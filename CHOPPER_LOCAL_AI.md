@@ -5,7 +5,7 @@ LogicScan and project search run locally without an LLM. Optional models provide
 conversation, explanations and suggested code changes; deterministic tools keep
 their own results.
 
-## Small CPU setup without Ollama (4.65.9)
+## Small CPU setup without Ollama (4.65.10)
 
 In **Settings → Chopper · AI connection**, choose **Set up small CPU model**.
 The app downloads Qwen2.5-Coder 1.5B Instruct Q4_K_M from its pinned official
@@ -19,7 +19,7 @@ storage details and [the LAN/VPN server guide](distribution/LAN_SERVER.md) for
 installation and backup/restore. No Ollama installation is required. The older
 external-provider options below remain available for existing configurations.
 
-## Source answers and model response settings (4.65.9)
+## Source answers and model response settings (4.65.10)
 
 For **Machine functions**, Chopper selects active cyclic PLC logic and enabled
 ladder networks before HMI settings or initialization files. The local fallback
@@ -55,7 +55,7 @@ answer. A citation warning does not mean the requested feature is missing.
 Source citations alone do not verify all of an AI reply's engineering claims.
 
 Restart the backend after installing an update; refresh alone cannot replace
-loaded Python code. Check that both UI/API version badges show **4.65.9**.
+loaded Python code. Check that both UI/API version badges show **4.65.10**.
 Self-registration, own-password changes and Admin-created accounts remain
 supported. See [ACCOUNT_COMPATIBILITY.md](ACCOUNT_COMPATIBILITY.md) for the
 standing account and update requirements.
@@ -269,3 +269,9 @@ continue across labelled tiles without becoming new networks. HTML and SVG
 retain full drawing detail for zooming. Existing saved diagram models are
 upgraded when rendered, but old network pairing requires a fresh comparison.
 See LADDER_REFERENCE_REVIEW.md for the verified reference cases.
+
+## B&R formats and vendor help
+
+Open **AI Assistant ? KnowHub ? B&R help index**. Download the complete decoding guide there, or read `knowledge/help_index/BR_PROJECT_HELP.md`. The assistant retrieves guide/manual excerpts with `[H1]` citations alongside project `[S1]` evidence. Reference retrieval does not train new model weights or prove PLC execution. Match vendor help to the installed library and runtime.
+
+For another installation, copy the supplied manuals into the persistent server folder `knowledge/br_help` and use Admin?s **Rebuild index** button. The compact guide is included in application packages; the large manual collection is not. Back up the persistent knowledge folder.

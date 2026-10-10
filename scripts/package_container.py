@@ -39,6 +39,10 @@ def stage(destination: Path) -> None:
                     ignore=shutil.ignore_patterns('archive', 'learning', 'feedback', '__pycache__'))
     for name in ('master', 'data_models'):
         shutil.copytree(ROOT / 'knowledge' / name, destination / 'knowledge' / name)
+    help_target = destination / 'knowledge' / 'help_index'
+    help_target.mkdir()
+    for name in ('project_guide.json', 'BR_PROJECT_HELP.md'):
+        shutil.copy2(ROOT / 'knowledge' / 'help_index' / name, help_target / name)
     (destination / 'src').mkdir()
     for name in ('usopp_logo.png', 'petrus_logo.png'):
         shutil.copy2(ROOT / 'src' / name, destination / 'src' / name)

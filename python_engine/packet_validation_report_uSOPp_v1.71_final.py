@@ -371,7 +371,9 @@ def safe_relative_path(path: Path) -> str:
         return str(path)
 
 
-IGNORED_PROJECT_DIRECTORIES = {"temp", "as", "binaries", "diagnosis"}
+try: from python_engine.project_paths import IGNORED_PROJECT_DIRS
+except ModuleNotFoundError: from project_paths import IGNORED_PROJECT_DIRS
+IGNORED_PROJECT_DIRECTORIES = IGNORED_PROJECT_DIRS
 
 
 def is_ignored_project_path(path: Path) -> bool:
@@ -485,6 +487,7 @@ def discover_active_hmi_roots() -> Tuple[List[Path], List[Path], str]:
         return page_roots, page_roots + ([shared] if shared.exists() else []), screen
     if physical.exists():
         for path in list(physical.rglob("*.pkg")) + list(physical.rglob("*.per")):
+            if is_ignored_project_path(path): continue
             try:
                 physical_text += "\n" + path.read_text(encoding="utf-8", errors="ignore")
             except Exception:
@@ -1652,6 +1655,7 @@ def build_textgroup_catalog() -> Dict[str, Dict[str, object]]:
     seen_paths = set()
     for search_root in search_roots:
         for path in search_root.rglob("*.txtgrp"):
+            if is_ignored_project_path(path): continue
             if path in seen_paths:
                 continue
             seen_paths.add(path)
@@ -1684,6 +1688,7 @@ def extract_dropdown_rows() -> Dict[str, List[DropdownRow]]:
     seen_pages = set()
     for search_root in search_roots:
       for page_path in search_root.rglob("*.page"):
+        if is_ignored_project_path(page_path): continue
         if page_path in seen_pages:
             continue
         seen_pages.add(page_path)
@@ -5513,6 +5518,7 @@ def extract_hmi_parameter_usage() -> Dict[str, Dict[str, Any]]:
     })
     search_root = LOGICAL_ROOT if LOGICAL_ROOT.exists() else ROOT
     for page_path in search_root.rglob("*.page"):
+        if is_ignored_project_path(page_path): continue
         try:
             root = ET.parse(page_path).getroot()
         except Exception:

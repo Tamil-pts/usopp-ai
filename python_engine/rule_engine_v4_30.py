@@ -11,6 +11,8 @@ except ModuleNotFoundError:
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
+try: from python_engine.project_paths import project_files
+except ModuleNotFoundError: from project_paths import project_files
 try: from python_engine.source_resolution import matching_sources
 except ModuleNotFoundError: from source_resolution import matching_sources
 
@@ -25,10 +27,7 @@ def read_text(p: Path) -> str:
 
 
 def all_files(root: Path, suffix: str | None = None):
-    for p in root.rglob("*"):
-        relative=p.relative_to(root)
-        if any(part.casefold() in {'temp','as','binaries','diagnosis'} for part in relative.parts[:-1]):
-            continue
+    for p in project_files(root):
         if p.is_file() and (suffix is None or p.suffix.lower() == suffix.lower()):
             yield p
 

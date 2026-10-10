@@ -2,6 +2,8 @@
 from pathlib import Path
 import re
 from xml.etree import ElementTree
+try: from python_engine.project_paths import IGNORED_PROJECT_DIRS, project_files
+except ModuleNotFoundError: from project_paths import IGNORED_PROJECT_DIRS, project_files
 
 MAX_SETTINGS_BYTES=1024*1024
 
@@ -11,12 +13,12 @@ def _directory(parent:Path,name:str)->Path|None:
 def _legacy_configurations(root:Path)->list[Path]:
     physical=_directory(root,'Physical')
     # These are AS support folders, not user configurations.
-    reserved={'system','visualcomponents','temp'}
+    reserved={'system','visualcomponents'} | IGNORED_PROJECT_DIRS
     return sorted((p for p in physical.iterdir() if p.is_dir() and p.name.casefold() not in reserved),key=lambda p:p.name.casefold()) if physical else []
 
 def _legacy_cpu_roots(root:Path)->list[Path]:
     pgm=_directory(root,'pgm')
-    return sorted((cpu for config in pgm.iterdir() if config.is_dir()
+    return sorted((cpu for config in pgm.iterdir() if config.is_dir() and config.name.casefold() not in IGNORED_PROJECT_DIRS
                    for cpu in config.iterdir() if cpu.is_dir() and cpu.name.casefold()=='cpu'),key=lambda p:str(p).casefold()) if pgm else []
 
 def read_automation_studio_version(content:bytes,source:str)->str|None:
@@ -69,7 +71,7 @@ def read_active_project_hardware(root:Path,active_configuration:str|None)->dict:
     physical=_directory(physical_parent,active_configuration) if physical_parent else None
     if physical is None:
         return result
-    hardware=next((path for path in physical.rglob('*') if path.is_file() and path.name.casefold() in {'hardware.hwl','hardware.hw'}),None)
+    hardware=next((path for path in project_files(physical) if path.name.casefold() in {'hardware.hwl','hardware.hw'}),None)
     if hardware:
         try:
             tree=ElementTree.fromstring(hardware.read_bytes())
@@ -80,7 +82,7 @@ def read_active_project_hardware(root:Path,active_configuration:str|None)->dict:
             result['plcType']=controller.attrib.get('Type') if controller is not None else None
         except (ElementTree.ParseError,OSError,ValueError):
             pass
-    cpu_sw=next((path for path in physical.rglob('*') if path.is_file() and path.name.casefold()=='cpu.sw'),None)
+    cpu_sw=next((path for path in project_files(physical) if path.name.casefold()=='cpu.sw'),None)
     if cpu_sw:
         try:
             text=cpu_sw.read_text(encoding='utf-8',errors='replace')
@@ -94,7 +96,7 @@ def read_active_project_hardware(root:Path,active_configuration:str|None)->dict:
     # MasterPanel describes the HMI; it is not evidence of the PLC CPU type.
     available={name.casefold():name for name in result['screenFolders']}
     panels=[]
-    for path in sorted(physical.rglob('*'),key=lambda p:str(p).casefold()):
+    for path in sorted(project_files(physical),key=lambda p:str(p).casefold()):
         if not path.is_file() or path.name.casefold()!='hw.cfg':
             continue
         target=available.get(path.parent.name.casefold())

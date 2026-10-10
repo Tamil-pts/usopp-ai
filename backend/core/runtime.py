@@ -4,6 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, List
 import requests
+from python_engine.project_paths import IGNORED_PROJECT_DIRS
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -72,7 +73,6 @@ MAX_PROJECT_FILES=800000
 VALIDATION_LOCK=threading.Lock()
 COMPARE_JOBS={}
 COMPARE_JOBS_LOCK=threading.Lock()
-IGNORED_PROJECT_DIRS={'temp','as','binaries','diagnosis'}
 log.info('uSOPP_BACKEND_IMPORT_OK version=%s python=%s pid=%s cwd=%s', VERSION, sys.executable, os.getpid(), os.getcwd())
 log.info('CONFIG MAX_PROJECT_FILES=%d ENGINE=%s RULE_ENGINE=%s MASTER_KB=%s reports=retained', MAX_PROJECT_FILES, ENGINE, RULE_ENGINE, MASTER_PARAM_FILE)
 

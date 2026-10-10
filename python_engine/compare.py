@@ -21,6 +21,10 @@ except ModuleNotFoundError:
     from project_info import local_project_details
 from pathlib import Path
 from typing import Dict, List, Tuple
+try:
+    from python_engine.project_paths import IGNORED_PROJECT_DIRS, project_files
+except ModuleNotFoundError:
+    from project_paths import IGNORED_PROJECT_DIRS, project_files
 
 # ---------------------------------------------------------------------------
 # File classification
@@ -29,9 +33,7 @@ LOGIC_EXTS    = {'.st', '.src', '.var', '.typ', '.fun', '.fb', '.prg', '.idc', '
 LADDER_EXTS   = {'.ld'}
 SCREEN_EXTS   = {'.page', '.pages', '.layer', '.txtgrp', '.algrp', '.tpr', '.dso'}
 HARDWARE_EXTS = {'.hwl', '.iom', '.sw', '.per', '.osl'}
-SKIP_DIRS     = {
-    'temp', 'as', '.git', '__pycache__', 'binaries', 'diagnosis', 'bin', 'obj',
-}
+SKIP_DIRS = IGNORED_PROJECT_DIRS
 SKIP_EXTS     = {
     '.pkg', '.prg',
     '.bmp', '.png', '.jpg', '.jpeg', '.gif', '.ico',
@@ -917,7 +919,7 @@ def walk_project(root: Path, identity: dict) -> Dict[str, Path]:
     result: Dict[str, Path] = {}
     # Build/cache output is not engineering source and can contain very large
     # generated VCShared files. Exclude it from the comparison.
-    for p in root.rglob('*'):
+    for p in project_files(root, SKIP_DIRS):
         if not p.is_file():
             continue
         try:

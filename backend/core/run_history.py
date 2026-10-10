@@ -8,6 +8,7 @@ import shutil
 import threading
 import uuid
 from backend.core.runtime import WORK, EXPORTS, log
+from python_engine.project_paths import IGNORED_PROJECT_DIRS
 
 current_user = ContextVar('history_user', default=None)
 LOCK = threading.RLock()
@@ -15,7 +16,7 @@ SERVER_ID = uuid.uuid4().hex
 RUN_LOCKS = {}
 RECORDS = EXPORTS/'history'
 SNAPSHOTS = WORK/'history'
-IGNORED = {'temp','as','binaries','diagnosis','node_modules','.git','.venv','.usopp_exports','.usopp_workspaces'}
+IGNORED = IGNORED_PROJECT_DIRS
 
 def write_json(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)

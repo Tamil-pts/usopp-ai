@@ -9,8 +9,9 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 from python_engine.compare import project_identity, walk_project, _ladder_networks, decode_bytes
+from python_engine.project_paths import IGNORED_PROJECT_DIRS, project_files
 
-SCHEMA = 8
+SCHEMA = 9
 EXTENSIONS = {'.st', '.ld', '.ab', '.src', '.var', '.typ', '.fun', '.c', '.h', '.txt',
               '.pgp', '.page', '.pages', '.layer', '.dso', '.algrp', '.txtgrp',
               '.iom', '.sw', '.osl', '.hw', '.hwl', '.cfg', '.per', '.apj', '.gdm', '.set'}
@@ -128,9 +129,7 @@ def source_files(root):
         candidates += [p for p in root.iterdir() if p.is_file() and p.name.casefold()=='cpu.txt']
         library=next((p for p in root.iterdir() if p.is_dir() and p.name.casefold()=='library'),None)
         if library:
-            candidates += [p for p in library.rglob('*') if p.is_file() and
-                           not any(part.casefold() in {'temp','as','binaries','.git','diagnosis','__pycache__','dbk','ai_qc'}
-                                   for part in p.relative_to(root).parts)]
+            candidates += list(project_files(library, IGNORED_PROJECT_DIRS | {'dbk', 'ai_qc'}))
     files = sorted({p for p in candidates if p.suffix.casefold() in EXTENSIONS}, key=lambda p: str(p).casefold())
     return identity, files, legacy
 
@@ -300,22 +299,37 @@ def retrieve(index, question, limit=14, characters=18000):
     return chosen
 
 
-def explanation_reference_issue(answer, evidence, comparison=None):
+def explanation_reference_issue(answer, evidence, comparison=None, help_evidence=None, require_project_citations=True):
     """Return a specific citation failure. This does not verify semantic claims."""
     allowed={Path(e['file']).name.casefold() for e in evidence}
     allowed_paths={e['file'].replace('\\', '/').casefold() for e in evidence}
+    help_evidence = help_evidence or []
+    allowed.update(Path(e['file'].split('#')[0]).name.casefold() for e in help_evidence)
+    allowed_paths.update(e['file'].split('#')[0].replace('\\', '/').casefold() for e in help_evidence)
+    reference_file = REFERENCE_FILE if not help_evidence else r'[\w-][\w.-]*\.(?:' + '|'.join(re.escape(ext[1:]) for ext in sorted(EXTENSIONS | {'.htm', '.html', '.json', '.md', '.xml'}, key=len, reverse=True)) + ')'
+    for item in help_evidence:
+        supplied_path = item['file'].split('#')[0].replace('\\', '/')
+        allowed_paths.add('knowledge/' + supplied_path)
+        # Manuals may name a header or an illustrative source file. These
+        # names are grounded in supplied reference text; project behavior
+        # still needs its own source citation below.
+        allowed.update(name.casefold() for name in re.findall(r'\b(' + reference_file + r')\b', item.get('excerpt', ''), re.I))
+        allowed_paths.update(path.replace('\\', '/').casefold() for path in re.findall(r'(?<![\w./\\-])((?:[\w<>.-]+[/\\])+' + reference_file + r')\b', item.get('excerpt', ''), re.I))
     if comparison:
         allowed.update(Path(r['file']).name.casefold() for rows in comparison['categories'].values() for r in rows)
         allowed_paths.update(r['file'].replace('\\', '/').casefold() for rows in comparison['categories'].values() for r in rows)
-    mentioned=re.findall(r'\b(' + REFERENCE_FILE + r')\b',answer,re.I)
+    mentioned=re.findall(r'\b(' + reference_file + r')\b',answer,re.I)
     if any(name.casefold() not in allowed for name in mentioned): return 'unknown_source'
-    paths=re.findall(r'(?<![\w./\\-])((?:[\w<>.-]+[/\\])+' + REFERENCE_FILE + r')\b',answer,re.I)
+    paths=re.findall(r'(?<![\w./\\-])((?:[\w<>.-]+[/\\])+' + reference_file + r')\b',answer,re.I)
     if any(path.replace('\\', '/').casefold() not in allowed_paths for path in paths): return 'unknown_source'
     source_ids={str(e.get('sourceId') or f'S{n}').casefold() for n,e in enumerate(evidence,1)}
-    ids=[number for group in re.findall(r'\[((?:S\d+[,;\s]*)+)\]',answer,re.I) for number in re.findall(r'S\d+',group,re.I)]
+    cited = [number for group in re.findall(r'\[((?:[SH]\d+[,;\s]*)+)\]',answer,re.I) for number in re.findall(r'[SH]\d+',group,re.I)]
+    ids = [i for i in cited if i.upper().startswith('S')]
+    help_ids = [i for i in cited if i.upper().startswith('H')]
+    if any(i.casefold() not in {str(e['sourceId']).casefold() for e in help_evidence} for i in help_ids): return 'unknown_help_citation'
     if any(i.casefold() not in source_ids for i in ids): return 'unknown_citation'
     if comparison and not mentioned: return 'missing_comparison_source'
-    if evidence and all(not e.get('enabled',True) for e in evidence) and not re.search(r'commented|disabled|inactive|not.*execut',answer,re.I): return 'inactive_source'
+    if evidence and require_project_citations and all(not e.get('enabled',True) for e in evidence) and not re.search(r'commented|disabled|inactive|not.*execut',answer,re.I): return 'inactive_source'
     locations=0
     for name, number in re.findall(r'(' + REFERENCE_FILE + r')[^\n]{0,50}?(?:line\s+|:\s*)(\d+)',answer,re.I):
         ranges=[(e['line'],e['line']+(1 if e.get('network') else len(e['excerpt'].splitlines()))) for e in evidence
@@ -326,7 +340,8 @@ def explanation_reference_issue(answer, evidence, comparison=None):
         locations+=1
     # The prompt also permits file:line citations. A verified location should
     # not be rejected merely because a small model omitted the [S1] spelling.
-    if evidence and not ids and not locations: return 'missing_citations'
+    if evidence and require_project_citations and not ids and not locations: return 'missing_citations'
+    if help_evidence and not comparison and not ids and not locations and not help_ids: return 'missing_help_citations'
     return None
 
 

@@ -24,6 +24,10 @@ def prepare() -> Path:
     (stage / 'knowledge').mkdir()
     shutil.copytree(root / 'knowledge' / 'master', stage / 'knowledge' / 'master')
     shutil.copytree(root / 'knowledge' / 'data_models', stage / 'knowledge' / 'data_models')
+    help_target = stage / 'knowledge' / 'help_index'
+    help_target.mkdir()
+    for name in ('project_guide.json', 'BR_PROJECT_HELP.md'):
+        shutil.copy2(root / 'knowledge' / 'help_index' / name, help_target / name)
     return stage
 
 
