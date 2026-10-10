@@ -6,6 +6,7 @@ Engine and rule schema versions are independent of the application release.
 ## 4.65.6 - 2026-10-10
 
 - Add GitHub Desktop publishing instructions for the installed client and prepare a separate local downloads repository containing only installation documentation and ignore rules. Keep source and end-user repository access separate.
+- Clarify Windows Docker Desktop installation and hosting responsibilities: GitHub Pages can serve a static information/download site, while the complete uSOPp application needs its Python backend and persistent data on a PC or server.
 - Prepare private GitHub source and separate download repositories, a publishing helper and a manually triggered Windows/container build workflow. End-user assets contain compiled application packages and installation instructions; source ZIPs, credentials, accounts, uploads, results, logs and model weights are excluded.
 - Add a multi-stage Linux amd64 Dockerfile with application bytecode, a non-root runtime, one backend worker, five engine slots, six accounts and persistent data. Add Windows/Ubuntu install/start/stop/status/log/update launchers, initial Admin password files, localhost browser binding and retained volumes on upgrades.
 - Add source-file audits, ZIP/checksum packaging, adjacent-bytecode engine execution and release/install documentation. Bytecode and frontend JavaScript remain inspectable; this is packaging, not encryption. Linux containers use a separately configured model service rather than Windows llama binaries.

@@ -126,6 +126,21 @@ See [distribution/README.md](distribution/README.md) for installation, start/sto
 
 Keep container project name `usopp-container`. Do not run `docker compose down --volumes` when updating: it deletes saved data. New defaults seed missing knowledge/rules without overwriting edited entries.
 
+## 6. Windows Docker and website hosting
+
+Windows users can run the same Linux amd64 image through Docker Desktop with its WSL 2 backend and Linux containers mode. The prepared `usopp-container.ps1` launcher installs the app from a downloaded image archive, then provides start, stop, status, logs and update commands. Install Docker Desktop separately first; the actual uSOPp image must be built before installation. See [Docker's Windows installation guide](https://docs.docker.com/desktop/setup/install/windows-install/) and [the user commands](distribution/README.md#windows-container).
+
+| Location | What it provides for uSOPp |
+| --- | --- |
+| Private GitHub source repository | Versioned application source and build workflow |
+| Private GitHub Releases | Windows ZIPs, container archives, launchers and checksums |
+| GitHub Pages | A static information, documentation or download-links website |
+| Docker on Windows or Ubuntu | The running application, Python APIs, login, validation, comparison, reports and persistent history |
+
+[GitHub Pages is static hosting](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages). It cannot run this app's FastAPI backend, validation subprocesses or writable account/report storage. Publishing the frontend there alone would not provide a working uSOPp application. For the complete app, run the backend/container on a PC or server and provide the browser URL from that host.
+
+Keep application source private when creating an information website. GitHub Pages availability for private repositories depends on the GitHub plan; see the linked Pages documentation. A separate download/information site can be prepared after choosing its audience and visibility. The current container browser binding is localhost; LAN or internet access requires an intentional host/proxy configuration.
+
 ## Preparation status
 
 Compilation and package audits are recorded in CHANGELOG. Remote creation/push needs a signed-in GitHub connection. Windows runtime, Docker build/run, Actions and destination installation are not verified merely by preparing these files.
