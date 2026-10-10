@@ -17,7 +17,33 @@ The container's final stage copies compiled application code from a builder. Ori
 
 The Git root must be **`usopp_ai_2.0`**, never the parent containing customer PLC projects. Ignored data includes accounts, uploads, results, logs, private model settings, model weights, dependencies, build outputs, project knowledge caches and the local B&R help archive. Approved department data models and default knowledge are included.
 
-If GitHub is connected to this workspace, use that connection to create the repositories. Otherwise install Git and GitHub CLI on the maintainer PC:
+### GitHub Desktop (installed on this laptop)
+
+Both local repositories are committed and ready for Desktop. Publish the source first:
+
+1. Open GitHub Desktop and sign in to your GitHub account if needed.
+2. Choose **File -> Add local repository**, select the following folder, and click **Add repository**:
+
+```text
+C:\Users\PTPL0241\Projects\AI_QC\uaopp.ai\usopp_ai_2.0
+```
+
+3. Click **Publish repository**. Change its GitHub name to **`usopp-ai`**.
+4. Leave **Keep this code private** checked. Select your personal account or intended organization, then click **Publish repository**.
+
+Repeat **File -> Add local repository** for the prepared downloads folder:
+
+```text
+C:\Users\PTPL0241\Projects\AI_QC\uaopp.ai\usopp-distribution
+```
+
+Publish it as **`usopp-distribution`**, keeping **Keep this code private** checked. This repository initially contains only installation instructions and ignore rules. Download packages go in **Releases**, not Git commits. Give end users access to this repository only.
+
+These steps follow GitHub's [add a local repository](https://docs.github.com/en/desktop/adding-and-cloning-repositories/adding-a-repository-from-your-local-computer-to-github-desktop) and [publish an existing project](https://docs.github.com/en/desktop/adding-and-cloning-repositories/adding-an-existing-project-to-github-using-github-desktop) instructions. After publishing both repositories, continue with section 2 to configure release access.
+
+### Optional GitHub CLI
+
+If GitHub is connected to this workspace, use that connection to create the repositories. For command-line publishing, install Git and GitHub CLI on the maintainer PC:
 
 ```powershell
 winget install --id Git.Git --exact
