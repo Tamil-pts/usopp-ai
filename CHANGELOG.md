@@ -3,6 +3,20 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.65.8 - 2026-10-10
+
+- Fix the blank DataInspect page caused by shared workspace components resolving a second React copy from the parent package. Deduplicate React and React DOM in both frontend builds. Add a visible startup message and a render error panel with reload and error details; preserve saved targets, metadata and history.
+- Make the assistant welcome page, conversation, composer, tabs and prompt buttons inherit the workspace's common light/dark colors and selected accent. Keep the requested #073B4C sidebars. Add a shared theme switch in the app header.
+- Both TypeScript compilations and production frontend builds pass. The rebuilt DataInspect bundle contains only React 19.2.8, removing the extra 19.3.0 copy. The Windows EXE builds and compiled container staging passes its raw-source audit. Refreshed Windows/launcher ZIPs and checksums are prepared. Browser behavior and Docker deployment have not been tested.
+
+## 4.65.7 - 2026-10-10
+
+- Add persistent per-user SQLite settings for saved PLC targets, metadata, manual-frame templates, report covers and UI preferences. Hydrate before opening either frontend, migrate surviving browser records without overwriting server settings, retain deletion tombstones, and reject conflicting stale writes. Surface pending/error saves with retry and unsaved-settings recovery.
+- Archive full test results and owner/test IDs in SQLite alongside compatible JSON/files; adopt earlier history without changing identities. Keep rules, Knowledge Hub and learning evidence in their existing persistent JSON/JSONL schemas.
+- Add pinned Qwen2.5-Coder 1.5B Instruct Q4_K_M CPU setup with background download, size/SHA256 verification, progress, offline-copy support and persistent weights. Add bounded CPU answer length, independent five-request queue, CPU thread settings and optional startup loading through llama.cpp; no Ollama dependency.
+- Add a pinned Linux llama.cpp CPU build to the container and include model license/card in Windows and Linux packages. Add explicit LAN binding, full-volume backups before updates and checksum-checked restore to a new empty volume. Replace the unpublished Internet-tunnel draft with the agreed LAN/VPN instructions.
+- Checks and limitations: Python compilation, both TypeScript compilations, both production frontend builds and PowerShell/shell syntax pass. The Windows EXE builds and contains the new storage/model modules and bundled runtime; compiled container staging passes its raw-source audit. Windows/launcher ZIPs and checksums are prepared. The small CPU model downloads successfully and passes its pinned size/SHA256 check; local configuration is saved for the next app restart. Destination Docker build/run, backup/restore, five-user load, inference and live PLC routing remain unverified; no runtime tests were run.
+
 ## 4.65.6 - 2026-10-10
 
 - Add GitHub Desktop publishing instructions for the installed client and prepare a separate local downloads repository containing only installation documentation and ignore rules. Keep source and end-user repository access separate.

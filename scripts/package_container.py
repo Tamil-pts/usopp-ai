@@ -28,6 +28,9 @@ def stage(destination: Path) -> None:
     py_compile.compile(str(ROOT / 'scripts/container_bootstrap.py'),
                        cfile=str(destination / 'container_bootstrap.pyc'),
                        dfile='container_bootstrap.py', doraise=True)
+    py_compile.compile(str(ROOT / 'scripts/container_maintenance.py'),
+                       cfile=str(destination / 'container_maintenance.pyc'),
+                       dfile='container_maintenance.py', doraise=True)
     for page in ('index.html', 'nami/index.html'):
         if not (ROOT / 'dist' / page).is_file():
             raise ValueError(f'Build the frontend first: dist/{page} is missing.')
@@ -39,6 +42,9 @@ def stage(destination: Path) -> None:
     (destination / 'src').mkdir()
     for name in ('usopp_logo.png', 'petrus_logo.png'):
         shutil.copy2(ROOT / 'src' / name, destination / 'src' / name)
+    (destination / 'local_ai').mkdir()
+    for name in ('MODEL_LICENSE.txt', 'MODEL_CARD.md'):
+        shutil.copy2(ROOT / 'local_ai' / name, destination / 'local_ai' / name)
     # Runtime needs only the version, not developer build commands/dependencies.
     package = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))
     (destination / 'package.json').write_text(

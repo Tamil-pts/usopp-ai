@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
   if (frontendPort === apiPort) throw new Error('Development frontend and backend must use different application ports.');
   return {
     plugins: [react()],
+    resolve: {dedupe: ['react', 'react-dom']},
     build: { sourcemap: false, minify: 'esbuild' },
     server: {
       port: frontendPort,

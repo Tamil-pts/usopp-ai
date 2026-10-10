@@ -25,7 +25,12 @@ def load(run_id):
     try:
         if run_id.startswith('legacy_'): return run_history.legacy_result(run_id)
         record=run_history.read_record(run_id)
-        result=json.loads((run_history.RECORDS/run_id/'result.json').read_text(encoding='utf-8'))
+        try: result=json.loads((run_history.RECORDS/run_id/'result.json').read_text(encoding='utf-8'))
+        except (OSError,ValueError):
+            from backend.core.persistent_store import archived_run
+            archived=archived_run(run_id)
+            if not archived: raise FileNotFoundError('History result not found.')
+            result=archived[1]
         return record,result
     except (OSError,ValueError): raise HTTPException(404,'History record was not found.')
 

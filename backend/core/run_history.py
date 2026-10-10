@@ -37,6 +37,14 @@ SESSION_RESULTS = {'validation':'validation_results.json','metadata':'generated_
                    'rules':'rule_results.json','compare':'compare_results.json','datainspect':'datainspect_results.json',
                    'data-model':'data_model_results.json'}
 
+def archive_database(record, result):
+    # JSON/file archives remain recoverable even when the database is unavailable.
+    try:
+        from backend.core.persistent_store import archive_run
+        archive_run(record, result)
+    except Exception:
+        log.exception('RUN_HISTORY_DATABASE_ERROR run=%s; file archive retained', record['id'])
+
 def begin_run(kind, data, root=None):
     from backend.core.identifiers import identify_result
     from backend.core.access import claim_resource
@@ -54,6 +62,7 @@ def begin_run(kind, data, root=None):
     data.update(runOwner=record['user'],createdAt=record['createdAt'])
     write_json(folder/'result.json', data)
     write_json(folder/'record.json', record)
+    archive_database(record, data)
     return record
 
 def run_lock(run_id):
@@ -137,6 +146,7 @@ def _record_run(kind, data, root=None, metadata_path=None):
     session_file=session_folder/SESSION_RESULTS[kind]
     if session_file.is_file(): write_json(session_file,data)
     write_json(folder/'record.json',record)
+    archive_database(record, data)
     return record
 
 def add_run_artifact(run_id, source):
@@ -156,28 +166,48 @@ def add_run_artifact(run_id, source):
         result['historyDownloads']=[{'name':item,'url':f'/api/history/{run_id}/download/{item}'} for item in record['artifacts']]
         write_json(folder/'result.json',result)
         write_json(folder/'record.json',record)
+        archive_database(record, result)
         return name
 
 def read_record(run_id):
     if not __import__('re').fullmatch(r'[a-f0-9]{32}',run_id):
         raise ValueError('Invalid history ID.')
-    record=json.loads((RECORDS/run_id/'record.json').read_text(encoding='utf-8'))
+    try:
+        record=json.loads((RECORDS/run_id/'record.json').read_text(encoding='utf-8'))
+    except (OSError,ValueError):
+        from backend.core.persistent_store import archived_run
+        archived=archived_run(run_id)
+        if not archived: raise FileNotFoundError('History record not found.')
+        record=archived[0]
     if record.get('status')=='running' and record.get('serverId')!=SERVER_ID:
         record.update(status='interrupted',error='Server restarted before this test completed. Run a new test.')
     return record
 
 def list_records():
     with LOCK:
+        from backend.core.persistent_store import archived_records, archive_run
+        try: indexed={row['id']:row for row in archived_records()}
+        except Exception:
+            log.exception('RUN_HISTORY_DATABASE_READ_ERROR; using file archives')
+            indexed={}
         records=[]
         if RECORDS.exists():
             for path in RECORDS.glob('*/record.json'):
                 try:
                     row=json.loads(path.read_text(encoding='utf-8'))
-                    if row.get('status')=='running' and row.get('serverId')!=SERVER_ID:
-                        row.update(status='interrupted',error='Server restarted before this test completed. Run a new test.')
-                    row['projectAvailable']=bool(row.get('snapshotPath') and Path(row['snapshotPath']).is_dir())
-                    records.append(row)
-                except (OSError,ValueError): continue
+                    if row['id'] not in indexed:
+                        # Adopt earlier file history without changing owners or IDs.
+                        try:
+                            result=json.loads((path.parent/'result.json').read_text(encoding='utf-8'))
+                            archive_run(row,result,only_missing=True)
+                        except Exception: log.exception('RUN_HISTORY_DATABASE_IMPORT_ERROR run=%s',row['id'])
+                    indexed[row['id']]=row
+                except (OSError,ValueError,KeyError): continue
+        for row in indexed.values():
+            if row.get('status')=='running' and row.get('serverId')!=SERVER_ID:
+                row.update(status='interrupted',error='Server restarted before this test completed. Run a new test.')
+            row['projectAvailable']=bool(row.get('snapshotPath') and Path(row['snapshotPath']).is_dir())
+            records.append(row)
         # Pre-history runs can still be opened, but user identity was not captured.
         known={(row.get('sessionId'),row.get('kind')) for row in records}
         folders=list(WORK.iterdir())

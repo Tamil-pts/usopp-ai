@@ -79,6 +79,7 @@ $Arguments = @(
     '--add-data', ((Join-Path $AppRoot 'src\usopp_logo.png') + ';src'),
     '--add-data', ((Join-Path $AppRoot 'src\petrus_logo.png') + ';src'),
     '--collect-submodules', 'uvicorn',
+    '--collect-submodules', 'backend',
     '--collect-submodules', 'fastapi',
     '--collect-submodules', 'multipart',
     '--collect-submodules', 'openpyxl', '--collect-data', 'openpyxl',
@@ -101,9 +102,10 @@ $LocalRuntime = Join-Path $AppRoot 'local_ai\runtime'
 if (Test-Path -LiteralPath (Join-Path $LocalRuntime 'llama-server.exe')) {
     $Arguments = @('--add-data', ($LocalRuntime + ';local_ai/runtime')) + $Arguments
 }
+$Arguments = @('--add-data', ((Join-Path $AppRoot 'local_ai\MODEL_LICENSE.txt') + ';local_ai'), '--add-data', ((Join-Path $AppRoot 'local_ai\MODEL_CARD.md') + ';local_ai')) + $Arguments
 
 if (-not $SingleFile) {
-    $Arguments = @($Arguments[0..2]) + @('--contents-directory', '.') + @($Arguments[3..($Arguments.Count - 1)])
+    $Arguments = @('--contents-directory', '.') + $Arguments
 }
 
 # Windows PowerShell treats redirected native stderr (including INFO logs)

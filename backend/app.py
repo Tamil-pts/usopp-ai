@@ -12,17 +12,21 @@ from backend.core.runtime import RESOURCE_ROOT, VERSION, log
 from backend.api import assist, comparison, knowledge, rules, system, validation, metadata, validation_source, nami, auth, report_exports, history
 from backend.core.run_history import current_user
 from backend.core import accounts
-from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models
+from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models, user_settings
 from backend.core.mcp_tools import server as mcp_server, http_app as mcp_app
 from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def app_lifespan(app):
+    from backend.core.persistent_store import initialize
+    from backend.core.local_model_runtime import autostart
+    await __import__('asyncio').to_thread(initialize)
+    autostart()
     async with mcp_server.session_manager.run():
         try:yield
         finally:
-            from backend.core.local_model_runtime import stop
-            stop()
+            from backend.core.local_model_runtime import shutdown
+            shutdown()
 
 app = FastAPI(title='uSOPp.ai API', version=VERSION, debug=False,lifespan=app_lifespan)
 
@@ -96,6 +100,7 @@ for feature_router in (system.router, validation.router, metadata.router, knowle
 
 DIST=RESOURCE_ROOT/'dist'
 app.include_router(assist_settings.router)
+app.include_router(user_settings.router)
 app.include_router(assist_attachments.router)
 app.include_router(ladder.router)
 app.include_router(mcp_settings.router)

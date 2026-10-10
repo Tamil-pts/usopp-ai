@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+.di-startup-error { margin:24px; padding:24px; border:1px solid #c6d0da; border-radius:9px; background:#fff; color:#17202b; }
+.di-startup-error h1 { font-size:20px; font-weight:600; margin-bottom:12px; }
+.di-startup-error :is(p,details) { margin-bottom:16px; }
+.di-startup-error pre { white-space:pre-wrap; overflow-wrap:anywhere; }
+.di-startup-error button { border:1px solid #c6d0da; border-radius:7px; padding:8px 12px; cursor:pointer; }
+html[data-theme='dark'] .di-startup-error { background:#161c24; color:#e8edf2; border-color:#394553; }
+
 .di-mimic { --di-bg:#111c30; --di-soft:#18263d; --di-line:#30445f; --di-text:#e2e8f0; --di-muted:#9aafc7; --di-accent:#34d399; padding:18px 22px; color:var(--di-text); background:var(--di-bg); border-bottom:1px solid var(--di-line); }
 html[data-theme='light'] .di-mimic { --di-bg:#fff; --di-soft:#f1f6fb; --di-line:#d6e2ee; --di-text:#173049; --di-muted:#62788f; --di-accent:#00876b; }
 .di-mimic-title { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; font-size:12px; color:var(--di-muted); }

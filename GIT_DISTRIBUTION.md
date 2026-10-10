@@ -79,12 +79,12 @@ The normal workflow token has only `contents: read`. The distribution token is u
 3. The Windows job builds the frontend and portable EXE; the Linux job builds a Linux amd64 image with compiled application bytecode. Neither job starts the application or runs runtime tests.
 4. Download the run's artifacts or open the draft in the downloads repository. Review packages and installation behavior before publishing the draft to users. Publication is a separate manual action.
 
-Assets for 4.65.6:
+Assets for 4.65.8:
 
 ```text
-uSOPp_AI_4.65.6_Windows_x64.zip
-uSOPp_AI_4.65.6_Container_Launchers.zip
-uSOPp_AI_4.65.6_Container_linux_amd64.tar.gz
+uSOPp_AI_4.65.8_Windows_x64.zip
+uSOPp_AI_4.65.8_Container_Launchers.zip
+uSOPp_AI_4.65.8_Container_linux_amd64.tar.gz
 ```
 
 Each has a `.sha256` companion. The image is exported with `docker image save` and loaded with `docker image load`, so users need no registry account. Earlier Ubuntu/Azure source ZIPs are **not end-user assets** and are ignored by Git.
@@ -103,16 +103,16 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\build_windows_exe.ps1 
 Docker Desktop / Engine is required to build the image:
 
 ```powershell
-docker build --platform linux/amd64 --build-arg APP_VERSION=4.65.6 -t usopp-ai:4.65.6 .
-docker image save --output uSOPp_AI_4.65.6_Container_linux_amd64.tar usopp-ai:4.65.6
+docker build --platform linux/amd64 --build-arg APP_VERSION=4.65.8 -t usopp-ai:4.65.8 .
+docker image save --output uSOPp_AI_4.65.8_Container_linux_amd64.tar usopp-ai:4.65.8
 ```
 
 The Windows launcher also accepts an uncompressed `.tar`. On Ubuntu, produce the compressed release asset:
 
 ```bash
-docker build --platform linux/amd64 --build-arg APP_VERSION=4.65.6 -t usopp-ai:4.65.6 .
-docker image save usopp-ai:4.65.6 | gzip -1 > uSOPp_AI_4.65.6_Container_linux_amd64.tar.gz
-sha256sum uSOPp_AI_4.65.6_Container_linux_amd64.tar.gz > uSOPp_AI_4.65.6_Container_linux_amd64.tar.gz.sha256
+docker build --platform linux/amd64 --build-arg APP_VERSION=4.65.8 -t usopp-ai:4.65.8 .
+docker image save usopp-ai:4.65.8 | gzip -1 > uSOPp_AI_4.65.8_Container_linux_amd64.tar.gz
+sha256sum uSOPp_AI_4.65.8_Container_linux_amd64.tar.gz > uSOPp_AI_4.65.8_Container_linux_amd64.tar.gz.sha256
 ```
 
 See [distribution/README.md](distribution/README.md) for installation, start/stop, passwords, ports, data and updates. See [BUILD_WINDOWS_EXE.md](BUILD_WINDOWS_EXE.md) for EXE details. The GitHub workflow builds both packages without Docker on the maintainer PC.
@@ -122,7 +122,7 @@ See [distribution/README.md](distribution/README.md) for installation, start/sto
 1. Edit the private source; bump `package.json` and root versions in `package-lock.json`, update CHANGELOG, review, commit and push `main`.
 2. Manually build the version and publish the reviewed draft in the downloads repository.
 3. Users download compiled assets from **Releases**, finish jobs, and replace their EXE package or image.
-4. Native Windows users retain `%LOCALAPPDATA%\uSOPp.ai`. Container users retain the named data volume and installer settings. These installations use separate stores and do not automatically share accounts or history.
+4. Native Windows users retain `%LOCALAPPDATA%\uSOPp.ai`. Container users retain the named data volume and installer settings. These installations use separate stores. Container updates make a full backup first; see the server guide for restore to another server.
 
 Keep container project name `usopp-container`. Do not run `docker compose down --volumes` when updating: it deletes saved data. New defaults seed missing knowledge/rules without overwriting edited entries.
 
@@ -142,5 +142,7 @@ Windows users can run the same Linux amd64 image through Docker Desktop with its
 Keep application source private when creating an information website. GitHub Pages availability for private repositories depends on the GitHub plan; see the linked Pages documentation. A separate download/information site can be prepared after choosing its audience and visibility. The current container browser binding is localhost; LAN or internet access requires an intentional host/proxy configuration.
 
 ## Preparation status
+
+The agreed deployment is one shared server over the existing LAN/VPN. Follow [LAN_SERVER.md](distribution/LAN_SERVER.md) for install, retained-volume updates, automatic backups, new-volume restore and small CPU model setup. GitHub distributes application packages; private server data stays in the persistent volume.
 
 Compilation and package audits are recorded in CHANGELOG. Remote creation/push needs a signed-in GitHub connection. Windows runtime, Docker build/run, Actions and destination installation are not verified merely by preparing these files.

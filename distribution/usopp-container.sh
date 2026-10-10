@@ -4,12 +4,14 @@ action=${1:-status}
 image=${2:-}
 archive=${3:-}
 config_root=${USOPP_CONTAINER_CONFIG:-"$HOME/.config/usopp-container"}
+if [[ "$action" == update && ! -f "$config_root/image" ]]; then echo 'Run install before updating a server.' >&2; exit 1; fi
+if [[ "$action" == install && -f "$config_root/image" && "$image" != "$(cat "$config_root/image")" ]]; then echo 'Use update to change an installed release with a full backup.' >&2; exit 1; fi
 script_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 command -v docker >/dev/null || { echo 'Install Docker Engine and its Compose plugin first; see README.md.' >&2; exit 1; }
 [[ $(docker info --format '{{.OSType}}') == linux ]] || { echo 'Start Docker in Linux containers mode.' >&2; exit 1; }
 case "$action" in
   install|update)
-    [[ "$image" =~ ^[a-z0-9][a-z0-9._/:@-]+$ ]] || { echo 'Supply the release image name, e.g. usopp-ai:4.65.6.' >&2; exit 1; }
+    [[ "$image" =~ ^[a-z0-9][a-z0-9._/:@-]+$ ]] || { echo 'Supply the release image name, e.g. usopp-ai:4.65.7.' >&2; exit 1; }
     mkdir -p -- "$config_root"
     chmod 700 -- "$config_root"
     if [[ -n "$archive" ]]; then docker image load --input "$archive"; fi
@@ -28,21 +30,70 @@ case "$action" in
     if [[ -z "$port" && -f "$config_root/port" ]]; then port=$(cat "$config_root/port"); fi
     port=${port:-8200}
     [[ "$port" =~ ^[0-9]+$ && "$port" -ge 8200 && "$port" -le 8500 ]] || { echo 'Use a port between 8200 and 8500.' >&2; exit 1; }
-    printf '%s' "$image" > "$config_root/image"
-    printf '%s' "$port" > "$config_root/port"
+    bind_address=${USOPP_BIND_ADDRESS:-}
+    if [[ -z "$bind_address" && -f "$config_root/bind-address" ]]; then bind_address=$(cat "$config_root/bind-address"); fi
+    bind_address=${bind_address:-127.0.0.1}
+    [[ "$bind_address" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Use an IPv4 server bind address.' >&2; exit 1; }
+    IFS=. read -r -a octets <<< "$bind_address"
+    for octet in "${octets[@]}"; do [[ ${#octet} -le 3 && $((10#$octet)) -le 255 ]] || { echo 'Invalid IPv4 address.' >&2; exit 1; }; done
+    data_volume=usopp-container_data
+    if [[ -f "$config_root/data-volume" ]]; then data_volume=$(cat "$config_root/data-volume"); fi
     cp -- "$script_root/compose.yaml" "$config_root/compose.yaml"
     ;;
-  start|stop|status|logs) ;;
-  *) echo 'Use install, start, stop, status, logs or update.' >&2; exit 1 ;;
+  start|stop|status|logs|backup|restore) ;;
+  *) echo 'Use install, start, stop, status, logs, update, backup or restore.' >&2; exit 1 ;;
 esac
-[[ -f "$config_root/image" ]] || { echo 'Run install first.' >&2; exit 1; }
-export USOPP_IMAGE=$(cat "$config_root/image")
-export USOPP_PORT=$(cat "$config_root/port")
+if [[ "$action" == install || "$action" == update ]]; then
+  export USOPP_IMAGE="$image" USOPP_PORT="$port" USOPP_BIND_ADDRESS="$bind_address" USOPP_DATA_VOLUME="$data_volume"
+else
+  [[ -f "$config_root/image" ]] || { echo 'Run install first.' >&2; exit 1; }
+  export USOPP_IMAGE=$(cat "$config_root/image")
+  export USOPP_PORT=$(cat "$config_root/port")
+  export USOPP_BIND_ADDRESS=127.0.0.1 USOPP_DATA_VOLUME=usopp-container_data
+  if [[ -f "$config_root/bind-address" ]]; then export USOPP_BIND_ADDRESS=$(cat "$config_root/bind-address"); fi
+  if [[ -f "$config_root/data-volume" ]]; then export USOPP_DATA_VOLUME=$(cat "$config_root/data-volume"); fi
+fi
 export USOPP_ADMIN_PASSWORD_FILE="$config_root/admin-password.txt"
 compose=(docker compose --project-name usopp-container --file "$config_root/compose.yaml")
+assert_stopped() {
+  [[ -z $(docker ps --filter "volume=$USOPP_DATA_VOLUME" --format '{{.ID}}') ]] || { echo 'Finish active tests and run stop before backup/restore.' >&2; exit 1; }
+}
+backup_server() {
+  assert_stopped
+  backup_root=${USOPP_BACKUP_DIRECTORY:-"$config_root/backups"}
+  mkdir -p -- "$backup_root"
+  chmod 700 -- "$backup_root"
+  backup_root=$(cd -- "$backup_root" && pwd)
+  [[ "$backup_root" != *,* ]] || { echo 'Use a backup path without commas.' >&2; exit 1; }
+  backup_name="usopp-server-$(date -u +%Y%m%d-%H%M%S)-$RANDOM.tar.gz"
+  docker run --rm --network none --user 0 --entrypoint python --env USOPP_DATA_ROOT=/data --mount "type=volume,source=$USOPP_DATA_VOLUME,target=/data,readonly" --mount "type=bind,source=$backup_root,target=/backup" "$USOPP_IMAGE" /opt/usopp/container_maintenance.pyc backup "/backup/$backup_name" --owner "$(id -u)"
+  echo "Backup and checksum: $backup_root/$backup_name"
+}
+if [[ "$action" == install ]]; then docker volume create "$USOPP_DATA_VOLUME" >/dev/null
+else docker volume inspect "$USOPP_DATA_VOLUME" >/dev/null || { echo 'The data volume is missing. Restore a backup; do not start with an empty replacement.' >&2; exit 1; }; fi
+if [[ "$action" == update ]]; then "${compose[@]}" stop; backup_server; fi
+if [[ "$action" == install || "$action" == update ]]; then
+  printf '%s' "$USOPP_IMAGE" > "$config_root/image"
+  printf '%s' "$USOPP_PORT" > "$config_root/port"
+  printf '%s' "$USOPP_BIND_ADDRESS" > "$config_root/bind-address"
+  printf '%s' "$USOPP_DATA_VOLUME" > "$config_root/data-volume"
+fi
 case "$action" in
-  install|start|update) "${compose[@]}" up -d --pull never; echo "Open http://127.0.0.1:$USOPP_PORT; sign in as Admin with your chosen password." ;;
+  install|start|update) "${compose[@]}" up -d --pull never; echo "Open http://<server-LAN-IP>:$USOPP_PORT (bound to $USOPP_BIND_ADDRESS); sign in as Admin with your chosen password." ;;
   stop) "${compose[@]}" stop ;;
   status) "${compose[@]}" ps ;;
   logs) "${compose[@]}" logs --tail 100 ;;
+  backup) backup_server ;;
+  restore)
+    assert_stopped
+    backup_path=${2:?Supply the backup archive path}
+    new_volume=${3:?Supply a new empty volume name}
+    [[ "$new_volume" =~ ^[a-zA-Z0-9][a-zA-Z0-9_.-]+$ && "$new_volume" != "$USOPP_DATA_VOLUME" ]] || { echo 'Use a new volume name; existing data is retained.' >&2; exit 1; }
+    backup_root=$(cd -- "$(dirname -- "$backup_path")" && pwd)
+    [[ "$backup_root" != *,* ]] || { echo 'Use a backup path without commas.' >&2; exit 1; }
+    docker volume create "$new_volume" >/dev/null
+    docker run --rm --network none --user 0 --entrypoint python --env USOPP_DATA_ROOT=/data --mount "type=volume,source=$new_volume,target=/data" --mount "type=bind,source=$backup_root,target=/backup,readonly" "$USOPP_IMAGE" /opt/usopp/container_maintenance.pyc restore "/backup/$(basename -- "$backup_path")"
+    printf '%s' "$new_volume" > "$config_root/data-volume"
+    echo 'Restore complete. Run start; the original data volume is retained separately.'
+    ;;
 esac

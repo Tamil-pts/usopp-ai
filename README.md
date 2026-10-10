@@ -12,6 +12,11 @@ For Docker Desktop / Ubuntu containers, see [installation commands](distribution
 Container data stays in a persistent volume; original application source is
 omitted from runtime packages, but compiled code remains inspectable.
 
+For one shared server reached over the existing LAN/VPN, follow
+[the server installation and update guide](distribution/LAN_SERVER.md).
+See [persistent storage and CPU AI](PERSISTENT_STORAGE_AND_CPU_AI.md) for SQLite,
+retained rule/knowledge JSON and the included llama.cpp model setup.
+
 ## Ubuntu server deployment
 
 Follow [UBUNTU_DEMO.md](UBUNTU_DEMO.md) for the complete server installation guide:

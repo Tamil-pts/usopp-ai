@@ -26,7 +26,7 @@ The portable application is the simplest choice. For containers, first install [
 Download and extract `uSOPp_AI_<version>_Container_Launchers.zip`. Download `uSOPp_AI_<version>_Container_linux_amd64.tar.gz` into the same folder. Open PowerShell in that folder:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 install -Image usopp-ai:4.65.6 -ImageArchive .\uSOPp_AI_4.65.6_Container_linux_amd64.tar.gz
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 install -Image usopp-ai:4.65.8 -ImageArchive .\uSOPp_AI_4.65.8_Container_linux_amd64.tar.gz
 ```
 
 Use the version printed on your downloaded release in both places. Choose your initial Admin password when prompted; open `http://127.0.0.1:8200`. If that port is occupied, add `-Port 8201` to installation.
@@ -38,14 +38,14 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 st
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 start
 ```
 
-For an update, finish active jobs, download the new image and launchers, and use `update -Image usopp-ai:<new-version> -ImageArchive <new-image-path>`. The port and data volume are preserved. The password file in `%LOCALAPPDATA%\uSOPp-container` seeds only a new Admin; use account settings to change an existing password.
+For an update, finish active jobs, download the new image and launchers, and use `update -Image usopp-ai:<new-version> -ImageArchive <new-image-path>`. A full backup is made before startup; the port, bind address and data volume are preserved. The password file in `%LOCALAPPDATA%\uSOPp-container` seeds only a new Admin; use account settings to change an existing password.
 
 ## Ubuntu: container
 
 Install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) and the [Compose plugin](https://docs.docker.com/compose/install/linux/). Your account must have Docker access. Download and extract the same launchers and Linux amd64 image, then:
 
 ```bash
-bash usopp-container.sh install usopp-ai:4.65.6 ./uSOPp_AI_4.65.6_Container_linux_amd64.tar.gz
+bash usopp-container.sh install usopp-ai:4.65.8 ./uSOPp_AI_4.65.8_Container_linux_amd64.tar.gz
 bash usopp-container.sh status
 bash usopp-container.sh logs
 bash usopp-container.sh stop
@@ -56,19 +56,21 @@ Use `USOPP_PORT=8201 bash usopp-container.sh install ...` to choose another port
 
 ## Data, reports and PLC access
 
+For the agreed shared LAN/VPN server, follow [LAN_SERVER.md](LAN_SERVER.md). It includes server binding, CPU model setup, full backups, updates and restore.
+
 - A named Docker volume, `usopp-container_data`, holds accounts, private user workspaces, unique test IDs, reports, history, rules and knowledge. Stopping or replacing the container retains it. **Do not delete this volume when upgrading.** Finish active jobs before stopping or backing up the data.
 - Native Windows and container installations use separate data stores. They do not automatically share accounts or test history.
 - Use **Browse / upload folder** for local PLC projects: a Windows path such as `C:\Projects` is not a path inside a Linux container. Only `/data` is mounted by default.
 - Live DataInspect needs network access from Docker to the PLC IP and port. Files can be inspected without a PLC; live reads need a real reachable controller.
-- The browser port is bound to localhost. For remote users, configure a trusted LAN or HTTPS reverse proxy separately; never change to several backend workers because job locks are process-local.
-- The Linux image contains no bundled LLM runtime or model weights. Configure a reachable model service in Chopper settings if AI generation is needed. `127.0.0.1` inside Docker refers to the container, not the host PC. Other engineering workflows remain available.
+- The browser port defaults to localhost. Choose the server LAN address with `-BindAddress` on Windows or `USOPP_BIND_ADDRESS` on Ubuntu as shown in the LAN guide. Keep one backend worker because job locks are process-local.
+- The Linux image builds an included llama.cpp CPU runtime. In Admin settings choose **Set up small CPU model** to download and verify Qwen2.5-Coder 1.5B once into the persistent volume. No Ollama is needed. Model weights and settings survive updates.
 
 The packages omit original application Python/TypeScript source and frontend source maps. Compiled bytecode, JavaScript and image contents can still be inspected or reverse engineered. They are not source encryption.
 
 Each release supplies SHA256 checksum files. To check a Windows ZIP or image download:
 
 ```powershell
-Get-FileHash .\uSOPp_AI_4.65.6_Windows_x64.zip -Algorithm SHA256
+Get-FileHash .\uSOPp_AI_4.65.8_Windows_x64.zip -Algorithm SHA256
 ```
 
 Compare the hash with that file's published `.sha256` companion. On Ubuntu use `sha256sum -c <filename>.sha256` from the download folder.

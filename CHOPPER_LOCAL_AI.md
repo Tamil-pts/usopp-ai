@@ -5,6 +5,20 @@ LogicScan and project search run locally without an LLM. Optional models provide
 conversation, explanations and suggested code changes; deterministic tools keep
 their own results.
 
+## Small CPU setup without Ollama (4.65.8)
+
+In **Settings → Chopper · AI connection**, choose **Set up small CPU model**.
+The app downloads Qwen2.5-Coder 1.5B Instruct Q4_K_M from its pinned official
+revision, checks size/SHA256, and loads it through the included llama.cpp runtime.
+Windows and the Docker image provide their respective CPU runtime. Model weights,
+configuration and approved knowledge remain in the persistent data root on updates.
+CPU answers are bounded and serialized independently of validation workers.
+
+See [PERSISTENT_STORAGE_AND_CPU_AI.md](PERSISTENT_STORAGE_AND_CPU_AI.md) for
+storage details and [the LAN/VPN server guide](distribution/LAN_SERVER.md) for
+installation and backup/restore. No Ollama installation is required. The older
+external-provider options below remain available for existing configurations.
+
 ## Machine-function answers and model timeouts (4.64.0)
 
 For **Machine functions**, Chopper selects active cyclic PLC logic and enabled
@@ -21,7 +35,7 @@ Admin can check the model connection or select a smaller installed model.
 Local analysis is not proof of physical operation or a complete simulation.
 
 Restart the backend after installing an update; refresh alone cannot replace
-loaded Python code. Check that both UI/API version badges show **4.64.1**.
+loaded Python code. Check that both UI/API version badges show **4.65.8**.
 Self-registration, own-password changes and Admin-created accounts remain
 supported. See [ACCOUNT_COMPATIBILITY.md](ACCOUNT_COMPATIBILITY.md) for the
 standing account and update requirements.

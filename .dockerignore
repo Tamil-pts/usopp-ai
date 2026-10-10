@@ -19,6 +19,7 @@
 !scripts/build_nami.mjs
 !scripts/package_container.py
 !scripts/container_bootstrap.py
+!scripts/container_maintenance.py
 !deploy/
 !deploy/container/
 !deploy/container/entrypoint.sh
@@ -29,6 +30,9 @@
 !knowledge/data_models/**
 !rules/
 !rules/**
+!local_ai/
+!local_ai/MODEL_LICENSE.txt
+!local_ai/MODEL_CARD.md
 **/node_modules/**
 **/__pycache__/**
 **/*.pyc

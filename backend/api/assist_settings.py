@@ -3,6 +3,18 @@ from backend.core.assist_model import public_configuration,save_configuration,ch
 
 router=APIRouter(tags=['Chopper model'])
 
+@router.get('/api/assist/model/cpu')
+def cpu_status(request:Request):
+    admin(request)
+    from backend.core.cpu_model import status
+    return status()
+
+@router.post('/api/assist/model/cpu/install')
+def install_cpu(request:Request):
+    admin(request)
+    from backend.core.cpu_model import begin_install
+    return begin_install()
+
 def admin(request):
     if request.state.user.get('role')!='admin': raise HTTPException(403,'Only an administrator can view or change the shared Chopper model connection.')
 

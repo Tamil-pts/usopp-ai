@@ -1,5 +1,6 @@
 import {userStorage} from '../../shared/userStorage';
-import {activateUserStorage} from '../../shared/userStorage';
+import {activateUserStorage,hydrateUserStorage,flushUserStorage} from '../../shared/userStorage';
+import {StorageNotice} from '../../shared/StorageNotice';
 import {createContext,useContext,useEffect,useRef,useState,type ReactNode,type FormEvent} from 'react';
 import {Activity,ArrowRight,ArrowUpRight,BookOpen,Check,GitCompare,MessageSquare,ShieldCheck,RefreshCw} from 'lucide-react';
 import usoppLogo from '../../usopp_logo.png';
@@ -34,15 +35,16 @@ window.fetch=async(...args:Parameters<typeof fetch>)=>{
 };
 export function AuthProvider({children}:{children:ReactNode}){
   const [user,setUserState]=useState<AccountUser|null>(null),[loading,setLoading]=useState(true),[register,setRegister]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState('');
-  const setUser=(value:AccountUser|null)=>{activateUserStorage(value);setUserState(value)};
+  const accountGeneration=useRef(0);
+  const setUser=async(value:AccountUser|null)=>{const generation=++accountGeneration.current;if(value)await hydrateUserStorage(value);else activateUserStorage(null);if(generation===accountGeneration.current)setUserState(value)};
   const [serviceReady,setServiceReady]=useState(false);
   const [form,setForm]=useState({username:'',password:'',confirm:'',designation:'',company:''});
   const usernameInput=useRef<HTMLInputElement>(null);
   useEffect(()=>{
     document.documentElement.dataset.theme=userStorage.getItem('usopp_theme')==='dark'?'dark':'light';
     let active=true;
-    accountRequest('session').then(result=>{if(active){setUser(result.user);setServiceReady(true)}}).catch(reason=>{if(active){setError(reason.message);setServiceReady(false)}}).finally(()=>{if(active)setLoading(false)});
-    const expired=()=>{setUser(null);setRegister(false);setError('Your session expired. Sign in again.');setForm(value=>({...value,password:'',confirm:''}))};
+    accountRequest('session').then(async result=>{if(active){await setUser(result.user);setServiceReady(true)}}).catch(reason=>{if(active){setError(reason.message);setServiceReady(false)}}).finally(()=>{if(active)setLoading(false)});
+    const expired=()=>{void setUser(null);setRegister(false);setError('Your session expired. Sign in again.');setForm(value=>({...value,password:'',confirm:''}))};
     window.addEventListener('usopp-session-expired',expired);
     return()=>{active=false;window.removeEventListener('usopp-session-expired',expired)};
   },[]);
@@ -51,21 +53,21 @@ export function AuthProvider({children}:{children:ReactNode}){
     if(!serviceReady)return;
     if(register&&form.password!==form.confirm){setError('Passwords do not match.');return;}
     setBusy(true);
-    try{const result=await accountRequest(register?'register':'login',form);setUser(result.user);setForm({username:'',password:'',confirm:'',designation:'',company:''})}
+    try{const result=await accountRequest(register?'register':'login',form);await setUser(result.user);setForm({username:'',password:'',confirm:'',designation:'',company:''})}
     catch(reason:any){setError(reason.message);if(reason instanceof AccountServiceError)setServiceReady(false)}finally{setBusy(false)}
   };
   const retryConnection=async()=>{
     setBusy(true);setError('');
-    try{const result=await accountRequest('session');setUser(result.user);setServiceReady(true)}
+    try{const result=await accountRequest('session');await setUser(result.user);setServiceReady(true)}
     catch(reason:any){setError(reason.message);setServiceReady(false)}finally{setBusy(false)}
   };
-  const logout=async()=>{await accountRequest('logout',{});setUser(null);setRegister(false)};
+  const logout=async()=>{await flushUserStorage();await accountRequest('logout',{});await setUser(null);setRegister(false)};
   const enterWorkspace=()=>{
     if(register){setRegister(false);setForm(value=>({...value,password:'',confirm:''}));if(serviceReady)setError('')}
     usernameInput.current?.focus({preventScroll:true});
   };
   if(loading)return <div className="accountScreen"><div className="accountOpening" role="status"><img src={usoppLogo} alt="uSOPp.ai" width={68}/><p>Opening your engineering workspace…</p></div></div>;
-  if(user)return <Context.Provider key={user.id} value={{user,logout}}>{children}</Context.Provider>;
+  if(user)return <Context.Provider key={user.id} value={{user,logout}}>{children}<StorageNotice/></Context.Provider>;
   const featureIcons=[ShieldCheck,Activity,GitCompare,BookOpen,MessageSquare];
   return <div className="accountScreen">
     <header className="accountLandingHeader"><a className="accountBrand" href="#accountLanding" aria-label="uSOPp.ai home"><img src={usoppLogo} alt=""/><div><b>uSOPp.ai</b><span>ENGINEERING WORKSPACE</span></div></a><nav aria-label="Welcome page"><a href="#accountFeatures">Explore the platform</a><a href="#accountCard" onClick={enterWorkspace}>Sign in <ArrowUpRight size={16}/></a></nav><img className="accountPetrus" src={petrusLogo} alt="Petrus"/></header>
