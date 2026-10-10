@@ -37,7 +37,7 @@ def stage(destination: Path) -> None:
     shutil.copytree(ROOT / 'dist', destination / 'dist')
     shutil.copytree(ROOT / 'rules', destination / 'rules',
                     ignore=shutil.ignore_patterns('archive', 'learning', 'feedback', '__pycache__'))
-    for name in ('master', 'data_models'):
+    for name in ('master', 'data_models', 'chopper'):
         shutil.copytree(ROOT / 'knowledge' / name, destination / 'knowledge' / name)
     help_target = destination / 'knowledge' / 'help_index'
     help_target.mkdir()

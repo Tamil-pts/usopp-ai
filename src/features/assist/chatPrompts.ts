@@ -1,5 +1,8 @@
 export const CHAT_PROMPTS=[
  {title:'Machine functions',prompt:'Explain the machine functions and operating sequence of the selected project. Cite source files and ladder networks; identify active tasks and inferred behaviour.'},
+ {title:'Communication',prompt:'What communication is used in this project? Trace the called blocks, task ownership, endpoints, settings and error handling with source evidence.'},
+ {title:'RS485 logic',prompt:'Check the RS485 communication logic in this project. Separate physical interface from protocol; trace device/mode, block calls, status, timeout, retry and recovery. Say what is unresolved.'},
+ {title:'Improvements',prompt:'Review this project for improvement candidates. Cite the observed source, explain the reason and proposed action, and distinguish possible issues from proven defects.'},
  {title:'Major differences',prompt:'What are the major differences between the two MatchView projects? Separate variable, logic, ladder, HMI layout, HMI behaviour and hardware changes.'},
  {title:'Start / stop logic',prompt:'Trace the machine start and stop conditions, interlocks and outputs in the selected project. Show the source evidence and unresolved dependencies.'},
  {title:'Alarms',prompt:'Explain alarm handling and how faults stop the machine in the selected project. Cite the logic and alarm definitions.'},

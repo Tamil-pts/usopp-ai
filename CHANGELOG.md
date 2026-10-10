@@ -3,6 +3,14 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.65.11 - 2026-10-10
+
+- Add backend engineering task guides for machine functions, communication, RS485/serial review, source lookup and improvement candidates. Normalize common request spelling without rewriting quoted identifiers or source paths. Add communication/RS485/improvement prompt shortcuts.
+- Cache compact literal call/assignment/branch/serial-setting records with the selected project index. Resolve ST instances in their declaration scope, recognize B&R TCP/UDP/ICMP/Modbus/DVFrame families, retain enabled ladder block types, trace nearby settings/status and sibling initialization values, and supply bounded source evidence. Separate physical RS485 from protocol, active configuration from live connection, and review candidates from proven defects. Custom/indirect wrappers and complete control-flow semantics remain unresolved without further source review.
+- Save source-backed Chopper replies as private pending Q&A drafts in persistent `application.sqlite3`. Add KnowHub **Project answer training**: users see their drafts; Admin can correct, approve/reject and export shared training examples. Include original informal questions, source/help excerpts, source/evidence fingerprints, reviewer and revision checks. Approval validates citation identity and still requires engineering review. Preserve drafts across upgrades with the existing persistent data volume.
+- Add an optional offline LoRA trainer and separate dependency file for the original Qwen2.5-Coder 1.5B model. Require reviewed examples, deduplicate, hold out project groups, mask prompt tokens, preserve complete answers, and record interrupted/completed runs. It does not train during app startup, change the serving GGUF, or publish source data. Ship task guides/training instructions in Windows and container runtimes. No new model weights were trained in this implementation.
+- Python compilation, both TypeScript compilations and both production frontend builds pass. Refresh the portable Windows EXE, download ZIPs and compiled container staging. No browser, live inference, actual training or Docker runtime tests were run; the optional trainer is compiled but its training path has not been exercised here.
+
 ## 4.65.10 - 2026-10-10
 
 - Add `knowledge/help_index/BR_PROJECT_HELP.md`, one readable guide with contents, decoder steps, structured record examples and syntax references. Its 31 JSON topics cover ST, Automation Basic, C, ladder topology/rendering, HMI pages/layers/text/snippets/bitmaps/alarms, global/local variables, arrays/types, RETAIN/permanent storage, libraries, hardware, I/O and active task/configuration ownership. Include AS 2.7 layouts and source editing limitations. All guide source pointers resolve in this checkout.

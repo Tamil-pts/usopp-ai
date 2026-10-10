@@ -13,6 +13,7 @@ from backend.api import assist, comparison, knowledge, rules, system, validation
 from backend.core.run_history import current_user
 from backend.core import accounts
 from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models, user_settings, br_help
+from backend.api import assist_training
 from backend.core.mcp_tools import server as mcp_server, http_app as mcp_app
 from contextlib import asynccontextmanager
 
@@ -104,6 +105,7 @@ DIST=RESOURCE_ROOT/'dist'
 app.include_router(assist_settings.router)
 app.include_router(user_settings.router)
 app.include_router(br_help.router)
+app.include_router(assist_training.router)
 app.include_router(assist_attachments.router)
 app.include_router(ladder.router)
 app.include_router(mcp_settings.router)

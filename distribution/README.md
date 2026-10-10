@@ -26,7 +26,7 @@ The portable application is the simplest choice. For containers, first install [
 Download and extract `uSOPp_AI_<version>_Container_Launchers.zip`. Download `uSOPp_AI_<version>_Container_linux_amd64.tar.gz` into the same folder. Open PowerShell in that folder:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 install -Image usopp-ai:4.65.10 -ImageArchive .\uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 install -Image usopp-ai:4.65.11 -ImageArchive .\uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz
 ```
 
 Use the version printed on your downloaded release in both places. Choose your initial Admin password when prompted; open `http://127.0.0.1:8200`. If that port is occupied, add `-Port 8201` to installation.
@@ -45,7 +45,7 @@ For an update, finish active jobs, download the new image and launchers, and use
 Install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) and the [Compose plugin](https://docs.docker.com/compose/install/linux/). Your account must have Docker access. Download and extract the same launchers and Linux amd64 image, then:
 
 ```bash
-bash usopp-container.sh install usopp-ai:4.65.10 ./uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz
+bash usopp-container.sh install usopp-ai:4.65.11 ./uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz
 bash usopp-container.sh status
 bash usopp-container.sh logs
 bash usopp-container.sh stop
@@ -70,7 +70,7 @@ The packages omit original application Python/TypeScript source and frontend sou
 Each release supplies SHA256 checksum files. To check a Windows ZIP or image download:
 
 ```powershell
-Get-FileHash .\uSOPp_AI_4.65.10_Windows_x64.zip -Algorithm SHA256
+Get-FileHash .\uSOPp_AI_4.65.11_Windows_x64.zip -Algorithm SHA256
 ```
 
 Compare the hash with that file's published `.sha256` companion. On Ubuntu use `sha256sum -c <filename>.sha256` from the download folder.

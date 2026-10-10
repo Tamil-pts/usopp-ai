@@ -1,0 +1,6 @@
+# Optional training environment only. Not installed into the serving app.
+torch>=2.4,<3
+transformers>=4.45,<5
+peft>=0.13,<0.19
+accelerate>=1,<2
+datasets>=3,<5

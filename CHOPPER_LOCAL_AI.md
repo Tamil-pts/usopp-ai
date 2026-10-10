@@ -5,7 +5,20 @@ LogicScan and project search run locally without an LLM. Optional models provide
 conversation, explanations and suggested code changes; deterministic tools keep
 their own results.
 
-## Small CPU setup without Ollama (4.65.10)
+## Project task analysis and reviewed training (4.65.11)
+
+Chopper now has backend guidance and source traces for machine functions,
+communication, RS485/serial logic and improvement reviews. Common informal
+spellings are recognized while source names remain exact. Project replies are
+saved as private pending drafts in persistent `application.sqlite3`.
+
+Open **KnowHub → Project answer training** to review the saved question, reply
+and source evidence. Admin can correct/approve and export examples for a separate
+LoRA training run. Installing this update does not train or change the CPU GGUF.
+See [the complete training instructions](knowledge/chopper/CHOPPER_TRAINING.md)
+for dataset collection, CPU/GPU training, held-out projects and later deployment.
+
+## Small CPU setup without Ollama (4.65.11)
 
 In **Settings → Chopper · AI connection**, choose **Set up small CPU model**.
 The app downloads Qwen2.5-Coder 1.5B Instruct Q4_K_M from its pinned official
@@ -19,7 +32,7 @@ storage details and [the LAN/VPN server guide](distribution/LAN_SERVER.md) for
 installation and backup/restore. No Ollama installation is required. The older
 external-provider options below remain available for existing configurations.
 
-## Source answers and model response settings (4.65.10)
+## Source answers and model response settings (4.65.11)
 
 For **Machine functions**, Chopper selects active cyclic PLC logic and enabled
 ladder networks before HMI settings or initialization files. The local fallback
@@ -55,7 +68,7 @@ answer. A citation warning does not mean the requested feature is missing.
 Source citations alone do not verify all of an AI reply's engineering claims.
 
 Restart the backend after installing an update; refresh alone cannot replace
-loaded Python code. Check that both UI/API version badges show **4.65.10**.
+loaded Python code. Check that both UI/API version badges show **4.65.11**.
 Self-registration, own-password changes and Admin-created accounts remain
 supported. See [ACCOUNT_COMPATIBILITY.md](ACCOUNT_COMPATIBILITY.md) for the
 standing account and update requirements.

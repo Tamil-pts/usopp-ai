@@ -10,8 +10,9 @@ import xml.etree.ElementTree as ET
 
 from python_engine.compare import project_identity, walk_project, _ladder_networks, decode_bytes
 from python_engine.project_paths import IGNORED_PROJECT_DIRS, project_files
+from python_engine.project_analysis import collect_file, normalize_question
 
-SCHEMA = 9
+SCHEMA = 10
 EXTENSIONS = {'.st', '.ld', '.ab', '.src', '.var', '.typ', '.fun', '.c', '.h', '.txt',
               '.pgp', '.page', '.pages', '.layer', '.dso', '.algrp', '.txtgrp',
               '.iom', '.sw', '.osl', '.hw', '.hwl', '.cfg', '.per', '.apj', '.gdm', '.set'}
@@ -30,7 +31,7 @@ EXECUTABLE = {'.st', '.ld', '.ab', '.src', '.c'}
 
 def machine_question(question):
     """Route functional questions separately from settings and symbol lookups."""
-    text = str(question)
+    text = normalize_question(question)
     if re.search(r'\b(?:HMI|settings?|configuration|parameters?|datapoints?|declar\w*|where)\b', text, re.I):
         return False
     return bool(re.search(r'machine.*(?:function|operat|work)|(?:function|operat).*machine|'
@@ -157,7 +158,7 @@ def build_index(root, cache_dir=None, progress=None):
                                   'file': path.relative_to(root).as_posix()})
         except (ET.ParseError, OSError): pass
     owners = {t['source'].removesuffix('.prg').replace('.', '/').casefold() for t in tasks if t['source']}
-    chunks, symbols, inventory, notices, modules = [], [], [], [], []
+    chunks, symbols, inventory, notices, modules, analysis_records, ladder_calls = [], [], [], [], [], [], []
     budget = 0
     for number, path in enumerate(files, 1):
         if progress: progress('Reading project files and extracting logic', number, len(files))
@@ -175,6 +176,7 @@ def build_index(root, cache_dir=None, progress=None):
         ownership = 'active task' if active else 'configuration' if rel.startswith('Physical/') else 'shared / task ownership unconfirmed'
         inventory.append({'file': rel, 'category': kind, 'ownership': ownership,
                           'lines': len(text.splitlines())})
+        analysis_records.extend(collect_file(rel, text, kind, ownership))
         if kind in {'Logic', 'Ladder'}:
             assignment = r'\b([A-Za-z_]\w*(?:\.\w+)*)\s*' + (r'=(?!=)' if path.suffix.casefold()=='.ab' else r':=')
             facts={'file': rel, 'ownership': ownership,
@@ -204,6 +206,12 @@ def build_index(root, cache_dir=None, progress=None):
                                'network': network['index'], 'category': kind, 'ownership': ownership,
                                'enabled':enabled,'behaviour':ladder_behaviour(network),
                                'text': snippet[:10000], 'terms': sorted(words(rel + ' ' + snippet))})
+                for cell in network['diagram']['cells']:
+                    if cell['kind'] in {'functionblock', 'function'}:
+                        item = chunks[-1]
+                        ladder_calls.append({**{k: item[k] for k in ('file', 'line', 'network', 'category', 'ownership', 'enabled')},
+                                             'eventLine': item['line'], 'name': cell.get('instance') or cell.get('name') or cell['type'],
+                                             'blockType': cell['type'], 'excerpt': item['text']})
         else:
             lines = text.splitlines()
             for start in range(0, len(lines), 60):
@@ -216,6 +224,7 @@ def build_index(root, cache_dir=None, progress=None):
     if identity.get('scope_notice'): notices.append(identity['scope_notice'])
     result = {'schema': SCHEMA, 'fingerprint': fingerprint, 'identity': identity, 'tasks': tasks,
               'inventory': inventory, 'symbols': symbols, 'chunks': chunks, 'notices': notices, 'modules': modules,
+              'analysisRecords': analysis_records, 'ladderCalls': ladder_calls,
               'counts': dict(Counter(item['category'] for item in inventory)),
               'coverage': 'Static source analysis; shared sources are not proof of active runtime behaviour.'}
     if cache:
@@ -230,6 +239,7 @@ def build_index(root, cache_dir=None, progress=None):
 
 
 def retrieve(index, question, limit=14, characters=18000):
+    question = normalize_question(question)
     query = words(question)
     overview = machine_question(question)
     feature = feature_question(question)

@@ -1,6 +1,6 @@
 # Shared uSOPp server on LAN/VPN
 
-Release examples below use **4.65.10**. Replace the version with the release you actually download. One server runs the app; five regular users plus Admin use browsers through the existing LAN/VPN. The development laptop remains separate.
+Release examples below use **4.65.11**. Replace the version with the release you actually download. One server runs the app; five regular users plus Admin use browsers through the existing LAN/VPN. The development laptop remains separate.
 
 ## 1. Prepare the server
 
@@ -16,13 +16,13 @@ Only the server needs Docker. User PCs need the browser, VPN and their uSOPp acc
 Open PowerShell in the extracted launcher folder. Verify the image archive against its supplied checksum:
 
 ```powershell
-Get-FileHash .\uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz -Algorithm SHA256
+Get-FileHash .\uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz -Algorithm SHA256
 ```
 
 Use your server's LAN IPv4 address in place of `192.168.19.10`:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 install -Image usopp-ai:4.65.10 -ImageArchive .\uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz -Port 8201 -BindAddress 192.168.19.10
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 install -Image usopp-ai:4.65.11 -ImageArchive .\uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz -Port 8201 -BindAddress 192.168.19.10
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 status
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 logs
 ```
@@ -38,8 +38,8 @@ New-NetFirewallRule -DisplayName 'uSOPp LAN VPN' -Direction Inbound -Action Allo
 ## 3. Install on Ubuntu
 
 ```bash
-sha256sum -c uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz.sha256
-USOPP_PORT=8201 USOPP_BIND_ADDRESS=192.168.19.10 bash usopp-container.sh install usopp-ai:4.65.10 ./uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz
+sha256sum -c uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz.sha256
+USOPP_PORT=8201 USOPP_BIND_ADDRESS=192.168.19.10 bash usopp-container.sh install usopp-ai:4.65.11 ./uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz
 bash usopp-container.sh status
 bash usopp-container.sh logs
 ```

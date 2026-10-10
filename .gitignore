@@ -1,6 +1,9 @@
 node_modules/
 .venv/
 .venv-ubuntu/
+.venv-training/
+local_ai/training/
+chopper_reviewed_project_training.jsonl
 .usopp_server/
 dist/
 .usopp_workspaces/

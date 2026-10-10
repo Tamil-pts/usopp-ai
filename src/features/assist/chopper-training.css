@@ -1,0 +1,14 @@
+.chopperTraining{padding:20px;color:var(--text)}
+.chopperTraining>header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.chopperTraining>header p{max-width:850px;margin:8px 0;line-height:1.5}
+.chopperTrainingLayout{display:grid;grid-template-columns:minmax(220px,30%) minmax(0,1fr);gap:20px;margin-top:16px}
+.chopperTrainingLayout>aside{max-height:680px;overflow:auto;display:flex;flex-direction:column;gap:7px}
+.chopperTrainingLayout>aside button{text-align:left;padding:12px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;cursor:pointer}
+.chopperTrainingLayout>aside button.active{border-color:var(--accent);background:var(--panel2)}
+.chopperTrainingLayout small{display:block;margin-top:6px;color:var(--muted)}
+.chopperTrainingLayout textarea{display:block;box-sizing:border-box;width:100%;min-height:280px;resize:vertical;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;line-height:1.5}
+.chopperTrainingLayout .actions{margin:10px 0;display:flex;flex-wrap:wrap;gap:8px}
+.chopperTrainingLayout details{border-top:1px solid var(--line);padding:10px 0}
+.chopperTrainingLayout pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;color:var(--text)}
+.chopperTrainingLayout article{min-width:0}
+@media(max-width:800px){.chopperTrainingLayout{grid-template-columns:1fr}.chopperTrainingLayout>aside{max-height:280px}}

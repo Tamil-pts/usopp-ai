@@ -79,12 +79,12 @@ The normal workflow token has only `contents: read`. The distribution token is u
 3. The Windows job builds the frontend and portable EXE; the Linux job builds a Linux amd64 image with compiled application bytecode. Neither job starts the application or runs runtime tests.
 4. Download the run's artifacts or open the draft in the downloads repository. Review packages and installation behavior before publishing the draft to users. Publication is a separate manual action.
 
-Assets for 4.65.10:
+Assets for 4.65.11:
 
 ```text
-uSOPp_AI_4.65.10_Windows_x64.zip
-uSOPp_AI_4.65.10_Container_Launchers.zip
-uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz
+uSOPp_AI_4.65.11_Windows_x64.zip
+uSOPp_AI_4.65.11_Container_Launchers.zip
+uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz
 ```
 
 Each has a `.sha256` companion. The image is exported with `docker image save` and loaded with `docker image load`, so users need no registry account. Earlier Ubuntu/Azure source ZIPs are **not end-user assets** and are ignored by Git.
@@ -103,16 +103,16 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\build_windows_exe.ps1 
 Docker Desktop / Engine is required to build the image:
 
 ```powershell
-docker build --platform linux/amd64 --build-arg APP_VERSION=4.65.10 -t usopp-ai:4.65.10 .
-docker image save --output uSOPp_AI_4.65.10_Container_linux_amd64.tar usopp-ai:4.65.10
+docker build --platform linux/amd64 --build-arg APP_VERSION=4.65.11 -t usopp-ai:4.65.11 .
+docker image save --output uSOPp_AI_4.65.11_Container_linux_amd64.tar usopp-ai:4.65.11
 ```
 
 The Windows launcher also accepts an uncompressed `.tar`. On Ubuntu, produce the compressed release asset:
 
 ```bash
-docker build --platform linux/amd64 --build-arg APP_VERSION=4.65.10 -t usopp-ai:4.65.10 .
-docker image save usopp-ai:4.65.10 | gzip -1 > uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz
-sha256sum uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz > uSOPp_AI_4.65.10_Container_linux_amd64.tar.gz.sha256
+docker build --platform linux/amd64 --build-arg APP_VERSION=4.65.11 -t usopp-ai:4.65.11 .
+docker image save usopp-ai:4.65.11 | gzip -1 > uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz
+sha256sum uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz > uSOPp_AI_4.65.11_Container_linux_amd64.tar.gz.sha256
 ```
 
 See [distribution/README.md](distribution/README.md) for installation, start/stop, passwords, ports, data and updates. See [BUILD_WINDOWS_EXE.md](BUILD_WINDOWS_EXE.md) for EXE details. The GitHub workflow builds both packages without Docker on the maintainer PC.
