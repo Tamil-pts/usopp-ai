@@ -65,30 +65,40 @@ project groups, refuses unreviewed rows, and skips overlong rows without silentl
 cutting off the answer. A minimum of 50 distinct reviewed examples is a pilot
 collection target, not proof of enough data or adequate quality.
 
-Use a separate development/training environment so training does not consume
-the serving model's CPU/RAM or interrupt validations. An NVIDIA GPU is preferable
-for training. Explicit CPU training is supported, but can require substantial RAM
-and time; a small CPU inference setup does not imply training will fit or finish
-quickly. Training duration depends on hardware, token length and dataset size.
+Both inference and adapter training use **CPU only**. The serving llama.cpp
+runtime uses zero GPU layers. The optional trainer uses float32, disables GPU
+selection and limits CPU compute threads. No Ollama or GPU installation is needed.
+
+Use a separate virtual environment for training dependencies. A virtual
+environment does not isolate CPU or RAM: training on the shared server can affect
+validations and other users. Prefer another CPU computer; if using the shared
+server, schedule training when users are not working and start with two threads.
+Thread limits do not cap RAM. A small CPU inference setup does not imply training
+will fit or finish quickly. Duration depends on hardware, token length and dataset
+size. Training never runs automatically at app startup.
 
 From the source checkout on a training computer:
 
 ```powershell
 py -3.11 -m venv .venv-training
+.\.venv-training\Scripts\python.exe -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.4,<3"
 .\.venv-training\Scripts\python.exe -m pip install -r scripts/chopper_training_requirements.txt
-.\.venv-training\Scripts\python.exe scripts/train_chopper_adapter.py --dataset C:\Training\chopper_reviewed_project_training.jsonl --output C:\Training\chopper-run-001 --device cpu
+.\.venv-training\Scripts\python.exe scripts/train_chopper_adapter.py --dataset C:\Training\chopper_reviewed_project_training.jsonl --output C:\Training\chopper-run-001 --cpu-threads 2
 ```
 
 Ubuntu CPU equivalent:
 
 ```bash
 python3.11 -m venv .venv-training
+.venv-training/bin/python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.4,<3"
 .venv-training/bin/python -m pip install -r scripts/chopper_training_requirements.txt
-.venv-training/bin/python scripts/train_chopper_adapter.py --dataset /home/lmw/training/chopper_reviewed_project_training.jsonl --output /home/lmw/training/chopper-run-001 --device cpu
+.venv-training/bin/python scripts/train_chopper_adapter.py --dataset /home/lmw/training/chopper_reviewed_project_training.jsonl --output /home/lmw/training/chopper-run-001 --cpu-threads 2
 ```
 
-For NVIDIA use the PyTorch build appropriate to its CUDA environment, then
-select `--device cuda`. The script defaults to 4,096 tokens and two epochs;
+CPU is the default; existing `--device cpu` commands remain valid. The default
+thread limit is half the available logical CPUs, with a minimum of one and a
+maximum of four. Use `--cpu-threads` to choose a limit from 1 to 64.
+The script defaults to 4,096 tokens and two epochs;
 use `--max-length` or `--epochs` only after considering memory and examples.
 It downloads the original model into the training computer's Hugging Face cache
 on its first run. Training dependencies and original model weights are not
@@ -97,7 +107,7 @@ installed by the normal uSOPp installer.
 Outputs: `adapter/`, `training_manifest.json`, training row snapshots, skipped-row
 reasons, and `held_out.jsonl`. The script does not run engineering evaluation,
 push anything online, replace GGUF files, or activate an adapter in production.
-The training manifest records completion or interruption honestly.
+The training manifest records CPU threads, precision, and completion or interruption.
 
 ## Evaluate and deploy later
 
@@ -115,6 +125,7 @@ automatic. New weights do not replace the source decoder or B&R reference index.
 
 Primary references:
 
+- [PyTorch CPU installation](https://pytorch.org/get-started/locally/)
 - [Hugging Face PEFT LoRA](https://huggingface.co/docs/peft/package_reference/lora)
 - [Hugging Face Transformers Trainer](https://huggingface.co/docs/transformers/main_classes/trainer)
 - [Qwen2.5-Coder model family](https://github.com/QwenLM/Qwen2.5-Coder)

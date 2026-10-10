@@ -1,4 +1,4 @@
-"""Explicit offline LoRA training from Admin-reviewed Chopper Q&A exports.
+"""Explicit CPU-only offline LoRA training from Admin-reviewed Chopper Q&A exports.
 
 Run in a separate training environment. Never changes the serving model.
 """
@@ -6,6 +6,7 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
 import random
 
@@ -14,13 +15,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dataset', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--device', choices=['cpu', 'cuda'], required=True)
+    parser.add_argument('--device', choices=['cpu'], default='cpu', help='CPU only; --device cpu remains accepted.')
+    parser.add_argument('--cpu-threads', type=int, default=min(4, max(1, (os.cpu_count() or 2)//2)),
+                        help='CPU compute threads (1..64); defaults to at most four, using half the available logical CPUs.')
     parser.add_argument('--model', default='Qwen/Qwen2.5-Coder-1.5B-Instruct')
     parser.add_argument('--max-length', type=int, default=4096)
     parser.add_argument('--epochs', type=float, default=2)
     args = parser.parse_args()
     if not 256 <= args.max_length <= 8192 or not 0 < args.epochs <= 10:
         parser.error('Use max-length 256..8192 and epochs greater than 0, at most 10.')
+    if not 1 <= args.cpu_threads <= 64:
+        parser.error('Use cpu-threads 1..64.')
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()): parser.error('Choose an empty output directory; existing training artifacts are preserved.')
     rows, keys = [], set()
@@ -42,14 +47,21 @@ def main():
     train = [r for r in rows if r['metadata']['splitGroup'] not in held_groups]
     held = [r for r in rows if r['metadata']['splitGroup'] in held_groups]
     if len(train) < 20: parser.error('The project split leaves fewer than 20 training examples. Add more reviewed projects.')
+    # Apply limits before importing libraries or loading the original model.
+    # These limit compute threads; training still shares the host's RAM/CPU.
+    os.environ['CUDA_VISIBLE_DEVICES'] = ''
+    os.environ['OMP_NUM_THREADS'] = str(args.cpu_threads)
+    os.environ['MKL_NUM_THREADS'] = str(args.cpu_threads)
+    os.environ['TOKENIZERS_PARALLELISM'] = 'false'
     try:
         import torch
         from datasets import Dataset
         from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments, set_seed
         from peft import LoraConfig, get_peft_model
     except ImportError:
-        parser.error('Install scripts/chopper_training_requirements.txt in a separate training virtual environment.')
-    if args.device == 'cuda' and not torch.cuda.is_available(): parser.error('CUDA is unavailable. Install the matching PyTorch build or select --device cpu explicitly.')
+        parser.error('Install CPU PyTorch and scripts/chopper_training_requirements.txt as described in knowledge/chopper/CHOPPER_TRAINING.md.')
+    torch.set_num_threads(args.cpu_threads)
+    torch.set_num_interop_threads(1)
     set_seed(42)
     tokenizer = AutoTokenizer.from_pretrained(args.model, trust_remote_code=False)
     tokenizer.pad_token = tokenizer.pad_token or tokenizer.eos_token
@@ -63,8 +75,7 @@ def main():
             rejected.append({'id': row['metadata']['id'], 'reason': 'over token limit', 'tokens': len(tokens)}); continue
         encoded.append({'input_ids': tokens, 'attention_mask': [1]*len(tokens), 'labels': [-100]*len(prefix)+tokens[len(prefix):]})
     if len(encoded) < 20: parser.error('Too few complete examples fit max-length. Use shorter reviewed traces or a larger token limit; answers are never silently truncated.')
-    dtype = torch.float32 if args.device == 'cpu' else torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
-    model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=dtype, trust_remote_code=False, use_safetensors=True)
+    model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=torch.float32, trust_remote_code=False, use_safetensors=True)
     model.config.use_cache = False
     model = get_peft_model(model, LoraConfig(r=8, lora_alpha=16, lora_dropout=0.05, bias='none',
                                            task_type='CAUSAL_LM', target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj']))
@@ -77,6 +88,7 @@ def main():
     for name, data in [('held_out.jsonl', held), ('training_rows.jsonl', train), ('skipped_rows.jsonl', rejected)]:
         (output/name).write_text(''.join(json.dumps(r, ensure_ascii=False)+'\n' for r in data), encoding='utf-8')
     manifest = {'schemaVersion': 1, 'status': 'training', 'baseModel': args.model, 'device': args.device,
+                'cpuThreads': args.cpu_threads, 'precision': 'float32',
                 'createdAt': datetime.now(timezone.utc).isoformat(), 'datasetDigest': hashlib.sha256(args.dataset.read_bytes()).hexdigest(),
                 'trainingExamples': len(encoded), 'heldOutExamples': len(held), 'skippedExamples': len(rejected),
                 'maxLength': args.max_length, 'epochs': args.epochs, 'evaluated': False, 'servingModelChanged': False}
@@ -84,10 +96,10 @@ def main():
     save_manifest()
     try:
         trainer = Trainer(model=model, train_dataset=Dataset.from_list(encoded), data_collator=collate,
-                          args=TrainingArguments(output_dir=str(output/'checkpoints'), use_cpu=args.device=='cpu',
+                          args=TrainingArguments(output_dir=str(output/'checkpoints'), use_cpu=True,
                           per_device_train_batch_size=1, gradient_accumulation_steps=8, num_train_epochs=args.epochs,
-                          learning_rate=1e-4, gradient_checkpointing=True, bf16=dtype==torch.bfloat16,
-                          fp16=dtype==torch.float16, optim='adamw_torch', logging_steps=5, save_strategy='epoch',
+                          learning_rate=1e-4, gradient_checkpointing=True, bf16=False,
+                          fp16=False, optim='adamw_torch', logging_steps=5, save_strategy='epoch',
                           save_total_limit=2, report_to='none', push_to_hub=False, dataloader_num_workers=0, seed=42))
         trainer.train()
         model.save_pretrained(output/'adapter'); tokenizer.save_pretrained(output/'adapter')

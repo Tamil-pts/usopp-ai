@@ -1,4 +1,5 @@
 # Optional training environment only. Not installed into the serving app.
+# Install the CPU wheel first using the commands in CHOPPER_TRAINING.md.
 torch>=2.4,<3
 transformers>=4.45,<5
 peft>=0.13,<0.19

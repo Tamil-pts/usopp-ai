@@ -3,6 +3,12 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.65.12 - 2026-10-10
+
+- Make the optional reviewed Chopper adapter trainer CPU only by default. Preserve --device cpu compatibility; reject GPU selection, use float32, disable GPU visibility, limit compute/tokenizer threads and record CPU threads/precision in the run manifest. Existing llama.cpp inference already uses zero GPU layers.
+- Add Windows and Ubuntu CPU PyTorch installation commands and a two-thread training example. Explain that a separate virtual environment separates dependencies but shares host CPU/RAM; use another CPU computer or off-hours on the shared server. Training remains an explicit offline step using reviewed examples; no new weights have been trained.
+- Python compilation, both TypeScript compilations and both production frontend builds pass. Refresh the portable Windows EXE and compiled container staging; their raw application source audits pass. No actual training, inference, browser or Docker runtime tests were run.
+
 ## 4.65.11 - 2026-10-10
 
 - Add backend engineering task guides for machine functions, communication, RS485/serial review, source lookup and improvement candidates. Normalize common request spelling without rewriting quoted identifiers or source paths. Add communication/RS485/improvement prompt shortcuts.

@@ -601,7 +601,7 @@ not every application feature on Ubuntu. The corrected bundle includes the
 source build-order fix and this guide. A fresh installation of that bundle on
 the second server is still to be confirmed.
 
-## Shared LAN/VPN container server (4.65.11)
+## Shared LAN/VPN container server (4.65.12)
 
 For the packaged deployment, follow [distribution/LAN_SERVER.md](distribution/LAN_SERVER.md).
 It includes Ubuntu and Windows Docker installation, LAN binding, persistent SQLite
