@@ -1,0 +1,26 @@
+.hmiGroupedProperties{display:flex;flex-direction:column;min-width:0;min-height:0;color:var(--text,#172033);background:var(--panel,#fff)}
+.hmiCategoryTools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line,#c6d3e0);font:12px/1.4 system-ui,sans-serif}
+.hmiCategoryTools>span{flex:1;min-width:180px;color:var(--muted,#52677b)}
+.hmiCategoryTools>button{padding:5px 9px;border:1px solid var(--line,#c6d3e0);border-radius:4px;background:var(--panel2,#eef4fa);color:var(--text,#25394d);cursor:pointer}
+.hmiGroupedPropertyScroll{flex:1;min-height:0;overflow:auto;scrollbar-gutter:stable;scrollbar-width:auto;scrollbar-color:#678ba8 #e6edf2}
+.hmiGroupedPropertyTable{border-collapse:collapse;width:100%;min-width:620px;table-layout:fixed;font:12px/1.5 system-ui,sans-serif;color:var(--text,#172033)}
+.hmiGroupedProperties .hmiGroupedPropertyTable th,.hmiGroupedProperties .hmiGroupedPropertyTable td{padding:7px 10px;border-bottom:1px solid var(--line,#e1e8ef);text-align:left;overflow-wrap:anywhere;vertical-align:top;width:auto;font-weight:400}
+.hmiGroupedPropertyTable thead{position:sticky;top:0;z-index:2;background:var(--panel2,#eef4fa)}
+.hmiGroupedProperties .hmiGroupedPropertyTable thead th{font-weight:600}
+.hmiGroupedPropertyTable thead tr:first-child th{border-top:3px solid #00c6b5}
+.hmiGroupedPropertyTable thead tr:first-child th+th{border-top-color:#b5718f;border-left:1px solid var(--line,#c6d3e0)}
+.hmiGroupedPropertyTable thead span,.hmiGroupedPropertyTable thead small{display:block;font-weight:400;font-size:10px;color:var(--muted,#52677b)}
+.hmiGroupedPropertyTable tr>:nth-child(3){border-left:1px solid var(--line,#c6d3e0)}
+.hmiGroupedProperties .hmiGroupedPropertyTable .hmiCategoryHeading th{padding:0;background:var(--panel2,#edf0f3)}
+.hmiGroupedPropertyTable .hmiCategoryHeading th+th{border-left:1px solid var(--line,#c6d3e0)}
+.hmiCategoryHeading button{width:100%;display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:0;padding:8px 10px;text-align:left;font:inherit;background:transparent;color:inherit;cursor:pointer}
+.hmiCategoryHeading.nested button{font-weight:500}
+.hmiCategoryToggle{width:12px;height:12px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #8a9aac;font:12px/1 monospace;flex:none;background:var(--panel,#fff)}
+.hmiCategoryCount{margin-left:auto;color:var(--muted,#52677b);font-size:11px;font-weight:400}
+.hmiCategoryChanges{border-radius:4px;padding:1px 6px;background:#fff0c2;color:#754c0a;font-size:11px;font-weight:500}
+.hmiGroupedPropertyTable .hmiCategoryProperty th{font-weight:400}
+.hmiGroupedPropertyTable .hmiCategoryProperty.changed{background:#fff3d8;color:#754c0a}
+.hmiCategoryHeading button:focus-visible,.hmiCategoryTools button:focus-visible{outline:2px solid #2563eb;outline-offset:-2px}
+.hmiPreviewInspector .hmiGroupedPropertyScroll{flex:none;height:500px;min-height:180px;resize:vertical}
+.hmiCompareLayout>.hmiGroupedProperties{height:100%;overflow:hidden}
+@media(max-width:820px){.hmiCompareLayout>.hmiGroupedProperties{height:520px}}

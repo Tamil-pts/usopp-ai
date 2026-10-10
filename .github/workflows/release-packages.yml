@@ -1,0 +1,109 @@
+name: Build private download packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      create_draft:
+        description: Create a draft release in the private distribution repository
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-packages
+  cancel-in-progress: false
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m venv .venv
+          & .venv/Scripts/python.exe -m pip install -r backend_requirements.txt
+          npm ci --no-audit --no-fund
+          if ($LASTEXITCODE -ne 0) { throw 'npm installation failed.' }
+      - name: Build frontend and portable Windows application
+        shell: pwsh
+        run: ./build_windows_exe.ps1 -RebuildFrontend
+      - name: Create audited ZIPs and checksums
+        shell: pwsh
+        run: |
+          & .venv/Scripts/python.exe scripts/package_downloads.py --latest-windows --output release/downloads/ci
+          if ($LASTEXITCODE -ne 0) { throw 'Download packaging failed.' }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-windows
+          path: release/downloads/ci/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Build compiled Linux amd64 image and export it
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(python3 -c "import json; print(json.load(open('package.json'))['version'])")
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          mkdir -p release/downloads/ci
+          docker build --platform linux/amd64 --build-arg APP_VERSION="$version" -t "usopp-ai:$version" .
+          image="release/downloads/ci/uSOPp_AI_${version}_Container_linux_amd64.tar.gz"
+          docker image save "usopp-ai:$version" | gzip -1 > "$image"
+          (cd release/downloads/ci && sha256sum "$(basename "$image")" > "$(basename "$image").sha256")
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-container
+          path: release/downloads/ci/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  draft:
+    if: inputs.create_draft
+    needs: [windows, container]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: release-*
+          path: release-assets
+          merge-multiple: true
+      - name: Create a draft release containing packages only
+        env:
+          GH_TOKEN: ${{ secrets.DISTRIBUTION_TOKEN }}
+          DISTRIBUTION_REPO: ${{ vars.DISTRIBUTION_REPO }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ -n "$GH_TOKEN" ]] || { echo 'Set the DISTRIBUTION_TOKEN secret first.'; exit 1; }
+          [[ "$DISTRIBUTION_REPO" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]
+          [[ $(gh repo view "$DISTRIBUTION_REPO" --json isPrivate --jq .isPrivate) == true ]] || { echo 'The distribution repository must be private.'; exit 1; }
+          version=$(python3 -c "import json; print(json.load(open('package.json'))['version'])")
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          python3 -c "from pathlib import Path; Path('release-notes.md').write_text('Windows portable application, compiled Linux amd64 container image, launchers and SHA256 checksums. See the installation README in this repository. Original application source is omitted; bytecode and image contents can be inspected. Container and Windows runtime checks are required before publishing this draft.', encoding='utf-8')"
+          gh release create "v$version" --repo "$DISTRIBUTION_REPO" --draft --title "uSOPp.ai $version" --notes-file release-notes.md release-assets/*

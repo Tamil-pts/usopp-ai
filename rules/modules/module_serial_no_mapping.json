@@ -1,0 +1,55 @@
+{
+  "id": "module_serial_no_mapping",
+  "name": "Module serial no mapping",
+  "rules": [
+    {
+      "id": "BR_MODULE_SERIAL_420",
+      "name": "Module serial no mapping",
+      "category": "Hardware / I/O",
+      "featureId": "hardware_io",
+      "kind": "module_serial_mapping",
+      "sourceFile": "mms_nw_rCyclic.st",
+      "enabled": true,
+      "machineScope": [
+        "All"
+      ],
+      "expected": "Every controller and electronic remote module has a unique SerialNumber datapoint binding; its four-byte integer variable or array element is transmitted exactly once on each applicable GC 420 path, with matching payload length and response setup.",
+      "groupCode": 420,
+      "featureName": "Hardware / I/O",
+      "subroutine": "mms_nw_rCyclic.st",
+      "allowedDatatypes": [
+        "UDINT",
+        "DINT",
+        "DWORD"
+      ],
+      "description": "Every controller and electronic remote module has a unique SerialNumber datapoint binding; its four-byte integer variable or array element is transmitted exactly once on each applicable GC 420 path, with matching payload length and response setup.",
+      "serialMapping": {
+        "ioMappingFiles": [],
+        "hardwareFiles": [],
+        "declarationFiles": []
+      },
+      "serialCrossReferences": [
+        {
+          "name": "Hardware inventory",
+          "scope": "Hardware.hw in the active configuration",
+          "requirement": "Identify the active controller and electronic remote modules. Exclude passive terminals, bases and inactive configurations."
+        },
+        {
+          "name": "SerialNumber I/O bindings",
+          "scope": "IoMap.iom / IOMap.iom",
+          "requirement": "Every inventoried module has one SerialNumber binding. Different modules must not own the same scalar or array element."
+        },
+        {
+          "name": "PLC declarations",
+          "scope": "Project declarations (.var / .typ / AS 2.7 CPU.txt)",
+          "requirement": "Resolve each bound scalar or array element to an accepted four-byte integer type. Array indices and bulk-copy ranges must fit its declared bounds."
+        },
+        {
+          "name": "Packet task ownership",
+          "scope": "Active configuration Cpu.sw and the matching mms_nw_r source",
+          "requirement": "Use LastUser.set to select the active configuration, or the single AS 2.7 configuration. Report unresolved selection instead of checking inactive targets."
+        }
+      ]
+    }
+  ]
+}

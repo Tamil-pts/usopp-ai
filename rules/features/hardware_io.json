@@ -1,0 +1,8 @@
+{
+  "id": "hardware_io",
+  "name": "Hardware / I/O",
+  "description": "",
+  "ruleIds": [
+    "BR_MODULE_SERIAL_420"
+  ]
+}

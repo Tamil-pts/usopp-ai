@@ -1,0 +1,19 @@
+.textGroupComparison{min-width:0;min-height:0;max-height:1100px;color:var(--text);background:var(--panel);overflow:auto;flex:1}
+.textGroupTools{display:flex;align-items:center;flex-wrap:wrap;gap:16px;padding:10px 14px;border-bottom:1px solid var(--line);font:12px/1.5 system-ui,sans-serif}
+.textGroupTools label{display:flex;align-items:center;gap:7px}.textGroupTools input[type=search]{width:240px}.textGroupTools input[type=search],.textGroupTools select{padding:6px 8px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:4px}
+.textGroupTools>span{margin-left:auto;color:var(--muted)}.textGroupTools input[type=checkbox]{accent-color:var(--accent)}
+.textGroupSectionHeading{width:100%;display:flex;align-items:center;gap:9px;padding:12px 14px;background:var(--panel2);color:var(--text);border:0;border-block:1px solid var(--line);text-align:left;font:14px/1.4 system-ui,sans-serif;cursor:pointer}
+.textGroupSectionHeading span{margin-left:auto;color:var(--muted);font-size:12px}.textGroupSectionHeading small{font-size:12px;color:#754c0a;background:#fff0c2;border-radius:4px;padding:2px 7px}
+.textGroupTableScroll{max-height:460px;min-height:80px;overflow:auto;scrollbar-gutter:stable;resize:vertical}
+.textGroupTable{width:100%;min-width:1120px;border-collapse:collapse;table-layout:fixed;font:12px/1.5 system-ui,sans-serif;color:var(--text)}
+.textGroupTable thead{position:sticky;top:0;z-index:2;background:var(--panel2)}
+.textGroupTable th,.textGroupTable td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;white-space:pre-wrap;overflow-wrap:anywhere;font-weight:400}
+.textGroupTable th{font-weight:600}.textGroupTable thead .base{border-top:3px solid #00c6b5}.textGroupTable thead .developed{border-top:3px solid #b5718f;border-left:1px solid var(--line)}
+.textGroupTable thead tr:first-child span{display:block;font-size:10px;color:var(--muted);font-weight:400}.textGroupTable .sideStart{border-left:1px solid var(--line)}
+.textGroupTable td.modified{background:#fff3d8;color:#754c0a}.textGroupTable td.added{background:#e5f7ee;color:#17643f}.textGroupTable td.removed,.textGroupTable td.absent{background:#fde8e8;color:#913039}
+.textGroupRowStatus{text-align:center!important;color:var(--muted)}.textGroupRowStatus.added{color:#198754}.textGroupRowStatus.removed{color:#b5393c}.textGroupRowStatus.modified{color:#986c08}
+.textGroupRowSelect{font:inherit;color:inherit;background:transparent;border:0;padding:0;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.textGroupTable tr.selected td{box-shadow:inset 0 2px #568de0,inset 0 -2px #568de0}.textGroupEmpty{font-style:italic;opacity:.75}.textGroupNoRows{padding:14px!important;color:var(--muted)}
+.textGroupExtra{margin:12px;border:1px solid var(--line)}.textGroupExtra summary,.textGroupSelectionHead{padding:10px 12px;background:var(--panel2);font-size:13px}.textGroupExtra summary{cursor:pointer}.textGroupExtra .hmiGroupedPropertyScroll{flex:none;max-height:350px}
+.textGroupSelectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px}.textGroupSelectionHead button{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:4px;padding:5px 9px;cursor:pointer}
+.textGroupSectionHeading:focus-visible,.textGroupRowSelect:focus-visible{outline:2px solid #2563eb;outline-offset:-2px}

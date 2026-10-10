@@ -1,0 +1,920 @@
+{
+  "controleCode": "CARDING",
+  "keysList": {
+    "qms_CARDING_shift_live": [
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Adjusted Time Stamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": null,
+        "mongoKey": "time_stamp",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Hank",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "hank",
+        "mongoKey": "count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "140",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "U",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "u",
+        "mongoKey": "u_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max U",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min U",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_u_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "sliver_a",
+        "mongoKey": "delivery_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Delivery A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "max_delivery_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Delivery A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "min_delivery_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Feed A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "feed_a",
+        "mongoKey": "feed_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Feed A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "max_feed_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Feed A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "min_feed_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Delivery 5mtr CV %",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "delivery_5mtr_cv_%",
+        "mongoKey": "delivery_cv _percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Delivery CV",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "max_delivery_cv_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Delivery CV",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "min_delivery_cv_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Feed 5m CV",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "feed_5m_cv",
+        "mongoKey": "feed_cv",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Maximum Feed CV",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_feed_cv_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Minimum Feed CV",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_feed_cv_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Chute Pressure",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "chute pressure",
+        "mongoKey": "chute_pressure",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Chute Pressure",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_chute_pressure",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Chute Pressure",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_chute_pressure",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Chute Feed Motor FrequencyReal",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "chute_feed_motor_frequency",
+        "mongoKey": "feed_motor_frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Feed Motor Frequency",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_feed_motor_frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Feed Motor Frequency",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_feed_motor_frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Card Feed roller Speed",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "card_feed_roller_speed",
+        "mongoKey": "card_feed_roller_rpm",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Card Feed Roller Speed",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_card_feed_roller_rpm",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Card Feed Roller Speed",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_card_feed_roller_rpm",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Feed Weight in gms/mtr",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "feed_weight_in_gms/mtr",
+        "mongoKey": "feed_weight_in_gms/mtr",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Feed Weight",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_feed_weight_in_gms/mtr",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Feed weight",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_feed_weight_in_gms/mtr",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "qms_CARDING_shift": [
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Adjusted Time Stamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": null,
+        "mongoKey": "time_stamp",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver Hank",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "sliver_hank",
+        "mongoKey": "count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "140",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver U Instant",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "sliver_u_instant",
+        "mongoKey": "u_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max U",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "max_u_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min U",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "min_u_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "sliver_a",
+        "mongoKey": "delivery_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Delivery A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "max_delivery_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Delivery A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "min_delivery_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Feed A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "feed_a",
+        "mongoKey": "feed_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Feed A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "max_feed_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Feed A",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "min_feed_a_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Delivery 5mtr CV %",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "delivery_5mtr_cv_%",
+        "mongoKey": "delivery_cv _percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Delivery CV",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "max_delivery_cv_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Delivery CV",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": null,
+        "mongoKey": "min_delivery_cv_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Feed 5m CV",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "feed_5m_cv",
+        "mongoKey": "feed_cv",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Maximum Feed CV",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_feed_cv_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Minimum Feed CV",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_feed_cv_percent",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Chute Pressure",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "chute pressure",
+        "mongoKey": "chute_pressure",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Chute Pressure",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_chute_pressure",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Chute Pressure",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_chute_pressure",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Chute Feed Motor FrequencyReal",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "chute_feed_motor_frequency",
+        "mongoKey": "feed_motor_frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Feed Motor Frequency",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_feed_motor_frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Feed Motor Frequency",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_feed_motor_frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Card Feed roller Speed",
+        "dataType": "FLOAT",
+        "groupCode": "250",
+        "tdEngineKey": "card_feed_roller_speed",
+        "mongoKey": "card_feed_roller_rpm",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Card Feed Roller Speed",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_card_feed_roller_rpm",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Card Feed Roller Speed",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_card_feed_roller_rpm",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Feed Weight in gms/mtr",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "feed_weight_in_gms/mtr",
+        "mongoKey": "feed_weight_in_gms/mtr",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Feed Weight",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_feed_weight_in_gms/mtr",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Feed weight",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_feed_weight_in_gms/mtr",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Thick Places Stops",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "thick_places_stops",
+        "mongoKey": "thick_place_stops",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Servo Drive stops",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "servo_drive_stops",
+        "mongoKey": "servo_drive_stops",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ]
+  },
+  "queryDetails": {
+    "qms_CARDING_shift_live": [
+      "ts_act",
+      "asset_id"
+    ],
+    "qms_CARDING_shift": [
+      "shift_id",
+      "shift_date",
+      "asset_id"
+    ]
+  }
+}

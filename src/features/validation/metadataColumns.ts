@@ -1,0 +1,6 @@
+import type {MetaCol} from '../../shared/types';
+export const DEFAULT_META_COLS:MetaCol[]=[
+ {key:'sl',label:'Sl. No.',enabled:true},{key:'plcTagCode',label:'TAG_CODE',enabled:true},{key:'logicComment',label:'Parameter',enabled:true},{key:'gc',label:'Group Code',enabled:true},{key:'lt',label:'Data Type',enabled:true},{key:'lo',label:'TCP Offset',enabled:true},{key:'size',label:'Size',enabled:true},{key:'dropdown',label:'Drop Down',enabled:true},
+ {key:'metaSeq',label:'Metadata S No.',enabled:true},{key:'metadataScreenName',label:'Screen Name',enabled:true},{key:'metadataMachineVariants',label:'Machine Variants',enabled:true},{key:'metadataTagCode',label:'TAG_CODE',enabled:true},{key:'meta',label:'Parameter',enabled:true},{key:'mg',label:'Group Code',enabled:true},{key:'mt',label:'Data Type',enabled:true},{key:'mo',label:'Offset',enabled:true},{key:'metadataUnits',label:'UNITS',enabled:true},{key:'metadataMin',label:'MIN',enabled:true},{key:'metadataMax',label:'MAX',enabled:true},{key:'result',label:'Result',enabled:true},
+ {key:'hmiMin',label:'HMI Min',enabled:false},{key:'hmiMax',label:'HMI Max',enabled:false},{key:'valueSource',label:'Value Source',enabled:false},{key:'inputType',label:'Input Type',enabled:false},{key:'metadataShown',label:'IS_SHOWN_VALUE_DIFFERENT',enabled:false}
+];

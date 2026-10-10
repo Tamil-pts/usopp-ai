@@ -1,0 +1,30 @@
+name: usopp-container
+services:
+  app:
+    image: ${USOPP_IMAGE:?Run the installer or set USOPP_IMAGE first}
+    ports:
+      - "127.0.0.1:${USOPP_PORT:-8200}:8200"
+    environment:
+      USOPP_DATA_ROOT: /data
+      USOPP_MAX_USERS: "6"
+      USOPP_MAX_PARALLEL_TESTS: "5"
+      USOPP_INITIAL_ADMIN_PASSWORD_FILE: /run/secrets/usopp_admin_password
+    secrets:
+      - usopp_admin_password
+    volumes:
+      - data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=1g
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 15m
+secrets:
+  usopp_admin_password:
+    file: ${USOPP_ADMIN_PASSWORD_FILE:?Run the installer first}
+volumes:
+  data:

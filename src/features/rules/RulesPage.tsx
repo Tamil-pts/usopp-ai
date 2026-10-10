@@ -1,0 +1,29 @@
+import {useReportExport,downloadReport} from '../../shared/ReportExport';
+import {Fragment,useRef,useState} from 'react';
+import {RuleLogicEvidence} from './RuleLogicEvidence';
+import {ValidationSourceEditor} from '../validation/ValidationSourceEditor';
+import {Bot,Download} from 'lucide-react';
+import {Badge} from '../../shared/ui';
+import {RulePipeline} from './RulePipeline';
+import {badgeStatus,useRuleLibrary} from './library';
+export function RulesPage({projectName,projectPath,projectReady,machineDepartment='All',onProjectSelected,onMachineDepartmentChange,departments,ruleResults,runRules,busy,revision,onAssist,onSourceSaved}:{projectName:string;projectPath:string;projectReady:boolean;machineDepartment?:string;onProjectSelected:(path:string,name:string,files?:File[])=>void;onMachineDepartmentChange:(value:string)=>void;departments:string[];ruleResults:any;runRules:(rules:any)=>Promise<any>;busy:string;revision:number;onAssist:(result:any,rule:any)=>void;onSourceSaved:(path:string,name:string)=>void}){
+ const requestExport=useReportExport();
+ const exportResult=(format:'html'|'pdf')=>requestExport({title:'LogicScan — Complete validation result',projectName:ruleResults.projectName||projectName,format,onExport:cover=>downloadReport(`/api/reports/rules/${encodeURIComponent(ruleResults.sessionId)}/${format}`,`LogicScan_${cover.projectName}_ResultView.${format}`,cover)});
+ const [source,setSource]=useState<any>(null);
+ const {rules,error}=useRuleLibrary(revision);const resultPanel=useRef<HTMLDivElement>(null);
+ const orderedResults=[...(ruleResults?.results||[])].sort((a:any,b:any)=>String(a.name||a.id).localeCompare(String(b.name||b.id),undefined,{numeric:true,sensitivity:'base'})||String(a.id).localeCompare(String(b.id)));
+ return <>{source&&<ValidationSourceEditor sessionId={source.sessionId} selection={source} datatypes={[]} onClose={()=>setSource(null)} onSaved={()=>onSourceSaved(source.projectPath,source.projectName)}/>}<div className="pageHead"><div><div className="eyebrow">ENGINEERING VALIDATION</div><h1>LogicScan</h1><p>Build and run feature pipelines. View and configure the complete rule library in AI Assistant / KnowHub.</p></div></div>
+ {error&&<p role="alert">{error}</p>}
+ {ruleResults?.testId&&<p className="mono">Test ID: {ruleResults.testId}</p>}
+ <RulePipeline onConfigureRule={rule=>onAssist({id:rule.id,name:rule.name,status:"DRAFT",expected:rule.expected,actual:"Configure and test this rule before enabling.",evidence:[],configureOnly:true},rule)} projectReady={projectReady} projectName={projectName} projectPath={projectPath} machineDepartment={machineDepartment} onProjectSelected={onProjectSelected} onMachineDepartmentChange={onMachineDepartmentChange} departments={departments} rules={rules} runRules={runRules} busy={busy} ruleResults={ruleResults} onShowResults={()=>resultPanel.current?.scrollIntoView({behavior:'smooth'})}/>
+ <div ref={resultPanel}><h2>ResultView</h2>{!ruleResults&&<p className="muted">Run the pipeline to see validation evidence and downloadable reports here.</p>}
+  {ruleResults?.stageRuns&&<details className="card" style={{padding:10,marginBottom:10}} open><summary>Flow outcomes (including skipped paths)</summary><table className="table"><thead><tr><th>Step / condition</th><th>Outcome</th><th>Details</th></tr></thead><tbody>{ruleResults.stageRuns.map((step:any)=><tr key={step.id}><td>{step.label||step.id}</td><td>{step.status}</td><td>{step.reason||''}</td></tr>)}</tbody></table></details>}
+  {ruleResults&&<><div className="ruleRunSummary card"><button className="btn primary" disabled={!ruleResults.sessionId} onClick={()=>exportResult('html')}><Download size={14}/>Export HTML</button><button className="btn" disabled={!ruleResults.sessionId} onClick={()=>exportResult('pdf')}><Download size={14}/>Export PDF</button><b>{ruleResults.ruleCount||ruleResults.results?.length} checks</b><span className="passText">{ruleResults.counts?.pass||0} pass</span><span className="failText">{ruleResults.counts?.fail||0} fail</span><span className="warnText">{ruleResults.counts?.warn||0} warning / {ruleResults.counts?.not_found||0} not found</span>{(ruleResults.reportDownloads||[]).map((url:string,i:number)=><a className="btn" href={url} key={url}><Download size={14}/>Report {i+1}</a>)}</div><div className="card tableWrap"><table className="table ruleResultTable"><thead><tr><th>No.</th><th>Rule name</th><th>Rule ID</th><th>Status</th><th>Expected</th></tr></thead><tbody>{orderedResults.map((item:any,index:number)=><Fragment key={(item.pipelineStageId||'')+item.id}><tr><td>{index+1}</td><td><b>{item.name||item.id}</b>{item.pipelineStageName&&<small>{item.pipelineBranch?`Branch ${item.pipelineBranch} | `:''}{item.pipelineStageName}</small>}</td><td>{item.standardId||item.id}</td><td><Badge status={badgeStatus(item.status)}/></td><td>{item.expected}</td></tr>
+   <tr className="ruleLogicRow"><td colSpan={5}><details className="ruleResultDetails"><summary>View actual result, evidence and Assist / Teach</summary>
+    <div className="ruleResultDetailContent">
+     <div className="actions"><button className={'assistSymbol '+badgeStatus(item.status)} title="Discuss this result with Chopper" onClick={()=>onAssist(item,item.ruleDefinition||rules.find(r=>r.id===item.id))}><Bot size={16}/>Assist / Teach</button></div>
+     <h3>Actual result</h3><p className="ruleActualResult">{item.actual||'No actual result provided.'}</p>
+     <h3>Findings - expected, actual and source</h3>
+     <RuleLogicEvidence item={item} onSource={(path,line,edit)=>setSource({path,line,edit,sessionId:ruleResults.sessionId,projectPath:ruleResults.projectPath,projectName:ruleResults.projectName})}/></div></details></td></tr></Fragment>)}</tbody></table></div></>}
+ </div></>;
+}

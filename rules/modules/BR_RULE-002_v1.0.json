@@ -1,0 +1,31 @@
+{
+  "id": "BR_RULE-002",
+  "name": "Alarm time out default value",
+  "description": "in that default alarm value is in the default of below 30 it set as 250",
+  "version": "1.0",
+  "enabled": true,
+  "reviewStatus": "Engineer reviewed",
+  "machineDepartment": "All",
+  "machineModels": [
+    "All"
+  ],
+  "machineScope": [
+    "All"
+  ],
+  "category": "Logic / declaration",
+  "featureName": "Spin Connect",
+  "featureId": "spin_connect",
+  "ruleScope": "Spin Connect",
+  "subroutine": "mms_nw_rCyclic.st",
+  "logicAlternatives": [
+    "IF Alarm_EN_Delay <= 30 THEN\n\t\tAlarm_EN_Delay := 250; \n\tEND_IF"
+  ],
+  "exactLogic": "IF Alarm_EN_Delay <= 30 THEN\n\t\tAlarm_EN_Delay := 250; \n\tEND_IF",
+  "expected": "in that default alarm value is in the default of below 30 it set as 250",
+  "variable": "",
+  "allowedDatatypes": [],
+  "sourceFiles": [
+    "mms_nw_rCyclic.st"
+  ],
+  "kind": "exact_logic_declaration"
+}

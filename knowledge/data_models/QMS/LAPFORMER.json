@@ -1,0 +1,1467 @@
+{
+  "controleCode": "LAPFORMER",
+  "keysList": {
+    "qms_LAPFORMER_shift_live": [
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Adjusted Time Stamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": null,
+        "mongoKey": "time_stamp",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Target Weight",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "target_weight",
+        "mongoKey": "target_weight",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lap Weight",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "lap_weight",
+        "mongoKey": "lap_weight",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Lap Weight",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "lap_weight",
+        "mongoKey": "max_lap_weight",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "maximum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Lap Weight",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "lap_weight",
+        "mongoKey": "min_lap_weight",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "minimum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot Name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Between Lap CV",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "b_w_lap_cv",
+        "mongoKey": "b_w_lap_cv",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Between Lap CV",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "b_w_lap_cv",
+        "mongoKey": "max_b_w_lap_cv",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "maximum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Between Lap CV",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "b_w_lap_cv",
+        "mongoKey": "min_b_w_lap_cv",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "minimum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lap Weight Stops",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "lap_weight_stops",
+        "mongoKey": "lap_weight_stops",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Doffs",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "number_of_doff",
+        "mongoKey": "no_of_doffs",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg. Doff Lap Weight (g/m)",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "grams_per_metre",
+        "mongoKey": "avg_lap_weight",
+        "formula": "pms_LAPFORMER_doff",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg. Doff Lap Weight (g/m) Minimum",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "grams_per_metre",
+        "mongoKey": "min_avg_lap_weight",
+        "formula": "pms_LAPFORMER_doff",
+        "type": "instant",
+        "aggType": "minimum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg. Doff Lap Weight (g/m) Maximum",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "grams_per_metre",
+        "mongoKey": "max_avg_lap_weight",
+        "formula": "pms_LAPFORMER_doff",
+        "type": "instant",
+        "aggType": "maximum",
+        "isRequired": true
+      }
+    ],
+    "qms_LAPFORMER_hours": [
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Adjusted Time Stamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": null,
+        "mongoKey": "time_stamp",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Target Weight",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "target_weight",
+        "mongoKey": "target_weight",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lap Weight",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "lap_weight",
+        "mongoKey": "lap_weight",
+        "formula": null,
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot Name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Between Lap CV",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "b/w_lap_cv",
+        "mongoKey": "b_w_lap_cv",
+        "formula": null,
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lap Weight Stops",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "lap_weight_stops",
+        "mongoKey": "lap_weight_stops",
+        "formula": null,
+        "type": "instant",
+        "aggType": "sum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Doffs",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "number_of_doff",
+        "mongoKey": "no_of_doffs",
+        "formula": null,
+        "type": "instant",
+        "aggType": "sum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg. Doff Lap Weight (g/m)",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "grams_per_metre",
+        "mongoKey": "avg_lap_weight",
+        "formula": "pms_LAPFORMER_doff",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      }
+    ],
+    "qms_LAPFORMER_shift": [
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "50",
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Adjusted Time Stamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "50",
+        "tdEngineKey": null,
+        "mongoKey": "time_stamp",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Target Weight",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "target_weight",
+        "mongoKey": "target_weight",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lap Weight",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "lap_weight",
+        "mongoKey": "lap_weight",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Lap Weight",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "lap_weight",
+        "mongoKey": "max_lap_weight",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "maximum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Lap Weight",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "lap_weight",
+        "mongoKey": "min_lap_weight",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "minimum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot Name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Between Lap CV",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "b_w_lap_cv",
+        "mongoKey": "b_w_lap_cv",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Between Lap CV",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "b_w_lap_cv",
+        "mongoKey": "max_b_w_lap_cv",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "maximum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Between Lap CV",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "b_w_lap_cv",
+        "mongoKey": "min_b_w_lap_cv",
+        "formula": "qms_LAPFORMER_minutes_time_series",
+        "type": "instant",
+        "aggType": "minimum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lap Weight Stops",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "lap_weight_stops",
+        "mongoKey": "lap_weight_stops",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Doffs",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "number_of_doff",
+        "mongoKey": "no_of_doffs",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg. Doff Lap Weight (g/m)",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "grams_per_metre",
+        "mongoKey": "avg_lap_weight",
+        "formula": "pms_LAPFORMER_doff",
+        "type": "instant",
+        "aggType": "average",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg. Doff Lap Weight (g/m) Minimum",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "grams_per_metre",
+        "mongoKey": "min_avg_lap_weight",
+        "formula": "pms_LAPFORMER_doff",
+        "type": "instant",
+        "aggType": "minimum",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg. Doff Lap Weight (g/m) Maximum",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "grams_per_metre",
+        "mongoKey": "max_avg_lap_weight",
+        "formula": "pms_LAPFORMER_doff",
+        "type": "instant",
+        "aggType": "maximum",
+        "isRequired": true
+      }
+    ],
+    "qms_LAPFORMER_minutes_time_series": [
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Adjusted Time Stamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": null,
+        "mongoKey": "time_stamp",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Target Weight",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "target_weight",
+        "mongoKey": "target_weight",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lap Weight",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "lap_weight",
+        "mongoKey": "lap_weight",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot Name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Between Lap CV",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "b/w_lap_cv",
+        "mongoKey": "b_w_lap_cv",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lap Weight Stops",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "lap_weight_stops",
+        "mongoKey": "lap_weight_stops",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ]
+  },
+  "queryDetails": {
+    "pms_LAPFORMER_minutes_time_series": [
+      "shift_date",
+      "shift_id",
+      "ts_act",
+      "asset_id"
+    ],
+    "pms_LAPFORMER_shift": [
+      "shift_id",
+      "shift_date",
+      "asset_id"
+    ],
+    "pms_LAPFORMER_shift_live": [
+      "asset_id"
+    ],
+    "pms_LAPFORMER_hours": [
+      "shift_date",
+      "shift_id",
+      "end_time",
+      "asset_id"
+    ],
+    "pms_LAPFORMER_doff": [
+      "asset_id",
+      "doff_date",
+      "doff_hour"
+    ],
+    "qms_LAPFORMER_shift": [
+      "shift_id",
+      "shift_date",
+      "asset_id"
+    ],
+    "qms_LAPFORMER_minutes_time_series": [
+      "shift_date",
+      "shift_id",
+      "ts_act",
+      "asset_id"
+    ],
+    "qms_LAPFORMER_hours": [
+      "shift_date",
+      "shift_id",
+      "end_time",
+      "asset_id"
+    ],
+    "qms_LAPFORMER_shift_live": [
+      "asset_id"
+    ],
+    "pms_LAPFORMER_events": [
+      "shift_date",
+      "shift_id",
+      "asset_id",
+      "status_endtime"
+    ],
+    "pms_LAPFORMER_stoppages": [
+      "shift_date",
+      "shift_id",
+      "asset_id",
+      "idle_starttime"
+    ],
+    "cms_LAPFORMER_minutes_time_series": [
+      "shift_date",
+      "shift_id",
+      "ts_act",
+      "asset_id"
+    ],
+    "cms_LAPFORMER_hours": [
+      "shift_date",
+      "shift_id",
+      "end_time",
+      "asset_id"
+    ],
+    "cms_LAPFORMER_shift_live": [
+      "asset_id"
+    ],
+    "cms_LAPFORMER_shift": [
+      "shift_id",
+      "shift_date",
+      "asset_id"
+    ],
+    "pms_LAPFORMER_raw_data_history": [
+      "asset_id",
+      "group_code",
+      "source_time"
+    ]
+  },
+  "targets": {
+    "LAPFORMER_PMS": [
+      {
+        "code": "MU",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Upper",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false
+      },
+      {
+        "code": "PE",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Upper",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false
+      },
+      {
+        "code": "DOFFT",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false
+      },
+      {
+        "code": "PL",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false
+      }
+    ],
+    "PMS": [
+      {
+        "code": "PKG",
+        "target": 0.0,
+        "inputType": "",
+        "isEditable": true,
+        "direction": "Upper",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": true
+      },
+      {
+        "code": "UKG",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": true,
+        "is_sum": false
+      },
+      {
+        "code": "STDW",
+        "target": 0.0,
+        "inputType": "Percentage",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": true,
+        "is_sum": false
+      }
+    ],
+    "QMS": [
+      {
+        "code": "LW",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Upper",
+        "tolerance": 0.0,
+        "threshold": null,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": true,
+        "is_sum": false
+      },
+      {
+        "code": "BLCV",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": true,
+        "is_sum": false
+      },
+      {
+        "code": "NLWS",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": true
+      }
+    ],
+    "LAPFORMER_CMS": [
+      {
+        "code": "MDBT_CMS",
+        "target": 65.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false,
+        "is_dashboard": false,
+        "sequence_number": 0,
+        "is_breach_alert": false
+      },
+      {
+        "code": "LRGV_CMS",
+        "target": 1.5,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false,
+        "is_dashboard": false,
+        "sequence_number": 0,
+        "is_breach_alert": false
+      },
+      {
+        "code": "MMP_CMS",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false,
+        "is_dashboard": false,
+        "sequence_number": 0,
+        "is_breach_alert": false
+      },
+      {
+        "code": "MMC_CMS",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false,
+        "is_dashboard": false,
+        "sequence_number": 0,
+        "is_breach_alert": false
+      },
+      {
+        "code": "MMT_CMS",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false,
+        "is_dashboard": false,
+        "sequence_number": 0,
+        "is_breach_alert": false
+      },
+      {
+        "code": "MMIT_CMS",
+        "target": 70.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false,
+        "is_dashboard": false,
+        "sequence_number": 0,
+        "is_breach_alert": false
+      },
+      {
+        "code": "MMS_CMS",
+        "target": 0.0,
+        "inputType": "Direct Value",
+        "isEditable": false,
+        "direction": "Lower",
+        "tolerance": null,
+        "threshold": 0.0,
+        "lcl": null,
+        "ucl": null,
+        "is_active": true,
+        "is_available": false,
+        "is_avg": false,
+        "is_sum": false,
+        "is_dashboard": false,
+        "sequence_number": 0,
+        "is_breach_alert": false
+      }
+    ]
+  },
+  "indexDetails": {
+    "pms_LAPFORMER_minutes_time_series": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id",
+      "time_stamp"
+    ],
+    "pms_LAPFORMER_shift_live": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id"
+    ],
+    "pms_LAPFORMER_shift": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id"
+    ],
+    "pms_LAPFORMER_hours": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id",
+      "end_time"
+    ],
+    "pms_LAPFORMER_doff": [
+      "doff_date",
+      "doff_hour",
+      "asset_id",
+      "shift_date",
+      "platform_shift_id"
+    ],
+    "qms_LAPFORMER_shift_live": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id"
+    ],
+    "qms_LAPFORMER_shift": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id"
+    ],
+    "qms_LAPFORMER_minutes_time_series": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id",
+      "time_stamp"
+    ],
+    "pms_LAPFORMER_events": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id"
+    ],
+    "pms_LAPFORMER_stoppages": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id"
+    ],
+    "cms_LAPFORMER_minutes_time_series": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id",
+      "time_stamp"
+    ],
+    "cms_LAPFORMER_shift_live": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id"
+    ],
+    "cms_LAPFORMER_shift": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id"
+    ],
+    "cms_LAPFORMER_hours": [
+      "shift_date",
+      "platform_shift_id",
+      "asset_id",
+      "end_time"
+    ]
+  }
+}

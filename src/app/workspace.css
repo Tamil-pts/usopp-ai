@@ -1,0 +1,53 @@
+/* Workspace shell and table rules are shared by every feature. */
+[hidden] { display:none !important; }
+.tableLayoutRoot { min-height:100vh; }
+.workspaceApp .content { max-width:none; min-width:0; }
+.featureTabs { display:flex; gap:8px; flex-wrap:wrap; margin:0 0 18px; }
+.featureTabs .chip { padding:9px 13px; }
+.inputGrid,.homeFeatures { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.inputCard,.workbookViewer,.homeProject,.featureCard { padding:22px; min-width:0; }
+.inputCard h2,.featureCard h2,.homeProject h2,.workbookViewer h2 { font-size:18px; margin:0 0 10px; }
+.inputCard p,.featureCard p,.homeProject p { color:var(--muted); line-height:1.6; }
+.homeProject { margin-bottom:18px; }
+.featureCard { text-align:left; color:inherit; cursor:pointer; }
+.featureCard:hover { border-color:var(--accent); }
+.featureCard span { color:var(--accent); }
+.pathLabel { display:flex; flex-direction:column; gap:8px; font-weight:600; margin:14px 0; }
+.pathLabel input { width:100%; box-sizing:border-box; }
+.pathError { color:var(--fail); overflow-wrap:anywhere; }
+.statusMessage { padding:14px 18px; margin:12px 0; }
+.inputCard details { margin-top:18px; border-top:1px solid var(--line); padding-top:14px; }
+.inputCard summary { cursor:pointer; color:var(--muted); }
+.inputCard input[type=file] { max-width:100%; margin-top:12px; }
+.selectedPath,.localPath { overflow-wrap:anywhere; white-space:normal; }
+.folderBrowser { width:min(800px,94vw); max-height:92vh; overflow:auto; }
+.folderBrowser .treeRow { display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:transparent; border:0; color:inherit; padding:10px; cursor:pointer; }
+.folderBrowser .treeRow.selected { background:var(--accent-soft,#e8efff); }
+.folderBrowser .treeRow span:first-of-type { flex:1; overflow-wrap:anywhere; }
+.folderBrowser .folderTree { min-height:180px; max-height:40vh; }
+.projectContext { display:flex; justify-content:space-between; align-items:center; padding:12px 18px; margin-bottom:18px; }
+.workbookViewer .panelHead { flex-wrap:wrap; gap:12px; }
+.workbookScroll { max-height:65vh; overflow:auto; }
+.workbookViewer input { box-sizing:border-box; width:100%; min-width:0; }
+.metadataDuplicateNotice { margin:10px 0; padding:9px 12px; border:1px solid #8b5cf6; border-radius:7px; background:#f3e8ff; color:#5b21b6; font-weight:600; }
+.metadataDuplicateRow > td { background:#f3e8ff !important; border-top-color:#c4b5fd; border-bottom-color:#c4b5fd; }
+.metadataDuplicateRow .metadataEditInput { background:#faf5ff; border-color:#8b5cf6; }
+.metadataDuplicateBadge { display:block; width:max-content; margin:0 0 5px; padding:2px 6px; border-radius:999px; background:#7c3aed; color:#fff; font-size:.75rem; font-weight:700; }
+.tableLayoutRoot .tableWrap,.tableLayoutRoot .metadataTableWrap,.tableLayoutRoot .metadataWorkbookScroll { overflow-x:auto; max-width:100%; min-width:0; }
+.tableLayoutRoot table { width:100% !important; min-width:var(--table-min-width,0px) !important; table-layout:auto !important; border-collapse:collapse; }
+.tableLayoutRoot table th,.tableLayoutRoot table td { width:auto !important; min-width:0 !important; max-width:none !important; text-align:left; vertical-align:top; white-space:normal !important; overflow-wrap:anywhere; box-sizing:border-box; }
+.tableLayoutRoot table th { padding:10px 12px; }
+.tableLayoutRoot table td { padding:10px 12px; }
+.tableLayoutRoot table .mappingCell,.tableLayoutRoot table .mappingHead { width:auto !important; min-width:0 !important; }
+.tableLayoutRoot table .mappingCell > * { min-width:0; max-width:100%; }
+.tableLayoutRoot[data-table-layout=fit] table,.tableLayoutRoot[data-table-layout=custom] table { table-layout:fixed !important; }
+.tableLayoutRoot table pre,.tableLayoutRoot table .code { white-space:pre-wrap; overflow-wrap:anywhere; }
+.bubble { white-space:pre-wrap; }
+@media(max-width:900px){.inputGrid,.homeFeatures { grid-template-columns:1fr; }.workspaceApp .topStatus { display:none; }}
+
+body { min-width:760px; }
+.tableLayoutRoot .main { min-width:0; }
+
+.processingTimePopup{position:fixed;z-index:1200;top:16px;right:18px;display:flex;align-items:flex-start;gap:8px;min-width:215px;padding:9px 11px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);color:var(--text);box-shadow:var(--shadow)}
+.processingTimePopup>svg{margin-top:2px;color:var(--accent)}.processingTimePopup>div{display:grid;grid-template-columns:1fr auto;gap:2px 10px;flex:1}.processingTimePopup b{grid-column:1/-1;font-size:.8125rem}.processingTimePopup span{font:600 .6875rem 'IBM Plex Mono',Consolas,monospace;color:var(--muted);white-space:nowrap}
+@media(max-width:700px){.processingTimePopup{top:8px;right:8px;min-width:190px}.processingTimePopup>div{grid-template-columns:1fr}.processingTimePopup b{grid-column:auto}}

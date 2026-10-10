@@ -1,0 +1,41 @@
+{
+  "id": "BR_RULE-001",
+  "name": "read Receive time out default value",
+  "description": "read Receive time out default value to be 250 if the value is 0 or below 30",
+  "version": "1.0",
+  "enabled": true,
+  "reviewStatus": "Engineer reviewed",
+  "machineDepartment": "All",
+  "machineModels": [
+    "All"
+  ],
+  "machineScope": [
+    "All"
+  ],
+  "category": "Logic with condition",
+  "featureName": "Spin Connect",
+  "featureId": "spin_connect",
+  "ruleScope": "Spin Connect",
+  "subroutine": "mms_nw_rCyclic.st",
+  "logicAlternatives": [
+    "IF HMI_read_recv_timeout_time <= 30 THEN\n\t\tHMI_read_recv_timeout_time := 250;  \n\tEND_IF",
+    "IF HMI_recv_timeout_time <= 30 THEN\n\t\tHMI_recv_timeout_time := 250;  \n\tEND_IF",
+    "IF Read_recv_timeout_time <= 30 THEN\n\t\tRead_recv_timeout_time := 250;  \n\tEND_IF"
+  ],
+  "exactLogic": "IF HMI_read_recv_timeout_time <= 30 THEN\n\t\tHMI_read_recv_timeout_time := 250;  \n\tEND_IF",
+  "expected": "read Receive time out default value to be 250 if the value is 0 or below 30",
+  "variable": "HMI_read_recv_timeout_time",
+  "acceptedVariables": [
+    "HMI_read_recv_timeout_time",
+    "HMI_recv_timeout_time",
+    "Read_recv_timeout_time"
+  ],
+  "allowedDatatypes": [],
+  "sourceFiles": [
+    "mms_nw_rCyclic.st"
+  ],
+  "kind": "condition_assignment",
+  "comparison": "<=",
+  "threshold": "30",
+  "assignedValue": "250"
+}

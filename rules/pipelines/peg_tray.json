@@ -1,0 +1,24 @@
+{
+  "id": "peg_tray",
+  "name": "peg tray",
+  "machineDepartment": "Blow Room",
+  "executionMode": "graph",
+  "stages": [
+    {
+      "id": "a7b1daf3-4a53-41dd-bedf-aee267e7a29c",
+      "featureId": "peg_tray",
+      "label": "peg tray",
+      "ruleIds": []
+    }
+  ],
+  "flow": [
+    {
+      "id": "a7b1daf3-4a53-41dd-bedf-aee267e7a29c",
+      "kind": "feature"
+    },
+    {
+      "id": "d2c675a0-f9eb-498a-9d79-2cb02818f18c",
+      "kind": "end"
+    }
+  ]
+}

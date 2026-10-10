@@ -1,0 +1,1060 @@
+{
+  "controleCode": "SPEEDFRAME",
+  "keysList": {
+    "qms_SPEEDFRAME_shift_live": [
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Adjusted Time Stamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": null,
+        "mongoKey": "time_stamp",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving count",
+        "mongoKey": "count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "130",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "TPI",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "tpi",
+        "mongoKey": "tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max TPI",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min TPI",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV TPI",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg TPI",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Required Draft",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "required draft",
+        "mongoKey": "required draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "main_draft",
+        "mongoKey": "main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Breaking Draft",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "breaking_draft",
+        "mongoKey": "breaking_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "break_draft",
+        "mongoKey": "break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Count of Sliver",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "count_of_sliver",
+        "mongoKey": "count_of_sliver",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Count of Roving",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "count_of_roving",
+        "mongoKey": "count_of_roving",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "total_draft",
+        "mongoKey": "total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV  Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Set Creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": null,
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "creal_draft",
+        "mongoKey": "creal_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_creel_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_creel_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV  creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_creel_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_creel_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Rovo Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop",
+        "mongoKey": "roving_break_ebsh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop",
+        "mongoKey": "Sliver_break_ebsh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Head Stock hank",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "head_stock_hank",
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tail Stack Hank",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "tail_stock_hank",
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "qms_SPEEDFRAME_shift": [
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Adjusted Time Stamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "tdEngineKey": null,
+        "mongoKey": "time_stamp",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving count",
+        "mongoKey": "count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "130",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "TPI",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "tpi",
+        "mongoKey": "tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max TPI",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min TPI",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV TPI",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg TPI",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Required Draft",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "required draft",
+        "mongoKey": "required draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "main_draft",
+        "mongoKey": "main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Breaking Draft",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "breaking_draft",
+        "mongoKey": "breaking_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "break_draft",
+        "mongoKey": "break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Count of Sliver",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "count_of_sliver",
+        "mongoKey": "count_of_sliver",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Count of Roving",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "count_of_roving",
+        "mongoKey": "count_of_roving",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "total_draft",
+        "mongoKey": "total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV  Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Set Creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": null,
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "creal_draft",
+        "mongoKey": "creal_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "max_creel_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Min creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "min_creel_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "CV  creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "cv_creel_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Avg creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "logic",
+        "tdEngineKey": null,
+        "mongoKey": "avg_creel_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Rovo Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop",
+        "mongoKey": "roving_break_ebsh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop",
+        "mongoKey": "Sliver_break_ebsh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Head Stock hank",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "head_stock_hank",
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tail Stack Hank",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "tail_stock_hank",
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      }
+    ]
+  },
+  "queryDetails": {
+    "qms_SPEEDFRAME_shift_live": [
+      "ts_act",
+      "asset_id"
+    ],
+    "qms_SPEEDFRAME_shift": [
+      "shift_id",
+      "shift_date",
+      "asset_id"
+    ]
+  }
+}

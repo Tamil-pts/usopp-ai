@@ -1,0 +1,1651 @@
+{
+  "id": "R-15B7CDC167FB495CA2D5B9B9014C6AD4",
+  "name": "Finisher - Shift parameter traceability GC40-GC110",
+  "kind": "structured_requirements",
+  "category": "Logic traceability in various subroutines",
+  "description": "Trace parameters 103-111, 113 and 114 from fltmode input assignments and declarations to 4-byte SpinConnect packets: GC40 current shift; GC50-GC110 previous shifts 1-7. Require the correct parameter index, shift array and 4-byte cursor advance in every group. Index 112 is excluded because its input assignment is commented out in Project 2.",
+  "expected": "Trace parameters 103-111, 113 and 114 from fltmode input assignments and declarations to 4-byte SpinConnect packets: GC40 current shift; GC50-GC110 previous shifts 1-7. Require the correct parameter index, shift array and 4-byte cursor advance in every group. Index 112 is excluded because its input assignment is commented out in Project 2.",
+  "featureName": "Spin Connect",
+  "featureId": "spin_connect",
+  "machineScope": [
+    "Finisher"
+  ],
+  "machineModels": [
+    "All"
+  ],
+  "checks": [
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[103] := PMS_CAN_WAITING_TIME;"
+      ],
+      "declarationText": "PMS_CAN_WAITING_TIME : REAL",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[103]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[103]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[103]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[103]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[103]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[103]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[103]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[103]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "PMS_CAN_WAITING_TIME",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[104] := HANK_PROCESSED;"
+      ],
+      "declarationText": "HANK_PROCESSED : REAL",
+      "declarationFile": "Logical/Global.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[104]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[104]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[104]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[104]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[104]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[104]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[104]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[104]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "HANK_PROCESSED",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[105] := PMS_TOTAL_BREAKS;"
+      ],
+      "declarationText": "PMS_TOTAL_BREAKS : REAL",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[105]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[105]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[105]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[105]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[105]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[105]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[105]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[105]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "PMS_TOTAL_BREAKS",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[106] := PMS_TOTAL_BREAKS_IN_MINS;"
+      ],
+      "declarationText": "PMS_TOTAL_BREAKS_IN_MINS : REAL",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[106]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[106]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[106]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[106]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[106]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[106]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[106]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[106]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "PMS_TOTAL_BREAKS_IN_MINS",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[107] := PMS_TOTAL_FEED_BREAKS;"
+      ],
+      "declarationText": "PMS_TOTAL_FEED_BREAKS : REAL",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[107]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[107]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[107]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[107]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[107]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[107]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[107]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[107]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "PMS_TOTAL_FEED_BREAKS",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[108] := PMS_TOTAL_DEL_BREAKS;"
+      ],
+      "declarationText": "PMS_TOTAL_DEL_BREAKS : REAL",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[108]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[108]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[108]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[108]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[108]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[108]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[108]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[108]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "PMS_TOTAL_DEL_BREAKS",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[109] := PMS_TOTAL_QUALITY_BREAKS;"
+      ],
+      "declarationText": "PMS_TOTAL_QUALITY_BREAKS : REAL",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[109]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[109]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[109]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[109]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[109]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[109]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[109]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[109]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "PMS_TOTAL_QUALITY_BREAKS",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[110] := PMS_CAN_FILLING_TIME;"
+      ],
+      "declarationText": "PMS_CAN_FILLING_TIME : REAL",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[110]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[110]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[110]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[110]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[110]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[110]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[110]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[110]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "PMS_CAN_FILLING_TIME",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[111] := hmi_doff_length;"
+      ],
+      "declarationText": "hmi_doff_length : REAL",
+      "declarationFile": "Logical/Global.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[111]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[111]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[111]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[111]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[111]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[111]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[111]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[111]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "hmi_doff_length",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[113] := HMI_AIR_CONSUMPTION_SHIFT;"
+      ],
+      "declarationText": "HMI_AIR_CONSUMPTION_SHIFT : REAL",
+      "declarationFile": "Logical/AirConsumption/gva_rdspress.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[113]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[113]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[113]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[113]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[113]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[113]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[113]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[113]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "HMI_AIR_CONSUMPTION_SHIFT",
+          "datatype": "REAL"
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "MC_SHIFT_REPORT.INPUT_PARAMETERS[114] := INT_TO_REAL(PMS_Can_Reject_Count);"
+      ],
+      "declarationText": "PMS_Can_Reject_Count : INT",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[114]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[114]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[114]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[114]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[114]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[114]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[114]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        },
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[114]),4);\nnw_i := nw_i + 4;"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": []
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [
+        {
+          "variable": "PMS_Can_Reject_Count",
+          "datatype": "INT"
+        }
+      ]
+    }
+  ],
+  "version": "1.0",
+  "enabled": false,
+  "reviewStatus": "Needs engineer review",
+  "configurationFormat": "grouped-v1",
+  "needsRuleConfiguration": false
+}

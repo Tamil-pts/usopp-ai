@@ -1,0 +1,324 @@
+{
+  "id": "R-56FDD812DF844C3AB7DDF10FEE18631A",
+  "name": "shift data reset",
+  "kind": "structured_requirements",
+  "category": "Logic traceability in various subroutines",
+  "description": "shift data reset before that shift change reset",
+  "expected": "shift data reset before that shift change reset",
+  "featureName": "Spin connect",
+  "featureId": "spin_connect",
+  "machineScope": [
+    "Blow Room"
+  ],
+  "machineModels": [
+    "All"
+  ],
+  "checks": [
+    {
+      "type": "logic",
+      "file": "fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "IF(MC_SHIFT_CHANGE_RESET_POWER = 1)THEN\nMC_SHIFT_CHANGE_RESET_POWER := 0;\n\tEND_IF"
+      ],
+      "declarationText": "",
+      "declarationFile": "",
+      "variants": [
+        {
+          "entity": "Control",
+          "controlType": "String",
+          "name": "",
+          "nameMatch": "exact",
+          "classId": "",
+          "properties": {},
+          "texts": [],
+          "snippets": [],
+          "textGroupFile": ""
+        }
+      ],
+      "crossChecks": [
+        {
+          "type": "ladder",
+          "file": "mc_timinCyclic.ld",
+          "groupMode": "none",
+          "groupCodes": [],
+          "alternatives": [],
+          "declarationText": "",
+          "declarationFile": "",
+          "variants": [
+            {
+              "entity": "Control",
+              "controlType": "String",
+              "name": "",
+              "nameMatch": "exact",
+              "classId": "",
+              "properties": {},
+              "texts": [],
+              "snippets": [],
+              "textGroupFile": ""
+            }
+          ],
+          "crossChecks": [],
+          "networks": [
+            {
+              "id": "9ec93333-11d2-484c-8ae8-dc9f188b1672",
+              "label": "shift change bit for fltmode",
+              "mode": "elements",
+              "relation": "before",
+              "relativeTo": "249542b1-c18e-43c1-a231-54f8ff6a3b89",
+              "elements": [
+                {
+                  "kind": "contact",
+                  "type": "open",
+                  "name": "TRUE",
+                  "position": "",
+                  "inputs": "",
+                  "outputs": ""
+                },
+                {
+                  "kind": "coil",
+                  "type": "set",
+                  "name": "MC_SHIFT_CHANGE_RESET_POWER",
+                  "position": "",
+                  "inputs": "",
+                  "outputs": ""
+                }
+              ],
+              "xml": ""
+            },
+            {
+              "id": "249542b1-c18e-43c1-a231-54f8ff6a3b89",
+              "label": "Reference for shift change bit for fltmode",
+              "mode": "elements",
+              "relation": "presence",
+              "relativeTo": "",
+              "elements": [
+                {
+                  "kind": "contact",
+                  "type": "open",
+                  "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                  "position": "",
+                  "inputs": "",
+                  "outputs": ""
+                },
+                {
+                  "kind": "coil",
+                  "type": "reset",
+                  "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                  "position": "",
+                  "inputs": "",
+                  "outputs": ""
+                }
+              ],
+              "xml": ""
+            }
+          ],
+          "declarations": [],
+          "configurationIssues": [],
+          "ladderAlternatives": [
+            {
+              "file": "shiftCyclic.ld",
+              "networks": [
+                {
+                  "id": "cfaace28-900a-4b41-84c5-0d571008f129",
+                  "label": "shift change bit for fltmode",
+                  "mode": "elements",
+                  "relation": "presence",
+                  "relativeTo": "",
+                  "elements": [
+                    {
+                      "kind": "contact",
+                      "type": "open",
+                      "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "set",
+                      "name": "MC_SHIFT_CHANGE_RESET_POWER",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "reset",
+                      "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    }
+                  ],
+                  "xml": ""
+                }
+              ]
+            },
+            {
+              "file": "shiftCyclic.ld",
+              "networks": [
+                {
+                  "id": "07b8a461-5af5-44eb-95d0-822e13734aee",
+                  "label": "shift change bit for fltmode",
+                  "mode": "elements",
+                  "relation": "before",
+                  "relativeTo": "bad309c0-8b7b-443b-aa8a-08b32f4c1fd7",
+                  "elements": [
+                    {
+                      "kind": "contact",
+                      "type": "open",
+                      "name": "TRUE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "set",
+                      "name": "MC_SHIFT_CHANGE_RESET_POWER",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    }
+                  ],
+                  "xml": ""
+                },
+                {
+                  "id": "bad309c0-8b7b-443b-aa8a-08b32f4c1fd7",
+                  "label": "Reference for shift change bit for fltmode",
+                  "mode": "elements",
+                  "relation": "presence",
+                  "relativeTo": "",
+                  "elements": [
+                    {
+                      "kind": "contact",
+                      "type": "open",
+                      "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "reset",
+                      "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    }
+                  ],
+                  "xml": ""
+                }
+              ]
+            },
+            {
+              "file": "mc_shiftCyclic.ld",
+              "networks": [
+                {
+                  "id": "9d175d0b-9c2a-4743-ae88-cfb26815d3a6",
+                  "label": "shift change bit for fltmode",
+                  "mode": "elements",
+                  "relation": "before",
+                  "relativeTo": "f28461d9-2e9e-4052-bde7-1eea21d2a7d1",
+                  "elements": [
+                    {
+                      "kind": "contact",
+                      "type": "open",
+                      "name": "TRUE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "set",
+                      "name": "MC_SHIFT_CHANGE_RESET_POWER",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    }
+                  ],
+                  "xml": ""
+                },
+                {
+                  "id": "f28461d9-2e9e-4052-bde7-1eea21d2a7d1",
+                  "label": "Reference for shift change bit for fltmode",
+                  "mode": "elements",
+                  "relation": "presence",
+                  "relativeTo": "",
+                  "elements": [
+                    {
+                      "kind": "contact",
+                      "type": "open",
+                      "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "reset",
+                      "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    }
+                  ],
+                  "xml": ""
+                }
+              ]
+            },
+            {
+              "file": "shift.prg",
+              "networks": [
+                {
+                  "id": "dcbe4b07-496b-487d-bf8a-6cdb60821d07",
+                  "label": "shift change bit for fltmode",
+                  "mode": "elements",
+                  "relation": "presence",
+                  "relativeTo": "46ecb47c-f0cb-47a0-a5c2-07ebcb9a6ee1",
+                  "elements": [
+                    {
+                      "kind": "contact",
+                      "type": "open",
+                      "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "set",
+                      "name": "MC_SHIFT_CHANGE_RESET_POWER",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "reset",
+                      "name": "MC_SHIFT_REPORT.SHIFT_CHANGE",
+                      "position": "",
+                      "inputs": "",
+                      "outputs": ""
+                    }
+                  ],
+                  "xml": ""
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "networks": [],
+      "declarations": []
+    }
+  ],
+  "version": "1.0",
+  "enabled": true,
+  "reviewStatus": "Engineer reviewed",
+  "configurationFormat": "grouped-v1",
+  "needsRuleConfiguration": false
+}

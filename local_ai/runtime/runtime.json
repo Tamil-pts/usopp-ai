@@ -1,0 +1,6 @@
+{
+  "release": "b11475",
+  "source": "https://github.com/ggml-org/llama.cpp/releases/download/b11475/llama-b11475-bin-win-cpu-x64.zip",
+  "sha256": "1e0d0ed71d143bde3b2ea45d65879eae9b72998cfd5ace4d6aa9570c789be6a7",
+  "architecture": "Windows x64 CPU"
+}

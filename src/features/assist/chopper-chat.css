@@ -1,0 +1,105 @@
+.chopperWorkspace .chopperChat{grid-template-rows:auto minmax(300px,1fr) auto auto auto;min-width:0}.chopperMessages{min-width:0;scroll-behavior:smooth}.chopperMessage>div{min-width:0;overflow-wrap:anywhere}.chopperMessage.withLog{max-width:100%;width:100%;align-items:flex-start}.chopperMessage.withLog>div{flex:1}.chopperMessage.withLog p{white-space:pre-wrap}.chatLogResult{display:grid;gap:12px;margin-top:14px}.chatLogResult p{margin:0}.chatLogResult small{color:var(--muted)}.chatLogResult pre{max-height:300px;overflow:auto;white-space:pre-wrap}.chatLogResult select{max-width:100%;color:var(--text);background:var(--panel);border:1px solid var(--line2);padding:8px;border-radius:6px}.chatLogResult .logTable td{white-space:pre-wrap}.chatLogResult .logTable td small{display:block}.chatResultChoices{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.chatResultChoices label{display:grid;gap:5px;min-width:130px;max-width:100%}.chatResultChoices input{width:auto}.chatFriendlyChoices{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.chatCopy{display:block;margin-top:8px;border:0;background:transparent;color:var(--accent);cursor:pointer;padding:4px 0}.chopperAttachments{display:flex;flex-wrap:wrap;gap:8px;padding:0 14px}.chatAttachment{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:7px 9px;margin:8px 0;background:var(--panel2);max-width:100%}.chatAttachment span{min-width:0;overflow-wrap:anywhere}.chatAttachment small{display:block;color:var(--muted)}.chatAttachment button{border:0;background:transparent;color:var(--text);cursor:pointer}.chopperComposer.unifiedComposer{grid-template-columns:auto minmax(0,1fr) auto}.unifiedComposer .chatAttachButton{align-self:start}.chopperSideSection summary{cursor:pointer;margin-bottom:8px}.chopperSideSection small{overflow-wrap:anywhere}.chatLogResult .logResultText{color:var(--text);background:var(--panel);min-height:200px}.chatLogResult .logTable{max-height:400px}.chatLogResult .logTable table{min-width:650px}
+@media(max-width:760px){.chopperWorkspace{grid-template-columns:1fr}.chopperSidebar{display:block}.chopperSideSection{display:flex;flex-wrap:wrap;gap:6px}.chopperSideSection>span{width:100%}.chopperLearningBadge{display:none}.chopperMessage{max-width:95%}.chopperChat header i{display:none}.chopperComposer.unifiedComposer{grid-template-columns:auto minmax(0,1fr)}.unifiedComposer>button:last-of-type{grid-column:2;justify-self:end}.chatResultChoices label{flex:1}.chopperMessages{max-height:650px}}
+
+.chatPromptSuggestions{padding:6px 14px 12px;margin-top:0}.chopperTyping span{white-space:normal}.chopperSideSection label{font-size:12px;display:block;margin-bottom:8px}
+.unifiedComposer{position:relative}.chatAttachmentMenu{position:absolute;bottom:100%;left:10px;display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--panel,#fff);border:1px solid var(--line,#cbd5e1);box-shadow:0 8px 25px #0002;z-index:15;border-radius:10px}.chatAttachmentMenu .btn{text-align:left}
+
+/* Chopper's welcome and conversation share the reference's dark green palette. */
+.workspaceApp .assistantMain { background:#080d0c; }
+.workspaceApp .assistantContent {
+  --bg:#080d0c;--panel:#0f1715;--panel2:#16201d;--line:#293d36;--line2:#3c5148;
+  --text:#e9f1ed;--muted:#a5b9ae;--faint:#87a294;--accent:#40deb2;--accentbg:#123b2c;
+  --pass:#65ddb0;--passbg:#153629;--fail:#ffa79d;--failbg:#3c211f;--warn:#f2cc8e;--warnbg:#382d1c;
+  min-height:100%;color:var(--text);padding:clamp(20px,3vw,44px);
+}
+.workspaceApp .assistantPageHeading { padding:6px 0 12px;margin-bottom:20px; }
+.workspaceApp .assistantContent .assistantPageHeading h1 { font-size:clamp(28px,3.3vw,44px);letter-spacing:-1.2px;line-height:1.2;font-weight:500;margin:16px 0; }
+.workspaceApp .assistantContent .assistantPageHeading .eyebrow { color:var(--accent);letter-spacing:2px;font-size:11px; }
+.workspaceApp .assistantContent .assistantPageHeading p { color:var(--muted);font-size:14px; }
+.assistantWorkspace .ruleWorkspaceTabs { gap:8px;margin-bottom:20px; }
+.assistantWorkspace .ruleWorkspaceTabs button { color:var(--muted);border-color:var(--line);background:transparent;border-radius:7px; }
+.assistantWorkspace .ruleWorkspaceTabs button.active { color:var(--accent);border-color:#397560;background:#12382b;box-shadow:none; }
+.chopperInterface { min-width:0; }
+.chopperConnectionBar { margin:0 0 14px;padding:11px 14px;border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--muted); }
+.chopperConnectionBar summary { color:var(--muted);font-size:12px; }
+.chopperConnectionBar .actions { margin-top:12px;align-items:center; }
+.chopperConnectionBar small { font-size:11px;line-height:1.6; }
+.chopperInterface .chopperWorkspace { grid-template-columns:226px minmax(0,1fr);border-color:var(--line);border-radius:12px;overflow:hidden;box-shadow:none;min-height:690px; }
+.chopperInterface .chopperSidebar { background:#073B4C;border-right:1px solid #26566a;padding:18px 14px;color:#e4f0f4;gap:18px; }
+.workspaceApp .chopperInterface .chopperSidebar .newChat { width:100%;justify-content:center;gap:8px;padding:11px 14px;background:#14566a;color:white;border:1px solid #4c8391;border-radius:7px;font-size:13px; }
+.chopperInterface .chopperSidebar .chopperSideSection { border-color:#2b5b6a; }
+.chopperInterface .chopperSidebar .chopperSideSection > span { color:#95bfcc;font-size:10px;letter-spacing:1.5px; }
+.chopperInterface .chopperSidebar :is(.chopperSideSection button,.chopperSideSection summary) { color:#daeaf0;font-size:12px; }
+.chopperInterface .chopperSidebar .chopperSideSection button { min-height:34px;padding:8px 6px; }
+.chopperInterface .chopperSidebar .chopperSideSection button:hover { color:white;background:#124d60; }
+.chopperInterface .chopperSidebar .chopperSideSection small { color:#a8c9d5;font-size:11px;line-height:1.6; }
+.chopperInterface .chopperSidebar .chopperSideSection label { font-size:11px;color:#daeaf0; }
+.chopperInterface .chopperSidebar .chopperSideSection select { width:100%;margin:7px 0;padding:8px;background:#0d4659;border:1px solid #48768b;border-radius:5px;color:#e5f2f7; }
+.chopperInterface .chopperSidebar .chopperSideSection input { accent-color:#54dbb4; }
+.chopperInterface .chopperLearningBadge { background:#0d4659;border-color:#316274;color:#e4f4f8; }
+.chopperInterface .chopperLearningBadge svg { color:#86e9c9; }
+.chopperInterface .chopperLearningBadge span { color:#aecfd9; }
+.chopperInterface .chopperChat { grid-template-rows:auto auto minmax(320px,1fr) auto auto auto;background:var(--bg);min-width:0; }
+.chopperInterface .chopperChat > header { border-bottom:0;padding:18px 24px; }
+.chopperInterface .chopperChat > header b { font-weight:600;font-size:15px; }
+.chopperInterface .chopperChat > header span { font-size:11px; }
+.chopperInterface :is(.chopperAvatar,.messageAvatar) { background:#103a2c;color:#6be8bd;box-shadow:none;border-radius:9px; }
+.chopperContextBanner { display:flex;align-items:center;gap:12px;margin:0 24px 4px;padding:14px 16px;background:#19231f;border:1px solid #304339;border-radius:8px;color:var(--muted);font-size:12px;line-height:1.6; }
+.chopperContextBanner svg { color:var(--accent);flex:none; }
+.chopperContextBanner b { color:#cbe1d4;font-weight:500; }
+.chopperInterface .chopperMessages { background:none;padding:24px;max-height:600px;gap:22px;scrollbar-color:#436656 #101b16; }
+.chopperInterface .chopperMessage { max-width:90%;font-size:14px;gap:10px; }
+.chopperInterface .chopperMessage > div { padding:14px 17px;background:#101c16;border-color:#304638;border-radius:10px; }
+.chopperInterface .chopperMessage.user > div { background:#153d31;border-color:#326652;color:var(--text); }
+.chopperInterface .chopperMessage.withLog { max-width:100%; }
+.chopperInterface .chopperMessages.isWelcome { min-height:420px;max-height:none;justify-content:center; }
+.chopperWelcome { text-align:center;display:flex;flex-direction:column;align-items:center;gap:0;max-width:850px;margin:24px auto 20px;width:100%; }
+.chopperWelcomeIcon { color:var(--accent);margin-bottom:18px;flex:none; }
+.chopperWelcomeEyebrow { color:#91b1a0;font:10px/1.5 'IBM Plex Mono',Consolas,monospace;letter-spacing:1.8px; }
+.chopperWelcome h2 { color:var(--text);font-size:clamp(25px,2.7vw,36px);letter-spacing:-1px;line-height:1.3;font-weight:500;margin:16px 0 18px; }
+.chopperWelcome p { max-width:60ch;margin:0;color:var(--muted);font-size:15px;line-height:1.85; }
+.chopperWelcome p strong { color:#d8ecdf;font-weight:500; }
+.chopperWelcomePrompts { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%;margin:32px 0 26px; }
+.workspaceApp .chopperInterface .chopperWelcomePrompts .btn { padding:16px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font-size:12px;line-height:1.6;background:transparent;border-color:#344a3e;color:#e1eee5;border-radius:7px; }
+.chopperWelcomePrompts svg { color:var(--accent);flex:none; }
+.workspaceApp .chopperInterface .chopperExplore { display:inline-flex;align-items:center;justify-content:center;gap:16px;background:transparent;border-color:#344a3e;color:var(--text);font-size:14px;padding:12px 20px;border-radius:8px; }
+.workspaceApp .chopperInterface .btn:hover { border-color:#68ccaa;color:#e9fff1;background:#142b20; }
+.workspaceApp .chopperInterface .btn:focus-visible,.chopperInterface textarea:focus-visible { outline:2px solid var(--accent);outline-offset:3px; }
+.workspaceApp .chopperInterface .btn:disabled { opacity:.45;cursor:not-allowed; }
+.chopperInterface .chopperAttachments { padding:0 24px; }
+.chopperInterface .chatPromptSuggestions { padding:8px 24px 16px;gap:7px; }
+.workspaceApp .chopperInterface .chatPromptSuggestions .btn { color:var(--muted);background:transparent;border-color:#344a3e;font-size:11px;padding:6px 10px;border-radius:6px;min-height:32px; }
+.chopperInterface .chopperComposer { padding:16px 24px 20px;gap:10px;border-top-color:var(--line); }
+.chopperInterface .chopperComposer textarea { border-color:#344a3e;border-radius:9px;background:#141f18;min-height:68px;font-size:13px;color:var(--text); }
+.chopperInterface .chopperComposer textarea::placeholder { color:#99afa0; }
+.workspaceApp .chopperInterface .chopperComposer .btn { border-color:#344a3e;background:#142b20;color:#b9dfcb;border-radius:8px;padding:10px 12px; }
+.workspaceApp .chopperInterface .chopperComposer .btn.primary { background:#37b48a;border-color:#37b48a;color:#061c13;display:flex;align-items:center;gap:6px;font-weight:600; }
+.chopperInterface .chopperComposer small { color:var(--faint);font-size:10px;line-height:1.6; }
+.chopperInterface .chopperTyping { font-size:12px;line-height:1.7;color:#b5d8c5;padding:4px 0; }
+.chopperInterface .assistSource { color:#91b1a0;font-size:10px;line-height:1.7; }
+@media(max-width:1100px) {
+  .chopperInterface .chopperWorkspace { grid-template-columns:200px minmax(0,1fr); }
+  .chopperWelcomePrompts { grid-template-columns:minmax(0,1fr);gap:8px;max-width:440px; }
+  .chopperInterface .chopperMessages.isWelcome { min-height:500px; }
+}
+@media(max-width:800px) {
+  .chopperInterface .chopperWorkspace { grid-template-columns:minmax(0,1fr);min-height:0; }
+  .chopperInterface .chopperSidebar { display:block;border-right:0;border-bottom:1px solid #26566a;padding:12px 16px; }
+  .chopperInterface .chopperSidebar .newChat { width:auto; }
+  .chopperInterface .chopperSidebar .chopperSideSection { display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid #2b5b6a;padding-top:10px;margin-top:12px; }
+  .chopperInterface .chopperSidebar .chopperSideSection > span { width:100%; }
+  .chopperInterface .chopperSidebar details.chopperSideSection { display:block; }
+  .chopperInterface .chopperLearningBadge { display:none; }
+  .chopperInterface .chopperMessages { padding:20px 16px; }
+  .chopperInterface .chopperMessages.isWelcome { min-height:420px; }
+  .chopperInterface .chopperChat > header { padding:18px 16px; }
+  .chopperContextBanner { margin:0 16px 4px;font-size:11px; }
+  .chopperInterface :is(.chopperAttachments,.chatPromptSuggestions) { padding-left:16px;padding-right:16px; }
+  .chopperInterface .chopperComposer { padding:14px 16px; }
+  .chopperInterface .chopperChat header i { display:none; }
+  .chopperInterface .chopperComposer.unifiedComposer { grid-template-columns:auto minmax(0,1fr); }
+  .chopperInterface .chopperComposer > button:last-of-type { grid-column:2;justify-self:end; }
+  .chopperWelcome { margin:16px auto; }
+  .chopperWelcome p { font-size:13px; }
+}
+@media(prefers-reduced-motion:reduce) { .chopperInterface .chopperMessages { scroll-behavior:auto; } }

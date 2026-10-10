@@ -1,0 +1,129 @@
+{
+  "version": "1.0",
+  "mappings": [
+    {
+      "plc_parameter": "User Login Level",
+      "plc_tag": "current_password_level",
+      "metadata_parameter": "User Login Level",
+      "plc_type": "UINT",
+      "metadata_type": "USINT",
+      "allowed": true,
+      "reason": "Approved user-level value labels supplied for metadata Sheet2.",
+      "mapping": [
+        {
+          "PLCVAL": 0,
+          "SHOWNVAL": "USER LEVEL - 0"
+        },
+        {
+          "PLCVAL": 1,
+          "SHOWNVAL": "USER LEVEL - 1"
+        },
+        {
+          "PLCVAL": 2,
+          "SHOWNVAL": "USER LEVEL - 2"
+        },
+        {
+          "PLCVAL": 3,
+          "SHOWNVAL": "USER LEVEL - 3"
+        },
+        {
+          "PLCVAL": 4,
+          "SHOWNVAL": "USER LEVEL - 4"
+        },
+        {
+          "PLCVAL": 5,
+          "SHOWNVAL": "USER LEVEL - 5"
+        },
+        {
+          "PLCVAL": 6,
+          "SHOWNVAL": "USER LEVEL - 6"
+        },
+        {
+          "PLCVAL": 7,
+          "SHOWNVAL": "USER LEVEL - 7"
+        },
+        {
+          "PLCVAL": 8,
+          "SHOWNVAL": "USER LEVEL - 8"
+        },
+        {
+          "PLCVAL": 9,
+          "SHOWNVAL": "MASTER ID"
+        },
+        {
+          "PLCVAL": 10,
+          "SHOWNVAL": "ASSEMBLY"
+        },
+        {
+          "PLCVAL": 11,
+          "SHOWNVAL": "SPINCONNECT"
+        }
+      ],
+      "machine_department": "All"
+    },
+    {
+      "plc_parameter": "Machine status",
+      "plc_tag": "MMS_MACHINE_STATUS",
+      "metadata_parameter": "Machine status",
+      "machine_department": "Carding",
+      "plc_type": "UINT",
+      "metadata_type": "UINT",
+      "allowed": true,
+      "reason": "Approved user-level value labels supplied for metadata Sheet2.",
+      "mapping": [
+        {
+          "PLCVAL": "11",
+          "SHOWNVAL": "MACHINE DOFF"
+        },
+        {
+          "PLCVAL": "8",
+          "SHOWNVAL": "MACHINE ON"
+        },
+        {
+          "PLCVAL": "0",
+          "SHOWNVAL": "MACHINE OFF"
+        }
+      ]
+    },
+    {
+      "plc_parameter": "Machine Status",
+      "plc_tag": "MMS_MACHINE_STATUS",
+      "metadata_parameter": "Machine Status",
+      "machine_department": "All",
+      "plc_type": "INT",
+      "metadata_type": "INT",
+      "allowed": true,
+      "reason": "Approved user-level value labels supplied for metadata Sheet2.",
+      "mapping": [
+        {
+          "PLCVAL": "1",
+          "SHOWNVAL": "MACHINE ON"
+        },
+        {
+          "PLCVAL": "0",
+          "SHOWNVAL": "MACHINE OFF"
+        }
+      ]
+    }
+  ],
+  "entry_schema": {
+    "plc_parameter": "PLC logic comment / parameter",
+    "plc_tag": "PLC tag / variable for traceability",
+    "metadata_parameter": "Metadata Parameter",
+    "plc_type": "BOOL or other PLC type",
+    "metadata_type": "Metadata type, e.g. USINT",
+    "allowed": true,
+    "reason": "Engineering reason for the mapping",
+    "mapping": [
+      {
+        "PLCVAL": 0,
+        "SHOWNVAL": "OFF"
+      },
+      {
+        "PLCVAL": 1,
+        "SHOWNVAL": "ON"
+      }
+    ]
+  },
+  "description": "Approved dropdown and shown-value mappings. IS_SHOWN_VALUE_DIFFERENT=YES in metadata activates Sheet2 TAG_CODE/PLCVAL/SHOWNVAL validation."
+}

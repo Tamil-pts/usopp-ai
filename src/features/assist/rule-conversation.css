@@ -1,0 +1,39 @@
+.ruleConversationWorkspace {font-size:16px;line-height:1.6}
+.ruleConversationWorkspace .chopperChatHead {padding:20px 24px}
+.ruleConversationWorkspace .chopperChatHead b {font-size:20px}
+.ruleConversationWorkspace .chopperChatHead span,.ruleConversationWorkspace small {font-size:14px}
+.ruleConversationWorkspace .btn,.ruleConversationWorkspace .chip,.ruleConversationWorkspace select {font-size:15px;min-height:42px}
+.conversationContext {display:flex;gap:12px;flex-wrap:wrap;padding:14px 24px;border-bottom:1px solid var(--line);color:var(--muted)}
+.conversationContext b {color:var(--accent)}
+.ruleConversationWorkspace .ruleConversationLog {padding:24px;gap:20px;min-height:180px;max-height:48vh}
+.ruleConversationWorkspace .chopperBubble,.ruleConversationWorkspace .engineerBubble {font-size:17px;line-height:1.7;padding:18px 22px;border-radius:16px;max-width:90%;white-space:pre-wrap}
+.ruleConversationWorkspace .engineerBubble {max-width:78%}
+.ruleConversationWorkspace .answerEdit {font-size:13px;min-height:30px}
+.ruleConversationWorkspace .conversationOptions {padding:20px 24px;gap:10px}
+.ruleConversationWorkspace .categoryChoices {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.ruleConversationWorkspace .categoryChoices .chip {border-radius:12px;text-align:left;white-space:normal;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:16px;background:var(--panel);color:var(--text);border:1px solid var(--line2)}
+.categoryChoices .chip small {color:var(--muted);font-weight:400;line-height:1.5}
+.ruleConversationWorkspace .categoryChoices .chip:hover {border-color:var(--accent);background:var(--accentbg)}
+.ruleConversationWorkspace .chopperComposer {padding:24px;gap:12px}
+.answerFieldLabel {grid-column:1/-1;font-weight:600}
+.ruleConversationWorkspace .chopperComposer textarea {font:16px/1.6 Consolas,monospace;min-height:130px;max-height:400px;background:var(--panel);padding:16px}
+.ruleConversationWorkspace .logicExtensionChoices {padding:20px 24px;gap:14px}
+.ruleConversationWorkspace .logicExtensionChoice {padding:20px;min-height:120px}
+.ruleConversationWorkspace .logicExtensionChoice b {font-size:17px}
+.ruleConversationWorkspace .logicExtensionChoice small {font-size:14px;line-height:1.6}
+.logicExtensionChoice:first-child {border-color:#6697ee}
+.logicExtensionChoice:nth-child(2) {border-color:#dda744}
+.questionExample {margin-top:12px;font-size:15px}
+.questionExample summary {cursor:pointer;color:var(--accent)}
+.questionExample pre {overflow:auto;white-space:pre-wrap;font:15px/1.6 Consolas,monospace;padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.ruleConversationWorkspace .conversationReview {padding:24px}
+.ruleConversationWorkspace .conversationReview article {padding:24px;border-radius:14px;margin-bottom:24px}
+.ruleConversationWorkspace .conversationReview h3 {font-size:24px}
+.ruleConversationWorkspace .conversationReview textarea {font:15px/1.7 Consolas,monospace;min-height:150px}
+.ruleConversationWorkspace .conversationReview input:not([type=checkbox]) {font-size:16px;min-height:42px}
+.ruleSaveState {padding:14px 18px;border:1px solid var(--line);border-radius:10px;background:var(--accentbg)}
+.ruleConversationWorkspace .draftRuleSummary {font-size:15px}
+.ruleConversationWorkspace .draftRuleSummary dd {overflow-wrap:anywhere}
+.ruleConversationWorkspace .btn:focus-visible,.ruleConversationWorkspace .chip:focus-visible,.logicExtensionChoice:focus-visible {outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:900px){.ruleConversationWorkspace .categoryChoices{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.ruleConversationWorkspace .categoryChoices,.ruleConversationWorkspace .logicExtensionChoices{grid-template-columns:1fr}.ruleConversationWorkspace .chopperBubble,.ruleConversationWorkspace .engineerBubble{max-width:100%}.ruleConversationWorkspace .chopperComposer{grid-template-columns:1fr}.ruleConversationWorkspace .ruleDraftPicker label{flex-direction:column;align-items:stretch}.ruleConversationWorkspace .conversationReview,.ruleConversationWorkspace .conversationReview article{padding:14px}}

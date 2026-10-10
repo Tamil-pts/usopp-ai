@@ -1,0 +1,45 @@
+{
+  "id": "BR_RULE-005",
+  "name": "Product Code",
+  "description": "need to check the Blow_room_product_code plc tag is available in all group code except 11",
+  "version": "1.0",
+  "enabled": true,
+  "reviewStatus": "Engineer reviewed",
+  "machineDepartment": "Blow Room",
+  "machineModels": [
+    "All"
+  ],
+  "machineScope": [
+    "Blow Room"
+  ],
+  "category": "Group code wise parameter check",
+  "featureName": "Spin Connect",
+  "featureId": "spin_connect",
+  "ruleScope": "Spin Connect",
+  "subroutine": "mms_nw_rCyclic.st",
+  "logicAlternatives": [
+    "nw_i :=5;\n  memcpy(ADR(nw_snd_buffer[nw_i]),ADR(Blow_room_product_code),2);(*Product code*)          \t\t\t   \nnw_i := nw_i + 2;"
+  ],
+  "exactLogic": "nw_i :=5;\n  memcpy(ADR(nw_snd_buffer[nw_i]),ADR(Blow_room_product_code),2);(*Product code*)          \t\t\t   \nnw_i := nw_i + 2;",
+  "expected": "Every active Group Code except 11 starts with the two-byte Blow_room_product_code mapping.",
+  "variable": "Blow_room_product_code",
+  "allowedDatatypes": [
+    "INT"
+  ],
+  "sourceFiles": [
+    "mms_nw_rCyclic.st"
+  ],
+  "groupCodeMode": "exclude",
+  "groupCodes": [
+    11
+  ],
+  "kind": "product_code_all_groups",
+  "excludeGroupCodes": [
+    11
+  ],
+  "sourceFile": "mms_nw_rCyclic.st",
+  "moduleId": "BR_RULE-005",
+  "featureIds": [
+    "spin_connect"
+  ]
+}

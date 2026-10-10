@@ -1,0 +1,29 @@
+[Unit]
+Description=uSOPp engineering workspace
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=usopp
+Group=usopp
+WorkingDirectory=/opt/usopp/current
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONUTF8=1
+Environment=USOPP_NO_BROWSER=1
+EnvironmentFile=/etc/usopp/usopp.env
+ExecStartPre=/opt/usopp/current/.venv-ubuntu/bin/python /opt/usopp/current/scripts/cloud_admin.py --check
+# One backend process keeps in-memory jobs and the shared concurrency limits consistent.
+ExecStart=/opt/usopp/current/.venv-ubuntu/bin/python -m uvicorn backend.app:app --host 127.0.0.1 --port 8201 --workers 1 --proxy-headers --forwarded-allow-ips 127.0.0.1 --no-access-log --timeout-graceful-shutdown 900
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=920
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/usopp
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "description": "Approved fallback limits for PLC packet parameters when an HMI page does not declare MinValue or MaxValue. HMI limits always take priority.",
+  "mappings": [],
+  "entry_schema": {
+    "plc_parameter": "Exact PLC logic comment / parameter name",
+    "plc_tag": "Exact PLC variable / tag",
+    "min": "Approved minimum value",
+    "max": "Approved maximum value",
+    "reason": "Engineering source or approval reference"
+  }
+}

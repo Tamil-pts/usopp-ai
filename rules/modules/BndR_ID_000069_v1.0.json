@@ -1,0 +1,176 @@
+{
+  "id": "BndR_ID_000069",
+  "name": "shift parameters added for Spin connect 2.0 CARD",
+  "kind": "structured_requirements",
+  "category": "Logic traceability in various subroutines",
+  "description": "Trace parameters 103-111, 113 and 114 from fltmode input assignments and declarations to 4-byte SpinConnect packets: GC40 current shift; GC50-GC110 previous shifts 1-7. Require the correct parameter index, shift array and 4-byte cursor advance in every group. Index 112 is excluded because its input assignment is commented out in Project 2.",
+  "expected": "Trace parameters 103-111, 113 and 114 from fltmode input assignments and declarations to 4-byte SpinConnect packets: GC40 current shift; GC50-GC110 previous shifts 1-7. Require the correct parameter index, shift array and 4-byte cursor advance in every group. Index 112 is excluded because its input assignment is commented out in Project 2.",
+  "featureName": "Spin Connect",
+  "featureId": "spin_connect",
+  "machineScope": [
+    "Carding"
+  ],
+  "machineModels": [
+    "All"
+  ],
+  "checks": [
+    {
+      "type": "logic",
+      "file": "fltmodeCyclic.st",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        "\tMC_SHIFT_REPORT.INPUT_PARAMETERS[91] := PRE_MACHINE_DELIVERY_RATE;\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[92] :=  PMS_Production_Efficiency;\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[101] := PMS_Production_Loss;\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[102] := PMS_Machine_Utilization;\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[103] := PMS_Production_Loss_Kg;\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[104] := PMS_UKg;\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[105] := PMS_Total_Stops_Shift;\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[106] := HMI_AIR_CONSUMPTION_SHIFT_MAX;\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[107] := shift_thickplace;   (*No Of ThickPlace*)\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[108] := UINT_TO_REAL (CO_RUN_LENGTH);      (*Total Can Length*)\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[109] := UINT_TO_REAL (HMI_CAN_LENGTH );    (*Set can length*)\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[110] := shift_can_length;(*sHIFT can length*)\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[111] := HMI_RHANK;(*Required Hank*)\n\tMC_SHIFT_REPORT.INPUT_PARAMETERS[112] := HMI_MHANK;  (*Meaured Hank*)   "
+      ],
+      "declarationText": "",
+      "declarationFile": "Logical/SpinConnect/PMS_Variables.var",
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            40
+          ],
+          "alternatives": [
+            "\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[91]),4);(*Average Delivery*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[92]),4);(*Production Efficiency*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[101]),4);(*Production Loss %*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[102]),4);(*Machine Utilization*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[103]),4);(*Production Loss Kg*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[104]),4);(*UKG Energy Monitoring*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[105]),4);(*Total Stops/Shifts*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[106]),4);(*Air cummulative per shift *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[107]),4);(*no.of thick place*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[108]),4);(*actual can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[109]),4);(*set can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[110]),4);(*sHIFT can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[111]),4);(*required hank *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[112]),4);(*maesured hank*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": [],
+          "crossCheckMode": "all"
+        },
+        {
+          "type": "logic",
+          "file": "mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            50
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[91]),4);(*Average Delivery*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[92]),4);(*Production Efficiency*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[101]),4);(*Production Loss %*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[102]),4);(*Machine Utilization*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[103]),4);(*Production Loss Kg*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[104]),4);(*UKG Energy Monitoring*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[105]),4);(*Total Stops/Shifts*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[106]),4);(*Air cummulative per shift *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[107]),4);(*no.of thick place*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[108]),4);(*actual can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[109]),4);(*set can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[110]),4);(*sHIFT can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[111]),4);(*required hank *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[112]),4);(*maesured hank*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": [],
+          "crossCheckMode": "all"
+        },
+        {
+          "type": "logic",
+          "file": "mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            60
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[91]),4);(*Average Delivery*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[92]),4);(*Production Efficiency*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[101]),4);(*Production Loss %*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[102]),4);(*Machine Utilization*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[103]),4);(*Production Loss Kg*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[104]),4);(*UKG Energy Monitoring*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[105]),4);(*Total Stops/Shifts*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[106]),4);(*Air cummulative per shift *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[107]),4);(*no.of thick place*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[108]),4);(*actual can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[109]),4);(*set can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[110]),4);(*sHIFT can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[111]),4);(*required hank *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[112]),4);(*maesured hank*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": [],
+          "crossCheckMode": "all"
+        },
+        {
+          "type": "logic",
+          "file": "mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            70
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[91]),4);(*Average Delivery*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[92]),4);(*Production Efficiency*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[101]),4);(*Production Loss %*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[102]),4);(*Machine Utilization*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[103]),4);(*Production Loss Kg*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[104]),4);(*UKG Energy Monitoring*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[105]),4);(*Total Stops/Shifts*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[106]),4);(*Air cummulative per shift *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[107]),4);(*no.of thick place*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[108]),4);(*actual can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[109]),4);(*set can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[110]),4);(*sHIFT can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[111]),4);(*required hank *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[112]),4);(*maesured hank*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": [],
+          "crossCheckMode": "all"
+        },
+        {
+          "type": "logic",
+          "file": "mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            80
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[91]),4);(*Average Delivery*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[92]),4);(*Production Efficiency*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[101]),4);(*Production Loss %*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[102]),4);(*Machine Utilization*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[103]),4);(*Production Loss Kg*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[104]),4);(*UKG Energy Monitoring*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[105]),4);(*Total Stops/Shifts*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[106]),4);(*Air cummulative per shift *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[107]),4);(*no.of thick place*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[108]),4);(*actual can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[109]),4);(*set can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[110]),4);(*sHIFT can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[111]),4);(*required hank *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[112]),4);(*maesured hank*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": [],
+          "crossCheckMode": "all"
+        },
+        {
+          "type": "logic",
+          "file": "mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            90
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[91]),4);(*Average Delivery*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[92]),4);(*Production Efficiency*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[101]),4);(*Production Loss %*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[102]),4);(*Machine Utilization*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[103]),4);(*Production Loss Kg*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[104]),4);(*UKG Energy Monitoring*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[105]),4);(*Total Stops/Shifts*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[106]),4);(*Air cummulative per shift *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[107]),4);(*no.of thick place*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[108]),4);(*actual can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[109]),4);(*set can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[110]),4);(*sHIFT can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[111]),4);(*required hank *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[112]),4);(*maesured hank*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": [],
+          "crossCheckMode": "all"
+        },
+        {
+          "type": "logic",
+          "file": "mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            100
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[91]),4);(*Average Delivery*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[92]),4);(*Production Efficiency*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[101]),4);(*Production Loss %*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[102]),4);(*Machine Utilization*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[103]),4);(*Production Loss Kg*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[104]),4);(*UKG Energy Monitoring*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[105]),4);(*Total Stops/Shifts*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[106]),4);(*Air cummulative per shift *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[107]),4);(*no.of thick place*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[108]),4);(*actual can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[109]),4);(*set can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[110]),4);(*sHIFT can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[111]),4);(*required hank *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[112]),4);(*maesured hank*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": [],
+          "crossCheckMode": "all"
+        },
+        {
+          "type": "logic",
+          "file": "mms_nw_rCyclic.st",
+          "groupMode": "selected",
+          "groupCodes": [
+            110
+          ],
+          "alternatives": [
+            "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[91]),4);(*Average Delivery*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[92]),4);(*Production Efficiency*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[101]),4);(*Production Loss %*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[102]),4);(*Machine Utilization*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[103]),4);(*Production Loss Kg*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[104]),4);(*UKG Energy Monitoring*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[105]),4);(*Total Stops/Shifts*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[106]),4);(*Air cummulative per shift *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[107]),4);(*no.of thick place*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[108]),4);(*actual can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[109]),4);(*set can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[110]),4);(*sHIFT can length*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[111]),4);(*required hank *)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[112]),4);(*maesured hank*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 4;\n\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "crossChecks": [],
+          "acceptedLogicAlternatives": [],
+          "declarations": [],
+          "crossCheckMode": "all"
+        }
+      ],
+      "acceptedLogicAlternatives": [],
+      "declarations": [],
+      "crossCheckMode": "all"
+    }
+  ],
+  "version": "1.0",
+  "enabled": true,
+  "reviewStatus": "Engineer reviewed",
+  "configurationFormat": "grouped-v1",
+  "needsRuleConfiguration": false,
+  "standardId": "BndR_ID_000069"
+}

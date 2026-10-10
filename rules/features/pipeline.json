@@ -1,0 +1,29 @@
+{
+  "id": "my_pipeline",
+  "name": "My pipeline",
+  "machineDepartment": "Blow Room",
+  "executionMode": "graph",
+  "stages": [
+    {
+      "id": "d45dd131-4d23-43e4-bbda-4cb61be8d02c",
+      "featureId": "spin_connect",
+      "label": "Spin Connect",
+      "ruleIds": [
+        "BR_RULE-005",
+        "R-453B5E3DEA8041C79DD92639CFEC9550",
+        "R-23A8CA72BBE84FE7A57BADA2861B979E",
+        "R-56FDD812DF844C3AB7DDF10FEE18631A"
+      ]
+    }
+  ],
+  "flow": [
+    {
+      "id": "d45dd131-4d23-43e4-bbda-4cb61be8d02c",
+      "kind": "feature"
+    },
+    {
+      "id": "fa310ae8-6313-4d66-be9d-6f7055f709c9",
+      "kind": "end"
+    }
+  ]
+}

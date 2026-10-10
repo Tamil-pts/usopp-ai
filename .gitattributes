@@ -1,0 +1,14 @@
+* text=auto eol=lf
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.png binary
+*.xlsx binary
+*.dll binary
+*.exe binary
+# Preserve original reference-file bytes and their provenance hashes.
+knowledge/** -text

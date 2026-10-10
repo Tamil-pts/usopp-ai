@@ -1,0 +1,99 @@
+/* Readable type and viewport reflow across every workspace. Imported last. */
+/* Fixed navigation palette requested for the shared sidebar. */
+.workspaceApp .rail { background:#073B4C;border-color:#215565;color:#e4f0f4; }
+.workspaceApp .rail .nav button { color:#c6dfe7; }
+.workspaceApp .rail .nav button:hover { background:#124d60;color:#fff; }
+.workspaceApp .rail .nav button.active { background:#1a5969;border-color:#47838d;color:#b4fce3; }
+.workspaceApp .rail .nav button:focus-visible { outline:2px solid #82e9cc;outline-offset:2px; }
+:root { font-size:16px; }
+body { min-width:0; }
+#root,.tableLayoutRoot { width:100%;min-width:0; }
+.workspaceApp { width:100%;height:100vh;height:100dvh;min-width:0;grid-template-columns:104px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);font-size:1rem;line-height:1.5; }
+.workspaceApp .rail { width:auto;min-width:0;min-height:0;overflow-y:auto;padding:14px 8px;display:flex;flex-direction:column; }
+.workspaceApp .nav { width:100%;min-width:0;display:flex;flex-direction:column;flex:1; }
+.workspaceApp .nav .settingsNav { margin-top:auto; }
+.workspaceApp .nav button { font-size:.8125rem;min-height:62px;padding:10px 4px;gap:6px; }
+.workspaceApp .nav svg { width:20px;height:20px; }
+.workspaceApp .top { min-height:64px;min-width:0;flex-wrap:wrap;gap:8px 16px;padding:12px 20px; }
+.workspaceApp .crumb { font-size:.9375rem;overflow-wrap:anywhere; }
+.workspaceApp .top .badge { white-space:normal; }
+.workspaceApp .main { min-height:0;min-width:0; }
+.workspaceApp .content { width:100%;padding:clamp(14px,2vw,28px);min-width:0; }
+.workspaceApp .content > section,.workspaceApp .card { min-width:0; }
+.workspaceApp .pageHead { align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:20px; }
+.workspaceApp .pageHead > div { min-width:0; }
+.workspaceApp .pageHead h1 { font-size:1.625rem;line-height:1.3; }
+.workspaceApp .pageHead p { font-size:.9375rem;max-width:80ch; }
+.workspaceApp .eyebrow { font-size:.8125rem; }
+.workspaceApp :is(.btn,.chip,.compareDarkBtn,.compareRunBtn) { font-size:.875rem;line-height:1.4;min-height:38px;max-width:100%;white-space:normal; }
+.workspaceApp :is(input,select,textarea) { font-size:.9375rem;max-width:100%; }
+.workspaceApp :is(.textInput,.search,.metadataEditInput) { min-width:0; }
+.workspaceApp :is(.btn,.chip) svg { flex-shrink:0; }
+.workspaceApp :is(.actions,.filters,.featureTabs,.seg,.projectContext,.columnRow,.projectActions) { flex-wrap:wrap; }
+.workspaceApp .projectActions { justify-content:space-between;align-items:center;padding:16px;gap:16px; }
+.workspaceApp .toolbar > div { min-width:0;max-width:100%; }
+.workspaceApp .toolbar .search { width:min(290px,100%); }
+.workspaceApp :is(.table,.metadataInlineCell,.metadataEditInput) { font-size:.875rem; }
+.workspaceApp :is(.tableWrap,.metadataWorkbookScroll) { width:100%;max-width:100%;min-width:0; }
+.workspaceApp :is(.table th,.table td) { line-height:1.5; }
+.workspaceApp :is(.inputGrid,.homeFeatures,.settingsGrid,.ruleResults,.detailGrid,.detailSplit,.kbGrid,.compareDarkKnowledge) { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.workspaceApp :is(.inputGrid,.homeFeatures,.settingsGrid,.ruleStudio,.kbGrid,.compareDarkKnowledge) > * { min-width:0; }
+.workspaceApp .kpis { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.workspaceApp .setting { padding:20px; }
+.workspaceApp .setting h3 { font-size:1.0625rem; }
+.workspaceApp .setting p { font-size:.9375rem; }
+.workspaceApp .columnRow > span { min-width:0;font-size:.875rem;overflow-wrap:anywhere; }
+.workspaceApp .kbForm { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.workspaceApp .ruleStudio { grid-template-columns:minmax(210px,.85fr) minmax(0,1.2fr) minmax(0,1fr); }
+.workspaceApp .ruleResult pre,.workspaceApp .rulePreview pre { font-size:.875rem;max-width:100%;overflow:auto; }
+.workspaceApp .chat { min-width:0;min-height:400px; }
+.workspaceApp .bubble { font-size:.9375rem;line-height:1.6;overflow-wrap:anywhere; }
+.workspaceApp .composer { flex-wrap:wrap; }
+.workspaceApp .composer textarea { min-width:0;flex-basis:240px; }
+.workspaceApp .toast { max-width:calc(100vw - 32px);font-size:.875rem;overflow-wrap:anywhere; }
+.workspaceApp :is(.localPath,.selectedPath,.mono,.code,.detailBlock .v) { overflow-wrap:anywhere; }
+.workspaceApp :is(.modalBackdrop,.compareConsoleOverlay) { padding:12px; }
+.workspaceApp .folderBrowser { width:min(800px,100%);max-width:100%;max-height:calc(100dvh - 24px); }
+.workspaceApp .panelHead { flex-wrap:wrap;gap:12px; }
+.workspaceApp .folderBrowser .treeRow { min-width:0;flex-wrap:wrap; }
+.workspaceApp .folderBrowser .treeRow .subtle { font-size:.8125rem; }
+@media(max-width:1200px) {
+  .workspaceApp .ruleStudio { grid-template-columns:minmax(200px,.7fr) minmax(0,1fr); }
+  .workspaceApp .ruleStudio > :last-child { grid-column:1/-1; }
+}
+@media(max-width:950px) {
+  .workspaceApp :is(.inputGrid,.homeFeatures,.settingsGrid,.ruleResults,.assistRuleGrid,.detailGrid,.detailSplit,.kbGrid,.compareDarkKnowledge) { grid-template-columns:minmax(0,1fr); }
+  .workspaceApp .kpis { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .workspaceApp .ruleStudio { grid-template-columns:minmax(0,1fr); }
+  .workspaceApp .ruleStudio > :last-child { grid-column:auto; }
+  .workspaceApp .assistLayout { grid-template-columns:minmax(0,1fr); }
+}
+@media(max-width:760px) {
+  .workspaceApp { grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);grid-template-areas:'top' 'rail' 'main'; }
+  .workspaceApp .rail { padding:6px 10px;overflow:visible;border-right:0;border-bottom:1px solid var(--line); }
+  .workspaceApp .brand { width:46px;height:46px;margin:0; }
+  .workspaceApp .nav { display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px; }
+  .workspaceApp .nav button { min-height:54px;font-size:.8125rem;padding:6px 2px; }
+  .workspaceApp .top { padding:10px 14px; }
+  .workspaceApp .usoppTopLogo { width:34px;height:34px; }
+  .workspaceApp .petrusTopLogo { height:30px;max-width:112px; }
+  .workspaceApp .topSpacer { display:none; }
+  .workspaceApp .top .badge { margin-left:auto; }
+  .workspaceApp .pageHead h1 { font-size:1.375rem; }
+  .workspaceApp :is(.inputCard,.selectionCard,.workbookViewer) { padding:16px; }
+  .workspaceApp .inputCard .actions { gap:8px; }
+  .workspaceApp .projectActions > .actions { width:100%; }
+  .workspaceApp .projectActions .generationButton,.workspaceApp .projectActions .validationButton { flex:1 1 170px; }
+  .workspaceApp .kbForm { grid-template-columns:minmax(0,1fr); }
+  .workspaceApp .bubble { max-width:95%; }
+}
+@media(max-width:480px) {
+  .workspaceApp .nav { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .workspaceApp .nav button { flex-direction:row;min-height:38px;justify-content:center;gap:7px; }
+  .workspaceApp .content { padding:12px; }
+  .workspaceApp .top { min-height:54px; }
+  .workspaceApp .top .badge { font-size:.8125rem; }
+  .workspaceApp .crumb { display:none; }
+  .workspaceApp .petrusTopLogo { height:27px;max-width:96px; }
+  .workspaceApp .featureTabs .chip { padding:8px 10px; }
+}

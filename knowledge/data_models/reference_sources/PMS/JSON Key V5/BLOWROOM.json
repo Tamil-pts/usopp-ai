@@ -1,0 +1,635 @@
+{
+	"controleCode": "BLOWROOM",
+	"keysList": {
+		"pms_BLOWROOM_shift": [
+			{
+				"tagName": "Time Stamp Actual",
+				"dataType": "TIMESTAMP",
+				"groupCode": "50",
+				"tdEngineKey": "ts",
+				"mongoKey": "ts_act",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Adjusted Time Stamp",
+				"dataType": "TIMESTAMP",
+				"groupCode": "50",
+				"tdEngineKey": "null",
+				"mongoKey": "time_stamp",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Tenant Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "50",
+				"tdEngineKey": "tenant",
+				"mongoKey": "tenant_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Business Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "50",
+				"tdEngineKey": "business",
+				"mongoKey": "business_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Asset Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "50",
+				"tdEngineKey": "asset",
+				"mongoKey": "asset_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Unit Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "50",
+				"tdEngineKey": "unit",
+				"mongoKey": "unit_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Shed Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "50",
+				"tdEngineKey": "shed",
+				"mongoKey": "shed_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Shift Number",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "shift_number",
+				"mongoKey": "shift_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Shift Date",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "shift_date",
+				"mongoKey": "date",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Month",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "shift_month",
+				"mongoKey": "month",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Year",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "shift_year",
+				"mongoKey": "year",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Date",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "shift_date",
+				"formula": "CONCAT(year, '-', month, '-', date)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Shift Hour",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "shift_hour",
+				"mongoKey": "hours",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Minute",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "shift_minute",
+				"mongoKey": "minutes",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Hour",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "shift_hour",
+				"formula": "CONCAT(hours, ':', minutes)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "model Name",
+				"dataType": "STRING",
+				"groupCode": "50",
+				"tdEngineKey": "machine_model",
+				"mongoKey": "machine_type",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Lot name",
+				"dataType": "NCHAR",
+				"groupCode": "50",
+				"tdEngineKey": "lot_name",
+				"mongoKey": "lot_number",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Run Time Hour",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "run_time_hour",
+				"mongoKey": "run_hour",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Run Time Minutes",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "run_time_minute",
+				"mongoKey": "run_minute",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Run Time Minute",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "run_time_minute",
+				"formula": "MATH(run_hour * 60 + run_minute)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Idle Time Hour",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "idle_time_hour",
+				"mongoKey": "idle_hour",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Idle Time Minutes",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "idle_time_minute",
+				"mongoKey": "idle_minute",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Idle Time Minute",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "idle_time_minute",
+				"formula": "MATH(idle_hour * 60 + idle_minute)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Power Fail Time Hour",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "power_fail_time_hour",
+				"mongoKey": "power_fail_hour",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Power Fail Time Minutes",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "power_fail_time_minute",
+				"mongoKey": "power_fail_minute",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Power Fail Time Minute",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "power_fail_time_minute",
+				"formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Total kWh",
+				"dataType": "FLOAT",
+				"groupCode": "50",
+				"tdEngineKey": "total_kwh",
+				"mongoKey": "total_kwh",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Machine Utilization",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "machine_uti",
+				"formula": "MATH(((run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute)) * 100)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Efficiency Loss Percentage",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "eff_loss_percent",
+				"formula": "MATH(((idle_time_minute + power_fail_time_minute)/ (run_time_minute + idle_time_minute + power_fail_time_minute)) * 100)",
+				"type": "instant",
+				"isRequired": true
+			}
+		],
+		"pms_BLOWROOM_shift_live": [
+			{
+				"tagName": "Time Stamp Actual",
+				"dataType": "TIMESTAMP",
+				"groupCode": "40",
+				"tdEngineKey": "ts",
+				"mongoKey": "ts_act",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Adjusted Time Stamp",
+				"dataType": "TIMESTAMP",
+				"groupCode": "40",
+				"tdEngineKey": "null",
+				"mongoKey": "time_stamp",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Tenant Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "40",
+				"tdEngineKey": "tenant",
+				"mongoKey": "tenant_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Business Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "40",
+				"tdEngineKey": "business",
+				"mongoKey": "business_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Asset Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "40",
+				"tdEngineKey": "asset",
+				"mongoKey": "asset_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Unit Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "40",
+				"tdEngineKey": "unit",
+				"mongoKey": "unit_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Shed Id",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "40",
+				"tdEngineKey": "shed",
+				"mongoKey": "shed_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Shift Number",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "shift_number",
+				"mongoKey": "shift_id",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Shift Date",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "shift_date",
+				"mongoKey": "date",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Month",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "shift_month",
+				"mongoKey": "month",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Year",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "shift_year",
+				"mongoKey": "year",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift date",
+				"dataType": "VARCHAR(100)",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "shift_date",
+				"formula": "CONCAT(year, '-', month, '-', date)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Shift Hour",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "shift_hour",
+				"mongoKey": "hours",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Minute",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "shift_minute",
+				"mongoKey": "minutes",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Shift Hour",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "shift_hour",
+				"formula": "CONCAT(hours, ':', minutes)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "model Name",
+				"dataType": "STRING",
+				"groupCode": "40",
+				"tdEngineKey": "machine_model",
+				"mongoKey": "machine_type",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Lot name",
+				"dataType": "NCHAR",
+				"groupCode": "40",
+				"tdEngineKey": "lot_name",
+				"mongoKey": "lot_number",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Run Time Hour",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "run_time_hour",
+				"mongoKey": "run_hour",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Run Time Minute",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "run_time_minute",
+				"mongoKey": "run_minute",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Run time minutes",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "run_time_minute",
+				"formula": "MATH(run_hour * 60 + run_minute)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Idle Time Hour",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "idle_time_hour",
+				"mongoKey": "idle_hour",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Idle Time Minutes",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "idle_time_minute",
+				"mongoKey": "idle_minute",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Idle Time Minute",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "idle_time_minute",
+				"formula": "MATH(idle_hour * 60 + idle_minute)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Power Fail Time Hour",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "power_fail_time_hour",
+				"mongoKey": "power_fail_hour",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Power Fail Time Minutes",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "power_fail_time_minute",
+				"mongoKey": "power_fail_minute",
+				"formula": null,
+				"type": "instant",
+				"isRequired": false
+			},
+			{
+				"tagName": "Power Fail Time Minute",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "power_fail_time_minute",
+				"formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Total kWh",
+				"dataType": "FLOAT",
+				"groupCode": "40",
+				"tdEngineKey": "total_kwh",
+				"mongoKey": "total_kwh",
+				"formula": null,
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Machine Utilization",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "machine_uti",
+				"formula": "MATH(((run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute)) * 100)",
+				"type": "instant",
+				"isRequired": true
+			},
+			{
+				"tagName": "Efficiency Loss Percentage",
+				"dataType": "FLOAT",
+				"groupCode": "formula",
+				"tdEngineKey": null,
+				"mongoKey": "eff_loss_percent",
+				"formula": "MATH((idle_time_minute + power_fail_time_minute)/ (run_time_minute + idle_time_minute + power_fail_time_minute) * 100)",
+				"type": "instant",
+				"isRequired": true
+			}
+		]
+	},
+	"queryDetails": {
+		"pms_BLOWROOM_shift": [
+			"shift_id",
+			"shift_date",
+			"asset_id"
+		],
+		"pms_BLOWROOM_shift_live": [
+			"asset_id"
+		],
+		"pms_BLOWROOM_raw_data_history": [
+			"asset_id",
+			"group_code",
+			"source_time"
+		]
+	},
+	"targets": {
+		"BLOWROOM_PMS": [
+			{
+				"code": "MU",
+				"target": 0.0,
+				"inputType": "Direct Value",
+				"isEditable": false,
+				"direction": "Upper",
+				"tolerance": null,
+				"threshold": 0.0,
+				"lcl": null,
+				"ucl": null,
+				"is_active": true,
+				"is_available": false,
+				"is_avg": false,
+				"is_sum": false
+			}
+		]
+	},
+	"indexDetails": {
+		"pms_BLOWROOM_shift_live": [
+			"shift_date",
+			"platform_shift_id",
+			"asset_id"
+		],
+		"pms_BLOWROOM_shift": [
+			"shift_date",
+			"platform_shift_id",
+			"asset_id"
+		]
+	}
+}

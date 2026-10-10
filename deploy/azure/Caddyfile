@@ -1,0 +1,15 @@
+# Replace this hostname with your own domain or the Azure public-IP DNS name.
+usopp.example.com {
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy same-origin
+        -Server
+    }
+    # The app serves both frontends, APIs and reports under one HTTPS origin.
+    # Caddy sets forwarded headers; only the local proxy is trusted by Uvicorn.
+    reverse_proxy 127.0.0.1:8201 {
+        transport http {
+            response_header_timeout 900s
+        }
+    }
+}

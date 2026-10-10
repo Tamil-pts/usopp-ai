@@ -1,0 +1,154 @@
+{
+  "id": "R-453B5E3DEA8041C79DD92639CFEC9550",
+  "name": "Lot name in process setting",
+  "kind": "structured_requirements",
+  "category": "PLC logic + HMI",
+  "description": "Check that Lot name in process setting ",
+  "expected": "Check that Lot name in process setting ",
+  "featureName": "Spin connect",
+  "featureId": "spin_connect",
+  "machineScope": [
+    "Blow Room"
+  ],
+  "machineModels": [
+    "All"
+  ],
+  "checks": [
+    {
+      "type": "logic",
+      "file": "mms_nw_rCyclic.st",
+      "groupMode": "selected",
+      "groupCodes": [
+        140,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "alternatives": [
+        "\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(PMS_LotName),50);(*Lot Name*) \n\t\t\t\t\t\t\t\t\t\t\t\tstringlength:= strlen(ADR(PMS_LotName));\n\t\t\t\t\t\t\t\t\t\t\t\tmemset(ADR(nw_snd_buffer[nw_i+stringlength]),0,50-stringlength);\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 50;"
+      ],
+      "declarationText": "",
+      "declarationFile": "",
+      "variants": [
+        {
+          "entity": "Control",
+          "controlType": "String",
+          "name": "",
+          "nameMatch": "exact",
+          "classId": "",
+          "properties": {},
+          "texts": [],
+          "snippets": [],
+          "textGroupFile": ""
+        }
+      ],
+      "crossChecks": [],
+      "networks": [],
+      "declarations": [],
+      "acceptedLogicAlternatives": [
+        {
+          "file": "mms_nw_r.src",
+          "logic": "\t\t\t\t\t\t\t\t\t\t\t\tmemcpy(ADR(nw_snd_buffer[nw_i]),ADR(PMS_LotName),50);(*Lot Name*) \n\t\t\t\t\t\t\t\t\t\t\t\tstringlength:= strlen(ADR(PMS_LotName));\n\t\t\t\t\t\t\t\t\t\t\t\tmemset(ADR(nw_snd_buffer[nw_i+stringlength]),0,50-stringlength);\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i + 50;",
+          "declarationText": "",
+          "declarationFile": "",
+          "declarations": []
+        }
+      ]
+    },
+    {
+      "type": "hmi",
+      "file": "PROCESS_SETTINGS_RUNNING",
+      "groupMode": "none",
+      "groupCodes": [],
+      "alternatives": [
+        ""
+      ],
+      "declarationText": "",
+      "declarationFile": "",
+      "variants": [
+        {
+          "entity": "Control",
+          "controlType": "String",
+          "name": "String",
+          "nameMatch": "prefix",
+          "classId": "",
+          "properties": {
+            "ValueDatapoint": "Local.SpinConnect.PMS_LotName",
+            "InputTouchpad": "AlphaPadQVGA"
+          },
+          "texts": [],
+          "snippets": [],
+          "textGroupFile": ""
+        }
+      ],
+      "crossChecks": [],
+      "networks": [],
+      "declarations": [],
+      "acceptedHmiAlternatives": [
+        {
+          "file": "PROCESS_SETTINGS",
+          "variant": {
+            "entity": "Control",
+            "controlType": "String",
+            "name": "String",
+            "nameMatch": "prefix",
+            "classId": "",
+            "properties": {
+              "ValueDatapoint": "Local.SpinConnect.PMS_LotName",
+              "InputTouchpad": "AlphaPadQVGA"
+            },
+            "texts": [],
+            "snippets": [],
+            "textGroupFile": "",
+            "referenceChecks": [
+              {
+                "kind": "touchpad",
+                "nameOverride": "",
+                "characterRequirement": "uppercase",
+                "shiftLevels": "all",
+                "texts": [],
+                "snippets": []
+              }
+            ]
+          }
+        },
+        {
+          "file": "PROCESS_SETTINGS",
+          "variant": {
+            "entity": "Control",
+            "controlType": "String",
+            "name": "String_1",
+            "nameMatch": "exact",
+            "classId": "",
+            "properties": {
+              "ValueDatapoint": "Local.GLOBAL.PMS_LotName",
+              "InputTouchpad": "AlphaPadQVGA"
+            },
+            "texts": [],
+            "snippets": [],
+            "textGroupFile": "",
+            "referenceChecks": [
+              {
+                "kind": "touchpad",
+                "nameOverride": "",
+                "characterRequirement": "uppercase",
+                "shiftLevels": "all",
+                "texts": [],
+                "snippets": []
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "version": "1.0",
+  "enabled": true,
+  "reviewStatus": "Engineer reviewed",
+  "configurationFormat": "grouped-v1",
+  "needsRuleConfiguration": false
+}

@@ -1,0 +1,151 @@
+S NO.,Screen name,Machine Varients,Parameters,UNITS,MIN,MAX,TAG_CODE,GROUP_CODE,OFFSET_FROM_THE_START_OF_THE_GROUP_IN_BYTES,FROM_VERSION,TO_VERSION,TAG_DATA_TYPE,OFFSET_FACTOR,SCALE_FACTOR,IS_VISIBLE,IS_WRITABLE,CONDITION_TAG_NAME,BIT_OR_TAG,BIT_NO,BIT_CONDITION,TAG_VALUE,TAG_CONDITION,IS_SHOWN_VALUE_DIFFERENT
+1,Program Version,BOTH,Program Version,<null>,<null>,<null>,1,10,0,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+2,Default screen,BOTH,Delivery Speed,m/min,0,300,2,20,0,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+3,Default screen,BOTH,Sliver Hank,Ne,0,300,3,20,4,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+4,Default screen,BOTH,Production,kg/h,<null>,<null>,4,20,8,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+5,Default screen,BOTH,5m CV,%,0,15,5,20,12,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+6,Default screen,BOTH,Lickerin Suction Pressure,%,0,300,6,20,16,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+7,Default screen,BOTH,Flats Suction,%,0,300,7,20,20,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+8,Default screen,BOTH,A\L Value,%,0,300,8,20,24,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+9,Default screen,BOTH,ACT Value,%,0,300,9,20,28,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+10,Default screen,BOTH,D%,<null>,0,300,10,20,32,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+11,Default screen,BOTH,Current Length,<null>,<null>,<null>,11,20,36,5.295,5.296,UINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+12,Default screen,BOTH,Total CAN Length,<null>,<null>,<null>,12,20,38,5.295,5.296,UINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+13,Default screen,BOTH,Empty CAN Length,<null>,<null>,<null>,13,20,40,5.295,5.296,UINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+14,Default screen,BOTH,Machine Status,<null>,<null>,<null>,14,20,42,5.295,5.296,UINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+15,Default screen,BOTH,Chute Pressure,Pa,<null>,<null>,15,20,44,5.295,5.296,INT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+16,Default screen,BOTH,Feed Weight in gms/mtr,g/m,<null>,<null>,16,20,46,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+17,Default screen,BOTH,Feed Thickness LHS,mm,<null>,<null>,17,20,50,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+18,Default screen,BOTH,Feed Thickness LHS-MID,mm,0,15,18,20,54,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+19,Default screen,BOTH,Feed Thickness Middle,mm,3,60,19,20,58,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+20,Default screen,BOTH,Feed Thickness RHS-MID,mm,0,15,20,20,62,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+21,Default screen,BOTH,Feed Thickness RHS,mm,0,60,21,20,66,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+22,Default screen,BOTH,Feed Thickness AVG,mm,3,60,22,20,70,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+23,Default screen,BOTH,Feed Roller,rpm,0,60,23,20,74,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+24,Default screen,BOTH,Card Draft,<null>,<null>,<null>,24,20,78,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+25,Default screen,BOTH,Cylinder Speed,rpm,<null>,<null>,25,20,82,5.295,5.296,UINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+26,Default screen,BOTH,Flats Speed,mm/min,<null>,<null>,26,20,84,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+27,Default screen,BOTH,Lickerin Speed,rpm,<null>,<null>,27,20,88,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+28,Default screen,BOTH,Chute Opening Roller Speed,rpm,<null>,<null>,28,20,92,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+29,Default screen,BOTH,Chute Stripper Roller,rpm,<null>,<null>,29,20,96,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+30,Default screen,BOTH,ALL OFF CV%,<null>,<null>,<null>,30,20,100,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+31,Default screen,BOTH,50 AVG CV%,<null>,<null>,<null>,31,20,104,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+32,Default screen,BOTH,Doffer Roller RPM,<null>,<null>,<null>,32,20,108,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+33,Default screen,BOTH,Doffer Roller mpm,<null>,<null>,<null>,33,20,112,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+34,Default screen,BOTH,RD Roller rpm,<null>,<null>,<null>,34,20,116,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+35,Default screen,BOTH,RD Roller mpm,<null>,<null>,<null>,35,20,120,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+36,Default screen,BOTH,Crush Roller rpm,<null>,<null>,<null>,36,20,124,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+37,Default screen,BOTH,Crush Roller mpm,<null>,<null>,<null>,37,20,128,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+38,Default screen,BOTH,Delivery Roller RPM,<null>,<null>,<null>,38,20,132,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+39,Default screen,BOTH,Delivery Roller MPM,<null>,<null>,<null>,39,20,136,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+40,Default screen,BOTH,Coiler Delivery Roller RPM,<null>,<null>,<null>,40,20,140,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+41,Default screen,BOTH,Coiler Delivery Roller MPM,<null>,<null>,<null>,41,20,144,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+42,Default screen,BOTH,Chute Feed Motor RPM,<null>,<null>,<null>,42,20,148,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+43,Default screen,BOTH,Chute Feed Motor Frequency,Hz,<null>,<null>,43,20,152,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+44,Default screen,BOTH,Card Feed Motor RPM,<null>,<null>,<null>,44,20,156,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+45,Default screen,BOTH,Card Feed Motor Frequency,Hz,<null>,<null>,45,20,160,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+46,Default screen,BOTH,Doffer Motor RPM,<null>,<null>,<null>,46,20,164,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+47,Default screen,BOTH,Doffer Motor Frequency,Hz,<null>,<null>,47,20,168,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+48,Default screen,BOTH,Delivery Motor RPM,<null>,<null>,<null>,48,20,172,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+49,Default screen,BOTH,Delivery Motor Frequency,Hz,<null>,<null>,49,20,176,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+50,Default screen,BOTH,Coiler motor RPM,<null>,<null>,<null>,50,20,180,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+51,Default screen,BOTH,Coiler motor Frequency,Hz,<null>,<null>,51,20,184,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+52,Default screen,BOTH,Power Module,<null>,<null>,<null>,52,20,188,5.295,5.296,BOOL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+53,Default screen,BOTH,Health Module,<null>,<null>,<null>,53,20,189,5.295,5.296,BOOL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+54,Default Screen,BOTH,Machine Stoppage Reason,<null>,<null>,<null>,54,20,190,5.295,5.296,INT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+55,Default Screen,BOTH,Machine Setting Log Trigger,<null>,<null>,<null>,55,20,191,5.295,5.296,USINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+56,Default Screen,BOTH,Machine History Setting Log Trigger,<null>,<null>,<null>,56,20,192,5.295,5.296,USINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+57,Default Screen,BOTH,Process Setting Log Trigger,<null>,<null>,<null>,57,20,193,5.295,5.296,USINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+58,Default Screen,BOTH,User Login Level,<null>,<null>,<null>,58,20,195,5.295,5.296,UINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+59,Default Screen,BOTH,BR Line 1 Status,<null>,<null>,<null>,59,20,196,5.295,5.296,BOOL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+60,Default Screen,BOTH,BR Line 2 Status,<null>,<null>,<null>,60,20,199,5.295,5.296,BOOL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+61,Fault History,BOTH,Current Fault 1 Byte,<null>,<null>,<null>,61,30,0,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+62,Fault History,BOTH,Current Fault 2 Byte,<null>,<null>,<null>,62,30,1,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+63,Fault History,BOTH,Current Fault 3 Byte,<null>,<null>,<null>,63,30,2,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+64,Fault History,BOTH,Current Fault 4 Byte,<null>,<null>,<null>,64,30,3,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+65,Fault History,BOTH,Current Fault 5 Byte,<null>,<null>,<null>,65,30,4,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+66,Fault History,BOTH,Current Fault 6 Byte,<null>,<null>,<null>,66,30,5,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+67,Fault History,BOTH,Current Fault 7 Byte,<null>,<null>,<null>,67,30,6,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+68,Fault History,BOTH,Current Fault 8 Byte,<null>,<null>,<null>,68,30,7,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+69,Fault History,BOTH,Current Fault 9 Byte,<null>,<null>,<null>,69,30,8,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+70,Fault History,BOTH,Current Fault 10 Byte,<null>,<null>,<null>,70,30,9,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+71,Fault History,BOTH,Current Fault 11 Byte,<null>,<null>,<null>,71,30,10,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+72,Fault History,BOTH,Current Fault 12 Byte,<null>,<null>,<null>,72,30,11,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+73,Fault History,BOTH,Current Fault 13 Byte,<null>,<null>,<null>,73,30,12,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+74,Fault History,BOTH,Current Fault 14 Byte,<null>,<null>,<null>,74,30,13,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+75,Fault History,BOTH,Current Fault 15 Byte,<null>,<null>,<null>,75,30,14,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+76,Fault History,BOTH,Current Fault 16 Byte,<null>,<null>,<null>,76,30,15,5.295,5.296,BYTE,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+77,Current Shift Report,BOTH,Shift Number,<null>,<null>,<null>,77,40,0,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+78,Current Shift Report,BOTH,Shift Date,<null>,<null>,<null>,78,40,4,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+79,Current Shift Report,BOTH,Shift Month,<null>,<null>,<null>,79,40,8,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+80,Current Shift Report,BOTH,Shift Year,<null>,<null>,<null>,80,40,12,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+81,Current Shift Report,BOTH,Shift Hour,<null>,<null>,<null>,81,40,16,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+82,Current Shift Report,BOTH,Shift Minute,<null>,<null>,<null>,82,40,20,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+83,Current Shift Report,BOTH,Shift Hank,<null>,<null>,<null>,83,40,24,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+84,Current Shift Report,BOTH,Shift Kgs,<null>,<null>,<null>,84,40,28,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+85,Current Shift Report,BOTH,Run Time Hour,<null>,<null>,<null>,85,40,32,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+86,Current Shift Report,BOTH,Run Time Minute,<null>,<null>,<null>,86,40,36,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+87,Current Shift Report,BOTH,Idle Time Hour,<null>,<null>,<null>,87,40,40,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+88,Current Shift Report,BOTH,Idle Time Minute,<null>,<null>,<null>,88,40,44,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+89,Current Shift Report,BOTH,Power Fail Time Hour,<null>,<null>,<null>,89,40,48,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+90,Current Shift Report,BOTH,Power Fail Time Minute,<null>,<null>,<null>,90,40,52,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+91,Current Shift Report,BOTH,Machine Efficiency,<null>,<null>,<null>,91,40,56,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+92,Current Shift Report,BOTH,Production Efficiency,<null>,<null>,<null>,92,40,60,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+93,Current Shift Report,BOTH,Double Lap,<null>,<null>,<null>,93,40,64,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+94,Current Shift Report,BOTH,Other Fault,<null>,<null>,<null>,94,40,68,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+95,Current Shift Report,BOTH,Sliver Break,<null>,<null>,<null>,95,40,72,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+96,Current Shift Report,BOTH,Chute Fault,<null>,<null>,<null>,96,40,76,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+97,Current Shift Report,BOTH,Number of Doff,<null>,<null>,<null>,97,40,80,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+98,Current Shift Report,BOTH,Delivery Speed,<null>,<null>,<null>,98,40,84,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+99,Current Shift Report,BOTH,Voltage avg,V,<null>,<null>,99,40,88,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+100,Current Shift Report,BOTH,Current avg,A,<null>,<null>,100,40,92,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+101,Current Shift Report,BOTH,Power Factor,<null>,<null>,<null>,101,40,96,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+102,Current Shift Report,BOTH,Frequency,Hz,<null>,<null>,102,40,100,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+103,Current Shift Report,BOTH,Total Active Power,kW,<null>,<null>,103,40,104,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+104,Current Shift Report,BOTH,Total kVA,<null>,<null>,<null>,104,40,108,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+105,Current Shift Report,BOTH,Total kvar,<null>,<null>,<null>,105,40,112,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+106,Current Shift Report,BOTH,Total kWh,<null>,<null>,<null>,106,40,116,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+107,Current Shift Report,BOTH,Total kVAh,<null>,<null>,<null>,107,40,120,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+108,Current Shift Report,BOTH,Total kVArh,<null>,<null>,<null>,108,40,124,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+109,Current Shift Report,BOTH,no.of thick place,<null>,<null>,<null>,109,40,128,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+110,Current Shift Report,BOTH,actual can length,<null>,<null>,<null>,110,40,132,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+111,Current Shift Report,BOTH,Set can length,<null>,<null>,<null>,111,40,136,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+112,Current Shift Report,BOTH,sHIFT can length,<null>,<null>,<null>,112,40,140,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+113,Current Shift Report,BOTH,Measured Hank,Ne,<null>,<null>,113,40,144,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+114,Current Shift Report,BOTH,Required Hank,Ne,<null>,<null>,114,40,148,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+115,Current Shift Report,BOTH,Lot Name,<null>,<null>,<null>,115,40,192,5.295,5.296,STRING,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+404,Machine Setting,BOTH,Door Safety,<null>,<null>,<null>,404,130,0,5.295,5.296,BOOL,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,YES
+405,Machine Setting,BOTH,Grinding Sequence,<null>,<null>,<null>,405,130,1,5.295,5.296,BOOL,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,YES
+406,Machine Setting,BOTH,Chute Drain,<null>,<null>,<null>,406,130,2,5.295,5.296,BOOL,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,YES
+407,Machine Setting,BOTH,Lot Change,<null>,<null>,<null>,407,130,3,5.295,5.296,BOOL,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,YES
+417,Machine Setting,BOTH,Can Change Speed,m/min,25,300,417,130,23,5.295,5.296,UINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+465,Process Settings,BOTH,CURRENT PROGRAM,<null>,1,3,465,140,0,5.295,5.296,SINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+466,Process Settings,BOTH,Count,S,0,100,466,140,1,5.295,5.296,USINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+467,Process Settings,BOTH,Can Length,m,10,17500,467,140,2,5.295,5.296,UINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+468,Process Settings,BOTH,Delivery Rate,m/min,10,350,468,140,4,5.295,5.296,UINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+472,Process Settings,BOTH,Required Hank,Ne,0.03,0.18,472,140,14,5.295,5.296,REAL,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+476,Process Settings,BOTH,Auto Leveller,<null>,<null>,<null>,476,140,30,5.295,5.296,BOOL,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,YES
+509,Machine History,BOTH,Date,<null>,1,31,509,150,0,5.295,5.296,USINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+510,Machine History,BOTH,Month,<null>,1,12,510,150,1,5.295,5.296,USINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+511,Machine History,BOTH,Year,<null>,2000,4000,511,150,2,5.295,5.296,UINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+512,Machine History,BOTH,Hour,<null>,0,23,512,150,4,5.295,5.296,USINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+513,Machine History,BOTH,Minute,<null>,0,59,513,150,5,5.295,5.296,USINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+514,Machine History,BOTH,Second,<null>,0,59,514,150,6,5.295,5.296,USINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+515,Machine History,BOTH,Machine Number,<null>,<null>,<null>,515,150,7,5.295,5.296,UINT,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+519,Machine History,BOTH,Machine Run Hours,<null>,<null>,<null>,519,150,15,5.295,5.296,REAL,1,1,YES,YES,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+575,Module Status,BOTH,Bus Receiver Module (100),<null>,<null>,<null>,575,240,0,5.295,5.296,USINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+576,Module Status,BOTH,High Speed Counter Module (101),<null>,<null>,<null>,576,240,1,5.295,5.296,USINT,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,YES
+595,Quality Monitor,BOTH,Sliver A,%,<null>,<null>,595,250,0,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+596,Quality Monitor,BOTH,Sliver U,%,<null>,<null>,596,250,4,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+609,Energy Monitor,BOTH,Hank,Ne,<null>,<null>,609,410,0,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+610,Energy Monitor,BOTH,Delivery Speed,m/min,<null>,<null>,610,410,4,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+616,Energy Monitor,BOTH,Total Active Power,kW,<null>,<null>,616,410,26,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+619,Energy Monitor,BOTH,Total kWh,kWh,<null>,<null>,619,410,38,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+629,Doff Report 1,BOTH,Doff Date,<null>,<null>,<null>,629,500,0,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+634,Doff Report 1,BOTH,Hank,Ne,<null>,<null>,634,500,20,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+636,Doff Report 1,BOTH,Doff Production,Kg,<null>,<null>,636,500,28,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+705,Health Monitor,BOTH,Delivery Speed,mpm,<null>,<null>,705,600,0,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+706,Health Monitor,BOTH,Cylider Speed,rpm,<null>,<null>,706,600,4,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+712,Health Monitor,BOTH,TEMPERATURE 1,˚C / ˚F,<null>,<null>,712,600,28,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+720,Health Monitor,BOTH,VIBRATION 1,mm/sec,<null>,<null>,720,600,60,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>
+728,Health Monitor,BOTH,LICKERIN PRESSURE,Pa,<null>,<null>,728,600,92,5.295,5.296,REAL,1,1,YES,NO,<null>,<null>,<null>,<null>,<null>,<null>,<null>

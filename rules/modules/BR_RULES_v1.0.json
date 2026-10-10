@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0",
+  "id": "BR_RULES",
+  "name": "Spin Connect Validation Rules",
+  "version": "1.0",
+  "enabled": true,
+  "kind": "rule_collection",
+  "machineScope": [
+    "All"
+  ],
+  "source": {
+    "requirement": "Requirment for assit_rule.txt",
+    "checklist": "spin connect 2.0 check list.csv"
+  },
+  "rules": [
+    {
+      "id": "BR_RULE-001",
+      "name": "MMS_Alarm_time out_default_value",
+      "version": "1.0",
+      "enabled": false,
+      "reviewStatus": "Needs engineer review",
+      "machineDepartment": "All",
+      "machineModels": [
+        "All"
+      ],
+      "subroutine": "mms_nw_rCyclic.st",
+      "category": "Logic with condition",
+      "expected": "One accepted receive-timeout variable is at or below 30; set that same variable to 250.",
+      "kind": "condition_assignment",
+      "needsLogicConfiguration": false,
+      "logicAlternatives": [
+        "IF HMI_read_recv_timeout_time <= 30 THEN\n    HMI_read_recv_timeout_time := 250;\nEND_IF",
+        "IF HMI_recv_timeout_time <= 30 THEN\n    HMI_recv_timeout_time := 250;\nEND_IF",
+        "IF Read_recv_timeout_time <= 30 THEN\n    Read_recv_timeout_time := 250;\nEND_IF"
+      ],
+      "exactLogic": "IF HMI_read_recv_timeout_time <= 30 THEN\n    HMI_read_recv_timeout_time := 250;\nEND_IF",
+      "variable": "HMI_read_recv_timeout_time",
+      "acceptedVariables": [
+        "HMI_read_recv_timeout_time",
+        "HMI_recv_timeout_time",
+        "Read_recv_timeout_time"
+      ],
+      "comparison": "<=",
+      "threshold": 30,
+      "assignedValue": 250,
+      "description": "Alarm Receive Timeout",
+      "featureName": "Spin Connect",
+      "featureId": "spin_connect",
+      "machineScope": [
+        "All"
+      ],
+      "moduleId": "BR_RULES"
+    },
+    {
+      "id": "BR_RULE-002",
+      "name": "MMS_Alarm_default_value",
+      "version": "1.0",
+      "enabled": false,
+      "reviewStatus": "Needs engineer review",
+      "machineDepartment": "All",
+      "machineModels": [
+        "All"
+      ],
+      "subroutine": "mms_nw_rCyclic.st",
+      "category": "Logic / declaration",
+      "expected": "Declare Alarm_EN_Delay as DINT and assign it the value 250.",
+      "kind": "exact_logic_declaration",
+      "needsLogicConfiguration": false,
+      "logicAlternatives": [
+        "Alarm_EN_Delay := 250;"
+      ],
+      "exactLogic": "Alarm_EN_Delay := 250;",
+      "variable": "Alarm_EN_Delay",
+      "allowedDatatypes": [
+        "DINT"
+      ],
+      "description": "Alarm Timeout delay",
+      "featureName": "Spin Connect",
+      "featureId": "spin_connect",
+      "machineScope": [
+        "All"
+      ],
+      "moduleId": "BR_RULES"
+    },
+    {
+      "id": "BR_RULE-005",
+      "name": "product code",
+      "version": "1.0",
+      "enabled": false,
+      "reviewStatus": "Needs engineer review",
+      "machineDepartment": "Blow Room",
+      "machineModels": [
+        "Blow Room"
+      ],
+      "subroutine": "mms_nw_rCyclic.st",
+      "category": "Group code wise parameter check",
+      "expected": "Every active CASE nw_group_code branch except Group Code 11 contains the two-byte Blow_room_product_code mapping and advances nw_i by 2.",
+      "kind": "product_code_all_groups",
+      "needsLogicConfiguration": false,
+      "sourceFile": "mms_nw_rCyclic.st",
+      "variable": "Blow_room_product_code",
+      "size": 2,
+      "excludeGroupCodes": [
+        11
+      ],
+      "description": "Product Code mapping in all group code",
+      "featureName": "Spin Connect",
+      "featureId": "spin_connect",
+      "machineScope": [
+        "Blow Room"
+      ],
+      "moduleId": "BR_RULES"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "id": "R-23A8CA72BBE84FE7A57BADA2861B979E",
+  "name": "Machine Status",
+  "kind": "structured_requirements",
+  "category": "Logic traceability in various subroutines",
+  "description": "Check the machine status logic",
+  "expected": "Check the machine status logic",
+  "featureName": "Spin connect",
+  "featureId": "spin_connect",
+  "machineScope": [
+    "Blow Room"
+  ],
+  "machineModels": [
+    "All"
+  ],
+  "checks": [
+    {
+      "type": "logic",
+      "file": "mms_nw_rCyclic.st",
+      "groupMode": "selected",
+      "groupCodes": [
+        20
+      ],
+      "alternatives": [
+        "memcpy(ADR(nw_snd_buffer[nw_i]),ADR(MMS_MACHINE_STATUS),4);(*Machine Status*)\n\t\t\t\t\t\t\t\t\t\t\t\tnw_i := nw_i+4;"
+      ],
+      "declarationText": "MMS_MACHINE_STATUS : DINT /GLOBAL ",
+      "declarationFile": "",
+      "variants": [
+        {
+          "entity": "Control",
+          "controlType": "String",
+          "name": "",
+          "nameMatch": "exact",
+          "classId": "",
+          "properties": {},
+          "texts": [],
+          "snippets": [],
+          "textGroupFile": ""
+        }
+      ],
+      "crossChecks": [
+        {
+          "type": "logic",
+          "file": "Logical/SpinConnect/mms_Pms/Cyclic.st",
+          "groupMode": "none",
+          "groupCodes": [],
+          "alternatives": [
+            "\t\t\tIF MACHINE_RUNTIME.START THEN\n\t\t\t\tMMS_MACHINE_STATUS := 1;\n\t\t\tELSE\n\t\t\t\tMMS_MACHINE_STATUS := 0;\n\t\t\tEND_IF"
+          ],
+          "declarationText": "",
+          "declarationFile": "",
+          "variants": [
+            {
+              "entity": "Control",
+              "controlType": "String",
+              "name": "",
+              "nameMatch": "exact",
+              "classId": "",
+              "properties": {},
+              "texts": [],
+              "snippets": [],
+              "textGroupFile": ""
+            }
+          ],
+          "crossChecks": [],
+          "declarations": []
+        }
+      ],
+      "declarations": [
+        {
+          "variable": "MMS_MACHINE_STATUS",
+          "datatype": "DINT",
+          "scope": "global"
+        }
+      ]
+    }
+  ],
+  "version": "1.0",
+  "enabled": true,
+  "reviewStatus": "Engineer reviewed",
+  "configurationFormat": "grouped-v1",
+  "needsRuleConfiguration": false
+}
