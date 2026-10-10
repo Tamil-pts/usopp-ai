@@ -8,9 +8,9 @@ import uuid
 
 from fastapi import APIRouter, HTTPException
 from backend.core.rule_configuration import guided_configuration
-from backend.core.assist_model import chat_model
+from backend.core.assist_model import chat_model, model_response_timeout, ModelBusyError
 from backend.core.assist_progress import report, reporter
-from python_engine.project_knowledge import build_index, retrieve, project_answer, comparison_knowledge, comparison_answer, module_overview, explanation_supported, machine_question
+from python_engine.project_knowledge import build_index, retrieve, project_answer, comparison_knowledge, comparison_answer, module_overview, explanation_reference_issue, machine_question, feature_question
 
 from backend.core.project_info import local_project_details
 from backend.core.rule_learning import append_observation, read_observations, search_observations
@@ -32,7 +32,8 @@ def assist_start(payload: dict):
     now = time.monotonic()
     with ASSIST_JOBS_LOCK:
         for key in list(ASSIST_JOBS):
-            if now - ASSIST_JOBS[key]['started'] > 1800 and ASSIST_JOBS[key]['status'] != 'running': del ASSIST_JOBS[key]
+            job=ASSIST_JOBS[key]
+            if job['status'] != 'running' and now - job.get('finished',job['started']) > 1800: del ASSIST_JOBS[key]
         if sum(j['status'] == 'running' and j['owner'] == owner for j in ASSIST_JOBS.values()) >= 2:
             raise HTTPException(429, 'Wait for your current Chopper questions to finish.')
         ASSIST_JOBS[sid] = {'status': 'running', 'owner': owner, 'started': now, 'stage': 'Preparing project context', 'current': 0, 'total': 0}
@@ -309,26 +310,41 @@ def assist(payload:dict):
         assist_context.pop('logSummary',None)
         assist_context['contextCoverage']+=' Large attachments/log previews omitted from this explanation; local decoded tables remain available.'
     for number,item in enumerate(project_evidence,1): item['sourceId']=f'S{number}'
-    system+=' Cite each source-backed behaviour with its supplied [S1], [S2] identifiers. Do not invent source files or line numbers. For comparisons cite the exact file paths supplied in comparisonKnowledge. If evidence is insufficient, say what remains unresolved. Commented-out ladder networks do not execute. A normally open contact conducts when its variable is TRUE; a normally closed contact conducts when its variable is FALSE. A normal coil follows rung continuity. Do not infer execution from a comment or a variable name alone.'
-    prompt=f'Task: {task}\nContext:\n{json.dumps(assist_context,ensure_ascii=False)}\nQuestion: {question}'
+    system+=' Cite each source-backed behaviour with its supplied [S1], [S2] identifiers or an exact supplied file:line location. Do not invent source files or line numbers. For comparisons cite the exact file paths supplied in comparisonKnowledge. If evidence is insufficient, say what remains unresolved. Commented-out ladder networks do not execute. A normally open contact conducts when its variable is TRUE; a normally closed contact conducts when its variable is FALSE. A normal coil follows rung continuity. Do not infer execution from a comment or a variable name alone.'
+    if feature_question(question):
+        system+=' For a feature-presence question, answer presence first, cite the matching calls and active task mapping, then any related HMI datapoints. Separate code availability from live execution or network connectivity. Do not treat a declaration or page filename alone as implementation proof.'
+    context_json=json.dumps(assist_context,ensure_ascii=False,separators=(',',':'))
+    prompt=f'Task: {task}\nContext:\n{context_json}\nQuestion: {question}'
     model_notice=None
-    model_timeout = 60 if knowledge and machine_question(question) else 120
+    model_timeout=1800
     try:
-        report(f'Generating explanation with the configured model (response limit: {model_timeout} seconds)')
+        model_timeout=model_response_timeout()
+        report(f'Generating explanation with the configured model (response window: {model_timeout / 60:g} minutes)')
         history=[{**h,'content':str(h.get('content',''))[:600]} for h in (payload.get('history') or [])[-4:] if isinstance(h,dict)]
-        generated=chat_model(system,prompt,history,timeout=model_timeout)
+        generated=chat_model(system,prompt,history,timeout=model_timeout,on_progress=report)
         if generated:
             answer=generated['answer']
             report('Checking explanation source references')
-            if (knowledge or comparison) and not explanation_supported(answer,model_evidence,comparison):
-                model_notice='The model explanation contained missing or unsupported source references. Showing verified source evidence instead; ask a focused follow-up.'
+            reference_issue=explanation_reference_issue(answer,model_evidence,comparison) if knowledge or comparison else None
+            if reference_issue:
+                log.warning('CHOPPER_MODEL_REFERENCE_REJECTED reason=%s evidence_count=%s',reference_issue,len(model_evidence))
+                reason={'missing_citations':'The AI reply omitted source citations.',
+                        'unknown_citation':'The AI reply cited a source identifier that was not supplied.',
+                        'unknown_source':'The AI reply named a file or path outside the supplied source evidence.',
+                        'outside_excerpt':'The AI reply cited a line outside the supplied source excerpt.',
+                        'ambiguous_source':'The AI reply did not identify which file with that name it used.',
+                        'inactive_source':'The AI reply did not identify the supplied logic as disabled.',
+                        'missing_comparison_source':'The AI reply omitted the compared source filenames.'}[reference_issue]
+                model_notice=reason+' Showing the source findings below. This citation check does not determine whether a feature is available.'
             else:
                 observation=_learn_assist_result(payload,context,rule_result,answer) if rule_result else None
                 return {'answer':answer,'source':generated['provider'],'model':generated['model'],'evidence':project_evidence,'semanticReviewRequired':bool(knowledge or comparison),'learningId':observation.get('id') if observation else None}
     except Exception as error:
         log.warning('ASSIST_LLM_ERROR type=%s; using local engineering evidence',type(error).__name__)
-        if isinstance(error, requests.exceptions.Timeout):
-            model_notice=f'The configured AI model did not return an answer within {model_timeout} seconds. Showing local source analysis. An administrator can check the model connection in Settings.'
+        if isinstance(error, ModelBusyError):
+            model_notice=str(error)+' Showing local source analysis.'
+        elif isinstance(error, requests.exceptions.Timeout):
+            model_notice=f'The configured AI model did not finish within the {model_timeout / 60:g}-minute response window. Showing local source analysis. Large projects may need a more focused question or a shorter answer; Admin can review the response settings.'
         else:
             model_notice='The configured AI model could not provide an answer. Showing local source analysis. An administrator can check the model connection in Settings.'
     if comparison:

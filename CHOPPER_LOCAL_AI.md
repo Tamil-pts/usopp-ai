@@ -5,7 +5,7 @@ LogicScan and project search run locally without an LLM. Optional models provide
 conversation, explanations and suggested code changes; deterministic tools keep
 their own results.
 
-## Small CPU setup without Ollama (4.65.8)
+## Small CPU setup without Ollama (4.65.9)
 
 In **Settings → Chopper · AI connection**, choose **Set up small CPU model**.
 The app downloads Qwen2.5-Coder 1.5B Instruct Q4_K_M from its pinned official
@@ -19,7 +19,7 @@ storage details and [the LAN/VPN server guide](distribution/LAN_SERVER.md) for
 installation and backup/restore. No Ollama installation is required. The older
 external-provider options below remain available for existing configurations.
 
-## Machine-function answers and model timeouts (4.64.0)
+## Source answers and model response settings (4.65.9)
 
 For **Machine functions**, Chopper selects active cyclic PLC logic and enabled
 ladder networks before HMI settings or initialization files. The local fallback
@@ -28,14 +28,34 @@ locations. It labels shared task ownership, commented networks, complex branches
 and incomplete operating-sequence coverage. It does not treat settings-page
 matches as a machine-function explanation.
 
-The optional model has a 60-second response timeout for machine-function
-questions. Reading/retrieval/model stages and elapsed time remain visible in
-chat. On a timeout, Chopper shows local source analysis and an explicit notice;
-Admin can check the model connection or select a smaller installed model.
-Local analysis is not proof of physical operation or a complete simulation.
+The default model response window is **30 minutes**, including CPU queue waiting
+and generation. Admin can set 0.5-30 minutes in Settings. Project indexing and
+retrieval happen before that window and depend on project size. Reading,
+retrieval, queue and generation stages and elapsed time remain visible in chat.
+The answer token limit is separate: increasing it permits longer CPU answers.
+On expiry, Chopper retains local source findings and reports the selected limit.
+Existing settings without a timeout field use the new 30-minute default.
+
+**Ready** means the runtime has loaded the model. **Save & check** asks for a
+short reply with a separate 30-second check and reports its response time; it
+does not establish the speed of a large project answer. Existing runtime logs
+on the development laptop show project prompt reading plus generation exceeding
+the former 60-second limit. Request metrics record timing and token counts,
+without recording questions, source excerpts, answers or credentials.
+
+For feature-presence questions, matching active executable source is selected
+before HMI files. The local answer shows literal calls, declaration locations,
+task ownership and related HMI bindings. Source presence and live operation
+remain distinct. No PLC ping is sent by this source analysis.
+
+The AI citation check accepts supplied [S1] identifiers or a supported file:line
+location. Unknown paths, identifiers and out-of-excerpt line numbers are rejected.
+If a reply fails, chat identifies the citation problem and keeps the local source
+answer. A citation warning does not mean the requested feature is missing.
+Source citations alone do not verify all of an AI reply's engineering claims.
 
 Restart the backend after installing an update; refresh alone cannot replace
-loaded Python code. Check that both UI/API version badges show **4.65.8**.
+loaded Python code. Check that both UI/API version badges show **4.65.9**.
 Self-registration, own-password changes and Admin-created accounts remain
 supported. See [ACCOUNT_COMPATIBILITY.md](ACCOUNT_COMPATIBILITY.md) for the
 standing account and update requirements.

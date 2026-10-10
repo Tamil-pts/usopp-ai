@@ -67,7 +67,7 @@ def start(cfg):
         runtime=executable();(BASE/'logs').mkdir(exist_ok=True)
         LOG=(BASE/'logs'/'chopper-local-model.log').open('ab')
         try:
-            PROCESS=subprocess.Popen([str(runtime),'-m',str(model.resolve()),'--host','127.0.0.1','--port',str(port),'-c',str(context),'--alias','chopper-local','--parallel','1','--threads',str(threads),'--threads-batch',str(threads),'--gpu-layers','0'],cwd=str(runtime.parent),stdin=subprocess.DEVNULL,stdout=LOG,stderr=subprocess.STDOUT,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            PROCESS=subprocess.Popen([str(runtime),'-m',str(model.resolve()),'--host','127.0.0.1','--port',str(port),'-c',str(context),'--alias','chopper-local','--parallel','1','--threads',str(threads),'--threads-batch',str(threads),'--gpu-layers','0','--timeout','1800'],cwd=str(runtime.parent),stdin=subprocess.DEVNULL,stdout=LOG,stderr=subprocess.STDOUT,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
             IDENTITY=identity
         except OSError as error:
             stop();raise HTTPException(503,'Cannot start the bundled local model runtime.') from error

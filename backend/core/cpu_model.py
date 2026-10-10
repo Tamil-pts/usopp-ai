@@ -95,7 +95,7 @@ def install(activate=True, start_runtime=True):
             from backend.core.assist_model import save_configuration
             cfg = save_configuration({'provider': 'embedded', 'modelPath': str(TARGET),
                 'localPort': 8202, 'contextSize': 8192, 'cpuThreads': min(4, os.cpu_count() or 2),
-                'autoStart': True, 'maxTokens': 512, 'clearApiKey': True})
+                'autoStart': True, 'maxTokens': 512, 'responseTimeoutSeconds': 1800, 'clearApiKey': True})
             if start_runtime:
                 from backend.core.local_model_runtime import start
                 start(cfg)

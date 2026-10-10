@@ -1,5 +1,5 @@
 from fastapi import APIRouter,HTTPException,Request
-from backend.core.assist_model import public_configuration,save_configuration,check_model
+from backend.core.assist_model import public_configuration,save_configuration,check_model,ModelBusyError
 
 router=APIRouter(tags=['Chopper model'])
 
@@ -31,6 +31,7 @@ def save_model(payload:dict,request:Request):
 def check(request:Request):
     admin(request)
     try: return check_model()
+    except ModelBusyError as error:raise HTTPException(409,str(error))
     except Exception as error:
         # Do not expose request headers, credentials or upstream response bodies.
         raise HTTPException(502,f'Model connection failed ({type(error).__name__}). Check that the service is running and its URL/model are correct.')

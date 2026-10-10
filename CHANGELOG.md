@@ -3,6 +3,13 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.65.9 - 2026-10-10
+
+- Give Chopper a default 30-minute model response window, configurable in Settings. CPU queue waiting and answer generation share it; project indexing remains separate. Preserve per-request messages and independent validation workers. Compact the model context JSON, expose the CPU answer token limit, and distinguish model readiness from a user-requested short reply check. Log timing/token metrics without storing prompts or answers.
+- Explain citation failures separately from feature availability. Accept supplied source IDs or supported file:line citations; retain rejection of unknown paths, IDs and unsupported line numbers. Log the specific rejection reason. For feature-presence questions, prioritize matching executable source and show literal calls, declaration locations, active task ownership and related HMI bindings. Rebuild the source index with the updated retrieval schema.
+- Existing runtime logs show CPU prompt reading plus generation exceeding the previous 60-second cutoff. New inference, browser and Docker deployment checks have not been run for this change.
+- Python compilation, both TypeScript compilations and both production frontend builds pass. The Windows EXE builds and its raw-source audit passes; compiled container staging is prepared with the same audit. Refreshed Windows/launcher ZIPs and SHA256 companions are prepared for 4.65.9.
+
 ## 4.65.8 - 2026-10-10
 
 - Fix the blank DataInspect page caused by shared workspace components resolving a second React copy from the parent package. Deduplicate React and React DOM in both frontend builds. Add a visible startup message and a render error panel with reload and error details; preserve saved targets, metadata and history.

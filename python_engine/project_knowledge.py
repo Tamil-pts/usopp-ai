@@ -10,14 +10,17 @@ import xml.etree.ElementTree as ET
 
 from python_engine.compare import project_identity, walk_project, _ladder_networks, decode_bytes
 
-SCHEMA = 7
+SCHEMA = 8
 EXTENSIONS = {'.st', '.ld', '.ab', '.src', '.var', '.typ', '.fun', '.c', '.h', '.txt',
               '.pgp', '.page', '.pages', '.layer', '.dso', '.algrp', '.txtgrp',
               '.iom', '.sw', '.osl', '.hw', '.hwl', '.cfg', '.per', '.apj', '.gdm', '.set'}
+REFERENCE_FILE = r'[\w-][\w.-]*\.(?:' + '|'.join(re.escape(ext[1:]) for ext in sorted(EXTENSIONS, key=len, reverse=True)) + ')'
 STOP = {'what', 'does', 'this', 'project', 'machine', 'function', 'explain', 'about',
         'logic', 'show', 'with', 'that', 'from', 'used', 'work', 'works', 'please',
         'the', 'and', 'how', 'are', 'for', 'can', 'all', 'its', 'tell', 'conditions',
-        'cite', 'only', 'supplied', 'line', 'evidence', 'limit', 'answer', 'words', 'selected'}
+        'cite', 'only', 'supplied', 'line', 'evidence', 'limit', 'answer', 'words', 'selected',
+        'check', 'feature', 'features', 'available', 'availability', 'present', 'exists',
+        'exist', 'implemented', 'there', 'whether', 'avalaible', 'avaliable', 'availble'}
 OVERVIEW_WORDS = {'functions', 'operating', 'operation', 'sequence', 'source', 'files',
                   'ladder', 'networks', 'identify', 'active', 'tasks', 'inferred',
                   'behaviour', 'behavior', 'overview', 'understand', 'uploaded'}
@@ -31,6 +34,20 @@ def machine_question(question):
         return False
     return bool(re.search(r'machine.*(?:function|operat|work)|(?:function|operat).*machine|'
                           r'operating sequence|(?:understand|explain).*project|project.*(?:function|overview)', text, re.I))
+
+
+def feature_question(question):
+    return bool(re.search(r'\b(?:features?|avail\w*|avalaible|present|exists?|implemented)\b', str(question), re.I))
+
+
+def source_calls(item):
+    """Keep literal ST/AB calls and their lines; do not infer block internals."""
+    if Path(item['file']).suffix.casefold() not in {'.st', '.ab', '.src'}: return []
+    text = re.sub(r'\(\*.*?\*\)|//[^\n]*', lambda m: '\n' * m.group().count('\n'), item['excerpt'], flags=re.S)
+    pattern = r'(?im)^\s*(?:[A-Za-z_]\w*(?:\.\w+)*\s*(?::=|=)\s*)?([A-Za-z_]\w*)\s*\(([^;]*?)\)\s*;'
+    return [{'name': m.group(1), 'call': ' '.join((m.group(1) + '(' + m.group(2) + ')').split()),
+             'line': item['line'] + text.count('\n', 0, m.start(1))}
+            for m in re.finditer(pattern, text)]
 
 
 def ladder_behaviour(network):
@@ -216,6 +233,7 @@ def build_index(root, cache_dir=None, progress=None):
 def retrieve(index, question, limit=14, characters=18000):
     query = words(question)
     overview = machine_question(question)
+    feature = feature_question(question)
     if overview: query -= OVERVIEW_WORDS
     file_match=re.search(r'([\w.-]+\.(?:ld|st|ab|src|c|var|typ|page))\b',question,re.I)
     network_match=re.search(r'\bnetwork\s+(\d+)',question,re.I)
@@ -235,6 +253,10 @@ def retrieve(index, question, limit=14, characters=18000):
         candidates=[c for c in candidates if c.get('enabled',True)]
     def score(chunk):
         return sum(20 for word in query if word in chunk['file'].casefold()) + 4*len(query & set(chunk['terms']))
+    def feature_rank(chunk):
+        # Matching active logic establishes more than a similarly named page.
+        return (not bool(score(chunk)), chunk['category'] not in {'Logic', 'Ladder'},
+                chunk['ownership'] != 'active task', -score(chunk), chunk['file'], chunk['line'])
     modules = {m['file']:m for m in index.get('modules',[])}
     def operational_rank(chunk):
         module = modules.get(chunk['file'],{})
@@ -246,7 +268,7 @@ def retrieve(index, question, limit=14, characters=18000):
                 -bool(chunk.get('behaviour')),
                 -len(re.findall(r'\b(?:DO_|MC_ON|MC_OFF|FEED|FAULT|START|STOP)\w*', chunk['text'], re.I)),
                 chunk['file'], chunk['line'])
-    ranked = sorted(candidates, key=operational_rank if overview else lambda c: (-score(c),
+    ranked = sorted(candidates, key=operational_rank if overview else feature_rank if feature else lambda c: (-score(c),
                     c['ownership'] != 'active task', c['category'] not in {'Logic', 'Ladder'}, c['file'], c['line']))
     chosen, seen_files, seen_tasks = [], set(), set()
     for chunk in ranked:
@@ -254,7 +276,7 @@ def retrieve(index, question, limit=14, characters=18000):
         if overview and chunk['file'] in seen_files: continue
         if not overview and query and not score(chunk): continue
         # A bounded sample across control tasks is more useful than one large XML page.
-        excerpt = chunk['text'][:min(900 if overview else 1800, characters)]
+        excerpt = chunk['text'][:min(900 if overview else 3200 if feature else 1800, characters)]
         if not excerpt: break
         facts = chunk.get('behaviour', [])
         if not chunk.get('network'):
@@ -263,25 +285,53 @@ def retrieve(index, question, limit=14, characters=18000):
                       {'excerpt': excerpt, 'behaviour': facts})
         seen_files.add(chunk['file']); seen_tasks.add(Path(chunk['file']).parent.as_posix()); characters -= len(excerpt)
         if len(chosen) >= limit or characters <= 0: break
+    if feature:
+        # Include the matched task's declarations even when the query uses the
+        # block type rather than the source filename.
+        parents = {Path(e['file']).parent.as_posix() for e in chosen if e['category'] in {'Logic', 'Ladder'}}
+        for chunk in index['chunks']:
+            if len(chosen) >= limit or characters <= 0: break
+            if chunk['category'] != 'Declarations' or chunk['file'] in seen_files: continue
+            if Path(chunk['file']).parent.as_posix() not in parents: continue
+            excerpt = chunk['text'][:min(1800, characters)]
+            chosen.append({k: chunk[k] for k in ('file', 'line', 'category', 'ownership')} |
+                          {'excerpt': excerpt, 'behaviour': []})
+            seen_files.add(chunk['file']); characters -= len(excerpt)
     return chosen
 
 
-def explanation_supported(answer, evidence, comparison=None):
-    """Reject fabricated source names/locations; semantic claims still need review."""
+def explanation_reference_issue(answer, evidence, comparison=None):
+    """Return a specific citation failure. This does not verify semantic claims."""
     allowed={Path(e['file']).name.casefold() for e in evidence}
+    allowed_paths={e['file'].replace('\\', '/').casefold() for e in evidence}
     if comparison:
         allowed.update(Path(r['file']).name.casefold() for rows in comparison['categories'].values() for r in rows)
-    mentioned=re.findall(r'\b([A-Za-z_][\w.-]*\.(?:st|ld|ab|src|var|typ|page|layer|iom|sw|hwl|hw))\b',answer,re.I)
-    if any(name.casefold() not in allowed for name in mentioned): return False
-    ids=[number for group in re.findall(r'\[((?:S\d+[,;\s]*)+)\]',answer) for number in re.findall(r'S(\d+)',group)]
-    if evidence and (not ids or any(not 1<=int(i)<=len(evidence) for i in ids)): return False
-    if comparison and not mentioned: return False
-    if evidence and all(not e.get('enabled',True) for e in evidence) and not re.search(r'commented|disabled|inactive|not.*execut',answer,re.I): return False
-    for name, number in re.findall(r'([A-Za-z_][\w.-]*\.(?:st|ld|ab|src|var|typ))[^\n]{0,50}?(?:line\s+|:\s*)(\d+)',answer,re.I):
+        allowed_paths.update(r['file'].replace('\\', '/').casefold() for rows in comparison['categories'].values() for r in rows)
+    mentioned=re.findall(r'\b(' + REFERENCE_FILE + r')\b',answer,re.I)
+    if any(name.casefold() not in allowed for name in mentioned): return 'unknown_source'
+    paths=re.findall(r'(?<![\w./\\-])((?:[\w<>.-]+[/\\])+' + REFERENCE_FILE + r')\b',answer,re.I)
+    if any(path.replace('\\', '/').casefold() not in allowed_paths for path in paths): return 'unknown_source'
+    source_ids={str(e.get('sourceId') or f'S{n}').casefold() for n,e in enumerate(evidence,1)}
+    ids=[number for group in re.findall(r'\[((?:S\d+[,;\s]*)+)\]',answer,re.I) for number in re.findall(r'S\d+',group,re.I)]
+    if any(i.casefold() not in source_ids for i in ids): return 'unknown_citation'
+    if comparison and not mentioned: return 'missing_comparison_source'
+    if evidence and all(not e.get('enabled',True) for e in evidence) and not re.search(r'commented|disabled|inactive|not.*execut',answer,re.I): return 'inactive_source'
+    locations=0
+    for name, number in re.findall(r'(' + REFERENCE_FILE + r')[^\n]{0,50}?(?:line\s+|:\s*)(\d+)',answer,re.I):
         ranges=[(e['line'],e['line']+(1 if e.get('network') else len(e['excerpt'].splitlines()))) for e in evidence
                 if Path(e['file']).name.casefold()==name.casefold()]
-        if not any(start<=int(number)<end for start,end in ranges): return False
-    return True
+        if not any(start<=int(number)<end for start,end in ranges): return 'outside_excerpt'
+        files={e['file'] for e in evidence if Path(e['file']).name.casefold()==name.casefold()}
+        if len(files)>1 and not ids: return 'ambiguous_source'
+        locations+=1
+    # The prompt also permits file:line citations. A verified location should
+    # not be rejected merely because a small model omitted the [S1] spelling.
+    if evidence and not ids and not locations: return 'missing_citations'
+    return None
+
+
+def explanation_supported(answer, evidence, comparison=None):
+    return explanation_reference_issue(answer, evidence, comparison) is None
 
 
 def module_overview(index, question, limit=16):
@@ -296,6 +346,8 @@ def module_overview(index, question, limit=16):
 
 def project_answer(index, evidence, question=''):
     identity = index['identity']
+    if feature_question(question):
+        return feature_answer(index, evidence, question)
     lines = [f"Project knowledge: {identity.get('project_name', 'Uploaded project')}",
              f"Active configuration: {identity.get('active_configuration') or 'unresolved / legacy single configuration'}",
              'Source inventory: ' + ', '.join(f'{count} {kind} files' for kind, count in index['counts'].items()),
@@ -314,8 +366,57 @@ def project_answer(index, evidence, question=''):
         for fact in displayed:
             lines.append('- ' + (fact if isinstance(fact,str) else fact['text']))
         if not facts:
-            lines.append('- No complete conditional action was extracted from this excerpt. Open the source to trace its connections and called functions.')
+            lines.append('- ' + {'HMI': 'HMI page, text or datapoint evidence; this is not executable PLC logic.',
+                                 'Declarations': 'Variable/type declaration evidence; declarations alone do not establish execution.'}.get(item['category'],
+                                 'No complete conditional action was extracted from this excerpt. Open the source to trace its connections and called functions.'))
     lines.extend(['', 'Coverage: these are selected static control actions, not a complete simulated operating sequence. The order above is for reading, not PLC execution order. Shared sources are not confirmed active tasks. Machine purpose and function-block internals require further source review.', *index['notices']])
+    return '\n'.join(lines)
+
+
+def feature_answer(index, evidence, question):
+    """Answer source-presence questions without pretending to run the feature."""
+    query = words(question)
+    executable = [e for e in evidence if e['category'] in {'Logic', 'Ladder'} and e.get('enabled', True)]
+    matches = [(e, c) for e in executable for c in source_calls(e)
+               if any(word in c['name'].casefold() for word in query)]
+    active = [e for e in ([m[0] for m in matches] if matches else executable) if e['ownership'] == 'active task']
+    if matches:
+        lead = 'Yes, matching feature calls are present in the PLC source.'
+    elif executable:
+        lead = 'Matching executable source was found. Its connection to the requested feature needs source review.'
+    elif evidence:
+        lead = 'Related source was found, but these excerpts do not establish an executable implementation.'
+    else:
+        lead = 'No matching source was found in this search. This is not proof that the feature is absent.'
+    lines = [lead, f"Project: {index['identity'].get('project_name', 'Uploaded project')}",
+             f"Active configuration: {index['identity'].get('active_configuration') or 'unresolved / legacy single configuration'}"]
+    if active: lines.append('Matching logic belongs to a task listed in the active configuration.')
+    else: lines.append('Active task ownership for this feature is unconfirmed.')
+    seen = set()
+    for item, call in matches[:5]:
+        location = (item['file'], call['line'])
+        if location in seen: continue
+        seen.add(location)
+        lines.extend(['', f"{item['file']}:{call['line']} ({item['ownership']})", '- Source call: ' + call['call']])
+        declarations_for_call = [s for s in index['symbols'] if s['name'].casefold() == call['name'].casefold()
+                                 and Path(s['file']).parent == Path(item['file']).parent]
+        for symbol in declarations_for_call[:1]:
+            lines.append(f"- Declared as {symbol['name']} : {symbol['declaration']} ({symbol['file']}:{symbol['line']}).")
+    for item in executable[:3]:
+        lines.extend(['', f"{item['file']}:{item['line']} ({item['ownership']})"])
+        facts = item.get('behaviour', [])
+        for fact in facts[:3]: lines.append('- ' + (fact if isinstance(fact, str) else fact['text']))
+        if not facts: lines.append('- Matching source excerpt; review its full connections and called functions.')
+    hmi_items = sorted((e for e in evidence if e['category'] == 'HMI'),
+                       key=lambda e: 'Variable[' not in e['excerpt'])
+    for item in hmi_items:
+        if item['file'] in seen: continue
+        seen.add(item['file'])
+        lines.extend(['', f"{item['file']}:{item['line']}", '- Related HMI page/text evidence.'])
+        bindings = list(dict.fromkeys(re.findall(r'Variable\[([^\n"<>]+)\]', item['excerpt'])))
+        if bindings: lines.append('- Datapoint bindings: ' + ', '.join(bindings[:4]) + '.')
+        if sum(isinstance(s, str) for s in seen) >= 3: break
+    lines.extend(['', 'Source presence and task ownership are reported separately. PLC execution and network reachability have not been tested.', *index['notices']])
     return '\n'.join(lines)
 
 

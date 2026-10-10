@@ -1,0 +1,7 @@
+.assistModelSettings > label { display:grid; gap:6px; margin:12px 0; }
+.assistModelSettings small { color:var(--muted); line-height:1.5; }
+.assistModelControls { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:12px 0; }
+.assistModelControls label { display:grid; align-content:start; gap:6px; min-width:0; }
+.assistModelSettings .modelStartup { display:flex; align-items:center; gap:8px; }
+.assistModelSettings .modelStartup input { accent-color:var(--accent); }
+.assistModelSettings .actions { margin:12px 0; }

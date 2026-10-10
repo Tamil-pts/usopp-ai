@@ -1,6 +1,6 @@
 # Shared LAN/VPN container deployment plan
 
-Status: storage, CPU model setup and container install/update/backup/restore are implemented in 4.65.8; destination verification is pending. See PERSISTENT_STORAGE_AND_CPU_AI.md and distribution/LAN_SERVER.md.
+Status: storage, CPU model setup and container install/update/backup/restore are implemented in 4.65.9; destination verification is pending. See PERSISTENT_STORAGE_AND_CPU_AI.md and distribution/LAN_SERVER.md.
 
 ## Deployment
 

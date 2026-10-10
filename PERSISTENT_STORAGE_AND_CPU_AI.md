@@ -1,6 +1,6 @@
 # Persistent storage and Chopper CPU model
 
-Implemented in 4.65.8. One shared server supports five regular accounts plus Admin. Users connect through the existing LAN/VPN and sign in; the server administrator installs releases.
+Implemented in 4.65.9. One shared server supports five regular accounts plus Admin. Users connect through the existing LAN/VPN and sign in; the server administrator installs releases.
 
 ## What goes in a database
 
@@ -37,7 +37,7 @@ The selected model is [Qwen2.5-Coder 1.5B Instruct, Q4_K_M](https://huggingface.
 
 Windows packages include llama.cpp CPU binaries. The Dockerfile builds a Linux CPU runtime from the same pinned llama.cpp release, b11475 / `7e8324f5feba1d8be3f966e1791e84107e40cdd7`. No Ollama service is needed or modified. Model weights are downloaded once into the persistent volume and are excluded from Git and application images.
 
-Defaults: 8,192 context tokens, up to four CPU threads, 512 answer tokens, one model generation at a time. Up to five independent Chopper requests may enter the queue; waits are bounded. Each request supplies its own messages and source evidence. CPU model queuing does not use the validation worker lock. Allow approximately 4 GB free RAM for this starting model and at least 1.4 GB disk for its download; total server RAM/disk must also cover simultaneous validations and retained projects. Actual speed depends on the server and is not established by compilation.
+Defaults: 8,192 context tokens, up to four CPU threads, 512 answer tokens, one model generation at a time. The model response window defaults to 30 minutes; Admin can select 0.5-30 minutes. Up to five independent Chopper requests may enter the queue; queue waiting and generation share that window. Project indexing happens before it. Each request supplies its own messages and source evidence. CPU model queuing does not use the validation worker lock. Ready means the model is loaded; Save & check requests a short answer with a separate 30-second limit. Allow approximately 4 GB free RAM for this starting model and at least 1.4 GB disk for its download; total server RAM/disk must also cover simultaneous validations and retained projects. Actual speed depends on the server and is not established by compilation.
 
 For an offline server, place the exact approved GGUF at `/data/local_ai/models/qwen2.5-coder-1.5b-instruct-q4_k_m.gguf`, then use the same setup button: it verifies the file without downloading it. The existing custom-GGUF selection remains available for another compatible licensed model. Keep custom weights under `USOPP_DATA_ROOT/local_ai/models` to include them in server backups.
 
