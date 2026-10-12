@@ -280,16 +280,18 @@ npm start -- --host 127.0.0.1 --port 8201
 
 ## 10. First sign-in and project uploads
 
-A fresh account database creates this initial administrator:
+A fresh installation of the updated application includes this demo account:
 
 | Field | Initial value |
 | --- | --- |
-| Username | `Admin` |
-| Password | `usopp.2026` |
+| Username | `demo` |
+| Password | `demo` |
+| Session duration | 30 minutes |
 
-After signing in, change the administrator password in **Settings**.
-Existing installations retain their current password; restarting does not reset
-it. Admin can create/manage accounts in **WorkHub → User management**.
+Click **Explore demo** on the landing page to fill the demo credentials, then
+click **Sign in**. Obtain administrative credentials privately from the server
+owner. Existing installations retain their current passwords; restarting does
+not reset them. Admin can create/manage accounts in **WorkHub → User management**.
 Users can change their own passwords in Settings.
 
 For PLC projects on your laptop, use the browser upload/attachment controls.

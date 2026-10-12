@@ -1,0 +1,465 @@
+{
+  "scope": "Every route; empty input and missing-resource handling in temporary storage",
+  "results": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/log",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/logs/today",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/local/browse",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/path/check",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/cache/clear",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/download/{sid}/{filename}",
+      "status": 404,
+      "detail": "{\"detail\":\"Workbook not found\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/project-upload/start",
+      "status": 400,
+      "detail": "{\"detail\":\"Select the complete B&R project folder.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/project-upload/chunk",
+      "status": 400,
+      "detail": "{\"detail\":\"Request could not be processed. See backend log for details.\",\"errors\":[{\"type\":\"missing\",\"loc\":[\"body\",\"session_id\"],\"msg\":\"Field required\",\"input\":null},{\"type\":\"missing\",\"loc\":[\"body\",\"project_files\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/project-upload/finish",
+      "status": 400,
+      "detail": "{\"detail\":\"Invalid project upload session.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/project/details",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/project/last-user",
+      "status": 400,
+      "detail": "{\"detail\":\"Request could not be processed. See backend log for details.\",\"errors\":[{\"type\":\"missing\",\"loc\":[\"body\",\"settings_file\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/validate",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/generate-metadata",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/metadata/upload",
+      "status": 400,
+      "detail": "{\"detail\":\"Request could not be processed. See backend log for details.\",\"errors\":[{\"type\":\"missing\",\"loc\":[\"body\",\"metadata\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/validate",
+      "status": 400,
+      "detail": "{\"detail\":\"Select the complete B&R project folder.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/generate-metadata",
+      "status": 400,
+      "detail": "{\"detail\":\"Select the complete B&R project folder.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/metadata/view/sheets",
+      "status": 400,
+      "detail": "{\"detail\":\"Select or generate a metadata workbook first.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/metadata/view/export",
+      "status": 400,
+      "detail": "{\"detail\":\"Select or generate a metadata workbook first.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/metadata/view/save",
+      "status": 400,
+      "detail": "{\"detail\":\"Select or generate a metadata workbook first.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/metadata/view/download/{sid}/{name}",
+      "status": 404,
+      "detail": "{\"detail\":\"Workbook copy not found.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/local/metadata/download/{sid}",
+      "status": 404,
+      "detail": "{\"detail\":\"Metadata workbook not found. Select the input workbook or generate it again.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/knowledge/master",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/api/knowledge/master",
+      "status": 400,
+      "detail": "{\"detail\":\"Mappings must be a list.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/knowledge/master",
+      "status": 400,
+      "detail": "{\"detail\":\"PLC Parameter and Metadata Parameter are required.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/knowledge/master/csv",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/knowledge/master/csv",
+      "status": 400,
+      "detail": "{\"detail\":\"Request could not be processed. See backend log for details.\",\"errors\":[{\"type\":\"missing\",\"loc\":[\"body\",\"file\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/knowledge/master/dropdown",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "PUT",
+      "path": "/api/knowledge/master/dropdown",
+      "status": 400,
+      "detail": "{\"detail\":\"Mappings must be a list.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/knowledge/master/dropdown/csv",
+      "status": 400,
+      "detail": "{\"detail\":\"Request could not be processed. See backend log for details.\",\"errors\":[{\"type\":\"missing\",\"loc\":[\"body\",\"file\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/knowledge/master/dropdown/csv",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/knowledge/project",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/knowledge/project",
+      "status": 400,
+      "detail": "{\"detail\":\"Project name, PLC Parameter and Metadata Parameter are required.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/compare/start",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/compare/project-info",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/local/compare/status/{sid}",
+      "status": 404,
+      "detail": "{\"detail\":\"Comparison session not found or already cleared.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/compare",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/local/compare/detail/{sid}/{detail_id}",
+      "status": 400,
+      "detail": "{\"detail\":\"Invalid comparison detail\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/local/compare/export/{sid}/{fmt}",
+      "status": 404,
+      "detail": "{\"detail\":\"Comparison result not found. Run the comparison again.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/compare",
+      "status": 400,
+      "detail": "{\"detail\":\"Select both project folders using the same input method.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/library",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/rules/library/{rule_id}",
+      "status": 404,
+      "detail": "{\"detail\":\"Rule was not found in the active rule library.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/features",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/rules/features/{feature_id}",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/rules/features/{feature_id}",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/rules/feature-pipeline",
+      "status": 400,
+      "detail": "{\"detail\":\"Name the pipeline and add features.\"}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/rules/pipelines/{pipeline_id}",
+      "status": 404,
+      "detail": "{\"detail\":\"Saved pipeline was not found.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/local/rules/validate",
+      "status": 400,
+      "detail": "{\"detail\":\"Local path is required.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/modules",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/rules/modules",
+      "status": 400,
+      "detail": "{\"detail\":\"Rule configuration must contain at least one rule.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/modules/{module_id}",
+      "status": 404,
+      "detail": "{\"detail\":\"Rule module not found.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rules/checklists/normalize",
+      "status": 400,
+      "detail": "{\"detail\":\"Request could not be processed. See backend log for details.\",\"errors\":[{\"type\":\"missing\",\"loc\":[\"body\",\"file\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rules/feedback",
+      "status": 400,
+      "detail": "{\"detail\":\"Select a supported feedback decision.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/feedback",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/learning",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/learning/model",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/learning/export",
+      "status": 404,
+      "detail": "{\"detail\":\"No engineer-approved learning examples are ready for export.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rules/default",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/rules/validate",
+      "status": 400,
+      "detail": "{\"detail\":\"Request could not be processed. See backend log for details.\",\"errors\":[{\"type\":\"missing\",\"loc\":[\"body\",\"rules_json\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/assist/rule-config",
+      "status": 400,
+      "detail": "{\"detail\":\"Describe the engineering rule first.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/assist",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/validation/source/read",
+      "status": 400,
+      "detail": "{\"detail\":\"Invalid validation session.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/validation/source/save",
+      "status": 400,
+      "detail": "{\"detail\":\"Invalid validation session.\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/nami/health",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/nami/simulator/state",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/nami/simulator/update",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/nami/plc/read-multiple-groups",
+      "status": 400,
+      "detail": "{\"detail\":\"groupCodes must contain 1 to 256 group codes\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/nami/plc/read-group",
+      "status": 400,
+      "detail": "{\"detail\":\"groupCode must be between 0 and 65535\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/nami/plc/test-connection",
+      "status": 400,
+      "detail": "{\"detail\":\"Enter the controller IP address or hostname\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/nami/plc/send-raw",
+      "status": 400,
+      "detail": "{\"detail\":\"rawBytes must be a nonempty byte array\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/nami/plc/send-rtc",
+      "status": 400,
+      "detail": "{\"detail\":\"asciiPayload must be nonempty ASCII text\"}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/session",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/register",
+      "status": 400,
+      "detail": "{\"detail\":\"Enter username.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 400,
+      "detail": "{\"detail\":\"Enter username.\"}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "status": 200,
+      "detail": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/password",
+      "status": 400,
+      "detail": "{\"detail\":\"Enter currentPassword.\"}"
+    }
+  ],
+  "failures": [],
+  "functionalChecks": [
+    "Grouped rule configuration and real engine validation of subroutine-relative Cyclic.st: PASS"
+  ]
+}

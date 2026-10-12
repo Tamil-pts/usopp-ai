@@ -34,7 +34,7 @@ def playbook():
 def task_guidance(intent):
     data = playbook()
     return {'intent': intent, 'steps': data['tasks'].get(intent, data['tasks']['source lookup']),
-            'responseStyle': data['responseStyle'], 'status': 'Backend task guidance; installed model weights unchanged.'}
+            'responseStyle': data['responseStyle'], 'status': 'Backend task guidance; weight training is recorded separately in run manifests.'}
 
 
 def capture(user, question, result, project_name):

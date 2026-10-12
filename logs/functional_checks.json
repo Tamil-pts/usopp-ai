@@ -1,0 +1,91 @@
+{
+  "generated": {
+    "sessionId": "8404_ocs36zhu",
+    "totalParameters": 1010,
+    "generationSeconds": 8.2,
+    "workbookPath": "C:\\Users\\PTPL0241\\Projects\\AI_QC\\uaopp.ai\\usopp_ai_2.0\\.usopp_exports\\metadata\\project_1_Generated_Metadata_8404_ocs36zhu.xlsx",
+    "downloadExcelUrl": "/api/metadata/view/download/8404_ocs36zhu/project_1_Generated_Metadata_8404_ocs36zhu.xlsx"
+  },
+  "sheets": {
+    "project 1": {
+      "rows": 1011,
+      "columns": 24
+    },
+    "Sheet2": {
+      "rows": 277,
+      "columns": 5
+    }
+  },
+  "validation": {
+    "sessionId": "8404_55xz24w6",
+    "summary": {
+      "totalChecks": 2020,
+      "passed": 1935,
+      "warnings": 68,
+      "failed": 17,
+      "complianceScore": 97,
+      "totalGroups": 31
+    },
+    "downloadExcelUrl": "/api/download/8404_55xz24w6/project_1_Validation_Report.xlsx"
+  },
+  "rules": {
+    "version": "4.32",
+    "ruleCount": 1,
+    "counts": {
+      "pass": 1,
+      "fail": 0,
+      "not_found": 0
+    },
+    "results": [
+      {
+        "id": "QA-SOURCE",
+        "name": "Packet source exists",
+        "status": "PASS",
+        "expected": "Required files shall exist.",
+        "actual": "1 matching files found.",
+        "evidence": [
+          "Logical\\SpinConnect\\mms_nw_r\\mms_nw_rCyclic.st"
+        ],
+        "recommendations": [],
+        "sourceFiles": [
+          "Logical\\SpinConnect\\mms_nw_r\\mms_nw_rCyclic.st"
+        ]
+      }
+    ],
+    "moduleReports": [],
+    "sessionId": "8404_ly5btdsc",
+    "projectName": "project 1",
+    "localMode": true,
+    "reportDownloads": [],
+    "reportStatus": null
+  },
+  "comparison": {
+    "sessionId": "8404_w7f38yry",
+    "summary": {
+      "total_in_base": 1732,
+      "total_in_new": 1130,
+      "added": 621,
+      "removed": 1223,
+      "modified": 206,
+      "unchanged": 303,
+      "by_category": {
+        "logic": 181,
+        "screen": 589,
+        "hardware": 63,
+        "config": 1217
+      },
+      "elapsed_seconds": 5.65
+    },
+    "seconds": 12.38,
+    "jsonBytes": 74348522,
+    "pdfBytes": 367811,
+    "docxBytes": 132528
+  },
+  "applicationVersion": "4.33.0",
+  "regressionTests": 15,
+  "engineSha256": {
+    "packet_validation_report_uSOPp_v1.71_final.py": "c37e57903f60ffda36ed7c2c468dd24ac13aaa7d039eea6efba25cdd0810364d",
+    "project_compare_engine.py": "ffae896a9533f3ed60950a421cfa6b5fba383f04f1164b23dbca09151c91e238",
+    "rule_engine_v4_30.py": "7d02a16225f1eca771865ec9a38f8c3773e87b55e8a38df700ccbfd8e84b89f5"
+  }
+}

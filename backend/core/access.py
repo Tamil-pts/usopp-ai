@@ -28,6 +28,8 @@ def require_resource(path):
         return
     resolved = Path(path).resolve()
     if not any(resolved == root.resolve() or resolved.is_relative_to(root.resolve()) for root in (WORK, EXPORTS)):
+        if user.get('isDemo'):
+            raise HTTPException(403, 'Upload a project or file to use it in your demo workspace.')
         return
     keys = [resource_key(item) for item in (resolved, *resolved.parents)]
     with accounts.store.db() as db:
@@ -57,6 +59,13 @@ def require_session(sid):
 async def authorize_request(request):
     """Cover session URLs and JSON references; multipart uploads use runtime checks."""
     path = request.url.path
+    if request.state.user.get('isDemo') and request.method not in ('GET','HEAD','OPTIONS'):
+        shared_prefixes=('/api/knowledge/','/api/local/knowledge/','/api/rules/features/',
+                         '/api/rules/library/','/api/rules/pipelines/')
+        shared_paths={'/api/rules/modules','/api/rules/feature-pipeline','/api/rules/feedback',
+                      '/api/nami/data-models/import'}
+        if path in shared_paths or path.startswith(shared_prefixes):
+            raise HTTPException(403, 'Shared configuration changes require a personal account. Demo uploads and validation results stay in your demo workspace.')
     patterns = (
         r'^/api/download/([^/]+)', r'^/api/metadata/view/download/([^/]+)',
         r'^/api/local/metadata/download/([^/]+)', r'^/api/reports/rules/([^/]+)',

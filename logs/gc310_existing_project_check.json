@@ -1,0 +1,12 @@
+{
+  "summary": {
+    "totalChecks": 2020,
+    "passed": 1935,
+    "warnings": 68,
+    "failed": 17,
+    "complianceScore": 97,
+    "totalGroups": 31
+  },
+  "comparedGroups": 31,
+  "changedFields": []
+}

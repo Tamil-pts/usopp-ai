@@ -2,13 +2,34 @@
 
 This repository contains installation instructions and release packages. Users do not need the private application source repository.
 
+## Download the published release
+
+Open this repository's **Releases**, select the required version and download
+the package assets listed below. Container installation needs both the launcher
+ZIP and Linux image archive, plus their checksum files:
+
+```text
+uSOPp_AI_<version>_Container_Launchers.zip
+uSOPp_AI_<version>_Container_Launchers.zip.sha256
+uSOPp_AI_<version>_Container_linux_amd64.tar.gz
+uSOPp_AI_<version>_Container_linux_amd64.tar.gz.sha256
+```
+
+The automatically generated **Source code** archives contain this downloads
+repository's documentation. Choose the named installation packages to install
+uSOPp. A missing Linux image asset means the container package is not available
+yet; the launcher ZIP alone cannot install the app.
+
+For deleting the original Ubuntu source demo and creating new container
+accounts/data, follow [Fresh Ubuntu installation](LAN_SERVER.md#8-replace-the-old-ubuntu-source-demo-with-a-fresh-container).
+
 ## Windows: portable application
 
 1. Open **Releases** and download `uSOPp_AI_<version>_Windows_x64.zip`.
 2. Right-click the ZIP, select **Extract all**, and keep the complete extracted folder.
 3. Double-click `Start_uSOPp.cmd`; the browser opens at `http://127.0.0.1:8200`. Direct launch through `uSOPp_AI.exe` also works.
-4. On a fresh installation sign in as **Admin**, password **usopp.2026**, then change it in **Settings → My account**. Existing installations retain their accounts.
-5. Register up to five regular users plus Admin. See the app Help for each workspace.
+4. Click **Explore demo** on the landing page to fill username **demo** and password **demo**, then click **Sign in**. Demo sessions sign out automatically after 30 minutes. Administrative credentials are supplied privately by the server owner.
+5. New users can request accounts from the sign-in page. Admin enables approved accounts in WorkHub / User management. The server allows five enabled regular users plus Admin; pending requests and the separate demo account do not use active-user slots. Each demo login gets its own uploads, results and settings. See the app Help for each workspace.
 
 No Python, Node.js, Git or Docker is required. Windows may flag an unsigned EXE; packages are currently unsigned. Accounts, uploads, results and history stay in `%LOCALAPPDATA%\uSOPp.ai`. Finish jobs and use `Stop_uSOPp.cmd` before upgrading. Closing the browser alone does not stop the backend. Keep the data folder; extract each new version into a new application folder.
 

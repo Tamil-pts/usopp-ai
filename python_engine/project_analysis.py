@@ -13,6 +13,7 @@ SPELLINGS = {
     'projrct': 'project', 'projrcts': 'projects', 'alram': 'alarm',
     'parametre': 'parameter', 'parametr': 'parameter', 'timout': 'timeout',
     'laddee': 'ladder', 'laddder': 'ladder', 'logci': 'logic',
+    'fualt': 'fault', 'faut': 'fault', 'sysntex': 'syntax', 'syntx': 'syntax',
 }
 
 
@@ -33,9 +34,13 @@ def question_intent(question):
     text = normalize_question(question)
     communication = bool(re.search(r'\b(?:communications?|protocols?|RS(?:232|422|485)|serial|modbus|TCP|UDP|ping|ethernet|CANopen|POWERLINK|profibus)\b|\b(?:Tcp(?:Open|Close|Server|Client|Send|Recv|Ioctl)|Udp(?:Open|Close|Send|Recv)|IcmpPing|FRM_\w+|MBMOpen|MBMaster|MBSlave)\w*', text, re.I))
     improvement = bool(re.search(r'\b(?:improv\w*|suggest\w*|optimi[sz]\w*|review|bugs?|risk\w*)\b', text, re.I))
-    machine = bool(re.search(r'machine.*(?:function|operat|work)|(?:function|operat).*machine|operating sequence|(?:understand|explain).*project|project.*(?:function|overview)', text, re.I))
-    return {'kind': 'communication review' if communication and improvement else 'communication' if communication else 'improvement review' if improvement else 'machine functions' if machine else 'source lookup',
+    machine = bool(re.search(r'machine.*(?:function|operat|work)|(?:function|operat).*(?:machine|project)|operating sequence|(?:understand|explain).*project|project.*(?:function|overview)', text, re.I))
+    syntax = bool(re.search(r'\b(?:syntax|compil(?:e|er|ation|ing))\b', text, re.I))
+    diagnosis = bool(re.search(r'\b(?:why|caus\w*|reason\w*|diagnos\w*|troubleshoot\w*|not\s+work\w*|not\s+(?:connect\w*|happen\w*))\b', text, re.I))
+    fault = diagnosis and bool(re.search(r'\b(?:fault\w*|alarm\w*|error\w*|status|Step\s*100|communication|connection|doff\w*|HMS|ping)\b|\b(?:Tcp|FRM_)\w+', text, re.I))
+    return {'kind': 'syntax review' if syntax else 'fault diagnosis' if fault else 'communication review' if communication and improvement else 'communication' if communication else 'improvement review' if improvement else 'machine functions' if machine else 'source lookup',
             'communication': communication, 'improvement': improvement, 'machine': machine,
+            'fault': fault, 'syntax': syntax,
             'normalizedQuestion': text}
 
 

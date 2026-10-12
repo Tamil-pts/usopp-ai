@@ -1,15 +1,29 @@
-# Private GitHub repositories and local installation
+# GitHub source and downloads repositories
 
 ## Package layout
+
+Your repositories are:
+
+- Application source and build workflow: [Tamil-pts/usopp-ai](https://github.com/Tamil-pts/usopp-ai).
+- Installation guides and public package downloads: [Tamil-pts/usopp-distribution](https://github.com/Tamil-pts/usopp-distribution).
+
+Edit and build the application in `usopp_ai_2.0`. Commit/push the latest source
+there before running its package workflow. Maintain the download instructions
+in the separate `usopp-distribution` checkout and attach built ZIP/image files
+as GitHub Release assets. Generated packages stay ignored in both Git checkouts.
+
+You can also download the successful workflow artifacts and copy the package
+files directly to Ubuntu over SSH/SCP. A public release is unnecessary for that
+manual installation. See [the fresh Ubuntu procedure](distribution/LAN_SERVER.md#8-replace-the-old-ubuntu-source-demo-with-a-fresh-container).
 
 | Repository / package | Contains | Access |
 | --- | --- | --- |
 | Private `usopp-ai` | Application source, approved default rules/data models, build scripts | Maintainers |
-| Private `usopp-distribution` | Installation README and compiled release downloads | Authorized users |
+| `usopp-distribution` | Installation guides and compiled release downloads | Authorized users if private; anyone if public |
 | Windows ZIP | Portable EXE, dependencies, frontend and defaults | Windows users |
 | Container image archive + launchers ZIP | Compiled Linux application, dependencies, defaults and Compose commands | Windows Docker / Ubuntu users |
 
-Users who can read the source repository can download its source. Keep end users in the downloads repository only. Both repositories are private. GitHub's automatic **Source code** release archive in the downloads repository contains only its installation README, not application code.
+Users who can read the source repository can download its source. Keep end users in the downloads repository only. The automated publisher uses two private repositories. The manual route in section 2 also supports a public downloads repository. GitHub's automatic **Source code** release archive in the downloads repository contains its installation documentation.
 
 The container's final stage copies compiled application code from a builder. Original `.py`, `.ts`, `.tsx` and frontend source maps are excluded. Third-party Python dependencies retain their own files and licenses. Bytecode and JavaScript are reversible; containers provide packaging, not encryption. See [Docker multi-stage builds](https://docs.docker.com/get-started/docker-concepts/building-images/multi-stage-builds/).
 
@@ -65,6 +79,57 @@ Select **GitHub.com → HTTPS → browser login**. The publisher creates private
 Pending edits must be reviewed and committed before publishing. See GitHub CLI [repository creation](https://cli.github.com/manual/gh_repo_create) and [authentication](https://cli.github.com/manual/gh_auth_login).
 
 ## 2. Configure release access
+
+### Manual downloads repository setup
+
+The local `usopp-distribution` directory is a prepared Git repository. It becomes
+a GitHub repository only after you publish it. For the manual route:
+
+1. On GitHub choose **New repository**, name it `usopp-distribution`, select
+   **Private** for restricted downloads or **Public** if anyone may download the
+   application packages, and initialize it with a README. Keep the application
+   source repository private.
+2. Copy the current `distribution/README.md` and `distribution/LAN_SERVER.md`
+   from the application checkout into this downloads repository. They contain
+   installation instructions. Its Git commits should contain documentation,
+   not the application source, account databases, projects or test results.
+3. Open the private source repository's **Actions -> Build private download
+   packages -> Run workflow**. For manual publishing, leave **Create a draft
+   release** unchecked. The build artifacts can then be downloaded from the
+   successful workflow run without connecting a downloads-repository token.
+4. Download and extract the `release-windows` and `release-container` workflow
+   artifacts. Collect the matching application ZIP, container launcher ZIP,
+   Linux container image archive and their `.sha256` companions.
+5. In the downloads repository open **Releases -> Draft a new release**. Create
+   a tag `v<version>` matching `package.json`, select its documentation branch
+   and use title `uSOPp.ai <version>`. Attach the built package files as release
+   assets and save the draft. Publish after checking the packages on the target
+   host. Follow [GitHub's release instructions](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
+6. Users open that release and download its container launcher ZIP, Linux image
+   archive and both checksum files. For the original Ubuntu source demo, see
+   [the fresh installation procedure](distribution/LAN_SERVER.md#8-replace-the-old-ubuntu-source-demo-with-a-fresh-container).
+
+No tracked `release/` directory is needed. Keep `release/`, `artifacts/`,
+`*.tar.gz`, dependencies, databases, private settings and model/training data in
+the source repository's `.gitignore`. GitHub Actions rebuilds the application
+from tracked sources and dependency manifests; release assets are attached
+separately from Git commits. Generated `dist/`, `.venv/` and `node_modules/`
+are therefore unnecessary in the source repository.
+
+If you choose a public downloads repository, both packages and that
+repository's automatic Source code archives are publicly downloadable. Keeping
+only documentation in its Git history makes those automatic archives contain
+the documentation. Compiled bytecode and JavaScript remain inspectable; the
+packages are not source encryption. Private server data stays in server storage
+and must not be attached as a release asset.
+
+The existing automated draft publisher and `publish_private_github.ps1` require
+both repositories to be private. They intentionally reject a public downloads
+repository. The manual build/download/upload route above works without changing
+those scripts. An automated public publisher would require a separate explicit
+configuration change.
+
+### Automated private draft publication
 
 1. In the private source repository, open **Settings → Secrets and variables → Actions → Variables**. Set `DISTRIBUTION_REPO` to `<owner>/usopp-distribution`; the publisher sets this automatically.
 2. Create a **fine-grained personal access token** restricted to the downloads repository, with **Contents: read and write** and an appropriate expiry. Store it only as the source repository's Actions secret **`DISTRIBUTION_TOKEN`**.

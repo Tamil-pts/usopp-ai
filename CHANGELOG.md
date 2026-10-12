@@ -3,6 +3,20 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## Development updates - 2026-10-12
+
+- Add demo / demo sign-in through the landing page's Explore demo action. Enforce a fixed 30-minute demo session in the server cookie/database and return its expiry for automatic browser logout. Use a separate namespace for each demo login; retain five regular-user slots plus Admin, restrict demo shared-configuration writes/server-file access and keep its fixed credentials out of account password editing. Remove Admin password values from the published installation guides. Implementation added on 2026-10-12; no tests were requested for this change.
+
+- Document the confirmed source/download repository URLs and direct SSH/SCP installation from workflow artifacts. Refresh the public README/LAN guide and the local container-launcher ZIP. Compile the updated Python account modules, rebuild the main/DataInspect interfaces and restart the local development server. No container image or portable EXE was rebuilt locally for these changes.
+
+- Change public registration to create pending account requests. Admin can review and enable requests from WorkHub / User management; pending users cannot sign in and do not use the five regular-user slots. Add request status feedback and a refresh action for Admin.
+- Add a reduced private container build bundle for building on Ubuntu without GitHub. Include all runtime knowledge inputs required by the container compiler, fix Windows CRLF in generated SHA256 files, and document the local SCP/build/install steps. The bundle is 4.3 MiB; it excludes uploaded projects, B&R help source, models, training data, dependencies and runtime databases. The Ubuntu image still needs to be built on the destination server.
+
+## Development fixes - 2026-10-11
+
+- Fix Module serial no mapping when the backend runs the rule engine as a script: support the project-info import without requiring the python_engine package on the script path. Exclude Power Panel interface accessories such as 4PP065.IF23-1 from controller/serial inventories; retain target-ownership failures for actual multiple controllers.
+- Verify Project 2 and Project 3 through the real local validation API with isolated accounts, workspaces and SQLite history. Project 2 has 33 passing checks and one missing PLC1 SerialNumber binding; Project 3 passes all 125 checks. Confirm separate test IDs, history retrieval and database archiving. All 22 related regression tests pass. Record the source evidence and limitations in MODULE_SERIAL_MAPPING.md. Packaged Windows/container releases were not rebuilt.
+
 ## 4.65.12 - 2026-10-10
 
 - Make the optional reviewed Chopper adapter trainer CPU only by default. Preserve --device cpu compatibility; reject GPU selection, use float32, disable GPU visibility, limit compute/tokenizer threads and record CPU threads/precision in the run manifest. Existing llama.cpp inference already uses zero GPU layers.

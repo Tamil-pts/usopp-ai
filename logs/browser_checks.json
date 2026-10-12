@@ -1,0 +1,20 @@
+{
+  "errors": [],
+  "twoSheetEdits": "passed",
+  "navigationRetainsEdits": "passed",
+  "generatedRows": 1010,
+  "validationTabs": "passed",
+  "tableBefore": {
+    "width": 4200,
+    "cells": 21,
+    "min": "4200px"
+  },
+  "tableAfter": {
+    "width": 4000,
+    "cells": 20,
+    "min": "4000px"
+  },
+  "compareBrowser": "passed",
+  "localFolderDialogs": "passed",
+  "chatFallback": "passed"
+}

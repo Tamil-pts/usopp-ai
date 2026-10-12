@@ -19,6 +19,8 @@ def main():
     parser.add_argument('--cpu-threads', type=int, default=min(4, max(1, (os.cpu_count() or 2)//2)),
                         help='CPU compute threads (1..64); defaults to at most four, using half the available logical CPUs.')
     parser.add_argument('--model', default='Qwen/Qwen2.5-Coder-1.5B-Instruct')
+    parser.add_argument('--initial-adapter', type=Path,
+                        help='Continue learning from a saved adapter with a fresh optimizer and project split.')
     parser.add_argument('--allow-source-derived', action='store_true',
                         help='Train source-derived examples without claiming human review.')
     parser.add_argument('--max-length', type=int, default=4096)
@@ -52,13 +54,28 @@ def main():
     held = [r for r in rows if r['metadata']['splitGroup'] in held_groups]
     if len(train) < 20: parser.error('The project split leaves fewer than 20 training examples. Add more project examples.')
     output.mkdir(parents=True, exist_ok=True)
+    (output/'dataset.jsonl').write_bytes(args.dataset.read_bytes())
     manifest = {'schemaVersion': 2, 'status': 'preparing', 'baseModel': args.model, 'device': args.device,
                 'cpuThreads': args.cpu_threads, 'precision': 'float32',
                 'createdAt': datetime.now(timezone.utc).isoformat(), 'datasetDigest': hashlib.sha256(args.dataset.read_bytes()).hexdigest(),
                 'trainingExamples': len(train), 'heldOutExamples': len(held), 'skippedExamples': 0,
                 'sourceDerivedExamples': sum(r['metadata'].get('origin') == 'source-derived' for r in rows),
                 'maxLength': args.max_length, 'epochs': args.epochs, 'evaluated': False, 'servingModelChanged': False}
+    base_download = Path(args.model)/'download_manifest.json'
+    if base_download.is_file():
+        manifest['baseModelDownload'] = json.loads(base_download.read_text(encoding='utf-8'))
+    if args.initial_adapter:
+        initial = args.initial_adapter.resolve()
+        weights = initial/'adapter_model.safetensors'
+        if not (initial/'adapter_config.json').is_file() or not weights.is_file():
+            parser.error('Initial adapter requires its config and safetensors weights.')
+        manifest['initialAdapter'] = {'path': str(initial), 'weightsSHA256': hashlib.sha256(weights.read_bytes()).hexdigest(),
+                                      'freshOptimizer': True}
     def save_manifest(): (output/'training_manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
+    def failed(error):
+        manifest.update(status='failed or interrupted', error=f'{type(error).__name__}: {error}',
+                        updatedAt=datetime.now(timezone.utc).isoformat())
+        save_manifest()
     save_manifest()
     print(f'CPU preparation: {len(train)} training examples, {len(held)} held-out examples, {args.cpu_threads} threads.', flush=True)
     # Apply limits before importing libraries or loading the original model.
@@ -71,14 +88,18 @@ def main():
         import torch
         from datasets import Dataset
         from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainerCallback, TrainingArguments, set_seed
-        from peft import LoraConfig, get_peft_model
-    except ImportError:
+        from peft import LoraConfig, PeftModel, get_peft_model
+    except ImportError as error:
+        failed(error)
         parser.error('Install CPU PyTorch and scripts/chopper_training_requirements.txt as described in knowledge/chopper/CHOPPER_TRAINING.md.')
     torch.set_num_threads(args.cpu_threads)
     torch.set_num_interop_threads(1)
     set_seed(42)
     manifest['status'] = 'loading tokenizer'; save_manifest()
-    tokenizer = AutoTokenizer.from_pretrained(args.model, trust_remote_code=False)
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(args.model, trust_remote_code=False)
+    except BaseException as error:
+        failed(error); raise
     tokenizer.pad_token = tokenizer.pad_token or tokenizer.eos_token
     encoded, rejected = [], []
     for row in train:
@@ -94,11 +115,22 @@ def main():
         parser.error('Too few complete examples fit max-length. Use shorter source traces or a larger token limit; answers are never silently truncated.')
     manifest.update(status='loading base model', trainingExamples=len(encoded), skippedExamples=len(rejected)); save_manifest()
     print(f'Loading base model on CPU; {len(encoded)} complete examples fit the token limit.', flush=True)
-    model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=torch.float32, trust_remote_code=False, use_safetensors=True)
+    try:
+        model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=torch.float32, trust_remote_code=False, use_safetensors=True)
+    except BaseException as error:
+        failed(error); raise
     model.config.use_cache = False
-    model = get_peft_model(model, LoraConfig(r=8, lora_alpha=16, lora_dropout=0.05, bias='none',
-                                           task_type='CAUSAL_LM', target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj']))
+    try:
+        if args.initial_adapter:
+            model = PeftModel.from_pretrained(model, str(args.initial_adapter.resolve()),
+                                             is_trainable=True, use_safetensors=True)
+        else:
+            model = get_peft_model(model, LoraConfig(r=8, lora_alpha=16, lora_dropout=0.05, bias='none',
+                                                   task_type='CAUSAL_LM', target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj']))
+    except BaseException as error:
+        failed(error); raise
     model.enable_input_require_grads()
+    manifest['trainableParameters'], manifest['totalParameters'] = model.get_nb_trainable_parameters()
     def collate(items):
         length = max(len(i['input_ids']) for i in items)
         return {key: torch.tensor([i[key]+[fill]*(length-len(i[key])) for i in items], dtype=torch.long)
@@ -107,8 +139,19 @@ def main():
         (output/name).write_text(''.join(json.dumps(r, ensure_ascii=False)+'\n' for r in data), encoding='utf-8')
     manifest['status'] = 'training'; save_manifest()
     class Progress(TrainerCallback):
+        def on_train_begin(self, args, state, control, **kwargs):
+            manifest.update(step=state.global_step, totalSteps=state.max_steps, completedMicrobatches=0,
+                            updatedAt=datetime.now(timezone.utc).isoformat())
+            save_manifest()
+            print(f'Training started: {state.max_steps} optimization steps; CPU only.', flush=True)
+        def on_substep_end(self, args, state, control, **kwargs):
+            manifest.update(completedMicrobatches=manifest.get('completedMicrobatches', 0)+1,
+                            updatedAt=datetime.now(timezone.utc).isoformat())
+            save_manifest()
+            print(f"Completed CPU microbatch {manifest['completedMicrobatches']}; optimization step {state.global_step}/{state.max_steps}.", flush=True)
         def on_step_end(self, args, state, control, **kwargs):
             manifest.update(step=state.global_step, totalSteps=state.max_steps, epoch=state.epoch,
+                            completedMicrobatches=manifest.get('completedMicrobatches', 0)+1,
                             updatedAt=datetime.now(timezone.utc).isoformat())
             save_manifest()
         def on_log(self, args, state, control, logs=None, **kwargs):
@@ -124,8 +167,8 @@ def main():
         manifest['trainingMetrics'] = result.metrics
         model.save_pretrained(output/'adapter'); tokenizer.save_pretrained(output/'adapter')
         manifest['status'] = 'trained; engineering evaluation pending'
-    except BaseException:
-        manifest['status'] = 'failed or interrupted'; save_manifest(); raise
+    except BaseException as error:
+        failed(error); raise
     save_manifest()
     print(f'Adapter saved: {output / "adapter"}. Serving GGUF unchanged; evaluate before conversion and installation.')
 

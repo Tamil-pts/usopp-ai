@@ -1,0 +1,55 @@
+{
+  "version": "4.33.2",
+  "configuredBytes": 42,
+  "calculatedBytes": 40,
+  "fields": 40,
+  "bufferOffsets": [
+    5,
+    44
+  ],
+  "metadataOffsets": [
+    0,
+    39
+  ],
+  "branchesPerField": 2,
+  "result": "WARNING \u2014 Configured 42 bytes; calculated 40 bytes (2 bytes unfilled)",
+  "report": "C:\\Users\\PTPL0241\\Projects\\AI_QC\\uaopp.ai\\usopp_ai_2.0\\.usopp_workspaces\\gc310_review\\GC310_Validation.xlsx",
+  "generatedMetadata": "C:\\Users\\PTPL0241\\Projects\\AI_QC\\uaopp.ai\\usopp_ai_2.0\\.usopp_workspaces\\gc310_review\\GC310_Metadata.xlsx",
+  "metadataValidation": {
+    "totalChecks": 80,
+    "passed": 80,
+    "warnings": 0,
+    "failed": 0,
+    "complianceScore": 100,
+    "totalGroups": 1
+  },
+  "frontendBuild": "passed",
+  "workflowChecks": 15,
+  "mixedPacketAndCommentChecks": "passed",
+  "existingProjectRegression": {
+    "summary": {
+      "totalChecks": 2020,
+      "passed": 1935,
+      "warnings": 68,
+      "failed": 17,
+      "complianceScore": 97,
+      "totalGroups": 31
+    },
+    "comparedGroups": 31,
+    "changedFields": []
+  },
+  "browser": {
+    "version": "4.33.2",
+    "realApiValidation": true,
+    "packet": "42 configured / 40 calculated / 2 unfilled",
+    "offsetRows": 40,
+    "firstOffset": "5 -> 5",
+    "lastOffset": "44 -> 44",
+    "branchEvidence": true,
+    "narrowWindow": {
+      "viewport": 720,
+      "document": 720
+    },
+    "pageErrors": []
+  }
+}

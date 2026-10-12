@@ -6,7 +6,10 @@ import sys
 import uuid
 import xml.etree.ElementTree as ET
 import fnmatch
-from python_engine.project_info import local_project_details
+try:
+    from python_engine.project_info import local_project_details
+except ModuleNotFoundError:
+    from project_info import local_project_details
 
 EXPECTED = 'Every controller and electronic remote module has a unique SerialNumber datapoint binding; its four-byte integer variable or array element is transmitted exactly once on each applicable GC 420 path, with matching payload length and response setup.'
 CROSS_REFERENCES = [
@@ -161,8 +164,10 @@ def evaluate(root, rule, engine):
                 for node in tree.iter():
                     if node.tag.rsplit('}',1)[-1]!='Module': continue
                     name=node.get('Name','');typ=node.get('Type','')
-                    # Terminal/bus bases and passive connectors are not electronic devices.
-                    if re.match(r'X20(?:TB|BM|BB)|X67TB',typ,re.I): continue
+                    # Panel interface accessories (for example 4PP065.IF23-1)
+                    # share the controller's type prefix but are not another CPU
+                    # and do not expose a separate SerialNumber datapoint.
+                    if re.match(r'X20(?:TB|BM|BB)|X67TB|[45](?:PPC|PP|PC)[^.]*\.IF',typ,re.I): continue
                     if re.match(r'X20|X67|X90|[45]PP|[45]PC|[45]PPC|APC|PPC',typ,re.I):
                         inventory.append(name)
                     if re.match(r'X20CP|[45]PP|[45]PC|[45]PPC|APC|PPC',typ,re.I): controllers.append(name)

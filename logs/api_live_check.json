@@ -1,0 +1,98 @@
+{
+  "apiOperations": 63,
+  "liveChecks": [
+    {
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "path": "/api/logs/today",
+      "status": 200
+    },
+    {
+      "path": "/api/local/browse",
+      "status": 200
+    },
+    {
+      "path": "/api/download/{sid}/{filename}",
+      "status": "requires fixture; see regression coverage"
+    },
+    {
+      "path": "/api/metadata/view/download/{sid}/{name}",
+      "status": "requires fixture; see regression coverage"
+    },
+    {
+      "path": "/api/local/metadata/download/{sid}",
+      "status": "requires fixture; see regression coverage"
+    },
+    {
+      "path": "/api/knowledge/master",
+      "status": 200
+    },
+    {
+      "path": "/api/knowledge/master/dropdown",
+      "status": 200
+    },
+    {
+      "path": "/api/knowledge/project",
+      "status": 200
+    },
+    {
+      "path": "/api/local/compare/status/{sid}",
+      "status": "requires fixture; see regression coverage"
+    },
+    {
+      "path": "/api/local/compare/detail/{sid}/{detail_id}",
+      "status": "requires fixture; see regression coverage"
+    },
+    {
+      "path": "/api/local/compare/export/{sid}/{fmt}",
+      "status": "requires fixture; see regression coverage"
+    },
+    {
+      "path": "/api/rules/library",
+      "status": 200
+    },
+    {
+      "path": "/api/rules/features",
+      "status": 200
+    },
+    {
+      "path": "/api/rules/modules",
+      "status": 200
+    },
+    {
+      "path": "/api/rules/modules/{module_id}",
+      "status": "requires fixture; see regression coverage"
+    },
+    {
+      "path": "/api/rules/feedback",
+      "status": 200
+    },
+    {
+      "path": "/api/rules/learning",
+      "status": 200
+    },
+    {
+      "path": "/api/rules/learning/model",
+      "status": 200
+    },
+    {
+      "path": "/api/rules/learning/export",
+      "status": 404
+    },
+    {
+      "path": "/api/rules/default",
+      "status": 200
+    },
+    {
+      "path": "/assets/index-CYtU0i2a.js",
+      "status": 200
+    },
+    {
+      "path": "/assets/index-iDGCfSh_.css",
+      "status": 200
+    }
+  ],
+  "limitations": "Mutation and file/session routes require fixtures; regression suite covers core workflows. This report does not claim every API business case passes."
+}

@@ -1,36 +1,45 @@
-node_modules/
+
 .venv/
 .venv-ubuntu/
 .venv-training/
-local_ai/training/
-chopper_reviewed_project_training.jsonl
-.usopp_server/
+node_modules/
 dist/
-.usopp_workspaces/
-logs/*.log
+*.tsbuildinfo
 __pycache__/
 *.pyc
-accounts.sqlite3*
-usopp_paths.bat
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 
+.usopp_server/
+.usopp-container/
+.usopp_workspaces/
 .usopp_exports/
-.env
+usopp_paths.bat
+admin-password.txt
 logs/
-*.tsbuildinfo
-node_modules_setup_backup*/
+
+.env
+
+
 
 # Build products and private installation data
 .build/
 release/
 artifacts/
 .usopp_assist_model.json
-knowledge/projects/
+
 knowledge/br_help/
+knowledge/projects/
+local_ai/training/
+local_ai/models/
 rules/learning/
 rules/feedback/
 rules/archive/
-local_ai/models/
+
+
+
 *.gguf
 *.safetensors
 *.pem
@@ -46,6 +55,5 @@ local_ai/models/
 *.env
 !*.env.example
 test_meta.xlsx
-.usopp-container/
-admin-password.txt
 *.tar.gz
+*.zip

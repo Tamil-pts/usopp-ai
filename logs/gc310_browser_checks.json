@@ -1,0 +1,14 @@
+{
+  "version": "4.33.2",
+  "realApiValidation": true,
+  "packet": "42 configured / 40 calculated / 2 unfilled",
+  "offsetRows": 40,
+  "firstOffset": "5 -> 5",
+  "lastOffset": "44 -> 44",
+  "branchEvidence": true,
+  "narrowWindow": {
+    "viewport": 720,
+    "document": 720
+  },
+  "pageErrors": []
+}

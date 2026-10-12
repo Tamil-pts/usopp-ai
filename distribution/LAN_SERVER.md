@@ -48,6 +48,11 @@ Open **http://192.168.19.10:8201**. The installer saves the chosen image, port, 
 
 ## 4. Create users and install the CPU model
 
+Visitors can click **Explore demo** on the landing page to fill `demo` / `demo`
+and then click **Sign in**. Each demo login has its own workspace and a fixed
+30-minute session. Demo access does not consume one of the five regular-user
+slots. Shared rule/mapping changes and administration use personal accounts.
+
 Sign in as Admin. Create up to five regular accounts. Each account keeps its own saved settings, imported metadata and test history. Admin can review everyone's tests.
 
 In **Settings → Chopper · AI connection**, click **Set up small CPU model**. The one-time 1.12 GB download runs in the background, verifies SHA256, selects the included llama.cpp runtime and enables startup on restart. Wait for **Ready**. No Ollama installation is required. Existing browser-only saved settings migrate when their owner signs in to the updated app from that browser.
@@ -109,3 +114,196 @@ This restore flow is for container backups. Native Windows and source/demo insta
 ## Implementation status
 
 Install/update/backup/restore and the CPU runtime build are prepared in the source and release tooling. They have not been run on a Docker destination: Docker is unavailable on the development laptop. Complete image/build, restore and concurrent-user verification on the destination before using this as production storage.
+
+## 8. Replace the old Ubuntu source demo with a fresh container
+
+Use this procedure for the original `~/usopp-demo/usopp_ai_2.0` installation
+managed by `npm start` / `scripts/ubuntu_demo.py`. The requested fresh install
+deletes that application's source, virtual environments, accounts, results,
+settings, mappings, knowledge and rules. It creates new container accounts/data.
+
+### Download the new release manually
+
+Open [Tamil-pts/usopp-distribution Releases](https://github.com/Tamil-pts/usopp-distribution/releases),
+select the published version and download these four assets:
+
+```text
+uSOPp_AI_<version>_Container_Launchers.zip
+uSOPp_AI_<version>_Container_Launchers.zip.sha256
+uSOPp_AI_<version>_Container_linux_amd64.tar.gz
+uSOPp_AI_<version>_Container_linux_amd64.tar.gz.sha256
+```
+
+The image archive and launcher ZIP must belong to the same release. The
+automatic **Source code** ZIP is not the container installer. Obtain all four
+files before removing the old app. If the image asset is absent, the maintainer
+must build the latest source using the package workflow and publish the release
+first; the launcher ZIP alone cannot install the application.
+
+For a direct manual installation before publishing a release, either build
+from the local source bundle on Ubuntu (section 9), or use the source
+repository's **Actions -> Build private download packages** workflow. The
+workflow can build the image even when Docker is absent on the development
+laptop.
+
+To transfer the files from Windows Downloads to the original Ubuntu server,
+open PowerShell and replace the version below with the downloaded version:
+
+```powershell
+$usoppRelease = '<published-version>'
+$usoppDownloadRoot = Join-Path $env:USERPROFILE 'Downloads'
+ssh lmw@192.168.19.10 'mkdir -p "$HOME/usopp-container"'
+$usoppReleaseFiles = @(
+    "uSOPp_AI_${usoppRelease}_Container_Launchers.zip",
+    "uSOPp_AI_${usoppRelease}_Container_Launchers.zip.sha256",
+    "uSOPp_AI_${usoppRelease}_Container_linux_amd64.tar.gz",
+    "uSOPp_AI_${usoppRelease}_Container_linux_amd64.tar.gz.sha256"
+)
+foreach ($usoppReleaseFile in $usoppReleaseFiles) {
+    scp (Join-Path $usoppDownloadRoot $usoppReleaseFile) 'lmw@192.168.19.10:~/usopp-container/'
+    if ($LASTEXITCODE -ne 0) { throw "Transfer failed: $usoppReleaseFile" }
+}
+```
+
+Replace `lmw` and `192.168.19.10` if installing on a different server. If you
+download directly in the server's browser, save the same files under
+`~/usopp-container` instead.
+
+### Check the downloaded files and Docker
+
+On Ubuntu, run these commands, substituting the published version:
+
+```bash
+cd "$HOME/usopp-container"
+usopp_release='<published-version>'
+sha256sum -c "uSOPp_AI_${usopp_release}_Container_Launchers.zip.sha256"
+sha256sum -c "uSOPp_AI_${usopp_release}_Container_linux_amd64.tar.gz.sha256"
+docker info --format '{{.OSType}}'
+docker compose version
+```
+
+Both checksum checks must report **OK**, and the Docker OS must report
+**linux**. Install Docker Engine/Compose using section 1 if they are absent;
+use an account with Docker access. Run the following stages only after these
+checks succeed.
+
+### Stop and delete the old source demo
+
+Run the stop/status commands first:
+
+```bash
+cd "$HOME/usopp-demo/usopp_ai_2.0"
+./.venv-ubuntu/bin/python scripts/ubuntu_demo.py stop
+./.venv-ubuntu/bin/python scripts/ubuntu_demo.py status
+```
+
+Once status reports **stopped**, delete the complete old application directory:
+
+```bash
+cd "$HOME"
+rm -rf -- "$HOME/usopp-demo/usopp_ai_2.0"
+```
+
+This removal targets the old source demo. Python/Node installed on the host are
+not required by the container. Leave unrelated host services installed; the
+original server has another Docker application using port 8200.
+
+### Install the new container
+
+These steps assume this server has no previous uSOPp container installation or
+uSOPp data volume. An existing container volume is reused by the installer and
+would need its own explicit removal to perform a complete reset.
+
+```bash
+cd "$HOME/usopp-container"
+unzip "uSOPp_AI_${usopp_release}_Container_Launchers.zip"
+USOPP_PORT=8201 USOPP_BIND_ADDRESS=192.168.19.10 \
+  bash usopp-container.sh install "usopp-ai:$usopp_release" \
+  "./uSOPp_AI_${usopp_release}_Container_linux_amd64.tar.gz"
+bash usopp-container.sh status
+bash usopp-container.sh logs
+```
+
+Use the new server's own LAN/VPN IPv4 address for `USOPP_BIND_ADDRESS`.
+Choose a new initial Admin password when prompted. Open
+`http://192.168.19.10:8201`, sign in as Admin and create the user accounts.
+Configure rules, mappings, knowledge and the CPU model in the new installation.
+The container carries its runtime; no `npm install` or application Python
+environment is needed on the host.
+
+For subsequent upgrades, use section 6's **update** command to keep the data
+created in this fresh installation.
+
+## 9. Build the container from local source files on Ubuntu
+
+Use this when the release image has not been uploaded yet. It transfers a
+private, reduced build bundle from the development PC, builds the Linux image
+on Ubuntu and installs it locally. It excludes uploaded PLC projects, account
+databases, local model weights, training data, B&R help source files and
+dependency folders. Ubuntu needs Internet access during the Docker build to
+download its pinned base images, packages and llama.cpp source.
+
+On the development Windows PC, from the `usopp_ai_2.0` source folder, create
+the bundle and checksum:
+
+```powershell
+$usoppVersion = (Get-Content .\package.json -Raw | ConvertFrom-Json).version
+$usoppBundle = ".\release\private-build\uSOPp_AI_${usoppVersion}_Container_Build_Source.tar.gz"
+python .\scripts\package_container_build.py --output $usoppBundle
+python .\scripts\package_downloads.py --output ".\release\downloads\$usoppVersion"
+```
+
+Transfer those two files and the matching launcher ZIP/checksum to Ubuntu. For
+version `4.65.12`, the filenames are:
+
+```text
+uSOPp_AI_4.65.12_Container_Build_Source.tar.gz
+uSOPp_AI_4.65.12_Container_Build_Source.tar.gz.sha256
+uSOPp_AI_4.65.12_Container_Launchers.zip
+uSOPp_AI_4.65.12_Container_Launchers.zip.sha256
+```
+
+Run `scp` from Windows PowerShell, replacing `lmw` and the server IP if needed:
+
+```powershell
+$usoppVersion = '4.65.12'
+$usoppSource = ".\release\private-build\uSOPp_AI_${usoppVersion}_Container_Build_Source.tar.gz"
+$usoppLauncher = ".\release\downloads\$usoppVersion\uSOPp_AI_${usoppVersion}_Container_Launchers.zip"
+scp $usoppSource "lmw@192.168.19.10:~/usopp-container/"
+scp "$usoppSource.sha256" "lmw@192.168.19.10:~/usopp-container/"
+scp $usoppLauncher "lmw@192.168.19.10:~/usopp-container/"
+scp "$usoppLauncher.sha256" "lmw@192.168.19.10:~/usopp-container/"
+```
+
+On Ubuntu, verify both checksums, extract the source to its own build folder,
+and build the image. The build takes several minutes and uses the Ubuntu
+server's CPU and network:
+
+```bash
+cd "$HOME/usopp-container"
+usopp_version='4.65.12'
+sha256sum -c "uSOPp_AI_${usopp_version}_Container_Build_Source.tar.gz.sha256"
+sha256sum -c "uSOPp_AI_${usopp_version}_Container_Launchers.zip.sha256"
+mkdir -p "build-${usopp_version}"
+tar -xzf "uSOPp_AI_${usopp_version}_Container_Build_Source.tar.gz" -C "build-${usopp_version}"
+docker build --platform linux/amd64 --build-arg APP_VERSION="$usopp_version" \
+  -t "usopp-ai:$usopp_version" "build-${usopp_version}"
+```
+
+Then install the image already built in Docker. Keep the existing app on port
+8200 untouched; this example uses port 8201:
+
+```bash
+unzip -o "uSOPp_AI_${usopp_version}_Container_Launchers.zip"
+USOPP_PORT=8201 USOPP_BIND_ADDRESS=192.168.19.10 \
+  bash usopp-container.sh install "usopp-ai:$usopp_version"
+bash usopp-container.sh status
+bash usopp-container.sh logs
+```
+
+The Admin password prompt appears during the first container install. Wait for
+`Health: healthy` before opening `http://192.168.19.10:8201`. Once the
+container is running, the temporary build folder and transferred bundle may
+be removed from `~/usopp-container`; keep the launcher ZIP for future
+management commands. Do not remove Docker images or volumes belonging to other
+applications.

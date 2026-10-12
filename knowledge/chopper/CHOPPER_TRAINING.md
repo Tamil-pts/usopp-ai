@@ -19,6 +19,12 @@ Supported analysis paths:
 - Improvement review: source-located candidates for state handling, timeout units,
   buffer/pointer usage and stop/fault interlocks. A candidate is not a proven defect.
 - Focused source/feature lookup with source evidence and B&R reference help.
+- Fault diagnosis: set/reset writers, interlocks, timers, state/error transitions
+  and the live values needed to distinguish a trigger from its physical cause.
+- Syntax review: language-specific syntax, declaration scope, compiler settings
+  and the distinction between source review and an Automation Studio build.
+
+The repeatable method is in [PROJECT_ANALYSIS_METHOD.md](PROJECT_ANALYSIS_METHOD.md).
 
 Matching a block family is a bounded static heuristic. Custom wrappers, indirect
 calls, macros, dynamically constructed mode strings and missing libraries may
@@ -31,7 +37,29 @@ one prompt; large questions should be divided into functions or communication ta
 GGUF remains an inference model. Task guidance and retrieved source improve its
 inputs, but do not guarantee correct answers on every project.
 
-## Build a reviewed dataset in the app
+Development training artifacts are separate from this installed-model statement.
+The first local CPU pilot saved an adapter and a separate GGUF. Its sampled
+held-out answers still had missing citations and semantic errors, so it was not
+made the active Chopper model. A longer continuation run uses the corrected,
+compact project-overview example. See the development run's manifest and
+comparison report under `local_ai/training/`; those private artifacts are not
+bundled into Git or installer defaults.
+
+## Training data: source-derived examples or reviewed chat answers
+
+Manual Admin approval is optional for the initial source-derived training run.
+Examples can be authored directly from supplied project code and B&R help,
+using the user's informal question style. Label their origin `source-derived`,
+retain source excerpts/digests and citations, and set `reviewed: false` unless
+someone actually reviewed them. Do not label these as human-approved answers.
+The trainer accepts this input with `--allow-source-derived`.
+
+User questions are useful training prompts. The model's previous reply is not
+automatically a correct training answer: derive the target answer from source
+evidence, especially when a reply failed citation checks. Raw help files alone
+are reference material; supervised training uses question/context/answer records.
+
+The existing app review workflow remains available for corrected chat answers:
 
 1. Attach/select a project and ask Chopper a question. Both accepted model replies
    and local source replies with evidence are saved as pending drafts.
@@ -61,8 +89,8 @@ do not publish them in Git or distribute them with installer defaults.
 The optional script trains a LoRA adapter on the original Hugging Face
 `Qwen/Qwen2.5-Coder-1.5B-Instruct`, not directly on the installed GGUF.
 It masks system/user tokens from the loss, deduplicates examples, holds out whole
-project groups, refuses unreviewed rows, and skips overlong rows without silently
-cutting off the answer. A minimum of 50 distinct reviewed examples is a pilot
+project groups, accepts reviewed Q&A or explicitly selected source-derived rows, and skips overlong rows without silently
+cutting off the answer. A minimum of 50 distinct accepted examples is a pilot
 collection target, not proof of enough data or adequate quality.
 
 Both inference and adapter training use **CPU only**. The serving llama.cpp
@@ -95,6 +123,24 @@ python3.11 -m venv .venv-training
 .venv-training/bin/python scripts/train_chopper_adapter.py --dataset /home/lmw/training/chopper_reviewed_project_training.jsonl --output /home/lmw/training/chopper-run-001 --cpu-threads 2
 ```
 
+For a source-derived dataset, add `--allow-source-derived`. The first development
+pilot uses one epoch and a 2,048-token limit, keeping complete examples only:
+
+```powershell
+.\.venv-training\Scripts\python.exe -u scripts/train_chopper_adapter.py --dataset local_ai/training/seed-20261010/source_derived_project_training.jsonl --output local_ai/training/chopper-next-run --allow-source-derived --cpu-threads 4 --max-length 2048 --epochs 1
+```
+
+Choose a new empty output directory for every run. The manifest records preparation,
+model loading, training steps and metrics. Preparing a dataset or downloading the
+original weights is not a completed training run. Completion is recorded only
+after training returns and the adapter/tokenizer are saved.
+
+To continue from a saved adapter, add
+`--initial-adapter C:\Training\previous-run\adapter`. This starts a fresh
+optimizer; it is not an exact checkpoint resume. Keep the same original base
+model and project-family split, and retain the earlier run. The new manifest
+records the starting adapter's hash, and `dataset.jsonl` snapshots the full input.
+
 CPU is the default; existing `--device cpu` commands remain valid. The default
 thread limit is half the available logical CPUs, with a minimum of one and a
 maximum of four. Use `--cpu-threads` to choose a limit from 1 to 64.
@@ -107,7 +153,11 @@ installed by the normal uSOPp installer.
 Outputs: `adapter/`, `training_manifest.json`, training row snapshots, skipped-row
 reasons, and `held_out.jsonl`. The script does not run engineering evaluation,
 push anything online, replace GGUF files, or activate an adapter in production.
-The training manifest records CPU threads, precision, and completion or interruption.
+The training manifest records CPU threads, precision, completion or interruption,
+completed microbatches, optimization steps and loss metrics. For a local base-model
+directory containing `download_manifest.json`, it also records the pinned model
+revision and download hash. Use `--model C:\Training\base-model` to load original
+weights already downloaded onto the training computer.
 
 ## Evaluate and deploy later
 
@@ -122,6 +172,29 @@ base model and the installed llama.cpp runtime. Keep the existing GGUF for
 rollback, then select the separately named new GGUF in **Settings → Chopper**.
 This release prepares training/export; conversion and deployment are not
 automatic. New weights do not replace the source decoder or B&R reference index.
+
+For a completed local run, merge into a new HF model folder on CPU:
+
+```powershell
+.\.venv-training\Scripts\python.exe scripts/merge_chopper_adapter.py --run C:\Training\chopper-run-001 --base C:\Training\original-hf-model --output C:\Training\merged-hf --cpu-threads 4
+```
+
+The merger preserves the serving GGUF and records adapter/base provenance. It
+requires the local original model, not a quantized GGUF. Then use the matching
+[llama.cpp conversion tools](https://github.com/ggml-org/llama.cpp) to convert
+and quantize the merged model:
+
+```powershell
+.\.venv-training\Scripts\python.exe C:\Tools\llama.cpp\convert_hf_to_gguf.py C:\Training\merged-hf --outfile C:\Training\chopper-f16.gguf --outtype f16
+C:\Tools\llama.cpp\llama-quantize.exe C:\Training\chopper-f16.gguf C:\Training\chopper-q4_k_m.gguf Q4_K_M 4
+```
+
+Install the converter's dependencies in the training environment. The local
+development conversion used the bundled runtime's `b11475` release, with its
+source pinned to `7e8324f5feba1d8be3f966e1791e84107e40cdd7`, plus SentencePiece.
+Keep conversion logs and file hashes. Quantization and a small answer comparison
+do not establish complete engineering correctness; inspect logical operators,
+contacts/coils, types, source scope and unsupported claims as well as citations.
 
 Primary references:
 

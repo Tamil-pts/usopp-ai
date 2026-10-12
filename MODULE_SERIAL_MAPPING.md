@@ -49,3 +49,53 @@ it does not establish that every module is correctly mapped.
 The checks read project files and do not require a connected physical PLC.
 Detailed evidence is in `.build/module-serial-review-project2.json` and
 `.build/module-serial-review-nm-v2121.json`.
+
+## Verification on 2026-10-11
+
+Two validator defects were reproduced and corrected:
+
+- The backend starts `rule_engine_v4_30.py` as a script. The serial validator
+  previously imported `python_engine.project_info` without its script-mode
+  fallback, producing `Rule evaluation error: No module named 'python_engine'`.
+  Both package and direct-script execution now work.
+- Project 3's `4PP065.IF23-1` Power Panel interface accessory was counted as a
+  second controller. Interface accessories are now excluded from the serial
+  inventory along with passive terminals/bases. Actual additional controllers
+  still require explicit target ownership.
+
+| Project | Active configuration | Result | Checks |
+| --- | --- | --- | --- |
+| Project 2 / LDF3S_16480 | LDF3S_WO_SUCTION | FAIL: missing PLC1 SerialNumber binding | 33 passed, 1 failed |
+| Project 3 / LR9SXPV6338 | Config7_REG_MCMT_CTL_HPM_ECS | PASS | 125 passed, 0 failed |
+
+Project 2 binds `HW_100_X20PS9600_SerialNo` to `X20PS9600.SerialNumber`
+in `Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom`, line 126. Its GC 420 copy
+is labelled "CPU Module" at `mms_nw_rCyclic.st`, line 2173, but that binding
+identifies the X20PS9600 power supply. There is no `PLC1.SerialNumber`
+binding. The 16 mapped scalar values, declarations and 64-byte payload pass;
+the separate required controller binding still fails. Review that requirement
+and the intended controller serial before changing PLC source or packet size.
+
+Project 3 has 41 SerialNumber bindings. GC 420 copies 200 bytes from
+`BR_HW_SR_NO[0]`, covering indices 0 through 49 inside the declared 0..50
+UDINT array. All bound elements, including controller index 45, are included.
+Five additional 50-byte drive strings give a 450-byte payload, matching the
+configured header (`1 * 256 + 194`) and response setup.
+
+The real API flow was checked using isolated test accounts, workspaces and
+history databases. Both projects returned their structured findings; their
+separate test/history IDs and results survived history retrieval and SQLite
+archiving. Existing user accounts and live histories were not changed.
+
+22 related regression tests pass, including 12 serial-mapping tests. They cover
+script execution, the interface accessory, real multiple-controller ambiguity,
+scalar and bulk-array copies, bounds, missing bindings, duplicate ownership,
+datatype errors, packet headers and active configuration selection.
+
+Detailed results are saved in `.build/module-serial-project2-api.json`,
+`.build/module-serial-project3-api.json`, `.build/module-serial-api-summary.json`
+and `.build/module-serial-regression.log`. These are source-file checks and
+API integration checks; they do not read serial values from a live PLC.
+
+Rerun the rule in LogicScan to create a fresh result. Previous history entries
+retain their original findings.

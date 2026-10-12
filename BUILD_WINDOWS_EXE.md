@@ -87,7 +87,7 @@ Nami Live includes shared light/dark mode and the corrected settings dialog.
 
 ## Accounts and shared Help
 
-On first startup, sign in with username **Admin** and password **usopp.2026**. Change this password under **Settings → My account → Change password**. A changed password is preserved across application restarts and upgrades using the same data folder.
+On the landing page, click **Explore demo** to fill username **demo** and password **demo**, then click **Sign in**. The demo session signs out automatically after 30 minutes. Obtain administrative credentials privately from the server owner. Existing account passwords are preserved across application restarts and upgrades using the same data folder.
 
 **New user** creates a standard account with username, password, designation and company. All engineering APIs require a signed-in session. Password changes sign out the account's other browser sessions. The default is five regular users plus Admin. Uploaded project resources and saved test results belong to their user; Admin can review all users and history. Shared model settings and account administration are Admin-only. See MULTI_USER.md for concurrency and storage details.
 

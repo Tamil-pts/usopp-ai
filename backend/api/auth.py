@@ -54,29 +54,30 @@ def field(data, name, minimum=1, maximum=120):
 
 def session(response, request, user):
     token = accounts.store.new_session(user['id'])
-    response.set_cookie(accounts.COOKIE,token,max_age=accounts.SESSION_SECONDS,
+    response.set_cookie(accounts.COOKIE,token,max_age=accounts.session_seconds(user),
                         httponly=True,samesite='lax',secure=request.url.scheme=='https',path='/')
     response.headers['Cache-Control']='no-store'
-    return {'user':user}
+    return {'user':accounts.store.user_for_token(token)}
 
 @router.get('/session')
 def current_session(request:Request, response:Response):
     response.headers['Cache-Control']='no-store'
     return {'user':accounts.store.user_for_token(request.cookies.get(accounts.COOKIE))}
 
-@router.post('/register')
+@router.post('/register', status_code=202)
 def register(request:Request,response:Response,data:dict=Body(...)):
     username=field(data,'username',3,40)
     if not re.fullmatch(r'[A-Za-z0-9_.-]+',username):
         raise HTTPException(400,'Username can contain letters, numbers, dots, underscores and hyphens.')
     password=field(data,'password',8,128)
     try:
-        user=accounts.store.register(username,password,field(data,'designation'),field(data,'company'))
+        user=accounts.store.request_account(username,password,field(data,'designation'),field(data,'company'))
     except sqlite3.IntegrityError:
         raise HTTPException(409,'This username already exists. Choose another or sign in.')
     except accounts.AccountCapacityError as error:
         raise HTTPException(409,str(error))
-    return session(response,request,user)
+    response.headers['Cache-Control']='no-store'
+    return {'pending':True,'message':'Your account request was sent to the administrator. You can sign in after Admin enables your account.'}
 
 @router.post('/login')
 def login(request:Request,response:Response,data:dict=Body(...)):
@@ -84,6 +85,8 @@ def login(request:Request,response:Response,data:dict=Body(...)):
                                    request.client.host if request.client else 'local')
     if error=='throttled':
         raise HTTPException(429,'Too many unsuccessful attempts. Try again in five minutes.')
+    if error=='pending':
+        raise HTTPException(403,'Your account request is waiting for Admin approval. You can sign in after your account is enabled.')
     if not user:
         raise HTTPException(401,'Username or password is incorrect.')
     return session(response,request,user)
@@ -97,6 +100,8 @@ def logout(request:Request,response:Response):
 @router.post('/password')
 def change_password(request:Request,response:Response,data:dict=Body(...)):
     user=request.state.user
+    if user.get('isDemo'):
+        raise HTTPException(403,'The demo account uses fixed demonstration credentials. Create your own account to set a private password.')
     current=field(data,'currentPassword',1,128)
     replacement=field(data,'newPassword',8,128)
     if current==replacement:

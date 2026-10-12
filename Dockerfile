@@ -33,6 +33,8 @@ COPY python_engine ./python_engine
 COPY scripts/package_container.py scripts/container_bootstrap.py scripts/container_maintenance.py ./scripts/
 COPY knowledge/master ./knowledge/master
 COPY knowledge/data_models ./knowledge/data_models
+COPY knowledge/chopper ./knowledge/chopper
+COPY knowledge/help_index ./knowledge/help_index
 COPY rules ./rules
 COPY src/usopp_logo.png src/petrus_logo.png ./src/
 COPY local_ai/MODEL_LICENSE.txt local_ai/MODEL_CARD.md ./local_ai/

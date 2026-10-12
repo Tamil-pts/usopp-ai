@@ -28,6 +28,10 @@
 !knowledge/master/**
 !knowledge/data_models/
 !knowledge/data_models/**
+!knowledge/chopper/
+!knowledge/chopper/**
+!knowledge/help_index/
+!knowledge/help_index/**
 !rules/
 !rules/**
 !local_ai/

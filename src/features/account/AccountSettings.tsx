@@ -11,6 +11,7 @@ export function AccountSettings(){
     try{const result=await accountRequest('password',{currentPassword:current,newPassword:replacement});setMessage(result.message);setCurrent('');setReplacement('');setConfirm('')}
     catch(reason:any){setError(reason.message)}finally{setBusy(false)}
   };
+  if(user.isDemo)return <div className="card setting"><h3>My account</h3><p><b>{user.username}</b> · Demo user</p><p>This demo session signs out automatically after 30 minutes. Your uploads and results belong to this demo session. Create a personal account for a continuing workspace.</p></div>;
   return <div className="card setting"><h3>My account</h3><p><b>{user.username}</b> · {user.role==='admin'?'Administrator':'User'}<br/>{user.designation} · {user.company}</p>
     <form onSubmit={submit} className="accountForm">
       <PasswordInput label="Current password" autoComplete="current-password" required value={current} onChange={e=>setCurrent(e.target.value)}/>

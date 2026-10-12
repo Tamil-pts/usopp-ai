@@ -14,7 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def checksum(path: Path):
     with path.open('rb') as stream:
         digest = hashlib.file_digest(stream, 'sha256').hexdigest()
-    path.with_name(path.name + '.sha256').write_text(f'{digest}  {path.name}\n', encoding='ascii')
+    path.with_name(path.name + '.sha256').write_text(
+        f'{digest}  {path.name}\n', encoding='ascii', newline='\n')
 
 
 def write_zip(destination: Path, sources: list[tuple[Path, str]]):

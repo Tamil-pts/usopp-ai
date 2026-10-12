@@ -1,0 +1,308 @@
+[
+  {
+    "engine": "packet_validation_report_uSOPp_v1.71_final.py",
+    "returncode": 0,
+    "stderr": ""
+  },
+  {
+    "engine": "compare.py",
+    "returncode": 0,
+    "stderr": ""
+  },
+  {
+    "engine": "rule_engine_v4_30.py",
+    "returncode": 0,
+    "stderr": ""
+  },
+  {
+    "structuredRequirementResults": {
+      "version": "4.52",
+      "ruleCount": 1,
+      "pipelineMode": "sequential",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "not_found": 0
+      },
+      "results": [
+        {
+          "id": "SMOKE",
+          "name": "Packaged requirements",
+          "status": "PASS",
+          "expected": "",
+          "actual": "4 checks; 0 failed.",
+          "evidence": [
+            {
+              "check": "Requirement 1",
+              "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+              "status": "PASS",
+              "groupCode": null,
+              "line": 1,
+              "expected": [
+                "IF Ready THEN Status := 1; END_IF;"
+              ],
+              "actual": "IF Ready THEN Status := 1; END_IF;",
+              "matchedAlternative": 1
+            },
+            {
+              "check": "Requirement 1 / cross reference 1",
+              "file": "Logical/Machine/mms_Pms/Cyclic.st",
+              "status": "PASS",
+              "groupCode": null,
+              "line": 1,
+              "expected": [
+                "IF Status = 1 THEN Running := TRUE; END_IF;"
+              ],
+              "actual": "IF Status = 1 THEN Running := TRUE; END_IF;",
+              "matchedAlternative": 1
+            },
+            {
+              "check": "Requirement 2",
+              "file": "Logical/Screen.page",
+              "status": "PASS",
+              "alternative": 1,
+              "control": "String_1",
+              "properties": [
+                {
+                  "property": "ValueDatapoint",
+                  "expected": "Local.Name",
+                  "actual": "Source[global].Variable[Local.Name]",
+                  "status": "PASS"
+                }
+              ],
+              "actual": "All required properties matched on the same object."
+            },
+            {
+              "check": "Requirement 3",
+              "file": "Logical/Timing.ld",
+              "status": "PASS",
+              "expected": [
+                {
+                  "id": "n1",
+                  "mode": "elements",
+                  "relation": "presence",
+                  "elements": [
+                    {
+                      "kind": "contact",
+                      "type": "open",
+                      "name": "TRUE"
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "set",
+                      "name": "ResetPower"
+                    }
+                  ]
+                }
+              ],
+              "ladderNetworks": [
+                {
+                  "networkCheck": 1,
+                  "matchingNetworks": [
+                    1
+                  ],
+                  "matchedNetwork": 1,
+                  "relationship": "presence",
+                  "relativeTo": null,
+                  "expected": {
+                    "id": "n1",
+                    "mode": "elements",
+                    "relation": "presence",
+                    "elements": [
+                      {
+                        "kind": "contact",
+                        "type": "open",
+                        "name": "TRUE"
+                      },
+                      {
+                        "kind": "coil",
+                        "type": "set",
+                        "name": "ResetPower"
+                      }
+                    ]
+                  },
+                  "actual": "Matched"
+                }
+              ],
+              "actual": "All ladder network requirements matched."
+            }
+          ],
+          "recommendations": [],
+          "sourceFiles": [
+            "Logical/Machine/mms_Pms/Cyclic.st",
+            "Logical/Screen.page",
+            "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+            "Logical/Timing.ld"
+          ],
+          "structuredRequirements": [
+            {
+              "check": "Requirement 1",
+              "file": "Logical/SpinConnect/mms_nw_r/mms_nw_rCyclic.st",
+              "status": "PASS",
+              "groupCode": null,
+              "line": 1,
+              "expected": [
+                "IF Ready THEN Status := 1; END_IF;"
+              ],
+              "actual": "IF Ready THEN Status := 1; END_IF;",
+              "matchedAlternative": 1
+            },
+            {
+              "check": "Requirement 1 / cross reference 1",
+              "file": "Logical/Machine/mms_Pms/Cyclic.st",
+              "status": "PASS",
+              "groupCode": null,
+              "line": 1,
+              "expected": [
+                "IF Status = 1 THEN Running := TRUE; END_IF;"
+              ],
+              "actual": "IF Status = 1 THEN Running := TRUE; END_IF;",
+              "matchedAlternative": 1
+            },
+            {
+              "check": "Requirement 2",
+              "file": "Logical/Screen.page",
+              "status": "PASS",
+              "alternative": 1,
+              "control": "String_1",
+              "properties": [
+                {
+                  "property": "ValueDatapoint",
+                  "expected": "Local.Name",
+                  "actual": "Source[global].Variable[Local.Name]",
+                  "status": "PASS"
+                }
+              ],
+              "actual": "All required properties matched on the same object."
+            },
+            {
+              "check": "Requirement 3",
+              "file": "Logical/Timing.ld",
+              "status": "PASS",
+              "expected": [
+                {
+                  "id": "n1",
+                  "mode": "elements",
+                  "relation": "presence",
+                  "elements": [
+                    {
+                      "kind": "contact",
+                      "type": "open",
+                      "name": "TRUE"
+                    },
+                    {
+                      "kind": "coil",
+                      "type": "set",
+                      "name": "ResetPower"
+                    }
+                  ]
+                }
+              ],
+              "ladderNetworks": [
+                {
+                  "networkCheck": 1,
+                  "matchingNetworks": [
+                    1
+                  ],
+                  "matchedNetwork": 1,
+                  "relationship": "presence",
+                  "relativeTo": null,
+                  "expected": {
+                    "id": "n1",
+                    "mode": "elements",
+                    "relation": "presence",
+                    "elements": [
+                      {
+                        "kind": "contact",
+                        "type": "open",
+                        "name": "TRUE"
+                      },
+                      {
+                        "kind": "coil",
+                        "type": "set",
+                        "name": "ResetPower"
+                      }
+                    ]
+                  },
+                  "actual": "Matched"
+                }
+              ],
+              "actual": "All ladder network requirements matched."
+            }
+          ],
+          "ruleDefinition": {
+            "id": "SMOKE",
+            "name": "Packaged requirements",
+            "category": "PLC logic + HMI",
+            "kind": "structured_requirements",
+            "enabled": true,
+            "checks": [
+              {
+                "type": "logic",
+                "file": "mms_nw_r\\mms_nw_rCyclic.st",
+                "alternatives": [
+                  "IF Ready THEN Status := 1; END_IF;"
+                ],
+                "crossChecks": [
+                  {
+                    "type": "logic",
+                    "file": "mms_Pms\\Cyclic.st",
+                    "alternatives": [
+                      "IF Status = 1 THEN Running := TRUE; END_IF;"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "hmi",
+                "file": "Screen.page",
+                "variants": [
+                  {
+                    "entity": "Control",
+                    "name": "String",
+                    "nameMatch": "prefix",
+                    "properties": {
+                      "ValueDatapoint": "Local.Name"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "ladder",
+                "file": "Timing.ld",
+                "networks": [
+                  {
+                    "id": "n1",
+                    "mode": "elements",
+                    "relation": "presence",
+                    "elements": [
+                      {
+                        "kind": "contact",
+                        "type": "open",
+                        "name": "TRUE"
+                      },
+                      {
+                        "kind": "coil",
+                        "type": "set",
+                        "name": "ResetPower"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "expectedLogic": [],
+          "failureReasons": [],
+          "logicComparisons": [],
+          "logicConfiguration": "Grouped requirements: every check and cross reference must pass; one complete accepted alternative may satisfy each check."
+        }
+      ],
+      "moduleReports": []
+    }
+  },
+  {
+    "packagedServer": "PASS",
+    "version": "4.60.3"
+  }
+]
