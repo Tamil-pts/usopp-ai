@@ -5,6 +5,11 @@ Engine and rule schema versions are independent of the application release.
 
 ## Development updates - 2026-10-12
 
+- Add an Admin-only Settings tool to export/import shared engineering knowledge in a versioned ZIP. It carries parameter and project mappings, edited knowledge, rules, engineering learning/feedback, imported DataInspect models and machine-prefix configuration, with optional B&R help sources. Import validates paths, makes a pre-import copy of replaced files, overlays matching files without deleting production-only files, and reports imported files. Model weights, users, results and PLC uploads are excluded.
+- Move machine/department list and `.apj` prefix detection into a shared Admin-managed configuration. Existing built-in mappings remain the defaults; future machine prefixes can be added from Settings and are used by all users.
+- Add permanent deletion for regular accounts. Admin and the fixed demo account cannot be deleted; deleting a regular user revokes sessions and removes their saved settings, history and owned workspaces.
+- Bump the application version to 4.65.13. No model fine-tuning occurs on export/import; approved engineering observations remain retrieval data unless separately used in an offline training run.
+
 - Add demo / demo sign-in through the landing page's Explore demo action. Enforce a fixed 30-minute demo session in the server cookie/database and return its expiry for automatic browser logout. Use a separate namespace for each demo login; retain five regular-user slots plus Admin, restrict demo shared-configuration writes/server-file access and keep its fixed credentials out of account password editing. Remove Admin password values from the published installation guides. Implementation added on 2026-10-12; no tests were requested for this change.
 
 - Document the confirmed source/download repository URLs and direct SSH/SCP installation from workflow artifacts. Refresh the public README/LAN guide and the local container-launcher ZIP. Compile the updated Python account modules, rebuild the main/DataInspect interfaces and restart the local development server. No container image or portable EXE was rebuilt locally for these changes.

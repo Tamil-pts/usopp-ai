@@ -25,6 +25,7 @@ import {validateEngineeringRules} from '../features/rules/api';
 import {AssistWorkspace} from '../features/assist/AssistWorkspace';
 import {SettingsPage} from '../features/settings/SettingsPage';
 import {DEPARTMENTS} from '../features/rules/library';
+import {DEFAULT_MACHINE_PREFIXES,type MachinePrefix} from '../features/validation/projectDetails';
 import {TableLayoutProvider} from '../shared/TableLayout';
 import './responsive.css';
 import usoppLogo from '../usopp_logo.png';
@@ -40,7 +41,8 @@ function App(){
   const [historyDetail,setHistoryDetail]=useState<any>(null);
   const [theme,setTheme]=useState<'light'|'dark'>(()=>userStorage.getItem('usopp_theme')==='dark'?'dark':'light');
   const [accent,setAccent]=useState(()=>userStorage.getItem('usopp_accent')||'#4f7ff2');
-  const [departments,setDepartments]=useState<string[]>(()=>{try{return [...new Set([...DEPARTMENTS,...JSON.parse(userStorage.getItem('usopp_custom_departments_v1')||'[]')])]}catch{return DEPARTMENTS}});
+  const [machineConfig,setMachineConfig]=useState<{departments:string[];prefixes:MachinePrefix[]}>({departments:DEPARTMENTS,prefixes:DEFAULT_MACHINE_PREFIXES});
+  const departments=machineConfig.departments;
   const [health,setHealth]=useState<any>(null);
   const [toast,setToast]=useState('');
   const [metaCols,setMetaCols]=useState<MetaCol[]>(()=>{
@@ -49,7 +51,7 @@ function App(){
       return [...valid,...DEFAULT_META_COLS.filter(d=>!valid.some((c:any)=>c.key===d.key))];
     }catch{return DEFAULT_META_COLS}
   });
-  const validation=useValidationWorkspace();
+  const validation=useValidationWorkspace(machineConfig.prefixes);
   const compare=useCompareProjects(setToast);
   const [ruleResults,setRuleResults]=useState<any>(null);
   const [ruleBusy,setRuleBusy]=useState('');
@@ -60,6 +62,8 @@ function App(){
   useEffect(()=>{document.documentElement.dataset.theme=theme;document.documentElement.style.setProperty('--accent',accent);userStorage.setItem('usopp_theme',theme);userStorage.setItem('usopp_accent',accent)},[theme,accent]);
   useEffect(()=>{userStorage.setItem('usopp_meta_cols_v4.30',JSON.stringify(metaCols))},[metaCols]);
   useEffect(()=>{let cancelled=false;const check=()=>fetch('/api/health').then(r=>{if(!r.ok)throw new Error();return r.json()}).then(j=>{if(!cancelled)setHealth(j)}).catch(()=>{if(!cancelled)setHealth(null)});void check();const id=setInterval(check,15000);return()=>{cancelled=true;clearInterval(id)}},[]);
+  useEffect(()=>{let active=true;fetch('/api/admin/settings/machine-departments',{cache:'no-store'}).then(async response=>{const data=await response.json();if(!response.ok)throw new Error(data.detail||'Could not load machine departments.');if(active&&Array.isArray(data.departments)&&Array.isArray(data.prefixes))setMachineConfig(data)}).catch(()=>{});return()=>{active=false}},[]);
+  const saveMachineConfig=async(next:{departments:string[];prefixes:MachinePrefix[]})=>{const response=await fetch('/api/admin/settings/machine-departments',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(next)});const data=await response.json();if(!response.ok)throw new Error(data.detail||'Could not save machine / department settings.');setMachineConfig(data)};
   useEffect(()=>{if(!toast)return;const id=setTimeout(()=>setToast(''),8000);return()=>clearTimeout(id)},[toast]);
   const runRules=async(rules:any)=>{
     if(!validation.localProjectPath&&!validation.projectFiles.length){setToast('Select a project in the pipeline project box to continue.');return {error:'Select a project in the pipeline project box to continue.'}}
@@ -83,7 +87,7 @@ function App(){
       <section hidden={page!=='rules'}><RulesPage onSourceSaved={(path,name)=>{validation.adoptEditedProject(path,name);setRuleResults(null);setToast("Source saved with backup. Run the pipeline again to refresh results.")}} projectReady={!!validation.localProjectPath||!!validation.projectFiles.length} projectName={validation.projectName||''} projectPath={validation.localProjectPath||''} machineDepartment={validation.machineDepartment} onProjectSelected={(path,name,files)=>validation.selectProject(path,name,files)} onMachineDepartmentChange={validation.setMachineDepartment} departments={departments} ruleResults={ruleResults} runRules={runRules} busy={ruleBusy} revision={ruleRevision} onAssist={(result,rule)=>{setAssistFinding({result,rule,projectName:ruleResults?.projectName||validation.projectName,projectPath:ruleResults?.projectPath||validation.localProjectPath||validation.result?.projectPath||'',requestId:Date.now()});setPage('chatbot')}}/></section>
       <section hidden={page!=='chatbot'}><AssistWorkspace comparisonResult={compare.result} onOpenFeature={feature=>{if(['home','validation','compare','rules','chatbot','settings','plc','help'].includes(feature))setPage(feature as Page)}} onSourceSaved={(path,name)=>{validation.adoptEditedProject(path,name);setRuleResults(null);setToast("Source saved with backup. Run validation again.")}} finding={assistFinding} revision={ruleRevision} onSaved={rulesSaved} result={validation.result} projectPath={validation.localProjectPath||validation.result?.projectPath||ruleResults?.projectPath||''} projectFiles={validation.projectFiles} projectName={validation.projectName} machineDepartment={validation.machineDepartment} departments={departments} ruleResults={ruleResults}/></section>
       {page==='help'&&<HelpPage onOpen={setPage}/>}
-      <section hidden={page!=='settings'}><SettingsPage theme={theme} setTheme={setTheme} accent={accent} setAccent={setAccent} metaCols={metaCols} setMetaCols={setMetaCols} departments={departments} onDepartmentsChange={next=>{const custom=next.filter(d=>!DEPARTMENTS.includes(d));userStorage.setItem('usopp_custom_departments_v1',JSON.stringify(custom));setDepartments(next)}} boolMetadataMode={validation.boolMetadataMode} setBoolMetadataMode={validation.setBoolMetadataMode} localMetadataPath={validation.localMetadataPath} setLocalMetadataPath={p=>validation.selectMetadata(p,p.split(/[\\/]/).pop()||'')} localMetadataName={validation.localMetadataName} setLocalMetadataName={validation.setLocalMetadataName} onClearResults={()=>{validation.clearResults();compare.clearResults()}}/></section>
+      <section hidden={page!=='settings'}><SettingsPage theme={theme} setTheme={setTheme} accent={accent} setAccent={setAccent} metaCols={metaCols} setMetaCols={setMetaCols} departments={departments} machinePrefixes={machineConfig.prefixes} onMachineConfigChange={saveMachineConfig} boolMetadataMode={validation.boolMetadataMode} setBoolMetadataMode={validation.setBoolMetadataMode} localMetadataPath={validation.localMetadataPath} setLocalMetadataPath={p=>validation.selectMetadata(p,p.split(/[\\/]/).pop()||'')} localMetadataName={validation.localMetadataName} setLocalMetadataName={validation.setLocalMetadataName} onClearResults={()=>{validation.clearResults();compare.clearResults()}}/></section>
     </div></main>{historyDetail&&<HistoryResultDialog result={historyDetail} onClose={()=>setHistoryDetail(null)}/>} {toast&&<div className="toast" role="status">{toast}</div>}
   </div></TableLayoutProvider>;
 }

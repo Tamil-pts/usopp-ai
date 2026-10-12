@@ -16,15 +16,18 @@ export type ProjectDetails={
   configurationMessage:string;
 };
 
-const MACHINE_PREFIXES:[string,string][]=[
-  ['LDF','Finisher'],['LDB','Breaker'],['LH','Lapformer'],['LF','Speedframe'],
-  ['LC','Carding'],['BL','Blow Room'],['LR','Ringframe'],
+export type MachinePrefix={prefix:string;department:string};
+export const DEFAULT_MACHINE_PREFIXES:MachinePrefix[]=[
+  {prefix:'LDF',department:'Finisher'},{prefix:'LDB',department:'Breaker'},
+  {prefix:'LH',department:'Lapformer'},{prefix:'LF',department:'Speedframe'},
+  {prefix:'LC',department:'Carding'},{prefix:'BL',department:'Blow Room'},
+  {prefix:'LR',department:'Ringframe'},
 ];
-export function inferMachineDepartment(projectFiles:string[]){
+export function inferMachineDepartment(projectFiles:string[],prefixes:MachinePrefix[]=DEFAULT_MACHINE_PREFIXES){
   const apj=projectFiles.find(name=>/\.apj$/i.test(name));
   const source=(apj||'').replace(/^.*[\\/]/,'').replace(/\.apj$/i,'').toUpperCase();
-  const match=MACHINE_PREFIXES.find(([prefix])=>source.startsWith(prefix));
-  return match?.[1]||'All';
+  const match=[...prefixes].sort((a,b)=>b.prefix.length-a.prefix.length).find(item=>source.startsWith(item.prefix.toUpperCase()));
+  return match?.department||'All';
 }
 
 function parseStudioVersion(text:string,name:string) {

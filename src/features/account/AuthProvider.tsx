@@ -14,9 +14,9 @@ export type AccountUser={id:number;username:string;designation:string;company:st
 const Context=createContext<{user:AccountUser;logout:()=>Promise<void>}|null>(null);
 export function useAccount(){const value=useContext(Context);if(!value)throw new Error('Account is not signed in');return value;}
 class AccountServiceError extends Error {}
-export async function accountRequest(path:string,data?:unknown){
+export async function accountRequest(path:string,data?:unknown,method?:'POST'|'DELETE'){
   let response:Response;
-  try{response=await fetch('/api/auth/'+path,{credentials:'same-origin',cache:'no-store',...(data?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}:{})})}
+  try{response=await fetch('/api/auth/'+path,{credentials:'same-origin',cache:'no-store',...(data||method?{method:method||'POST',...(data?{headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}:{})}:{})})}
   catch{throw new AccountServiceError('Cannot reach the uSOPp server. Start the application, then check the connection again.')}
   if(response.status===404||response.status===405)throw new AccountServiceError('The running server needs an update. Stop and restart uSOPp.ai, then check the connection again.');
   let result:any;

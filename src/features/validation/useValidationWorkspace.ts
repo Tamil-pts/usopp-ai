@@ -3,9 +3,9 @@ import {useEffect,useState} from 'react';
 import {generateProjectMetadata,validateProject,prepareMetadata,type BoolMetadataMode} from './api';
 import type {AnyResult} from '../../shared/types';
 import {projectSourceFiles} from '../../shared/projectInput';
-import {inferMachineDepartment,loadProjectDetails,type ProjectDetails} from './projectDetails';
+import {inferMachineDepartment,loadProjectDetails,type MachinePrefix,type ProjectDetails} from './projectDetails';
 
-export function useValidationWorkspace() {
+export function useValidationWorkspace(machinePrefixes:MachinePrefix[]) {
   const [projectFiles,setProjectFiles]=useState<File[]>([]);
   const [localProjectPath,setLocalProjectPath]=useState(()=>userStorage.getItem('usopp_project_path_v4.31')||'');
   const [localMetadataPath,setLocalMetadataPath]=useState(()=>userStorage.getItem('usopp_metadata_path_v4.31')||'');
@@ -40,9 +40,9 @@ export function useValidationWorkspace() {
   useEffect(()=>{userStorage.setItem('usopp_project_path_v4.31',localProjectPath);userStorage.setItem('usopp_project_name_v4.31',projectName)},[localProjectPath,projectName]);
   useEffect(()=>{userStorage.setItem('usopp_machine_department_v1',machineDepartment);userStorage.setItem('usopp_machine_department_auto_v1',String(departmentAutomatic))},[machineDepartment,departmentAutomatic]);
   useEffect(()=>{userStorage.setItem('usopp_bool_metadata_mode_v1',boolMetadataMode)},[boolMetadataMode]);
-  useEffect(()=>{if(departmentAutomatic&&projectDetails){setMachineDepartmentState(inferMachineDepartment(projectDetails.projectFiles))}},[departmentAutomatic,projectDetails]);
+  useEffect(()=>{if(departmentAutomatic&&projectDetails){setMachineDepartmentState(inferMachineDepartment(projectDetails.projectFiles,machinePrefixes))}},[departmentAutomatic,projectDetails,machinePrefixes]);
   useEffect(()=>{userStorage.setItem('usopp_metadata_path_v4.31',localMetadataPath);userStorage.setItem('usopp_metadata_name_v4.31',localMetadataName)},[localMetadataPath,localMetadataName]);
-  const selectProject=(path:string,name:string,files:File[]=[])=>{setProjectDetails(null);setSourceChanged(false);setLocalProjectPath(path);setProjectFiles(files);setProjectName(name);setResult(null);setGenerated(null);setMessage('');setError('');setUploadProgress(null);setDepartmentAutomatic(true);setMachineDepartmentState(inferMachineDepartment(files.map(file=>file.name)))};
+  const selectProject=(path:string,name:string,files:File[]=[])=>{setProjectDetails(null);setSourceChanged(false);setLocalProjectPath(path);setProjectFiles(files);setProjectName(name);setResult(null);setGenerated(null);setMessage('');setError('');setUploadProgress(null);setDepartmentAutomatic(true);setMachineDepartmentState(inferMachineDepartment(files.map(file=>file.name),machinePrefixes))};
   const setMachineDepartment=(value:string)=>{setDepartmentAutomatic(false);setMachineDepartmentState(value);setResult(null);setGenerated(null)};
   const setBoolMetadataMode=(value:BoolMetadataMode)=>{setBoolMetadataModeState(value);setResult(null);setGenerated(null);setMessage('');setError('')};
   const selectMetadata=(path:string,name:string)=>{setError('');setMetadata(null);setLocalMetadataPath(path);setLocalMetadataName(name);setResult(null)};

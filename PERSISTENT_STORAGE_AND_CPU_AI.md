@@ -17,6 +17,14 @@ Implemented in 4.65.9. One shared server supports five regular accounts plus Adm
 
 All of these paths are under **`USOPP_DATA_ROOT`**. Docker uses `/data` in a named persistent volume. Application updates replace the image and retain that volume. Edited knowledge and rules are not overwritten by bundled defaults. Imported data models remain user-owned; bundled reference models are supplied with each application release.
 
+## Admin knowledge transfer
+
+In **Settings**, Admin can export a portable knowledge ZIP and import it on another uSOPp server. It includes shared and project parameter mappings, knowledge/rule files, learning and feedback records, user-imported DataInspect models, and `.apj` machine-prefix settings. B&R help sources are optional because they can make the archive large; the generated SQLite help index is rebuilt on the destination. On import, new files are added, matching files are copied to a pre-import backup then replaced, and files absent from the bundle remain unchanged. Model weights, accounts, user settings, results, uploaded PLC projects and reports are not included.
+
+Machine/department names and `.apj` prefixes are configured centrally in **Settings** by Admin and read by all users. The regular account Delete action permanently removes that account's sessions, saved settings, test history and owned workspaces. Admin and the fixed demo account cannot be deleted.
+
+This transfer moves data, not trained model weights. Approved feedback can be used as retrieved evidence and exported for offline training, but it does not automatically modify the running model. To deploy fine-tuned weights, transfer and configure the verified model separately.
+
 SQLite uses WAL and short transactions on the server's local disk. Run one backend process; existing validation workers remain independent. JSON is still appropriate for rules and reference data. A vector database is not required for the current approved-evidence retrieval.
 
 ## Browser migration and conflicts

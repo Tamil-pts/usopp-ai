@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "departments": ["All", "Blow Room", "Carding", "Breaker", "Finisher", "Comber", "Lapformer", "Speedframe", "Ringframe", "RAP", "Auto Winder"],
+  "prefixes": [
+    { "prefix": "LDF", "department": "Finisher" },
+    { "prefix": "LDB", "department": "Breaker" },
+    { "prefix": "LH", "department": "Lapformer" },
+    { "prefix": "LF", "department": "Speedframe" },
+    { "prefix": "LC", "department": "Carding" },
+    { "prefix": "BL", "department": "Blow Room" },
+    { "prefix": "LR", "department": "Ringframe" }
+  ]
+}

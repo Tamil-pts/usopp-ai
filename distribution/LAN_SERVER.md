@@ -57,6 +57,10 @@ Sign in as Admin. Create up to five regular accounts. Each account keeps its own
 
 In **Settings → Chopper · AI connection**, click **Set up small CPU model**. The one-time 1.12 GB download runs in the background, verifies SHA256, selects the included llama.cpp runtime and enables startup on restart. Wait for **Ready**. No Ollama installation is required. Existing browser-only saved settings migrate when their owner signs in to the updated app from that browser.
 
+Admin can manage shared `.apj` machine prefixes and export/import knowledge from **Settings**. Export from the source server and import the ZIP on production; choose the optional B&R help files only if they are needed, since they can make the archive large. Imported knowledge overlays matching files after saving pre-import copies and keeps production-only files. Transferred knowledge does not include accounts, histories, project uploads or model weights; the normal image update retains those already on the production volume.
+
+Admin can permanently delete a regular account from **User management**. This revokes its sessions and removes its saved settings, history and owned workspaces. Admin and the fixed demo account are protected from deletion.
+
 For PLC projects use **Browse / upload folder**. Windows project paths are not Linux container paths. Live DataInspect requires a network route from Docker to the PLC IP/port over the factory network/VPN.
 
 ## 5. Stop, backup and start

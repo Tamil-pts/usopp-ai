@@ -191,6 +191,20 @@ class AccountStore:
                 db.execute('DELETE FROM sessions WHERE user_id=?',(user_id,))
             return public_user(db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone())
 
+    def delete_user(self, user_id):
+        with self.db() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row = db.execute('SELECT * FROM users WHERE id=?', (user_id,)).fetchone()
+            if not row:
+                raise ValueError('Account not found.')
+            if row['role'] == 'admin' or row['is_demo']:
+                raise ValueError('The Admin and fixed demo accounts cannot be deleted.')
+            paths = [item['path'] for item in db.execute('SELECT path FROM resource_owners WHERE user_id=?', (user_id,))]
+            db.execute('DELETE FROM sessions WHERE user_id=?', (user_id,))
+            db.execute('DELETE FROM resource_owners WHERE user_id=?', (user_id,))
+            db.execute('DELETE FROM users WHERE id=?', (user_id,))
+            return {'username': row['username'], 'paths': paths}
+
     def logout(self, token):
         if token:
             with self.db() as db:

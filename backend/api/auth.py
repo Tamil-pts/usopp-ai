@@ -1,5 +1,7 @@
 import re
 import sqlite3
+import shutil
+from pathlib import Path
 from fastapi import APIRouter, Body, HTTPException, Request, Response
 from backend.core import accounts
 
@@ -41,6 +43,39 @@ def manage_user(user_id:int,request:Request,data:dict=Body(...)):
     except sqlite3.IntegrityError: raise HTTPException(409,'This username already exists.')
     except ValueError as error: raise HTTPException(400,str(error))
     return {'user':user}
+
+@router.delete('/users/{user_id}')
+def delete_user(user_id:int,request:Request):
+    admin(request)
+    if request.state.user.get('id') == user_id:
+        raise HTTPException(400,'You cannot delete the account you are currently using.')
+    try:
+        deleted=accounts.store.delete_user(user_id)
+    except ValueError as error:
+        raise HTTPException(400,str(error))
+    from backend.core.runtime import WORK, EXPORTS
+    removed=0
+    safe_roots=(WORK.resolve(),EXPORTS.resolve())
+    paths=sorted((Path(value) for value in deleted['paths']),key=lambda path:len(path.parts))
+    removed_roots=[]
+    for path in paths:
+        try:
+            target=path.resolve()
+            if not any(target!=root and root in target.parents for root in safe_roots):
+                continue
+            if any(target==parent or parent in target.parents for parent in removed_roots):
+                continue
+            if target.is_dir(): shutil.rmtree(target)
+            elif target.is_file(): target.unlink()
+            else: continue
+            removed_roots.append(target); removed+=1
+        except OSError:
+            continue
+    from backend.core.persistent_store import db as persistent_db
+    with persistent_db() as connection:
+        connection.execute('DELETE FROM user_settings WHERE user_id=?',(user_id,))
+        connection.execute('DELETE FROM run_archive WHERE user_id=?',(user_id,))
+    return {'deleted':True,'username':deleted['username'],'removedWorkspaces':removed}
 
 def field(data, name, minimum=1, maximum=120):
     value = data.get(name)
