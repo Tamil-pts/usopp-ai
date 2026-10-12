@@ -1,0 +1,162 @@
+{
+  "version": "1.0",
+  "project": "LDB3_PV11521",
+  "mappings": [
+    {
+      "plc_parameter": "Hank leveller",
+      "plc_tag": "Autoleveller_ON_OFF",
+      "metadata_parameter": "Auto leveller",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Production Hanks",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[18]",
+      "metadata_parameter": "Current Shift Production Hanks",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Energy Monitoring",
+      "plc_tag": "HMI_EN_Energy",
+      "metadata_parameter": "Power Module",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Cumulative Consumption Air Consumption",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[109]",
+      "metadata_parameter": "Shift Air Consumption",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Can rejection",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[110]",
+      "metadata_parameter": "Thick Places Can Rejection Count",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift_Number",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[1]",
+      "metadata_parameter": "Shift Number",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift_Date",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[4]",
+      "metadata_parameter": "Shift Date",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift_Month",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[3]",
+      "metadata_parameter": "Shift Month",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift_Year",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[2]",
+      "metadata_parameter": "Shift Year",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift_Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[5]",
+      "metadata_parameter": "Shift Hour",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift_Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[6]",
+      "metadata_parameter": "Shift Minute",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Hanks",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[18]",
+      "metadata_parameter": "Hank",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Kgs",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[20]",
+      "metadata_parameter": "Production in kg",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Production Efficiency (kmtrs",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[65]",
+      "metadata_parameter": "Production in km",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift Feed roller stops",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[22]",
+      "metadata_parameter": "Feed Roller Stoppage",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift Feed sensor stops",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[23]",
+      "metadata_parameter": "Feed Sensor Stoppage",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Previous_Shift_Feed_Stoppage_Time_Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[24]",
+      "metadata_parameter": "Feed Stoppage Time Hour",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Health Monitoring",
+      "plc_tag": "HMI_EN_RDS",
+      "metadata_parameter": "Health Module",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "MACHINE NAME",
+      "plc_tag": "PMS_MACHINE_NAME_HMI",
+      "metadata_parameter": "Machine Model",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Sliver monitor deviation percentage",
+      "plc_tag": "SM_Dev_Percent",
+      "metadata_parameter": "Sliver monitor fault Dev %",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Specrtogram peak",
+      "plc_tag": "spectrogram_peak_int",
+      "metadata_parameter": "Spectrogram Peak",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Machine Setting Log",
+      "plc_tag": "Machine_Setting_change_Trigger",
+      "metadata_parameter": "Machine Setting Log Trigger",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Process Setting Log",
+      "plc_tag": "Process_Setting_change_Trigger",
+      "metadata_parameter": "Process Setting Log Trigger",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "Machine History Setting Log",
+      "plc_tag": "MachiHis_Setting_change_Trigger",
+      "metadata_parameter": "Machine History Setting Log Trigger",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "level Quality Setting change Trigger",
+      "plc_tag": "Level_Qua_Setting_change_Trigger",
+      "metadata_parameter": "Quality Setting Log Trigger",
+      "status": "accepted"
+    },
+    {
+      "plc_parameter": "PMS STOPPAGE REPORT",
+      "plc_tag": "PMS_Stoppages",
+      "metadata_parameter": "Machine Stoppage Reason",
+      "status": "accepted"
+    }
+  ]
+}

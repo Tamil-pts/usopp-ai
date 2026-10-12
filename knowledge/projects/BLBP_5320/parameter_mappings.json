@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "project": "BLBP_5320",
+  "mappings": [
+    {
+      "plc_parameter": "Traverse Speed (mpm)",
+      "plc_tag": "HMI_TROLLEY_SPEED",
+      "metadata_parameter": "Traverse Speed",
+      "status": "accepted"
+    }
+  ]
+}

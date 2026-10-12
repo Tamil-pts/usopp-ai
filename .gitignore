@@ -31,7 +31,7 @@ artifacts/
 .usopp_assist_model.json
 
 knowledge/br_help/
-knowledge/projects/
+
 local_ai/training/
 local_ai/models/
 rules/learning/
