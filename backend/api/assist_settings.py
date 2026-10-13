@@ -45,13 +45,13 @@ def runtime_status(request:Request):
 @router.post('/api/assist/model/runtime/{action}')
 def runtime_action(action:str,request:Request):
     admin(request)
-    from backend.core.local_model_runtime import start,stop
+    from backend.core.local_model_runtime import start,stop,restart
     from backend.core.assist_model import configuration
     if action=='stop':return stop()
-    if action!='start':raise HTTPException(400,'Choose start or stop')
+    if action not in ('start','restart'):raise HTTPException(400,'Choose start, restart or stop')
     cfg=configuration()
     if cfg['provider']!='embedded':raise HTTPException(409,'Save Chopper local model mode first.')
-    return start(cfg)
+    return restart(cfg) if action=='restart' else start(cfg)
 
 @router.get('/api/assist/tools')
 def tools():

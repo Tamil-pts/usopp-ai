@@ -95,6 +95,22 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\usopp-container.ps1 up
 USOPP_BACKUP_DIRECTORY="$HOME/usopp-backups" bash usopp-container.sh update usopp-ai:<new-version> <new-image-path>
 ```
 
+Starting with the release that introduces `update-release`, an Ubuntu server with internet access can download a public release by version, verify the launcher and image checksums, and run the same data-preserving update:
+
+```bash
+bash usopp-container.sh update-release 4.65.14
+```
+
+Replace `4.65.14` with the published version. Use the numeric version, with or without the leading `v`. To change the listening interface while updating, pass its IPv4 address (for example, the office NIC):
+
+```bash
+USOPP_BIND_ADDRESS=172.16.0.129 USOPP_PORT=8201 \
+  USOPP_BACKUP_DIRECTORY="$HOME/usopp-backups" \
+  bash usopp-container.sh update-release 4.65.14
+```
+
+Finish active tests first. The updater needs outbound HTTPS access to the public `Tamil-pts/usopp-distribution` GitHub release. It downloads into a temporary directory, verifies both SHA256 files, makes the regular full volume backup, and removes the temporary download afterward. The old manual `update <image> <archive>` command remains available for offline servers.
+
 The command loads the image, stops the app, makes a complete backup and starts the selected release on the existing volume. Existing users, passwords, test IDs/results, rule configuration, edited parameter mappings and model weights remain. Port and bind address are preserved. A backup failure leaves the app stopped with its data retained. Read the log/status after an update; startup is not proof of completed migrations or a working live PLC route.
 
 ## 7. Restore or move to another server

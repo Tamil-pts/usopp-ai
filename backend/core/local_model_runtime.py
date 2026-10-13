@@ -13,6 +13,7 @@ LOCK=threading.RLock()
 PROCESS=None
 IDENTITY=None
 LOG=None
+LAST_EXIT_CODE=None
 SHUTTING_DOWN=threading.Event()
 
 def executable():
@@ -23,29 +24,32 @@ def executable():
     raise HTTPException(409,'Local model runtime is missing. Use the complete Windows package or the updated CPU container image.')
 
 def stop():
-    global PROCESS,IDENTITY,LOG
+    global PROCESS,IDENTITY,LOG,LAST_EXIT_CODE
     with LOCK:
         if PROCESS and PROCESS.poll() is None:
             PROCESS.terminate()
             try:PROCESS.wait(timeout=10)
             except subprocess.TimeoutExpired:PROCESS.kill();PROCESS.wait(timeout=5)
+        if PROCESS:
+            LAST_EXIT_CODE=PROCESS.poll()
         PROCESS=None;IDENTITY=None
         if LOG:LOG.close();LOG=None
     return {'running':False,'message':'Chopper local model stopped.'}
 
 def status():
     with LOCK:
-        running=bool(PROCESS and PROCESS.poll() is None)
+        exit_code=PROCESS.poll() if PROCESS else LAST_EXIT_CODE
+        running=bool(PROCESS and exit_code is None)
         try:path=str(executable());available=True
         except HTTPException:path='';available=False
         ready=False
         if running:
             try:ready=requests.get(f'http://127.0.0.1:{IDENTITY[1]}/health',timeout=2).status_code==200
             except requests.RequestException:pass
-        return {'running':running,'ready':ready,'runtimeAvailable':available,'runtimePath':path,'logFile':str(BASE/'logs'/'chopper-local-model.log')}
+        return {'running':running,'ready':ready,'runtimeAvailable':available,'runtimePath':path,'logFile':str(BASE/'logs'/'chopper-local-model.log'),'port':IDENTITY[1] if IDENTITY else None,'processExitCode':exit_code,'failed':bool(PROCESS and exit_code is not None and exit_code != 0)}
 
 def start(cfg):
-    global PROCESS,IDENTITY,LOG
+    global PROCESS,IDENTITY,LOG,LAST_EXIT_CODE
     model=Path(str(cfg.get('modelPath') or '')).expanduser()
     if not model.is_file():raise HTTPException(400,'Choose a local GGUF model file on the uSOPp computer.')
     with model.open('rb') as stream:
@@ -67,11 +71,18 @@ def start(cfg):
         runtime=executable();(BASE/'logs').mkdir(exist_ok=True)
         LOG=(BASE/'logs'/'chopper-local-model.log').open('ab')
         try:
+            LAST_EXIT_CODE=None
             PROCESS=subprocess.Popen([str(runtime),'-m',str(model.resolve()),'--host','127.0.0.1','--port',str(port),'-c',str(context),'--alias','chopper-local','--parallel','1','--threads',str(threads),'--threads-batch',str(threads),'--gpu-layers','0','--timeout','1800'],cwd=str(runtime.parent),stdin=subprocess.DEVNULL,stdout=LOG,stderr=subprocess.STDOUT,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
             IDENTITY=identity
         except OSError as error:
             stop();raise HTTPException(503,'Cannot start the bundled local model runtime.') from error
     return status()|{'message':'Chopper local model is loading. Check status until it is ready.'}
+
+def restart(cfg):
+    """Restart the configured local model and return its new startup status."""
+    stop()
+    result=start(cfg)
+    return result|{'message':'Chopper local model restarted and is loading. Refresh status until it is ready.'}
 
 def autostart():
     """Model loading is optional and must not delay API/validation availability."""

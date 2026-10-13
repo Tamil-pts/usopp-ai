@@ -7,6 +7,35 @@ config_root=${USOPP_CONTAINER_CONFIG:-"$HOME/.config/usopp-container"}
 if [[ "$action" == update && ! -f "$config_root/image" ]]; then echo 'Run install before updating a server.' >&2; exit 1; fi
 if [[ "$action" == install && -f "$config_root/image" && "$image" != "$(cat "$config_root/image")" ]]; then echo 'Use update to change an installed release with a full backup.' >&2; exit 1; fi
 script_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+if [[ "$action" == update-release ]]; then
+  release_input=${2:-}
+  release_version=${release_input#v}
+  [[ "$release_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]] || { echo 'Supply a published version such as 4.65.13 or v4.65.13.' >&2; exit 1; }
+  [[ -f "$config_root/image" ]] || { echo 'Run install before updating a server.' >&2; exit 1; }
+  command -v docker >/dev/null || { echo 'Install Docker Engine and its Compose plugin first; see README.md.' >&2; exit 1; }
+  [[ $(docker info --format '{{.OSType}}') == linux ]] || { echo 'Start Docker in Linux containers mode.' >&2; exit 1; }
+  for tool in curl sha256sum unzip; do command -v "$tool" >/dev/null || { echo "Install $tool before downloading a release." >&2; exit 1; }; done
+  download_root=$(mktemp -d "${TMPDIR:-/tmp}/usopp-release-${release_version}.XXXXXX")
+  trap 'rm -rf -- "$download_root"' EXIT
+  release_base="https://github.com/Tamil-pts/usopp-distribution/releases/download/v${release_version}"
+  launcher_zip="uSOPp_AI_${release_version}_Container_Launchers.zip"
+  image_archive="uSOPp_AI_${release_version}_Container_linux_amd64.tar.gz"
+  assets=("$launcher_zip" "$launcher_zip.sha256" "$image_archive" "$image_archive.sha256")
+  for asset in "${assets[@]}"; do
+    echo "Downloading $asset"
+    curl --fail --location --retry 3 --retry-delay 2 --silent --show-error "$release_base/$asset" --output "$download_root/$asset"
+  done
+  for checksum in "$launcher_zip.sha256" "$image_archive.sha256"; do
+    sed -i 's/\r$//' "$download_root/$checksum"
+    (cd "$download_root" && sha256sum --check "$checksum")
+  done
+  mkdir "$download_root/launchers"
+  unzip -q "$download_root/$launcher_zip" -d "$download_root/launchers"
+  [[ -f "$download_root/launchers/usopp-container.sh" && -f "$download_root/launchers/compose.yaml" ]] || { echo 'The release launcher ZIP is missing required files.' >&2; exit 1; }
+  echo "Checksums verified. Updating to usopp-ai:$release_version (the installer backs up the existing data volume)."
+  bash "$download_root/launchers/usopp-container.sh" update "usopp-ai:$release_version" "$download_root/$image_archive"
+  exit $?
+fi
 command -v docker >/dev/null || { echo 'Install Docker Engine and its Compose plugin first; see README.md.' >&2; exit 1; }
 [[ $(docker info --format '{{.OSType}}') == linux ]] || { echo 'Start Docker in Linux containers mode.' >&2; exit 1; }
 case "$action" in
@@ -41,7 +70,7 @@ case "$action" in
     cp -- "$script_root/compose.yaml" "$config_root/compose.yaml"
     ;;
   start|stop|status|logs|backup|restore) ;;
-  *) echo 'Use install, start, stop, status, logs, update, backup or restore.' >&2; exit 1 ;;
+  *) echo 'Use install, start, stop, status, logs, update, update-release, backup or restore.' >&2; exit 1 ;;
 esac
 if [[ "$action" == install || "$action" == update ]]; then
   export USOPP_IMAGE="$image" USOPP_PORT="$port" USOPP_BIND_ADDRESS="$bind_address" USOPP_DATA_VOLUME="$data_volume"

@@ -73,7 +73,7 @@ bash usopp-container.sh stop
 bash usopp-container.sh start
 ```
 
-Use `USOPP_PORT=8201 bash usopp-container.sh install ...` to choose another port. Update with `bash usopp-container.sh update usopp-ai:<new-version> <new-image-path>`. Installer settings and initial-password file remain under `~/.config/usopp-container`.
+Use `USOPP_PORT=8201 bash usopp-container.sh install ...` to choose another port. For a release already downloaded to the server, update with `bash usopp-container.sh update usopp-ai:<new-version> <new-image-path>`. Starting with the release that introduces this command, download and verify a public GitHub release by version with `bash usopp-container.sh update-release 4.65.14` (replace the example with the published version). The versioned updater fetches the image, launcher and SHA256 files, verifies both archives, then updates the existing data volume with a backup. Installer settings and initial-password file remain under `~/.config/usopp-container`.
 
 ## Data, reports and PLC access
 

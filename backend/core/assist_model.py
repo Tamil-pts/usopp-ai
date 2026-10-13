@@ -179,7 +179,10 @@ def check_model():
         if not state['ready']:
             return {**state,'connected':False,'message':'Choose a GGUF file, save, then Start local model in Settings and wait until it is loaded.','models':[]}
         answer=chat_model('Reply with OK only.','Connection check.',timeout=30,max_tokens=8)
-        return {**state,'connected':True,'responseSeconds':answer['responseSeconds'],'message':f"Chopper returned a short reply in {answer['responseSeconds']} seconds. Project answers also need time to read source evidence.",'models':['chopper-local']}
+        reply=str(answer.get('answer') or '').strip()
+        connected=bool(reply)
+        message=(f"Chopper test passed in {answer['responseSeconds']} seconds. Reply: {reply[:120]}" if connected else 'Chopper received the test request but returned an empty reply. Check the model log and settings.')
+        return {**state,'connected':connected,'responseSeconds':answer['responseSeconds'],'testReply':reply[:120],'message':message,'models':['chopper-local']}
     if cfg['provider']=='ollama':
         response=requests.get(cfg['baseUrl']+'/api/tags',timeout=5,allow_redirects=False)
         if response.status_code!=200: raise ValueError(f'Ollama returned HTTP {response.status_code}.')
