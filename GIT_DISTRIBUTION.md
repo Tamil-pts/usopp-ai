@@ -27,6 +27,53 @@ Users who can read the source repository can download its source. Keep end users
 
 The container's final stage copies compiled application code from a builder. Original `.py`, `.ts`, `.tsx` and frontend source maps are excluded. Third-party Python dependencies retain their own files and licenses. Bytecode and JavaScript are reversible; containers provide packaging, not encryption. See [Docker multi-stage builds](https://docs.docker.com/get-started/docker-concepts/building-images/multi-stage-builds/).
 
+### When Python files are visible on the production server
+
+Pushing application source to the private `usopp-ai` repository does not copy
+that checkout onto the production host. Install the compiled
+`Container_linux_amd64.tar.gz` image asset when the server should not receive
+the original application source.
+
+| Location / file | What it means |
+| --- | --- |
+| `~/usopp-container/build-<version>/backend/` or `python_engine/` | A readable host build checkout extracted by the manual source-build procedure. Installing a container does not remove this folder. |
+| `*_Container_Build_Source.tar.gz` or an older `*_Azure_Source.zip` | A private developer source archive, suitable only for a trusted build machine. These are not end-user installers. |
+| `/opt/usopp/backend/*.pyc` and `/opt/usopp/python_engine/*.pyc` inside the current image | Compiled application bytecode; original application `.py` files are omitted. |
+| `/opt/venv/.../*.py` inside the image | Python dependencies retain their third-party source files and licenses. |
+| A model path ending in `.gguf` in Settings | The selected model weights file location. Showing its path does not expose the Python implementation. |
+
+The current Dockerfile compiles application Python in the intermediate
+`compiler` stage and copies only `/compiled` into the final runtime. The staging
+script rejects raw application source and frontend source maps. The Windows
+release uses PyInstaller and a separate bytecode staging step. Neither process
+encrypts the implementation or prevents a server administrator from inspecting
+compiled files. Native compilation would be a separate build change.
+
+The public download route publishes compiled image/Windows assets and
+launchers. `package_container_build.py` is a separate, explicit private-build
+command; the release workflow does not invoke it. Keep source-build archives
+out of manually uploaded release assets as well.
+
+When connected to the server, identify the running image and check the
+application directories using read-only commands:
+
+```bash
+docker ps --format 'table {{.Names}}\t{{.Image}}'
+# Replace <container-name> with the uSOPp container shown above.
+docker exec <container-name> sh -c 'find /opt/usopp/backend /opt/usopp/python_engine -type f -name "*.py" -print'
+```
+
+The second command should print no application `.py` files for a current
+compiled image. If it does, check the installed image version and bind mounts.
+If files are under a host `build-<version>` folder, they are separate build
+inputs. Review that exact folder and retained archive before removing them;
+keep the launcher files and persistent application data.
+
+`.gitignore` controls newly added files, not already tracked files or old Git
+history. `git ls-files -ci --exclude-standard` lists tracked files that now match
+ignore rules. Review that list before any deliberate untracking; do not ignore
+`.py`, `backend/`, `python_engine/` or `src/` in the source repository.
+
 ## 1. Publish the reviewed source
 
 The Git root must be **`usopp_ai_2.0`**, never the parent containing customer PLC projects. Ignored data includes accounts, uploads, results, logs, private model settings, model weights, dependencies, build outputs, project knowledge caches and the local B&R help archive. Approved department data models and default knowledge are included.

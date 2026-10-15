@@ -1,6 +1,6 @@
 import {Fragment,useEffect,useState,type ReactNode} from 'react';
 import {groupHmiProperties,type HmiPropertyGroup,type HmiPropertyRow} from './hmiPropertyGroups';
-import {skipHmiProperty} from './hmiDifferenceFilter';
+import {skipHmiPageIndex,skipHmiProperty} from './hmiDifferenceFilter';
 import './hmi-property-comparison.css';
 
 function valueText(value:unknown) {
@@ -9,11 +9,11 @@ function valueText(value:unknown) {
 }
 
 /** One paired table keeps category expansion and property rows aligned. */
-export function HmiPropertyComparison({base,developed,baseLabel,newLabel,contextKey,skipLayout=false,baseMissing=false,newMissing=false}:{
+export function HmiPropertyComparison({base,developed,baseLabel,newLabel,contextKey,skipLayout=false,skipPageIndex=false,baseMissing=false,newMissing=false}:{
  base:Record<string,unknown>;developed:Record<string,unknown>;baseLabel:string;newLabel:string;contextKey:string;
- skipLayout?:boolean;baseMissing?:boolean;newMissing?:boolean;
+ skipLayout?:boolean;skipPageIndex?:boolean;baseMissing?:boolean;newMissing?:boolean;
 }) {
- const groups=groupHmiProperties(base,developed,key=>skipLayout&&skipHmiProperty(key));
+ const groups=groupHmiProperties(base,developed,key=>skipLayout&&(skipHmiProperty(key)||(skipPageIndex&&skipHmiPageIndex(key))));
  const [overrides,setOverrides]=useState<Record<string,boolean>>({});
  useEffect(()=>setOverrides({}),[contextKey]);
  const expanded=(group:HmiPropertyGroup)=>overrides[group.id]??(group.id==='Identity'||group.changed>0);

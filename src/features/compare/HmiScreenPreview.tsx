@@ -145,7 +145,7 @@ export function HmiScreenPreview({data,baseLabel,newLabel,skipLayout=false}:{dat
     <ResizeHandle height={canvasHeight} onChange={setCanvasHeight}/>
     <div className="hmiPreviewInspector" ref={inspectorRef}>
       <div className="hmiInspectorHeading"><h3>{selected?`Control properties: ${selected}`:'Screen properties'}</h3><button onClick={()=>previewRef.current?.scrollTo({top:0,behavior:'smooth'})}>Back to screens ↑</button></div>
-      <HmiPropertyComparison base={properties[0]} developed={properties[1]} baseLabel={baseLabel} newLabel={newLabel} contextKey={`${baseLabel}:${newLabel}:${layouts[0]?.name}:${layouts[1]?.name}:${selected||'screen'}`} skipLayout={skipLayout} baseMissing={!!selected&&!controls[0]} newMissing={!!selected&&!controls[1]}/>
+      <HmiPropertyComparison base={properties[0]} developed={properties[1]} baseLabel={baseLabel} newLabel={newLabel} contextKey={`${baseLabel}:${newLabel}:${layouts[0]?.name}:${layouts[1]?.name}:${selected||'screen'}`} skipLayout={skipLayout} skipPageIndex={!selected} baseMissing={!!selected&&!controls[0]} newMissing={!!selected&&!controls[1]}/>
     </div>
   </div>;
 }

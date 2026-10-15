@@ -68,6 +68,81 @@ def categorize(rel_path: str) -> str:
     return 'config'
 
 
+def _comparison_file_family(rel_path: str):
+    """Return a safe cross-project matching family for a source file."""
+    path = Path(rel_path)
+    extension = path.suffix.casefold()
+    category = categorize(rel_path)
+    if category == 'logic' and extension in {'.src', '.st', '.ld'}:
+        # AS 2.7 PGS source/ladder containers and AS 4.x ST/XML ladder files
+        # are alternate encodings of executable PLC logic.
+        return category, 'plc-implementation'
+    if category in {'logic', 'screen', 'hardware'}:
+        return category, extension
+    return None
+
+
+def _comparison_name_key(rel_path: str):
+    family = _comparison_file_family(rel_path)
+    if family is None:
+        return None
+    stem = Path(rel_path).stem.casefold()
+    if family == ('logic', 'plc-implementation'):
+        # AS 4.x commonly names the main task *Cyclic.st*, while the legacy
+        # AS 2.7 source uses the program name without that suffix.
+        stem = re.sub(r'cyclic$', '', stem, flags=re.I)
+    return (*family, stem)
+
+
+def align_project_files(base_files: Dict[str, Path], new_files: Dict[str, Path]):
+    """Pair exact paths first, then unique compatible filenames across layouts.
+
+    Ambiguous same-name candidates stay as additions/removals. This avoids
+    silently comparing unrelated local variables, screens or PLC routines.
+    Each row is (display_path, base_relative_path, new_relative_path, method).
+    """
+    base_by_casefold = {path.casefold(): path for path in base_files}
+    new_by_casefold = {path.casefold(): path for path in new_files}
+    pairs = []
+    matched_base = set()
+    matched_new = set()
+
+    for folded in sorted(set(base_by_casefold) & set(new_by_casefold)):
+        base_rel, new_rel = base_by_casefold[folded], new_by_casefold[folded]
+        pairs.append((new_rel, base_rel, new_rel, 'same relative path'))
+        matched_base.add(base_rel)
+        matched_new.add(new_rel)
+
+    def candidates(files, already_matched):
+        grouped = {}
+        for rel in files:
+            if rel in already_matched:
+                continue
+            key = _comparison_name_key(rel)
+            if key is not None:
+                grouped.setdefault(key, []).append(rel)
+        return grouped
+
+    base_names = candidates(base_files, matched_base)
+    new_names = candidates(new_files, matched_new)
+    for key in sorted(set(base_names) & set(new_names)):
+        base_rows, new_rows = base_names[key], new_names[key]
+        if len(base_rows) != 1 or len(new_rows) != 1:
+            continue
+        base_rel, new_rel = base_rows[0], new_rows[0]
+        pairs.append((new_rel, base_rel, new_rel, 'same unique filename'))
+        matched_base.add(base_rel)
+        matched_new.add(new_rel)
+
+    for rel in base_files:
+        if rel not in matched_base:
+            pairs.append((rel, rel, None, 'base only'))
+    for rel in new_files:
+        if rel not in matched_new:
+            pairs.append((rel, None, rel, 'developed only'))
+    return sorted(pairs, key=lambda row: row[0].casefold())
+
+
 def project_identity(root: Path, selected_hmi: str = '') -> dict:
     """Read identity from project descriptors without using build output."""
     details=local_project_details(root)
@@ -1051,6 +1126,30 @@ def decode_bytes(data: bytes) -> str:
     return data.decode('utf-8', errors='replace')
 
 
+def decode_project_text(path: Path, data: bytes = None) -> str:
+    """Decode readable source text from AS 2.7 binary PGS containers."""
+    path = Path(path)
+    data = path.read_bytes() if data is None else data
+    if path.suffix.casefold() not in {'.src', '.ld'} or not data.startswith(b'B&R') or b'\x00' not in data:
+        return decode_bytes(data)
+
+    decoded = data.decode('utf-8', errors='ignore')
+    source_markers = [
+        r'\(\*\s*PROGRAM\b',
+        r'\(\*\s*(?:CYCLIC|INIT)\s+PROGRAM\b',
+        r'\b(?:IF|ELSIF|CASE|FOR|WHILE|REPEAT)\s*\(',
+        r'\b(?:LDN?|STN?|ANDN?|ORN?|XOR|CAL|RET|JMP|EQ|NE|GT|GE|LT|LE|ADD|SUB|MUL|DIV)\s+\S',
+        r'(?m)^\s*[A-Za-z_]\w*(?:\s*\[[^\]]+\])?\s*:=',
+    ]
+    matches = [match for pattern in source_markers
+               if (match := re.search(pattern, decoded, re.I)) is not None]
+    if matches:
+        decoded = decoded[min(match.start() for match in matches):]
+    lines = decoded.splitlines()
+    printable = [''.join(char for char in line if char == '\t' or char.isprintable()) for line in lines]
+    return '\n'.join(printable)
+
+
 def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hmi: str = '', detail_dir=None) -> dict:
     started = time.time()
     emit_progress('phase', message='Scanning Base project', phase='scan_base')
@@ -1061,8 +1160,8 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
     new_files  = walk_project(new_root, new_identity)
     emit_progress('phase', message=f'Developed project scanned: {len(new_files):,} files', phase='compare')
 
-    all_paths  = sorted(set(base_files) | set(new_files))
-    total = len(all_paths)
+    file_pairs = align_project_files(base_files, new_files)
+    total = len(file_pairs)
     counts = {'added': 0, 'removed': 0, 'modified': 0, 'unchanged': 0}
     by_cat = {'logic': 0, 'screen': 0, 'hardware': 0, 'config': 0}
     diffs: List[dict] = []
@@ -1075,18 +1174,18 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
         detail_dir.mkdir(parents=True, exist_ok=True)
     last_emit = 0.0
 
-    for idx, rel in enumerate(all_paths, 1):
-        in_base = rel in base_files
-        in_new  = rel in new_files
-        cat = categorize(rel)
-        sub = subroutine_from_path(rel)
-        base_path = base_files.get(rel)
-        new_path = new_files.get(rel)
+    for idx, (rel, base_rel, new_rel, match_method) in enumerate(file_pairs, 1):
+        in_base = base_rel is not None
+        in_new  = new_rel is not None
+        cat = categorize(new_rel or base_rel)
+        sub = subroutine_from_path(new_rel or base_rel)
+        base_path = base_files.get(base_rel) if base_rel else None
+        new_path = new_files.get(new_rel) if new_rel else None
 
         emit_now = (idx == 1 or idx == total or idx % max(1, total // 100) == 0 or time.time()-last_emit >= 1.0)
         if emit_now:
             emit_progress('progress', current=idx, total=total, percent=round(idx*100/total, 1) if total else 100,
-                          category=cat, path=rel, base_path=rel if in_base else '', new_path=rel if in_new else '')
+                          category=cat, path=rel, base_path=base_rel or '', new_path=new_rel or '')
             last_emit = time.time()
 
         if in_base and in_new:
@@ -1101,6 +1200,7 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
                     'base_file_name': base_path.name, 'new_file_name': new_path.name,
                     'base_relative_path': base_path.relative_to(base_root).as_posix(),
                     'new_relative_path': new_path.relative_to(new_root).as_posix(),
+                    'path_match_method': match_method,
                     'base_lines': 0, 'new_lines': 0, 'added_lines': [], 'removed_lines': [],
                     'hunks': [], 'logic_added': [], 'logic_removed': [],
                     'source_view_available': b'\x00' not in bdata and b'\xef\xbf\xbd' not in bdata,
@@ -1119,26 +1219,27 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
                         entry['project_detail_id'] = detail_id
                 same_project_files.append(entry)
                 continue
-            base_text = decode_bytes(bdata)
-            new_text  = decode_bytes(ndata)
+            base_text = decode_project_text(base_path, bdata)
+            new_text  = decode_project_text(new_path, ndata)
             logic_diff = source_diff(base_text,new_text) if cat=='logic' else None
             status = 'unchanged' if bdata == ndata or logic_diff is not None and not logic_diff['hunks'] else 'modified'
         elif in_new:
             status = 'added'
-            new_text = decode_bytes(file_bytes(new_path))
+            new_text = decode_project_text(new_path, file_bytes(new_path))
             base_text = ''
         else:
             status = 'removed'
-            base_text = decode_bytes(file_bytes(base_path))
+            base_text = decode_project_text(base_path, file_bytes(base_path))
             new_text = ''
 
         if cat=='logic' and not (in_base and in_new):
             logic_diff = source_diff(base_text,new_text)
         parsed_screen = None
         if cat == 'screen':
-            parsed_screen = parse_structured_hmi_diff(base_text, new_text, Path(rel).suffix.lower(),
+            screen_extension = Path(new_rel or base_rel).suffix.lower()
+            parsed_screen = parse_structured_hmi_diff(base_text, new_text, screen_extension,
                                                        base_path, new_path, hmi_resource_cache, base_identity.get('active_hmi'), new_identity.get('active_hmi'))
-            if in_base and in_new and (Path(rel).suffix.lower()=='.dso' or base_text == new_text or hmi_xml_equivalent(base_text, new_text)):
+            if in_base and in_new and (screen_extension=='.dso' or base_text == new_text or hmi_xml_equivalent(base_text, new_text)):
                 status = 'modified' if parsed_screen['changes'] else 'unchanged'
 
         counts[status] += 1
@@ -1152,6 +1253,7 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
             'new_file_name': new_path.name if new_path else None,
             'base_relative_path': str(base_path.relative_to(base_root)).replace('\\','/') if base_path else None,
             'new_relative_path': str(new_path.relative_to(new_root)).replace('\\','/') if new_path else None,
+            'path_match_method': match_method,
             'added_lines': [], 'removed_lines': [], 'hunks': [],
             'logic_added': [], 'logic_removed': [],
             'source_view_available': Path(rel).suffix.lower() in LOGIC_EXTS | LADDER_EXTS,
@@ -1168,12 +1270,13 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
                     json.dump(parsed_screen, stream, ensure_ascii=False, separators=(',', ':'))
                 entry['screen_detail_id'] = detail_id
         # Unchanged ladder files need the same network model as changed files.
-        if Path(rel).suffix.casefold() in LADDER_EXTS:
+        if (base_path and new_path and Path(base_rel).suffix.casefold() in LADDER_EXTS
+                and Path(new_rel).suffix.casefold() in LADDER_EXTS):
             try:
                 try: from python_engine.ladder_model import declaration_symbols
                 except ModuleNotFoundError: from ladder_model import declaration_symbols
                 parsed_ladder = parse_ladder_diff(base_text, new_text,
-                    declaration_symbols(base_files,rel),declaration_symbols(new_files,rel),rel)
+                    declaration_symbols(base_files,base_rel),declaration_symbols(new_files,new_rel),rel)
                 entry['ladder_structured_available'] = bool(parsed_ladder.get('parsed'))
                 if status == 'unchanged' and detail_dir is not None:
                     detail_id = hashlib.sha256(('ladder:' + rel).encode('utf-8')).hexdigest()
@@ -1263,16 +1366,16 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
         if entry['status'] == 'modified':
             if cat == 'hardware' and in_base and in_new:
                 try:
-                    bt = read_safe(base_files[rel]); nt = read_safe(new_files[rel])
+                    bt = read_safe(base_path); nt = read_safe(new_path)
                     entry['parsed_hardware'] = parse_hardware_diff(bt, nt, Path(rel).suffix.lower())
                 except Exception: pass
         elif entry['status'] == 'added' and cat == 'hardware' and in_new:
             try:
-                entry['parsed_hardware'] = parse_hardware_diff('', read_safe(new_files[rel]), Path(rel).suffix.lower())
+                entry['parsed_hardware'] = parse_hardware_diff('', read_safe(new_path), Path(rel).suffix.lower())
             except Exception: pass
         elif entry['status'] == 'removed' and cat == 'hardware' and in_base:
             try:
-                entry['parsed_hardware'] = parse_hardware_diff(read_safe(base_files[rel]), '', Path(rel).suffix.lower())
+                entry['parsed_hardware'] = parse_hardware_diff(read_safe(base_path), '', Path(rel).suffix.lower())
             except Exception: pass
 
         diffs.append(entry)

@@ -1,6 +1,8 @@
 import json
 from io import BytesIO
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from openpyxl import Workbook
 from backend.core.data_models import parse_model,validate_model,plc_type,groups
 
@@ -61,5 +63,58 @@ class DataModelTests(unittest.TestCase):
         self.assertNotEqual(breaker['id'],finisher['id'])
         self.assertEqual(breaker['sourceSha256'],finisher['sourceSha256'])
         self.assertEqual(breaker['id'],parse_model(raw,'DRAWFRAMEBREAKER.json','QMS')['id'])
+
+    def test_database_only_type_needs_wire_definition_not_a_plc_failure(self):
+        raw={'controleCode':'DRAWFRAMEFINISHER','keysList':{'cms_DRAWFRAMEFINISHER_hours':[
+            {'tagName':'Production in kg','dataType':'TIMESTAMP','groupCode':'40'}]}}
+        model=parse_model(json.dumps(raw).encode(),'DRAWFRAMEFINISHER.json','CMS')
+        row=validate_model(model,self.metadata('Production in kg'))['rows'][0]
+        self.assertEqual(row['status'],'UNRESOLVED')
+        self.assertEqual(row['reasonCodes'],['REFERENCE_TYPE_UNSUPPORTED'])
+        raw['keysList']['cms_DRAWFRAMEFINISHER_hours'][0]['plcDataType']='REAL'
+        explicit=parse_model(json.dumps(raw).encode(),'DRAWFRAMEFINISHER.json','CMS')
+        self.assertEqual(explicit['parameters'][0]['dataType'],'TIMESTAMP')
+        self.assertEqual(validate_model(explicit,self.metadata('Production in kg'))['rows'][0]['status'],'PASS')
+
+    def test_builder_preserves_conflicting_originals_and_cross_references_types(self):
+        from scripts.build_data_model_knowledge import build
+        with TemporaryDirectory() as directory:
+            root=Path(directory);source=root/'source';cms=source/'CMS';cms.mkdir(parents=True)
+            original={'controleCode':'DRAWFRAMEFINISHER','keysList':{'cms_DRAWFRAMEFINISHER_hours':[
+                {'tagName':'Production in kg','dataType':'TIMESTAMP','groupCode':'40'},
+                {'tagName':'Valid value','dataType':'FLOAT','groupCode':'40'}]}}
+            raw=json.dumps(original).encode();(cms/'DRAWFRAMEFINISHER.json').write_bytes(raw)
+            book=Workbook();sheet=book.active;sheet.title='cms_DFFinisher_hourwise'
+            sheet.append(['Name(Only Reference)','Data Type','Group Code'])
+            sheet.append(['Production in kg','FLOAT',40]);sheet.append(['Valid value','FLOAT',40])
+            book.save(cms/'CMS_DrawFrameFinisher_Key_Definitions.xlsx')
+            models,issues=build(source,root/'output')
+            self.assertFalse(issues);self.assertEqual(len(models),1)
+            model=models[0];requirement=model['parameters'][0]
+            self.assertEqual((cms/'DRAWFRAMEFINISHER.json').read_bytes(),raw)
+            self.assertEqual(model['databaseModel'],original)
+            self.assertEqual(requirement['dataType'],'TIMESTAMP')
+            self.assertEqual(requirement['suggestedPlcType'],'REAL')
+            self.assertEqual(requirement['excelReferences'][0]['dataType'],'FLOAT')
+            self.assertEqual(requirement['excelReferences'][0]['row'],2)
+            metadata=self.metadata('Production in kg')+self.metadata('Valid value',dtype='INT')
+            result=validate_model(model,metadata)
+            self.assertEqual(result['rows'][0]['status'],'UNRESOLVED')
+            self.assertIn('REFERENCE_CONFLICT',result['rows'][0]['reasonCodes'])
+            self.assertEqual(result['rows'][1]['status'],'FAIL')
+            self.assertIn('TYPE_DIFFERS',result['rows'][1]['reasonCodes'])
+
+    def test_real_finisher_screenshot_reference_conflict(self):
+        catalog=Path(__file__).resolve().parents[1]/'knowledge/data_models/catalog.json'
+        models=json.loads(catalog.read_text(encoding='utf-8'))['models']
+        model=next(value for value in models if value['machine']=='DRAWFRAMEFINISHER' and value['service']=='CMS')
+        rows=validate_model(model,self.metadata('Production in kg'))['rows']
+        current=next(row for row in rows if row['name']=='Production in kg' and row['groupCodes']==[40])
+        self.assertEqual(current['status'],'UNRESOLVED')
+        self.assertEqual(current['dataType'],'TIMESTAMP')
+        self.assertEqual({row['dataType'] for row in current['excelReferences']},{'FLOAT'})
+        self.assertEqual({row['row'] for row in current['excelReferences']},{54,98,121})
+        previous=next(row for row in rows if row['name']=='Production in kg' and row['groupCodes']==[50])
+        self.assertEqual(previous['reasonCodes'],['GROUP_DIFFERS'])
 
 if __name__=='__main__':unittest.main()

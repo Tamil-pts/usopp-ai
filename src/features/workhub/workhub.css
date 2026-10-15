@@ -1,0 +1,81 @@
+.workHubPage { display:flex;flex-direction:column;gap:22px; }
+.workHubDashboard { --hub-ink:#073b43;--hub-mint:#72e6c3;display:flex;flex-direction:column;gap:30px; }
+.workHubHeading,.workHubSectionHeading { display:flex;justify-content:space-between;align-items:center;gap:16px; }
+.workHubEyebrow { display:block;color:var(--accent);font:600 .6875rem/1.5 'IBM Plex Mono',Consolas,monospace;letter-spacing:.13em;margin-bottom:7px; }
+.workHubHeading h1 { margin:0;font-size:1.875rem;line-height:1.2;letter-spacing:-.035em; }
+.workHubHelp { display:inline-flex;align-items:center;gap:8px;padding:9px 0 9px 12px;color:var(--muted);background:transparent;border:0;font-size:.8125rem; }
+.workHubHelp:hover { color:var(--accent); }
+.workHubHero { display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);position:relative;isolation:isolate;overflow:hidden;border:1px solid #215955;border-radius:18px;background:linear-gradient(112deg,#063b3c 0%,#0a4544 58%,#0b363b 100%);box-shadow:0 10px 32px #092e2812;color:#f3fbf8;min-height:340px; }
+.workHubHeroContent { position:relative;z-index:1;padding:clamp(26px,3.3vw,48px);padding-right:12px; }
+.workHubHeroEyebrow { display:flex;align-items:center;gap:9px;color:#abe6d4;font:600 .6875rem/1.5 'IBM Plex Mono',Consolas,monospace;letter-spacing:.15em; }
+.workHubHeroEyebrow>span { width:7px;height:7px;background:var(--hub-mint);border-radius:50%;box-shadow:0 0 0 5px #72e6c318; }
+.workHubHero h2 { margin:19px 0 16px;font-size:clamp(2.25rem,3.8vw,4.1rem);font-weight:600;line-height:1.05;letter-spacing:-.045em; }
+.workHubHero h2 em { font-style:normal;color:var(--hub-mint); }
+.workHubHeroContent>p { margin:0;max-width:49ch;font-size:.9375rem;line-height:1.7;color:#c4dbd5; }
+.workHubHeroActions { display:flex;gap:12px;flex-wrap:wrap;margin-top:25px; }
+.workHubHeroActions button { display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:43px;border-radius:7px;padding:10px 15px;font-size:.8125rem;font-weight:600;transition:background .15s,border-color .15s; }
+.workHubPrimary { border:1px solid #a1efda;background:#a1efda;color:#073b3c; }
+.workHubPrimary:hover { background:#c2f7e9;border-color:#c2f7e9; }
+.workHubSecondary { border:1px solid #588781;background:#ffffff06;color:#e1f3ed; }
+.workHubSecondary:hover { background:#ffffff10;border-color:#90c5bb; }
+.workHubIllustration { position:relative;align-self:center;width:100%;height:300px;min-width:0; }
+.workHubDiagramGrid { position:absolute;inset:-60px -20px;background-image:radial-gradient(#8bc5b626 .9px,transparent .9px);background-size:17px 17px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 72%); }
+.workHubConnectors { position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:#659b90;stroke-width:1.2;stroke-dasharray:4 4;opacity:.65; }
+.workHubDiagramNode { position:absolute;display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #83c0ad36;border-radius:9px;background:#194f4e;box-shadow:0 9px 22px #062a2b22; }
+.workHubDiagramNode>svg { color:#86dec2;flex:none; }
+.workHubDiagramNode>div { display:flex;flex-direction:column;gap:2px; }
+.workHubDiagramNode b { color:#e2f3eb;font-size:.75rem;font-weight:600; }
+.workHubDiagramNode span { color:#a7c6bd;font-size:.625rem; }
+.workHubDiagramSource { top:38px;left:6%; }
+.workHubDiagramMetadata { top:38px;right:7%; }
+.workHubDiagramPackets { bottom:35px;left:4%; }
+.workHubDiagramRules { bottom:35px;right:5%; }
+.workHubDiagramCore { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:106px;height:106px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;border:1px solid #85dec286;border-radius:28px;background:#164e47;box-shadow:0 0 0 11px #70c8ab08,0 0 0 23px #70c8ab05;color:#a2f0d6; }
+.workHubDiagramCore span { text-align:center;font-size:.625rem;line-height:1.35;color:#d5efe3; }
+.workHubTools { display:flex;flex-direction:column;gap:18px; }
+.workHubSectionHeading h2 { margin:0;font-size:1.25rem;line-height:1.35;font-weight:600;letter-spacing:-.025em; }
+.workHubSectionHeading>p { margin:0;color:var(--muted);font-size:.8125rem;text-align:right; }
+.workHubToolLayout { display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,.9fr);gap:18px; }
+.workHubTaskGrid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px; }
+.workHubTask { display:flex;flex-direction:column;min-width:0;text-align:left;border:1px solid var(--line);border-radius:12px;padding:22px;background:var(--panel);color:var(--text);box-shadow:0 3px 9px #123e3203;transition:transform .16s,border-color .16s,box-shadow .16s; }
+.workHubTask:hover { transform:translateY(-2px);border-color:var(--accent);box-shadow:0 7px 20px #123e3209; }
+.workHubTaskTop { display:flex;align-items:center;gap:10px;margin-bottom:20px;width:100%; }
+.workHubToolIcon { width:39px;height:39px;display:grid;place-items:center;flex:none;border-radius:10px;background:var(--accentbg);color:var(--accent); }
+.workHubToolName { font-size:.875rem;font-weight:600; }
+.workHubTaskArrow { margin-left:auto;color:var(--faint);transition:color .16s; }
+.workHubTask:hover .workHubTaskArrow { color:var(--accent); }
+.workHubTask h3 { margin:0 0 9px;font-size:1.0625rem;font-weight:600;letter-spacing:-.025em; }
+.workHubTask p { margin:0 0 23px;font-size:.8125rem;line-height:1.65;color:var(--muted); }
+.workHubTaskDetail { display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:12px;margin-top:auto;width:100%;color:var(--accent);font:500 .6875rem/1.5 'IBM Plex Mono',Consolas,monospace; }
+.workHubChopper { display:flex;flex-direction:column;min-width:0;border:1px solid var(--line2);border-radius:12px;padding:25px;background:linear-gradient(160deg,var(--accentbg),var(--panel) 75%);color:var(--text); }
+.workHubChopperIdentity { display:flex;align-items:center;gap:10px;flex-wrap:wrap; }
+.workHubChopperIdentity>span:first-child { width:43px;height:43px;display:grid;place-items:center;border:1px solid var(--line2);border-radius:13px;color:var(--accent);background:var(--panel); }
+.workHubChopperIdentity>div { display:flex;flex-direction:column; }
+.workHubChopperIdentity b { font-size:.9375rem; }
+.workHubChopperIdentity small { font-size:.6875rem;color:var(--muted); }
+.workHubChopperIdentity .workHubChopperMark { margin-left:auto;color:var(--accent);font:600 .5625rem 'IBM Plex Mono',Consolas,monospace;letter-spacing:.07em; }
+.workHubChopper h3 { margin:29px 0 15px;font-size:clamp(1.625rem,2.4vw,2.5rem);line-height:1.12;letter-spacing:-.04em;font-weight:600; }
+.workHubChopper>p { margin:0;color:var(--muted);font-size:.875rem;line-height:1.7;max-width:38ch; }
+.workHubChopper ul { display:flex;flex-direction:column;gap:14px;list-style:none;padding:0;margin:26px 0 30px; }
+.workHubChopper li { display:flex;align-items:center;gap:10px;font-size:.75rem;color:var(--muted); }
+.workHubChopper li svg { color:var(--accent);flex:none; }
+.workHubChopper>button { display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;margin-top:auto;min-height:43px;border:1px solid var(--accent);border-radius:7px;background:var(--accent);color:#fff;padding:10px 14px;font-size:.8125rem;font-weight:600; }
+.workHubChopper>button:hover { filter:brightness(1.08); }
+.workHubChopperHint { color:var(--faint);font-size:.6875rem;line-height:1.5;margin-top:10px; }
+.workHubClosing { display:flex;justify-content:space-between;align-items:center;gap:14px;padding:0 2px; }
+.workHubClosing>span { color:var(--accent);font:600 .625rem/1.5 'IBM Plex Mono',Consolas,monospace;letter-spacing:.12em; }
+.workHubClosing>p { color:var(--muted);font-size:.75rem;line-height:1.5;margin:0; }
+.workHubAdministration { display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 18px;border:1px solid var(--line);border-radius:10px;background:var(--panel); }
+.workHubAdministration>div { display:flex;flex-direction:column;gap:3px; }
+.workHubAdministration b { font-size:.8125rem;font-weight:600; }
+.workHubAdministration span { color:var(--muted);font-size:.75rem; }
+.workHubPage .adminHistory { margin-top:0; }
+.workHubDashboard button:focus-visible { outline:2px solid var(--accent);outline-offset:4px; }
+.workHubHero button:focus-visible { outline-color:#c2f7e9; }
+[data-theme=dark] .workHubTask { box-shadow:none; }
+[data-theme=dark] .workHubChopper>button { color:#082c24;background:#8edfc0;border-color:#8edfc0; }
+@media(min-width:1700px) { .workHubHero { min-height:375px; }.workHubIllustration { max-width:640px;justify-self:center; } }
+@media(max-width:1200px) { .workHubHero { grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); }.workHubDiagramNode { padding:10px;gap:7px; }.workHubDiagramNode span { display:none; }.workHubToolLayout { grid-template-columns:minmax(0,1.6fr) minmax(250px,1fr); }.workHubTask { padding:19px; }.workHubChopper { padding:22px; }.workHubChopperMark { display:none; } }
+@media(max-width:960px) { .workHubHero { grid-template-columns:minmax(0,1fr); }.workHubHeroContent { padding:30px; }.workHubHero h2 { font-size:3rem; }.workHubHero h2 br { display:none; }.workHubHero h2 em { margin-left:.15em; }.workHubHeroContent>p { max-width:64ch; }.workHubIllustration { display:none; }.workHubToolLayout { grid-template-columns:minmax(0,1fr); }.workHubChopper h3 br { display:none; }.workHubChopper h3 { margin-top:20px; }.workHubChopper>p { max-width:65ch; }.workHubChopper ul { margin:20px 0;flex-direction:row;flex-wrap:wrap;gap:12px 22px; }.workHubChopper>button { max-width:230px; }.workHubChopperIdentity .workHubChopperMark { display:inline; }.workHubSectionHeading { align-items:flex-start; }.workHubSectionHeading>p { max-width:26ch; } }
+@media(max-width:600px) { .workHubDashboard { gap:24px; }.workHubHeading { align-items:flex-start; }.workHubHeading h1 { font-size:1.625rem; }.workHubHelp { padding-left:0;gap:6px;font-size:.75rem; }.workHubHelp>svg:last-child { display:none; }.workHubEyebrow { font-size:.5625rem; }.workHubHero { border-radius:12px; }.workHubHeroContent { padding:25px 22px; }.workHubHero h2 { font-size:2.625rem; }.workHubHero h2 br { display:block; }.workHubHero h2 em { margin-left:0; }.workHubHeroContent>p { font-size:.875rem; }.workHubHeroActions { flex-direction:column;align-items:stretch; }.workHubHeroActions button { justify-content:space-between; }.workHubSecondary svg:first-child { display:none; }.workHubTaskGrid { grid-template-columns:minmax(0,1fr);gap:12px; }.workHubSectionHeading { display:block; }.workHubSectionHeading>p { text-align:left;max-width:none;margin-top:8px; }.workHubTaskTop { margin-bottom:14px; }.workHubTask { padding:20px; }.workHubTask p { margin-bottom:18px; }.workHubChopper { padding:22px; }.workHubChopper ul { flex-direction:column; }.workHubClosing { align-items:flex-start;flex-direction:column;gap:7px; }.workHubAdministration { align-items:flex-start;flex-direction:column; }.workHubPage { gap:18px; } }
+@media(prefers-reduced-motion:reduce) { .workHubTask,.workHubTaskArrow,.workHubHeroActions button { transition:none; }.workHubTask:hover { transform:none; } }

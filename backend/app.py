@@ -13,7 +13,7 @@ from backend.api import assist, comparison, knowledge, rules, system, validation
 from backend.core.run_history import current_user
 from backend.core import accounts
 from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models, user_settings, br_help, admin_settings, admin_knowledge
-from backend.api import assist_training
+from backend.api import assist_training, assist_flow
 from backend.core.mcp_tools import server as mcp_server, http_app as mcp_app
 from contextlib import asynccontextmanager
 
@@ -109,6 +109,7 @@ app.include_router(admin_settings.router)
 app.include_router(admin_knowledge.router)
 app.include_router(assist_training.router)
 app.include_router(assist_attachments.router)
+app.include_router(assist_flow.router)
 app.include_router(ladder.router)
 app.include_router(mcp_settings.router)
 app.mount('/api/mcp',mcp_app)

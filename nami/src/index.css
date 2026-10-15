@@ -187,3 +187,7 @@ html[data-theme='light'] :is([class^="border-slate-800"],[class*=" border-slate-
 html[data-theme='light'] input, html[data-theme='light'] select, html[data-theme='light'] textarea { color:#1e293b; }
 html[data-theme='light'] input::placeholder, html[data-theme='light'] textarea::placeholder { color:#64748b; }
 html[data-theme='light'] :is(button,a):focus-visible { outline:2px solid #059669; outline-offset:2px; }
+
+/* Keep table hover readable in both themes; it is not a validation status. */
+.di-parameter-row:hover { background-color:rgba(148,163,184,.08); }
+html[data-theme='light'] .di-parameter-row:hover { background-color:#f2f8f6; }

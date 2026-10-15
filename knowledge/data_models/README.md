@@ -44,13 +44,21 @@ The example illustrates the schema. Each generated file preserves its supplied d
 
 Excel clarifies names, types and groups and supplies original worksheet/row locations. It does not overwrite an available JSON definition. The supplied Carding attachment matches the archived QMS Carding JSON. Default references are fixed; the app does not combine every workbook/JSON version.
 
+The builder cross-checks the normalized datatype of matching Excel and JSON rows within the same service, department, parameter name and Group Code. Disagreement is retained as a **reference conflict**, including both source datatypes and worksheet locations. It requires reference review and does not count as a PLC datatype failure. The original database JSON and source workbooks remain unchanged.
+
 **Source discrepancy:** `QMS/JSON Keys V1/DRAWFRAMEBREAKER.json` declares `DRAWFRAMEFINISHER` and contains Finisher collections. It is archived but excluded from fixed Breaker requirements. QMS Breaker uses the correctly labeled `qms_DRAWFRAMEBREAKER` collections from `PMS/JSON Key V5/DRAWFRAMEBREAKER.json`. The warning is retained in the model and manifest.
 
 ## Checks and display
 
 Names ignore letter case and surrounding whitespace. Different words, punctuation or internal spacing still differ. A similar spelling may be attached to a metadata row to explain a failure; it is never accepted as a match. The parameter must exist in its specified Group Code and have the mapped PLC datatype: FLOAT → REAL, NCHAR/NVARCHAR/VARCHAR/CHAR → STRING, USINT → BYTE.
 
-The Data model column shows the reference name, matching services and result. Repeated collections are grouped only when they have the same outcome. Source details retain every collection/entry and Excel location. Parameters absent from the model are labeled **Not in data model**; expected parameters absent from metadata are listed above the table and in the complete requirements view. Wrong-group parameters stay visible with the expected/actual groups.
+The Data model column shows the reference name, matching services and result. Repeated collections are grouped only when they have the same outcome. Source details retain every collection/entry and Excel location. Expected parameters absent from metadata are listed above the table and in the complete requirements view. Wrong-group requirements remain separate with their expected and actual groups.
+
+An unmatched metadata name is labeled **No matching reference for this department**. Letter case is accepted; `Delivery Hanks` and `Hanks`, for example, remain different names until an explicit mapping is supplied. Missing requirements for another Group Code do not turn a valid current-group row into a failure.
+
+Database-only types such as `TIMESTAMP`, `INTEGER` and `SMALLINT UNSIGNED` do not define a PLC wire representation. These PLC requirements are **UNRESOLVED**, rather than incorrectly compared to a guessed wire type. A source may declare `plcDataType` explicitly when its wire representation is known. A conflicting Excel type can be suggested for review without silently replacing the JSON type.
+
+Current table and exported evaluations are recalculated from the loaded metadata. Saved validation outcomes cannot override newer metadata or reference rules. Archived runs retain their saved reference snapshots, labeled separately from the current department catalog. Historical results remain available as original saved evidence.
 
 Server IDs and timestamps are skipped, as are host fields (`isHost`). Formulas, `groupCode: "formula"` and `isAutoCalc` fields are shown as calculated. Missing required PLC parameters fail; unavailable optional parameters remain optional; incomplete definitions remain unresolved. The check compares loaded metadata and does not claim to evaluate formulas or verify live PLC values.
 

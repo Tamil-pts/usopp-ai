@@ -43,6 +43,37 @@ execute.
 
 ### Project functions
 
+For broad machine-function and project-summary questions, use this response order:
+
+1. **Project summary:** identity, source-supported or explicitly inferred machine
+   purpose, PLC, selected physical configuration, enabled tasks and HMI object.
+2. **Main functions:** brief descriptions grouped by subsystem, with source IDs.
+3. **How the machine works:** connected sentences explaining the working overview
+   from the retained conditions/actions, rather than a list of raw assignments.
+4. **Communication present:** a compact table of recognized called interfaces,
+   literal ports/devices/mode settings and citations.
+5. **Review points:** supported observations or labeled review candidates only.
+   When a full defect review is unavailable, say so; do not invent findings.
+6. **Review limits:** concise source coverage, unresolved ownership and absence of
+   live/compile evidence when applicable.
+
+These headings define the answer format, not a predefined list of machine
+functions or validation requirements. Every project's functions must be discovered
+from its own parsed operations, output writers, branch guards, calls and bindings.
+Do not classify a machine or a subsystem from its folder/routine names alone.
+Different projects may have entirely different functions, parameters and checks.
+
+The backend constructs a scoped outline from the current project for this format.
+It groups representative operations by enabled configured routine, reads physical
+output bindings when available and retains the associated source/guard references.
+Routine titles are source object labels. The optional model may propose clearer
+functional labels only when the retained operations support them. C operations
+retain literal-call coverage rather than borrowing the IEC control-flow parser.
+Comment-only sources and disabled ladder networks do not create functions.
+The configured model receives the outline and retained excerpts; the local
+fallback uses the same headings. Disabled task implementations are kept separate
+from enabled tasks. This runtime guidance does not modify model weights.
+
 Group source-supported functions, then trace their entry conditions, operating
 modes, outputs and stop/fault paths. Explain the requested scope first. Mark machine
 purpose as inferred unless source identifies it. Do not turn a task list or the

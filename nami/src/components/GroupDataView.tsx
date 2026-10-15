@@ -245,9 +245,8 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
 
         <div className="px-4 py-2 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
           {dataModelCheck ? <span role="status">
-            <strong className="text-white">Data model: {dataModelCheck.result.status}</strong>
-            {' · '}{dataModelCheck.model.service} · {dataModelCheck.model.source}
-            {' · '}{dataModelCheck.result.summary.PASS} passed · {dataModelCheck.result.summary.FAIL} failed · {dataModelCheck.result.summary.UNRESOLVED} unresolved requirements (all groups)
+            <strong className="text-white">Current metadata evaluation</strong>
+            {' · '}Last saved check: {dataModelCheck.model.service} · {new Date(dataModelCheck.validatedAt).toLocaleString()}
           </span> : <span>Data model checks run automatically against the loaded metadata.</span>}
           <button type="button" onClick={onOpenDataModels} className="text-emerald-400 underline">
             Review requirements / missing parameters
@@ -256,7 +255,7 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
         <div className="px-4 py-2 border-b border-slate-800 text-[11px] text-slate-400" role="status">
           {referenceData.loading ? 'Reading fixed data models...' :
             referenceData.error ? <span className="text-amber-400">{referenceData.error}</span> :
-            services.length ? 'Data models: ' + services.join(', ') + '. Names ignore letter case; group codes and datatypes are checked.' : 'No fixed data model is available for this department.'}
+            services.length ? (referenceData.snapshot ? 'Saved reference snapshot: ' : 'Current department references: ') + services.join(', ') + '. Names ignore letter case. Each result applies to its stated Group Code; requirements for other groups are listed separately. Reference conflicts require review and do not indicate a PLC failure.' : 'No fixed data model is available for this department.'}
         </div>
         {!!unavailable.length && <details className="px-4 py-3 border-b border-slate-800 text-xs">
           <summary className="cursor-pointer text-amber-400">Unavailable data model parameters in GC {groupCode} ({unavailable.length})</summary>
@@ -289,7 +288,7 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
                 const hasValue = parsed && parsed.rawValue !== null;
 
                 return (
-                  <tr key={item.tagCode} className="hover:bg-slate-800/40 transition-colors">
+                  <tr key={metadataRowKey(item)} className="di-parameter-row transition-colors">
                     <td className="py-2 px-3 font-mono text-slate-400">{item.tagCode}</td>
                     <td className="py-2 px-3">
                       <div className="font-medium text-white">{item.parameter}</div>

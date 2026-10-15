@@ -11,7 +11,9 @@ export interface DataModelParameter {
   kind: string; formula: string; source: string; sheet: string; row: number;
   required?: boolean; status?: DataModelStatus; detail?: string;
   reasonCodes?: string[]; actual?: MetadataItem[];
-  excelReferences?: {source: string; sheet: string; row: number}[];
+  excelReferences?: {source: string; sheet: string; row: number; name?: string; dataType?: string; plcType?: string; kind?: string}[];
+  referenceIssues?: {code: string; detail: string}[];
+  suggestedPlcType?: string;
 }
 export interface DataModel extends Omit<DataModelSummary, 'parameterCount' | 'warningCount'> {
   parameters: DataModelParameter[]; warnings: string[];
@@ -28,7 +30,7 @@ export interface DataModelReference extends DataModelParameter {
   modelId: string; service: string; machine: string; sourceRelativePath?: string;
   match: 'exact' | 'name-differs';
 }
-export interface DataModelReferenceData {models: DataModel[]; loading: boolean; error: string}
+export interface DataModelReferenceData {models: DataModel[]; loading: boolean; error: string; snapshot?: boolean}
 
 export const dataModelMachineKey = (value: string) => value.toLowerCase().replace(/[^a-z]/g, '')
   .replace(/^finisher$/, 'drawframefinisher').replace(/^breaker$/, 'drawframebreaker');
@@ -44,6 +46,8 @@ const priority: Record<DataModelStatus, number> = {
   FAIL: 6, UNRESOLVED: 5, OPTIONAL: 4, DERIVED: 3, SKIPPED: 2, PASS: 1,
 };
 const serviceOrder = ['PMS', 'QMS', 'CMS'];
+const plcTypes = new Set(['BOOL', 'SINT', 'USINT', 'BYTE', 'INT', 'UINT', 'WORD', 'DINT', 'UDINT', 'DWORD',
+  'LINT', 'ULINT', 'LWORD', 'REAL', 'LREAL', 'STRING', 'WSTRING', 'TIME', 'LTIME', 'DATE', 'TIME_OF_DAY', 'TOD', 'DATE_AND_TIME', 'DT']);
 const plcType = (value: string) => {
   const root = String(value || '').trim().toUpperCase().replace(/\s*[\[(].*$/, '');
   return ({FLOAT: 'REAL', NCHAR: 'STRING', NVARCHAR: 'STRING', VARCHAR: 'STRING', CHAR: 'STRING', USINT: 'BYTE'} as Record<string, string>)[root] || root;
@@ -76,6 +80,18 @@ export function evaluateDataModel(model: DataModel, items: MetadataItem[]): Data
     if (row.kind === 'formula') return {...row, actual: named, status: 'DERIVED' as const, detail: 'Calculated field; not required from the PLC.'};
     if (!row.name || !row.groupCodes.length || !row.plcType) return {...row, actual: named,
       status: 'UNRESOLVED' as const, detail: 'Reference is missing a name, datatype or group code.', reasonCodes: ['REFERENCE_INCOMPLETE']};
+    if (row.referenceIssues?.length || !plcTypes.has(row.plcType)) {
+      const reasonCodes: string[] = []; const details: string[] = [];
+      if (row.referenceIssues?.length) {
+        reasonCodes.push('REFERENCE_CONFLICT'); details.push(...row.referenceIssues.map(issue => issue.detail));
+      }
+      if (!plcTypes.has(row.plcType)) {
+        reasonCodes.push('REFERENCE_TYPE_UNSUPPORTED');
+        details.push(`Database datatype ${row.dataType} does not define a supported PLC datatype. Specify the PLC wire datatype before checking it.`);
+      }
+      return {...row, actual: named.filter(item => row.groupCodes.includes(item.groupCode)),
+        status: 'UNRESOLVED' as const, reasonCodes, detail: details.join(' ')};
+    }
     const failures: string[] = []; const reasons: string[] = [];
     const actual = new Map<string, MetadataItem>();
     const capture = (values: MetadataItem[]) => values.forEach(value => actual.set(metadataRowKey(value), value));
@@ -111,8 +127,11 @@ export function evaluateDataModel(model: DataModel, items: MetadataItem[]): Data
 
 export function checkedDataModels(items: MetadataItem[], models: DataModel[], check: DataModelCheck | null = null) {
   const selected = [...models].sort((a, b) => serviceOrder.indexOf(a.service) - serviceOrder.indexOf(b.service));
-  if (check && !selected.some(model => model.id === check.model.id)) selected.push(check.model);
-  return selected.map(model => ({model, result: check?.model.id === model.id ? check.result : evaluateDataModel(model, items)}));
+  const sameMachine = !models.length || models.some(model => dataModelMachineKey(model.machine) === dataModelMachineKey(check?.model.machine || ''));
+  if (check && sameMachine && !selected.some(model => model.id === check.model.id)) selected.push(check.model);
+  // Saved checks are historical evidence. The current table must always use
+  // the current metadata and current reference definitions.
+  return selected.map(model => ({model, result: evaluateDataModel(model, items)}));
 }
 function reference(row: DataModelParameter, model: DataModel): DataModelReference {
   return {...row, modelId: model.id, service: model.service, machine: model.machine,
@@ -125,11 +144,25 @@ export function buildDataModelRowReferences(items: MetadataItem[], models: DataM
   for (const checked of checkedDataModels(items, models, check)) for (const row of checked.result.rows) {
     if (!row.name || row.kind === 'server') continue;
     for (const item of row.actual || []) {
+      // A same-name parameter found in another GC is evidence for the
+      // unavailable requirement, not a failure on this metadata row. Keep the
+      // passing row attached to its own GC and list the missing GC separately.
+      if (row.status === 'UNRESOLVED' && !row.reasonCodes?.some(code => code === 'REFERENCE_CONFLICT' || code === 'REFERENCE_TYPE_UNSUPPORTED')) continue;
+      let displayRow = row;
+      if (row.reasonCodes?.includes('GROUP_DIFFERS')) {
+        if (!row.groupCodes.includes(item.groupCode)) continue;
+        const sameGroup = (row.actual || []).filter(actual => actual.groupCode === item.groupCode);
+        const duplicate = sameGroup.length > 1;
+        const wrongType = sameGroup.some(actual => plcType(actual.dataType) !== row.plcType);
+        const reasonCodes = [...(duplicate ? ['DUPLICATE_PARAMETER'] : []), ...(wrongType ? ['TYPE_DIFFERS'] : [])];
+        displayRow = {...row, status: reasonCodes.length ? row.required === false ? 'OPTIONAL' : 'FAIL' : 'PASS', reasonCodes,
+          detail: reasonCodes.length ? row.detail : `Name (ignoring case), datatype and GC ${item.groupCode} match. Other required groups are checked separately.`};
+      }
       const key = metadataRowKey(item);
       if (!keys.has(key)) continue;
       const values = result.get(key) || [];
       if (!values.some(existing => existing.modelId === checked.model.id && existing.sheet === row.sheet && existing.row === row.row))
-        result.set(key, [...values, reference(row, checked.model)]);
+        result.set(key, [...values, reference(displayRow, checked.model)]);
     }
   }
   return result;
@@ -154,10 +187,11 @@ export function dataModelResultLabel(row: DataModelParameter): string {
   if (row.status === 'PASS') return 'Pass';
   if (row.status === 'DERIVED') return 'Calculated field';
   if (row.status === 'SKIPPED') return 'Server generated';
-  if (row.status === 'UNRESOLVED') return 'Reference incomplete';
+  if (row.status === 'UNRESOLVED') return row.reasonCodes?.includes('REFERENCE_CONFLICT') ? 'Reference conflict - review required' :
+    row.reasonCodes?.includes('REFERENCE_TYPE_UNSUPPORTED') ? 'PLC datatype not defined' : 'Reference incomplete';
   const prefix = row.status === 'OPTIONAL' ? 'Optional' : 'Fail';
   if (row.reasonCodes?.includes('NAME_DIFFERS')) return prefix + ' - name differs';
-  if (row.reasonCodes?.includes('GROUP_DIFFERS')) return prefix + ' - group differs';
+  if (row.reasonCodes?.includes('GROUP_DIFFERS')) return prefix + ' - required group missing';
   if (row.reasonCodes?.includes('TYPE_DIFFERS')) return prefix + ' - datatype differs';
   if (row.reasonCodes?.includes('DUPLICATE_PARAMETER')) return prefix + ' - duplicate parameter';
   if (row.reasonCodes?.includes('MISSING_PARAMETER')) return prefix + ' - parameter missing';
@@ -168,7 +202,7 @@ export function dataModelResultLabel(row: DataModelParameter): string {
 export function groupDataModelReferences(references: DataModelReference[]) {
   const groups = new Map<string, DataModelReference[]>();
   for (const row of references) {
-    const key = JSON.stringify([nameKey(row.name), dataModelResultLabel(row)]);
+    const key = JSON.stringify([nameKey(row.name), dataModelResultLabel(row), row.plcType, row.groupCodes]);
     groups.set(key, [...(groups.get(key) || []), row]);
   }
   return [...groups.values()].map(rows => ({name: rows[0].name, label: dataModelResultLabel(rows[0]), status: rows[0].status,

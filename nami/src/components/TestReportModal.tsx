@@ -78,12 +78,14 @@ export const TestReportModal: React.FC<TestReportModalProps> = ({
       dataModelCheck,
       dataModelRequirements: checkedDataModels(metadata, dataModelReferences.models, dataModelCheck).map(({model, result}) => ({
         service: model.service, department: model.machine,
+        checkMode: 'Current metadata evaluation', referenceScope: dataModelReferences.snapshot ? 'Saved reference snapshot' : 'Current department references',
         source: model.sourceRelativePath || model.source, fixed: !!model.fixed, ...result,
       })),
       unavailableDataModelParameters: unavailableDataModelParameters(metadata, dataModelReferences.models, dataModelCheck),
       dataModelReferenceSource: {
         loading: dataModelReferences.loading,
         error: dataModelReferences.error,
+        snapshot: !!dataModelReferences.snapshot,
         models: dataModelReferences.models.map(model => ({id: model.id, source: model.sourceRelativePath || model.source, service: model.service, machine: model.machine, fixed: !!model.fixed})),
       },
       summary: {
@@ -101,7 +103,7 @@ export const TestReportModal: React.FC<TestReportModalProps> = ({
           ...item,
           dataModelReferences: references.get(metadataRowKey(item)) || [],
           dataModelCheck: modelRows.get(metadataRowKey(item)) || {
-            status: dataModelReferences.loading ? 'Loading references' : dataModelReferences.error ? 'References unavailable' : 'Not in data model', requirements: [],
+            status: dataModelReferences.loading ? 'Loading references' : dataModelReferences.error ? 'References unavailable' : 'No matching reference for this department', requirements: [],
           },
         })),
       })),

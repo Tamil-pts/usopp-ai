@@ -145,7 +145,8 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
     dataModelSnapshot.machine === currentMachineType &&
     dataModelSnapshot.check.model.id === dataModelSelection.modelId ? dataModelSnapshot.check : null;
   const liveReferenceData = useDataModelReferences(currentMachineType, dataModelSelection.modelId);
-  const referenceData = initialHistory?.dataModelReferenceSource || liveReferenceData;
+  const referenceData = initialHistory?.dataModelReferenceSource
+    ? {...initialHistory.dataModelReferenceSource, snapshot: true} : liveReferenceData;
   const persistDecoded = async (identity: {historyId?: string; testId?: string}, groups: Record<number, GroupResponseData>) => {
     setLatestTestId(identity.testId || '');
     try {await saveDecodedRun(identity, groups, dataModelCheck, referenceData); setHistoryWarning('');}

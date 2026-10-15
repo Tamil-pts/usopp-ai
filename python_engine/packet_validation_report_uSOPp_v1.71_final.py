@@ -521,7 +521,13 @@ def strip_comments(line: str) -> str:
 
 def extract_comment(line: str) -> Optional[str]:
     match = re.search(r"\(\*(.*?)\*\)", line)
-    return match.group(1).strip() if match else None
+    if not match:
+        return None
+    comment = match.group(1).strip()
+    # Some Automation Studio comments use ``(*// text *)``.  The slashes are
+    # decoration inside the block comment, not part of the PLC description.
+    comment = re.sub(r"^//\s*", "", comment).strip()
+    return comment or None
 
 
 def packet_code_lines(text: str) -> List[str]:
@@ -5301,7 +5307,32 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
         # Resolve names together so an alias cannot merge distinct PLC fields.
         # Validation still retains every conditional path, while metadata uses
         # the first path in source order.
-        primary_parameters = [p for p in grp.parameters if p.metadata_primary_path]
+        primary_parameters = []
+        seen_source_fields = set()
+        for param in grp.parameters:
+            if not param.metadata_primary_path:
+                continue
+            # A parser path can occasionally surface the same physical source
+            # field more than once. Collapse only exact repeats from the same
+            # source location and packet position; repeated PLC names at other
+            # offsets or source lines remain separate metadata fields.
+            source_identity = (
+                str(param.source_file or "").casefold().replace("\\", "/"),
+                param.line_number,
+                normalize_name(str(param.parameter or "")),
+                normalize_name(str(param.parameter_description or "")),
+                normalize_name(str(param.source_expression or "")),
+                normalize_name(str(param.destination_expression or "")),
+                param.offset_buffer,
+                param.memcpy_size,
+                normalize_type_name(str(param.data_type or "")),
+                str(param.transfer_method or "").casefold(),
+                normalize_name(str(param.condition_context or "")),
+            )
+            if source_identity in seen_source_fields:
+                continue
+            seen_source_fields.add(source_identity)
+            primary_parameters.append(param)
         candidates = []
         for param in primary_parameters:
             plc_parameter = plc_parameter_value(param)

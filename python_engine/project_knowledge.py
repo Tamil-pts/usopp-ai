@@ -10,9 +10,10 @@ import xml.etree.ElementTree as ET
 
 from python_engine.compare import project_identity, walk_project, _ladder_networks, decode_bytes
 from python_engine.project_paths import IGNORED_PROJECT_DIRS, project_files
-from python_engine.project_analysis import collect_file, normalize_question
+from python_engine.project_analysis import collect_file, normalize_question, machine_summary_question
+from python_engine.source_operations import collect_operations
 
-SCHEMA = 10
+SCHEMA = 12
 EXTENSIONS = {'.st', '.ld', '.ab', '.src', '.var', '.typ', '.fun', '.c', '.h', '.txt',
               '.pgp', '.page', '.pages', '.layer', '.dso', '.algrp', '.txtgrp',
               '.iom', '.sw', '.osl', '.hw', '.hwl', '.cfg', '.per', '.apj', '.gdm', '.set'}
@@ -32,6 +33,7 @@ EXECUTABLE = {'.st', '.ld', '.ab', '.src', '.c'}
 def machine_question(question):
     """Route functional questions separately from settings and symbol lookups."""
     text = normalize_question(question)
+    if machine_summary_question(text): return True
     if re.search(r'\b(?:HMI|settings?|configuration|parameters?|datapoints?|declar\w*|where)\b', text, re.I):
         return False
     return bool(re.search(r'machine.*(?:function|operat|work)|(?:function|operat).*machine|'
@@ -155,10 +157,13 @@ def build_index(root, cache_dir=None, progress=None):
             for node in tree.iter():
                 if node.tag.rsplit('}', 1)[-1].casefold() == 'task':
                     tasks.append({'name': node.get('Name', ''), 'source': node.get('Source', ''),
-                                  'file': path.relative_to(root).as_posix()})
+                                  'file': path.relative_to(root).as_posix(),
+                                  'enabled': node.get('Disabled', 'false').casefold() != 'true',
+                                  'language': node.get('Language', '')})
         except (ET.ParseError, OSError): pass
-    owners = {t['source'].removesuffix('.prg').replace('.', '/').casefold() for t in tasks if t['source']}
-    chunks, symbols, inventory, notices, modules, analysis_records, ladder_calls = [], [], [], [], [], [], []
+    owners = {t['source'].removesuffix('.prg').replace('.', '/').casefold() for t in tasks if t['source'] and t['enabled']}
+    disabled_owners = {t['source'].removesuffix('.prg').replace('.', '/').casefold() for t in tasks if t['source'] and not t['enabled']}
+    chunks, symbols, inventory, notices, modules, analysis_records, ladder_calls, operation_records = [], [], [], [], [], [], [], []
     budget = 0
     for number, path in enumerate(files, 1):
         if progress: progress('Reading project files and extracting logic', number, len(files))
@@ -173,7 +178,8 @@ def build_index(root, cache_dir=None, progress=None):
         if not text.strip(): continue
         kind = category(path)
         active = any('/' + owner + '/' in '/' + rel.casefold() for owner in owners)
-        ownership = 'active task' if active else 'configuration' if rel.startswith('Physical/') else 'shared / task ownership unconfirmed'
+        disabled = any('/' + owner + '/' in '/' + rel.casefold() for owner in disabled_owners)
+        ownership = 'active task' if active else 'disabled task' if disabled else 'configuration' if rel.startswith('Physical/') else 'shared / task ownership unconfirmed'
         inventory.append({'file': rel, 'category': kind, 'ownership': ownership,
                           'lines': len(text.splitlines())})
         analysis_records.extend(collect_file(rel, text, kind, ownership))
@@ -196,6 +202,7 @@ def build_index(root, cache_dir=None, progress=None):
         if kind == 'Declarations' or path.suffix.casefold() == '.txt':
             symbols.extend({**s, 'file': rel} for s in declarations(text))
         networks = _ladder_networks(text) if path.suffix.casefold() == '.ld' else []
+        operation_records.extend(collect_operations(rel, text, kind, ownership, networks))
         if networks:
             network_offsets = [m.start() for m in re.finditer(r'<network\s', text)]
             for network in networks:
@@ -224,7 +231,7 @@ def build_index(root, cache_dir=None, progress=None):
     if identity.get('scope_notice'): notices.append(identity['scope_notice'])
     result = {'schema': SCHEMA, 'fingerprint': fingerprint, 'identity': identity, 'tasks': tasks,
               'inventory': inventory, 'symbols': symbols, 'chunks': chunks, 'notices': notices, 'modules': modules,
-              'analysisRecords': analysis_records, 'ladderCalls': ladder_calls,
+              'analysisRecords': analysis_records, 'ladderCalls': ladder_calls, 'operationRecords': operation_records,
               'counts': dict(Counter(item['category'] for item in inventory)),
               'coverage': 'Static source analysis; shared sources are not proof of active runtime behaviour.'}
     if cache:
@@ -254,7 +261,7 @@ def retrieve(index, question, limit=14, characters=18000):
         if file_match:
             candidates=[c for c in candidates if Path(c['file']).name.casefold()==file_match.group(1).casefold()]
         if not re.search(r'commented|disabled|inactive',question,re.I):
-            candidates=[c for c in candidates if c.get('enabled',True)]
+            candidates=[c for c in candidates if c.get('enabled',True) and c['ownership'] != 'disabled task']
     if overview and not file_match:
         candidates=[c for c in candidates if c['category'] in {'Logic','Ladder'} and
                     Path(c['file']).suffix.casefold() in EXECUTABLE]

@@ -551,9 +551,9 @@ export function exportVerificationExcel(
       'Screen Name': item.screenName,
       'Parameter Name': item.parameter,
       'Data Model': modelReferences.length ? groupDataModelReferences(modelReferences).map(group => `${group.name}\n${group.services.join(', ')}\n${group.label}`).join('\n\n') :
-        referenceData?.loading ? 'Loading references' : referenceData?.error ? 'References unavailable' : referenceData ? item.parameter + ' / Not in data model' : 'Not loaded',
+        referenceData?.loading ? 'Loading references' : referenceData?.error ? 'References unavailable' : referenceData ? item.parameter + ' / No matching reference for this department' : 'Not loaded',
       'Data Model Sources': modelReferences.map(reference => `${reference.sourceRelativePath || reference.source} / ${reference.sheet}:${reference.row} / ${reference.plcType} / GC ${reference.groupCodes.join(', ')}`).join('\n'),
-      'Data Model Check': modelRow?.status || (referenceData?.loading ? 'Loading references' : referenceData?.error ? 'References unavailable' : referenceData || dataModelCheck ? 'Not in data model' : 'Not loaded'),
+      'Data Model Check': modelRow?.status || (referenceData?.loading ? 'Loading references' : referenceData?.error ? 'References unavailable' : referenceData || dataModelCheck ? 'No matching reference for this department' : 'Not loaded'),
       'Data Model Details': modelRow?.requirements.map(row => `${row.name}: ${row.detail || ''}`).join('\n') || '',
       'Data Model Reference': [...new Set(modelReferences.map(row => row.service + ': ' + (row.sourceRelativePath || row.source)))].join('\n'),
       'Test ID': testRuns[item.groupCode]?.testId || '',
@@ -586,10 +586,12 @@ export function exportVerificationExcel(
       'Service': model.service,
       'Department': model.machine,
       'Reference Model': model.sourceRelativePath || model.source,
-      'Check Mode': model.id === dataModelCheck?.model.id ? 'Saved' : 'Automatic',
-      'Validated At': model.id === dataModelCheck?.model.id ? dataModelCheck.validatedAt : '',
+      'Check Mode': 'Current metadata evaluation',
+      'Reference Scope': referenceData?.snapshot ? 'Saved reference snapshot' : 'Current department references',
+      'Last Saved At': model.id === dataModelCheck?.model.id ? dataModelCheck.validatedAt : '',
       'Parameter Name': row.name,
-      'Expected Data Type': row.plcType,
+      'Reference Data Type': row.dataType,
+      'Expected PLC Data Type': row.reasonCodes?.some(code => code === 'REFERENCE_CONFLICT' || code === 'REFERENCE_TYPE_UNSUPPORTED') ? 'Requires reference review' : row.plcType,
       'Expected Group Codes': row.groupCodes.join(', '),
       'Result': dataModelResultLabel(row),
       'Details': row.detail || '',
@@ -598,7 +600,7 @@ export function exportVerificationExcel(
       'Source': row.source,
       'Sheet': row.sheet,
       'Row': row.row,
-      'Excel References': row.excelReferences?.map(source => `${source.source} / ${source.sheet}:${source.row}`).join('\n') || '',
+      'Excel References': row.excelReferences?.map(source => `${source.source} / ${source.sheet}:${source.row}${source.dataType ? ' / ' + source.dataType : ''}`).join('\n') || '',
     })));
     XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(requirements), 'Data Model Requirements');
   }

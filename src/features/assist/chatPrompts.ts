@@ -1,5 +1,6 @@
 export const CHAT_PROMPTS=[
- {title:'Machine functions',prompt:'Explain the machine functions and operating sequence of the selected project. Cite source files and ladder networks; identify active tasks and inferred behaviour.'},
+ {title:'Function flow',prompt:'Show a step-by-step function flow for a PLC routine in the selected project.'},
+ {title:'Machine functions',prompt:'Give a clear machine summary of the selected project: machine purpose, main functions, how it works in connected sentences, communication used, supported review points and review limits. Cite sources, identify enabled tasks and label inferred behaviour.'},
  {title:'Communication',prompt:'What communication is used in this project? Trace the called blocks, task ownership, endpoints, settings and error handling with source evidence.'},
  {title:'RS485 logic',prompt:'Check the RS485 communication logic in this project. Separate physical interface from protocol; trace device/mode, block calls, status, timeout, retry and recovery. Say what is unresolved.'},
  {title:'Improvements',prompt:'Review this project for improvement candidates. Cite the observed source, explain the reason and proposed action, and distinguish possible issues from proven defects.'},

@@ -14,6 +14,8 @@ SPELLINGS = {
     'parametre': 'parameter', 'parametr': 'parameter', 'timout': 'timeout',
     'laddee': 'ladder', 'laddder': 'ladder', 'logci': 'logic',
     'fualt': 'fault', 'faut': 'fault', 'sysntex': 'syntax', 'syntx': 'syntax',
+    'fucntion': 'function', 'functon': 'function', 'summery': 'summary',
+    'esummary': 'summary',
 }
 
 
@@ -30,17 +32,36 @@ def normalize_question(question):
     return ''.join(parts) + ordinary(value[end:])
 
 
+def machine_summary_question(question):
+    """Broad machine questions use an overview; named routines keep their own route."""
+    text = normalize_question(question)
+    if re.search(r'\b[\w.-]+\.(?:st|ab|ld|src|c|var|typ|page)\b|\bnetwork\s+\d+\b', text, re.I):
+        return False
+    broad = re.search(r'\b(?:machine|project)\b.{0,40}\b(?:summary|overview|purpose|functions?|operating\s+sequence)\b|'
+                      r'\b(?:summary|overview|purpose|functions?)\s+(?:of|for)\s+(?:(?:the|this|that|selected|uploaded)\s+)?(?:machine|project)\b', text, re.I)
+    focused = re.search(r'\b(?:routine|subroutine|variable|parameter|syntax|ping|RS\d+|serial|TCP|UDP|modbus|HMS|motor|doffing|alarm|fault|energy|lubrication|HMI|communication)\b', text, re.I)
+    if focused and not broad: return False
+    if re.search(r'\b(?:available|present|implemented|exists?)\b', text, re.I) and not re.search(r'\b(?:summary|overview)\b', text, re.I):
+        return False
+    return bool(re.search(
+        r'(?:project|machine).*(?:summary|overview|purpose|functions?|operat\w*|working)|'
+        r'(?:summari[sz]e|summary|overview|purpose|functions?).*(?:project|machine)|'
+        r'(?:understand|explain|describe).*\bproject\b|'
+        r'what.*machine.*\b(?:do|does)\b|how.*machine.*\b(?:work|works|run|runs)\b', text, re.I))
+
+
 def question_intent(question):
     text = normalize_question(question)
     communication = bool(re.search(r'\b(?:communications?|protocols?|RS(?:232|422|485)|serial|modbus|TCP|UDP|ping|ethernet|CANopen|POWERLINK|profibus)\b|\b(?:Tcp(?:Open|Close|Server|Client|Send|Recv|Ioctl)|Udp(?:Open|Close|Send|Recv)|IcmpPing|FRM_\w+|MBMOpen|MBMaster|MBSlave)\w*', text, re.I))
     improvement = bool(re.search(r'\b(?:improv\w*|suggest\w*|optimi[sz]\w*|review|bugs?|risk\w*)\b', text, re.I))
-    machine = bool(re.search(r'machine.*(?:function|operat|work)|(?:function|operat).*(?:machine|project)|operating sequence|(?:understand|explain).*project|project.*(?:function|overview)', text, re.I))
+    summary = machine_summary_question(text)
+    machine = summary or bool(re.search(r'machine.*(?:function|operat|work)|(?:function|operat).*(?:machine|project)|operating sequence|(?:understand|explain).*project|project.*(?:function|overview)', text, re.I))
     syntax = bool(re.search(r'\b(?:syntax|compil(?:e|er|ation|ing))\b', text, re.I))
     diagnosis = bool(re.search(r'\b(?:why|caus\w*|reason\w*|diagnos\w*|troubleshoot\w*|not\s+work\w*|not\s+(?:connect\w*|happen\w*))\b', text, re.I))
     fault = diagnosis and bool(re.search(r'\b(?:fault\w*|alarm\w*|error\w*|status|Step\s*100|communication|connection|doff\w*|HMS|ping)\b|\b(?:Tcp|FRM_)\w+', text, re.I))
-    return {'kind': 'syntax review' if syntax else 'fault diagnosis' if fault else 'communication review' if communication and improvement else 'communication' if communication else 'improvement review' if improvement else 'machine functions' if machine else 'source lookup',
+    return {'kind': 'syntax review' if syntax else 'fault diagnosis' if fault else 'machine functions' if summary else 'communication review' if communication and improvement else 'communication' if communication else 'improvement review' if improvement else 'machine functions' if machine else 'source lookup',
             'communication': communication, 'improvement': improvement, 'machine': machine,
-            'fault': fault, 'syntax': syntax,
+            'fault': fault, 'syntax': syntax, 'machineSummary': summary and not syntax and not fault,
             'normalizedQuestion': text}
 
 
@@ -75,6 +96,12 @@ def collect_file(file, text, category, ownership):
                 if re.fullmatch(r'\s*(?:(?:extern|static|inline|const|unsigned|signed|long|short)\s+)*[A-Za-z_]\w*\s*\*?\s+', prefix): continue
             target = re.match(r'\s*&\s*([A-Za-z_]\w*)', code[match.end():match.end()+100]) if Path(file).suffix.casefold() == '.c' else None
             add('call', match, name=match.group(1), instance=target.group(1) if target else match.group(1))
+        if Path(file).suffix.casefold() in {'.st', '.ab', '.src'}:
+            # IEC function blocks can be invoked without parentheses. These
+            # candidates become communication proof only after type resolution.
+            for match in re.finditer(r'(?m)^\s*([A-Za-z_]\w*)\s*;\s*$', code):
+                if match.group(1).casefold() not in ignored | {'else', 'end_if', 'endif', 'end_case', 'end_program', 'return', 'exit'}:
+                    add('call', match, name=match.group(1), instance=match.group(1), bare=True)
         assignment = r'\b([A-Za-z_]\w*(?:\.[A-Za-z_]\w*|\[[^\]\n]+\])*)\s*(?::=|=(?!=))\s*([^;\n]+)'
         for match in list(re.finditer(assignment, clean))[:2000]:
             # Avoid C/AB comparisons and named arguments becoming assignments.
@@ -97,7 +124,8 @@ def block_family(name):
     if name.startswith(('mbtcp', 'mb_tcp')): return 'Modbus TCP'
     if re.match(r'mb(?:mopen|mclose|master|mcmd|sopen|sclose|slave)', name): return 'Modbus serial (RTU/ASCII mode needs tracing)'
     if re.match(r'frm_(?:x?open|close|read|write|rbuf|gbuf|ioctl)', name): return 'Serial frames / DVFrame'
-    if name.startswith(('canopen', 'arcan', 'can_', 'ascans')): return 'CAN API (protocol needs tracing)'
+    if name.startswith(('canopen', 'arcan', 'ascans')) or re.match(r'can_(?:open|close|read|write|send|recv|ioctl|init)\b', name):
+        return 'CAN API (protocol needs tracing)'
     return None
 
 
@@ -131,15 +159,18 @@ def analyze(index, question, fallback_evidence, characters=15000, limit=20):
     calls, settings = [], [r for r in records if r['kind'] == 'serial setting']
     for record in records:
         if record['kind'] != 'call': continue
+        if record['ownership'] == 'disabled task' and not re.search(r'\b(?:disabled|inactive)\b', str(question), re.I): continue
         resolved = _symbols(symbol_map, record)
         types = list(dict.fromkeys(re.match(r'\w+', s['declaration']).group() for s in resolved if re.match(r'\w+', s['declaration'])))
+        if record.get('bare') and not any(block_family(t) for t in types):
+            continue
         family = block_family(record['name']) or next((block_family(t) for t in types if block_family(t)), None)
         if family:
             calls.append({**record, 'blockTypes': types, 'family': family, 'declarations': resolved[:2]})
     # Ladder blocks have explicit types, so declarations are unnecessary for presence.
     for record in index.get('ladderCalls', []):
         family = block_family(record['blockType'])
-        if family and record.get('enabled', True): calls.append({**record, 'family': family, 'blockTypes': [record['blockType']], 'declarations': []})
+        if family and record.get('enabled', True) and record['ownership'] != 'disabled task': calls.append({**record, 'family': family, 'blockTypes': [record['blockType']], 'declarations': []})
     query = intent['normalizedQuestion']
     query_tokens = set(re.findall(r'[A-Za-z_]\w*', query.casefold()))
     file_focus = re.search(r'\b([\w.-]+\.(?:st|ab|c|ld))\b', query, re.I)

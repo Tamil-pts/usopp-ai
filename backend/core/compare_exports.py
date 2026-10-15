@@ -130,21 +130,25 @@ def _control_blocks(parsed: dict, category: str) -> list[dict]:
     developed_page = parsed.get("new_page_properties") or {}
     page_keys = sorted(set(base_page) | set(developed_page), key=str.casefold)
     if page_keys:
+        page_rows = [
+            _row(key, base_page.get(key), developed_page.get(key), group=_property_group(key))
+            for key in page_keys
+        ]
         blocks.append(
             {
                 "title": "Page properties",
                 "subtitle": str(parsed.get("object_name") or parsed.get("entity_label") or "HMI object"),
-                "status": "modified",
-                "rows": [
-                    _row(key, base_page.get(key), developed_page.get(key), group=_property_group(key))
-                    for key in page_keys
-                ],
+                "status": "modified" if any(row.get("state") != "unchanged" for row in page_rows) else "unchanged",
+                "rows": page_rows,
             }
         )
 
     # Text snippets are separate from indexed values in the UI, but must also
     # retain their complete binding/configuration evidence in every report.
     controls = list(parsed.get("controls") or [])
+    # Page properties are already emitted once above; parsed HMI data also
+    # carries a synthetic Screen properties record for the interactive view.
+    controls = [control for control in controls if str(control.get("name") or "").casefold() != "screen properties"]
     for snippet in (parsed.get("text_group") or {}).get("snippets") or []:
         controls.append({**snippet, "name": "Text snippet: " + str(snippet.get("name") or "Unnamed")})
     for control in controls:

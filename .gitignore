@@ -7,9 +7,18 @@ dist/
 *.tsbuildinfo
 __pycache__/
 *.pyc
+*.pyo
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.cache/
+.coverage
+.coverage.*
+coverage/
+htmlcov/
+.ipynb_checkpoints/
+.runtime/
+node_modules_setup_backup*/
 
 
 .usopp_server/
@@ -31,8 +40,9 @@ artifacts/
 .usopp_assist_model.json
 
 knowledge/br_help/
-
+knowledge/projects/
 local_ai/training/
+chopper_reviewed_project_training.jsonl
 local_ai/models/
 rules/learning/
 rules/feedback/
@@ -47,6 +57,8 @@ rules/archive/
 *.pfx
 *.p12
 *.sqlite
+*.sqlite-shm
+*.sqlite-wal
 *.sqlite3
 *.sqlite3-shm
 *.sqlite3-wal

@@ -13,13 +13,14 @@ from pathlib import Path
 
 APP_ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(APP_ROOT))
-from backend.core.data_models import SERVICES,clean,header,machine_key,name_key,parse_model
+from backend.core.data_models import SERVICES,PLC_TYPES,clean,header,machine_key,name_key,parse_model
 
 
 def write_json(path,data):
     path.parent.mkdir(parents=True,exist_ok=True)
     temporary=path.with_suffix(path.suffix+'.tmp')
-    temporary.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    with temporary.open('w',encoding='utf-8',newline='\n') as stream:
+        stream.write(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
     temporary.replace(path)
 
 
@@ -106,9 +107,22 @@ def build(source,output):
         for workbook,filename in workbooks.get((service,department_key),[]):
             for row in workbook['parameters']:
                 key=(name_key(row['name']),tuple(row['groupCodes']))
-                locations.setdefault(key,[]).append({'source':filename,'sheet':row['sheet'],'row':row['row']})
+                locations.setdefault(key,[]).append({'source':filename,'sheet':row['sheet'],'row':row['row'],
+                    'name':row['name'],'dataType':row['dataType'],'plcType':row['plcType'],'kind':row['kind']})
         for row in model['parameters']:
-            row['excelReferences']=locations.get((name_key(row['name']),tuple(row['groupCodes'])),[])
+            references=locations.get((name_key(row['name']),tuple(row['groupCodes'])),[])
+            row['excelReferences']=[{key:value[key] for key in ('source','sheet','row','dataType')} for value in references]
+            if row['kind']!='plc':continue
+            conflicts=[value for value in references if value['kind']=='plc' and value['plcType'] and value['plcType']!=row['plcType']]
+            if conflicts:
+                expected=', '.join(sorted({value['dataType'] for value in conflicts}))
+                row['referenceIssues']=[{'code':'REFERENCE_TYPE_CONFLICT',
+                    'detail':f'Reference sources disagree: JSON declares {row["dataType"]}; the matching Excel reference declares {expected} for the same name and Group Code. Confirm the PLC wire datatype; this is not a PLC failure.'}]
+                types={value['plcType'] for value in references if value['kind']=='plc' and value['plcType'] in PLC_TYPES}
+                if len(types)==1:row['suggestedPlcType']=next(iter(types))
+                model['warnings'].append(f'{row["sheet"]}:{row["row"]}: '+row['referenceIssues'][0]['detail'])
+            elif row['plcType'] not in PLC_TYPES:
+                model['warnings'].append(f'{row["sheet"]}:{row["row"]}: Database datatype {row["dataType"]} has no declared PLC wire datatype; requirement needs review.')
         catalog.append(model)
     old=output/'catalog.json';legacy=output/'legacy_catalog.json'
     if old.is_file() and not legacy.exists():

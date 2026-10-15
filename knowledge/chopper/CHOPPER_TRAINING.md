@@ -26,6 +26,13 @@ Supported analysis paths:
 
 The repeatable method is in [PROJECT_ANALYSIS_METHOD.md](PROJECT_ANALYSIS_METHOD.md).
 
+Broad machine-function and project-summary answers now use **Project summary,
+Main functions, How the machine works, Communication present, Review points,
+Review limits**. The backend prepares a source-scoped outline for the configured
+model and formats the local fallback with the same sections. This teaches the
+answering method through runtime guidance; it does not install new trained weights
+or copy one project's machine facts into another project's answers.
+
 Matching a block family is a bounded static heuristic. Custom wrappers, indirect
 calls, macros, dynamically constructed mode strings and missing libraries may
 need additional source review. This does not simulate a PLC, prove wiring, or
@@ -213,3 +220,18 @@ Primary references:
 
 Live-state questions need the numeric state/status and the relevant source.
 Names and task presence alone do not establish the cause of a runtime error.
+
+
+## Project-specific machine summaries
+
+Machine-function response headings are a presentation format. They are not a
+fixed machine checklist, validation policy or set of expected parameters. Runtime
+summaries now discover the selected project's parsed operations and actual calls,
+preserve enabled-task/configuration scope and retain source references. Names
+alone do not establish a function or physical machine type. An unrelated heating
+project must not inherit drawframe/sliver/doffing explanations.
+
+The optional local model receives the retained source outline and excerpts. The
+local fallback reports representative operations with exact variable names; it
+states when the source does not establish a complete machine sequence. This
+change updates source analysis and answer guidance, not model weights.

@@ -1,0 +1,184 @@
+"""Local integration check: isolated accounts/settings, no controller traffic."""
+from pathlib import Path
+import json
+import os
+import re
+import socket
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+ARTIFACTS = ROOT / '.build' / 'workspace-review-20261015'
+USERNAME = 'workspace_check'
+PASSWORD = 'LocalCheck.2026'
+
+
+def serve(port):
+    sys.path.insert(0, str(ROOT))
+    os.environ.pop('USOPP_DATA_ROOT', None)
+    os.environ.pop('USOPP_LLM_BASE_URL', None)
+    os.environ['USOPP_LLM_PROVIDER'] = 'local'
+    # Import resource paths first without copying the multi-GB reference tree.
+    # Mutable stores and workspaces are redirected before application imports.
+    from backend.core import runtime
+    runtime.BASE = ARTIFACTS / 'isolated-data'
+    runtime.WORK = runtime.BASE / '.usopp_workspaces'
+    runtime.EXPORTS = runtime.BASE / '.usopp_exports'
+    for directory in (runtime.BASE, runtime.WORK, runtime.EXPORTS):
+        directory.mkdir(parents=True, exist_ok=True)
+    from backend.core import accounts
+    import sqlite3
+    try:
+        accounts.store.register(USERNAME, PASSWORD, 'Test engineer', 'Local integration check')
+    except sqlite3.IntegrityError:
+        pass
+    from backend.app import app
+    import uvicorn
+    uvicorn.run(app, host='127.0.0.1', port=port, access_log=False)
+
+
+def run():
+    from urllib.request import urlopen
+    from playwright.sync_api import sync_playwright, expect
+    ARTIFACTS.mkdir(parents=True, exist_ok=True)
+    with socket.socket() as probe:
+        probe.bind(('127.0.0.1', 0))
+        port = probe.getsockname()[1]
+    url = f'http://127.0.0.1:{port}'
+    with (ARTIFACTS / 'server.log').open('w', encoding='utf-8') as log:
+        process = subprocess.Popen([sys.executable, __file__, '--serve', str(port)], cwd=ROOT,
+                                   stdout=log, stderr=subprocess.STDOUT,
+                                   creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
+        try:
+            deadline = time.monotonic() + 45
+            while True:
+                if process.poll() is not None:
+                    raise AssertionError('Isolated server exited; see server.log')
+                try:
+                    urlopen(url + '/api/health', timeout=1)
+                    break
+                except OSError:
+                    if time.monotonic() > deadline:
+                        raise
+                    time.sleep(.2)
+            with sync_playwright() as engine:
+                browser = engine.chromium.launch(channel='msedge', headless=True)
+                page = browser.new_page(viewport={'width': 1536, 'height': 1100})
+                errors = []
+                page.on('pageerror', lambda error: errors.append(str(error)))
+                page.route('**/api/nami/plc/**', lambda route: route.fulfill(
+                    status=403, json={'detail': 'Controller requests disabled during local UI checks.'}))
+                page.goto(url)
+                page.get_by_label('Username', exact=True).fill(USERNAME)
+                page.get_by_label('Password', exact=True).fill(PASSWORD)
+                page.get_by_role('button', name='Sign in', exact=True).click()
+                navigation = page.get_by_role('navigation', name='Main navigation')
+                expect(navigation).to_be_visible(timeout=20000)
+                dashboard = page.locator('.workHubDashboard')
+                expect(dashboard).to_be_visible()
+                expect(page.locator('.homeProject')).to_have_count(0)
+                expect(page.locator('.kpis')).to_have_count(0)
+                expect(dashboard.locator('.workHubTask')).to_have_count(4)
+                page.screenshot(path=str(ARTIFACTS / 'workhub-light.png'))
+                page.get_by_role('button', name='Dark mode', exact=True).click()
+                expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
+                page.screenshot(path=str(ARTIFACTS / 'workhub-dark.png'))
+                page.get_by_role('button', name='Light mode', exact=True).click()
+                page.set_viewport_size({'width': 430, 'height': 930})
+                expect(dashboard.locator('.workHubTask')).to_have_count(4)
+                assert dashboard.evaluate('(el)=>el.scrollWidth<=el.clientWidth+2'), 'Dashboard horizontal overflow'
+                dashboard.get_by_role('button', name='Open Chopper', exact=True).scroll_into_view_if_needed()
+                expect(dashboard.get_by_role('button', name='Open Chopper', exact=True)).to_be_visible()
+                expect(dashboard.get_by_role('heading', name='Understand how it works.', exact=True)).to_be_visible()
+                page.screenshot(path=str(ARTIFACTS / 'workhub-narrow-bottom.png'))
+                dashboard.get_by_role('heading', name='WorkHub', exact=True).scroll_into_view_if_needed()
+                page.screenshot(path=str(ARTIFACTS / 'workhub-narrow.png'))
+                page.set_viewport_size({'width': 1536, 'height': 1100})
+                for name in ('ByteMap', 'DataInspect', 'MatchView', 'LogicScan'):
+                    dashboard.locator('.workHubTask').filter(has_text=name).click()
+                    expect(navigation.get_by_role('button', name=name, exact=True)).to_have_class('active')
+                    expect(dashboard).not_to_be_visible()
+                    navigation.get_by_role('button', name='WorkHub', exact=True).click()
+                    expect(dashboard).to_be_visible()
+
+                # Seed metadata in this test user's isolated server-owned storage.
+                account = page.request.get(url + '/api/auth/session').json()['user']
+                names = ['doffs', 'Production in kg', 'Powerfail_Time_Minute', 'Delivery Hanks', 'Feed Roller Stoppage']
+                metadata = [{'sNo': i + 1, 'screenName': 'Current Shift Report', 'machineVariants': '',
+                             'parameter': name, 'units': '', 'min': None, 'max': None, 'tagCode': 55 + i,
+                             'groupCode': 40, 'offset': i * 4, 'fromVersion': '', 'toVersion': '',
+                             'dataType': 'REAL', 'arraySize': None, 'offsetFactor': 1, 'scaleFactor': 1,
+                             'isVisible': True, 'isWritable': False} for i, name in enumerate(names)]
+                plc = {'id': 'review-finisher', 'name': 'Local Finisher fixture', 'machineType': 'Finisher',
+                       'ip': '127.0.0.1', 'port': 21010, 'machineId': 0, 'isSimulated': True,
+                       'endianness': 'little', 'timeoutMs': 2500, 'status': 'idle'}
+                values = {'plc_configs': [plc], 'spinning_metadata_Finisher': metadata,
+                          'spinning_metadata_source_Finisher': 'Local source-review fixture'}
+                storage = page.request.get(url + '/api/account/storage').json()['entries']
+                response = page.request.post(url + '/api/account/storage', data={
+                    'accountId': account['id'], 'changes': [{'key': key, 'value': json.dumps(value) if not isinstance(value, str) else value,
+                    'revision': storage.get(key, {}).get('revision', 0)} for key, value in values.items()]})
+                assert response.ok, response.text()
+                dashboard.get_by_role('button', name=re.compile('DataInspect')).click()
+                frame = page.frame_locator('iframe[title="Nami PLC Data Verification V1.5"]')
+                production = frame.locator('tbody tr').filter(has=frame.get_by_text('Production in kg', exact=True)).last
+                expect(production).to_be_visible(timeout=30000)
+                expect(production).to_contain_text('Reference conflict')
+                expect(production).not_to_contain_text('Fail - datatype differs')
+                production.get_by_text('Source details', exact=True).click()
+                expect(production).to_contain_text('TIMESTAMP')
+                expect(production).to_contain_text('FLOAT')
+                doffs = frame.locator('tbody tr').filter(has=frame.get_by_text('doffs', exact=True)).last
+                expect(doffs).to_contain_text('Pass')
+                unmatched = frame.locator('tbody tr').filter(has=frame.get_by_text('Delivery Hanks', exact=True)).last
+                expect(unmatched).to_contain_text('No matching reference for this department')
+                production.hover()
+                page.screenshot(path=str(ARTIFACTS / 'datainspect-reference-review.png'))
+
+                # Real source analysis uses local tools in this isolated backend.
+                response = page.request.post(url + '/api/assist', timeout=120000, data={
+                    'question': 'Explain the machine functions of this project.',
+                    'context': {'projectPath': str(ROOT.parent / 'project 2'), 'projectName': 'project 2'}})
+                assert response.ok, response.text()[:1000]
+                answer = response.json()
+                assert '### Main functions' in answer['answer']
+                assert '21010' in answer['answer'] and '21011' in answer['answer']
+                assert 'Draft and sliver settings' not in answer['answer']
+                assert answer['machineSummary']['enabledTasks'] == 70
+                (ARTIFACTS / 'chopper-api-summary.md').write_text(answer['answer'], encoding='utf-8')
+                # Exercise the chat renderer with this real API result delivered through its job protocol.
+                page.route('**/api/assist/start', lambda route: route.fulfill(json={'jobId': 'local-browser-summary'}))
+                page.route('**/api/assist/status/local-browser-summary', lambda route: route.fulfill(json={
+                    'status': 'complete', 'stage': 'Answer ready', 'result': answer, 'elapsedSeconds': 0}))
+                navigation.get_by_role('button', name='AI Assistant', exact=True).click()
+                composer = page.locator('.chopperComposer textarea')
+                composer.fill('Explain the machine functions of project 2.')
+                page.locator('.chopperComposer').get_by_role('button', name='Send', exact=True).click()
+                expect(page.locator('.chopperReply').get_by_role('heading', name='Main functions', exact=True)).to_be_visible(timeout=20000)
+                page.get_by_role('button', name=re.compile(r'^Show source S\d+$')).first.click()
+                expect(page.locator('.assistEvidenceList details[open]')).to_have_count(1)
+                page.screenshot(path=str(ARTIFACTS / 'chopper-project-specific.png'))
+                assert not errors, errors
+                (ARTIFACTS / 'verification.json').write_text(json.dumps({
+                    'workhub': 'light/dark/narrow, four working tool cards, no project/KPI cards',
+                    'dataInspect': 'actual Finisher reference conflict, case-insensitive pass and unmatched-name wording',
+                    'chopper': 'actual project 2 API + formatted chat rendering + source citation expansion',
+                    'pageErrors': errors, 'controllerTraffic': 'blocked', 'modelGeneration': 'local tools only',
+                    'isolatedData': str(ARTIFACTS / 'isolated-data')}, indent=2), encoding='utf-8')
+                browser.close()
+        finally:
+            process.terminate()
+            try:
+                process.wait(timeout=15)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait(timeout=5)
+    print('Workspace integration checks passed. Screenshots and verification.json:', ARTIFACTS)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1 and sys.argv[1] == '--serve':
+        serve(int(sys.argv[2]))
+    else:
+        run()

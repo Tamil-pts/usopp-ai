@@ -221,6 +221,58 @@ def local_compare_ladder(sid:str,path:str):
     return JSONResponse(_ladder_detail(result,work,path))
 
 
+def _function_flow_detail(result:dict, work:Path, path:str):
+    """Explain the saved comparison source; never open or change a live project."""
+    from python_engine.function_flow import SUPPORTED_EXTENSIONS, build_function_flow
+    entries=[entry for key in ('diffs','same_logic_files','same_project_files') for entry in result.get(key,[])]
+    entry=next((entry for entry in entries if entry.get('path')==path and entry.get('category')=='logic'),None)
+    if entry is None or Path(path).suffix.casefold() not in SUPPORTED_EXTENSIONS:
+        raise HTTPException(404,'Select a supported PLC implementation file from this comparison.')
+    detail_id=entry.get('project_detail_id','')
+    if re.fullmatch(r'[a-f0-9]{64}',detail_id):
+        saved=work/'hmi_details'/f'{detail_id}.json'
+        if saved.is_file(): entry={**entry,**json.loads(saved.read_text(encoding='utf-8'))}
+    flows={}
+    for side,key in (('base','base'),('developed','new')):
+        source=entry.get(f'{key}_source')
+        source_path=entry.get(f'{key}_relative_path') or path
+        if source is None or not entry.get(f'{key}_file_name'):
+            flows[side]=None
+            continue
+        if len(source)>5*1024*1024:
+            raise HTTPException(413,'Function flow supports source files up to 5 MB.')
+        if '\x00' in source:
+            raise HTTPException(409,'This saved source still contains legacy binary records. Run comparison again with the updated application.')
+        if Path(source_path).suffix.casefold() not in SUPPORTED_EXTENSIONS:
+            flows[side]=None
+            continue
+        flow=build_function_flow(source,source_path)
+        flow['lineBasis']='Saved decoded source view' if Path(source_path).suffix.casefold()=='.src' or source_path.casefold().startswith('pgm/') else 'Saved source file'
+        flows[side]=flow
+    if not any(flow is not None for flow in flows.values()):
+        raise HTTPException(404,'Source was not saved for this file. Run comparison again to generate its function flow.')
+    return flows
+
+
+@router.get('/api/local/compare/flow/{sid}')
+def local_compare_function_flow(sid:str,path:str):
+    result,work=_comparison_result_for_export(sid)
+    return JSONResponse(_function_flow_detail(result,work,path))
+
+
+@router.get('/api/local/compare/flow/{sid}/export')
+def export_compare_function_flow(sid:str,path:str,side:str='developed'):
+    if side not in {'base','developed'}:
+        raise HTTPException(400,'Choose Base or Developed for the flow export.')
+    from python_engine.function_flow import flow_html
+    result,work=_comparison_result_for_export(sid)
+    flow=_function_flow_detail(result,work,path).get(side)
+    if flow is None:
+        raise HTTPException(404,'This file is absent from the selected project.')
+    filename=re.sub(r'[^A-Za-z0-9_.-]','_',Path(flow['sourceFile']).stem)+'_'+side+'_Function_Flow.html'
+    return PlainTextResponse(flow_html(flow),media_type='text/html',headers={'Content-Disposition':f'attachment; filename="{filename}"'})
+
+
 def _hydrate_screen_details(result:dict,work:Path,include_same:bool=False):
     # Export gets its own copy, never inflate the object used by status polling.
     result={**result,'diffs':[dict(entry) for entry in result.get('diffs',[])]}

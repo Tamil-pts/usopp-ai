@@ -7,6 +7,11 @@ import re
 
 SERVER_NAMES={'shed id','unit id','asset id','business id','tenant id','adjusted time stamp','time stamp actual'}
 SERVICES={'PMS':'Production monitoring service','QMS':'Quality monitoring service','CMS':'Condition monitoring service'}
+# SQL/storage types such as TIMESTAMP and INTEGER do not identify the PLC wire
+# representation. Keep them unresolved unless a PLC datatype is supplied.
+PLC_TYPES={'BOOL','SINT','USINT','BYTE','INT','UINT','WORD','DINT','UDINT','DWORD',
+           'LINT','ULINT','LWORD','REAL','LREAL','STRING','WSTRING','TIME','LTIME',
+           'DATE','TIME_OF_DAY','TOD','DATE_AND_TIME','DT'}
 
 
 def machine_key(value):
@@ -86,6 +91,10 @@ def parse_model(content,filename,service='',machine=''):
             for record in data['parameters']:
                 row=entry(record.get('name'),record.get('dataType'),','.join(map(str,record.get('groupCodes') or [])),record.get('formula'),filename,record.get('sheet','Parameters'),record.get('row',0),record.get('required',True))
                 if record.get('kind') in {'server','formula'}:row['kind']=record['kind']
+                for key in ('excelReferences','referenceIssues','suggestedPlcType'):
+                    if key in record:row[key]=record[key]
+                if record.get('plcDataType'):
+                    row['plcDataType']=clean(record['plcDataType']);row['plcType']=plc_type(record['plcDataType'])
                 records.append(row)
             service=service or data.get('service','');machine=machine or data.get('machine','')
         elif isinstance(data,dict) and isinstance(data.get('keysList'),dict):
@@ -100,6 +109,8 @@ def parse_model(content,filename,service='',machine=''):
                 for number,record in enumerate(items,start=1):
                     if not isinstance(record,dict):continue
                     row=entry(record.get('tagName'),record.get('dataType'),record.get('groupCode'),record.get('formula'),filename,sheet,number,record.get('isRequired',True))
+                    if record.get('plcDataType'):
+                        row['plcDataType']=clean(record['plcDataType']);row['plcType']=plc_type(record['plcDataType'])
                     if record.get('isHost') is True:row['kind']='server'
                     elif record.get('isAutoCalc') is True or clean(record.get('groupCode')).casefold()=='formula':row['kind']='formula'
                     records.append(row)
@@ -145,6 +156,16 @@ def validate_model(model,metadata):
         elif requirement['kind']=='formula':result.update(status='DERIVED',actual=by_name.get(name_key(requirement['name']),[]),detail='Calculated field; formula is shown for review, not evaluated against PLC values.')
         elif not requirement['name'] or not requirement['groupCodes'] or not requirement['plcType']:
             result.update(status='UNRESOLVED',actual=by_name.get(name_key(requirement['name']),[]),reasonCodes=['REFERENCE_INCOMPLETE'],detail='Development-team model is missing a name, datatype or group code. No requirement was inferred.')
+        elif requirement.get('referenceIssues') or requirement['plcType'] not in PLC_TYPES:
+            actual=[item for group in requirement['groupCodes'] for item in indexed.get((name_key(requirement['name']),group),[])]
+            reasons=[];details=[]
+            if requirement.get('referenceIssues'):
+                reasons.append('REFERENCE_CONFLICT')
+                details.extend(issue['detail'] for issue in requirement['referenceIssues'])
+            if requirement['plcType'] not in PLC_TYPES:
+                reasons.append('REFERENCE_TYPE_UNSUPPORTED')
+                details.append(f'Database datatype {requirement["dataType"]} does not define a supported PLC datatype. Specify the PLC wire datatype before checking it.')
+            result.update(status='UNRESOLVED',actual=actual,reasonCodes=reasons,detail=' '.join(details))
         else:
             failures=[];reasons=[]
             for group in requirement['groupCodes']:

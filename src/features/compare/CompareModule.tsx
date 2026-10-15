@@ -7,6 +7,7 @@ import {downloadCSV} from '../../shared/download';
 import {LocalFolderTree} from '../../shared/LocalFileBrowser';
 import {ResizeHandle} from './ResizeHandle';
 import {CompareView} from './CompareView';
+import {FunctionFlow} from './FunctionFlow';
 import {HmiScreenPreview} from './HmiScreenPreview';
 import {HmiPropertyComparison} from './HmiPropertyComparison';
 import {TextGroupComparison} from './TextGroupComparison';
@@ -182,7 +183,7 @@ function ParsedScreenView({data,baseLabel,newLabel,skipLayout=false}:{data:any;b
   return <div className="hmiInspector hmiSplitInspector">
     <div className="hmiInspectorTabs"><strong>{data.object_name||'HMI object'}</strong><span>{data.entity_label||'Structured HMI records'}</span><button className={!showAll?'active':''} onClick={()=>setShowAll(false)}>Changed only</button><button className={showAll?'active':''} onClick={()=>setShowAll(true)}>Show all</button></div>
     {(data.datasource_availability||[]).filter((item:any)=>item.status!=='available' && (!selected || item.name===selected.name)).map((item:any)=><div className="hmiMappingNotice" key={`${item.side}-${item.name}`}>{item.side==='base'?'Base':'Developed'} ? {item.name}: {item.status==='missing'?`Missing in local data source for active HMI ${item.target}`:'Select an active HMI to check this mapping'}. ConnectingVisus: {item.connectingVisus||'Not configured'}</div>)}
-    <div className="hmiCompareLayout" style={{height:propertyHeight,flexShrink:0}}><aside className="hmiControlList"><div className="hmiControlListHead">{String(data.entity_label||'HMI ITEMS').toUpperCase()} ({controls.length})</div>{controls.map((control:any)=><button key={control.name} className={selected?.name===control.name?'active':''} onClick={()=>setSelectedControl(control.name)}><span className="hmiControlType">{control.class_id||control.class}</span><span>{control.name}</span><small>{control.status==='added'?'+ Added':control.status==='removed'?'- Removed':control.status==='unchanged'?'= Same':`Modified (${(control.changes||[]).length})`}</small></button>)}{!controls.length&&<div className="hmiNoChanges">No changed items. Select Show all to inspect the complete screen.</div>}</aside><HmiPropertyComparison base={base} developed={developed} baseLabel={baseLabel} newLabel={newLabel} contextKey={`${baseLabel}:${newLabel}:${data.object_name}:${selected?.name||'screen'}`} skipLayout={skipLayout} baseMissing={!!selected&&!selected.base} newMissing={!!selected&&!selected.new}/></div><ResizeHandle height={propertyHeight} onChange={setPropertyHeight} label="structured HMI properties"/>
+    <div className="hmiCompareLayout" style={{height:propertyHeight,flexShrink:0}}><aside className="hmiControlList"><div className="hmiControlListHead">{String(data.entity_label||'HMI ITEMS').toUpperCase()} ({controls.length})</div>{controls.map((control:any)=><button key={control.name} className={selected?.name===control.name?'active':''} onClick={()=>setSelectedControl(control.name)}><span className="hmiControlType">{control.class_id||control.class}</span><span>{control.name}</span><small>{control.status==='added'?'+ Added':control.status==='removed'?'- Removed':control.status==='unchanged'?'= Same':`Modified (${(control.changes||[]).length})`}</small></button>)}{!controls.length&&<div className="hmiNoChanges">No changed items. Select Show all to inspect the complete screen.</div>}</aside><HmiPropertyComparison base={base} developed={developed} baseLabel={baseLabel} newLabel={newLabel} contextKey={`${baseLabel}:${newLabel}:${data.object_name}:${selected?.name||'screen'}`} skipLayout={skipLayout} skipPageIndex={!selected||selected.name==='Screen properties'} baseMissing={!!selected&&!selected.base} newMissing={!!selected&&!selected.new}/></div><ResizeHandle height={propertyHeight} onChange={setPropertyHeight} label="structured HMI properties"/>
   </div>;
 }
 
@@ -418,7 +419,7 @@ export function CompareModule({
   const [selectedIndex,setSelectedIndex]=React.useState(0);
   const [hmiView,setHmiView]=React.useState<'structured'|'preview'>('structured');
   const [skipHmiLayout,setSkipHmiLayout]=React.useState(false);
-  const [sourceView,setSourceView]=React.useState<'difference'|'source'|'diagram'>('difference');
+  const [sourceView,setSourceView]=React.useState<'difference'|'source'|'diagram'|'flow'>('difference');
 
   const summary=result?.summary||{};
   const knowledge=result?.knowledge||{};
@@ -460,6 +461,7 @@ export function CompareModule({
 
   const selectedRaw=treeItems[selectedIndex]||null;
   const isLadder=/\.ld$/i.test(selectedRaw?.path||'');
+  const supportsFlow=selectedRaw?.category==='logic'&&/\.(st|ab|src|ld)$/i.test(selectedRaw?.path||'');
   React.useEffect(()=>{
     setSourceView(isLadder?'diagram':selectedRaw?.status==='unchanged'&&selectedRaw?.source_view_available?'source':'difference');
   },[result?.sessionId,selectedRaw?.path]);
@@ -606,15 +608,17 @@ export function CompareModule({
             <div className="compareDarkDetailActions">{isLadder&&<button className={sourceView==='diagram'?'selected':''} onClick={()=>setSourceView('diagram')}>Ladder diagram</button>}{selected.category!=='screen'&&selected.source_view_available&&<><button className={sourceView==='difference'?'selected':''} onClick={()=>setSourceView('difference')}>Differences</button><button className={sourceView==='source'?'selected':''} onClick={()=>setSourceView('source')}>Show all source</button></>}{selected.category==='screen'&&<><button className={hmiView==='structured'?'selected':''} onClick={()=>setHmiView('structured')}>Structured HMI</button>{(selected.parsed_screen?.layouts?.base?.layers||selected.parsed_screen?.layouts?.new?.layers)&&<button className={hmiView==='preview'?'selected':''} title="View HMI screen layout" onClick={()=>setHmiView('preview')}><Monitor size={15}/> Screen preview</button>}</>}<span className="detailActionDivider"/>{(['all','modified','removed','added'] as const).map(status=><button key={status} className={fileStatus===status?'selected':''} onClick={()=>setFileStatus(status)}>{status[0].toUpperCase()+status.slice(1)}</button>)}</div>
           </div>
           <div className="compareDarkProjectHeaders"><div className="base"><span>BASE / REFERENCE</span><b>{baseLabel}</b><small>AS {projectInfo.base?.automation_studio_version||'Not detected'} | {projectInfo.base?.active_configuration||'No active configuration'} | PLC {projectInfo.base?.plc_type||'Not detected'} | Screen {projectInfo.base?.active_hmi||'Not detected'}</small></div><div className="developed"><span>DEVELOPED / COMPARE</span><b>{newLabel}</b><small>AS {projectInfo.developed?.automation_studio_version||'Not detected'} | {projectInfo.developed?.active_configuration||'No active configuration'} | PLC {projectInfo.developed?.plc_type||'Not detected'} | Screen {projectInfo.developed?.active_hmi||'Not detected'}</small></div></div>
-          {selected.category==='screen'&&<label className="hmiSkipLayout"><input type="checkbox" checked={skipHmiLayout} onChange={event=>setSkipHmiLayout(event.target.checked)}/> Skip layout properties in screen differences <small>Width, Top, Left, AlignmentVertical, AlignmentHorizontal</small></label>}
+          {selected.category==='screen'&&<label className="hmiSkipLayout"><input type="checkbox" checked={skipHmiLayout} onChange={event=>setSkipHmiLayout(event.target.checked)}/> Skip layout properties in screen differences <small>Width, Top, Left, AlignmentVertical, AlignmentHorizontal, and screen Index</small></label>}
           {selected.category==='logic'&&<div className="compareDarkSubroutine">Subroutine / Task: <b>{selected.subroutine||'Not available'}</b></div>}
+          {supportsFlow&&<div className="compareDarkDetailActions" style={{padding:'8px 14px'}}><button className={sourceView==='flow'?'selected':''} onClick={()=>setSourceView('flow')}>Function flow</button><small>Step-by-step working sequence with source or ladder alongside</small></div>}
+          {supportsFlow&&sourceView==='flow'&&<FunctionFlow key={`${result.sessionId}/${selected.path}`} sessionId={result.sessionId} path={selected.path} baseLabel={baseLabel} newLabel={newLabel}/>}
           {selected.project_detail_id&&!loadedDetail&&<div className="compareDarkEmpty">{screenDetail?.key===detailKey&&screenDetail.error?screenDetail.error:'Loading file source…'}</div>}
           {selected.screen_detail_id&&!selected.parsed_screen&&<div className="compareDarkEmpty">{screenDetail?.key===detailKey&&screenDetail.error?screenDetail.error:'Loading HMI details...'}</div>}
           {selected.parsed_screen&&(hmiView==='preview'&&(selected.parsed_screen.layouts?.base?.layers||selected.parsed_screen.layouts?.new?.layers)?<HmiScreenPreview key={selected.path} data={selected.parsed_screen} baseLabel={baseLabel} newLabel={newLabel} skipLayout={skipHmiLayout}/>:<ParsedScreenView key={selected.path} data={selected.parsed_screen} baseLabel={baseLabel} newLabel={newLabel} skipLayout={skipHmiLayout}/>)}
           {selected.parsed_hardware&&<ParsedHardwareView data={selected.parsed_hardware}/>}
           {isLadder&&sourceView==='diagram'&&!selected.parsed_ladder&&<div className="compareDarkEmpty" role="status">{screenDetail?.key===detailKey&&screenDetail.error?screenDetail.error:'Reading ladder networks...'}</div>}
           {selected.parsed_ladder&&sourceView==='diagram'&&<ParsedLadderView key={selected.path} data={selected.parsed_ladder} baseLabel={baseLabel} newLabel={newLabel} testId={result.testId}/>}
-          {sourceView!=='diagram'&&(selected.logic_added?.length>0||selected.logic_removed?.length>0)?<div className="compareDarkLogicSummary">
+          {sourceView!=='diagram'&&sourceView!=='flow'&&(selected.logic_added?.length>0||selected.logic_removed?.length>0)?<div className="compareDarkLogicSummary">
             <div className="logicSummaryTitle">PLC LOGIC SUMMARY</div>
             <div className="logicSummaryCols">{(['new','base'] as const).map(side=><div key={side}><b className={side==='new'?'green':'red'}>{side==='new'?'Developed ? added / modified':'Base ? removed / modified'} ({logicSummaryLines(selected,side).length})</b>{logicSummaryLines(selected,side).map((row:any,i:number)=><pre key={i}><span className="summaryLineNumber">{row.line?`L${row.line}`:'?'}</span>{row.text}</pre>)}</div>)}</div>
           </div>:null}
