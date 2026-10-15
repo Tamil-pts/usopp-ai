@@ -3,6 +3,14 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.65.14 - 2026-10-15
+
+- Refresh the landing page and WorkHub with the requested engineering copy, connected tool navigation, a four-step workflow guide and saved engineering activity. Admin sees activity across users; regular users see their own 7/30-day activity. Keep the old project and validation KPI cards removed.
+- Build Chopper machine summaries from the selected project's enabled routines, parsed operations, function calls, branch conditions and source evidence. Preserve project-specific differences instead of using a fixed machine-function list.
+- Correct DataInspect reference aggregation and case-insensitive matching. Report conflicting JSON/workbook datatypes as unresolved reference conflicts, retain genuine mismatches and keep different group-code requirements separate. Preserve source evidence and archived reference context.
+- Audit container packaging to omit original application Python/TypeScript source and frontend source maps. Preserve private source tracking for release builds; compiled bytecode remains reversible. Existing host source folders require separate cleanup.
+- Development verification: both frontend builds, focused regressions and isolated browser checks passed. Physical PLC traffic and live model generation were not exercised by the workspace browser checks. Container build artifacts are prepared separately by the release workflow.
+
 ## Development updates - 2026-10-12
 
 - Add an Admin-only Settings tool to export/import shared engineering knowledge in a versioned ZIP. It carries parameter and project mappings, edited knowledge, rules, engineering learning/feedback, imported DataInspect models and machine-prefix configuration, with optional B&R help sources. Import validates paths, makes a pre-import copy of replaced files, overlays matching files without deleting production-only files, and reports imported files. Model weights, users, results and PLC uploads are excluded.
