@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import FileResponse
 from backend.core.access import claim_resource
 from backend.core import run_history
@@ -40,6 +40,17 @@ def history(request:Request):
     rows=run_history.list_records()
     if user['role']!='admin': rows=[row for row in rows if (row.get('user') or {}).get('id')==user['id']]
     return {'runs':rows,'scope':'all' if user['role']=='admin' else 'own'}
+
+
+@router.get('/activity')
+def activity(request:Request, days:int=Query(7,ge=1,le=30)):
+    from backend.core.workhub_activity import summarize_activity
+    user=request.state.user
+    rows=run_history.list_records()
+    if user['role']!='admin':
+        rows=[row for row in rows if (row.get('user') or {}).get('id')==user['id']]
+    return {**summarize_activity(rows,days), 'scope':'all' if user['role']=='admin' else 'own'}
+
 
 @router.get('/{run_id}')
 def result(run_id:str,request:Request):

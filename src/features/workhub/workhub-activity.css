@@ -1,0 +1,76 @@
+.workHubActivity { overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--text); }
+.workHubActivityHeading { display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 26px;border-bottom:1px solid var(--line); }
+.workHubActivityHeading h2 { margin:0 0 5px;font-size:1.25rem;line-height:1.35;font-weight:600;letter-spacing:-.025em; }
+.workHubActivityHeading p { margin:0;color:var(--muted);font-size:.8125rem;line-height:1.6; }
+.workHubActivityControls { display:flex;align-items:center;gap:10px;flex:none; }
+.workHubActivityRange { display:inline-flex;padding:3px;border:1px solid var(--line);border-radius:7px;background:var(--panel2); }
+.workHubActivityRange button { border:0;border-radius:4px;background:transparent;color:var(--muted);padding:6px 12px;font-size:.75rem;white-space:nowrap; }
+.workHubActivityRange button[aria-pressed=true] { background:var(--panel);color:var(--accent);box-shadow:0 1px 4px #092e2812;font-weight:600; }
+.workHubActivityRefresh { display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;background:transparent;border:1px solid var(--line2);border-radius:7px;color:var(--muted);padding:7px 10px;font-size:.75rem; }
+.workHubActivityRefresh:not(:disabled):hover { border-color:var(--accent);color:var(--accent); }
+.workHubActivityRefresh:disabled { opacity:.65;cursor:wait; }
+.workHubActivityState { display:flex;align-items:center;gap:16px;min-height:165px;padding:30px;color:var(--muted); }
+.workHubActivityState>svg { flex:none;color:var(--accent); }
+.workHubActivityState b { font-size:.9375rem;color:var(--text); }
+.workHubActivityState p { max-width:80ch;margin:7px 0 0;font-size:.8125rem;line-height:1.6; }
+.workHubActivityError { background:var(--panel2); }
+.workHubActivityError .btn { margin-left:auto;flex:none; }
+.workHubActivityOverview { display:grid;grid-template-columns:minmax(0,1.8fr) minmax(245px,.85fr); }
+.workHubActivityChartPanel { padding:24px 26px;min-width:0; }
+.workHubActivitySubheading { display:flex;justify-content:space-between;align-items:flex-start;gap:14px; }
+.workHubActivity h3 { font-size:.875rem;font-weight:600;margin:0; }
+.workHubActivitySubheading p { margin:5px 0 0;color:var(--muted);font-size:.75rem; }
+.workHubActivitySubheading p b { color:var(--text); }
+.workHubActivitySubheading>span { display:flex;align-items:center;gap:5px;color:var(--faint);font-size:.625rem;margin-top:2px;white-space:nowrap; }
+.workHubActivityChart { display:grid;grid-template-columns:23px minmax(0,1fr);gap:10px;height:195px;margin-top:24px; }
+.workHubActivityAxis { display:flex;flex-direction:column;justify-content:space-between;padding:0 0 26px;color:var(--faint);font:500 .625rem/1 'IBM Plex Mono',Consolas,monospace; }
+.workHubActivityBars { display:grid;align-items:stretch;gap:clamp(3px,1vw,16px);min-width:0;background:repeating-linear-gradient(to top,transparent 0,transparent calc(50% - .5px),var(--line) calc(50% - .5px),var(--line) calc(50% + .5px),transparent calc(50% + .5px));background-size:100% calc(100% - 26px);background-repeat:no-repeat;border-bottom:0; }
+.workHubActivityDay { display:flex;flex-direction:column;min-width:0;position:relative; }
+.workHubActivityBarTrack { display:flex;align-items:flex-end;justify-content:center;height:100%;position:relative;border-bottom:1px solid var(--line2); }
+.workHubActivityBar { display:block;min-width:3px;width:100%;max-width:46px;border-radius:4px 4px 0 0;background:linear-gradient(0deg,var(--accent),color-mix(in srgb,var(--accent) 60%,#78dbb8));opacity:.85; }
+.workHubActivityDay:hover .workHubActivityBar { opacity:1; }
+.workHubActivityBar.empty { border-radius:1px;background:var(--line2); }
+.workHubActivityBarValue { position:absolute;left:50%;transform:translateX(-50%);color:var(--muted);font:600 .625rem 'IBM Plex Mono',Consolas,monospace; }
+.workHubActivityDayLabel { display:block;flex:none;text-align:center;margin-top:10px;min-height:16px;font-size:.625rem;line-height:1;white-space:nowrap;color:var(--muted); }
+.workHubActivityDaily { margin-top:15px;color:var(--muted);font-size:.6875rem; }
+.workHubActivityDaily summary { cursor:pointer;width:max-content;max-width:100%; }
+.workHubActivityDaily dl { display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:7px 15px;padding:12px;margin:10px 0 0;border:1px solid var(--line);border-radius:7px;background:var(--panel2); }
+.workHubActivityDaily dl>div { display:flex;justify-content:space-between;gap:10px; }
+.workHubActivityDaily dd { margin:0;color:var(--text); }
+.workHubActivityBreakdown { padding:24px;border-left:1px solid var(--line);background:color-mix(in srgb,var(--panel2) 55%,var(--panel)); }
+.workHubActivityTools { display:flex;flex-direction:column;gap:11px; }
+.workHubActivityTools h3 { margin-bottom:3px; }
+.workHubActivityTool>div { display:flex;justify-content:space-between;gap:12px;font-size:.6875rem;margin-bottom:5px; }
+.workHubActivityTool b { color:var(--muted);font:500 .6875rem 'IBM Plex Mono',Consolas,monospace; }
+.workHubActivityToolTrack { display:block;height:4px;border-radius:5px;background:var(--line);overflow:hidden; }
+.workHubActivityToolTrack>span { display:block;height:100%;border-radius:5px;background:var(--accent);opacity:.65; }
+.workHubActivityPeople { margin-top:23px;padding-top:18px;border-top:1px solid var(--line); }
+.workHubActivityPeople>h3 { display:flex;align-items:center;gap:7px;margin-bottom:12px; }
+.workHubActivityPeople>h3 svg { color:var(--muted); }
+.workHubActivityPerson { display:flex;align-items:center;gap:9px;padding:7px 0;min-width:0; }
+.workHubActivityPerson>span:first-child,.workHubActivityAvatar { display:grid;place-items:center;flex:none;width:28px;height:28px;background:var(--accentbg);border:1px solid var(--line);border-radius:50%;font-size:.5625rem;font-weight:600;color:var(--accent); }
+.workHubActivityPerson>div { min-width:0;display:flex;flex:1;flex-direction:column;gap:3px; }
+.workHubActivityPerson b { font-size:.6875rem;font-weight:600;overflow-wrap:anywhere; }
+.workHubActivityPerson small { display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.5625rem;color:var(--muted); }
+.workHubActivityPerson>span:last-child { flex:none;font-size:.625rem;color:var(--muted); }
+.workHubActivityPeopleMore { color:var(--muted);font-size:.625rem;line-height:1.5;margin:5px 0 0; }
+.workHubActivityRecent { padding:22px 26px 9px;border-top:1px solid var(--line); }
+.workHubActivityRecentHeading { display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px; }
+.workHubActivityRecentHeading p { margin:4px 0 0;font-size:.6875rem;color:var(--muted); }
+.workHubActivityRecentHeading button { display:inline-flex;align-items:center;gap:7px;border:0;background:transparent;color:var(--accent);font-size:.6875rem;padding:7px 0; }
+.workHubActivityRecent ol { list-style:none;padding:0;margin:0; }
+.workHubActivityRecent li { display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line); }
+.workHubActivityRun { flex:1;min-width:0; }
+.workHubActivityRun>div { display:flex;align-items:center;gap:8px;flex-wrap:wrap; }
+.workHubActivityRun b { font-weight:600;font-size:.8125rem;overflow-wrap:anywhere; }
+.workHubActivityRun>div>span { font-size:.6875rem;color:var(--accent);padding:2px 6px;border:1px solid var(--line);border-radius:4px;background:var(--panel2); }
+.workHubActivityRun p { display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;overflow-wrap:anywhere;margin:4px 0 0;color:var(--muted);font-size:.75rem; }
+.workHubActivityRun p small { font-size:.625rem;color:var(--faint); }
+.workHubActivityRunTime { display:flex;align-items:flex-end;flex-direction:column;gap:5px;flex:none;text-align:right; }
+.workHubActivityRunTime time { color:var(--muted);font-size:.6875rem; }
+.workHubActivityRunTime>span { color:var(--faint);font-size:.625rem; }
+.workHubActivityFooter { display:flex;justify-content:space-between;gap:14px;padding:14px 26px;border-top:1px solid var(--line);font-size:.5625rem;line-height:1.5;color:var(--faint);background:var(--panel2); }
+.workHubActivityFooter>span:last-child { white-space:nowrap; }
+.workHubActivity button:focus-visible,.workHubActivity summary:focus-visible { outline:2px solid var(--accent);outline-offset:3px; }
+@media(max-width:1050px) { .workHubActivityOverview { grid-template-columns:minmax(0,1fr); }.workHubActivityBreakdown { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;border-left:0;border-top:1px solid var(--line); }.workHubActivityPeople { border-top:0;border-left:1px solid var(--line);margin:0;padding:0 0 0 24px; }.workHubActivitySubheading>span { white-space:normal;text-align:right; } }
+@media(max-width:600px) { .workHubActivityHeading { align-items:flex-start;flex-direction:column;padding:20px;gap:16px; }.workHubActivityControls { justify-content:space-between;width:100%; }.workHubActivityChartPanel { padding:20px; }.workHubActivityChart { gap:7px;height:180px; }.workHubActivityBars { gap:3px; }.workHubActivityDayLabel { font-size:.5rem; }.workHubActivitySubheading>span { font-size:.5625rem;max-width:100px; }.workHubActivityBreakdown { grid-template-columns:minmax(0,1fr);padding:20px;gap:20px; }.workHubActivityPeople { padding:18px 0 0;border-left:0;border-top:1px solid var(--line); }.workHubActivityRecent { padding:20px 20px 5px; }.workHubActivityRecentHeading { align-items:flex-start;flex-direction:column;gap:5px; }.workHubActivityRecent li { flex-wrap:wrap;gap:8px; }.workHubActivityRunTime { flex-direction:row;align-items:center;justify-content:space-between;width:100%;padding-left:36px;text-align:left; }.workHubActivityFooter { flex-direction:column;padding:12px 20px;gap:6px; }.workHubActivityState { align-items:flex-start;flex-wrap:wrap;padding:24px; }.workHubActivityState>div { flex:1;min-width:180px; }.workHubActivityError .btn { margin-left:41px; } }

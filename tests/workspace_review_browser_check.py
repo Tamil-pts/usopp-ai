@@ -33,6 +33,30 @@ def serve(port):
         accounts.store.register(USERNAME, PASSWORD, 'Test engineer', 'Local integration check')
     except sqlite3.IntegrityError:
         pass
+    try:
+        accounts.store.register('activity_colleague', PASSWORD, 'Test engineer', 'Local integration check')
+    except sqlite3.IntegrityError:
+        pass
+    # Seed only the isolated test store. The dashboard uses its real history API.
+    from datetime import datetime, timedelta, timezone
+    import uuid
+    from backend.core import run_history
+    people = {person['username']: person for person in accounts.store.list_users()}
+    for index, (kind, age, owner) in enumerate([
+        ('validation', 0, USERNAME), ('rules', 1, USERNAME),
+        ('datainspect', 1, USERNAME), ('compare', 3, USERNAME),
+        ('metadata', 12, USERNAME), ('validation', 0, 'activity_colleague'),
+    ]):
+        identity = uuid.uuid5(uuid.NAMESPACE_URL, f'usopp-workspace-review-activity-{index}').hex
+        when = (datetime.now(timezone.utc)-timedelta(days=age, minutes=1)).isoformat()
+        person = people[owner]
+        record = {'id': identity, 'kind': kind, 'testId': f'UI-REVIEW-{index}',
+                  'projectName': 'Isolated workflow fixture', 'machineDepartment': 'Finisher',
+                  'createdAt': when, 'completedAt': when, 'status': 'completed', 'summary': {},
+                  'user': {'id': person['id'], 'username': person['username']}}
+        run_history.write_json(run_history.RECORDS/identity/'record.json', record)
+        run_history.write_json(run_history.RECORDS/identity/'result.json', {})
+        run_history.archive_database(record, {})
     from backend.app import app
     import uvicorn
     uvicorn.run(app, host='127.0.0.1', port=port, access_log=False)
@@ -80,14 +104,51 @@ def run():
                 expect(page.locator('.homeProject')).to_have_count(0)
                 expect(page.locator('.kpis')).to_have_count(0)
                 expect(dashboard.locator('.workHubTask')).to_have_count(4)
+                activity = dashboard.locator('.workHubActivity')
+                expect(activity.get_by_role('heading', name='Your engineering activity')).to_be_visible()
+                expect(activity.locator('.workHubActivitySubheading')).to_contain_text('4 saved runs')
+                expect(activity.locator('.workHubActivityRecent li')).to_have_count(4)
+                expect(activity).not_to_contain_text('activity_colleague')
+                actual_activity = page.request.get(url + '/api/history/activity?days=7').json()
+                assert actual_activity['scope'] == 'own' and actual_activity['totalRuns'] == 4
+                activity.get_by_role('button', name='30 days', exact=True).click()
+                expect(activity.locator('.workHubActivitySubheading')).to_contain_text('5 saved runs')
+                expect(activity.locator('.workHubActivityDay')).to_have_count(30)
+                activity.get_by_role('button', name='7 days', exact=True).click()
+                expect(activity.locator('.workHubActivitySubheading')).to_contain_text('4 saved runs')
+                activity.get_by_text('View daily totals', exact=True).click()
+                expect(activity.locator('.workHubActivityDaily dl > div')).to_have_count(7)
+                activity.get_by_text('View daily totals', exact=True).click()
+                activity.screenshot(path=str(ARTIFACTS / 'workhub-activity-light.png'))
+                # Failure and empty states must not present invented activity totals.
+                activity_pattern = '**/api/history/activity?days=*'
+                page.route(activity_pattern, lambda route: route.fulfill(status=503, json={'detail': 'Local activity error fixture'}))
+                activity.get_by_role('button', name='Refresh engineering activity').click()
+                expect(activity.get_by_role('alert')).to_contain_text('Activity is unavailable')
+                expect(activity.locator('.workHubActivityChart')).to_have_count(0)
+                page.unroute(activity_pattern)
+                empty_activity = {**actual_activity, 'totalRuns': 0, 'users': [], 'tools': [], 'recent': [],
+                                  'daily': [{**point, 'count': 0} for point in actual_activity['daily']]}
+                page.route(activity_pattern, lambda route: route.fulfill(json=empty_activity))
+                activity.get_by_role('button', name='Try again', exact=True).click()
+                expect(activity).to_contain_text('No saved activity in the last 7 days')
+                expect(activity.locator('.workHubActivityChart')).to_have_count(0)
+                page.unroute(activity_pattern)
+                activity.get_by_role('button', name='Refresh engineering activity').click()
+                expect(activity.locator('.workHubActivitySubheading')).to_contain_text('4 saved runs')
+                activity.get_by_role('button', name='View saved history', exact=True).click()
+                expect(page.locator('.adminHistory h2')).to_be_focused()
+                dashboard.get_by_role('heading', name='WorkHub', exact=True).scroll_into_view_if_needed()
                 page.screenshot(path=str(ARTIFACTS / 'workhub-light.png'))
                 page.get_by_role('button', name='Dark mode', exact=True).click()
                 expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
                 page.screenshot(path=str(ARTIFACTS / 'workhub-dark.png'))
+                activity.screenshot(path=str(ARTIFACTS / 'workhub-activity-dark.png'))
                 page.get_by_role('button', name='Light mode', exact=True).click()
                 page.set_viewport_size({'width': 430, 'height': 930})
                 expect(dashboard.locator('.workHubTask')).to_have_count(4)
                 assert dashboard.evaluate('(el)=>el.scrollWidth<=el.clientWidth+2'), 'Dashboard horizontal overflow'
+                activity.screenshot(path=str(ARTIFACTS / 'workhub-activity-narrow.png'))
                 dashboard.get_by_role('button', name='Open Chopper', exact=True).scroll_into_view_if_needed()
                 expect(dashboard.get_by_role('button', name='Open Chopper', exact=True)).to_be_visible()
                 expect(dashboard.get_by_role('heading', name='Understand how it works.', exact=True)).to_be_visible()
@@ -95,6 +156,15 @@ def run():
                 dashboard.get_by_role('heading', name='WorkHub', exact=True).scroll_into_view_if_needed()
                 page.screenshot(path=str(ARTIFACTS / 'workhub-narrow.png'))
                 page.set_viewport_size({'width': 1536, 'height': 1100})
+                guide = dashboard.locator('.workHubGuide')
+                expect(guide.locator('ol > li')).to_have_count(4)
+                guide.screenshot(path=str(ARTIFACTS / 'workhub-workflow-guide.png'))
+                for label, destination in [('Open ByteMap', 'ByteMap'), ('Open LogicScan', 'LogicScan'),
+                                           ('Open DataInspect', 'DataInspect'), ('Ask Chopper', 'AI Assistant')]:
+                    guide.get_by_role('button', name=label, exact=True).click()
+                    expect(navigation.get_by_role('button', name=destination, exact=True)).to_have_class('active')
+                    navigation.get_by_role('button', name='WorkHub', exact=True).click()
+                    expect(dashboard).to_be_visible()
                 for name in ('ByteMap', 'DataInspect', 'MatchView', 'LogicScan'):
                     dashboard.locator('.workHubTask').filter(has_text=name).click()
                     expect(navigation.get_by_role('button', name=name, exact=True)).to_have_class('active')
@@ -120,7 +190,7 @@ def run():
                     'accountId': account['id'], 'changes': [{'key': key, 'value': json.dumps(value) if not isinstance(value, str) else value,
                     'revision': storage.get(key, {}).get('revision', 0)} for key, value in values.items()]})
                 assert response.ok, response.text()
-                dashboard.get_by_role('button', name=re.compile('DataInspect')).click()
+                dashboard.locator('.workHubTask').filter(has_text='DataInspect').click()
                 frame = page.frame_locator('iframe[title="Nami PLC Data Verification V1.5"]')
                 production = frame.locator('tbody tr').filter(has=frame.get_by_text('Production in kg', exact=True)).last
                 expect(production).to_be_visible(timeout=30000)
@@ -162,6 +232,8 @@ def run():
                 assert not errors, errors
                 (ARTIFACTS / 'verification.json').write_text(json.dumps({
                     'workhub': 'light/dark/narrow, four working tool cards, no project/KPI cards',
+                    'workhubActivity': 'actual isolated history API, own-user scope, 7/30-day totals, daily values, empty/error/retry, history link',
+                    'workhubGuide': 'four working workflow navigation buttons',
                     'dataInspect': 'actual Finisher reference conflict, case-insensitive pass and unmatched-name wording',
                     'chopper': 'actual project 2 API + formatted chat rendering + source citation expansion',
                     'pageErrors': errors, 'controllerTraffic': 'blocked', 'modelGeneration': 'local tools only',

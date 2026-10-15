@@ -1,8 +1,9 @@
 import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bot,Cpu,FileCode2,GitCompare,HelpCircle,Layers,ShieldCheck} from 'lucide-react';
 import type {EngineeringFeature} from '../../shared/features';
+import {WorkHubActivity} from './WorkHubActivity';
 import './workhub.css';
 
-type WorkHubProps={onOpen:(feature:EngineeringFeature|'help')=>void};
+type WorkHubProps={active:boolean;onOpen:(feature:EngineeringFeature|'help')=>void};
 
 const tasks=[
   {id:'validation',name:'ByteMap',label:'Map your PLC data',description:'Review packet structures, byte offsets and HMI mappings. Generate and inspect metadata workbooks.',detail:'Source → metadata',Icon:Layers},
@@ -11,7 +12,7 @@ const tasks=[
   {id:'rules',name:'LogicScan',label:'Review logic requirements',description:'Run your configured engineering rules and follow each finding back to its source evidence.',detail:'Requirements → evidence',Icon:ShieldCheck}
 ] as const;
 
-export function WorkHub({onOpen}:WorkHubProps){
+export function WorkHub({active,onOpen}:WorkHubProps){
   return <div className="workHubDashboard">
     <header className="workHubHeading">
       <div><span className="workHubEyebrow">YOUR ENGINEERING WORKSPACE</span><h1>WorkHub</h1></div>
@@ -39,6 +40,8 @@ export function WorkHub({onOpen}:WorkHubProps){
       </div>
     </section>
 
+    <WorkHubActivity active={active}/>
+
     <section className="workHubTools" aria-labelledby="workhub-tools">
       <div className="workHubSectionHeading"><div><span className="workHubEyebrow">PICK UP YOUR NEXT TASK</span><h2 id="workhub-tools">What would you like to work on?</h2></div><p>Purposeful tools. One connected workspace.</p></div>
       <div className="workHubToolLayout">
@@ -55,6 +58,16 @@ export function WorkHub({onOpen}:WorkHubProps){
           <small className="workHubChopperHint">Attach a project or log to give your question context.</small>
         </aside>
       </div>
+    </section>
+
+    <section className="workHubGuide" aria-labelledby="workhub-guide">
+      <div className="workHubSectionHeading"><div><span className="workHubEyebrow">A SHORT GUIDE TO YOUR WORKFLOW</span><h2 id="workhub-guide">From the right source to a useful result.</h2></div></div>
+      <ol>{[
+        {title:'Select the project',text:'Choose your source and confirm its machine, active PLC configuration and HMI target.',action:'Open ByteMap',page:'validation' as const},
+        {title:'Choose your references',text:'Load the matching metadata or select the engineering rules needed for this review.',action:'Open LogicScan',page:'rules' as const},
+        {title:'Run scoped checks',text:'Use ByteMap for source checks, DataInspect for packets, or MatchView for revision changes.',action:'Open DataInspect',page:'plc' as const},
+        {title:'Review and share',text:'Follow findings to the source evidence, inspect expected and actual values, then export the report.',action:'Ask Chopper',page:'chatbot' as const}
+      ].map((step,index)=><li key={step.title}><span className="workHubGuideNumber">{String(index+1).padStart(2,'0')}</span><h3>{step.title}</h3><p>{step.text}</p><button onClick={()=>onOpen(step.page)}>{step.action}<ArrowUpRight size={15}/></button></li>)}</ol>
     </section>
 
     <div className="workHubClosing"><span>LESS GUESSWORK. MORE ENGINEERING.</span><p>Connected tools. Traceable results. Confident decisions.</p></div>
