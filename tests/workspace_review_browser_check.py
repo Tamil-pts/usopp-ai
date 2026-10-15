@@ -109,6 +109,9 @@ def run():
                 expect(activity.locator('.workHubActivitySubheading')).to_contain_text('4 saved runs')
                 expect(activity.locator('.workHubActivityRecent li')).to_have_count(4)
                 expect(activity).not_to_contain_text('activity_colleague')
+                expect(activity.locator('.workHubActivityBarZero')).to_have_count(4)
+                assert activity.locator('.workHubActivityBarZero').evaluate_all(
+                    '(bars)=>bars.every(bar=>bar.getBoundingClientRect().height<=3)'), 'Zero-activity bars must stay on the baseline'
                 actual_activity = page.request.get(url + '/api/history/activity?days=7').json()
                 assert actual_activity['scope'] == 'own' and actual_activity['totalRuns'] == 4
                 activity.get_by_role('button', name='30 days', exact=True).click()
@@ -148,7 +151,12 @@ def run():
                 page.set_viewport_size({'width': 430, 'height': 930})
                 expect(dashboard.locator('.workHubTask')).to_have_count(4)
                 assert dashboard.evaluate('(el)=>el.scrollWidth<=el.clientWidth+2'), 'Dashboard horizontal overflow'
-                activity.screenshot(path=str(ARTIFACTS / 'workhub-activity-narrow.png'))
+                assert activity.locator('.workHubActivityBarZero').evaluate_all(
+                    '(bars)=>bars.every(bar=>bar.getBoundingClientRect().height<=3)'), 'Mobile zero-activity bars must stay on the baseline'
+                activity.locator('h2').scroll_into_view_if_needed()
+                page.screenshot(path=str(ARTIFACTS / 'workhub-activity-narrow.png'))
+                activity.locator('.workHubActivityRecentHeading').scroll_into_view_if_needed()
+                page.screenshot(path=str(ARTIFACTS / 'workhub-activity-narrow-recent.png'))
                 dashboard.get_by_role('button', name='Open Chopper', exact=True).scroll_into_view_if_needed()
                 expect(dashboard.get_by_role('button', name='Open Chopper', exact=True)).to_be_visible()
                 expect(dashboard.get_by_role('heading', name='Understand how it works.', exact=True)).to_be_visible()
