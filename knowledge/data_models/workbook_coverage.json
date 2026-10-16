@@ -1,0 +1,6131 @@
+{
+  "schemaVersion": 1,
+  "models": [
+    {
+      "service": "CMS",
+      "machine": "CARDING",
+      "namedWorkbookRows": 511,
+      "added": [
+        {
+          "name": "Required Hank",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 19
+        },
+        {
+          "name": "Delivery Speed",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 24
+        },
+        {
+          "name": "TotalPeak Cylinder LHS Bearing Temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 171
+        },
+        {
+          "name": "TotalPeak Cylinder RHS Bearing Temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 172
+        },
+        {
+          "name": "TotalPeak SFL Beam Temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 173
+        },
+        {
+          "name": "TotalPeak SFD Beam Temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 174
+        },
+        {
+          "name": "TotalPeak Cylinder LHS Frame Vibration",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 175
+        },
+        {
+          "name": "TotalPeak Flats LHS Frame Vibration",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 176
+        },
+        {
+          "name": "TotalPeak Cylinder RHS Frame Vibration",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 177
+        },
+        {
+          "name": "TotalPeak Flats RHS Frame Vibration",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 178
+        },
+        {
+          "name": "TotalPeak Chute Motor Power",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 179
+        },
+        {
+          "name": "TotalPeak Chute Motor Current",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 180
+        },
+        {
+          "name": "TotalPeak Chute Motor Torque",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 181
+        },
+        {
+          "name": "TotalPeak Chute Motor Inverter Heat Sink Temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 182
+        },
+        {
+          "name": "TotalPeak Chute Motor Speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 183
+        },
+        {
+          "name": "TotalPeak Card Feed Motor Power",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 184
+        },
+        {
+          "name": "TotalPeak Card Feed Motor Current",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 185
+        },
+        {
+          "name": "TotalPeak Card Feed Motor Torque",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 186
+        },
+        {
+          "name": "TotalPeak Card Feed Motor Inverter Heat Sink Temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 187
+        },
+        {
+          "name": "TotalPeak Card Feed Motor Speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 188
+        },
+        {
+          "name": "TotalPeak Cylinder Motor Power",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 189
+        },
+        {
+          "name": "TotalPeak Cylinder Motor Current",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 190
+        },
+        {
+          "name": "TotalPeak Cylinder Motor Torque",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 191
+        },
+        {
+          "name": "TotalPeak Cylinder Motor Inverter Heat Sink Temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 192
+        },
+        {
+          "name": "TotalPeak Cylinder Motor Speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 193
+        },
+        {
+          "name": "TotalPeak Doffer Motor Power",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 194
+        },
+        {
+          "name": "TotalPeak Doffer Motor Current",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 195
+        },
+        {
+          "name": "TotalPeak Doffer Motor Torque",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 196
+        },
+        {
+          "name": "TotalPeak Doffer Motor Inverter Heat Sink Temp",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 197
+        },
+        {
+          "name": "TotalPeak DofferMotor Speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 198
+        },
+        {
+          "name": "TotalPeak Delivery Motor Power",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 199
+        },
+        {
+          "name": "TotalPeak Delivery Motor Current",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 200
+        },
+        {
+          "name": "TotalPeak Delivery Motor Torque",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 201
+        },
+        {
+          "name": "TotalPeak Delivery Motor Inverter Heat Sink Temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 202
+        },
+        {
+          "name": "TotalPeak Delivery Motor Speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 203
+        },
+        {
+          "name": "TotalPeak Coiler Motor Power",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 204
+        },
+        {
+          "name": "TotalPeak Coiler Motor Current",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 205
+        },
+        {
+          "name": "TotalPeak Coiler Motor Torque",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 206
+        },
+        {
+          "name": "TotalPeak Coiler Motor Inverter Heat Sink Temp",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 207
+        },
+        {
+          "name": "TotalPeak Coiler Motor Speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_CARDING_shift",
+          "row": 208
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "COMBER",
+      "namedWorkbookRows": 219,
+      "added": [
+        {
+          "name": "delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_COMBER_shift_live",
+          "row": 39
+        },
+        {
+          "name": "Kgs",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_COMBER_hourwise",
+          "row": 54
+        },
+        {
+          "name": "UKg",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_COMBER_hourwise",
+          "row": 55
+        },
+        {
+          "name": "Maximum total kwh",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_COMBER_hourwise",
+          "row": 63
+        },
+        {
+          "name": "Minimum total kwh",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_COMBER_hourwise",
+          "row": 73
+        },
+        {
+          "name": "Maximum delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_COMBER_hourwise",
+          "row": 76
+        },
+        {
+          "name": "Minimum delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_COMBER_hourwise",
+          "row": 77
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEBREAKER",
+      "namedWorkbookRows": 337,
+      "added": [
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFBreaker_minutes",
+          "row": 18
+        },
+        {
+          "name": "delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFBreaker_shift_live",
+          "row": 53
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFBreaker_shift_live",
+          "row": 55
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFBreaker_hourwise",
+          "row": 99
+        },
+        {
+          "name": "Maximum delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFBreaker_hourwise",
+          "row": 121
+        },
+        {
+          "name": "Minimum delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFBreaker_hourwise",
+          "row": 122
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFBreaker_shift",
+          "row": 19
+        },
+        {
+          "name": "Head Stock Draft Motor Speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFBreaker_shift",
+          "row": 53
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "namedWorkbookRows": 337,
+      "added": [
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_minutes",
+          "row": 18
+        },
+        {
+          "name": "delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_shift_live",
+          "row": 53
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_shift_live",
+          "row": 55
+        },
+        {
+          "name": "Maximum total kwh",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 107
+        },
+        {
+          "name": "Minimum total kwh",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 118
+        },
+        {
+          "name": "Maximum delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 121
+        },
+        {
+          "name": "Minimum delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 122
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_shift",
+          "row": 19
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "LAPFORMER",
+      "namedWorkbookRows": 214,
+      "added": [
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_minutes_time_seri",
+          "row": 18
+        },
+        {
+          "name": "Lot Name",
+          "groupCodes": [
+            130
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_minutes_time_seri",
+          "row": 20
+        },
+        {
+          "name": "delivery_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift_live",
+          "row": 38
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 19
+        },
+        {
+          "name": "voltage_avg_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 39
+        },
+        {
+          "name": "current_avg_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 40
+        },
+        {
+          "name": "voltage_avg_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 56
+        },
+        {
+          "name": "current_avg_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 57
+        },
+        {
+          "name": "Main drive bearing Temperature_Totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 73
+        },
+        {
+          "name": "Lap Roller Gearbox Vibration_Totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 74
+        },
+        {
+          "name": "Main Motor Power_Totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 75
+        },
+        {
+          "name": "Main Motor Current_Totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 76
+        },
+        {
+          "name": "Main Motor Torque_Totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 77
+        },
+        {
+          "name": "Main Motor Inverter Heat Sink Temperature_Totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 78
+        },
+        {
+          "name": "Main Motor Speed_Totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_LAPFORMER_shift",
+          "row": 79
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "RINGFRAME",
+      "namedWorkbookRows": 698,
+      "added": [
+        {
+          "name": "Only Instantaneous",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 2
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 24
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 26
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 35
+        },
+        {
+          "name": "delivery_roller_housing_ts_temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 61
+        },
+        {
+          "name": "feed_roller_housing_ts_temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 62
+        },
+        {
+          "name": "main_motor_temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 63
+        },
+        {
+          "name": "ring_rail_motor_temperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 64
+        },
+        {
+          "name": "main_motor_vibration",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 69
+        },
+        {
+          "name": "main_frame_front_ts_vibration",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 70
+        },
+        {
+          "name": "main_frame_bottom_ts_vibration",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 71
+        },
+        {
+          "name": "rail_motor_vibration",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 72
+        },
+        {
+          "name": "Main Motor Inverter Heat Sink Tempemperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 82
+        },
+        {
+          "name": "Tail Stock Draft Motor Inverter Heat Sink Tempemperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 87
+        },
+        {
+          "name": "Suction Motor Inverter Heat Sink Tempemperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 92
+        },
+        {
+          "name": "Head Stock Draft Motor Inverter Heat Sink Tempemperature",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 97
+        },
+        {
+          "name": "air_consumption_CFM",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift_live",
+          "row": 105
+        },
+        {
+          "name": "Voltage Average",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 37
+        },
+        {
+          "name": "Current Average",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 38
+        },
+        {
+          "name": "Power Factor",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 39
+        },
+        {
+          "name": "Frequency",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 40
+        },
+        {
+          "name": "Total Active Power",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 41
+        },
+        {
+          "name": "Total kVA",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 42
+        },
+        {
+          "name": "Total kvar",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 43
+        },
+        {
+          "name": "Total kWh",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 44
+        },
+        {
+          "name": "Total kVAh",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 45
+        },
+        {
+          "name": "Total kVArh",
+          "groupCodes": [
+            410
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 46
+        },
+        {
+          "name": "delivery_roller_housing_ts_temperature_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 124
+        },
+        {
+          "name": "feed_roller_housing_ts_temperature_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 125
+        },
+        {
+          "name": "main_motor_temperature_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 126
+        },
+        {
+          "name": "ring_rail_motor_temperature_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 127
+        },
+        {
+          "name": "main_motor_vibration_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 132
+        },
+        {
+          "name": "main_frame_front_ts_vibration_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 133
+        },
+        {
+          "name": "main_frame_bottom_ts_vibration_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 134
+        },
+        {
+          "name": "rail_motor_vibration_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 135
+        },
+        {
+          "name": "Main Motor Inverter Heat Sink Tempemperature_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 145
+        },
+        {
+          "name": "Tail Stock Draft Motor Inverter Heat Sink Tempemperature_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 150
+        },
+        {
+          "name": "Suction Motor Inverter Heat Sink Tempemperature_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 155
+        },
+        {
+          "name": "Head Stock Draft Motor Inverter Heat Sink Tempemperature_max",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 160
+        },
+        {
+          "name": "delivery_roller_housing_ts_temperature_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 186
+        },
+        {
+          "name": "feed_roller_housing_ts_temperature_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 187
+        },
+        {
+          "name": "main_motor_temperature_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 188
+        },
+        {
+          "name": "ring_rail_motor_temperature_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 189
+        },
+        {
+          "name": "main_motor_vibration_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 194
+        },
+        {
+          "name": "main_frame_front_ts_vibration_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 195
+        },
+        {
+          "name": "main_frame_bottom_ts_vibration_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 196
+        },
+        {
+          "name": "rail_motor_vibration_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 197
+        },
+        {
+          "name": "Main Motor Inverter Heat Sink Tempemperature_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 207
+        },
+        {
+          "name": "Tail Stock Draft Motor Inverter Heat Sink Tempemperature_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 212
+        },
+        {
+          "name": "Suction Motor Inverter Heat Sink Tempemperature_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 217
+        },
+        {
+          "name": "Head Stock Draft Motor Inverter Heat Sink Tempemperature_min",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 222
+        },
+        {
+          "name": "Average Spindle Speed_min",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 226
+        },
+        {
+          "name": "Average Spindle Speed_max",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_hourwise",
+          "row": 227
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 24
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 26
+        },
+        {
+          "name": "Voltage Average_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 102
+        },
+        {
+          "name": "Current Average_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 103
+        },
+        {
+          "name": "Power Factor_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 104
+        },
+        {
+          "name": "Frequency_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 105
+        },
+        {
+          "name": "Total Active Power_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 106
+        },
+        {
+          "name": "Total kVA_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 107
+        },
+        {
+          "name": "Total kvar_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 108
+        },
+        {
+          "name": "Total kVAh_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 109
+        },
+        {
+          "name": "Total kVArh_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 110
+        },
+        {
+          "name": "Voltage Average_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 164
+        },
+        {
+          "name": "Current Average_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 165
+        },
+        {
+          "name": "Power Factor_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 166
+        },
+        {
+          "name": "Frequency_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 167
+        },
+        {
+          "name": "Total Active Power_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 168
+        },
+        {
+          "name": "Total kVA_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 169
+        },
+        {
+          "name": "Total kvar_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 170
+        },
+        {
+          "name": "Total kVAh_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 171
+        },
+        {
+          "name": "Total kVArh_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 172
+        },
+        {
+          "name": "Average Spindle Speed_min",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 226
+        },
+        {
+          "name": "Average Spindle Speed_max",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 227
+        },
+        {
+          "name": "Tail Stock Draft Motor Current_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 241
+        },
+        {
+          "name": "Tail Stock Draft Motor Torque_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 242
+        },
+        {
+          "name": "Tail Stock Draft Motor Inverter Heat Sink Tempemperature_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 243
+        },
+        {
+          "name": "Tail Stock Draft Motor Frequency_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 244
+        },
+        {
+          "name": "Suction Motor Power_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 245
+        },
+        {
+          "name": "Suction Motor Current_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 246
+        },
+        {
+          "name": "Suction Motor Torque_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 247
+        },
+        {
+          "name": "Suction Motor Inverter Heat Sink Tempemperature_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 248
+        },
+        {
+          "name": "Suction Motor Frequency_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 249
+        },
+        {
+          "name": "Head Stock Draft Motor Power_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 250
+        },
+        {
+          "name": "Head Stock Draft Motor Current_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 251
+        },
+        {
+          "name": "Head Stock Draft Motor Torque_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 252
+        },
+        {
+          "name": "Head Stock Draft Motor Inverter Heat Sink Tempemperature_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 253
+        },
+        {
+          "name": "Head Stock Draft Motor Frequency_totalpeak",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_RINGFRAME_shift",
+          "row": 254
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "SPEEDFRAME",
+      "namedWorkbookRows": 421,
+      "added": [
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_SpeedFrame_minutes",
+          "row": 18
+        },
+        {
+          "name": "flyer_speed",
+          "groupCodes": [
+            600
+          ],
+          "kind": "plc",
+          "source": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_SpeedFrame_minutes",
+          "row": 62
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_SpeedFrame_shift_live",
+          "row": 65
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_SpeedFrame_hourwise",
+          "row": 146
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_SpeedFrame_hourwise",
+          "row": 147
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_SpeedFrame_shift",
+          "row": 19
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "BLOWROOM",
+      "namedWorkbookRows": 180,
+      "added": [
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_shift_live",
+          "row": 23
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_shift_live",
+          "row": 25
+        },
+        {
+          "name": "Efficiency Loss %",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_shift_live",
+          "row": 28
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_shift",
+          "row": 21
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_shift",
+          "row": 23
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_shift",
+          "row": 25
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_shift",
+          "row": 27
+        },
+        {
+          "name": "Efficiency Loss %",
+          "groupCodes": [
+            60
+          ],
+          "kind": "formula",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_shift",
+          "row": 28
+        },
+        {
+          "name": "Time Stamp Actual",
+          "groupCodes": [
+            190
+          ],
+          "kind": "server",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 3
+        },
+        {
+          "name": "Adjusted Time Stamp",
+          "groupCodes": [
+            190
+          ],
+          "kind": "server",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 4
+        },
+        {
+          "name": "Tenant Id",
+          "groupCodes": [
+            190
+          ],
+          "kind": "server",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 5
+        },
+        {
+          "name": "Business Id",
+          "groupCodes": [
+            190
+          ],
+          "kind": "server",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 6
+        },
+        {
+          "name": "Asset Id",
+          "groupCodes": [
+            190
+          ],
+          "kind": "server",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 7
+        },
+        {
+          "name": "Unit Id",
+          "groupCodes": [
+            190
+          ],
+          "kind": "server",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 8
+        },
+        {
+          "name": "Shed Id",
+          "groupCodes": [
+            190
+          ],
+          "kind": "server",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 9
+        },
+        {
+          "name": "Doff Date",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 12
+        },
+        {
+          "name": "Doff Month",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 13
+        },
+        {
+          "name": "Doff Year",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 14
+        },
+        {
+          "name": "Doff Hour",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 15
+        },
+        {
+          "name": "Doff Minute",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 16
+        },
+        {
+          "name": "Count",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 18
+        },
+        {
+          "name": "DOFF Length",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 19
+        },
+        {
+          "name": "COP Content",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 20
+        },
+        {
+          "name": "DOFF Run Time Hour",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 21
+        },
+        {
+          "name": "DOFF Run Time Minute",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 22
+        },
+        {
+          "name": "DOFF Run Time Seconds",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 23
+        },
+        {
+          "name": "Doff Time Minute",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 24
+        },
+        {
+          "name": "Doff Time Seconds",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 25
+        },
+        {
+          "name": "Average speed",
+          "groupCodes": [
+            55
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 26
+        },
+        {
+          "name": "Average Delivery",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 27
+        },
+        {
+          "name": "Units Consumed",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 28
+        },
+        {
+          "name": "Air Consumption",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 29
+        },
+        {
+          "name": "Air Consumption CFM",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 30
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 31
+        },
+        {
+          "name": "Spindle speed Max",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 32
+        },
+        {
+          "name": "Doff Reason",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 33
+        },
+        {
+          "name": "Lot name",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 34
+        },
+        {
+          "name": "Air consumption Per doff",
+          "groupCodes": [
+            160
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 35
+        },
+        {
+          "name": "Doff Length",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 36
+        },
+        {
+          "name": "Tube/bobbin loading time",
+          "groupCodes": [
+            320
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_doff",
+          "row": 37
+        },
+        {
+          "name": "DOFF Time Hour",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 24
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 25
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 26
+        },
+        {
+          "name": "Air Consumption Cu.M",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 27
+        },
+        {
+          "name": "Air Consumption CFM",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 28
+        },
+        {
+          "name": "Count",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 29
+        },
+        {
+          "name": "Average TPI",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 30
+        },
+        {
+          "name": "Spindle Speed",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 32
+        },
+        {
+          "name": "Current Length",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 33
+        },
+        {
+          "name": "delivery speed",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 34
+        },
+        {
+          "name": "SET TPI",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 49
+        },
+        {
+          "name": "No of Doffs",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 50
+        },
+        {
+          "name": "Average Spindle Speed",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 51
+        },
+        {
+          "name": "Average Delivery",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 52
+        },
+        {
+          "name": "Conveted_gpss",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 53
+        },
+        {
+          "name": "Converted UKG",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_hours",
+          "row": 54
+        },
+        {
+          "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_raw_data",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_raw_data",
+          "row": 35
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_raw_data",
+          "row": 36
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_raw_data",
+          "row": 37
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_raw_data",
+          "row": 38
+        },
+        {
+          "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_events",
+          "row": 2
+        },
+        {
+          "name": "Yet to provide the requirements",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_BLOWROOM_faults",
+          "row": 2
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "CARDING",
+      "namedWorkbookRows": 221,
+      "added": [
+        {
+          "name": "Number of Doff",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift",
+          "row": 25
+        },
+        {
+          "name": "Del A%",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift",
+          "row": 40
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift",
+          "row": 44
+        },
+        {
+          "name": "Act Number of Thick Places",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift",
+          "row": 55
+        },
+        {
+          "name": "Avg Can length",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift",
+          "row": 56
+        },
+        {
+          "name": "Calculated Waste",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift",
+          "row": 57
+        },
+        {
+          "name": "Number of Doff",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift_live",
+          "row": 25
+        },
+        {
+          "name": "U%",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift_live",
+          "row": 56
+        },
+        {
+          "name": "Doff Production",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_doff",
+          "row": 22
+        },
+        {
+          "name": "Doff Unit Consumed",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_doff",
+          "row": 24
+        },
+        {
+          "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_raw_data",
+          "row": 2
+        },
+        {
+          "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_events",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_events",
+          "row": 37
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_events",
+          "row": 38
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_events",
+          "row": 39
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_events",
+          "row": 40
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_events",
+          "row": 41
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "COMBER",
+      "namedWorkbookRows": 231,
+      "added": [
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift",
+          "row": 47
+        },
+        {
+          "name": "Avg. Waiting Time for Lap Hour",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift",
+          "row": 56
+        },
+        {
+          "name": "Avg. Waiting Time for Lap H Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift",
+          "row": 57
+        },
+        {
+          "name": "Avg. Waiting Time for can Hour",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift",
+          "row": 58
+        },
+        {
+          "name": "Avg. Waiting Time for can H Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift",
+          "row": 59
+        },
+        {
+          "name": "Calculated Waste",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift",
+          "row": 60
+        },
+        {
+          "name": "Avg. Waiting Time for Lap Hour",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift_live",
+          "row": 58
+        },
+        {
+          "name": "Avg. Waiting Time for Lap H Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift_live",
+          "row": 59
+        },
+        {
+          "name": "Avg. Waiting Time for can Hour",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift_live",
+          "row": 60
+        },
+        {
+          "name": "Avg. Waiting Time for can H Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_shift_live",
+          "row": 61
+        },
+        {
+          "name": "Doff  Report Hour",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 15
+        },
+        {
+          "name": "Doff Report  Minute",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 16
+        },
+        {
+          "name": "DOFF Run Time Seconds",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 24
+        },
+        {
+          "name": "Doff Time  Minute",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 25
+        },
+        {
+          "name": "Doff Time  Seconds",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 26
+        },
+        {
+          "name": "Set DOFF Length",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 27
+        },
+        {
+          "name": "Lot Name",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 29
+        },
+        {
+          "name": "Max Flyer RPM",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 32
+        },
+        {
+          "name": "DOFF Length",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 33
+        },
+        {
+          "name": "Doff Production",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 34
+        },
+        {
+          "name": "required_hank",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 35
+        },
+        {
+          "name": "Number of Thick Places",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_doff",
+          "row": 36
+        },
+        {
+          "name": "Shift Cumulative Thick place",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_hours",
+          "row": 47
+        },
+        {
+          "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_raw_data",
+          "row": 2
+        },
+        {
+          "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_events",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_events",
+          "row": 37
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_events",
+          "row": 38
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_events",
+          "row": 39
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_COMBER_events",
+          "row": 41
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "DRAWFRAMEBREAKER",
+      "namedWorkbookRows": 270,
+      "added": [
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 18
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 20
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 22
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 24
+        },
+        {
+          "name": "Production in kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 25
+        },
+        {
+          "name": "Draft /Cylinder Roller Stoppage",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 30
+        },
+        {
+          "name": "Thick Place stops",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 36
+        },
+        {
+          "name": "Feed Stoppage Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 40
+        },
+        {
+          "name": "Delivery Stoppage Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 42
+        },
+        {
+          "name": "Other Stoppage Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 44
+        },
+        {
+          "name": "Total Breaks in Mins",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 49
+        },
+        {
+          "name": "U %",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 58
+        },
+        {
+          "name": "CV %",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 59
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 64
+        },
+        {
+          "name": "Total Break",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 73
+        },
+        {
+          "name": "Total Feed Breaks",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 75
+        },
+        {
+          "name": "Total Delivery Break",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 76
+        },
+        {
+          "name": "Shift Cumulative Thick place",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_hours",
+          "row": 51
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 18
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 20
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 22
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 24
+        },
+        {
+          "name": "Production in kg",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 25
+        },
+        {
+          "name": "Draft /Cylinder Roller Stoppage",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 30
+        },
+        {
+          "name": "Thick Place stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 36
+        },
+        {
+          "name": "Feed Stoppage Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 40
+        },
+        {
+          "name": "Delivery Stoppage Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 42
+        },
+        {
+          "name": "Other Stoppage Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 44
+        },
+        {
+          "name": "Total Breaks in Mins",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 49
+        },
+        {
+          "name": "Avg Can length",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 73
+        },
+        {
+          "name": "Calculated Waste",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 74
+        },
+        {
+          "name": "Total Break",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 75
+        },
+        {
+          "name": "Total Feed Breaks",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 77
+        },
+        {
+          "name": "Total Delivery Break",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 78
+        },
+        {
+          "name": "DOFF Run Time Minute",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_doff",
+          "row": 22
+        },
+        {
+          "name": "Set DOFF Length",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_doff",
+          "row": 24
+        },
+        {
+          "name": "Doff UKG",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_doff",
+          "row": 27
+        },
+        {
+          "name": "Number of Thick Places",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_doff",
+          "row": 28
+        },
+        {
+          "name": "Max Flyer RPM",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_doff",
+          "row": 32
+        },
+        {
+          "name": "DOFF Length",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_doff",
+          "row": 33
+        },
+        {
+          "name": "Doff Production",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_doff",
+          "row": 34
+        },
+        {
+          "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_raw_data",
+          "row": 2
+        },
+        {
+          "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_events",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_events",
+          "row": 37
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_events",
+          "row": 38
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_events",
+          "row": 39
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_events",
+          "row": 41
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "namedWorkbookRows": 284,
+      "added": [
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 18
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 20
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 22
+        },
+        {
+          "name": "Doff Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 24
+        },
+        {
+          "name": "UKG",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 43
+        },
+        {
+          "name": "Feed Stoppage Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 53
+        },
+        {
+          "name": "Delivery Stoppage Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 55
+        },
+        {
+          "name": "Other Stoppage Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 57
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 67
+        },
+        {
+          "name": "Total Break",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 76
+        },
+        {
+          "name": "Total Feed Breaks",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 78
+        },
+        {
+          "name": "Total Delivery Breaks",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+          "row": 79
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 18
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 20
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 22
+        },
+        {
+          "name": "Doff Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 24
+        },
+        {
+          "name": "Scanning roller stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 31
+        },
+        {
+          "name": "Spectogram Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 41
+        },
+        {
+          "name": "UKG",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 44
+        },
+        {
+          "name": "Feed Stoppage Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 54
+        },
+        {
+          "name": "Delivery Stoppage Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 56
+        },
+        {
+          "name": "Other Stoppage Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 58
+        },
+        {
+          "name": "Avg Can length",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 74
+        },
+        {
+          "name": "Calculated Waste",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 75
+        },
+        {
+          "name": "Total Break",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 76
+        },
+        {
+          "name": "Total Feed Breaks",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 78
+        },
+        {
+          "name": "Total Delivery Breaks",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_shift",
+          "row": 79
+        },
+        {
+          "name": "Average Delivery (m/Min)",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_doff",
+          "row": 18
+        },
+        {
+          "name": "DOFF Run Time Minute",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_doff",
+          "row": 22
+        },
+        {
+          "name": "Set DOFF Length",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_doff",
+          "row": 24
+        },
+        {
+          "name": "Number of Thick Places",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_doff",
+          "row": 28
+        },
+        {
+          "name": "Production_in_Hank",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_doff",
+          "row": 29
+        },
+        {
+          "name": "Max Flyer RPM",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_doff",
+          "row": 32
+        },
+        {
+          "name": "Doff Production",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_doff",
+          "row": 34
+        },
+        {
+          "name": "Shift Cumulative Thick place",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_hours",
+          "row": 50
+        },
+        {
+          "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            530
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
+          "row": 35
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            540
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
+          "row": 36
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            550
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
+          "row": 37
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [
+            560
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
+          "row": 38
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            570
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
+          "row": 39
+        },
+        {
+          "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_events",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_events",
+          "row": 37
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_events",
+          "row": 38
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_events",
+          "row": 39
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_events",
+          "row": 41
+        },
+        {
+          "name": "Yet to provide the requirements",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEFINISHER_faults",
+          "row": 2
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "LAPFORMER",
+      "namedWorkbookRows": 198,
+      "added": [
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 18
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 20
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 22
+        },
+        {
+          "name": "Auto Doff Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 24
+        },
+        {
+          "name": "Number of Doff",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 26
+        },
+        {
+          "name": "Trolley Not Present Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 34
+        },
+        {
+          "name": "Spool Not Present Hour",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 35
+        },
+        {
+          "name": "Spool Not Present Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 36
+        },
+        {
+          "name": "Lot Name",
+          "groupCodes": [
+            130
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 40
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 42
+        },
+        {
+          "name": "Avg. LapWeight in g/m",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 53
+        },
+        {
+          "name": "Avg_lapWeight in Kg",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift_live",
+          "row": 54
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 18
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 20
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 22
+        },
+        {
+          "name": "Auto Doff Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 24
+        },
+        {
+          "name": "Number of Doff",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 26
+        },
+        {
+          "name": "Trolley Not Present Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 34
+        },
+        {
+          "name": "Spool Not Present Hour",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 35
+        },
+        {
+          "name": "Spool Not Present Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 36
+        },
+        {
+          "name": "Calculated Waste",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_shift",
+          "row": 54
+        },
+        {
+          "name": "DOFF Run Time Minute",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_doff",
+          "row": 22
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            500
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_doff",
+          "row": 25
+        },
+        {
+          "name": "Average Doff Time",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_hours",
+          "row": 41
+        },
+        {
+          "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_raw_data",
+          "row": 2
+        },
+        {
+          "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_stoppages",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_stoppages",
+          "row": 37
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_stoppages",
+          "row": 38
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_stoppages",
+          "row": 39
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_LAPFORMER_stoppages",
+          "row": 41
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "RINGFRAME",
+      "namedWorkbookRows": 298,
+      "added": [
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 19
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 28
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 30
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 46
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 47
+        },
+        {
+          "name": "production_in_meters",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 65
+        },
+        {
+          "name": "Actual Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 66
+        },
+        {
+          "name": "PE Loss %",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 67
+        },
+        {
+          "name": "waste kg",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 70
+        },
+        {
+          "name": "SpindleUtilization",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 72
+        },
+        {
+          "name": "Cop Content (g)",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift_live",
+          "row": 79
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 19
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 24
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 26
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 28
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 30
+        },
+        {
+          "name": "Calculated Waste",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 60
+        },
+        {
+          "name": "production_in_meters",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 61
+        },
+        {
+          "name": "Actual Production Kg",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 62
+        },
+        {
+          "name": "PE Loss %",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 63
+        },
+        {
+          "name": "Total Shift Minute",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_shift",
+          "row": 71
+        },
+        {
+          "name": "DOFF Run Time Minute",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_doff",
+          "row": 22
+        },
+        {
+          "name": "Doff Time Minute",
+          "groupCodes": [
+            190
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_doff",
+          "row": 24
+        },
+        {
+          "name": "Average speed",
+          "groupCodes": [
+            55
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_doff",
+          "row": 26
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [
+            190
+          ],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_doff",
+          "row": 31
+        },
+        {
+          "name": "Conveted_gpss",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_hours",
+          "row": 53
+        },
+        {
+          "name": "Time Stamp Actual",
+          "groupCodes": [
+            170
+          ],
+          "kind": "server",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_speed_pattern",
+          "row": 2
+        },
+        {
+          "name": "Shift Number",
+          "groupCodes": [
+            170
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_speed_pattern",
+          "row": 9
+        },
+        {
+          "name": "07 Speed",
+          "groupCodes": [
+            170
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_speed_pattern",
+          "row": 29
+        },
+        {
+          "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_raw_data",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_raw_data",
+          "row": 35
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_raw_data",
+          "row": 36
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_raw_data",
+          "row": 37
+        },
+        {
+          "name": "Ukg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_raw_data",
+          "row": 38
+        },
+        {
+          "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_events",
+          "row": 2
+        },
+        {
+          "name": "Yet to provide the requirements",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_RINGFRAME_faults",
+          "row": 2
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "RINGFRAME_YBS",
+      "namedWorkbookRows": 0,
+      "added": []
+    },
+    {
+      "service": "PMS",
+      "machine": "SPEEDFRAME",
+      "namedWorkbookRows": 320,
+      "added": [
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 18
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 20
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 22
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 24
+        },
+        {
+          "name": "Rovo stop time MINUTE",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 31
+        },
+        {
+          "name": "Creel Stop time MINUTE",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 34
+        },
+        {
+          "name": "BTS Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 39
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 53
+        },
+        {
+          "name": "Upcoming Doff",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 69
+        },
+        {
+          "name": "Total Break",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift_live",
+          "row": 72
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 18
+        },
+        {
+          "name": "Idle Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 20
+        },
+        {
+          "name": "Power Fail Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 22
+        },
+        {
+          "name": "DOFF Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 24
+        },
+        {
+          "name": "Creel Stop",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 32
+        },
+        {
+          "name": "Creel Stop time MINUTE",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 34
+        },
+        {
+          "name": "BTS Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 39
+        },
+        {
+          "name": "Calculated Waste",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 65
+        },
+        {
+          "name": "Total Break",
+          "groupCodes": [
+            50
+          ],
+          "kind": "formula",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_shift",
+          "row": 68
+        },
+        {
+          "name": "Doff End Hour",
+          "groupCodes": [
+            170
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_doff",
+          "row": 20
+        },
+        {
+          "name": "Doff Reason",
+          "groupCodes": [
+            170
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_doff",
+          "row": 33
+        },
+        {
+          "name": "BTS Time MINUTE",
+          "groupCodes": [
+            170
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_doff",
+          "row": 38
+        },
+        {
+          "name": "-",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_hours",
+          "row": 44
+        },
+        {
+          "name": "Number of Roving Breaks",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_hours",
+          "row": 61
+        },
+        {
+          "name": "Number of Sliver Breaks",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_hours",
+          "row": 62
+        },
+        {
+          "name": "Time Stamp Actual",
+          "groupCodes": [
+            140
+          ],
+          "kind": "server",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_speed_pattern",
+          "row": 2
+        },
+        {
+          "name": "Shift Number",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_speed_pattern",
+          "row": 9
+        },
+        {
+          "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_raw_data",
+          "row": 2
+        },
+        {
+          "name": "Overall Machine Utilization",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_raw_data",
+          "row": 34
+        },
+        {
+          "name": "Production Efficiency",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_raw_data",
+          "row": 35
+        },
+        {
+          "name": "Production Kg",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_raw_data",
+          "row": 36
+        },
+        {
+          "name": "GPSS",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_raw_data",
+          "row": 38
+        },
+        {
+          "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_events",
+          "row": 2
+        },
+        {
+          "name": "Yet to provide the requirements",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_faults",
+          "row": 2
+        }
+      ]
+    },
+    {
+      "service": "QMS",
+      "machine": "CARDING",
+      "namedWorkbookRows": 180,
+      "added": [
+        {
+          "name": "Time Stamp Actual",
+          "groupCodes": [
+            50
+          ],
+          "kind": "server",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 2
+        },
+        {
+          "name": "Adjusted Timestamp",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 3
+        },
+        {
+          "name": "Tenant Id",
+          "groupCodes": [
+            50
+          ],
+          "kind": "server",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 4
+        },
+        {
+          "name": "Business Id",
+          "groupCodes": [
+            50
+          ],
+          "kind": "server",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 5
+        },
+        {
+          "name": "Asset Id",
+          "groupCodes": [
+            50
+          ],
+          "kind": "server",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 6
+        },
+        {
+          "name": "Unit Id",
+          "groupCodes": [
+            50
+          ],
+          "kind": "server",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 7
+        },
+        {
+          "name": "Shed Id",
+          "groupCodes": [
+            50
+          ],
+          "kind": "server",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 8
+        },
+        {
+          "name": "Shift Number",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 9
+        },
+        {
+          "name": "Shift Date",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 11
+        },
+        {
+          "name": "Shift Month",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 12
+        },
+        {
+          "name": "Shift Year",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 13
+        },
+        {
+          "name": "Shift Hour",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 14
+        },
+        {
+          "name": "Shift Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 15
+        },
+        {
+          "name": "Sliver Hank",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 16
+        },
+        {
+          "name": "Thick Place Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 45
+        },
+        {
+          "name": "Servo Drive stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 46
+        },
+        {
+          "name": "Delivery 1mtr CV %",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 47
+        },
+        {
+          "name": "Feed 1m CV",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 49
+        },
+        {
+          "name": "No of thick places up to 15%",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 51
+        },
+        {
+          "name": "No of thick places up to 20%",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 52
+        },
+        {
+          "name": "No of thick places up to 25%",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 53
+        },
+        {
+          "name": "ThickPlaces long Period",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 54
+        },
+        {
+          "name": "ThickPlaces short Period",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 55
+        },
+        {
+          "name": "feed Weight g/m (setting)",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 56
+        },
+        {
+          "name": "Thick place (LP) 10% (Set)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 57
+        },
+        {
+          "name": "Thick place (LP) 15% (Set)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 58
+        },
+        {
+          "name": "Thick place (LP) 25% (Set)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 59
+        },
+        {
+          "name": "Thick place (LP) 10% (Act)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 60
+        },
+        {
+          "name": "Thick place (LP) 15% (Act)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 61
+        },
+        {
+          "name": "Thick place (LP) 25% (Act)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 62
+        },
+        {
+          "name": "Thick place (SP) 10% (Set)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 63
+        },
+        {
+          "name": "Thick place (SP) 15% (Set)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 64
+        },
+        {
+          "name": "Thick place (SP) 25% (Set)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 65
+        },
+        {
+          "name": "Thick place (SP) 10% (Act)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 66
+        },
+        {
+          "name": "Thick place (SP) 15% (Act)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 67
+        },
+        {
+          "name": "Thick place (SP) 25% (Act)",
+          "groupCodes": [
+            250
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 68
+        },
+        {
+          "name": "Adjusted Timestamp",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift_live",
+          "row": 4
+        }
+      ]
+    },
+    {
+      "service": "QMS",
+      "machine": "COMBER",
+      "namedWorkbookRows": 100,
+      "added": [
+        {
+          "name": "CV %",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 21
+        },
+        {
+          "name": "Cumulative Thick place",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 24
+        },
+        {
+          "name": "Spectogram cv",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 25
+        },
+        {
+          "name": "Draft Cond. Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 27
+        },
+        {
+          "name": "U% Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 33
+        },
+        {
+          "name": "CV% Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 34
+        },
+        {
+          "name": "Spectrogram Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 36
+        },
+        {
+          "name": "ThikPlace Per Hour",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 44
+        },
+        {
+          "name": "Number Of doff",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 45
+        },
+        {
+          "name": "Thick place_AvgCan",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 46
+        },
+        {
+          "name": "A%",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift",
+          "row": 53
+        },
+        {
+          "name": "Spectogram cv",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift_live",
+          "row": 25
+        },
+        {
+          "name": "Draft Cond. Stops",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift_live",
+          "row": 30
+        },
+        {
+          "name": "U% Stops",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift_live",
+          "row": 36
+        },
+        {
+          "name": "CV% Stops",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift_live",
+          "row": 37
+        },
+        {
+          "name": "Spectrogram Stops",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift_live",
+          "row": 39
+        },
+        {
+          "name": "ThikPlace Per Hour",
+          "groupCodes": [
+            40
+          ],
+          "kind": "formula",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_shift_live",
+          "row": 47
+        },
+        {
+          "name": "U %",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_minutes_time_seri",
+          "row": 17
+        },
+        {
+          "name": "Spectogram",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_COMBER_minutes_time_seri",
+          "row": 19
+        }
+      ]
+    },
+    {
+      "service": "QMS",
+      "machine": "DRAWFRAMEBREAKER",
+      "namedWorkbookRows": 116,
+      "added": [
+        {
+          "name": "U%",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift",
+          "row": 18
+        },
+        {
+          "name": "Shift Cumulative Thick place",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift",
+          "row": 27
+        },
+        {
+          "name": "Feed Roller Stoppage",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift",
+          "row": 28
+        },
+        {
+          "name": "Draft /Cylinder Roller Stoppage",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift",
+          "row": 31
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift",
+          "row": 49
+        },
+        {
+          "name": "Number Of doff",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift",
+          "row": 51
+        },
+        {
+          "name": "Thick place_AvgCan",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift",
+          "row": 52
+        },
+        {
+          "name": "Feed Weight  g/m",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift",
+          "row": 56
+        },
+        {
+          "name": "Feed Roller Stoppage",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
+          "row": 29
+        },
+        {
+          "name": "Draft /Cylinder Roller Stoppage",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
+          "row": 32
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
+          "row": 50
+        },
+        {
+          "name": "Number Of doff",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
+          "row": 52
+        }
+      ]
+    },
+    {
+      "service": "QMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "namedWorkbookRows": 126,
+      "added": [
+        {
+          "name": "Time Stamp Actual",
+          "groupCodes": [],
+          "kind": "server",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 3
+        },
+        {
+          "name": "Adjusted Timestamp",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 4
+        },
+        {
+          "name": "Tenant Id",
+          "groupCodes": [],
+          "kind": "server",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 5
+        },
+        {
+          "name": "Business Id",
+          "groupCodes": [],
+          "kind": "server",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 6
+        },
+        {
+          "name": "Asset Id",
+          "groupCodes": [],
+          "kind": "server",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 7
+        },
+        {
+          "name": "Unit Id",
+          "groupCodes": [],
+          "kind": "server",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 8
+        },
+        {
+          "name": "Shed Id",
+          "groupCodes": [],
+          "kind": "server",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 9
+        },
+        {
+          "name": "CV%(5cm)",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 24
+        },
+        {
+          "name": "Spectogram",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 27
+        },
+        {
+          "name": "Shift Cumulative Thick place",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 30
+        },
+        {
+          "name": "Run Time Hour",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 43
+        },
+        {
+          "name": "Run Time Minute",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 44
+        },
+        {
+          "name": "Thick Place Per Hour",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 45
+        },
+        {
+          "name": "Number Of doff",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 46
+        },
+        {
+          "name": "Thick place_AvgCan",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 47
+        },
+        {
+          "name": "Can Rejection",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 48
+        },
+        {
+          "name": "Feed Weight  g/m",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 49
+        },
+        {
+          "name": "Sliver Trip count Dev",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 50
+        },
+        {
+          "name": "CVM%",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 51
+        },
+        {
+          "name": "CV%(2Cm)",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 52
+        },
+        {
+          "name": "CV%(10Cm)",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 54
+        },
+        {
+          "name": "CV%(25Cm)",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 55
+        },
+        {
+          "name": "CV%(50Cm)",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 56
+        },
+        {
+          "name": "CV%(3m)",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 58
+        },
+        {
+          "name": "CV%(5m)",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 59
+        },
+        {
+          "name": "Cumulative Thick place",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+          "row": 60
+        },
+        {
+          "name": "Shift Number",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 9
+        },
+        {
+          "name": "Shift Date",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 10
+        },
+        {
+          "name": "Shift Month",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 11
+        },
+        {
+          "name": "Shift Year",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 12
+        },
+        {
+          "name": "Shift Hour",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 13
+        },
+        {
+          "name": "Shift Minute",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 14
+        },
+        {
+          "name": "Spectogram",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 26
+        },
+        {
+          "name": "Feed roller stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 30
+        },
+        {
+          "name": "Feed sensor stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 31
+        },
+        {
+          "name": "Scanning roller stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 32
+        },
+        {
+          "name": "Drafting/Calender Roller stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 33
+        },
+        {
+          "name": "Web Guide stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 34
+        },
+        {
+          "name": "Coiler stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 35
+        },
+        {
+          "name": "Infeed Limit stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 36
+        },
+        {
+          "name": "Sliver Monitor stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 37
+        },
+        {
+          "name": "U Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 38
+        },
+        {
+          "name": "CV Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 39
+        },
+        {
+          "name": "Thick Places Stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 40
+        },
+        {
+          "name": "Servo Drive stops",
+          "groupCodes": [
+            50
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAMEFINISHER_shift",
+          "row": 41
+        },
+        {
+          "name": "U%",
+          "groupCodes": [
+            260
+          ],
+          "kind": "plc",
+          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_DRAWFRAME_minutes_time_seri",
+          "row": 18
+        }
+      ]
+    },
+    {
+      "service": "QMS",
+      "machine": "LAPFORMER",
+      "namedWorkbookRows": 50,
+      "added": [
+        {
+          "name": "Lap Weight (g/m)",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_shift_live",
+          "row": 17
+        },
+        {
+          "name": "Actual Lab Weight (g/m)",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_shift_live",
+          "row": 18
+        },
+        {
+          "name": "Lot name",
+          "groupCodes": [
+            130
+          ],
+          "kind": "plc",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_shift_live",
+          "row": 21
+        },
+        {
+          "name": "B/w Lap CV",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_shift_live",
+          "row": 22
+        },
+        {
+          "name": "Avg. Doff Lap Weight (g/m)",
+          "groupCodes": [
+            500
+          ],
+          "kind": "formula",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_shift_live",
+          "row": 27
+        },
+        {
+          "name": "Lap Weight",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_shift",
+          "row": 16
+        },
+        {
+          "name": "Actual Lab Weight",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_shift",
+          "row": 17
+        },
+        {
+          "name": "Actual Lap Weight",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_minutes_time_seri",
+          "row": 16
+        },
+        {
+          "name": "Lot name",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_LAPFORMER_minutes_time_seri",
+          "row": 20
+        }
+      ]
+    },
+    {
+      "service": "QMS",
+      "machine": "RINGFRAME",
+      "namedWorkbookRows": 46,
+      "added": [
+        {
+          "name": "TPI",
+          "groupCodes": [
+            140
+          ],
+          "kind": "plc",
+          "source": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_RINGFRAME_shift_live",
+          "row": 20
+        },
+        {
+          "name": "Compact suction pressure mximum Level",
+          "groupCodes": [
+            130
+          ],
+          "kind": "plc",
+          "source": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_RINGFRAME_shift_live",
+          "row": 49
+        }
+      ]
+    },
+    {
+      "service": "QMS",
+      "machine": "SPEEDFRAME",
+      "namedWorkbookRows": 130,
+      "added": [
+        {
+          "name": "Adjusted Timestamp",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 4
+        },
+        {
+          "name": "TPI (measured TPI)",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 19
+        },
+        {
+          "name": "Avg TPI",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 23
+        },
+        {
+          "name": "Count of Sliver",
+          "groupCodes": [
+            130
+          ],
+          "kind": "formula",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 36
+        },
+        {
+          "name": "Set Creel Draft",
+          "groupCodes": [
+            160
+          ],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 43
+        },
+        {
+          "name": "Set Main Draft",
+          "groupCodes": [
+            160
+          ],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 53
+        },
+        {
+          "name": "Set Total Draft",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 54
+        },
+        {
+          "name": "Number of Roving Breaks",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 55
+        },
+        {
+          "name": "Number of Sliver Breaks",
+          "groupCodes": [
+            40
+          ],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 56
+        },
+        {
+          "name": "Set TPI",
+          "groupCodes": [],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift_live",
+          "row": 57
+        },
+        {
+          "name": "Set TPI",
+          "groupCodes": [],
+          "kind": "formula",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEDFRAME_shift",
+          "row": 57
+        },
+        {
+          "name": "Creal Draft",
+          "groupCodes": [
+            20
+          ],
+          "kind": "plc",
+          "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_SPEEFRAME_minutes_time_seri",
+          "row": 22
+        }
+      ]
+    }
+  ]
+}

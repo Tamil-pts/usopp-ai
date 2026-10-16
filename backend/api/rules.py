@@ -45,6 +45,13 @@ from backend.core.rule_features import catalog, write_json, safe_id, LOCK, NAMES
 def feature_rule_library():
     return catalog()
 
+
+@router.get('/api/rules/references/{filename}/{check_id}')
+def reference_definition(filename:str,check_id:str,reference_hash:str=''):
+    from python_engine.rule_references import load_reference
+    try:return {'definition':load_reference({'referenceFile':filename,'checkId':check_id,'referenceHash':reference_hash})}
+    except (ValueError,OSError) as error:raise HTTPException(400,str(error))
+
 @router.delete('/api/rules/library/{rule_id}')
 def delete_library_rule(rule_id:str):
     """Remove one rule from defaults/modules and unlink it from features/pipelines."""

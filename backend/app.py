@@ -13,7 +13,8 @@ from backend.api import assist, comparison, knowledge, rules, system, validation
 from backend.core.run_history import current_user
 from backend.core import accounts
 from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models, user_settings, br_help, admin_settings, admin_knowledge
-from backend.api import assist_training, assist_flow
+from backend.api import assist_training, assist_flow, project_intelligence
+from backend.api import live_data, data_simulator, dashboard_layouts
 from backend.core.mcp_tools import server as mcp_server, http_app as mcp_app
 from contextlib import asynccontextmanager
 
@@ -25,9 +26,15 @@ async def app_lifespan(app):
     autostart()
     from backend.core.br_help import autostart as start_help_index
     start_help_index()
+    from backend.core import live_collection
+    from backend.core import data_simulator as virtual_plc
+    virtual_plc.autostart()
+    live_collection.start()
     async with mcp_server.session_manager.run():
         try:yield
         finally:
+            live_collection.shutdown()
+            virtual_plc.shutdown()
             from backend.core.local_model_runtime import shutdown
             shutdown()
 
@@ -104,12 +111,16 @@ for feature_router in (system.router, validation.router, metadata.router, knowle
 DIST=RESOURCE_ROOT/'dist'
 app.include_router(assist_settings.router)
 app.include_router(user_settings.router)
+app.include_router(live_data.router)
+app.include_router(data_simulator.router)
+app.include_router(dashboard_layouts.router)
 app.include_router(br_help.router)
 app.include_router(admin_settings.router)
 app.include_router(admin_knowledge.router)
 app.include_router(assist_training.router)
 app.include_router(assist_attachments.router)
 app.include_router(assist_flow.router)
+app.include_router(project_intelligence.router)
 app.include_router(ladder.router)
 app.include_router(mcp_settings.router)
 app.mount('/api/mcp',mcp_app)

@@ -1,0 +1,2413 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-comber-pms-comber-doff",
+  "name": "PMS / Comber / Doff",
+  "service": "PMS",
+  "machine": "Comber",
+  "view": "Doff",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_COMBER_doff",
+    "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Doff Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_date",
+        "doff_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_date",
+      "mongoKey": "doff_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Doff Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Doff Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Doff  Report Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff__report_hour",
+        "doff_hour (HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff__report_hour",
+      "mongoKey": "doff_hour (HH:MM)",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Doff Report  Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_report__minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_report__minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hank"
+      ],
+      "unit": "",
+      "tdEngineKey": "hank",
+      "mongoKey": "hank",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "doff_length",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_production",
+        "production_kgs"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_production",
+      "mongoKey": "production_kgs",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed",
+        "speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed",
+      "mongoKey": "speed",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_delivery",
+      "mongoKey": "average_delivery",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "DOFF Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_hour",
+        "doff_run_time_minute(MM:SS)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_hour",
+      "mongoKey": "doff_run_time_minute(MM:SS)",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "DOFF Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "DOFF Run Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_seconds"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_seconds",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Doff Time  Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minute (MM:SS)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_minute",
+      "mongoKey": "doff_time_minute (MM:SS)",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Doff Time  Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_seconds"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_seconds",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Set DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "set_doff_length",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Units Consumed",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "tdEngineKey": "units_consumed",
+      "mongoKey": "units_consumed",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "Lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Max Flyer RPM",
+      "dataType": "REAL",
+      "groupCodes": [
+        190
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Max_Flyer_RPM",
+        "max_flyer_rpm"
+      ],
+      "unit": "",
+      "tdEngineKey": "Max_Flyer_RPM",
+      "mongoKey": "max_flyer_rpm",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "set_doff_length",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Doff Production",
+        "production_in_kg"
+      ],
+      "unit": "",
+      "tdEngineKey": "Doff Production",
+      "mongoKey": "production_in_kg",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "required_hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "required_hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Number of Thick Places",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thickplace",
+        "number_of_thickplace"
+      ],
+      "unit": "",
+      "tdEngineKey": "no_of_thickplace",
+      "mongoKey": "number_of_thickplace",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date"
+      ],
+      "sourceAliases": [
+        "Shift date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Doff Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "doff_date",
+      "aliases": [
+        "Doff Date"
+      ],
+      "sourceAliases": [
+        "Doff Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Doff Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "doff_month",
+      "aliases": [
+        "Doff Month"
+      ],
+      "sourceAliases": [
+        "Doff Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Doff Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "doff_year",
+      "aliases": [
+        "Doff Year"
+      ],
+      "sourceAliases": [
+        "Doff Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "DOFF Date",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "doff_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "DOFF Date",
+        "Doff Date"
+      ],
+      "sourceAliases": [
+        "DOFF Date",
+        "Doff Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Doff Report Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff__report_hour",
+        "hour"
+      ],
+      "unit": "",
+      "mongoKey": "hour",
+      "tdEngineKey": "doff__report_hour",
+      "aliases": [
+        "Doff Report Hour",
+        "Doff  Report Hour"
+      ],
+      "sourceAliases": [
+        "Doff Report Hour",
+        "Doff  Report Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Doff Report Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_report__minute",
+        "minute"
+      ],
+      "unit": "",
+      "mongoKey": "minute",
+      "tdEngineKey": "doff_report__minute",
+      "aliases": [
+        "Doff Report Minutes",
+        "Doff Report  Minute"
+      ],
+      "sourceAliases": [
+        "Doff Report Minutes",
+        "Doff Report  Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Doff Report Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hour, ':',minute)",
+      "keys": [
+        "doff_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Report Minute",
+        "Doff Report  Minute"
+      ],
+      "sourceAliases": [
+        "Doff Report Minute",
+        "Doff Report  Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Doff End Date",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-' ,date, ' ' ,hour, ':', minute, ':00')",
+      "keys": [
+        "doff_end_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_end_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff End Date"
+      ],
+      "sourceAliases": [
+        "Doff End Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Machine Status",
+      "dataType": "STRING",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "machine_status",
+        "machine_status"
+      ],
+      "unit": "",
+      "mongoKey": "machine_status",
+      "tdEngineKey": "machine_status",
+      "aliases": [
+        "Machine Status"
+      ],
+      "sourceAliases": [
+        "Machine Status"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "mongoKey": "hank_ne",
+      "tdEngineKey": "required_hank",
+      "aliases": [
+        "Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "DOFF Length"
+      ],
+      "sourceAliases": [
+        "DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_production",
+        "production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "production_kgs",
+      "tdEngineKey": "doff_production",
+      "aliases": [
+        "Doff Production"
+      ],
+      "sourceAliases": [
+        "Doff Production"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed",
+        "speed"
+      ],
+      "unit": "",
+      "mongoKey": "speed",
+      "tdEngineKey": "speed",
+      "aliases": [
+        "Speed"
+      ],
+      "sourceAliases": [
+        "Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "mongoKey": "average_delivery",
+      "tdEngineKey": "average_delivery",
+      "aliases": [
+        "Average Delivery"
+      ],
+      "sourceAliases": [
+        "Average Delivery"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Doff Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_hour",
+        "doff_run_time_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_hour",
+      "tdEngineKey": "doff_run_time_hour",
+      "aliases": [
+        "Doff Run Time Hour",
+        "DOFF Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Hour",
+        "DOFF Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Doff Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_minute",
+        "doff_run_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_minutes",
+      "tdEngineKey": "doff_run_time_minute",
+      "aliases": [
+        "Doff Run Time Minute",
+        "DOFF Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Minute",
+        "DOFF Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Doff Run Time Second",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_seconds",
+        "doff_run_time_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_seconds",
+      "tdEngineKey": "doff_run_time_seconds",
+      "aliases": [
+        "Doff Run Time Second",
+        "DOFF Run Time Seconds"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Second",
+        "DOFF Run Time Seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Doff Run Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(doff_run_time_hour * 60) + doff_run_time_minutes + (gte(doff_run_time_seconds, 30) * 1)",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Run Time Seconds",
+        "DOFF Run Time Seconds"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Seconds",
+        "DOFF Run Time Seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Doff Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minutes",
+      "tdEngineKey": "doff_time_minute",
+      "aliases": [
+        "Doff Time Minute",
+        "Doff Time  Minute"
+      ],
+      "sourceAliases": [
+        "Doff Time Minute",
+        "Doff Time  Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Doff Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_seconds",
+        "doff_time_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_seconds",
+      "tdEngineKey": "doff_time_seconds",
+      "aliases": [
+        "Doff Time Seconds",
+        "Doff Time  Seconds"
+      ],
+      "sourceAliases": [
+        "Doff Time Seconds",
+        "Doff Time  Seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Doff Time Minutes and Seconds",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(doff_time_minutes * 60) + doff_time_seconds",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Time Minutes and Seconds",
+        "Doff Time  Minute"
+      ],
+      "sourceAliases": [
+        "Doff Time Minutes and Seconds",
+        "Doff Time  Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Doff Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "set_doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "Doff Length",
+        "DOFF Length"
+      ],
+      "sourceAliases": [
+        "Doff Length",
+        "DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Units Consumed",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "mongoKey": "units_consumed",
+      "tdEngineKey": "units_consumed",
+      "aliases": [
+        "Units Consumed"
+      ],
+      "sourceAliases": [
+        "Units Consumed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name"
+      ],
+      "sourceAliases": [
+        "Lot Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Number of Thick place",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thickplace",
+        "number_of_thickplace"
+      ],
+      "unit": "",
+      "mongoKey": "number_of_thickplace",
+      "tdEngineKey": "no_of_thickplace",
+      "aliases": [
+        "Number of Thick place",
+        "Number of Thick Places"
+      ],
+      "sourceAliases": [
+        "Number of Thick place",
+        "Number of Thick Places"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_kgs/units_consumed",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "mongoKey": "ukg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Ukg"
+      ],
+      "sourceAliases": [
+        "Ukg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hank"
+      ],
+      "unit": "",
+      "mongoKey": "hank",
+      "tdEngineKey": "hank",
+      "aliases": [
+        "Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Doff  Report Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff__report_hour",
+        "doff_hour (HH:MM)"
+      ],
+      "unit": "",
+      "mongoKey": "doff_hour (HH:MM)",
+      "tdEngineKey": "doff__report_hour",
+      "aliases": [
+        "Doff  Report Hour"
+      ],
+      "sourceAliases": [
+        "Doff  Report Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 38
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-39",
+      "name": "Doff Report  Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_report__minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "doff_report__minute",
+      "aliases": [
+        "Doff Report  Minute"
+      ],
+      "sourceAliases": [
+        "Doff Report  Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 39
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-40",
+      "name": "DOFF Run Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "doff_run_time_seconds",
+      "aliases": [
+        "DOFF Run Time Seconds"
+      ],
+      "sourceAliases": [
+        "DOFF Run Time Seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 40
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-41",
+      "name": "Doff Time  Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minute (MM:SS)"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute (MM:SS)",
+      "tdEngineKey": "doff_time_minute",
+      "aliases": [
+        "Doff Time  Minute"
+      ],
+      "sourceAliases": [
+        "Doff Time  Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 41
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-42",
+      "name": "Doff Time  Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "doff_time_seconds",
+      "aliases": [
+        "Doff Time  Seconds"
+      ],
+      "sourceAliases": [
+        "Doff Time  Seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 42
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-43",
+      "name": "Set DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "set_doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "Set DOFF Length"
+      ],
+      "sourceAliases": [
+        "Set DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 43
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-44",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "Lot_name",
+      "aliases": [
+        "Lot Name"
+      ],
+      "sourceAliases": [
+        "Lot Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 44
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-45",
+      "name": "Max Flyer RPM",
+      "dataType": "REAL",
+      "groupCodes": [
+        190
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Max_Flyer_RPM",
+        "max_flyer_rpm"
+      ],
+      "unit": "",
+      "mongoKey": "max_flyer_rpm",
+      "tdEngineKey": "Max_Flyer_RPM",
+      "aliases": [
+        "Max Flyer RPM"
+      ],
+      "sourceAliases": [
+        "Max Flyer RPM"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 45
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-46",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "set_doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "DOFF Length"
+      ],
+      "sourceAliases": [
+        "DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 46
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-47",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Doff Production",
+        "production_in_kg"
+      ],
+      "unit": "",
+      "mongoKey": "production_in_kg",
+      "tdEngineKey": "Doff Production",
+      "aliases": [
+        "Doff Production"
+      ],
+      "sourceAliases": [
+        "Doff Production"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 47
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-48",
+      "name": "required_hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "mongoKey": "hank_ne",
+      "tdEngineKey": "required_hank",
+      "aliases": [
+        "required_hank"
+      ],
+      "sourceAliases": [
+        "required_hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 48
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-49",
+      "name": "Number of Thick Places",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thickplace",
+        "number_of_thickplace"
+      ],
+      "unit": "",
+      "mongoKey": "number_of_thickplace",
+      "tdEngineKey": "no_of_thickplace",
+      "aliases": [
+        "Number of Thick Places"
+      ],
+      "sourceAliases": [
+        "Number of Thick Places"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_doff",
+        "row": 49
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 29,
+      "name": "Lot Name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Doff Date",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-12"
+      ]
+    },
+    {
+      "title": "Doff Month",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-13"
+      ]
+    },
+    {
+      "title": "Doff Year",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-14"
+      ]
+    },
+    {
+      "title": "Doff  Report Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-15"
+      ]
+    },
+    {
+      "title": "Doff Report  Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-16"
+      ]
+    },
+    {
+      "title": "DOFF Length",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Doff Date trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-12"
+      ]
+    },
+    {
+      "title": "Doff readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    },
+    {
+      "title": "Doff readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-23",
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-32",
+        "row-33",
+        "row-34",
+        "row-35",
+        "row-36"
+      ]
+    }
+  ]
+}

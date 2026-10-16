@@ -53,7 +53,7 @@ def network_errors(networks):
         if n.get('mode')=='exact':
             try:
                 parsed=fragment(n.get('xml',''))
-                if len(parsed)!=1 or not elements(parsed[0]): problems.append('Select one reference network containing ladder elements per check.')
+                if len(parsed)!=1 or not any(tag(node) in {'contact','coil','functionblock','function','analog'} for node in parsed[0].iter()): problems.append('Select one reference network containing ladder elements per check.')
             except (ET.ParseError,ValueError): problems.append('The reference network XML is incomplete or invalid.')
         elif not n.get('elements'): problems.append('Add a contact, coil or function block.')
         else:

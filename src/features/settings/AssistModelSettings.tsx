@@ -1,49 +1,100 @@
 import {useEffect,useRef,useState} from 'react';
+import {ArrowRight,Bot,Check,Cloud,Cpu,FolderOpen,LoaderCircle,Monitor,Plug,Power,RefreshCw,Settings2} from 'lucide-react';
 import {useAccount} from '../account/AuthProvider';
 import {apiJson} from '../rules/library';
 import {LocalFileTree} from '../../shared/LocalFileBrowser';
 import {copyChatText} from '../assist/chatFiles';
 import './assist-model-settings.css';
 
-export function AssistModelSettings() {
+const MODES=[
+ {id:'embedded',name:'Local CPU model',description:'Recommended · Runs on your uSOPp server',Icon:Cpu},
+ {id:'local',name:'Engineering tools',description:'Validation and log decoding without AI',Icon:Settings2},
+ {id:'ollama',name:'Ollama',description:'Connect an existing model service',Icon:Plug},
+ {id:'api',name:'Model API',description:'Connect a compatible provider',Icon:Cloud},
+];
+export function AssistModelSettings(){
  const {user}=useAccount();const admin=user.role==='admin';
- const [cfg,setCfg]=useState({provider:'local',baseUrl:'http://127.0.0.1:11434',model:'',modelPath:'',localPort:8202,contextSize:4096,cpuThreads:4,maxTokens:512,responseTimeoutSeconds:1800,autoStart:false,hasApiKey:false});
- const [cpu,setCpu]=useState<any>(null);const installation=useRef(false);
- const [key,setKey]=useState(''),[clearKey,setClearKey]=useState(false),[models,setModels]=useState<string[]>([]),[message,setMessage]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[browse,setBrowse]=useState(false),[runtime,setRuntime]=useState<any>(null);
+ const [cfg,setCfg]=useState({provider:'embedded',baseUrl:'http://127.0.0.1:8202/v1',model:'chopper-local',modelPath:'',modelFileAvailable:false,localPort:8202,contextSize:4096,cpuThreads:4,maxTokens:512,responseTimeoutSeconds:1800,autoStart:true,allowFallback:true,hasApiKey:false});
+ const [cpu,setCpu]=useState<any>(null),[runtime,setRuntime]=useState<any>(null);
+ const [key,setKey]=useState(''),[clearKey,setClearKey]=useState(false),[models,setModels]=useState<string[]>([]);
+ const [message,setMessage]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[browse,setBrowse]=useState(false),[dirty,setDirty]=useState(false);
  const [mcp,setMcp]=useState<any>(null),[token,setToken]=useState('');
- useEffect(()=>{if(!admin)return;apiJson('/api/assist/model').then(setCfg).catch(e=>setError(e.message));apiJson('/api/assist/mcp').then(setMcp).catch(()=>{})},[]);
- const refresh=()=>apiJson('/api/assist/model/runtime').then(setRuntime).catch(e=>setError(e.message));
- useEffect(()=>{if(!admin)return;let active=true;const poll=()=>apiJson('/api/assist/model/cpu').then(state=>{if(!active)return;setCpu(state);if(installation.current&&['installed','failed'].includes(state.phase)){installation.current=false;if(state.phase==='installed'){void apiJson('/api/assist/model').then(setCfg);void refresh();setMessage('CPU model installed. Chopper is loading it; settings and weights will remain after updates.')}else setError(state.error)}}).catch(e=>{if(active)setError(e.message)});void poll();const timer=setInterval(()=>void poll(),4000);return()=>{active=false;clearInterval(timer)}},[admin]);
- const setup=async()=>{setBusy(true);setError('');try{setCpu(await apiJson('/api/assist/model/cpu/install',{}));installation.current=true;setMessage('CPU model setup runs in the background. You can continue validation.')}catch(e:any){setError(e.message)}finally{setBusy(false)}};
- useEffect(()=>{if(admin&&cfg.provider==='embedded'){void refresh();const timer=setInterval(()=>void refresh(),5000);return()=>clearInterval(timer)}},[admin,cfg.provider]);
- const save=async(check=false)=>{setBusy(true);setMessage('');setError('');try {const saved=await apiJson('/api/assist/model',{...cfg,apiKey:key,clearApiKey:clearKey});setCfg(saved);setKey('');setClearKey(false);if(check){const result=await apiJson('/api/assist/model/check',{});setModels(result.models||[]);setMessage(result.message)}else setMessage('Chopper model connection saved.')}catch(e:any){setError(e.message)}finally{setBusy(false)}};
- const action=async(which:'start'|'stop'|'restart')=>{setBusy(true);setError('');setMessage('');try {if(which!=='stop'){const saved=await apiJson('/api/assist/model',{...cfg,apiKey:key,clearApiKey:clearKey});setCfg(saved);setKey('');setClearKey(false)}const state=await apiJson(`/api/assist/model/runtime/${which}`,{});setRuntime(state);setMessage(state.message||'Local model stopped.')}catch(e:any){setError(e.message)}finally{setBusy(false)}};
- const testModel=async()=>{setBusy(true);setError('');setMessage('Running the short Chopper connection test…');try{const result=await apiJson('/api/assist/model/check',{});setRuntime(result);setModels(result.models||[]);setMessage(result.message||'Chopper test completed.')}catch(e:any){setMessage('');setError(e.message)}finally{setBusy(false)}};
- const runtimeLabel=runtime?.ready?'Ready — model loaded and answering checks':runtime?.running?'Starting — model process is running but not ready yet':runtime?.failed?`Model process exited with code ${runtime.processExitCode}`:runtime?.processExitCode!==null&&runtime?.processExitCode!==undefined?'Model process stopped':runtime?.runtimeAvailable?'Included runtime available — model stopped':'Local runtime not found; use the complete Windows package or updated CPU container';
+ const installation=useRef(false);
+ const refresh=()=>apiJson('/api/assist/model/runtime').then(setRuntime);
+ const patch=(value:Partial<typeof cfg>)=>{setCfg(current=>({...current,...value}));setDirty(true);setMessage('')};
+ useEffect(()=>{
+  if(!admin)return;let active=true;
+  apiJson('/api/assist/model').then(value=>{if(active)setCfg(value)}).catch(reason=>{if(active)setError(reason.message)});
+  apiJson('/api/assist/mcp').then(value=>{if(active)setMcp(value)}).catch(()=>{});
+  const poll=()=>apiJson('/api/assist/model/cpu').then(state=>{
+   if(!active)return;setCpu(state);
+   if(installation.current&&['installed','failed'].includes(state.phase)){
+    installation.current=false;
+    if(state.phase==='installed'){void apiJson('/api/assist/model').then(value=>{if(active){setCfg(value);setDirty(false)}});void refresh().catch(()=>{});setMessage('Local model installed. Chopper is loading; wait for Ready.')}
+    else setError(state.error);
+   }
+  }).catch(reason=>{if(active)setError(reason.message)});
+  void poll();const timer=setInterval(()=>void poll(),4000);
+  return()=>{active=false;clearInterval(timer)};
+ },[admin]);
+ useEffect(()=>{
+  if(!admin||cfg.provider!=='embedded')return;let active=true;
+  const poll=()=>apiJson('/api/assist/model/runtime').then(value=>{if(active)setRuntime(value)}).catch(reason=>{if(active)setError(reason.message)});
+  void poll();const timer=setInterval(()=>void poll(),5000);return()=>{active=false;clearInterval(timer)};
+ },[admin,cfg.provider]);
+ const setup=async(modelId='primary')=>{
+  setBusy(true);setError('');try{setCpu(await apiJson('/api/assist/model/cpu/install',{modelId}));installation.current=true;setMessage('Model setup is running in the background. You can continue validation.')}catch(reason:any){setError(reason.message)}finally{setBusy(false)}
+ };
+ const selectModel=async(modelId:string)=>{
+  setBusy(true);setError('');try{setCfg(await apiJson('/api/assist/model/cpu/select',{modelId}));setDirty(false);setRuntime(await apiJson('/api/assist/model/runtime/start',{}));setMessage('Selected model is loading. Wait for Ready.')}catch(reason:any){setError(reason.message)}finally{setBusy(false)}
+ };
+ const save=async(check=false)=>{
+  setBusy(true);setMessage('');setError('');try{
+   setCfg(await apiJson('/api/assist/model',{...cfg,apiKey:key,clearApiKey:clearKey}));setKey('');setClearKey(false);setDirty(false);
+   if(check){const result=await apiJson('/api/assist/model/check',{});setModels(result.models||[]);setMessage(result.message)}else setMessage('Chopper settings saved.');
+  }catch(reason:any){setError(reason.message)}finally{setBusy(false)}
+ };
+ const action=async(which:'start'|'stop'|'restart')=>{
+  setBusy(true);setError('');setMessage('');try{
+   if(which!=='stop'){
+    const settings={...cfg,provider:'embedded',modelPath:cfg.modelPath||(cpu?.installed?cpu.modelPath:''),apiKey:key,clearApiKey:clearKey};
+    setCfg(await apiJson('/api/assist/model',settings));setDirty(false);setKey('');setClearKey(false);
+   }
+   const state=await apiJson(`/api/assist/model/runtime/${which}`,{});setRuntime(state);setMessage(state.message||'Local model stopped.');
+  }catch(reason:any){setError(reason.message)}finally{setBusy(false)}
+ };
+ const testModel=async()=>{
+  setBusy(true);setError('');setMessage('Checking Chopper…');try{const result=await apiJson('/api/assist/model/check',{});setModels(result.models||[]);setMessage(result.message||'Connection check complete.');await refresh()}catch(reason:any){setMessage('');setError(reason.message)}finally{setBusy(false)}
+ };
  if(!admin)return null;
- return <><div className="card setting assistModelSettings"><h3>Chopper · AI connection</h3><p>Local log decoding and validation work without a model. Chopper local model uses the runtime included with uSOPp and a GGUF file on this computer.</p>
- <div><b>Small CPU model: Qwen2.5-Coder 1.5B Instruct</b><p>One-time download: 1.12 GB · Apache 2.0. Runs on the uSOPp server with the included llama.cpp runtime. No Ollama or GPU is needed.</p><button className="btn primary" disabled={busy||['preparing','downloading','verifying'].includes(cpu?.phase)} onClick={()=>void setup()}>{cpu?.installed?'Use installed CPU model':'Set up small CPU model'}</button>{['preparing','downloading','verifying'].includes(cpu?.phase)&&<p role="status">{cpu.phase==='downloading'?`Downloading: ${cpu.percent}%`:cpu.phase==='verifying'?'Checking model checksum…':'Preparing model…'}</p>}{cpu?.error&&<p role="alert">{cpu.error}</p>}</div>
- <label>Mode<select className="textInput" disabled={!admin||busy} value={cfg.provider} onChange={e=>{setCfg({...cfg,provider:e.target.value});setMessage('')}}><option value="local">Local engineering tools</option><option value="embedded">Chopper local model · included runtime</option><option value="ollama">External Ollama model</option><option value="api">API / own compatible model</option></select></label>
- {cfg.provider!=='local'&&<label>Model response timeout (minutes)<input className="textInput" type="number" min={0.5} max={30} step={0.5} disabled={busy} value={(cfg.responseTimeoutSeconds||1800)/60} onChange={e=>setCfg({...cfg,responseTimeoutSeconds:Math.round(Number(e.target.value)*60)})}/><small>Default: 30 minutes. CPU queue waiting and answer generation share this window. Project reading time also depends on project size.</small></label>}
- {cfg.provider==='embedded'?<>
- <label>GGUF model file<input className="textInput" disabled={busy} value={cfg.modelPath||''} onChange={e=>setCfg({...cfg,modelPath:e.target.value})} placeholder="C:\Models\your-model.gguf"/></label>
- <button className="btn" disabled={busy} onClick={()=>setBrowse(true)}>Browse server files</button>
- <div className="assistModelControls">
-  <label>Local model port<input className="textInput" type="number" min={8200} max={8500} disabled={busy} value={cfg.localPort||8202} onChange={e=>setCfg({...cfg,localPort:Number(e.target.value)})}/></label>
-  <label>Context tokens<input className="textInput" type="number" min={512} max={32768} disabled={busy} value={cfg.contextSize||4096} onChange={e=>setCfg({...cfg,contextSize:Number(e.target.value)})}/></label>
-  <label>CPU threads<input className="textInput" type="number" min={1} max={64} disabled={busy} value={cfg.cpuThreads} onChange={e=>setCfg({...cfg,cpuThreads:Number(e.target.value)})}/></label>
-  <label>Answer tokens<input className="textInput" type="number" min={64} max={2048} step={64} disabled={busy} value={cfg.maxTokens||512} onChange={e=>setCfg({...cfg,maxTokens:Number(e.target.value)})}/><small>Higher limits allow longer answers and need more time.</small></label>
- </div>
- <label className="modelStartup"><input type="checkbox" disabled={busy} checked={cfg.autoStart} onChange={e=>setCfg({...cfg,autoStart:e.target.checked})}/>Start this model when the server starts</label>
- <p role="status">{runtimeLabel}{runtime?.port?` (port ${runtime.port})`:''}</p>
- {runtime?.failed&&<p role="alert">The model process exited unexpectedly. Review the runtime log below, then restart the model.</p>}
- <p>Test prompt: <code>Connection check.</code> Chopper is asked to reply with <code>OK</code>. A successful check reports its response time. Project questions take longer because Chopper reads project evidence.</p>
- <small>Restart stops the current local model process and any answer it is generating, then starts it again with the saved settings.</small>
- <div className="actions"><button className="btn primary" disabled={busy||!cfg.modelPath||runtime?.running} onClick={()=>void action('start')}>Start local model</button><button className="btn" disabled={busy||!cfg.modelPath} onClick={()=>void action('restart')}>Restart local model</button><button className="btn" disabled={busy||!runtime?.running} onClick={()=>void action('stop')}>Stop local model</button><button className="btn" disabled={busy} onClick={()=>void refresh()}>Refresh status</button><button className="btn" disabled={busy||!runtime?.ready} onClick={()=>void testModel()}>Test Chopper</button></div>
- {runtime?.logFile&&<small>Runtime log: <code>{runtime.logFile}</code></small>}
- <small>Model weights are separate from the EXE. Choose a model that fits the server's RAM. The model listens only on this computer; LAN users use Chopper through uSOPp.</small>
-</>:cfg.provider!=='local'&&<><label>Model service base URL<input className="textInput" disabled={!admin||busy} value={cfg.baseUrl} onChange={e=>setCfg({...cfg,baseUrl:e.target.value})}/></label><label>Model name<input className="textInput" list="chopperModels" disabled={!admin||busy} value={cfg.model} onChange={e=>setCfg({...cfg,model:e.target.value})}/><datalist id="chopperModels">{models.map(m=><option key={m} value={m}/>)}</datalist></label>{cfg.provider==='api'&&<><label>API key<input className="textInput" type="password" autoComplete="new-password" disabled={!admin||busy} value={key} onChange={e=>setKey(e.target.value)} placeholder={cfg.hasApiKey?'Saved; leave blank to keep it':'Optional for your local API'}/></label>{cfg.hasApiKey&&<label><input type="checkbox" disabled={!admin||busy} checked={clearKey} onChange={e=>setClearKey(e.target.checked)}/>Remove saved key</label>}</>}<small>Use the service address on the uSOPp server. API bases generally end in /v1.</small></>}
- {admin?<div className="actions"><button className="btn primary" disabled={busy} onClick={()=>void save()}>{cfg.provider==='embedded'?'Save model settings':'Save connection'}</button>{cfg.provider!=='embedded'&&<button className="btn" disabled={busy} onClick={()=>void save(true)}>Save &amp; check</button>}</div>:<p>Ask the administrator to configure the shared model.</p>}{message&&<p role="status">{message}</p>}{error&&<p role="alert">{error}</p>}
- <LocalFileTree open={browse} onClose={()=>setBrowse(false)} allowedExts={['.gguf']} selectedPath={cfg.modelPath} onSelect={path=>setCfg({...cfg,modelPath:path})}/></div>
- <div className="card setting"><h3>Chopper · MCP tools</h3><p>Connect an MCP client to the same application. It can inspect B&amp;R sources, find variables, read ladder models, prepare rule drafts and run validation or metadata generation.</p><p><b>Endpoint:</b> <code>{mcp?.endpoint||'Loading...'}</code></p><small>{mcp?.protocol}. Source edits remain reviewable in the uSOPp editor.</small><div className="actions"><button className="btn" disabled={busy} onClick={()=>{setError('');apiJson('/api/assist/mcp/token',{}).then(r=>{setToken(r.token);setMessage(`MCP token created; expires in ${Math.round(r.expiresInSeconds/3600)} hours.`)}).catch(e=>setError(e.message))}}>Create access token</button>{token&&<><button className="btn" onClick={()=>void copyChatText(token).then(()=>setMessage('Token copied.'))}>Copy token</button><button className="btn" onClick={()=>void apiJson('/api/assist/mcp/revoke',{token}).then(()=>{setToken('');setMessage('MCP token revoked.')})}>Revoke token</button></>}</div>{token&&<p>Token available to copy during this visit. Use <code>Authorization: Bearer &lt;token&gt;</code> in your MCP client.</p>}</div></>;
+ const installing=['preparing','downloading','verifying'].includes(cpu?.phase);
+ const ready=runtime?.ready,running=runtime?.running,modelAvailable=cfg.modelFileAvailable||cpu?.installed||(dirty&&!!cfg.modelPath);
+ const statusLabel=ready?'Ready':running?'Starting':runtime?.failed?'Needs attention':'Stopped';
+ const stages=[{name:'Runtime',done:runtime?.runtimeAvailable},{name:'Model file',done:modelAvailable},{name:'Active',done:running},{name:'Ready',done:ready}];
+ return <><section className="card setting assistModelSettings wide">
+  <header className="modelSetupHead"><div className="modelSetupIcon"><Bot size={26}/></div><div><h3>Chopper setup</h3><p>Choose a connection. Your local CPU model is ready to activate once its file is installed.</p></div>{cfg.provider==='embedded'&&<span className={'modelState '+(ready?'ready':running?'loading':'stopped')}>{running&&!ready?<LoaderCircle size={15} className="modelSpinning"/>:<span className="modelStateDot"/>}{statusLabel}</span>}</header>
+  <div className="modelModeGrid" role="group" aria-label="Chopper connection mode">{MODES.map(({id,name,description,Icon})=><button type="button" key={id} disabled={busy||installing} className={'modelMode '+(cfg.provider===id?'selected':'')} aria-pressed={cfg.provider===id} onClick={()=>patch({provider:id,...(id==='embedded'?{autoStart:true}:{}),...(id==='ollama'?{baseUrl:'http://127.0.0.1:11434',model:cfg.provider==='ollama'?cfg.model:''}:id==='api'?{baseUrl:cfg.provider==='api'?cfg.baseUrl:'',model:cfg.provider==='api'?cfg.model:''}:{})})}><Icon size={21}/><strong>{name}</strong><small>{description}</small>{cfg.provider===id&&<Check size={15} className="modelModeCheck"/>}</button>)}</div>
+  {cfg.provider==='embedded'?<>
+   <div className="modelConnectionFlow" aria-label="Browser connects to uSOPp server, which runs the local CPU model"><span><Monitor size={20}/><b>Your browser</b></span><ArrowRight size={18}/><span><Bot size={20}/><b>uSOPp server</b></span><ArrowRight size={18}/><span><Cpu size={20}/><b>Local CPU model</b></span></div>
+   <ol className="modelSetupStages">{stages.map((stage,index)=><li key={stage.name} className={stage.done?'complete':''}><span>{stage.done?<Check size={15}/>:index+1}</span>{stage.name}</li>)}</ol>
+   <div className="modelActivation"><div><b>{cpu?.model?.name||'Qwen2.5-Coder 1.5B Instruct · CPU'}</b><p>{ready?'Chopper is available to all signed-in users.':running?'Loading the model. Engineering validation remains available.':modelAvailable?'Activate the installed model to answer engineering questions.':'Set up the CPU model once, or select your own GGUF under Advanced settings.'}</p><small>One-time setup: 2.10 GB ? 1.5B fallback retained · CPU runtime included · No Ollama service required.</small></div><div className="actions">{modelAvailable?<button className="btn primary" disabled={busy||installing||(running&&!dirty)} onClick={()=>void action(running?'restart':'start')}><Power size={16}/>{ready&&!dirty?'Chopper active':running&&!dirty?'Loading…':'Activate local Chopper'}</button>:<button className="btn primary" disabled={busy||installing} onClick={()=>void setup()}><Cpu size={16}/>{installing?'Setting up…':'Set up local Chopper'}</button>}</div></div>
+   {installing&&<div className="modelInstallProgress" role="status"><progress max={100} value={cpu.phase==='downloading'?cpu.percent:undefined}/><span>{cpu.phase==='downloading'?`Downloading ${cpu.percent}%`:cpu.phase==='verifying'?'Verifying model file…':'Preparing setup…'}</span></div>}
+   {cpu?.error&&<p className="failText" role="alert">{cpu.error}</p>}
+   <div className="modelCpuChoices">{cpu?.models?.map((item:any)=><div key={item.choice}><b>{item.model.name}</b><small>{item.model.license} · {(item.model.size/1e9).toFixed(2)} GB · {item.installed?'Installed':'Not installed'}</small><button className="btn" disabled={busy||installing||!item.installed} onClick={()=>void selectModel(item.choice)}>Use {item.choice==='primary'?'3B primary':'1.5B fallback'}</button>{!item.installed&&<button className="btn" disabled={busy||installing} onClick={()=>void setup(item.choice)}>Install {item.choice==='primary'?'3B':'1.5B'}</button>}</div>)}</div>
+   <label className="modelStartup"><input type="checkbox" checked={cfg.allowFallback??true} onChange={event=>patch({allowFallback:event.target.checked})}/><span><b>Use installed 1.5B if the primary cannot start</b><small>Only one model runs at a time. No download occurs during startup.</small></span></label>
+   {runtime&&<p>{runtime.modelName||'No model running'} · {runtime.ramMB==null?'RAM —':`${runtime.ramMB} MB RAM`} · {runtime.contextLimit||cfg.contextSize} context tokens{runtime.responseSeconds!=null?` · Last answer ${runtime.responseSeconds}s`:''}{runtime.fallbackReason?` · ${runtime.fallbackReason}`:''}</p>}
+   {!runtime?.runtimeAvailable&&runtime&&<p className="failText">The local runtime is missing. Install the complete application package.</p>}
+   <label className="modelStartup"><input type="checkbox" disabled={busy} checked={cfg.autoStart} onChange={event=>patch({autoStart:event.target.checked})}/><span><b>Start with the server</b><small>Load this model automatically when uSOPp starts.</small></span></label>
+   <div className="actions modelRuntimeActions"><button className="btn" disabled={busy||!ready||dirty} onClick={()=>void testModel()}>Check connection</button><button className="btn" disabled={busy||!running} onClick={()=>void action('restart')}><RefreshCw size={15}/>Restart</button><button className="btn" disabled={busy||!running} onClick={()=>void action('stop')}>Stop</button><button className="btn" disabled={busy} onClick={()=>void refresh().catch(reason=>setError(reason.message))}>Refresh status</button></div>
+  </>:cfg.provider==='local'?<div className="modelToolsNotice"><Settings2 size={25}/><div><b>Engineering tools</b><p>Validation, metadata generation and local log decoding work without a model. Chopper also provides workflow guides.</p></div></div>:<div className="assistExternalFields"><label>Service base URL<input className="textInput" disabled={busy} value={cfg.baseUrl} onChange={event=>patch({baseUrl:event.target.value})} placeholder={cfg.provider==='ollama'?'http://127.0.0.1:11434':'https://your-provider/v1'}/></label><label>Model name<input className="textInput" list="chopperModels" disabled={busy} value={cfg.model} onChange={event=>patch({model:event.target.value})}/><datalist id="chopperModels">{models.map(model=><option key={model} value={model}/>)}</datalist></label>{cfg.provider==='api'&&<label>API key<input className="textInput" type="password" autoComplete="new-password" disabled={busy} value={key} onChange={event=>{setKey(event.target.value);setDirty(true)}} placeholder={cfg.hasApiKey?'Saved; leave blank to keep it':'Optional for a local API'}/>{cfg.hasApiKey&&<span><input type="checkbox" checked={clearKey} onChange={event=>{setClearKey(event.target.checked);setDirty(true)}}/> Remove saved key</span>}</label>}<small>Use the service address reachable from the uSOPp server.</small></div>}
+  <details className="modelAdvanced"><summary><Settings2 size={16}/> Advanced settings</summary>
+   {cfg.provider==='embedded'&&<><label>GGUF file on the server<input className="textInput" disabled={busy} value={cfg.modelPath} onChange={event=>patch({modelPath:event.target.value})}/></label><button className="btn" disabled={busy} onClick={()=>setBrowse(true)}><FolderOpen size={15}/>Browse server files</button><div className="assistModelControls"><label>Model port<input className="textInput" type="number" min={8200} max={8500} disabled={busy} value={cfg.localPort} onChange={event=>patch({localPort:Number(event.target.value)})}/></label><label>Context tokens<input className="textInput" type="number" min={512} max={32768} disabled={busy} value={cfg.contextSize} onChange={event=>patch({contextSize:Number(event.target.value)})}/></label><label>CPU threads<input className="textInput" type="number" min={1} max={64} disabled={busy} value={cfg.cpuThreads} onChange={event=>patch({cpuThreads:Number(event.target.value)})}/></label><label>Answer tokens<input className="textInput" type="number" min={64} max={2048} step={64} disabled={busy} value={cfg.maxTokens} onChange={event=>patch({maxTokens:Number(event.target.value)})}/></label></div></>}
+   {cfg.provider!=='local'&&<label>Response timeout (minutes)<input className="textInput" type="number" min={0.5} max={30} step={0.5} disabled={busy} value={cfg.responseTimeoutSeconds/60} onChange={event=>patch({responseTimeoutSeconds:Math.round(Number(event.target.value)*60)})}/><small>Includes CPU queue time and answer generation.</small></label>}
+   {runtime?.logFile&&<p>Runtime log: <code>{runtime.logFile}</code></p>}
+   {cfg.provider==='embedded'&&!installing&&<button className="btn" disabled={busy} onClick={()=>void setup()}>{cpu?.installed?'Verify and use the bundled CPU model':'Install the bundled CPU model'}</button>}
+  </details>
+  <footer className="modelSaveBar"><span>{dirty?'Unsaved changes':cfg.provider==='embedded'&&runtime?.ready?'Connected to local Chopper':'Settings saved on this server'}</span><div className="actions"><button className="btn primary" disabled={busy||installing} onClick={()=>void save()}>Save settings</button>{!['local','embedded'].includes(cfg.provider)&&<button className="btn" disabled={busy} onClick={()=>void save(true)}>Save & check</button>}</div></footer>
+  {message&&<p className="modelFeedback" role="status">{message}</p>}{error&&<p className="failText" role="alert">{error}</p>}
+  <LocalFileTree open={browse} onClose={()=>setBrowse(false)} allowedExts={['.gguf']} selectedPath={cfg.modelPath} onSelect={path=>patch({modelPath:path})}/>
+ </section><details className="card setting modelMcp"><summary>Advanced integration · Chopper MCP tools</summary><p>Connect an MCP client to this application to inspect sources, prepare rule drafts and run engineering tools.</p><p>Endpoint: <code>{mcp?.endpoint||'Loading…'}</code></p><small>{mcp?.protocol}</small><div className="actions"><button className="btn" disabled={busy} onClick={()=>{setError('');apiJson('/api/assist/mcp/token',{}).then(result=>{setToken(result.token);setMessage(`MCP token created for ${Math.round(result.expiresInSeconds/3600)} hours.`)}).catch(reason=>setError(reason.message))}}>Create access token</button>{token&&<><button className="btn" onClick={()=>void copyChatText(token).then(()=>setMessage('Token copied.')).catch(reason=>setError(reason.message))}>Copy token</button><button className="btn" onClick={()=>void apiJson('/api/assist/mcp/revoke',{token}).then(()=>{setToken('');setMessage('Token revoked.')}).catch(reason=>setError(reason.message))}>Revoke token</button></>}</div></details></>;
 }

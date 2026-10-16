@@ -3,7 +3,7 @@ import hashlib
 import os
 import tempfile
 from threading import RLock
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from backend.core.runtime import (
     KNOWLEDGE,
@@ -19,6 +19,75 @@ from backend.core.runtime import _local_path, _local_session
 
 router = APIRouter(tags=['Knowledge Base'])
 _master_lock = RLock()
+
+
+@router.get('/api/knowledge/data-model-rules')
+def data_model_rules(request:Request):
+    from backend.core.data_model_rules import load_rules
+    data,revision=load_rules(KNOWLEDGE/'master/data_model_rules.json')
+    return {**data,'revision':revision,'canEdit':request.state.user.get('role')=='admin'}
+
+
+@router.put('/api/knowledge/data-model-rules')
+def save_data_model_rules(payload:dict,request:Request):
+    if request.state.user.get('role')!='admin':raise HTTPException(403,'Only Admin can change shared reference rules.')
+    from backend.core.data_model_rules import load_rules,validate_rules
+    from backend.core.run_history import write_json
+    try:config=validate_rules(payload)
+    except ValueError as error:raise HTTPException(400,str(error))
+    if len(json.dumps(config).encode())>262144:raise HTTPException(400,'Reference rules must be smaller than 256 KB.')
+    path=KNOWLEDGE/'master/data_model_rules.json'
+    with _master_lock:
+        _,revision=load_rules(path)
+        if payload.get('revision')!=revision:raise HTTPException(409,'Reference rules changed elsewhere. Reopen the editor.')
+        write_json(path,config)
+    return data_model_rules(request)
+
+
+@router.get('/api/knowledge/units')
+def get_unit_rules():
+    from python_engine.unit_rules import load_unit_rules
+    data, revision = load_unit_rules(KNOWLEDGE/'master'/'unit_rules.json')
+    return {**data, 'revision': revision}
+
+
+@router.put('/api/knowledge/units')
+def save_unit_rules(payload: dict, request: Request):
+    from python_engine.unit_rules import load_unit_rules, validate_unit_rules
+    if request.state.user.get('role') != 'admin':
+        raise HTTPException(403, 'Only Admin can change shared metadata unit rules.')
+    try:
+        data = validate_unit_rules(payload)
+    except ValueError as error:
+        raise HTTPException(400, str(error))
+    path = KNOWLEDGE/'master'/'unit_rules.json'
+    with _master_lock:
+        _, revision = load_unit_rules(path)
+        if revision != payload.get('revision'):
+            raise HTTPException(409, 'Unit rules changed elsewhere. Reload before saving.')
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', dir=path.parent, delete=False) as stream:
+                temporary = stream.name
+                json.dump(data, stream, ensure_ascii=False, indent=2, allow_nan=False)
+            os.replace(temporary, path)
+        finally:
+            if temporary and os.path.exists(temporary): os.unlink(temporary)
+    return get_unit_rules()
+
+
+@router.post('/api/knowledge/units/preview')
+def preview_unit_rule(payload: dict):
+    from python_engine.unit_rules import validate_unit_rules, resolve_unit
+    try:
+        config = validate_unit_rules(payload)
+        name = payload.get('parameter')
+        if not isinstance(name, str) or not name.strip() or len(name) > 300:
+            raise ValueError('Enter a parameter name of at most 300 characters.')
+        return resolve_unit(config, name, str(payload.get('department') or 'All'), payload.get('existingUnit'))
+    except ValueError as error:
+        raise HTTPException(400, str(error))
 
 def _read_master(path=None):
     path = path or MASTER_PARAM_FILE
@@ -165,8 +234,16 @@ def save_master_dropdown(payload:dict):
     rows=payload.get('mappings')
     if not isinstance(rows,list): raise HTTPException(400,'Mappings must be a list.')
     for index,row in enumerate(rows,1):
-        if not isinstance(row,dict) or any(not isinstance(row.get(k),str) or not row[k].strip() for k in ('plc_parameter','plc_tag','metadata_parameter')):
-            raise HTTPException(400,f'Row {index}: PLC parameter, PLC tag and metadata parameter are required.')
+        if not isinstance(row,dict) or any(not isinstance(row.get(k),str) or not row[k].strip() for k in ('plc_parameter','metadata_parameter')):
+            raise HTTPException(400,f'Row {index}: PLC parameter and metadata parameter are required.')
+        optional_tag=row.get('allow_missing_plc_tag',False)
+        if not isinstance(optional_tag,bool): raise HTTPException(400,f'Row {index}: allow_missing_plc_tag must be true or false.')
+        tag=row.get('plc_tag')
+        if (tag is not None and not isinstance(tag,str)) or (not str(tag or '').strip() and not optional_tag):
+            raise HTTPException(400,f'Row {index}: enter a PLC tag or enable Allow missing PLC tag.')
+        department=str(row.get('machine_department') or 'All').strip() or 'All'
+        if optional_tag and department.casefold()=='all':
+            raise HTTPException(400,f'Row {index}: choose a specific department when allowing a missing PLC tag.')
         pairs=row.get('mapping')
         if not isinstance(row.get('allowed'),bool) or not isinstance(pairs,list) or not pairs:
             raise HTTPException(400,f'Row {index}: approval and at least one dropdown value are required.')
@@ -204,7 +281,7 @@ async def dropdown_csv(file: UploadFile = File(...)):
         for line,source in enumerate(reader,2):
             if not any(str(v or '').strip() for v in source.values()): continue
             row={key:str(source.get(original) or '').strip() for key,original in headers.items()}
-            if any(not row.get(key) for key in required): raise HTTPException(400,f'CSV line {line}: all identity fields, PLCVAL and SHOWNVAL are required.')
+            if any(not row.get(key) for key in required-{'PLC_TAG'}): raise HTTPException(400,f'CSV line {line}: PLC parameter, metadata parameter, PLCVAL and SHOWNVAL are required.')
             machine=(row.get('MACHINE_DEPARTMENT') or 'All').strip() or 'All'
             identity=tuple(row[key].casefold() for key in ('PLC_PARAMETER','PLC_TAG','METADATA_PARAMETER'))+(machine.casefold(),)
             if identity not in imported:
@@ -224,6 +301,12 @@ async def dropdown_csv(file: UploadFile = File(...)):
                 value=flag in ('true','yes','1')
                 if item['mapping'] and item['allowed'] != value: raise HTTPException(400,f'CSV line {line}: conflicting ALLOWED values.')
                 item['allowed']=value
+            if 'ALLOW_MISSING_PLC_TAG' in headers:
+                flag=row['ALLOW_MISSING_PLC_TAG'].casefold()
+                if flag not in ('true','false','yes','no','1','0'): raise HTTPException(400,f'CSV line {line}: ALLOW_MISSING_PLC_TAG must be true/false or yes/no.')
+                value=flag in ('true','yes','1')
+                if item['mapping'] and item.get('allow_missing_plc_tag',False)!=value: raise HTTPException(400,f'CSV line {line}: conflicting ALLOW_MISSING_PLC_TAG values.')
+                item['allow_missing_plc_tag']=value
             item['mapping'].append({'PLCVAL':row['PLCVAL'],'SHOWNVAL':row['SHOWNVAL']})
         if not imported: raise HTTPException(400,'CSV contains no dropdown values. Fill the template before importing.')
         for identity,item in imported.items():

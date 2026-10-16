@@ -1,0 +1,2025 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-lapformer-pms-lapformer-doff",
+  "name": "PMS / LapFormer / Doff",
+  "service": "PMS",
+  "machine": "LapFormer",
+  "view": "Doff",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_LAPFORMER_doff",
+    "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Doff Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_date",
+        "doff_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_date",
+      "mongoKey": "doff_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Doff Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Doff Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Doff Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_hour",
+        "doff_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_hour",
+      "mongoKey": "doff_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Doff Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Grams Per Metre",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "grams_per_metre",
+        "grams_per_metre"
+      ],
+      "unit": "",
+      "tdEngineKey": "grams_per_metre",
+      "mongoKey": "grams_per_metre",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_delivery",
+      "mongoKey": "average_delivery",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "doff_length",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_production",
+        "production_kgs"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_production",
+      "mongoKey": "production_kgs",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "DOFF Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_hour",
+        "doff_run_time_minute (MM:SS)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_hour",
+      "mongoKey": "doff_run_time_minute (MM:SS)",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "DOFF Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "DOFF Run Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_seconds"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_seconds",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Units Consumed",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "tdEngineKey": "units_consumed",
+      "mongoKey": "units_consumed",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "DOFF Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minute (MM:SS)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_minute",
+      "mongoKey": "doff_time_minute (MM:SS)",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "DOFF Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_seconds"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_seconds",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "DOFF Per lap weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "per_doff_lap_weight",
+        "per_doff_lap_weight"
+      ],
+      "unit": "",
+      "tdEngineKey": "per_doff_lap_weight",
+      "mongoKey": "per_doff_lap_weight",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_delivery",
+      "mongoKey": "average_delivery",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "tdEngineKey": "units_consumed",
+      "mongoKey": "units_consumed",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lot_Name",
+        "lot_name"
+      ],
+      "unit": "",
+      "tdEngineKey": "Lot_Name",
+      "mongoKey": "lot_name",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Target Weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "tdEngineKey": "target_weight",
+      "mongoKey": "target_weight",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "UKg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_kgs/units_consumed",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_kgs/units_consumed",
+      "definitionSource": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 35
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Doff Lap Weight g/m",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "grams_per_metre",
+        "grams_per_metre"
+      ],
+      "unit": "",
+      "tdEngineKey": "grams_per_metre",
+      "mongoKey": "grams_per_metre",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Doff Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "doff_date",
+      "aliases": [
+        "Doff Date"
+      ],
+      "sourceAliases": [
+        "Doff Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Doff Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "doff_month",
+      "aliases": [
+        "Doff Month"
+      ],
+      "sourceAliases": [
+        "Doff Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Doff Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "doff_year",
+      "aliases": [
+        "Doff Year"
+      ],
+      "sourceAliases": [
+        "Doff Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Doff date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "doff_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff date",
+        "Doff Date"
+      ],
+      "sourceAliases": [
+        "Doff date",
+        "Doff Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Doff Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_hour",
+        "hour"
+      ],
+      "unit": "",
+      "mongoKey": "hour",
+      "tdEngineKey": "doff_hour",
+      "aliases": [
+        "Doff Hour"
+      ],
+      "sourceAliases": [
+        "Doff Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Doff Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_minute",
+        "minute"
+      ],
+      "unit": "",
+      "mongoKey": "minute",
+      "tdEngineKey": "doff_minute",
+      "aliases": [
+        "Doff Minute"
+      ],
+      "sourceAliases": [
+        "Doff Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Doff Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hour, ':', minute)",
+      "keys": [
+        "doff_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Hour"
+      ],
+      "sourceAliases": [
+        "Doff Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Doff End Date",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-' ,date, ' ' ,hour, ':', minute, ':00')",
+      "keys": [
+        "doff_end_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_end_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff End Date"
+      ],
+      "sourceAliases": [
+        "Doff End Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date"
+      ],
+      "sourceAliases": [
+        "Shift date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Grams per Metre",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "grams_per_metre",
+        "grams_per_metre"
+      ],
+      "unit": "",
+      "mongoKey": "grams_per_metre",
+      "tdEngineKey": "grams_per_metre",
+      "aliases": [
+        "Grams per Metre",
+        "Grams Per Metre"
+      ],
+      "sourceAliases": [
+        "Grams per Metre",
+        "Grams Per Metre"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "mongoKey": "average_delivery",
+      "tdEngineKey": "average_delivery",
+      "aliases": [
+        "Average Delivery"
+      ],
+      "sourceAliases": [
+        "Average Delivery"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "DOFF Length"
+      ],
+      "sourceAliases": [
+        "DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_production",
+        "production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "production_kgs",
+      "tdEngineKey": "doff_production",
+      "aliases": [
+        "Doff Production"
+      ],
+      "sourceAliases": [
+        "Doff Production"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Doff Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_hour",
+        "doff_run_time_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_hour",
+      "tdEngineKey": "doff_run_time_hour",
+      "aliases": [
+        "Doff Run Time Hour",
+        "DOFF Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Hour",
+        "DOFF Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Doff Run Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_minute",
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_minute",
+      "tdEngineKey": "doff_run_time_minute",
+      "aliases": [
+        "Doff Run Time Minutes",
+        "DOFF Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Minutes",
+        "DOFF Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Doff Run Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_seconds",
+        "doff_run_time_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_seconds",
+      "tdEngineKey": "doff_run_time_seconds",
+      "aliases": [
+        "Doff Run Time Seconds",
+        "DOFF Run Time Seconds"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Seconds",
+        "DOFF Run Time Seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Doff Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(doff_run_time_hour * 60) + doff_run_time_minute + (gte(doff_run_time_seconds, 30) * 1)",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Run Time Minute",
+        "DOFF Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Minute",
+        "DOFF Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Units Consumed",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "mongoKey": "units_consumed",
+      "tdEngineKey": "units_consumed",
+      "aliases": [
+        "Units Consumed"
+      ],
+      "sourceAliases": [
+        "Units Consumed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Doff Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minutes",
+      "tdEngineKey": "doff_time_minute",
+      "aliases": [
+        "Doff Time Minutes",
+        "DOFF Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Time Minutes",
+        "DOFF Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Doff Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_seconds",
+        "doff_time_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_seconds",
+      "tdEngineKey": "doff_time_seconds",
+      "aliases": [
+        "Doff Time Seconds",
+        "DOFF Time Seconds"
+      ],
+      "sourceAliases": [
+        "Doff Time Seconds",
+        "DOFF Time Seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Doff Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "doff_time_minutes * 60 + doff_time_seconds",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Time Minute",
+        "DOFF Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Time Minute",
+        "DOFF Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Doff Per Lap weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "per_doff_lap_weight",
+        "per_doff_lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "per_doff_lap_weight",
+      "tdEngineKey": "per_doff_lap_weight",
+      "aliases": [
+        "Doff Per Lap weight",
+        "DOFF Per lap weight"
+      ],
+      "sourceAliases": [
+        "Doff Per Lap weight",
+        "DOFF Per lap weight"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "mongoKey": "average_delivery",
+      "tdEngineKey": "average_delivery",
+      "aliases": [
+        "Average Delivery"
+      ],
+      "sourceAliases": [
+        "Average Delivery"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Total Kwh",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "mongoKey": "units_consumed",
+      "tdEngineKey": "units_consumed",
+      "aliases": [
+        "Total Kwh",
+        "Total kWh"
+      ],
+      "sourceAliases": [
+        "Total Kwh",
+        "Total kWh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name"
+      ],
+      "sourceAliases": [
+        "Lot Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Target Weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "mongoKey": "target_weight",
+      "tdEngineKey": "target_weight",
+      "aliases": [
+        "Target Weight"
+      ],
+      "sourceAliases": [
+        "Target Weight"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_kgs/units_consumed",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "mongoKey": "ukg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Ukg",
+        "UKg"
+      ],
+      "sourceAliases": [
+        "Ukg",
+        "UKg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Doff Lap Weight g/m",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "grams_per_metre",
+        "grams_per_metre"
+      ],
+      "unit": "",
+      "mongoKey": "grams_per_metre",
+      "tdEngineKey": "grams_per_metre",
+      "aliases": [
+        "Doff Lap Weight g/m"
+      ],
+      "sourceAliases": [
+        "Doff Lap Weight g/m"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "DOFF Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "doff_run_time_minute",
+      "aliases": [
+        "DOFF Run Time Minute"
+      ],
+      "sourceAliases": [
+        "DOFF Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 37
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-38",
+      "name": "DOFF Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minute (MM:SS)"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute (MM:SS)",
+      "tdEngineKey": "doff_time_minute",
+      "aliases": [
+        "DOFF Time Minute"
+      ],
+      "sourceAliases": [
+        "DOFF Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_doff",
+        "row": 38
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 30,
+      "name": "Lot Name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Doff Date",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-12"
+      ]
+    },
+    {
+      "title": "Doff Month",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-13"
+      ]
+    },
+    {
+      "title": "Doff Year",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-14"
+      ]
+    },
+    {
+      "title": "Doff Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-15"
+      ]
+    },
+    {
+      "title": "Doff Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-16"
+      ]
+    },
+    {
+      "title": "Average Delivery",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Doff Date trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-12"
+      ]
+    },
+    {
+      "title": "Doff readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    },
+    {
+      "title": "Doff readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-23",
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-31",
+        "row-32",
+        "row-33"
+      ]
+    }
+  ]
+}

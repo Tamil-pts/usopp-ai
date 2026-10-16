@@ -1,3 +1,4 @@
+import {targetMode} from '../utils/targetMode';
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Plus, Trash2, CheckCircle2, AlertTriangle, RefreshCw, Cpu, Globe, Clock, FileSpreadsheet, Sliders, Upload } from 'lucide-react';
 import { PLCConfig, SpinningMachineType } from '../types';
@@ -8,12 +9,13 @@ interface PLCManagerModalProps {
   isOpen: boolean;
   onClose: () => void;
   plcs: PLCConfig[];
-  onSavePLCs: (plcs: PLCConfig[]) => void;
+  onSavePLCs: (plcs: PLCConfig[]) => Promise<void>;
   selectedPLCId: string;
   onSelectPLCId: (id: string) => void;
   onOpenRTCModal?: (plc: PLCConfig) => void;
   onOpenMetadataModal?: (machineType: SpinningMachineType) => void;
   initialTab?: 'targets' | 'manual-frame';
+  liveStatus?:Record<string,{lastCapturedAt?:number;error?:string;collecting:boolean}>;
 }
 
 export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
@@ -26,12 +28,15 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
   onOpenRTCModal,
   onOpenMetadataModal,
   initialTab = 'targets',
+  liveStatus={},
 }) => {
   const [items, setItems] = useState<PLCConfig[]>(plcs);
   const [activeTab, setActiveTab] = useState<'targets' | 'manual-frame'>(initialTab);
   const [testingId, setTestingId] = useState<string | null>(null);
   const [draftSelectedId, setDraftSelectedId] = useState(selectedPLCId);
   const [formError, setFormError] = useState('');
+  const [saving,setSaving]=useState(false);
+  const [groupText,setGroupText]=useState<Record<string,string>>({});
   const requestRef = useRef<AbortController | null>(null);
   const [testResults, setTestResults] = useState<
     Record<string, { ok: boolean; msg: string; rtt?: number; version?: string | null }>
@@ -43,6 +48,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
     setTestingId(null);
     if (isOpen) {
       setItems(plcs.map(p => ({...p})));
+      setGroupText(Object.fromEntries(plcs.map(p=>[p.id,(p.liveGroupCodes||[]).join(', ')])));
       setDraftSelectedId(selectedPLCId);
       setTestResults({});
       setFormError('');
@@ -61,20 +67,26 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
     if (!Number.isInteger(plc.port) || plc.port < 1 || plc.port > 65535) return `${plc.name}: PLC TCP port must be 1–65535.`;
     if (!Number.isInteger(plc.machineId) || plc.machineId < 0 || plc.machineId > 255) return `${plc.name}: Machine ID must be 0–255.`;
     if (!Number.isInteger(plc.timeoutMs) || (plc.timeoutMs ?? 0) < 100 || (plc.timeoutMs ?? 0) > 120000) return `${plc.name}: timeout must be 100–120000 ms.`;
+    if(plc.liveEnabled&&plc.timeoutMs>30000)return `${plc.name}: live collection timeout must be at most 30000 ms.`;
+    if(plc.liveEnabled&&!(plc.liveGroupCodes?.length))return `${plc.name}: enter the group codes to collect.`;
+    if(plc.liveGroupCodes?.some(group=>!Number.isInteger(group)||group<0||group>65535||group===11)||((plc.liveGroupCodes?.length||0)>32))return `${plc.name}: select up to 32 valid group codes; GC 11 closes automatically.`;
+    if(!Number.isInteger(plc.retentionDays??30)||(plc.retentionDays??30)<1||(plc.retentionDays??30)>30)return 'Retention must be 1–30 days.';
+    if(!Number.isInteger(plc.liveIntervalSeconds??10)||(plc.liveIntervalSeconds??10)<5||(plc.liveIntervalSeconds??10)>3600)return 'Live sample interval must be 5–3600 seconds.';
     return '';
   };
-  const applyDraft = (id = draftSelectedId) => {
+  const applyDraft = async (id = draftSelectedId) => {
     const error = items.map(validate).find(Boolean);
     if (error) { setFormError(error); return false; }
-    onSavePLCs(items.map(p => ({...p, name:p.name.trim(), ip:p.ip.trim()})));
-    onSelectPLCId(id);
-    return true;
+    setSaving(true);
+    try{await onSavePLCs(items.map(p => ({...p, name:p.name.trim(), ip:p.ip.trim()})));onSelectPLCId(id);return true}
+    catch(reason){setFormError(reason instanceof Error?reason.message:'Could not save target settings.');return false}
+    finally{setSaving(false)}
   };
 
   const handleUpdateItem = (id: string, updates: Partial<PLCConfig>) => {
     setItems((prev) => prev.map((p) => (p.id === id ? { ...p, ...updates } : p)));
     setFormError('');
-    if (Object.keys(updates).some(key => ['ip','port','machineId','isSimulated','endianness','timeoutMs','machineType'].includes(key))) {
+    if (Object.keys(updates).some(key => ['ip','port','machineId','isSimulated','targetMode','endianness','timeoutMs','machineType'].includes(key))) {
       setItems((prev) => prev.map((p) => p.id === id ? {...p, status: 'idle', tcpConnected: false,
         error: undefined, programVersion: undefined, programVersionStr: undefined} : p));
       requestRef.current?.abort();
@@ -159,8 +171,8 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
     }
   };
 
-  const handleSaveAndClose = () => {
-    if (applyDraft()) onClose();
+  const handleSaveAndClose = async () => {
+    if (await applyDraft()) onClose();
   };
 
   return (
@@ -271,8 +283,8 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
 
                         {onOpenMetadataModal && (
                           <button
-                            onClick={() => {
-                              if (applyDraft(plc.id)) onOpenMetadataModal(plc.machineType || 'Carding');
+                            onClick={async () => {
+                              if (await applyDraft(plc.id)) onOpenMetadataModal(plc.machineType || 'Carding');
                             }}
                             className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg border border-slate-600 transition-colors"
                             title="Upload/manage metadata for this PLC machine type"
@@ -296,8 +308,8 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
 
                         {onOpenRTCModal && (
                           <button
-                            onClick={() => {
-                              if (applyDraft(plc.id)) { onClose(); onOpenRTCModal(plc); }
+                            onClick={async () => {
+                              if (await applyDraft(plc.id)) { onClose(); onOpenRTCModal(plc); }
                             }}
                             className="flex items-center gap-1.5 px-2.5 py-1 bg-indigo-950/60 hover:bg-indigo-900/80 text-indigo-300 text-xs font-medium rounded-lg border border-indigo-700/60 transition-colors"
                             title="Open RTC Tester for this PLC"
@@ -339,12 +351,13 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                       <div>
                         <label className="block text-slate-400 mb-1">Target Mode</label>
                         <select
-                          value={plc.isSimulated ? 'sim' : 'real'}
-                          onChange={(e) => handleUpdateItem(plc.id, { isSimulated: e.target.value === 'sim' })}
+                          value={targetMode(plc)}
+                          onChange={(e) => handleUpdateItem(plc.id, {targetMode:e.target.value as PLCConfig['targetMode'],isSimulated:false,...(e.target.value==='data-simulator'?{ip:'127.0.0.1',port:21210+idx}:e.target.value==='automation-studio'?{ip:'127.0.0.1',port:21010}:{})})}
                           className="w-full bg-slate-700/50 border border-slate-600 rounded px-2 py-1.5 text-slate-200 focus:outline-none"
                         >
-                          <option value="sim">Simulated (Internal)</option>
-                          <option value="real">Real PLC (Network TCP)</option>
+                          <option value="plc">Real PLC (Network TCP)</option>
+                          <option value="automation-studio">Automation Studio simulation</option>
+                          <option value="data-simulator">Data simulator (metadata-driven TCP)</option>
                         </select>
                       </div>
 
@@ -408,6 +421,22 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                         </select>
                       </div>
                     </div>
+
+                    {targetMode(plc)==='automation-studio'&&<p className="mt-3 text-xs text-slate-300">Start ARsim with your SpinConnect TCP server program running. Enter that program's TCP listening port. The 11160 INA/UDP online port is a different service. 127.0.0.1 refers to the computer running the uSOPp server; enter the ARsim computer's IP if it runs elsewhere.</p>}
+                    {targetMode(plc)==='data-simulator'&&<p className="mt-3 text-xs text-slate-300">Save this target, select it, then open Data simulator in PLC details to load metadata, configure the generated values and start the virtual PLC.</p>}
+                    <fieldset className="mt-4 p-3 border border-slate-700 rounded-lg text-xs space-y-3" disabled={saving}>
+                      <legend className="px-2 font-semibold text-emerald-400">Live collection &amp; report history</legend>
+                      <label className="flex items-center gap-2 text-slate-200"><input type="checkbox" checked={plc.liveEnabled===true} onChange={event=>handleUpdateItem(plc.id,{liveEnabled:event.target.checked})}/>Enable live collection</label>
+                      <p className="text-slate-400">Off by default. When enabled, the server reads this machine even after you close the browser. Other machines can be collected and tested at the same time.</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <label className="text-slate-400">Group codes to collect<input aria-label={`Live groups for ${plc.name}`} className="block w-full mt-1 bg-slate-800 border border-slate-600 rounded p-2 text-slate-100" placeholder="20, 40, 50" value={groupText[plc.id]??''} onChange={event=>{setGroupText(previous=>({...previous,[plc.id]:event.target.value}));handleUpdateItem(plc.id,{liveGroupCodes:event.target.value.split(',').map(value=>value.trim()).filter(Boolean).map(Number)})}}/></label>
+                        <label className="text-slate-400">Sample interval (seconds)<input className="block w-full mt-1 bg-slate-800 border border-slate-600 rounded p-2 text-slate-100" type="number" min={5} max={3600} value={plc.liveIntervalSeconds??10} onChange={event=>handleUpdateItem(plc.id,{liveIntervalSeconds:Number(event.target.value)})}/></label>
+                        <label className="text-slate-400">Keep stored readings (days)<input className="block w-full mt-1 bg-slate-800 border border-slate-600 rounded p-2 text-slate-100" type="number" min={1} max={30} value={plc.retentionDays??30} onChange={event=>handleUpdateItem(plc.id,{retentionDays:Number(event.target.value)})}/></label>
+                      </div>
+                      <label className="flex items-center gap-2 text-slate-200"><input type="checkbox" checked={plc.storeLiveData===true} onChange={event=>handleUpdateItem(plc.id,{storeLiveData:event.target.checked})}/>Store readings for trends and reports</label>
+                      <p className="text-slate-400">Storage is optional. Without it, only the current server reading is kept in memory. Stored history expires after the selected retention, up to 30 days. Sampling resumes after a server restart.</p>
+                      <p className={liveStatus[plc.id]?.error?'text-rose-400':'text-slate-300'} role="status">{liveStatus[plc.id]?.error|| (liveStatus[plc.id]?.collecting?'Reading configured groups…':liveStatus[plc.id]?.lastCapturedAt?`Last capture: ${new Date(liveStatus[plc.id].lastCapturedAt!).toLocaleString()}`:'No live capture yet.')}</p>
+                    </fieldset>
 
                     {/* Status response badge if tested */}
                     {test && (
@@ -488,9 +517,10 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
           </button>
           <button
             onClick={handleSaveAndClose}
+            disabled={saving}
             className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
           >
-            Save & Apply
+            {saving?'Saving targets…':'Save & Apply'}
           </button>
         </div>
       </div>

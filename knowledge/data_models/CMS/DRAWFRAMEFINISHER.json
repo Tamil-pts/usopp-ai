@@ -10,7 +10,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -20,7 +23,10 @@
         "mongoKey": "time_stamp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -30,7 +36,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -40,7 +49,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -50,7 +62,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -60,7 +75,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -70,7 +88,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -80,7 +101,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -90,7 +114,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -100,7 +127,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -110,7 +140,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -120,7 +153,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -130,7 +166,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -140,7 +179,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -150,7 +192,10 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Hour",
@@ -160,7 +205,10 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Minutes",
@@ -170,7 +218,10 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Minute",
@@ -180,7 +231,10 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "aggregate",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Hank",
@@ -191,7 +245,10 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61"
+        "precision": "COL0049473730612fe61",
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot Name",
@@ -201,7 +258,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "voltage_avg",
@@ -211,7 +271,10 @@
         "mongoKey": "voltage_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "current_avg",
@@ -221,7 +284,10 @@
         "mongoKey": "current_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "power_factor",
@@ -231,7 +297,10 @@
         "mongoKey": "power_factor",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "frequency",
@@ -241,7 +310,10 @@
         "mongoKey": "frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Total Active Power",
@@ -251,7 +323,10 @@
         "mongoKey": "total_active_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Total Kva",
@@ -261,7 +336,10 @@
         "mongoKey": "total_kva",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total Kvar",
@@ -271,7 +349,10 @@
         "mongoKey": "total_kvar",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "totak kwh",
@@ -281,7 +362,10 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total kvah",
@@ -291,7 +375,10 @@
         "mongoKey": "total_kvah",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total kvarh",
@@ -301,7 +388,10 @@
         "mongoKey": "total_kvarh",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature",
@@ -311,7 +401,10 @@
         "mongoKey": "drafting_zone_Temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature CMS",
@@ -321,7 +414,10 @@
         "mongoKey": "dzt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature Target",
@@ -331,7 +427,10 @@
         "mongoKey": "dzt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration",
@@ -341,7 +440,10 @@
         "mongoKey": "drafting_zone_vibraton",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration CMS",
@@ -351,7 +453,10 @@
         "mongoKey": "dzv_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration Target",
@@ -361,7 +466,10 @@
         "mongoKey": "dzv_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power",
@@ -371,7 +479,16 @@
         "mongoKey": "main_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Power",
+          "Main Motor Output Power"
+        ],
+        "canonicalName": "Main Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power CMS",
@@ -381,7 +498,10 @@
         "mongoKey": "mmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power Target",
@@ -391,7 +511,10 @@
         "mongoKey": "mmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current",
@@ -401,7 +524,16 @@
         "mongoKey": "main_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Current",
+          "Main Motor Output Current"
+        ],
+        "canonicalName": "Main Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current CMS",
@@ -411,7 +543,10 @@
         "mongoKey": "mmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current Target",
@@ -421,7 +556,10 @@
         "mongoKey": "mmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque",
@@ -431,7 +569,10 @@
         "mongoKey": "main_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque CMS",
@@ -441,7 +582,10 @@
         "mongoKey": "mmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque Target",
@@ -451,7 +595,10 @@
         "mongoKey": "mmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature",
@@ -461,7 +608,10 @@
         "mongoKey": "main_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature CMS",
@@ -471,7 +621,10 @@
         "mongoKey": "mmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature Target",
@@ -481,7 +634,10 @@
         "mongoKey": "mmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed",
@@ -491,7 +647,10 @@
         "mongoKey": "main_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed CMS",
@@ -501,7 +660,10 @@
         "mongoKey": "mms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed Target",
@@ -511,7 +673,10 @@
         "mongoKey": "mms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power",
@@ -521,7 +686,16 @@
         "mongoKey": "coiler_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Power",
+          "Coiler Output Power"
+        ],
+        "canonicalName": "Coiler Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power CMS",
@@ -531,7 +705,10 @@
         "mongoKey": "cmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power Target",
@@ -541,7 +718,10 @@
         "mongoKey": "cmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current",
@@ -551,7 +731,16 @@
         "mongoKey": "coiler_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Current",
+          "Coiler Output Current"
+        ],
+        "canonicalName": "Coiler Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current CMS",
@@ -561,7 +750,10 @@
         "mongoKey": "cmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current Target",
@@ -571,7 +763,10 @@
         "mongoKey": "cmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque",
@@ -581,7 +776,10 @@
         "mongoKey": "coiler_motor_rotque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque CMS",
@@ -591,7 +789,10 @@
         "mongoKey": "cmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque Target",
@@ -601,7 +802,10 @@
         "mongoKey": "cmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature",
@@ -611,7 +815,10 @@
         "mongoKey": "coiler_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature CMS",
@@ -621,7 +828,10 @@
         "mongoKey": "cmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature Target",
@@ -631,7 +841,10 @@
         "mongoKey": "cmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed",
@@ -641,7 +854,10 @@
         "mongoKey": "coiler_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed CMS",
@@ -651,7 +867,10 @@
         "mongoKey": "cms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed Target",
@@ -661,7 +880,10 @@
         "mongoKey": "cms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power",
@@ -671,7 +893,10 @@
         "mongoKey": "suction_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power CMS",
@@ -681,7 +906,10 @@
         "mongoKey": "smp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power Target",
@@ -691,7 +919,10 @@
         "mongoKey": "smp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current",
@@ -701,7 +932,10 @@
         "mongoKey": "suction_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current CMS",
@@ -711,7 +945,10 @@
         "mongoKey": "smc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current Target",
@@ -721,7 +958,10 @@
         "mongoKey": "smc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque",
@@ -731,7 +971,10 @@
         "mongoKey": "suction_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque CMS",
@@ -741,7 +984,10 @@
         "mongoKey": "smt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque Target",
@@ -751,7 +997,10 @@
         "mongoKey": "smt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature",
@@ -761,7 +1010,10 @@
         "mongoKey": "suction_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature CMS",
@@ -771,7 +1023,10 @@
         "mongoKey": "smit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature Target",
@@ -781,7 +1036,10 @@
         "mongoKey": "smit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed",
@@ -791,7 +1049,10 @@
         "mongoKey": "suction_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed CMS",
@@ -801,7 +1062,10 @@
         "mongoKey": "sms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed Target",
@@ -811,7 +1075,10 @@
         "mongoKey": "sms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power",
@@ -821,7 +1088,16 @@
         "mongoKey": "draft_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Power",
+          "Drafting Motor Output Power"
+        ],
+        "canonicalName": "Draft Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power CMS",
@@ -831,7 +1107,10 @@
         "mongoKey": "dmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power Target",
@@ -841,7 +1120,10 @@
         "mongoKey": "dmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current",
@@ -851,7 +1133,16 @@
         "mongoKey": "draft_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Current",
+          "Drafting Motor Output Current"
+        ],
+        "canonicalName": "Draft Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current CMS",
@@ -861,7 +1152,10 @@
         "mongoKey": "dmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current Target",
@@ -871,7 +1165,10 @@
         "mongoKey": "dmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque",
@@ -881,7 +1178,16 @@
         "mongoKey": "draft_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Torque",
+          "Drafting Motor Motor Torque"
+        ],
+        "canonicalName": "Draft Motor Torque",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque CMS",
@@ -891,7 +1197,10 @@
         "mongoKey": "dmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque Target",
@@ -901,7 +1210,10 @@
         "mongoKey": "dmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp",
@@ -911,7 +1223,10 @@
         "mongoKey": "draft_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp CMS",
@@ -921,7 +1236,10 @@
         "mongoKey": "dmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp Target",
@@ -931,7 +1249,10 @@
         "mongoKey": "dmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed",
@@ -941,7 +1262,10 @@
         "mongoKey": "draft_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed CMS",
@@ -951,7 +1275,10 @@
         "mongoKey": "dms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed Target",
@@ -961,7 +1288,10 @@
         "mongoKey": "dms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       }
     ],
     "cms_DRAWFRAMEFINISHER_hours": [
@@ -973,7 +1303,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -983,7 +1316,10 @@
         "mongoKey": "time_stamp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -993,7 +1329,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -1003,7 +1342,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -1013,7 +1355,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -1023,7 +1368,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -1033,7 +1381,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -1043,7 +1394,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -1053,7 +1407,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -1063,7 +1420,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -1073,7 +1433,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -1083,7 +1446,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -1093,7 +1459,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -1103,7 +1472,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -1113,7 +1485,10 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Hour",
@@ -1123,7 +1498,10 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Minutes",
@@ -1133,7 +1511,10 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Minute",
@@ -1143,7 +1524,10 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "aggregate",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Hank",
@@ -1154,7 +1538,10 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61"
+        "precision": "COL0049473730612fe61",
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot Name",
@@ -1164,7 +1551,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "voltage_avg",
@@ -1175,7 +1565,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "current_avg",
@@ -1186,7 +1579,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "power_factor",
@@ -1197,7 +1593,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "frequency",
@@ -1208,7 +1607,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Total Active Power",
@@ -1219,7 +1621,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Total Kva",
@@ -1230,7 +1635,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total Kvar",
@@ -1241,7 +1649,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "totak kwh",
@@ -1252,7 +1663,10 @@
         "formula": null,
         "type": "aggregate",
         "aggType": "sum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total kvah",
@@ -1263,7 +1677,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total kvarh",
@@ -1274,7 +1691,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature",
@@ -1285,7 +1705,10 @@
         "formula": null,
         "type": "aggregate",
         "aggType": "sum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature CMS",
@@ -1296,7 +1719,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature Target",
@@ -1306,7 +1732,10 @@
         "mongoKey": "dzt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration",
@@ -1317,7 +1746,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration CMS",
@@ -1328,7 +1760,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration Target",
@@ -1338,7 +1773,10 @@
         "mongoKey": "dzv_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power",
@@ -1349,7 +1787,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Power",
+          "Main Motor Output Power"
+        ],
+        "canonicalName": "Main Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power CMS ",
@@ -1360,7 +1807,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power Target",
@@ -1370,7 +1820,10 @@
         "mongoKey": "mmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current",
@@ -1381,7 +1834,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Current",
+          "Main Motor Output Current"
+        ],
+        "canonicalName": "Main Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current CMS",
@@ -1392,7 +1854,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current Target",
@@ -1402,7 +1867,10 @@
         "mongoKey": "mmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque",
@@ -1413,7 +1881,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque CMS",
@@ -1424,7 +1895,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque Target",
@@ -1434,7 +1908,10 @@
         "mongoKey": "mmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature",
@@ -1445,7 +1922,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature CMS",
@@ -1456,7 +1936,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature Target",
@@ -1466,7 +1949,10 @@
         "mongoKey": "mmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed",
@@ -1477,7 +1963,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed CMS",
@@ -1488,7 +1977,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed Target",
@@ -1498,7 +1990,10 @@
         "mongoKey": "mms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power",
@@ -1509,7 +2004,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Power",
+          "Coiler Output Power"
+        ],
+        "canonicalName": "Coiler Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power CMS",
@@ -1520,7 +2024,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power Target",
@@ -1530,7 +2037,10 @@
         "mongoKey": "cmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current",
@@ -1541,7 +2051,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Current",
+          "Coiler Output Current"
+        ],
+        "canonicalName": "Coiler Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current CMS",
@@ -1552,7 +2071,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current Target",
@@ -1562,7 +2084,10 @@
         "mongoKey": "cmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque",
@@ -1573,7 +2098,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque CMS",
@@ -1584,7 +2112,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque Target",
@@ -1594,7 +2125,10 @@
         "mongoKey": "cmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature",
@@ -1605,7 +2139,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature CMS",
@@ -1616,7 +2153,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature Target",
@@ -1626,7 +2166,10 @@
         "mongoKey": "cmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed",
@@ -1637,7 +2180,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed CMS",
@@ -1648,7 +2194,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed Target",
@@ -1658,7 +2207,10 @@
         "mongoKey": "cms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power",
@@ -1669,7 +2221,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power CMS",
@@ -1680,7 +2235,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power Target",
@@ -1690,7 +2248,10 @@
         "mongoKey": "smp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current",
@@ -1701,7 +2262,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current CMS",
@@ -1712,7 +2276,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current Target",
@@ -1722,7 +2289,10 @@
         "mongoKey": "smc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque",
@@ -1733,7 +2303,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque CMS",
@@ -1744,7 +2317,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque Target",
@@ -1754,7 +2330,10 @@
         "mongoKey": "smt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature",
@@ -1765,7 +2344,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature CMS",
@@ -1776,7 +2358,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature Target",
@@ -1786,7 +2371,10 @@
         "mongoKey": "smit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed",
@@ -1797,7 +2385,10 @@
         "formula": null,
         "type": "aggregate",
         "aggType": "sum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed CMS",
@@ -1808,7 +2399,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed Target",
@@ -1818,7 +2412,10 @@
         "mongoKey": "sms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power",
@@ -1829,7 +2426,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Power",
+          "Drafting Motor Output Power"
+        ],
+        "canonicalName": "Draft Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power CMS",
@@ -1840,7 +2446,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power Target",
@@ -1850,7 +2459,10 @@
         "mongoKey": "dmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current",
@@ -1861,7 +2473,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Current",
+          "Drafting Motor Output Current"
+        ],
+        "canonicalName": "Draft Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current CMS",
@@ -1872,7 +2493,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current Target",
@@ -1882,7 +2506,10 @@
         "mongoKey": "dmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque",
@@ -1893,7 +2520,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Torque",
+          "Drafting Motor Motor Torque"
+        ],
+        "canonicalName": "Draft Motor Torque",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque CMS",
@@ -1904,7 +2540,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque Target",
@@ -1914,7 +2553,10 @@
         "mongoKey": "dmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp",
@@ -1925,7 +2567,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp CMS",
@@ -1936,7 +2581,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp Target",
@@ -1946,7 +2594,10 @@
         "mongoKey": "dmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed",
@@ -1957,7 +2608,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed CMS",
@@ -1968,7 +2622,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "average",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed Target",
@@ -1978,7 +2635,10 @@
         "mongoKey": "dms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature",
@@ -1989,7 +2649,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration",
@@ -2000,7 +2663,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power",
@@ -2011,7 +2677,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Power",
+          "Main Motor Output Power"
+        ],
+        "canonicalName": "Main Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current",
@@ -2022,7 +2697,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Current",
+          "Main Motor Output Current"
+        ],
+        "canonicalName": "Main Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque",
@@ -2033,7 +2717,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature",
@@ -2044,7 +2731,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed",
@@ -2055,7 +2745,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power",
@@ -2066,7 +2759,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Power",
+          "Coiler Output Power"
+        ],
+        "canonicalName": "Coiler Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current",
@@ -2077,7 +2779,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Current",
+          "Coiler Output Current"
+        ],
+        "canonicalName": "Coiler Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque",
@@ -2088,7 +2799,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature",
@@ -2099,7 +2813,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed",
@@ -2110,7 +2827,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power",
@@ -2121,7 +2841,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current",
@@ -2132,7 +2855,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque",
@@ -2143,7 +2869,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature",
@@ -2154,7 +2883,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed",
@@ -2165,7 +2897,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power",
@@ -2176,7 +2911,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Power",
+          "Drafting Motor Output Power"
+        ],
+        "canonicalName": "Draft Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current",
@@ -2187,7 +2931,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Current",
+          "Drafting Motor Output Current"
+        ],
+        "canonicalName": "Draft Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque",
@@ -2198,7 +2951,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Torque",
+          "Drafting Motor Motor Torque"
+        ],
+        "canonicalName": "Draft Motor Torque",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp",
@@ -2209,7 +2971,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed",
@@ -2220,7 +2985,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature",
@@ -2231,7 +2999,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration",
@@ -2242,7 +3013,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power",
@@ -2253,7 +3027,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Power",
+          "Main Motor Output Power"
+        ],
+        "canonicalName": "Main Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current",
@@ -2264,7 +3047,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Current",
+          "Main Motor Output Current"
+        ],
+        "canonicalName": "Main Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque",
@@ -2275,7 +3067,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature",
@@ -2286,7 +3081,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed",
@@ -2297,7 +3095,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power",
@@ -2308,7 +3109,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Power",
+          "Coiler Output Power"
+        ],
+        "canonicalName": "Coiler Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current",
@@ -2319,7 +3129,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Current",
+          "Coiler Output Current"
+        ],
+        "canonicalName": "Coiler Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque",
@@ -2330,7 +3149,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature",
@@ -2341,7 +3163,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed",
@@ -2352,7 +3177,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power",
@@ -2363,7 +3191,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current",
@@ -2374,7 +3205,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque",
@@ -2385,7 +3219,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature",
@@ -2396,7 +3233,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed",
@@ -2407,7 +3247,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power",
@@ -2418,7 +3261,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Power",
+          "Drafting Motor Output Power"
+        ],
+        "canonicalName": "Draft Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current",
@@ -2429,7 +3281,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Current",
+          "Drafting Motor Output Current"
+        ],
+        "canonicalName": "Draft Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque",
@@ -2440,7 +3301,16 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Torque",
+          "Drafting Motor Motor Torque"
+        ],
+        "canonicalName": "Draft Motor Torque",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp",
@@ -2451,7 +3321,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed",
@@ -2462,7 +3335,10 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Delivery Speed",
@@ -2472,17 +3348,32 @@
         "mongoKey": "delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Production in kg",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "40",
         "tdEngineKey": "production_in_kg",
         "mongoKey": "production_kgs",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Ukg",
@@ -2492,84 +3383,171 @@
         "mongoKey": "ukg",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Maximum voltage_avg",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "voltage_avg",
         "mongoKey": "voltage_avg_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Maximum current_avg",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "current_avg",
         "mongoKey": "current_avg_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Maximum power_factor",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "power_factor",
         "mongoKey": "power_factor_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Maximum frequency",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "frequency",
         "mongoKey": "frequency_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Maximum Total Active Power",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_active_power",
         "mongoKey": "total_active_power_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Maximum Total Kva",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_kva",
         "mongoKey": "total_kva_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Maximum total Kvar",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_kvar",
         "mongoKey": "total_kvar_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Maximum totak kwh",
@@ -2580,106 +3558,217 @@
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Maximum total kvah",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_kvah",
         "mongoKey": "total_kvah_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Maximum total kvarh",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_kvarh",
         "mongoKey": "total_kvarh_max",
         "formula": null,
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum voltage_avg",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "voltage_avg_min",
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum current_avg",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "current_avg",
         "mongoKey": "current_avg_min",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum power_factor",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "power_factor",
         "mongoKey": "power_factor_min",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum frequency",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "frequency",
         "mongoKey": "frequency_min",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum Total Active Power",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_active_power",
         "mongoKey": "total_active_power_min",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum Total Kva",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_kva",
         "mongoKey": "total_kva_min",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum total Kvar",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_kvar",
         "mongoKey": "total_kvar_min",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum totak kwh",
@@ -2690,29 +3779,56 @@
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Minimum total kvah",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_kvah",
         "mongoKey": "total_kvah_min",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       },
       {
         "tagName": "Minimum total kvarh",
-        "dataType": "TIMESTAMP",
+        "dataType": "REAL",
         "groupCode": "410",
         "tdEngineKey": "total_kvarh",
         "mongoKey": "total_kvarh_min",
         "formula": null,
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "referenceCorrections": [
+          {
+            "field": "dataType",
+            "previous": "TIMESTAMP",
+            "value": "REAL",
+            "source": "Consistent numeric Excel definition for the same name and Group Code."
+          }
+        ],
+        "ignoreNameSeparators": true,
+        "originalDataType": "TIMESTAMP"
       }
     ],
     "cms_DRAWFRAMEFINISHER_shift_live": [
@@ -2724,7 +3840,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -2734,7 +3853,10 @@
         "mongoKey": "time_stamp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -2744,7 +3866,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -2754,7 +3879,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -2764,7 +3892,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -2774,7 +3905,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -2784,7 +3918,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -2794,7 +3931,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -2804,7 +3944,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -2814,7 +3957,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -2824,7 +3970,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -2834,7 +3983,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -2844,7 +3996,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -2854,7 +4009,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -2864,7 +4022,10 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Hour",
@@ -2874,7 +4035,10 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Minutes",
@@ -2884,7 +4048,10 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Minute",
@@ -2894,7 +4061,10 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "aggregate",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Hank",
@@ -2905,7 +4075,10 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61"
+        "precision": "COL0049473730612fe61",
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot Name",
@@ -2915,7 +4088,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "voltage_avg",
@@ -2925,7 +4101,10 @@
         "mongoKey": "voltage_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "current_avg",
@@ -2935,7 +4114,10 @@
         "mongoKey": "current_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "power_factor",
@@ -2945,7 +4127,10 @@
         "mongoKey": "power_factor",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "frequency",
@@ -2955,7 +4140,10 @@
         "mongoKey": "frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Total Active Power",
@@ -2965,7 +4153,10 @@
         "mongoKey": "total_active_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Total Kva",
@@ -2975,7 +4166,10 @@
         "mongoKey": "total_kva",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total Kvar",
@@ -2985,7 +4179,10 @@
         "mongoKey": "total_kvar",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "totak kwh",
@@ -2995,7 +4192,10 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total kvah",
@@ -3005,7 +4205,10 @@
         "mongoKey": "total_kvah",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total kvarh",
@@ -3015,7 +4218,10 @@
         "mongoKey": "total_kvarh",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature",
@@ -3025,7 +4231,10 @@
         "mongoKey": "drafting_zone_Temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature CMS",
@@ -3035,7 +4244,10 @@
         "mongoKey": "dzt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature Target",
@@ -3045,7 +4257,10 @@
         "mongoKey": "dzt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration",
@@ -3055,7 +4270,10 @@
         "mongoKey": "drafting_zone_vibraton",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration CMS",
@@ -3065,7 +4283,10 @@
         "mongoKey": "dzv_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration Target",
@@ -3075,7 +4296,10 @@
         "mongoKey": "dzv_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power",
@@ -3085,7 +4309,16 @@
         "mongoKey": "main_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Power",
+          "Main Motor Output Power"
+        ],
+        "canonicalName": "Main Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power CMS",
@@ -3095,7 +4328,10 @@
         "mongoKey": "mmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power Target",
@@ -3105,7 +4341,10 @@
         "mongoKey": "mmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current",
@@ -3115,7 +4354,16 @@
         "mongoKey": "main_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Current",
+          "Main Motor Output Current"
+        ],
+        "canonicalName": "Main Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current CMS",
@@ -3125,7 +4373,10 @@
         "mongoKey": "mmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current Target",
@@ -3135,7 +4386,10 @@
         "mongoKey": "mmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque",
@@ -3145,7 +4399,10 @@
         "mongoKey": "main_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque CMS",
@@ -3155,7 +4412,10 @@
         "mongoKey": "mmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque Target",
@@ -3165,7 +4425,10 @@
         "mongoKey": "mmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature",
@@ -3175,7 +4438,10 @@
         "mongoKey": "main_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature CMS",
@@ -3185,7 +4451,10 @@
         "mongoKey": "mmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature Target",
@@ -3195,7 +4464,10 @@
         "mongoKey": "mmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed",
@@ -3205,7 +4477,10 @@
         "mongoKey": "main_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed CMS",
@@ -3215,7 +4490,10 @@
         "mongoKey": "mms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed Target",
@@ -3225,7 +4503,10 @@
         "mongoKey": "mms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power",
@@ -3235,7 +4516,16 @@
         "mongoKey": "coiler_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Power",
+          "Coiler Output Power"
+        ],
+        "canonicalName": "Coiler Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power CMS",
@@ -3245,7 +4535,10 @@
         "mongoKey": "cmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power Target",
@@ -3255,7 +4548,10 @@
         "mongoKey": "cmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current",
@@ -3265,7 +4561,16 @@
         "mongoKey": "coiler_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Current",
+          "Coiler Output Current"
+        ],
+        "canonicalName": "Coiler Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current CMS",
@@ -3275,7 +4580,10 @@
         "mongoKey": "cmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current Target",
@@ -3285,7 +4593,10 @@
         "mongoKey": "cmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque",
@@ -3295,7 +4606,10 @@
         "mongoKey": "coiler_motor_rotque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque CMS",
@@ -3305,7 +4619,10 @@
         "mongoKey": "cmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque Target",
@@ -3315,7 +4632,10 @@
         "mongoKey": "cmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature",
@@ -3325,7 +4645,10 @@
         "mongoKey": "coiler_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature CMS",
@@ -3335,7 +4658,10 @@
         "mongoKey": "cmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature Target",
@@ -3345,7 +4671,10 @@
         "mongoKey": "cmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed",
@@ -3355,7 +4684,10 @@
         "mongoKey": "coiler_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed CMS",
@@ -3365,7 +4697,10 @@
         "mongoKey": "cms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed Target",
@@ -3375,7 +4710,10 @@
         "mongoKey": "cms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power",
@@ -3385,7 +4723,10 @@
         "mongoKey": "suction_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power CMS",
@@ -3395,7 +4736,10 @@
         "mongoKey": "smp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power Target",
@@ -3405,7 +4749,10 @@
         "mongoKey": "smp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current",
@@ -3415,7 +4762,10 @@
         "mongoKey": "suction_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current CMS",
@@ -3425,7 +4775,10 @@
         "mongoKey": "smc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current Target",
@@ -3435,7 +4788,10 @@
         "mongoKey": "smc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque",
@@ -3445,7 +4801,10 @@
         "mongoKey": "suction_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque CMS",
@@ -3455,7 +4814,10 @@
         "mongoKey": "smt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque Target",
@@ -3465,7 +4827,10 @@
         "mongoKey": "smt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature",
@@ -3475,7 +4840,10 @@
         "mongoKey": "suction_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature CMS",
@@ -3485,7 +4853,10 @@
         "mongoKey": "smit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature Target",
@@ -3495,7 +4866,10 @@
         "mongoKey": "smit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed",
@@ -3505,7 +4879,10 @@
         "mongoKey": "suction_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed CMS",
@@ -3515,7 +4892,10 @@
         "mongoKey": "sms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed Target",
@@ -3525,7 +4905,10 @@
         "mongoKey": "sms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power",
@@ -3535,7 +4918,16 @@
         "mongoKey": "draft_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Power",
+          "Drafting Motor Output Power"
+        ],
+        "canonicalName": "Draft Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power CMS",
@@ -3545,7 +4937,10 @@
         "mongoKey": "dmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power Target",
@@ -3555,7 +4950,10 @@
         "mongoKey": "dmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current",
@@ -3565,7 +4963,16 @@
         "mongoKey": "draft_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Current",
+          "Drafting Motor Output Current"
+        ],
+        "canonicalName": "Draft Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current CMS",
@@ -3575,7 +4982,10 @@
         "mongoKey": "dmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current Target",
@@ -3585,7 +4995,10 @@
         "mongoKey": "dmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque",
@@ -3595,7 +5008,16 @@
         "mongoKey": "draft_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Torque",
+          "Drafting Motor Motor Torque"
+        ],
+        "canonicalName": "Draft Motor Torque",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque CMS",
@@ -3605,7 +5027,10 @@
         "mongoKey": "dmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque Target",
@@ -3615,7 +5040,10 @@
         "mongoKey": "dmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp",
@@ -3625,7 +5053,10 @@
         "mongoKey": "draft_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp CMS",
@@ -3635,7 +5066,10 @@
         "mongoKey": "dmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp Target",
@@ -3645,7 +5079,10 @@
         "mongoKey": "dmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed",
@@ -3655,7 +5092,10 @@
         "mongoKey": "draft_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed CMS",
@@ -3665,7 +5105,10 @@
         "mongoKey": "dms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed Target",
@@ -3675,7 +5118,10 @@
         "mongoKey": "dms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Delivery Speed",
@@ -3685,7 +5131,48 @@
         "mongoKey": "delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "delivery_speed",
+        "dataType": "float",
+        "groupCode": "600",
+        "formula": null,
+        "tdEngineKey": "delivery_speed",
+        "mongoKey": "delivery_speed",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_shift_live",
+          "row": 53
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Ukg",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "formula": "=total_kwh/production_kgs",
+        "tdEngineKey": null,
+        "mongoKey": "ukg",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": true,
+        "excelReference": {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_shift_live",
+          "row": 55
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       }
     ],
     "cms_DRAWFRAMEFINISHER_shift": [
@@ -3697,7 +5184,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -3707,7 +5197,10 @@
         "mongoKey": "time_stamp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -3717,7 +5210,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -3727,7 +5223,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -3737,7 +5236,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -3747,7 +5249,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -3757,7 +5262,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -3767,7 +5275,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -3777,7 +5288,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -3787,7 +5301,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -3797,7 +5314,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -3807,7 +5327,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -3817,7 +5340,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -3827,7 +5353,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -3837,7 +5366,10 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Hour",
@@ -3847,7 +5379,10 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Minutes",
@@ -3857,7 +5392,10 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Run Time Minute",
@@ -3867,7 +5405,10 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Hank",
@@ -3878,7 +5419,10 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61"
+        "precision": "COL0049473730612fe61",
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot Name",
@@ -3888,7 +5432,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "voltage_avg",
@@ -3898,7 +5445,10 @@
         "mongoKey": "voltage_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "current_avg",
@@ -3908,7 +5458,10 @@
         "mongoKey": "current_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "power_factor",
@@ -3918,7 +5471,10 @@
         "mongoKey": "power_factor",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "frequency",
@@ -3928,7 +5484,10 @@
         "mongoKey": "frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Total Active Power",
@@ -3938,7 +5497,10 @@
         "mongoKey": "total_active_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Total Kva",
@@ -3948,7 +5510,10 @@
         "mongoKey": "total_kva",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total Kvar",
@@ -3958,7 +5523,10 @@
         "mongoKey": "total_kvar",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "totak kwh",
@@ -3968,7 +5536,10 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total kvah",
@@ -3978,7 +5549,10 @@
         "mongoKey": "total_kvah",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "total kvarh",
@@ -3988,7 +5562,10 @@
         "mongoKey": "total_kvarh",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature",
@@ -3998,7 +5575,10 @@
         "mongoKey": "drafting_zone_Temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature CMS",
@@ -4008,7 +5588,10 @@
         "mongoKey": "dzt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Temperature Target",
@@ -4018,7 +5601,10 @@
         "mongoKey": "dzt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration",
@@ -4028,7 +5614,10 @@
         "mongoKey": "drafting_zone_vibraton",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration CMS",
@@ -4038,7 +5627,10 @@
         "mongoKey": "dzv_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Drafting Zone Vibration Target",
@@ -4048,7 +5640,10 @@
         "mongoKey": "dzv_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power",
@@ -4058,7 +5653,16 @@
         "mongoKey": "main_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Power",
+          "Main Motor Output Power"
+        ],
+        "canonicalName": "Main Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power CMS",
@@ -4068,7 +5672,10 @@
         "mongoKey": "mmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Power Target",
@@ -4078,7 +5685,10 @@
         "mongoKey": "mmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current",
@@ -4088,7 +5698,16 @@
         "mongoKey": "main_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Main Motor Current",
+          "Main Motor Output Current"
+        ],
+        "canonicalName": "Main Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current CMS",
@@ -4098,7 +5717,10 @@
         "mongoKey": "mmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Current Target",
@@ -4108,7 +5730,10 @@
         "mongoKey": "mmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque",
@@ -4118,7 +5743,10 @@
         "mongoKey": "main_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque CMS",
@@ -4128,7 +5756,10 @@
         "mongoKey": "mmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Torque Target",
@@ -4138,7 +5769,10 @@
         "mongoKey": "mmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature",
@@ -4148,7 +5782,10 @@
         "mongoKey": "main_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature CMS",
@@ -4158,7 +5795,10 @@
         "mongoKey": "mmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Inverter Heat Sink Temperature Target",
@@ -4168,7 +5808,10 @@
         "mongoKey": "mmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed",
@@ -4178,7 +5821,10 @@
         "mongoKey": "main_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed CMS",
@@ -4188,7 +5834,10 @@
         "mongoKey": "mms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Main Motor Speed Target",
@@ -4198,7 +5847,10 @@
         "mongoKey": "mms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power",
@@ -4208,7 +5860,16 @@
         "mongoKey": "coiler_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Power",
+          "Coiler Output Power"
+        ],
+        "canonicalName": "Coiler Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power CMS",
@@ -4218,7 +5879,10 @@
         "mongoKey": "cmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Power Target",
@@ -4228,7 +5892,10 @@
         "mongoKey": "cmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current",
@@ -4238,7 +5905,16 @@
         "mongoKey": "coiler_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Coiler Motor Current",
+          "Coiler Output Current"
+        ],
+        "canonicalName": "Coiler Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current CMS",
@@ -4248,7 +5924,10 @@
         "mongoKey": "cmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Current Target",
@@ -4258,7 +5937,10 @@
         "mongoKey": "cmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque",
@@ -4268,7 +5950,10 @@
         "mongoKey": "coiler_motor_rotque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque CMS",
@@ -4278,7 +5963,10 @@
         "mongoKey": "cmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Torque Target",
@@ -4288,7 +5976,10 @@
         "mongoKey": "cmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature",
@@ -4298,7 +5989,10 @@
         "mongoKey": "coiler_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature CMS",
@@ -4308,7 +6002,10 @@
         "mongoKey": "cmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Inverter Heat Sink Temperature Target",
@@ -4318,7 +6015,10 @@
         "mongoKey": "cmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed",
@@ -4328,7 +6028,10 @@
         "mongoKey": "coiler_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed CMS",
@@ -4338,7 +6041,10 @@
         "mongoKey": "cms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Coiler Motor Speed Target",
@@ -4348,7 +6054,10 @@
         "mongoKey": "cms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power",
@@ -4358,7 +6067,10 @@
         "mongoKey": "suction_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power CMS",
@@ -4368,7 +6080,10 @@
         "mongoKey": "smp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Power Target",
@@ -4378,7 +6093,10 @@
         "mongoKey": "smp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current",
@@ -4388,7 +6106,10 @@
         "mongoKey": "suction_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current CMS",
@@ -4398,7 +6119,10 @@
         "mongoKey": "smc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Current Target",
@@ -4408,7 +6132,10 @@
         "mongoKey": "smc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque",
@@ -4418,7 +6145,10 @@
         "mongoKey": "suction_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque CMS",
@@ -4428,7 +6158,10 @@
         "mongoKey": "smt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Torque Target",
@@ -4438,7 +6171,10 @@
         "mongoKey": "smt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature",
@@ -4448,7 +6184,10 @@
         "mongoKey": "suction_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature CMS",
@@ -4458,7 +6197,10 @@
         "mongoKey": "smit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Inverter Heat Sink Temperature Target",
@@ -4468,7 +6210,10 @@
         "mongoKey": "smit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed",
@@ -4478,7 +6223,10 @@
         "mongoKey": "suction_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed CMS",
@@ -4488,7 +6236,10 @@
         "mongoKey": "sms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Suction Motor Speed Target",
@@ -4498,7 +6249,10 @@
         "mongoKey": "sms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power",
@@ -4508,7 +6262,16 @@
         "mongoKey": "draft_motor_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Power",
+          "Drafting Motor Output Power"
+        ],
+        "canonicalName": "Draft Motor Power",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power CMS",
@@ -4518,7 +6281,10 @@
         "mongoKey": "dmp_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Power Target",
@@ -4528,7 +6294,10 @@
         "mongoKey": "dmp_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current",
@@ -4538,7 +6307,16 @@
         "mongoKey": "draft_motor_current",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Current",
+          "Drafting Motor Output Current"
+        ],
+        "canonicalName": "Draft Motor Current",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current CMS",
@@ -4548,7 +6326,10 @@
         "mongoKey": "dmc_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Current Target",
@@ -4558,7 +6339,10 @@
         "mongoKey": "dmc_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque",
@@ -4568,7 +6352,16 @@
         "mongoKey": "draft_motor_torque",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "aliases": [
+          "Draft Motor Torque",
+          "Drafting Motor Motor Torque"
+        ],
+        "canonicalName": "Draft Motor Torque",
+        "mappingSource": "knowledge/master/data_model_rules.json",
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque CMS",
@@ -4578,7 +6371,10 @@
         "mongoKey": "dmt_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Torque Target",
@@ -4588,7 +6384,10 @@
         "mongoKey": "dmt_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp",
@@ -4598,7 +6397,10 @@
         "mongoKey": "draft_motor_ihs_temp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp CMS",
@@ -4608,7 +6410,10 @@
         "mongoKey": "dmit_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft Motor Inverter Heat Sink Temp Target",
@@ -4618,7 +6423,10 @@
         "mongoKey": "dmit_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed",
@@ -4628,7 +6436,10 @@
         "mongoKey": "draft_motor_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed CMS",
@@ -4638,7 +6449,10 @@
         "mongoKey": "dms_cms",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Head Stock Draft Motor Speed Target",
@@ -4648,7 +6462,10 @@
         "mongoKey": "dms_target",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Delivery Speed",
@@ -4658,7 +6475,10 @@
         "mongoKey": "delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Production in kg",
@@ -4667,7 +6487,10 @@
         "tdEngineKey": "production_in_kg",
         "mongoKey": "production_kgs",
         "formula": null,
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Ukg",
@@ -4676,7 +6499,128 @@
         "tdEngineKey": "ukg",
         "mongoKey": "ukg",
         "formula": null,
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Run Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": null,
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_shift",
+          "row": 19
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      }
+    ],
+    "cms_DFFinisher_minutes": [
+      {
+        "tagName": "Run Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "formula": null,
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": null,
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_minutes",
+          "row": 18
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      }
+    ],
+    "cms_DFFinisher_hourwise": [
+      {
+        "tagName": "Maximum total kwh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "formula": null,
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh_max",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 107
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Minimum total kwh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "formula": null,
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh_min",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 118
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Maximum delivery_speed",
+        "dataType": "float",
+        "groupCode": "600",
+        "formula": null,
+        "tdEngineKey": "delivery_speed",
+        "mongoKey": "delivery_speed_max",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 121
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Minimum delivery_speed",
+        "dataType": "float",
+        "groupCode": "600",
+        "formula": null,
+        "tdEngineKey": "delivery_speed",
+        "mongoKey": "delivery_speed_min",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 122
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       }
     ]
   },

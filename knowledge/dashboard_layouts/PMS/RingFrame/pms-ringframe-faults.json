@@ -1,0 +1,76 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-ringframe-pms-ringframe-faults",
+  "name": "PMS / RingFrame / Faults",
+  "service": "PMS",
+  "machine": "RingFrame",
+  "view": "Faults",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_RINGFRAME_faults",
+    "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+  },
+  "parameters": [
+    {
+      "id": "row-2",
+      "name": "Yet to provide the requirements",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_faults",
+        "row": 2
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Yet to provide the requirements",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "",
+      "aliases": [
+        "Yet to provide the requirements"
+      ],
+      "sourceAliases": [
+        "Yet to provide the requirements"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_faults",
+        "row": 1
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 2,
+      "name": "Yet to provide the requirements",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": []
+}

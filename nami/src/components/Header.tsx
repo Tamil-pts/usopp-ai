@@ -1,3 +1,4 @@
+import {targetMode,targetModeLabel} from '../utils/targetMode';
 import React, {useEffect, useState} from 'react';
 import {Activity, Server, Cpu, Settings, ArrowRight, ArrowLeft, RefreshCw, Play, Square, Clock, Sliders, X} from 'lucide-react';
 import {PLCConfig, GroupResponseData, SpinningMachineType} from '../types';
@@ -119,7 +120,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
       <section className="di-mimic-card di-plc">
         <div className="di-device-heading">
-          <span className="di-device-icon"><Cpu size={26}/></span><span><strong>PLC</strong><small>{plc.isSimulated ? 'Built-in simulator' : 'Physical TCP target'}</small></span>
+          <span className="di-device-icon"><Cpu size={26}/></span><span><strong>PLC</strong><small>{targetModeLabel(plc)}</small></span>
         </div>
         <div className={`di-connection ${plc.status === 'connected' ? 'di-good' : plc.tcpConnected ? 'di-warning' : ''}`} title={plc.error}><span/> {connection}</div>
         <form className="di-ip-form" onSubmit={(event) => {
@@ -130,7 +131,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           }
           props.onChangePLCIP(ip); setIpError('');
         }}>
-          <label htmlFor="di-plc-ip">PLC IP</label><input id="di-plc-ip" value={ipDraft} disabled={busy || plc.isSimulated} onChange={(event) => {setIpDraft(event.target.value); setIpError('');}}/>
+          <label htmlFor="di-plc-ip">PLC IP</label><input id="di-plc-ip" value={ipDraft} disabled={busy || targetMode(plc)==='data-simulator'} onChange={(event) => {setIpDraft(event.target.value); setIpError('');}}/>
           {ipDraft.trim() !== plc.ip && <button disabled={busy} type="submit">Save IP</button>}
         </form>
         {ipError && <p className="di-form-error" role="alert">{ipError}</p>}
@@ -144,7 +145,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           <div><dt>Program version · GC 10</dt><dd>{version || 'Not available'}{props.versionResponse ? ` · read ${props.versionResponse.timestamp}` : ''}</dd></div>
           <div><dt>PLC RTC · GC 150</dt><dd title={clockIssue}>{clock}{props.clockResponse?.success ? ` · read ${props.clockResponse.timestamp}` : ''}</dd></div>
         </dl>
-        <div className="di-mimic-buttons"><button disabled={busy} onClick={props.onReadClock}><Clock size={15}/>Read PLC RTC</button><button disabled={busy} onClick={props.onOpenRTCModal}>RTC tester</button><button disabled={busy} onClick={props.onOpenPLCModal}>Manage targets</button>{plc.isSimulated && <button onClick={props.onOpenSimulatorModal}>Simulator</button>}</div>
+        <div className="di-mimic-buttons"><button disabled={busy} onClick={props.onReadClock}><Clock size={15}/>Read PLC RTC</button><button disabled={busy} onClick={props.onOpenRTCModal}>RTC tester</button><button disabled={busy} onClick={props.onOpenPLCModal}>Manage targets</button>{targetMode(plc)==='data-simulator' && <button onClick={props.onOpenSimulatorModal}>Data simulator</button>}</div>
         </details>
       </section>
     </div>

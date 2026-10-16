@@ -29,7 +29,7 @@ def start_inspect(data,operation):
         raise HTTPException(400,'Metadata must contain at most 30,000 parameter records.')
     ip,port,machine_id,timeout=target(data)
     supplied=data.get('plc') if isinstance(data.get('plc'),dict) else {}
-    plc={key:supplied[key] for key in ('id','name','machineType','endianness') if key in supplied}
+    plc={key:supplied[key] for key in ('id','name','machineType','endianness','targetMode') if key in supplied}
     plc.update(ip=ip,port=port,machineId=machine_id,timeoutMs=timeout,isSimulated=bool(data.get('isSimulated')))
     plc.setdefault('id','archived-plc');plc.setdefault('name',ip or 'PLC simulator')
     plc.setdefault('machineType','Custom');plc.setdefault('endianness',data.get('endianness','little'))

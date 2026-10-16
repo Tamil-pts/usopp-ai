@@ -1,3 +1,4 @@
+import {targetModeLabel} from '../utils/targetMode';
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   X,
@@ -264,7 +265,7 @@ export const RTCModal: React.FC<RTCModalProps> = ({
             <div>
               <span className="text-slate-400 block mb-0.5">Mode:</span>
               <span className={`font-semibold ${plc.isSimulated ? 'text-amber-400' : 'text-cyan-400'}`}>
-                {plc.isSimulated ? 'Virtual Simulator' : 'Physical TCP Socket'}
+                {targetModeLabel(plc)}
               </span>
             </div>
             <div>

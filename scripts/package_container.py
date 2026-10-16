@@ -37,8 +37,9 @@ def stage(destination: Path) -> None:
     shutil.copytree(ROOT / 'dist', destination / 'dist')
     shutil.copytree(ROOT / 'rules', destination / 'rules',
                     ignore=shutil.ignore_patterns('archive', 'learning', 'feedback', '__pycache__'))
-    for name in ('master', 'data_models', 'chopper'):
-        shutil.copytree(ROOT / 'knowledge' / name, destination / 'knowledge' / name)
+    for name in ('master', 'data_models', 'chopper', 'dashboard_layouts', 'lapformer'):
+        shutil.copytree(ROOT / 'knowledge' / name, destination / 'knowledge' / name,
+                        ignore=shutil.ignore_patterns('users') if name=='dashboard_layouts' else None)
     help_target = destination / 'knowledge' / 'help_index'
     help_target.mkdir()
     for name in ('project_guide.json', 'BR_PROJECT_HELP.md'):

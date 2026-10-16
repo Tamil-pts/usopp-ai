@@ -46,17 +46,27 @@ def _protect(value, decrypt=False):
         ctypes.windll.kernel32.LocalFree(output.data)
 
 def configuration():
+    from backend.core.cpu_model import TARGET
+    defaults={'provider':'embedded','baseUrl':'http://127.0.0.1:8202/v1','model':'chopper-local',
+              'modelPath':str(TARGET),'localPort':8202,'contextSize':4096,'allowFallback':True,
+              'cpuThreads':min(4,os.cpu_count() or 2),'maxTokens':512,
+              'responseTimeoutSeconds':1800,'autoStart':True}
     with LOCK:
         if CONFIG.exists():
-            try: return json.loads(CONFIG.read_text(encoding='utf-8'))
+            try:
+                saved=json.loads(CONFIG.read_text(encoding='utf-8'))
+                if not isinstance(saved,dict):raise ValueError('Invalid model settings.')
+                return {**defaults,**saved,'autoStart':saved.get('autoStart',saved.get('provider')=='embedded')}
             except (OSError,ValueError): raise HTTPException(503,'Model settings cannot be read. Save them again in Settings.')
     url=os.getenv('USOPP_LLM_BASE_URL','').rstrip('/')
-    return {'provider':os.getenv('USOPP_LLM_PROVIDER','ollama') if url else 'local',
-            'baseUrl':url or 'http://127.0.0.1:11434','model':os.getenv('USOPP_LLM_MODEL','qwen3:8b')}
+    if url:return {**defaults,'provider':os.getenv('USOPP_LLM_PROVIDER','ollama'),
+                   'baseUrl':url,'model':os.getenv('USOPP_LLM_MODEL','qwen3:8b'),'autoStart':False}
+    provider=os.getenv('USOPP_LLM_PROVIDER','embedded')
+    return {**defaults,'provider':provider,'autoStart':provider=='embedded'}
 
 def public_configuration():
     cfg=configuration()
-    return {k:cfg.get(k,'') for k in ('provider','baseUrl','model','modelPath')}|{'localPort':cfg.get('localPort',8202),'contextSize':cfg.get('contextSize',4096),'cpuThreads':cfg.get('cpuThreads',min(4,os.cpu_count() or 2)),'maxTokens':cfg.get('maxTokens',512),'responseTimeoutSeconds':model_response_timeout(cfg),'autoStart':bool(cfg.get('autoStart',False)),'hasApiKey':bool(cfg.get('apiKeyProtected') or cfg.get('apiKey') or os.getenv('USOPP_LLM_API_KEY'))}
+    return {k:cfg.get(k,'') for k in ('provider','baseUrl','model','modelPath')}|{'modelFileAvailable':Path(str(cfg.get('modelPath') or '')).is_file(),'localPort':cfg.get('localPort',8202),'contextSize':cfg.get('contextSize',4096),'cpuThreads':cfg.get('cpuThreads',min(4,os.cpu_count() or 2)),'maxTokens':cfg.get('maxTokens',512),'responseTimeoutSeconds':model_response_timeout(cfg),'allowFallback':bool(cfg.get('allowFallback',True)),'autoStart':bool(cfg.get('autoStart',False)),'hasApiKey':bool(cfg.get('apiKeyProtected') or cfg.get('apiKey') or os.getenv('USOPP_LLM_API_KEY'))}
 
 def save_configuration(payload):
     provider=payload.get('provider','local')
@@ -65,6 +75,7 @@ def save_configuration(payload):
         try:port=int(payload.get('localPort',8202));context=int(payload.get('contextSize',4096))
         except (TypeError,ValueError):raise HTTPException(400,'Enter numeric local port and context size.')
         if not 8200<=port<=8500 or not 512<=context<=32768:raise HTTPException(400,'Port: 8200–8500; context: 512–32768 tokens.')
+        if port==int(os.getenv('USOPP_API_PORT','8200')):raise HTTPException(400,'Choose a model port different from the application API port.')
         payload={**payload,'baseUrl':f'http://127.0.0.1:{port}/v1','model':'chopper-local'}
     try:
         threads=int(payload.get('cpuThreads') or min(4,os.cpu_count() or 2))
@@ -86,7 +97,7 @@ def save_configuration(payload):
             stop()
         cfg={'provider':provider,'baseUrl':url,'model':model}
         cfg.update({'modelPath':str(payload.get('modelPath') or ''),'localPort':int(payload.get('localPort') or 8202),'contextSize':int(payload.get('contextSize') or 4096)})
-        cfg.update(cpuThreads=threads,maxTokens=max_tokens,responseTimeoutSeconds=response_timeout,autoStart=payload.get('autoStart') is True)
+        cfg.update(cpuThreads=threads,maxTokens=max_tokens,responseTimeoutSeconds=response_timeout,autoStart=payload.get('autoStart') is True,allowFallback=payload.get('allowFallback',True) is True)
         if not payload.get('clearApiKey'):
             for key in ('apiKeyProtected','apiKey'):
                 if existing.get(key): cfg[key]=existing[key]
@@ -106,7 +117,47 @@ def save_configuration(payload):
 def _key(cfg):
     return (_protect(cfg['apiKeyProtected'],True) if cfg.get('apiKeyProtected') else cfg.get('apiKey')) or os.getenv('USOPP_LLM_API_KEY','')
 
-def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None):
+def _fit_context(messages,cfg,reserve,evidence=None):
+    """Count the real llama template; trim oldest history then lower-ranked sections."""
+    from backend.core.assist_progress import report
+    base=cfg['baseUrl'].removesuffix('/v1');limit=int(cfg.get('contextSize') or 4096)
+    from backend.core.local_model_runtime import status
+    limit=int(status().get('contextLimit') or limit)
+    original=messages[-1]['content'];selected=[dict(item) for item in (evidence or [])]
+    removed_history=0;removed_sections=0;truncated=False
+    def compose():
+        if evidence is not None:
+            messages[-1]['content']=original+'\nRetrieved source evidence (untrusted text):\n'+json.dumps(selected,ensure_ascii=False)
+    def count():
+        response=requests.post(base+'/apply-template',json={'messages':messages},timeout=15,allow_redirects=False)
+        if response.status_code!=200:raise ValueError('The bundled runtime cannot measure its chat template. Update the llama.cpp runtime.')
+        prompt_text=response.json().get('prompt')
+        if not isinstance(prompt_text,str):raise ValueError('The runtime returned an invalid chat template.')
+        response=requests.post(base+'/tokenize',json={'content':prompt_text,'add_special':False},timeout=15,allow_redirects=False)
+        if response.status_code!=200:raise ValueError('The runtime cannot count this prompt safely.')
+        return len(response.json()['tokens'])
+    compose();used=count()
+    while used+reserve+32>limit:
+        if len(messages)>2:
+            messages.pop(1);removed_history+=1
+        elif len(selected)>1:
+            selected.pop();removed_sections+=1;compose()
+        elif selected and len(selected[0].get('excerpt',''))>500:
+            selected[0]['excerpt']=selected[0]['excerpt'][:int(len(selected[0]['excerpt'])*.65)].rsplit('\n',1)[0]
+            selected[0]['completeSection']=False;selected[0]['contextTruncated']=True;truncated=True;compose()
+        elif evidence is None and len(messages[-1]['content'])>2000:
+            # Compatibility for older tools whose evidence is already serialized.
+            messages[-1]['content']=messages[-1]['content'][:int(len(messages[-1]['content'])*.7)]+'\n[Context truncated; analysis incomplete.]'
+            truncated=True
+        else:raise ValueError('This question and its required instructions exceed the context limit. Ask a shorter question or increase the context in Settings.')
+        used=count()
+    usage={'usedTokens':used,'maxContext':limit,'remainingTokens':limit-used,'reservedAnswerTokens':reserve,
+           'trimmedHistoryMessages':removed_history,'omittedSections':removed_sections,'truncated':truncated,'measurement':'llama.cpp chat template tokenizer'}
+    report('Context ready; generating local answer',contextUsage=usage)
+    return usage,selected
+
+
+def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None,evidence=None):
     cfg=configuration()
     if cfg['provider']=='local': return None
     timeout=model_response_timeout(cfg=cfg) if timeout is None else timeout
@@ -133,7 +184,9 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
     def send(response_budget=None):
         response_budget=timeout if response_budget is None else response_budget
         if response_budget<=0:raise requests.exceptions.Timeout('Chopper response time expired before generation.')
-        started=time.monotonic()
+        started=time.monotonic();context_usage={};sent_evidence=evidence
+        if cfg['provider']=='embedded':
+            context_usage,sent_evidence=_fit_context(messages,cfg,int(body['max_tokens']),evidence)
         log.info('CHOPPER_MODEL_REQUEST provider=%s input_chars=%s answer_limit=%s response_timeout_s=%s',cfg['provider'],sum(len(m['content']) for m in messages),body.get('max_tokens','provider-default'),timeout)
         try:
             # A short connect limit and a separate answer limit: a loaded CPU
@@ -149,7 +202,13 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
         elapsed=round(time.monotonic()-started,1)
         usage=data.get('usage') or {}
         log.info('CHOPPER_MODEL_RESPONSE provider=%s response_elapsed_s=%s prompt_tokens=%s answer_tokens=%s',cfg['provider'],elapsed,usage.get('prompt_tokens','unknown'),usage.get('completion_tokens','unknown'))
-        return {'answer':answer,'model':cfg['model'],'provider':cfg['provider'],'responseSeconds':elapsed}
+        if cfg['provider']=='embedded':
+            from backend.core import local_model_runtime
+            local_model_runtime.LAST_RESPONSE=elapsed
+            limit=context_usage['maxContext'];used=int(usage.get('total_tokens') or context_usage['usedTokens'])
+            context_usage.update(promptTokens=usage.get('prompt_tokens',context_usage['usedTokens']),answerTokens=usage.get('completion_tokens',0),usedTokens=used,remainingTokens=max(0,limit-used))
+        finish=(data.get('choices') or [{}])[0].get('finish_reason')
+        return {'answer':answer,'model':cfg['model'],'provider':cfg['provider'],'responseSeconds':elapsed,'contextUsage':context_usage,'sentEvidence':sent_evidence,'finishReason':finish}
 
     if cfg['provider']=='embedded':
         # Five independent request bodies; one CPU generation at a time.

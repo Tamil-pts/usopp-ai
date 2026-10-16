@@ -1,0 +1,223 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-ringframe-pms-ringframe-stoppages",
+  "name": "PMS / RingFrame / Stoppages",
+  "service": "PMS",
+  "machine": "RingFrame",
+  "view": "Stoppages",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_RINGFRAME_stoppages",
+    "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+  },
+  "parameters": [
+    {
+      "id": "row-2",
+      "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_stoppages",
+        "row": 2
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Overall Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "overall_machine_utilization"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "overall_machine_utilization",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_stoppages",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_efficiency"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_efficiency",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_stoppages",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Production Kg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_kg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_kg",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_stoppages",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_stoppages",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "GPSS",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "gpss"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "gpss",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_stoppages",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    }
+  ],
+  "excluded": [
+    {
+      "row": 2,
+      "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Overall Machine Utilization",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-35"
+      ]
+    },
+    {
+      "title": "Production Efficiency",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-36"
+      ]
+    },
+    {
+      "title": "Production Kg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-37"
+      ]
+    },
+    {
+      "title": "Overall Machine Utilization trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-35"
+      ]
+    },
+    {
+      "title": "Stoppages readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-35",
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39"
+      ]
+    }
+  ]
+}

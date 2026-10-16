@@ -76,7 +76,7 @@ class DataModelTests(unittest.TestCase):
         self.assertEqual(explicit['parameters'][0]['dataType'],'TIMESTAMP')
         self.assertEqual(validate_model(explicit,self.metadata('Production in kg'))['rows'][0]['status'],'PASS')
 
-    def test_builder_preserves_conflicting_originals_and_cross_references_types(self):
+    def test_builder_archives_originals_and_records_consistent_workbook_corrections(self):
         from scripts.build_data_model_knowledge import build
         with TemporaryDirectory() as directory:
             root=Path(directory);source=root/'source';cms=source/'CMS';cms.mkdir(parents=True)
@@ -92,26 +92,35 @@ class DataModelTests(unittest.TestCase):
             self.assertFalse(issues);self.assertEqual(len(models),1)
             model=models[0];requirement=model['parameters'][0]
             self.assertEqual((cms/'DRAWFRAMEFINISHER.json').read_bytes(),raw)
-            self.assertEqual(model['databaseModel'],original)
-            self.assertEqual(requirement['dataType'],'TIMESTAMP')
+            self.assertEqual((root/'output/reference_sources/CMS/DRAWFRAMEFINISHER.json').read_bytes(),raw)
+            corrected=model['databaseModel']['keysList']['cms_DRAWFRAMEFINISHER_hours'][0]
+            self.assertEqual(corrected['originalDataType'],'TIMESTAMP')
+            self.assertEqual(corrected['dataType'],'REAL')
+            self.assertEqual(requirement['dataType'],'REAL')
+            self.assertEqual(requirement['referenceCorrections'][0]['previous'],'TIMESTAMP')
             self.assertEqual(requirement['suggestedPlcType'],'REAL')
             self.assertEqual(requirement['excelReferences'][0]['dataType'],'FLOAT')
             self.assertEqual(requirement['excelReferences'][0]['row'],2)
             metadata=self.metadata('Production in kg')+self.metadata('Valid value',dtype='INT')
             result=validate_model(model,metadata)
-            self.assertEqual(result['rows'][0]['status'],'UNRESOLVED')
-            self.assertIn('REFERENCE_CONFLICT',result['rows'][0]['reasonCodes'])
-            self.assertEqual(result['rows'][1]['status'],'FAIL')
-            self.assertIn('TYPE_DIFFERS',result['rows'][1]['reasonCodes'])
+            self.assertEqual(result['rows'][0]['status'],'PASS')
+            self.assertEqual(result['rows'][1]['status'],'PASS')
+            self.assertIn('NUMERIC_VALUE_MAPPED',result['rows'][1]['reasonCodes'])
+            # Numeric database compatibility cannot override an explicit wire type.
+            model['parameters'][1].update(dataTypeRole='wire',numericValueType=False)
+            strict=validate_model(model,metadata)
+            self.assertEqual(strict['rows'][1]['status'],'FAIL')
+            self.assertIn('TYPE_DIFFERS',strict['rows'][1]['reasonCodes'])
 
-    def test_real_finisher_screenshot_reference_conflict(self):
+    def test_finisher_corrected_reference_retains_workbook_evidence(self):
         catalog=Path(__file__).resolve().parents[1]/'knowledge/data_models/catalog.json'
         models=json.loads(catalog.read_text(encoding='utf-8'))['models']
         model=next(value for value in models if value['machine']=='DRAWFRAMEFINISHER' and value['service']=='CMS')
         rows=validate_model(model,self.metadata('Production in kg'))['rows']
         current=next(row for row in rows if row['name']=='Production in kg' and row['groupCodes']==[40])
-        self.assertEqual(current['status'],'UNRESOLVED')
-        self.assertEqual(current['dataType'],'TIMESTAMP')
+        self.assertEqual(current['status'],'PASS')
+        self.assertEqual(current['dataType'],'REAL')
+        self.assertEqual(current['referenceCorrections'][0]['previous'],'TIMESTAMP')
         self.assertEqual({row['dataType'] for row in current['excelReferences']},{'FLOAT'})
         self.assertEqual({row['row'] for row in current['excelReferences']},{54,98,121})
         previous=next(row for row in rows if row['name']=='Production in kg' and row['groupCodes']==[50])

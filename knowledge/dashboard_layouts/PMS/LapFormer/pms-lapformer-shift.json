@@ -1,0 +1,3546 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-lapformer-pms-lapformer-shift",
+  "name": "PMS / LapFormer / Shift",
+  "service": "PMS",
+  "machine": "LapFormer",
+  "view": "Shift",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_LAPFORMER_shift",
+    "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_hour",
+      "mongoKey": "idle_time_minute",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_hour",
+      "mongoKey": "power_fail_time_minute",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Auto Doff Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "auto_doff_time_hour",
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "auto_doff_time_hour",
+      "mongoKey": "doff_time_minute",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Auto Doff Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "auto_doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "auto_doff_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Production kgs",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_kgs",
+        "production_kgs"
+      ],
+      "unit": "",
+      "tdEngineKey": "production_kgs",
+      "mongoKey": "production_kgs",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Number of Doff",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "number_of_doff",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "tdEngineKey": "number_of_doff",
+      "mongoKey": "no_of_doffs",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Delivery Hanks",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_hanks",
+        "delivery_hanks"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_hanks",
+      "mongoKey": "delivery_hanks",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Creel Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "creel_stop",
+        "creel_stop"
+      ],
+      "unit": "",
+      "tdEngineKey": "creel_stop",
+      "mongoKey": "creel_stop",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Drafting Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting_stop",
+        "drafting_stop"
+      ],
+      "unit": "",
+      "tdEngineKey": "drafting_stop",
+      "mongoKey": "drafting_stop",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Calender Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "calender_stop",
+        "calender_stop"
+      ],
+      "unit": "",
+      "tdEngineKey": "calender_stop",
+      "mongoKey": "calender_stop",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_delivery",
+      "mongoKey": "average_delivery",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Lap weight Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_weight_stops",
+        "lap_weight_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "lap_weight_stops",
+      "mongoKey": "lap_weight_stops",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Trolley Not Present Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "trolley_not_present_hour",
+        "trolley_not_present_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "trolley_not_present_hour",
+      "mongoKey": "trolley_not_present_minute",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Trolley Not Present Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "formula",
+      "formula": "trolley_not_present_hour * 60 + trolley_not_present_minutes",
+      "keys": [
+        "trolley_not_present_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "trolley_not_present_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "aggregation in minute",
+      "definitionSource": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 38
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Spool Not Present Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "formula",
+      "formula": "aggregation in minute",
+      "keys": [
+        "spool_not_present_hour",
+        "avg_waiting_time_empty_spool"
+      ],
+      "unit": "",
+      "tdEngineKey": "spool_not_present_hour",
+      "mongoKey": "avg_waiting_time_empty_spool",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Spool Not Present Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spool_not_present_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "spool_not_present_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "UKg",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg",
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "ukg",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Average Doff Time in seconds",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(doff_time_minute * 60)/no_of_doffs",
+      "keys": [
+        "avg_doff_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "avg_doff_min",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "(doff_time_minute *60) /no_of_doffs",
+      "definitionSource": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 44
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lot_Name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "Lot_Name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "Target Weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "tdEngineKey": "target_weight",
+      "mongoKey": "target_weight",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "Production efficiency",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute / (run_time_minute + idle_time_minute + doff_time_minute))* 100",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_eff",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_efficiency_formula",
+      "definitionSource": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 48
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-43",
+      "name": "Machine utilization",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute + doff_time_minute) * 100",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "machine_uti",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "machine_utilization_formula",
+      "definitionSource": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 49
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-51",
+      "name": "DOFF Per lap weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_per_lap_weight",
+        "doff_per_lap_weight"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_per_lap_weight",
+      "mongoKey": "doff_per_lap_weight",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 51
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-52",
+      "name": "Avg. LapWeight in g/m",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(production_kgs / (average_delivery * run_time_minute)) * 1000",
+      "keys": [
+        "avg_lapweight_gm"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "avg_lapweight_gm",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 52
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_kgs/(average_delivery * run_time_minute) *1000",
+      "definitionSource": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 58
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-53",
+      "name": "Avg_lapWeight in Kg",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_kgs / no_of_doffs",
+      "keys": [
+        "avg_lapweight_kg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "avg_lapweight_kg",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 53
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_kgs/no_of_doffs",
+      "definitionSource": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 59
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-54",
+      "name": "Calculated Waste",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(production_kgs * standard_waste_target) / 100",
+      "keys": [
+        "calc_waste_kg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "calc_waste_kg",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 54
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_kgs * standard waste % in setting / 100",
+      "definitionSource": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 61
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-55",
+      "name": "production Hanks",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_hanks",
+        "production_hanks"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_hanks",
+      "mongoKey": "production_hanks",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 55
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts_act",
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "ts_act",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_hour"
+      ],
+      "unit": "",
+      "mongoKey": "run_hour",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Run Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "run_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_minute",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "run_hour * 60 + run_minute",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idle_hour"
+      ],
+      "unit": "",
+      "mongoKey": "idle_hour",
+      "tdEngineKey": "idle_time_hour",
+      "aliases": [
+        "Idle Time Hour"
+      ],
+      "sourceAliases": [
+        "Idle Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Idle Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute",
+        "idle_minute"
+      ],
+      "unit": "",
+      "mongoKey": "idle_minute",
+      "tdEngineKey": "idle_time_minute",
+      "aliases": [
+        "Idle Time Minutes",
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minutes",
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "idle_hour * 60 + idle_minute",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "idle_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "power_fail_hour"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_hour",
+      "tdEngineKey": "power_fail_time_hour",
+      "aliases": [
+        "Power Fail Time Hour"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Power Fail Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute",
+        "power_fail_minute"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_minute",
+      "tdEngineKey": "power_fail_time_minute",
+      "aliases": [
+        "Power Fail Time Minutes",
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minutes",
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "power_fail_hour * 60 + power_fail_minute",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Auto DOFF Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "auto_doff_time_hour",
+        "doff_time_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_hour",
+      "tdEngineKey": "auto_doff_time_hour",
+      "aliases": [
+        "Auto DOFF Time Hour",
+        "Auto Doff Time Hour"
+      ],
+      "sourceAliases": [
+        "Auto DOFF Time Hour",
+        "Auto Doff Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Auto DOFF Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "auto_doff_time_minute",
+        "doff_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minutes",
+      "tdEngineKey": "auto_doff_time_minute",
+      "aliases": [
+        "Auto DOFF Time Minutes",
+        "Auto Doff Time Minute"
+      ],
+      "sourceAliases": [
+        "Auto DOFF Time Minutes",
+        "Auto Doff Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Auto DOFF Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "doff_time_hour * 60 + doff_time_minutes",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Auto DOFF Time Minute",
+        "Auto Doff Time Minute"
+      ],
+      "sourceAliases": [
+        "Auto DOFF Time Minute",
+        "Auto Doff Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Production Kgs",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_kgs",
+        "production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "production_kgs",
+      "tdEngineKey": "production_kgs",
+      "aliases": [
+        "Production Kgs",
+        "Production kgs"
+      ],
+      "sourceAliases": [
+        "Production Kgs",
+        "Production kgs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Number of Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "number_of_doff",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_doffs",
+      "tdEngineKey": "number_of_doff",
+      "aliases": [
+        "Number of Doffs",
+        "Number of Doff"
+      ],
+      "sourceAliases": [
+        "Number of Doffs",
+        "Number of Doff"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Delivery Hanks",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_hanks",
+        "delivery_hanks"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_hanks",
+      "tdEngineKey": "delivery_hanks",
+      "aliases": [
+        "Delivery Hanks"
+      ],
+      "sourceAliases": [
+        "Delivery Hanks"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Creel Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "creel_stop",
+        "creel_stop"
+      ],
+      "unit": "",
+      "mongoKey": "creel_stop",
+      "tdEngineKey": "creel_stop",
+      "aliases": [
+        "Creel Stop"
+      ],
+      "sourceAliases": [
+        "Creel Stop"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Drafting Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting_stop",
+        "drafting_stop"
+      ],
+      "unit": "",
+      "mongoKey": "drafting_stop",
+      "tdEngineKey": "drafting_stop",
+      "aliases": [
+        "Drafting Stop"
+      ],
+      "sourceAliases": [
+        "Drafting Stop"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Calender Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "calender_stop",
+        "calender_stop"
+      ],
+      "unit": "",
+      "mongoKey": "calender_stop",
+      "tdEngineKey": "calender_stop",
+      "aliases": [
+        "Calender Stop"
+      ],
+      "sourceAliases": [
+        "Calender Stop"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "mongoKey": "average_delivery",
+      "tdEngineKey": "average_delivery",
+      "aliases": [
+        "Average Delivery"
+      ],
+      "sourceAliases": [
+        "Average Delivery"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Lap Weight Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_weight_stops",
+        "lap_weight_stops"
+      ],
+      "unit": "",
+      "mongoKey": "lap_weight_stops",
+      "tdEngineKey": "lap_weight_stops",
+      "aliases": [
+        "Lap Weight Stops",
+        "Lap weight Stops"
+      ],
+      "sourceAliases": [
+        "Lap Weight Stops",
+        "Lap weight Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Trolley Not Present Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "trolley_not_present_hour",
+        "trolley_not_present_hour"
+      ],
+      "unit": "",
+      "mongoKey": "trolley_not_present_hour",
+      "tdEngineKey": "trolley_not_present_hour",
+      "aliases": [
+        "Trolley Not Present Hour"
+      ],
+      "sourceAliases": [
+        "Trolley Not Present Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Trolley Not Present Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "trolley_not_present_minute",
+        "trolley_not_present_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "trolley_not_present_minutes",
+      "tdEngineKey": "trolley_not_present_minute",
+      "aliases": [
+        "Trolley Not Present Minutes",
+        "Trolley Not Present Minute"
+      ],
+      "sourceAliases": [
+        "Trolley Not Present Minutes",
+        "Trolley Not Present Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Trolley Not Present Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "trolley_not_present_hour * 60 + trolley_not_present_minutes",
+      "keys": [
+        "trolley_not_present_minute"
+      ],
+      "unit": "",
+      "mongoKey": "trolley_not_present_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Trolley Not Present Minute"
+      ],
+      "sourceAliases": [
+        "Trolley Not Present Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "Spool Not Present Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spool_not_present_hour",
+        "spool_not_present_hour"
+      ],
+      "unit": "",
+      "mongoKey": "spool_not_present_hour",
+      "tdEngineKey": "spool_not_present_hour",
+      "aliases": [
+        "Spool Not Present Hour"
+      ],
+      "sourceAliases": [
+        "Spool Not Present Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Spool Not Present Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spool_not_present_minute",
+        "spool_not_present_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "spool_not_present_minutes",
+      "tdEngineKey": "spool_not_present_minute",
+      "aliases": [
+        "Spool Not Present Minutes",
+        "Spool Not Present Minute"
+      ],
+      "sourceAliases": [
+        "Spool Not Present Minutes",
+        "Spool Not Present Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Spool Not Present Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "spool_not_present_hour * 60 + spool_not_present_minutes",
+      "keys": [
+        "spool_not_present_minute"
+      ],
+      "unit": "",
+      "mongoKey": "spool_not_present_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Spool Not Present Minute"
+      ],
+      "sourceAliases": [
+        "Spool Not Present Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "Total kWh"
+      ],
+      "sourceAliases": [
+        "Total kWh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg",
+        "ukg"
+      ],
+      "unit": "",
+      "mongoKey": "ukg",
+      "tdEngineKey": "ukg",
+      "aliases": [
+        "Ukg",
+        "UKg"
+      ],
+      "sourceAliases": [
+        "Ukg",
+        "UKg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "Average Doff Time in Seconds",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(doff_time_minute * 60)/no_of_doffs",
+      "keys": [
+        "avg_doff_min"
+      ],
+      "unit": "",
+      "mongoKey": "avg_doff_min",
+      "tdEngineKey": "",
+      "aliases": [
+        "Average Doff Time in Seconds",
+        "Average Doff Time in seconds"
+      ],
+      "sourceAliases": [
+        "Average Doff Time in Seconds",
+        "Average Doff Time in seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name"
+      ],
+      "sourceAliases": [
+        "Lot Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Target Weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "mongoKey": "target_weight",
+      "tdEngineKey": "target_weight",
+      "aliases": [
+        "Target Weight"
+      ],
+      "sourceAliases": [
+        "Target Weight"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "Average Waiting Time for Empty Spool",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "avg_waitingtime_empty_spool"
+      ],
+      "unit": "",
+      "mongoKey": "avg_waitingtime_empty_spool",
+      "tdEngineKey": "",
+      "aliases": [
+        "Average Waiting Time for Empty Spool",
+        "Spool Not Present Hour"
+      ],
+      "sourceAliases": [
+        "Average Waiting Time for Empty Spool",
+        "Spool Not Present Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute / (run_time_minute + idle_time_minute + doff_time_minute))* 100",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "mongoKey": "production_eff",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production Efficiency",
+        "-"
+      ],
+      "sourceAliases": [
+        "Production Efficiency",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute + doff_time_minute) * 100",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "mongoKey": "machine_uti",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Utilization",
+        "-"
+      ],
+      "sourceAliases": [
+        "Machine Utilization",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "Machine Utilization Formula 1 - KM",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute ) / (run_time_minute + idle_time_minute + power_fail_time_minute) * 100",
+      "keys": [
+        "machine_uti_formula_1"
+      ],
+      "unit": "",
+      "mongoKey": "machine_uti_formula_1",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Utilization Formula 1 - KM"
+      ],
+      "sourceAliases": [
+        "Machine Utilization Formula 1 - KM"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Machine Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute+power_fail_time_minute))*100",
+      "keys": [
+        "machine_eff"
+      ],
+      "unit": "",
+      "mongoKey": "machine_eff",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Efficiency"
+      ],
+      "sourceAliases": [
+        "Machine Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Target Ukg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "UKG",
+        "tgt_ukg"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_ukg",
+      "tdEngineKey": "UKG",
+      "aliases": [
+        "Target Ukg",
+        "UKg"
+      ],
+      "sourceAliases": [
+        "Target Ukg",
+        "UKg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "Target Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PE",
+        "tgt_production_eff"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_eff",
+      "tdEngineKey": "PE",
+      "aliases": [
+        "Target Production Efficiency"
+      ],
+      "sourceAliases": [
+        "Target Production Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 53
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-54",
+      "name": "Target Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MU",
+        "tgt_machine_uti"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_machine_uti",
+      "tdEngineKey": "MU",
+      "aliases": [
+        "Target Machine Utilization"
+      ],
+      "sourceAliases": [
+        "Target Machine Utilization"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 54
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-55",
+      "name": "Target Production Kgs",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PKG",
+        "tgt_production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_kgs",
+      "tdEngineKey": "PKG",
+      "aliases": [
+        "Target Production Kgs"
+      ],
+      "sourceAliases": [
+        "Target Production Kgs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 55
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-56",
+      "name": "Target Production Efficiency Loss",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PL",
+        "tgt_production_eff_loss_percent"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_eff_loss_percent",
+      "tdEngineKey": "PL",
+      "aliases": [
+        "Target Production Efficiency Loss"
+      ],
+      "sourceAliases": [
+        "Target Production Efficiency Loss"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 56
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-57",
+      "name": "Doff Per Lap Weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_per_lap_weight",
+        "doff_per_lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "doff_per_lap_weight",
+      "tdEngineKey": "doff_per_lap_weight",
+      "aliases": [
+        "Doff Per Lap Weight",
+        "DOFF Per lap weight"
+      ],
+      "sourceAliases": [
+        "Doff Per Lap Weight",
+        "DOFF Per lap weight"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 57
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-58",
+      "name": "Avg Lap Weight in g/m",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(production_kgs / (average_delivery * run_time_minute)) * 1000",
+      "keys": [
+        "avg_lapweight_gm"
+      ],
+      "unit": "",
+      "mongoKey": "avg_lapweight_gm",
+      "tdEngineKey": "",
+      "aliases": [
+        "Avg Lap Weight in g/m",
+        "Avg. LapWeight in g/m"
+      ],
+      "sourceAliases": [
+        "Avg Lap Weight in g/m",
+        "Avg. LapWeight in g/m"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 58
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-59",
+      "name": "Avg Lap Weight in Kg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_kgs / no_of_doffs",
+      "keys": [
+        "avg_lapweight_kg"
+      ],
+      "unit": "",
+      "mongoKey": "avg_lapweight_kg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Avg Lap Weight in Kg",
+        "Avg_lapWeight in Kg"
+      ],
+      "sourceAliases": [
+        "Avg Lap Weight in Kg",
+        "Avg_lapWeight in Kg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 59
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-60",
+      "name": "Target Standard Waste Percent",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "STDW",
+        "standard_waste_target"
+      ],
+      "unit": "",
+      "mongoKey": "standard_waste_target",
+      "tdEngineKey": "STDW",
+      "aliases": [
+        "Target Standard Waste Percent"
+      ],
+      "sourceAliases": [
+        "Target Standard Waste Percent"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 60
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-61",
+      "name": "Calculated Waste KG",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(production_kgs * standard_waste_target) / 100",
+      "keys": [
+        "calc_waste_kg"
+      ],
+      "unit": "",
+      "mongoKey": "calc_waste_kg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Calculated Waste KG",
+        "Calculated Waste"
+      ],
+      "sourceAliases": [
+        "Calculated Waste KG",
+        "Calculated Waste"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 61
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-62",
+      "name": "Production Hanks",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_hanks",
+        "production_hanks"
+      ],
+      "unit": "",
+      "mongoKey": "production_hanks",
+      "tdEngineKey": "delivery_hanks",
+      "aliases": [
+        "Production Hanks",
+        "production Hanks"
+      ],
+      "sourceAliases": [
+        "Production Hanks",
+        "production Hanks"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 62
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-63",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 63
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-64",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "idle_time_minute",
+      "aliases": [
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 64
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-65",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "power_fail_time_minute",
+      "aliases": [
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 65
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-66",
+      "name": "Auto Doff Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "auto_doff_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "auto_doff_time_minute",
+      "aliases": [
+        "Auto Doff Time Minute"
+      ],
+      "sourceAliases": [
+        "Auto Doff Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 66
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-67",
+      "name": "Number of Doff",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "number_of_doff",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_doffs",
+      "tdEngineKey": "number_of_doff",
+      "aliases": [
+        "Number of Doff"
+      ],
+      "sourceAliases": [
+        "Number of Doff"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 67
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-68",
+      "name": "Trolley Not Present Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "formula",
+      "formula": "aggregation in minute",
+      "keys": [
+        "trolley_not_present_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "trolley_not_present_minute",
+      "aliases": [
+        "Trolley Not Present Minute"
+      ],
+      "sourceAliases": [
+        "Trolley Not Present Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 68
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-69",
+      "name": "Spool Not Present Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "formula",
+      "formula": "aggregation in minute",
+      "keys": [
+        "spool_not_present_hour",
+        "avg_waiting_time_empty_spool"
+      ],
+      "unit": "",
+      "mongoKey": "avg_waiting_time_empty_spool",
+      "tdEngineKey": "spool_not_present_hour",
+      "aliases": [
+        "Spool Not Present Hour"
+      ],
+      "sourceAliases": [
+        "Spool Not Present Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 69
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-70",
+      "name": "Spool Not Present Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spool_not_present_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "spool_not_present_minute",
+      "aliases": [
+        "Spool Not Present Minute"
+      ],
+      "sourceAliases": [
+        "Spool Not Present Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 70
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-71",
+      "name": "Calculated Waste",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_kgs * standard waste % in setting / 100",
+      "keys": [
+        "calc_waste_kg"
+      ],
+      "unit": "",
+      "mongoKey": "calc_waste_kg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Calculated Waste"
+      ],
+      "sourceAliases": [
+        "Calculated Waste"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_shift",
+        "row": 71
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 44,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 40,
+      "name": "Lot Name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Run Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Run Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Auto Doff Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-23"
+      ]
+    },
+    {
+      "title": "Auto Doff Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-24"
+      ]
+    },
+    {
+      "title": "Production kgs",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-25"
+      ]
+    },
+    {
+      "title": "Number of Doff",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-26"
+      ]
+    },
+    {
+      "title": "Run Time Hour trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Shift readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    },
+    {
+      "title": "Shift readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-23",
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34"
+      ]
+    },
+    {
+      "title": "Shift readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-35",
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-41",
+        "row-42",
+        "row-43",
+        "row-51",
+        "row-52",
+        "row-53",
+        "row-54"
+      ]
+    },
+    {
+      "title": "Shift readings 4",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-55"
+      ]
+    }
+  ]
+}

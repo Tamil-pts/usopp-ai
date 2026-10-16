@@ -1,0 +1,2130 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "qms-ringframe-qms-ringframe-shift-live",
+  "name": "QMS / RingFrame / LIVE",
+  "service": "QMS",
+  "machine": "RingFrame",
+  "view": "LIVE",
+  "mode": "live",
+  "columns": 3,
+  "source": {
+    "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "qms_RINGFRAME_shift_live",
+    "sha256": "fef804eee1498ec6cf2c75f1228994b0ceefd57a427550256fbbf80f15f5171b"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "count",
+        "count_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "count",
+      "mongoKey": "count_ne",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "TPI",
+        "Set_TPI"
+      ],
+      "unit": "",
+      "tdEngineKey": "TPI",
+      "mongoKey": "Set_TPI",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "HEAD STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "HEAD_STOCK_LHS_TPI",
+        "HEAD_STOCK_LHS_TPI"
+      ],
+      "unit": "",
+      "tdEngineKey": "HEAD_STOCK_LHS_TPI",
+      "mongoKey": "HEAD_STOCK_LHS_TPI",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "HEAD STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "HEAD_STOCK_RHS__TPI",
+        "HEAD_STOCK_RHS_TPI"
+      ],
+      "unit": "",
+      "tdEngineKey": "HEAD_STOCK_RHS__TPI",
+      "mongoKey": "HEAD_STOCK_RHS_TPI",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "TAIL STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "TAIL_STOCK_LHS_TPI",
+        "TAIL_STOCK_LHS_TPI"
+      ],
+      "unit": "",
+      "tdEngineKey": "TAIL_STOCK_LHS_TPI",
+      "mongoKey": "TAIL_STOCK_LHS_TPI",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "TAIL STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "TAIL_STOCK_RHS__TPI",
+        "TAIL_STOCK_RHS_TPI"
+      ],
+      "unit": "",
+      "tdEngineKey": "TAIL_STOCK_RHS__TPI",
+      "mongoKey": "TAIL_STOCK_RHS_TPI",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "Compact Suction Pressure",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Compact_Suction_Pressure",
+        "Compact_Suction_Pressure"
+      ],
+      "unit": "",
+      "tdEngineKey": "Compact_Suction_Pressure",
+      "mongoKey": "Compact_Suction_Pressure",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-48",
+      "name": "Compact suction pressure minimum Level",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "compact_pressure_min_level",
+        "compact_pressure_min_level"
+      ],
+      "unit": "",
+      "tdEngineKey": "compact_pressure_min_level",
+      "mongoKey": "compact_pressure_min_level",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 48
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-49",
+      "name": "Compact suction pressure mximum Level",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "compact_pressure_max_level",
+        "compact_pressure_max_level"
+      ],
+      "unit": "",
+      "tdEngineKey": "compact_pressure_max_level",
+      "mongoKey": "compact_pressure_max_level",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts_act",
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "ts_act",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        10
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        10
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "subtenant",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "subtenant",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        10
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        10
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        10
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Start Time",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Start Time",
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Start Time",
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "count",
+        "count_ne"
+      ],
+      "unit": "",
+      "mongoKey": "count_ne",
+      "tdEngineKey": "count",
+      "aliases": [
+        "Count"
+      ],
+      "sourceAliases": [
+        "Count"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot name"
+      ],
+      "sourceAliases": [
+        "Lot name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "countmix",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "countmix"
+      ],
+      "unit": "",
+      "mongoKey": "countmix",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "countmix",
+        "Lot name"
+      ],
+      "sourceAliases": [
+        "countmix",
+        "Lot name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Twist Per Inch",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tpi",
+        "set_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "set_tpi",
+      "tdEngineKey": "tpi",
+      "aliases": [
+        "Twist Per Inch",
+        "TPI"
+      ],
+      "sourceAliases": [
+        "Twist Per Inch",
+        "TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "HEAD STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "head_stock_lhs_tpi",
+        "head_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "head_stock_lhs_tpi",
+      "tdEngineKey": "head_stock_lhs_tpi",
+      "aliases": [
+        "HEAD STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "HEAD STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "MAX HEAD STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "head_stock_lhs_tpi",
+        "max_head_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "max_head_stock_lhs_tpi",
+      "tdEngineKey": "head_stock_lhs_tpi",
+      "aliases": [
+        "MAX HEAD STOCK LHS TPI",
+        "HEAD STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "MAX HEAD STOCK LHS TPI",
+        "HEAD STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "MIN HEAD STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "head_stock_lhs_tpi",
+        "min_head_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "min_head_stock_lhs_tpi",
+      "tdEngineKey": "head_stock_lhs_tpi",
+      "aliases": [
+        "MIN HEAD STOCK LHS TPI",
+        "HEAD STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "MIN HEAD STOCK LHS TPI",
+        "HEAD STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "CV HEAD STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "cv_head_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "cv_head_stock_lhs_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV HEAD STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "CV HEAD STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "AVG HEAD STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "avg_head_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "avg_head_stock_lhs_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "AVG HEAD STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "AVG HEAD STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "HEAD STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "head_stock_rhs__tpi",
+        "head_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "head_stock_rhs_tpi",
+      "tdEngineKey": "head_stock_rhs__tpi",
+      "aliases": [
+        "HEAD STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "HEAD STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "MAX HEAD STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "head_stock_rhs_tpi",
+        "max_head_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "max_head_stock_rhs_tpi",
+      "tdEngineKey": "head_stock_rhs_tpi",
+      "aliases": [
+        "MAX HEAD STOCK RHS TPI",
+        "HEAD STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "MAX HEAD STOCK RHS TPI",
+        "HEAD STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "MIN HEAD STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "head_stock_rhs_tpi",
+        "min_head_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "min_head_stock_rhs_tpi",
+      "tdEngineKey": "head_stock_rhs_tpi",
+      "aliases": [
+        "MIN HEAD STOCK RHS TPI",
+        "HEAD STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "MIN HEAD STOCK RHS TPI",
+        "HEAD STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "CV HEAD STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "cv_head_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "cv_head_stock_rhs_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV HEAD STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "CV HEAD STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "AVG HEAD STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "avg_head_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "avg_head_stock_rhs_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "AVG HEAD STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "AVG HEAD STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "TAIL STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tail_stock_lhs_tpi",
+        "tail_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "tail_stock_lhs_tpi",
+      "tdEngineKey": "tail_stock_lhs_tpi",
+      "aliases": [
+        "TAIL STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "TAIL STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "MAX TAIL STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "tail_stock_lhs_tpi",
+        "max_tail_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "max_tail_stock_lhs_tpi",
+      "tdEngineKey": "tail_stock_lhs_tpi",
+      "aliases": [
+        "MAX TAIL STOCK LHS TPI",
+        "TAIL STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "MAX TAIL STOCK LHS TPI",
+        "TAIL STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "MIN TAIL STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "tail_stock_lhs_tpi",
+        "min_tail_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "min_tail_stock_lhs_tpi",
+      "tdEngineKey": "tail_stock_lhs_tpi",
+      "aliases": [
+        "MIN TAIL STOCK LHS TPI",
+        "TAIL STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "MIN TAIL STOCK LHS TPI",
+        "TAIL STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "CV TAIL STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "cv_tail_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "cv_tail_stock_lhs_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV TAIL STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "CV TAIL STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "AVG TAIL STOCK LHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "avg_tail_stock_lhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "avg_tail_stock_lhs_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "AVG TAIL STOCK LHS TPI"
+      ],
+      "sourceAliases": [
+        "AVG TAIL STOCK LHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "TAIL STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tail_stock_rhs__tpi",
+        "tail_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "tail_stock_rhs_tpi",
+      "tdEngineKey": "tail_stock_rhs__tpi",
+      "aliases": [
+        "TAIL STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "TAIL STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "MAX TAIL STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "tail_stock_rhs_tpi",
+        "max_tail_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "max_tail_stock_rhs_tpi",
+      "tdEngineKey": "tail_stock_rhs_tpi",
+      "aliases": [
+        "MAX TAIL STOCK RHS TPI",
+        "TAIL STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "MAX TAIL STOCK RHS TPI",
+        "TAIL STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "MIN TAIL STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "tail_stock_rhs_tpi",
+        "min_tail_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "min_tail_stock_rhs_tpi",
+      "tdEngineKey": "tail_stock_rhs_tpi",
+      "aliases": [
+        "MIN TAIL STOCK RHS TPI",
+        "TAIL STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "MIN TAIL STOCK RHS TPI",
+        "TAIL STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "CV TAIL STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "cv_tail_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "cv_tail_stock_rhs_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV TAIL STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "CV TAIL STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "AVG TAIL STOCK RHS TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "avg_tail_stock_rhs_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "avg_tail_stock_rhs_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "AVG TAIL STOCK RHS TPI"
+      ],
+      "sourceAliases": [
+        "AVG TAIL STOCK RHS TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Compact Suction Pressure",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "compact_suction_pressure",
+        "compact_suction_pressure"
+      ],
+      "unit": "",
+      "mongoKey": "compact_suction_pressure",
+      "tdEngineKey": "compact_suction_pressure",
+      "aliases": [
+        "Compact Suction Pressure"
+      ],
+      "sourceAliases": [
+        "Compact Suction Pressure"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "MAX Compact Suction Pressure",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "compact_suction_pressure",
+        "max_compact_suction_pressure"
+      ],
+      "unit": "",
+      "mongoKey": "max_compact_suction_pressure",
+      "tdEngineKey": "compact_suction_pressure",
+      "aliases": [
+        "MAX Compact Suction Pressure",
+        "Compact Suction Pressure"
+      ],
+      "sourceAliases": [
+        "MAX Compact Suction Pressure",
+        "Compact Suction Pressure"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "MIN Compact Suction Pressure",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_RINGFRAME_minutes_time_series",
+      "keys": [
+        "compact_suction_pressure",
+        "min_compact_suction_pressure"
+      ],
+      "unit": "",
+      "mongoKey": "min_compact_suction_pressure",
+      "tdEngineKey": "compact_suction_pressure",
+      "aliases": [
+        "MIN Compact Suction Pressure",
+        "Compact Suction Pressure"
+      ],
+      "sourceAliases": [
+        "MIN Compact Suction Pressure",
+        "Compact Suction Pressure"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "CV Compact Suction Pressure",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "cv_compact_suction_pressure"
+      ],
+      "unit": "",
+      "mongoKey": "cv_compact_suction_pressure",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV Compact Suction Pressure"
+      ],
+      "sourceAliases": [
+        "CV Compact Suction Pressure"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "AVG Compact Suction Pressure",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "avg_compact_suction_pressure"
+      ],
+      "unit": "",
+      "mongoKey": "avg_compact_suction_pressure",
+      "tdEngineKey": "",
+      "aliases": [
+        "AVG Compact Suction Pressure"
+      ],
+      "sourceAliases": [
+        "AVG Compact Suction Pressure"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Draft TFles LHS",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "draft_tfles_lhs"
+      ],
+      "unit": "",
+      "mongoKey": "draft_tfles_lhs",
+      "tdEngineKey": "",
+      "aliases": [
+        "Draft TFles LHS"
+      ],
+      "sourceAliases": [
+        "Draft TFles LHS"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Draft TFles RHS",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "draft_tfles_rhs"
+      ],
+      "unit": "",
+      "mongoKey": "draft_tfles_rhs",
+      "tdEngineKey": "",
+      "aliases": [
+        "Draft TFles RHS"
+      ],
+      "sourceAliases": [
+        "Draft TFles RHS"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "Compact Suction Pressure Minimum Level",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "compact_pressure_min_level",
+        "compact_pressure_min_level"
+      ],
+      "unit": "",
+      "mongoKey": "compact_pressure_min_level",
+      "tdEngineKey": "compact_pressure_min_level",
+      "aliases": [
+        "Compact Suction Pressure Minimum Level",
+        "Compact suction pressure minimum Level"
+      ],
+      "sourceAliases": [
+        "Compact Suction Pressure Minimum Level",
+        "Compact suction pressure minimum Level"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Compact Suction Pressure Maximum Level",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "compact_pressure_max_level",
+        "compact_pressure_max_level"
+      ],
+      "unit": "",
+      "mongoKey": "compact_pressure_max_level",
+      "tdEngineKey": "compact_pressure_max_level",
+      "aliases": [
+        "Compact Suction Pressure Maximum Level",
+        "Compact suction pressure mximum Level"
+      ],
+      "sourceAliases": [
+        "Compact Suction Pressure Maximum Level",
+        "Compact suction pressure mximum Level"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "TPI",
+        "Set_TPI"
+      ],
+      "unit": "",
+      "mongoKey": "Set_TPI",
+      "tdEngineKey": "TPI",
+      "aliases": [
+        "TPI"
+      ],
+      "sourceAliases": [
+        "TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 49
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-50",
+      "name": "Compact suction pressure mximum Level",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "compact_pressure_max_level",
+        "compact_pressure_max_level"
+      ],
+      "unit": "",
+      "mongoKey": "compact_pressure_max_level",
+      "tdEngineKey": "compact_pressure_max_level",
+      "aliases": [
+        "Compact suction pressure mximum Level"
+      ],
+      "sourceAliases": [
+        "Compact suction pressure mximum Level"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/RINGFRAME.json",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "row": 50
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 4,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 19,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 46,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 47,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 18,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "LIVE readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-20",
+        "row-21",
+        "row-26",
+        "row-31",
+        "row-36"
+      ]
+    },
+    {
+      "title": "LIVE readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-41",
+        "row-48",
+        "row-49"
+      ]
+    }
+  ]
+}

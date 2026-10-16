@@ -3,6 +3,15 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.65.15 - 2026-10-16
+
+- Simplify Chopper setup with connection cards, a browser/server/model diagram, startup stages, one-click local activation and collapsed advanced controls. Use the bundled CPU model by default on new installations, auto-start an installed model and preserve explicitly saved connection choices. Missing model files show setup instructions; validation remains available during loading. Reject model/API port collisions.
+- Add a top-right Chopper help window across workspaces. Provide immediate window guides and context-aware explanations without leaving the active task. DataInspect shares the selected view, dialog, target, group and capture origin/time through an origin- and frame-checked bridge; manual and stored captures remain identified.
+- Add personal DataInspect dashboards with multiple layouts, resizable widgets, multiple parameters, formulas, charts, tables, layout import/export and result export. Store approved layout templates in knowledge. Add optional server-side multi-target collection with at most 30 days of storage and a metadata-driven textile simulator; collection remains disabled by default.
+- Rebuild PMS/QMS/CMS data model knowledge and dashboard templates with workbook coverage, reviewed aliases, formula and datatype corrections. Add configurable metadata unit rules and readable parameter captions. Preserve PLC identifiers and add the Blow Room Product code Sheet2 mapping 0 = Blow room, including explicitly enabled missing-tag matching.
+- Add 244 Lapformer source reference drafts for LH20S_PV2042, LH20_3390_REV1 and LH2014050 as separate features. Include complete source/ladder requirements, declaration scope, producing logic, function calls, datasource/HMI and physical I/O cross references. Save deduplicated expected definitions independently of the project under validation; expose unresolved references and two alarm-buffer source concerns for engineering review.
+- Both UI and API versions use package.json. Original application source remains excluded from production container staging; existing server images require a separate deployment update.
+
 ## 4.65.14 - 2026-10-15
 
 - Refresh the landing page and WorkHub with the requested engineering copy, connected tool navigation, a four-step workflow guide and saved engineering activity. Admin sees activity across users; regular users see their own 7/30-day activity. Keep the old project and validation KPI cards removed.

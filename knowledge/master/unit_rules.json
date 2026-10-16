@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "enabled": true,
+  "mappings": [
+    {"id":"minutes","keyword":"minutes","unit":"Mins","match":"word","machine_department":"All","enabled":true},
+    {"id":"minute","keyword":"minute","unit":"Mins","match":"word","machine_department":"All","enabled":true},
+    {"id":"seconds","keyword":"seconds","unit":"Sec","match":"word","machine_department":"All","enabled":true},
+    {"id":"second","keyword":"second","unit":"Sec","match":"word","machine_department":"All","enabled":true}
+  ]
+}

@@ -10,7 +10,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -20,7 +23,10 @@
         "mongoKey": "time_stamp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -30,7 +36,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -40,7 +49,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -50,7 +62,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -60,7 +75,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -70,7 +88,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -80,7 +101,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -90,7 +114,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -100,7 +127,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -110,7 +140,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -120,7 +153,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -130,7 +166,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -140,7 +179,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Start Time",
@@ -150,7 +192,10 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Count",
@@ -160,7 +205,10 @@
         "mongoKey": "count_ne",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot name",
@@ -170,7 +218,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "countmix",
@@ -180,7 +231,10 @@
         "mongoKey": "countmix",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Twist Per Inch",
@@ -190,7 +244,10 @@
         "mongoKey": "set_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "HEAD STOCK LHS TPI",
@@ -200,7 +257,10 @@
         "mongoKey": "head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX HEAD STOCK LHS TPI",
@@ -211,7 +271,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN HEAD STOCK LHS TPI",
@@ -222,7 +285,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV HEAD STOCK LHS TPI",
@@ -232,7 +298,10 @@
         "mongoKey": "cv_head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG HEAD STOCK LHS TPI",
@@ -242,7 +311,10 @@
         "mongoKey": "avg_head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "HEAD STOCK RHS TPI",
@@ -252,7 +324,10 @@
         "mongoKey": "head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX HEAD STOCK RHS TPI",
@@ -263,7 +338,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN HEAD STOCK RHS TPI",
@@ -274,7 +352,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV HEAD STOCK RHS TPI",
@@ -284,7 +365,10 @@
         "mongoKey": "cv_head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG HEAD STOCK RHS TPI",
@@ -294,7 +378,10 @@
         "mongoKey": "avg_head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "TAIL STOCK LHS TPI",
@@ -304,7 +391,10 @@
         "mongoKey": "tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX TAIL STOCK LHS TPI",
@@ -315,7 +405,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN TAIL STOCK LHS TPI",
@@ -326,7 +419,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV TAIL STOCK LHS TPI",
@@ -336,7 +432,10 @@
         "mongoKey": "cv_tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG TAIL STOCK LHS TPI",
@@ -346,7 +445,10 @@
         "mongoKey": "avg_tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "TAIL STOCK RHS TPI",
@@ -356,7 +458,10 @@
         "mongoKey": "tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX TAIL STOCK RHS TPI",
@@ -367,7 +472,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN TAIL STOCK RHS TPI",
@@ -378,7 +486,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV TAIL STOCK RHS TPI",
@@ -388,7 +499,10 @@
         "mongoKey": "cv_tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG TAIL STOCK RHS TPI",
@@ -398,7 +512,10 @@
         "mongoKey": "avg_tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Compact Suction Pressure",
@@ -408,7 +525,10 @@
         "mongoKey": "compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX Compact Suction Pressure",
@@ -419,7 +539,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN Compact Suction Pressure",
@@ -430,7 +553,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV Compact Suction Pressure",
@@ -440,7 +566,10 @@
         "mongoKey": "cv_compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG Compact Suction Pressure",
@@ -450,7 +579,10 @@
         "mongoKey": "avg_compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft TFles LHS",
@@ -460,7 +592,10 @@
         "mongoKey": "draft_tfles_lhs",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Draft TFles RHS",
@@ -470,7 +605,10 @@
         "mongoKey": "draft_tfles_rhs",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Compact Suction Pressure Minimum Level",
@@ -480,7 +618,10 @@
         "mongoKey": "compact_pressure_min_level",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Compact Suction Pressure Maximum Level",
@@ -490,7 +631,48 @@
         "mongoKey": "compact_pressure_max_level",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "TPI",
+        "dataType": "REAL",
+        "groupCode": "140",
+        "formula": null,
+        "tdEngineKey": "TPI",
+        "mongoKey": "Set_TPI",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_RINGFRAME_shift_live",
+          "row": 20
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Compact suction pressure mximum Level",
+        "dataType": "Float",
+        "groupCode": "130",
+        "formula": null,
+        "tdEngineKey": "compact_pressure_max_level",
+        "mongoKey": "compact_pressure_max_level",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_RINGFRAME_shift_live",
+          "row": 49
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       }
     ],
     "qms_RINGFRAME_shift": [
@@ -502,7 +684,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -512,7 +697,10 @@
         "mongoKey": "ts",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -522,7 +710,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -532,7 +723,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -542,7 +736,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -552,7 +749,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -562,7 +762,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -572,7 +775,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -582,7 +788,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -592,7 +801,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -602,7 +814,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -612,7 +827,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -622,7 +840,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -632,7 +853,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Start Time",
@@ -642,7 +866,10 @@
         "mongoKey": "shift_start_time",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Count",
@@ -652,7 +879,10 @@
         "mongoKey": "count_ne",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot name",
@@ -662,7 +892,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "countmix",
@@ -672,7 +905,10 @@
         "mongoKey": "countmix",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Twist Per Inch",
@@ -682,7 +918,10 @@
         "mongoKey": "set_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "HEAD STOCK LHS TPI",
@@ -692,7 +931,10 @@
         "mongoKey": "head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX HEAD STOCK LHS TPI",
@@ -703,7 +945,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN HEAD STOCK LHS TPI",
@@ -714,7 +959,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV HEAD STOCK LHS TPI",
@@ -724,7 +972,10 @@
         "mongoKey": "cv_head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG HEAD STOCK LHS TPI",
@@ -734,7 +985,10 @@
         "mongoKey": "avg_head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "HEAD STOCK RHS TPI",
@@ -744,7 +998,10 @@
         "mongoKey": "head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX HEAD STOCK RHS TPI",
@@ -755,7 +1012,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN HEAD STOCK RHS TPI",
@@ -766,7 +1026,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV HEAD STOCK RHS TPI",
@@ -776,7 +1039,10 @@
         "mongoKey": "cv_head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG HEAD STOCK RHS TPI",
@@ -786,7 +1052,10 @@
         "mongoKey": "avg_head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "TAIL STOCK LHS TPI",
@@ -796,7 +1065,10 @@
         "mongoKey": "tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX TAIL STOCK LHS TPI",
@@ -807,7 +1079,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN TAIL STOCK LHS TPI",
@@ -818,7 +1093,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV TAIL STOCK LHS TPI",
@@ -828,7 +1106,10 @@
         "mongoKey": "cv_tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG TAIL STOCK LHS TPI",
@@ -838,7 +1119,10 @@
         "mongoKey": "avg_tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "TAIL STOCK RHS TPI",
@@ -848,7 +1132,10 @@
         "mongoKey": "tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX TAIL STOCK RHS TPI",
@@ -859,7 +1146,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN TAIL STOCK RHS TPI",
@@ -870,7 +1160,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV TAIL STOCK RHS TPI",
@@ -880,7 +1173,10 @@
         "mongoKey": "cv_tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "AVG TAIL STOCK RHS TPI",
@@ -890,7 +1186,10 @@
         "mongoKey": "avg_tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Compact Suction Pressure",
@@ -900,7 +1199,10 @@
         "mongoKey": "compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MAX Compact Suction Pressure",
@@ -911,7 +1213,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "maximum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "MIN Compact Suction Pressure",
@@ -922,7 +1227,10 @@
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
         "aggType": "minimum",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "CV Compact Suction Pressure",
@@ -932,7 +1240,10 @@
         "mongoKey": "cv_compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Compact Suction Pressure Minimum Level",
@@ -942,7 +1253,10 @@
         "mongoKey": "compact_pressure_min_level",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Compact Suction Pressure Maximum Level",
@@ -952,7 +1266,10 @@
         "mongoKey": "compact_pressure_max_level",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       }
     ],
     "qms_RINGFRAME_minutes_time_series": [
@@ -964,7 +1281,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -974,7 +1294,10 @@
         "mongoKey": "ts",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -984,7 +1307,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -994,7 +1320,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -1004,7 +1333,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -1014,7 +1346,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -1024,7 +1359,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -1034,7 +1372,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -1044,7 +1385,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -1054,7 +1398,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -1064,7 +1411,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -1074,7 +1424,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -1084,7 +1437,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -1094,7 +1450,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Start Time",
@@ -1104,7 +1463,10 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Count",
@@ -1114,7 +1476,10 @@
         "mongoKey": "count_ne",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot name",
@@ -1124,7 +1489,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Twist Per Inch",
@@ -1134,7 +1502,10 @@
         "mongoKey": "set_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "HEAD STOCK LHS TPI",
@@ -1144,7 +1515,10 @@
         "mongoKey": "head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "HEAD STOCK RHS TPI",
@@ -1154,7 +1528,10 @@
         "mongoKey": "head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "TAIL STOCK LHS TPI",
@@ -1164,7 +1541,10 @@
         "mongoKey": "tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "TAIL STOCK RHS TPI",
@@ -1174,7 +1554,10 @@
         "mongoKey": "tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Compact Suction Pressure",
@@ -1184,7 +1567,10 @@
         "mongoKey": "compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       }
     ]
   },

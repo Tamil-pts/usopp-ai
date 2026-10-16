@@ -1,0 +1,216 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-lapformer-pms-lapformer-raw-data",
+  "name": "PMS / LapFormer / Raw data",
+  "service": "PMS",
+  "machine": "LapFormer",
+  "view": "Raw data",
+  "mode": "live",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_LAPFORMER_raw_data",
+    "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+  },
+  "parameters": [
+    {
+      "id": "row-2",
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_raw_data",
+        "row": 2
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "",
+      "aliases": [
+        "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained"
+      ],
+      "sourceAliases": [
+        "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_raw_data",
+        "row": 1
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 4,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 5,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 6,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 7,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 8,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 9,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 10,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 11,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 12,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 13,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 14,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 15,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 16,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 17,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 18,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 19,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 20,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 21,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 22,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 23,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 24,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 25,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 26,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 27,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 28,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 29,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 30,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 2,
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": []
+}

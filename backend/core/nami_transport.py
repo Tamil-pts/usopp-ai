@@ -118,7 +118,7 @@ def request_close(sock, machine_id, trace):
              result.get('error') or result.get('warning') or 'complete')
     return result
 
-def sequence(ip, port, machine_id, groups, timeout_ms):
+def sequence(ip, port, machine_id, groups, timeout_ms, stop_event=None, max_duration=None):
     results = []
     close = None
     error = None
@@ -133,9 +133,13 @@ def sequence(ip, port, machine_id, groups, timeout_ms):
             log.info('DataInspect [%s] TCP connected local=%s target=%s:%s', trace, sock.getsockname(), ip, port)
             try:
                 for group in groups:
+                    if (stop_event is not None and stop_event.is_set()) or (max_duration is not None and time.monotonic()-started >= max_duration):
+                        error = 'Collection cycle stopped before requesting the remaining groups.'
+                        break
                     request = read_request(machine_id, group)
                     log.info('DataInspect [%s] GC%s request hex=%s', trace, group, request.hex(' '))
                     result = dict(exchange(sock, request), groupCode=group, traceId=trace)
+                    result['completedAt'] = time.time() * 1000
                     results.append(result)
                     log.info('DataInspect [%s] GC%s stage=%s sent=%s received=%s rtt_ms=%s error=%s',
                              trace, group, result['stage'], len(result['sentBytes']), len(result['rawBytes']),

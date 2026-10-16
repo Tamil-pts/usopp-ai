@@ -1,0 +1,889 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "qms-carding-qms-carding-hour",
+  "name": "QMS / Carding / Hourly",
+  "service": "QMS",
+  "machine": "Carding",
+  "view": "Hourly",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "qms_CARDING_Hour",
+    "sha256": "dcb225cc9f4488e0f9066c2a1539dfbf2a2c5d19b4355b96dd58c004d649df6c"
+  },
+  "parameters": [
+    {
+      "id": "row-4",
+      "name": "Adjusted Timestamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ts",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 4
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "required_hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "U",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_u instant",
+        "u_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_u instant",
+      "mongoKey": "u_percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Sliver A",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_a",
+        "delivery_a_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_a",
+      "mongoKey": "delivery_a_percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Feed A",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_a",
+        "feed_a_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_a",
+      "mongoKey": "feed_a_percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Delivery 5mtr CV %",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_5mtr_cv_%",
+        "delivery_cv _percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_5mtr_cv_%",
+      "mongoKey": "delivery_cv _percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Feed 5m CV",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_5m_cv",
+        "feed_cv"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_5m_cv",
+      "mongoKey": "feed_cv",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Chute Pressure",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "chute_pressure",
+        "chute_pressure"
+      ],
+      "unit": "",
+      "tdEngineKey": "chute_pressure",
+      "mongoKey": "chute_pressure",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Chute Feed Motor FrequencyReal",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "chute_feed_motor_frequency",
+        "feed_motor_frequency"
+      ],
+      "unit": "",
+      "tdEngineKey": "chute_feed_motor_frequency",
+      "mongoKey": "feed_motor_frequency",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Card Feed roller Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "card_feed_roller_speed",
+        "card_feed_roller_rpm"
+      ],
+      "unit": "",
+      "tdEngineKey": "card_feed_roller_speed",
+      "mongoKey": "card_feed_roller_rpm",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Feed Weight in gms/mtr",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_weight_in_gms/mtr",
+        "feed_weight_in_gms_mtr"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_weight_in_gms/mtr",
+      "mongoKey": "feed_weight_in_gms_mtr",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Delivery 1mtr CV %",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_1mtr_cv_%",
+        "delivery_1mtr_cv_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_1mtr_cv_%",
+      "mongoKey": "delivery_1mtr_cv_percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Delivery 5mtr CV %",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_5mtr_cv_%",
+        "delivery_5mtr_cv_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_5mtr_cv_%",
+      "mongoKey": "delivery_5mtr_cv_percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Feed 1m CV",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_1m_cv",
+        "feed_1m_cv"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_1m_cv",
+      "mongoKey": "feed_1m_cv",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Feed 5m CV",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_5m_cv",
+        "feed_5m_cv"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_5m_cv",
+      "mongoKey": "feed_5m_cv",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "No of thick places up to 15%",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thick_places_up_to_15%",
+        "no_of_thick_places_up_to_15_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "no_of_thick_places_up_to_15%",
+      "mongoKey": "no_of_thick_places_up_to_15_percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "No of thick places up to 20%",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thick_places_up_to_20%",
+        "no_of_thick_places_up_to_20_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "no_of_thick_places_up_to_20%",
+      "mongoKey": "no_of_thick_places_up_to_20_percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "No of thick places up to 25%",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thick_places_up_to_25%",
+        "no_of_thick_places_up_to_25_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "no_of_thick_places_up_to_25%",
+      "mongoKey": "no_of_thick_places_up_to_25_percent",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "ThickPlaces long Period",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place__long_period_(act1)",
+        "thick_place_lp"
+      ],
+      "unit": "",
+      "tdEngineKey": "thick_place__long_period_(act1)",
+      "mongoKey": "thick_place_lp",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "ThickPlaces short Period",
+      "dataType": "REAL",
+      "groupCodes": [
+        250
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place__short_period_(act1)",
+        "thick_place_sp"
+      ],
+      "unit": "",
+      "tdEngineKey": "thick_place__short_period_(act1)",
+      "mongoKey": "thick_place_sp",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Timestamp",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 18,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Hank",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Sliver A",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-20"
+      ]
+    },
+    {
+      "title": "Delivery 5mtr CV %",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "Feed 5m CV",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-23"
+      ]
+    },
+    {
+      "title": "Delivery 1mtr CV %",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-28"
+      ]
+    },
+    {
+      "title": "Feed 1m CV",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-30"
+      ]
+    },
+    {
+      "title": "Hank trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Hourly readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22",
+        "row-23"
+      ]
+    },
+    {
+      "title": "Hourly readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34",
+        "row-35"
+      ]
+    },
+    {
+      "title": "Hourly readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-36"
+      ]
+    }
+  ]
+}

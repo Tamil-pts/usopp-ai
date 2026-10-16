@@ -1,0 +1,3761 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-comber-pms-comber-shift-live",
+  "name": "PMS / Comber / LIVE",
+  "service": "PMS",
+  "machine": "Comber",
+  "view": "LIVE",
+  "mode": "live",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_COMBER_shift_live",
+    "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_hour",
+      "mongoKey": "idle_time_minute",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_hour",
+      "mongoKey": "power_fail_time_minute",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Hanks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hanks",
+        "hanks"
+      ],
+      "unit": "",
+      "tdEngineKey": "hanks",
+      "mongoKey": "hanks",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Kgs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "kgs",
+        "production_kgs"
+      ],
+      "unit": "",
+      "tdEngineKey": "kgs",
+      "mongoKey": "production_kgs",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffs",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffs",
+      "mongoKey": "no_of_doffs",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed",
+        "speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed",
+      "mongoKey": "speed",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Delivery Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "delivery_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_speed",
+      "mongoKey": "delivery_speed",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Draft Cond. Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_cond._stops",
+        "draft_cond._stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_cond._stops",
+      "mongoKey": "draft_cond._stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Draft Earth Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_earth_stops",
+        "draft_earth_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_earth_stops",
+      "mongoKey": "draft_earth_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Coiler Chock Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_chock_stops",
+        "coiler_chock_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_chock_stops",
+      "mongoKey": "coiler_chock_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Empty Lap Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "empty_lap_stops",
+        "empty_lap_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "empty_lap_stops",
+      "mongoKey": "empty_lap_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Table Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "table_stops",
+        "table_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "table_stops",
+      "mongoKey": "table_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Sliver Monitor Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_monitor_stops",
+      "mongoKey": "sliver_monitor_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "U% Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u%_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "u%_stops",
+      "mongoKey": "u_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "CV% Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%_stops",
+      "mongoKey": "cv_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Thick Place Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place_stops",
+        "thick_place_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "thick_place_stops",
+      "mongoKey": "thick_place_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Spectrogram Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "spectrogram_stops",
+      "mongoKey": "spectrogram_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Servo Fault Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_fault_stops",
+        "servo_fault_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "servo_fault_stops",
+      "mongoKey": "servo_fault_stops",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "UKg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg",
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "ukg",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "required_hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "Doff Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "doff_length",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-43",
+      "name": "Lot Name",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-44",
+      "name": "U %",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_%",
+        "u_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "u_%",
+      "mongoKey": "u_percent",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 44
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-45",
+      "name": "CV %",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_%",
+        "cv_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv_%",
+      "mongoKey": "cv_percent",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 45
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-46",
+      "name": "Noil %",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "noil_%",
+        "noil_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "noil_%",
+      "mongoKey": "noil_percent",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 46
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-47",
+      "name": "Can Filling Time",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "can_filling_time",
+        "can_filling_time"
+      ],
+      "unit": "",
+      "tdEngineKey": "can_filling_time",
+      "mongoKey": "can_filling_time",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 47
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-48",
+      "name": "Current Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_length",
+        "current_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_length",
+      "mongoKey": "current_length",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 48
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-49",
+      "name": "Production efficiency",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute / (run_time_minute + idle_time_minute))* 100",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_eff",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_efficiency_formula",
+      "definitionSource": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 52
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-50",
+      "name": "Machine utilization",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "((run_time_minute) / (run_time_minute + idle_time_minute  + power_fail_time_minute)) *100",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "machine_uti",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "machine_utilization_formula",
+      "definitionSource": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 53
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-58",
+      "name": "Avg. Waiting Time for Lap Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "formula",
+      "formula": "lap_wait_hr * 60 + lap_wait_min",
+      "keys": [
+        "lap_waiting_time_hour",
+        "lap_waiting_mins"
+      ],
+      "unit": "",
+      "tdEngineKey": "lap_waiting_time_hour",
+      "mongoKey": "lap_waiting_mins",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 58
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "Data in minute",
+      "definitionSource": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 62
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-59",
+      "name": "Avg. Waiting Time for Lap H Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_waiting_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "lap_waiting_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 59
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-60",
+      "name": "Avg. Waiting Time for can Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "formula",
+      "formula": "can_wait_hr * 60 + can_wait_min",
+      "keys": [
+        "can_waiting_time_hour",
+        "can_waiting_mins"
+      ],
+      "unit": "",
+      "tdEngineKey": "can_waiting_time_hour",
+      "mongoKey": "can_waiting_mins",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 60
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "Data in minute",
+      "definitionSource": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 65
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-61",
+      "name": "Avg. Waiting Time for can H Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "can_waiting_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "can_waiting_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 61
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-62",
+      "name": "Total Break",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "draft_cond_stops + draft_earth_stops + coiler_chock_stops",
+      "keys": [
+        "total_break"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "total_break",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 62
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "draft_cond_stops + draft_earth_stops + coiler_chock_stops",
+      "definitionSource": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 66
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-63",
+      "name": "Breaks Per Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(total_break/run_time_minute) * 60",
+      "keys": [
+        "breaks_per_hour"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "breaks_per_hour",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 63
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "total_break/run_time_minute * 60",
+      "definitionSource": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 67
+      },
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "runtimehr"
+      ],
+      "unit": "",
+      "mongoKey": "runtimehr",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Run Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "runtimemins"
+      ],
+      "unit": "",
+      "mongoKey": "runtimemins",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "runtimehr * 60 + runtimemins",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idletimehr"
+      ],
+      "unit": "",
+      "mongoKey": "idletimehr",
+      "tdEngineKey": "idle_time_hour",
+      "aliases": [
+        "Idle Time Hour"
+      ],
+      "sourceAliases": [
+        "Idle Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Idle Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute",
+        "idletimemins"
+      ],
+      "unit": "",
+      "mongoKey": "idletimemins",
+      "tdEngineKey": "idle_time_minute",
+      "aliases": [
+        "Idle Time Minutes",
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minutes",
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "idletimehr * 60 + idletimemins",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "idle_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "powerfailhr"
+      ],
+      "unit": "",
+      "mongoKey": "powerfailhr",
+      "tdEngineKey": "power_fail_time_hour",
+      "aliases": [
+        "Power Fail Time Hour"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Power Fail Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute",
+        "powerfailmins"
+      ],
+      "unit": "",
+      "mongoKey": "powerfailmins",
+      "tdEngineKey": "power_fail_time_minute",
+      "aliases": [
+        "Power Fail Time Minutes",
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minutes",
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "powerfailhr * 60 + powerfailmins",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Hanks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hanks",
+        "hanks"
+      ],
+      "unit": "",
+      "mongoKey": "hanks",
+      "tdEngineKey": "hanks",
+      "aliases": [
+        "Hanks"
+      ],
+      "sourceAliases": [
+        "Hanks"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Kgs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "kgs",
+        "production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "production_kgs",
+      "tdEngineKey": "kgs",
+      "aliases": [
+        "Kgs"
+      ],
+      "sourceAliases": [
+        "Kgs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffs",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_doffs",
+      "tdEngineKey": "doffs",
+      "aliases": [
+        "Doffs"
+      ],
+      "sourceAliases": [
+        "Doffs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed",
+        "speed"
+      ],
+      "unit": "",
+      "mongoKey": "speed",
+      "tdEngineKey": "speed",
+      "aliases": [
+        "Speed"
+      ],
+      "sourceAliases": [
+        "Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Delivery Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "delivery_speed"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_speed",
+      "tdEngineKey": "delivery_speed",
+      "aliases": [
+        "Delivery Speed"
+      ],
+      "sourceAliases": [
+        "Delivery Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "Total kWh"
+      ],
+      "sourceAliases": [
+        "Total kWh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Draft Cond. Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_cond._stops",
+        "draft_cond_stops"
+      ],
+      "unit": "",
+      "mongoKey": "draft_cond_stops",
+      "tdEngineKey": "draft_cond._stops",
+      "aliases": [
+        "Draft Cond. Stops"
+      ],
+      "sourceAliases": [
+        "Draft Cond. Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Draft Earth Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_earth_stops",
+        "draft_earth_stops"
+      ],
+      "unit": "",
+      "mongoKey": "draft_earth_stops",
+      "tdEngineKey": "draft_earth_stops",
+      "aliases": [
+        "Draft Earth Stops"
+      ],
+      "sourceAliases": [
+        "Draft Earth Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Coiler Chock Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_chock_stops",
+        "coiler_chock_stops"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_chock_stops",
+      "tdEngineKey": "coiler_chock_stops",
+      "aliases": [
+        "Coiler Chock Stops"
+      ],
+      "sourceAliases": [
+        "Coiler Chock Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Empty Lap Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "empty_lap_stops",
+        "empty_lap_stops"
+      ],
+      "unit": "",
+      "mongoKey": "empty_lap_stops",
+      "tdEngineKey": "empty_lap_stops",
+      "aliases": [
+        "Empty Lap Stops"
+      ],
+      "sourceAliases": [
+        "Empty Lap Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Table Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "table_stops",
+        "table_stops"
+      ],
+      "unit": "",
+      "mongoKey": "table_stops",
+      "tdEngineKey": "table_stops",
+      "aliases": [
+        "Table Stops"
+      ],
+      "sourceAliases": [
+        "Table Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Sliver Monitor Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "mongoKey": "sliver_monitor_stops",
+      "tdEngineKey": "sliver_monitor_stops",
+      "aliases": [
+        "Sliver Monitor Stops"
+      ],
+      "sourceAliases": [
+        "Sliver Monitor Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "U% Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u%_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "mongoKey": "u_stops",
+      "tdEngineKey": "u%_stops",
+      "aliases": [
+        "U% Stops"
+      ],
+      "sourceAliases": [
+        "U% Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "CV% Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "mongoKey": "cv_stops",
+      "tdEngineKey": "cv%_stops",
+      "aliases": [
+        "CV% Stops"
+      ],
+      "sourceAliases": [
+        "CV% Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "Thick Place Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place_stops",
+        "thick_place_stops"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place_stops",
+      "tdEngineKey": "thick_place_stops",
+      "aliases": [
+        "Thick Place Stops"
+      ],
+      "sourceAliases": [
+        "Thick Place Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Spectrogram Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_stops"
+      ],
+      "unit": "",
+      "mongoKey": "spectrogram_stops",
+      "tdEngineKey": "spectrogram_stops",
+      "aliases": [
+        "Spectrogram Stops"
+      ],
+      "sourceAliases": [
+        "Spectrogram Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Servo Fault Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_fault_stops",
+        "servo_fault_stops"
+      ],
+      "unit": "",
+      "mongoKey": "servo_fault_stops",
+      "tdEngineKey": "servo_fault_stops",
+      "aliases": [
+        "Servo Fault Stops"
+      ],
+      "sourceAliases": [
+        "Servo Fault Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Total Breaks",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "draft_cond_stops + draft_earth_stops + coiler_chock_stops + empty_lap_stops + table_stops + sliver_monitor_stops + u_stops + cv_stops  + thick_place_stops + spectrogram_stops + servo_fault_stops ",
+      "keys": [
+        "total_breaks"
+      ],
+      "unit": "",
+      "mongoKey": "total_breaks",
+      "tdEngineKey": "",
+      "aliases": [
+        "Total Breaks"
+      ],
+      "sourceAliases": [
+        "Total Breaks"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg",
+        "ukg"
+      ],
+      "unit": "",
+      "mongoKey": "ukg",
+      "tdEngineKey": "ukg",
+      "aliases": [
+        "Ukg",
+        "UKg"
+      ],
+      "sourceAliases": [
+        "Ukg",
+        "UKg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "mongoKey": "hank_ne",
+      "tdEngineKey": "required_hank",
+      "aliases": [
+        "Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Doff Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "Doff Length"
+      ],
+      "sourceAliases": [
+        "Doff Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Lot Name",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name"
+      ],
+      "sourceAliases": [
+        "Lot Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "U %",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_%",
+        "u_percent"
+      ],
+      "unit": "",
+      "mongoKey": "u_percent",
+      "tdEngineKey": "u_%",
+      "aliases": [
+        "U %"
+      ],
+      "sourceAliases": [
+        "U %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "CV %",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_%",
+        "cv_percent"
+      ],
+      "unit": "",
+      "mongoKey": "cv_percent",
+      "tdEngineKey": "cv_%",
+      "aliases": [
+        "CV %"
+      ],
+      "sourceAliases": [
+        "CV %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Noil %",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "noil_%",
+        "noil_percent"
+      ],
+      "unit": "",
+      "mongoKey": "noil_percent",
+      "tdEngineKey": "noil_%",
+      "aliases": [
+        "Noil %"
+      ],
+      "sourceAliases": [
+        "Noil %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "Can Filling Time",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "can_filling_time",
+        "can_filling_time"
+      ],
+      "unit": "",
+      "mongoKey": "can_filling_time",
+      "tdEngineKey": "can_filling_time",
+      "aliases": [
+        "Can Filling Time"
+      ],
+      "sourceAliases": [
+        "Can Filling Time"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Current Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_length",
+        "current_length"
+      ],
+      "unit": "",
+      "mongoKey": "current_length",
+      "tdEngineKey": "current_length",
+      "aliases": [
+        "Current Length"
+      ],
+      "sourceAliases": [
+        "Current Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute / (run_time_minute + idle_time_minute))* 100",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "mongoKey": "production_eff",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production Efficiency",
+        "-"
+      ],
+      "sourceAliases": [
+        "Production Efficiency",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "((run_time_minute) / (run_time_minute + idle_time_minute  + power_fail_time_minute)) *100",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "mongoKey": "machine_uti",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Utilization",
+        "-"
+      ],
+      "sourceAliases": [
+        "Machine Utilization",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 53
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-54",
+      "name": "Machine Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "((run_time_minute) / (run_time_minute + idle_time_minute  + power_fail_time_minute)) *100",
+      "keys": [
+        "machine_eff"
+      ],
+      "unit": "",
+      "mongoKey": "machine_eff",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Efficiency"
+      ],
+      "sourceAliases": [
+        "Machine Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 54
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-55",
+      "name": "Target UKg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "UKG",
+        "tgt_ukg"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_ukg",
+      "tdEngineKey": "UKG",
+      "aliases": [
+        "Target UKg",
+        "UKg"
+      ],
+      "sourceAliases": [
+        "Target UKg",
+        "UKg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 55
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-56",
+      "name": "Target Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PE",
+        "tgt_production_eff"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_eff",
+      "tdEngineKey": "PE",
+      "aliases": [
+        "Target Production Efficiency"
+      ],
+      "sourceAliases": [
+        "Target Production Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 56
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-57",
+      "name": "Target Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MU",
+        "tgt_machine_uti"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_machine_uti",
+      "tdEngineKey": "MU",
+      "aliases": [
+        "Target Machine Utilization"
+      ],
+      "sourceAliases": [
+        "Target Machine Utilization"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 57
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-58",
+      "name": "Target Production Kgs",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PKG",
+        "tgt_production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_kgs",
+      "tdEngineKey": "PKG",
+      "aliases": [
+        "Target Production Kgs"
+      ],
+      "sourceAliases": [
+        "Target Production Kgs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 58
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-59",
+      "name": "Target Production Efficiency Loss %",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PL",
+        "tgt_production_eff_loss_percent"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_eff_loss_percent",
+      "tdEngineKey": "PL",
+      "aliases": [
+        "Target Production Efficiency Loss %"
+      ],
+      "sourceAliases": [
+        "Target Production Efficiency Loss %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 59
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-60",
+      "name": "Average Waiting Time for Lap Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_waiting_time_hour",
+        "lap_wait_hr"
+      ],
+      "unit": "",
+      "mongoKey": "lap_wait_hr",
+      "tdEngineKey": "lap_waiting_time_hour",
+      "aliases": [
+        "Average Waiting Time for Lap Hour",
+        "Avg. Waiting Time for Lap Hour"
+      ],
+      "sourceAliases": [
+        "Average Waiting Time for Lap Hour",
+        "Avg. Waiting Time for Lap Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 60
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-61",
+      "name": "Average Waiting Time for Lap Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_waiting_time_minute",
+        "lap_wait_min"
+      ],
+      "unit": "",
+      "mongoKey": "lap_wait_min",
+      "tdEngineKey": "lap_waiting_time_minute",
+      "aliases": [
+        "Average Waiting Time for Lap Minute",
+        "Avg. Waiting Time for Lap H Minute"
+      ],
+      "sourceAliases": [
+        "Average Waiting Time for Lap Minute",
+        "Avg. Waiting Time for Lap H Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 61
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-62",
+      "name": "Average Waiting Time for Lap Hour + Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "lap_wait_hr * 60 + lap_wait_min",
+      "keys": [
+        "lap_waiting_mins"
+      ],
+      "unit": "",
+      "mongoKey": "lap_waiting_mins",
+      "tdEngineKey": "",
+      "aliases": [
+        "Average Waiting Time for Lap Hour + Minute",
+        "Avg. Waiting Time for Lap Hour"
+      ],
+      "sourceAliases": [
+        "Average Waiting Time for Lap Hour + Minute",
+        "Avg. Waiting Time for Lap Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 62
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-63",
+      "name": "Average Waiting Time for Can Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "can_waiting_time_hour",
+        "can_wait_hr"
+      ],
+      "unit": "",
+      "mongoKey": "can_wait_hr",
+      "tdEngineKey": "can_waiting_time_hour",
+      "aliases": [
+        "Average Waiting Time for Can Hour",
+        "Avg. Waiting Time for can Hour"
+      ],
+      "sourceAliases": [
+        "Average Waiting Time for Can Hour",
+        "Avg. Waiting Time for can Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 63
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-64",
+      "name": "Average Waiting Time for Can Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "can_waiting_time_minute",
+        "can_wait_min"
+      ],
+      "unit": "",
+      "mongoKey": "can_wait_min",
+      "tdEngineKey": "can_waiting_time_minute",
+      "aliases": [
+        "Average Waiting Time for Can Minute",
+        "Avg. Waiting Time for can H Minute"
+      ],
+      "sourceAliases": [
+        "Average Waiting Time for Can Minute",
+        "Avg. Waiting Time for can H Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 64
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-65",
+      "name": "Average Waiting Time for Lap Hour + Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "can_wait_hr * 60 + can_wait_min",
+      "keys": [
+        "can_waiting_mins"
+      ],
+      "unit": "",
+      "mongoKey": "can_waiting_mins",
+      "tdEngineKey": "",
+      "aliases": [
+        "Average Waiting Time for Lap Hour + Minute",
+        "Avg. Waiting Time for can Hour"
+      ],
+      "sourceAliases": [
+        "Average Waiting Time for Lap Hour + Minute",
+        "Avg. Waiting Time for can Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 65
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-66",
+      "name": "Total Break",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "draft_cond_stops + draft_earth_stops + coiler_chock_stops",
+      "keys": [
+        "total_break"
+      ],
+      "unit": "",
+      "mongoKey": "total_break",
+      "tdEngineKey": "",
+      "aliases": [
+        "Total Break"
+      ],
+      "sourceAliases": [
+        "Total Break"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 66
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-67",
+      "name": "Breaks Per Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(total_break/run_time_minute) * 60",
+      "keys": [
+        "breaks_per_hour"
+      ],
+      "unit": "",
+      "mongoKey": "breaks_per_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Breaks Per Hour"
+      ],
+      "sourceAliases": [
+        "Breaks Per Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 67
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-68",
+      "name": "Avg. Waiting Time for Lap Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "formula",
+      "formula": "Data in minute",
+      "keys": [
+        "lap_waiting_time_hour",
+        "lap_waiting_mins"
+      ],
+      "unit": "",
+      "mongoKey": "lap_waiting_mins",
+      "tdEngineKey": "lap_waiting_time_hour",
+      "aliases": [
+        "Avg. Waiting Time for Lap Hour"
+      ],
+      "sourceAliases": [
+        "Avg. Waiting Time for Lap Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 68
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-69",
+      "name": "Avg. Waiting Time for Lap H Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_waiting_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "lap_waiting_time_minute",
+      "aliases": [
+        "Avg. Waiting Time for Lap H Minute"
+      ],
+      "sourceAliases": [
+        "Avg. Waiting Time for Lap H Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 69
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-70",
+      "name": "Avg. Waiting Time for can Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "formula",
+      "formula": "Data in minute",
+      "keys": [
+        "can_waiting_time_hour",
+        "can_waiting_mins"
+      ],
+      "unit": "",
+      "mongoKey": "can_waiting_mins",
+      "tdEngineKey": "can_waiting_time_hour",
+      "aliases": [
+        "Avg. Waiting Time for can Hour"
+      ],
+      "sourceAliases": [
+        "Avg. Waiting Time for can Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 70
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-71",
+      "name": "Avg. Waiting Time for can H Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "can_waiting_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "can_waiting_time_minute",
+      "aliases": [
+        "Avg. Waiting Time for can H Minute"
+      ],
+      "sourceAliases": [
+        "Avg. Waiting Time for can H Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_shift_live",
+        "row": 71
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 51,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Run Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Run Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Doffs",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-25"
+      ]
+    },
+    {
+      "title": "Delivery Speed",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-27"
+      ]
+    },
+    {
+      "title": "Doff Length",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-42"
+      ]
+    },
+    {
+      "title": "Run Time Hour trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "LIVE readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    },
+    {
+      "title": "LIVE readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-23",
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34"
+      ]
+    },
+    {
+      "title": "LIVE readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-35",
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-40",
+        "row-41",
+        "row-42",
+        "row-43",
+        "row-44",
+        "row-45",
+        "row-46"
+      ]
+    },
+    {
+      "title": "LIVE readings 4",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-47",
+        "row-48",
+        "row-49",
+        "row-50",
+        "row-58",
+        "row-59",
+        "row-60",
+        "row-61",
+        "row-62",
+        "row-63"
+      ]
+    }
+  ]
+}

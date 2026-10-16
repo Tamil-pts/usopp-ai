@@ -1,0 +1,1940 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-drawframebreaker-pms-drawframebreaker-doff",
+  "name": "PMS / DrawFrameBreaker / Doff",
+  "service": "PMS",
+  "machine": "DrawFrameBreaker",
+  "view": "Doff",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_DRAWFRAMEBREAKER_doff",
+    "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Doff Date",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_date",
+        "doff_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_date",
+      "mongoKey": "doff_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Doff Month",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Doff Year",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Doff Hour",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_hour",
+        "doff_hour (HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_hour",
+      "mongoKey": "doff_hour (HH:MM)",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Doff Minute",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Hank",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Average Delivery",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_delivery",
+      "mongoKey": "average_delivery",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Doff Production",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_production",
+        "production_kgs"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_production",
+      "mongoKey": "production_kgs",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "DOFF Length",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "doff_length",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "DOFF Run Time Hour",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_hour",
+        "doff_run_time_minute(MM:SS)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_hour",
+      "mongoKey": "doff_run_time_minute(MM:SS)",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "DOFF Run Time Minute",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "DOFF Run Time Seconds",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_seconds"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_run_time_seconds",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Set DOFF Length",
+      "dataType": "",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "set_doff_length",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Units Consumed",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "tdEngineKey": "units_consumed",
+      "mongoKey": "units_consumed",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lot_Name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "Lot_Name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Doff UKG",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Number of Thick Places",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thickplace",
+        "number_of_thickplace"
+      ],
+      "unit": "",
+      "tdEngineKey": "no_of_thickplace",
+      "mongoKey": "number_of_thickplace",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Max Flyer RPM",
+      "dataType": "REAL",
+      "groupCodes": [
+        190
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Max_Flyer_RPM",
+        "max_flyer_rpm"
+      ],
+      "unit": "",
+      "tdEngineKey": "Max_Flyer_RPM",
+      "mongoKey": "max_flyer_rpm",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "set_doff_length",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Doff Production",
+        "production_in_kg"
+      ],
+      "unit": "",
+      "tdEngineKey": "Doff Production",
+      "mongoKey": "production_in_kg",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Doff Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "doff_date",
+      "aliases": [
+        "Doff Date"
+      ],
+      "sourceAliases": [
+        "Doff Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Doff Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "doff_month",
+      "aliases": [
+        "Doff Month"
+      ],
+      "sourceAliases": [
+        "Doff Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Doff Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "doff_year",
+      "aliases": [
+        "Doff Year"
+      ],
+      "sourceAliases": [
+        "Doff Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Doff date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "doff_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff date",
+        "Doff Date"
+      ],
+      "sourceAliases": [
+        "Doff date",
+        "Doff Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Doff Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_hour",
+        "hour"
+      ],
+      "unit": "",
+      "mongoKey": "hour",
+      "tdEngineKey": "doff_hour",
+      "aliases": [
+        "Doff Hour"
+      ],
+      "sourceAliases": [
+        "Doff Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Doff Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_minute",
+        "minute"
+      ],
+      "unit": "",
+      "mongoKey": "minute",
+      "tdEngineKey": "doff_minute",
+      "aliases": [
+        "Doff Minute"
+      ],
+      "sourceAliases": [
+        "Doff Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Doff Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hour, ':', minute)",
+      "keys": [
+        "doff_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Hour"
+      ],
+      "sourceAliases": [
+        "Doff Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Doff End Date",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-' ,date, ' ' ,hour, ':', minute, ':00')",
+      "keys": [
+        "doff_end_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_end_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff End Date"
+      ],
+      "sourceAliases": [
+        "Doff End Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date"
+      ],
+      "sourceAliases": [
+        "Shift date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Hank",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "mongoKey": "hank_ne",
+      "tdEngineKey": "hank",
+      "aliases": [
+        "Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "mongoKey": "average_delivery",
+      "tdEngineKey": "average_delivery",
+      "aliases": [
+        "Average Delivery"
+      ],
+      "sourceAliases": [
+        "Average Delivery"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_production",
+        "production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "production_kgs",
+      "tdEngineKey": "doff_production",
+      "aliases": [
+        "Doff Production"
+      ],
+      "sourceAliases": [
+        "Doff Production"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "DOFF Length",
+      "dataType": "STRING",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "DOFF Length"
+      ],
+      "sourceAliases": [
+        "DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Doff Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_hour",
+        "doff_run_time_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_hour",
+      "tdEngineKey": "doff_run_time_hour",
+      "aliases": [
+        "Doff Run Time Hour",
+        "DOFF Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Hour",
+        "DOFF Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Doff Run Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_minute",
+        "doff_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minutes",
+      "tdEngineKey": "doff_run_time_minute",
+      "aliases": [
+        "Doff Run Time Minutes",
+        "DOFF Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Minutes",
+        "DOFF Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Doff Run Time Seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_seconds",
+        "doff_time_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_seconds",
+      "tdEngineKey": "doff_run_time_seconds",
+      "aliases": [
+        "Doff Run Time Seconds",
+        "DOFF Run Time Seconds"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Seconds",
+        "DOFF Run Time Seconds"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Doff Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(doff_run_time_hour * 60) + doff_time_minutes + (gte(doff_time_seconds, 30) * 1)",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Run Time Minute",
+        "DOFF Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Run Time Minute",
+        "DOFF Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "set_doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "DOFF Length"
+      ],
+      "sourceAliases": [
+        "DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Units Consumed",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "mongoKey": "units_consumed",
+      "tdEngineKey": "units_consumed",
+      "aliases": [
+        "Units Consumed"
+      ],
+      "sourceAliases": [
+        "Units Consumed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name"
+      ],
+      "sourceAliases": [
+        "Lot Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Number of Thick place",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thickplace",
+        "number_of_thickplace"
+      ],
+      "unit": "",
+      "mongoKey": "number_of_thickplace",
+      "tdEngineKey": "no_of_thickplace",
+      "aliases": [
+        "Number of Thick place",
+        "Number of Thick Places"
+      ],
+      "sourceAliases": [
+        "Number of Thick place",
+        "Number of Thick Places"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Doff UKG",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_kgs/total_kwh",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "mongoKey": "ukg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff UKG"
+      ],
+      "sourceAliases": [
+        "Doff UKG"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "DOFF Run Time Minute",
+      "dataType": "",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "doff_run_time_minute",
+      "aliases": [
+        "DOFF Run Time Minute"
+      ],
+      "sourceAliases": [
+        "DOFF Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 31
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-32",
+      "name": "Set DOFF Length",
+      "dataType": "",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "set_doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "Set DOFF Length"
+      ],
+      "sourceAliases": [
+        "Set DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 32
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-33",
+      "name": "Doff UKG",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "mongoKey": "ukg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff UKG"
+      ],
+      "sourceAliases": [
+        "Doff UKG"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 33
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-34",
+      "name": "Number of Thick Places",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thickplace",
+        "number_of_thickplace"
+      ],
+      "unit": "",
+      "mongoKey": "number_of_thickplace",
+      "tdEngineKey": "no_of_thickplace",
+      "aliases": [
+        "Number of Thick Places"
+      ],
+      "sourceAliases": [
+        "Number of Thick Places"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 34
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-35",
+      "name": "Max Flyer RPM",
+      "dataType": "REAL",
+      "groupCodes": [
+        190
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Max_Flyer_RPM",
+        "max_flyer_rpm"
+      ],
+      "unit": "",
+      "mongoKey": "max_flyer_rpm",
+      "tdEngineKey": "Max_Flyer_RPM",
+      "aliases": [
+        "Max Flyer RPM"
+      ],
+      "sourceAliases": [
+        "Max Flyer RPM"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 35
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-36",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "set_doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "set_doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "DOFF Length"
+      ],
+      "sourceAliases": [
+        "DOFF Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 36
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-37",
+      "name": "Doff Production",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Doff Production",
+        "production_in_kg"
+      ],
+      "unit": "",
+      "mongoKey": "production_in_kg",
+      "tdEngineKey": "Doff Production",
+      "aliases": [
+        "Doff Production"
+      ],
+      "sourceAliases": [
+        "Doff Production"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "row": 37
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 12,
+      "name": "Doff Date",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 13,
+      "name": "Doff Month",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 14,
+      "name": "Doff Year",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 15,
+      "name": "Doff Hour",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 16,
+      "name": "Doff Minute",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 17,
+      "name": "Hank",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 18,
+      "name": "Average Delivery",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 19,
+      "name": "Doff Production",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 20,
+      "name": "DOFF Length",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 21,
+      "name": "DOFF Run Time Hour",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 22,
+      "name": "DOFF Run Time Minute",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 23,
+      "name": "DOFF Run Time Seconds",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 24,
+      "name": "Set DOFF Length",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 25,
+      "name": "Units Consumed",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 26,
+      "name": "Lot Name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 27,
+      "name": "Doff UKG",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "DOFF Length",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-33"
+      ]
+    },
+    {
+      "title": "Doff Production",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-34"
+      ]
+    },
+    {
+      "title": "DOFF Length trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-33"
+      ]
+    },
+    {
+      "title": "Doff readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-28",
+        "row-32",
+        "row-33",
+        "row-34"
+      ]
+    }
+  ]
+}

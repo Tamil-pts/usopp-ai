@@ -1,3 +1,4 @@
+import {targetModeLabel} from '../utils/targetMode';
 import {userStorage} from '../../../src/shared/userStorage';
 import React, { useState, useEffect, useMemo } from 'react';
 import {
@@ -465,7 +466,7 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
                     : 'bg-emerald-950/60 text-emerald-300 border border-emerald-800'
                 }`}
               >
-                {activePLC.isSimulated ? 'Simulated' : 'Network TCP'}
+                {targetModeLabel(activePLC)}
               </span>
             </div>
             <div className="text-xs text-slate-400 font-mono mt-0.5 flex items-center gap-3">

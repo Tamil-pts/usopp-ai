@@ -75,6 +75,12 @@ def delete_user(user_id:int,request:Request):
     with persistent_db() as connection:
         connection.execute('DELETE FROM user_settings WHERE user_id=?',(user_id,))
         connection.execute('DELETE FROM run_archive WHERE user_id=?',(user_id,))
+    from backend.core.live_collection import remove_user
+    remove_user(user_id)
+    from backend.core.data_simulator import remove_user as remove_simulators
+    remove_simulators(user_id)
+    from backend.api.dashboard_layouts import remove_user as remove_layouts
+    remove_layouts(user_id)
     return {'deleted':True,'username':deleted['username'],'removedWorkspaces':removed}
 
 def field(data, name, minimum=1, maximum=120):

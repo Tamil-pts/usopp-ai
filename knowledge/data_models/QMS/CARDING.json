@@ -10,7 +10,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -20,7 +23,10 @@
         "mongoKey": "time_stamp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -30,7 +36,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -40,7 +49,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -50,7 +62,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -60,7 +75,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -70,7 +88,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -80,7 +101,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -90,7 +114,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -100,7 +127,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -110,7 +140,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -120,7 +153,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -130,7 +166,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -140,7 +179,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -150,7 +192,10 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Hank",
@@ -160,7 +205,10 @@
         "mongoKey": "count",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot name",
@@ -170,7 +218,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "U",
@@ -180,7 +231,10 @@
         "mongoKey": "u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max U",
@@ -190,7 +244,10 @@
         "mongoKey": "max_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min U",
@@ -200,7 +257,10 @@
         "mongoKey": "min_u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Sliver A",
@@ -210,7 +270,10 @@
         "mongoKey": "delivery_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Delivery A",
@@ -220,7 +283,10 @@
         "mongoKey": "max_delivery_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Delivery A",
@@ -230,7 +296,10 @@
         "mongoKey": "min_delivery_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Feed A",
@@ -240,7 +309,10 @@
         "mongoKey": "feed_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Feed A",
@@ -250,7 +322,10 @@
         "mongoKey": "max_feed_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Feed A",
@@ -260,7 +335,10 @@
         "mongoKey": "min_feed_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Delivery 5mtr CV %",
@@ -270,7 +348,10 @@
         "mongoKey": "delivery_cv _percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Delivery CV",
@@ -280,7 +361,10 @@
         "mongoKey": "max_delivery_cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Delivery CV",
@@ -290,7 +374,10 @@
         "mongoKey": "min_delivery_cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Feed 5m CV",
@@ -300,7 +387,10 @@
         "mongoKey": "feed_cv",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Maximum Feed CV",
@@ -310,7 +400,10 @@
         "mongoKey": "max_feed_cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Minimum Feed CV",
@@ -320,7 +413,10 @@
         "mongoKey": "min_feed_cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Chute Pressure",
@@ -330,7 +426,10 @@
         "mongoKey": "chute_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Chute Pressure",
@@ -340,7 +439,10 @@
         "mongoKey": "max_chute_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Chute Pressure",
@@ -350,7 +452,10 @@
         "mongoKey": "min_chute_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Chute Feed Motor FrequencyReal",
@@ -360,7 +465,10 @@
         "mongoKey": "feed_motor_frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Feed Motor Frequency",
@@ -370,7 +478,10 @@
         "mongoKey": "max_feed_motor_frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Feed Motor Frequency",
@@ -380,7 +491,10 @@
         "mongoKey": "min_feed_motor_frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Card Feed roller Speed",
@@ -390,7 +504,10 @@
         "mongoKey": "card_feed_roller_rpm",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Card Feed Roller Speed",
@@ -400,7 +517,10 @@
         "mongoKey": "max_card_feed_roller_rpm",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Card Feed Roller Speed",
@@ -410,7 +530,10 @@
         "mongoKey": "min_card_feed_roller_rpm",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Feed Weight in gms/mtr",
@@ -420,7 +543,10 @@
         "mongoKey": "feed_weight_in_gms/mtr",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Feed Weight",
@@ -430,7 +556,10 @@
         "mongoKey": "max_feed_weight_in_gms/mtr",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Feed weight",
@@ -440,7 +569,29 @@
         "mongoKey": "min_feed_weight_in_gms/mtr",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Adjusted Timestamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "40",
+        "formula": null,
+        "tdEngineKey": " ",
+        "mongoKey": "ts",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift_live",
+          "row": 4
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       }
     ],
     "qms_CARDING_shift": [
@@ -452,7 +603,10 @@
         "mongoKey": "ts_act",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Adjusted Time Stamp",
@@ -462,7 +616,10 @@
         "mongoKey": "time_stamp",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Tenant Id",
@@ -472,7 +629,10 @@
         "mongoKey": "tenant_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Business Id",
@@ -482,7 +642,10 @@
         "mongoKey": "business_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Asset Id",
@@ -492,7 +655,10 @@
         "mongoKey": "asset_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Unit Id",
@@ -502,7 +668,10 @@
         "mongoKey": "unit_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shed Id",
@@ -512,7 +681,10 @@
         "mongoKey": "shed_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Number",
@@ -522,7 +694,10 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Date",
@@ -532,7 +707,10 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Month",
@@ -542,7 +720,10 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Year",
@@ -552,7 +733,10 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift date",
@@ -562,7 +746,10 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -572,7 +759,10 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Minute",
@@ -582,7 +772,10 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false
+        "isRequired": false,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Shift Hour",
@@ -592,7 +785,10 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Sliver Hank",
@@ -602,7 +798,10 @@
         "mongoKey": "count",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Lot name",
@@ -612,7 +811,10 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Sliver U Instant",
@@ -622,7 +824,10 @@
         "mongoKey": "u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max U",
@@ -632,7 +837,10 @@
         "mongoKey": "max_u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min U",
@@ -642,7 +850,10 @@
         "mongoKey": "min_u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Sliver A",
@@ -652,7 +863,10 @@
         "mongoKey": "delivery_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Delivery A",
@@ -662,7 +876,10 @@
         "mongoKey": "max_delivery_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Delivery A",
@@ -672,7 +889,10 @@
         "mongoKey": "min_delivery_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Feed A",
@@ -682,7 +902,10 @@
         "mongoKey": "feed_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Feed A",
@@ -692,7 +915,10 @@
         "mongoKey": "max_feed_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Feed A",
@@ -702,7 +928,10 @@
         "mongoKey": "min_feed_a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Delivery 5mtr CV %",
@@ -712,7 +941,10 @@
         "mongoKey": "delivery_cv _percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Delivery CV",
@@ -722,7 +954,10 @@
         "mongoKey": "max_delivery_cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Delivery CV",
@@ -732,7 +967,10 @@
         "mongoKey": "min_delivery_cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Feed 5m CV",
@@ -742,7 +980,10 @@
         "mongoKey": "feed_cv",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Maximum Feed CV",
@@ -752,7 +993,10 @@
         "mongoKey": "max_feed_cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Minimum Feed CV",
@@ -762,7 +1006,10 @@
         "mongoKey": "min_feed_cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Chute Pressure",
@@ -772,7 +1019,10 @@
         "mongoKey": "chute_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Chute Pressure",
@@ -782,7 +1032,10 @@
         "mongoKey": "max_chute_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Chute Pressure",
@@ -792,7 +1045,10 @@
         "mongoKey": "min_chute_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Chute Feed Motor FrequencyReal",
@@ -802,7 +1058,10 @@
         "mongoKey": "feed_motor_frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Feed Motor Frequency",
@@ -812,7 +1071,10 @@
         "mongoKey": "max_feed_motor_frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Feed Motor Frequency",
@@ -822,7 +1084,10 @@
         "mongoKey": "min_feed_motor_frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Card Feed roller Speed",
@@ -832,7 +1097,10 @@
         "mongoKey": "card_feed_roller_rpm",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Card Feed Roller Speed",
@@ -842,7 +1110,10 @@
         "mongoKey": "max_card_feed_roller_rpm",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Card Feed Roller Speed",
@@ -852,7 +1123,10 @@
         "mongoKey": "min_card_feed_roller_rpm",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Feed Weight in gms/mtr",
@@ -862,7 +1136,10 @@
         "mongoKey": "feed_weight_in_gms/mtr",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Max Feed Weight",
@@ -872,7 +1149,10 @@
         "mongoKey": "max_feed_weight_in_gms/mtr",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Min Feed weight",
@@ -882,7 +1162,10 @@
         "mongoKey": "min_feed_weight_in_gms/mtr",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -892,7 +1175,10 @@
         "mongoKey": "thick_place_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       },
       {
         "tagName": "Servo Drive stops",
@@ -902,7 +1188,694 @@
         "mongoKey": "servo_drive_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true
+        "isRequired": true,
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Time Stamp Actual",
+        "dataType": "TIMESTAMP",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "ts",
+        "mongoKey": "ts_act",
+        "isRequired": true,
+        "isHost": true,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 2
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Adjusted Timestamp",
+        "dataType": "TIMESTAMP",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": " ",
+        "mongoKey": "ts",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 3
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Tenant Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "tenant",
+        "mongoKey": "tenant_id",
+        "isRequired": true,
+        "isHost": true,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 4
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Business Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "business",
+        "mongoKey": "business_id",
+        "isRequired": true,
+        "isHost": true,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 5
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Asset Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "asset",
+        "mongoKey": "asset_id",
+        "isRequired": true,
+        "isHost": true,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 6
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Unit Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "unit",
+        "mongoKey": "unit_id",
+        "isRequired": true,
+        "isHost": true,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 7
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Shed Id",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "shed",
+        "mongoKey": "shed_id",
+        "isRequired": true,
+        "isHost": true,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 8
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 9
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "REAL",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "shift_date",
+        "mongoKey": "shift_date(DD:MM:YYYY)",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 11
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "REAL",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "shift_month",
+        "mongoKey": null,
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 12
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "REAL",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "shift_year",
+        "mongoKey": null,
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 13
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "REAL",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "shift_hour(HH:MM)",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 14
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "REAL",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "shift_minute",
+        "mongoKey": null,
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 15
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Sliver Hank",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "required_hank",
+        "mongoKey": "hank_Ne",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 16
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick Place Stops",
+        "dataType": "Integer",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "thick_place_stops",
+        "mongoKey": "thick_place_stops",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 45
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Servo Drive stops",
+        "dataType": "Integer",
+        "groupCode": "50",
+        "formula": null,
+        "tdEngineKey": "servo_drive_stops",
+        "mongoKey": "servo_drive_stops",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 46
+        },
+        "dataTypeRole": "value",
+        "numericValueType": false,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Delivery 1mtr CV %",
+        "dataType": "Real",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "delivery_1mtr_cv_%",
+        "mongoKey": "delivery_1mtr_cv _percent",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 47
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Feed 1m CV",
+        "dataType": "Real",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "feed_1m_cv",
+        "mongoKey": "feed_1m_cv",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 49
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "No of thick places up to 15%",
+        "dataType": "Real",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "no_of_thick_places_up_to_15%",
+        "mongoKey": "no_of_thick_places_up_to_15_percent",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 51
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "No of thick places up to 20%",
+        "dataType": "Real",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "no_of_thick_places_up_to_20%",
+        "mongoKey": "no_of_thick_places_up_to_20_percent",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 52
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "No of thick places up to 25%",
+        "dataType": "Real",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "no_of_thick_places_up_to_25%",
+        "mongoKey": "no_of_thick_places_up_to_25_percent",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 53
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "ThickPlaces long Period",
+        "dataType": "real",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place__long_period_(act1)",
+        "mongoKey": "thick_place_lp",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 54
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "ThickPlaces short Period",
+        "dataType": "real",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place__short_period_(act1)",
+        "mongoKey": "thick_place_sp",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 55
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "feed Weight g/m (setting)",
+        "dataType": "real",
+        "groupCode": "140",
+        "formula": null,
+        "tdEngineKey": "current_feed_weight",
+        "mongoKey": "current_feed_weight_gm",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 56
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (LP) 10% (Set)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_long_period_sp1",
+        "mongoKey": "thick_place_long_period_10set",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 57
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (LP) 15% (Set)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_long_period_sp2",
+        "mongoKey": "thick_place_long_period_15set",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 58
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (LP) 25% (Set)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_long_period_sp3",
+        "mongoKey": "thick_place_long_period_25set",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 59
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (LP) 10% (Act)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_long_period_act1",
+        "mongoKey": "thick_place_long_period_10act",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 60
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (LP) 15% (Act)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_long_period_act2",
+        "mongoKey": "thick_place_long_period_15act",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 61
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (LP) 25% (Act)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_long_period_act3",
+        "mongoKey": "thick_place_long_period_25act",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 62
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (SP) 10% (Set)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_short_period_sp1",
+        "mongoKey": "thick_place_short_period_10set",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 63
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (SP) 15% (Set)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_short_period_sp2",
+        "mongoKey": "thick_place_short_period_15set",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 64
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (SP) 25% (Set)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_short_period_sp3",
+        "mongoKey": "thick_place_short_period_25set",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 65
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (SP) 10% (Act)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_short_period_act1",
+        "mongoKey": "thick_place_short_period_10act",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 66
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (SP) 15% (Act)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_short_period_act2",
+        "mongoKey": "thick_place_short_period_15act",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 67
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
+      },
+      {
+        "tagName": "Thick place (SP) 25% (Act)",
+        "dataType": "float",
+        "groupCode": "250",
+        "formula": null,
+        "tdEngineKey": "thick_place_short_period_act3",
+        "mongoKey": "thick_place_short_period_25act",
+        "isRequired": true,
+        "isHost": false,
+        "isAutoCalc": false,
+        "excelReference": {
+          "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "qms_CARDING_shift",
+          "row": 68
+        },
+        "dataTypeRole": "value",
+        "numericValueType": true,
+        "ignoreNameSeparators": true
       }
     ]
   },

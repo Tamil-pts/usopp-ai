@@ -1,0 +1,932 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-blowroom-pms-blowroom-minutes-time-seri",
+  "name": "PMS / BlowRoom / Minute trend",
+  "service": "PMS",
+  "machine": "BlowRoom",
+  "view": "Minute trend",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_BLOWROOM_minutes_time_seri",
+    "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_hour",
+      "mongoKey": "idle_time_minute",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_hour",
+      "mongoKey": "power_fail_time_minute",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "DOFF Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_hour",
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_hour",
+      "mongoKey": "doff_time_minute",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "DOFF Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "GPSS",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "weight_/_spindle",
+        "gpss"
+      ],
+      "unit": "",
+      "tdEngineKey": "weight_/_spindle",
+      "mongoKey": "gpss",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Air Consumption Cu.M",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "air_consumption",
+        "air_consumption_Cu.M"
+      ],
+      "unit": "",
+      "tdEngineKey": "air_consumption",
+      "mongoKey": "air_consumption_Cu.M",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Air Consumption CFM",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(air_consumption_Cu.M *35.3147)/run_time_minute",
+      "keys": [
+        "air_consumption_cfm"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "air_consumption_cfm",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "count",
+        "count_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "count",
+      "mongoKey": "count_ne",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Average TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_tpi",
+        "average_tpi"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_tpi",
+      "mongoKey": "average_tpi",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Spindle Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spindle_speed",
+        "current_spindle_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "spindle_speed",
+      "mongoKey": "current_spindle_speed",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Current Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_length",
+        "current_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_length",
+      "mongoKey": "current_length",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "delivery speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "current_delivery_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_speed",
+      "mongoKey": "current_delivery_speed",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Production kgs",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_kgs_formula",
+      "keys": [
+        "production_kgs"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_kgs",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Average ukg",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "average_ukg_formula",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Production efficiency",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "production_efficiency_formula",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_eff",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Machine utilization",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "machine_utilization_formula",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "machine_uti",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Average doff time",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "average_doff_time_formula",
+      "keys": [
+        "avg_doff_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "avg_doff_min",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 41,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 42,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 48,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 35,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Run Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Run Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-19"
+      ]
+    },
+    {
+      "title": "DOFF Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-24"
+      ]
+    },
+    {
+      "title": "DOFF Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-25"
+      ]
+    },
+    {
+      "title": "delivery speed",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-34"
+      ]
+    },
+    {
+      "title": "Run Time Hour trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Minute trend readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22",
+        "row-23"
+      ]
+    },
+    {
+      "title": "Minute trend readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34",
+        "row-36"
+      ]
+    },
+    {
+      "title": "Minute trend readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-40"
+      ]
+    }
+  ]
+}

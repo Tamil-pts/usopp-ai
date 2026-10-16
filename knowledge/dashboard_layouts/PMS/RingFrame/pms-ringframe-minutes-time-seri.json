@@ -1,0 +1,2908 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-ringframe-pms-ringframe-minutes-time-seri",
+  "name": "PMS / RingFrame / Minute trend",
+  "service": "PMS",
+  "machine": "RingFrame",
+  "view": "Minute trend",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_RINGFRAME_minutes_time_seri",
+    "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_hour",
+      "mongoKey": "idle_time_minute",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_hour",
+      "mongoKey": "power_fail_time_minute",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "DOFF Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_hour",
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_hour",
+      "mongoKey": "doff_time_minute",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "DOFF Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "GPSS",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "weight_/_spindle",
+        "gpss"
+      ],
+      "unit": "",
+      "tdEngineKey": "weight_/_spindle",
+      "mongoKey": "gpss",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Air Consumption Cu.M",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "air_consumption",
+        "air_consumption_Cu.M"
+      ],
+      "unit": "",
+      "tdEngineKey": "air_consumption",
+      "mongoKey": "air_consumption_Cu.M",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Air Consumption CFM",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(air_consumption_cu_m * 35.3147)/run_time_minute",
+      "keys": [
+        "air_consumption_cfm"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "air_consumption_cfm",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "(air_consumption_Cu.M *35.3147)/run_time_minute",
+      "definitionSource": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 30
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "count",
+        "count_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "count",
+      "mongoKey": "count_ne",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Average TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_tpi",
+        "average_tpi"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_tpi",
+      "mongoKey": "average_tpi",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Spindle Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spindle_speed",
+        "current_spindle_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "spindle_speed",
+      "mongoKey": "current_spindle_speed",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Current Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_length",
+        "current_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_length",
+      "mongoKey": "current_length",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "delivery speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "current_delivery_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_speed",
+      "mongoKey": "current_delivery_speed",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Production kgs",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(gpss * no_of_spindles)/1000",
+      "keys": [
+        "production_kgs"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_kgs",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_kgs_formula",
+      "definitionSource": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 42
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Average ukg",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "total_kwh / production_kgs",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "average_ukg_formula",
+      "definitionSource": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 43
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Production efficiency",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute))*100",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_eff",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_efficiency_formula",
+      "definitionSource": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 44
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Machine utilization",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + doff_time_minute + power_fail_time_minute) * 100",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "machine_uti",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "machine_utilization_formula",
+      "definitionSource": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 45
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Average doff time",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "doff_time_minute / no_of_doffs",
+      "keys": [
+        "avg_doff_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "avg_doff_min",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "average_doff_time_formula",
+      "definitionSource": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 47
+      },
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_hour"
+      ],
+      "unit": "",
+      "mongoKey": "run_hour",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "run_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_minute",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Run time minutes",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "run_hour * 60 + run_minute",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run time minutes",
+        "Run Time Hour",
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run time minutes",
+        "Run Time Hour",
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idle_hour"
+      ],
+      "unit": "",
+      "mongoKey": "idle_hour",
+      "tdEngineKey": "idle_time_hour",
+      "aliases": [
+        "Idle Time Hour"
+      ],
+      "sourceAliases": [
+        "Idle Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute",
+        "idle_minute"
+      ],
+      "unit": "",
+      "mongoKey": "idle_minute",
+      "tdEngineKey": "idle_time_minute",
+      "aliases": [
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Idle time minutes",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "idle_hour * 60 + idle_minute",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "idle_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Idle time minutes",
+        "Idle Time Hour",
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle time minutes",
+        "Idle Time Hour",
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "power_fail_hour"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_hour",
+      "tdEngineKey": "power_fail_time_hour",
+      "aliases": [
+        "Power Fail Time Hour"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Power Fail Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute",
+        "power_fail_minute"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_minute",
+      "tdEngineKey": "power_fail_time_minute",
+      "aliases": [
+        "Power Fail Time Minutes",
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minutes",
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "power_fail_hour * 60 + power_fail_minute",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "DOFF Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_hour",
+        "doff_time_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_hour",
+      "tdEngineKey": "doff_time_hour",
+      "aliases": [
+        "DOFF Time Hour"
+      ],
+      "sourceAliases": [
+        "DOFF Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "DOFF Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minutes",
+      "tdEngineKey": "doff_time_minute",
+      "aliases": [
+        "DOFF Time Minutes",
+        "DOFF Time Minute"
+      ],
+      "sourceAliases": [
+        "DOFF Time Minutes",
+        "DOFF Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Doff Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "doff_time_hour * 60 + doff_time_minutes",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Time Minute",
+        "DOFF Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Time Minute",
+        "DOFF Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "GPSS",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "weight_/_spindle",
+        "gpss"
+      ],
+      "unit": "",
+      "mongoKey": "gpss",
+      "tdEngineKey": "weight_/_spindle",
+      "aliases": [
+        "GPSS"
+      ],
+      "sourceAliases": [
+        "GPSS"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Air Consumption Cu.M",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "air_consumption",
+        "air_consumption_cu_m"
+      ],
+      "unit": "",
+      "mongoKey": "air_consumption_cu_m",
+      "tdEngineKey": "air_consumption",
+      "aliases": [
+        "Air Consumption Cu.M"
+      ],
+      "sourceAliases": [
+        "Air Consumption Cu.M"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Air Consumption CFM",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(air_consumption_cu_m * 35.3147)/run_time_minute",
+      "keys": [
+        "air_consumption_cfm"
+      ],
+      "unit": "",
+      "mongoKey": "air_consumption_cfm",
+      "tdEngineKey": "",
+      "aliases": [
+        "Air Consumption CFM"
+      ],
+      "sourceAliases": [
+        "Air Consumption CFM"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "count",
+        "count_ne"
+      ],
+      "unit": "",
+      "mongoKey": "count_ne",
+      "tdEngineKey": "count",
+      "aliases": [
+        "Count"
+      ],
+      "sourceAliases": [
+        "Count"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Average TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_tpi",
+        "average_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "average_tpi",
+      "tdEngineKey": "average_tpi",
+      "aliases": [
+        "Average TPI"
+      ],
+      "sourceAliases": [
+        "Average TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "Total kWh"
+      ],
+      "sourceAliases": [
+        "Total kWh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Spindle Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spindle_speed",
+        "current_spindle_speed"
+      ],
+      "unit": "",
+      "mongoKey": "current_spindle_speed",
+      "tdEngineKey": "spindle_speed",
+      "aliases": [
+        "Spindle Speed"
+      ],
+      "sourceAliases": [
+        "Spindle Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Current Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_length",
+        "current_length"
+      ],
+      "unit": "",
+      "mongoKey": "current_length",
+      "tdEngineKey": "current_length",
+      "aliases": [
+        "Current Length"
+      ],
+      "sourceAliases": [
+        "Current Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "delivery speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "current_delivery_speed"
+      ],
+      "unit": "",
+      "mongoKey": "current_delivery_speed",
+      "tdEngineKey": "delivery_speed",
+      "aliases": [
+        "delivery speed"
+      ],
+      "sourceAliases": [
+        "delivery speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "No of Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_doffs",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_doffs",
+      "tdEngineKey": "no_of_doffs",
+      "aliases": [
+        "No of Doffs"
+      ],
+      "sourceAliases": [
+        "No of Doffs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name",
+        "Lot name"
+      ],
+      "sourceAliases": [
+        "Lot Name",
+        "Lot name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "No of Spindles",
+      "dataType": "REAL",
+      "groupCodes": [
+        320
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_spindles",
+        "no_of_spindles"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_spindles",
+      "tdEngineKey": "no_of_spindles",
+      "aliases": [
+        "No of Spindles"
+      ],
+      "sourceAliases": [
+        "No of Spindles"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Set Average Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_speed",
+        "set_average_speed"
+      ],
+      "unit": "",
+      "mongoKey": "set_average_speed",
+      "tdEngineKey": "average_speed",
+      "aliases": [
+        "Set Average Speed"
+      ],
+      "sourceAliases": [
+        "Set Average Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "SET TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tpi",
+        "set_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "set_tpi",
+      "tdEngineKey": "tpi",
+      "aliases": [
+        "SET TPI"
+      ],
+      "sourceAliases": [
+        "SET TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Production kgs",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(gpss * no_of_spindles)/1000",
+      "keys": [
+        "production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "production_kgs",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production kgs",
+        "-"
+      ],
+      "sourceAliases": [
+        "Production kgs",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "total_kwh / production_kgs",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "mongoKey": "ukg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Ukg",
+        "-"
+      ],
+      "sourceAliases": [
+        "Ukg",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute))*100",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "mongoKey": "production_eff",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production Efficiency",
+        "-"
+      ],
+      "sourceAliases": [
+        "Production Efficiency",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + doff_time_minute + power_fail_time_minute) * 100",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "mongoKey": "machine_uti",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Utilization",
+        "-"
+      ],
+      "sourceAliases": [
+        "Machine Utilization",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Machine Utilization Formula 1 - KM",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute) * 100",
+      "keys": [
+        "machine_uti_formula_1"
+      ],
+      "unit": "",
+      "mongoKey": "machine_uti_formula_1",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Utilization Formula 1 - KM"
+      ],
+      "sourceAliases": [
+        "Machine Utilization Formula 1 - KM"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "Average Doff Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "doff_time_minute / no_of_doffs",
+      "keys": [
+        "avg_doff_min"
+      ],
+      "unit": "",
+      "mongoKey": "avg_doff_min",
+      "tdEngineKey": "",
+      "aliases": [
+        "Average Doff Minute",
+        "-"
+      ],
+      "sourceAliases": [
+        "Average Doff Minute",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Machine Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute+power_fail_time_minute))*100",
+      "keys": [
+        "machine_eff"
+      ],
+      "unit": "",
+      "mongoKey": "machine_eff",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Efficiency"
+      ],
+      "sourceAliases": [
+        "Machine Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Target Standard Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "SE",
+        "tgt_standard_eff"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_standard_eff",
+      "tdEngineKey": "SE",
+      "aliases": [
+        "Target Standard Efficiency"
+      ],
+      "sourceAliases": [
+        "Target Standard Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "TPM",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "set_tpi * 39.37",
+      "keys": [
+        "tpm"
+      ],
+      "unit": "",
+      "mongoKey": "tpm",
+      "tdEngineKey": "",
+      "aliases": [
+        "TPM"
+      ],
+      "sourceAliases": [
+        "TPM"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Target Production KG Formula 1",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "((((set_average_speed/tpm) * 1.0936 * total_shift_time) / (840 * 2.2046 * count_ne)) * (tgt_standard_eff / 100)) * no_of_spindles",
+      "keys": [
+        "pkg_formula_1"
+      ],
+      "unit": "",
+      "mongoKey": "pkg_formula_1",
+      "tdEngineKey": "",
+      "aliases": [
+        "Target Production KG Formula 1"
+      ],
+      "sourceAliases": [
+        "Target Production KG Formula 1"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Target GPSS Formula 1",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(tgt_production_kgs / no_of_spindles) * 1000",
+      "keys": [
+        "gpss_formula_1"
+      ],
+      "unit": "",
+      "mongoKey": "gpss_formula_1",
+      "tdEngineKey": "",
+      "aliases": [
+        "Target GPSS Formula 1"
+      ],
+      "sourceAliases": [
+        "Target GPSS Formula 1"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "Target Production Kgs",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "PKG",
+        "tgt_production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_kgs",
+      "tdEngineKey": "PKG",
+      "aliases": [
+        "Target Production Kgs"
+      ],
+      "sourceAliases": [
+        "Target Production Kgs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 53
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-54",
+      "name": "Target GPSS",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "GPSS",
+        "tgt_gpss"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_gpss",
+      "tdEngineKey": "GPSS",
+      "aliases": [
+        "Target GPSS",
+        "GPSS"
+      ],
+      "sourceAliases": [
+        "Target GPSS",
+        "GPSS"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 54
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-55",
+      "name": "Target Ukg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "UKG",
+        "tgt_ukg"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_ukg",
+      "tdEngineKey": "UKG",
+      "aliases": [
+        "Target Ukg",
+        "-"
+      ],
+      "sourceAliases": [
+        "Target Ukg",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 55
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-56",
+      "name": "Target Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PE",
+        "tgt_production_eff"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_eff",
+      "tdEngineKey": "PE",
+      "aliases": [
+        "Target Production Efficiency"
+      ],
+      "sourceAliases": [
+        "Target Production Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 56
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-57",
+      "name": "Target Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MU",
+        "tgt_machine_uti"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_machine_uti",
+      "tdEngineKey": "MU",
+      "aliases": [
+        "Target Machine Utilization"
+      ],
+      "sourceAliases": [
+        "Target Machine Utilization"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 57
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-58",
+      "name": "40s Converted Factor",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "CF",
+        "conv_factor_40s"
+      ],
+      "unit": "",
+      "mongoKey": "conv_factor_40s",
+      "tdEngineKey": "CF",
+      "aliases": [
+        "40s Converted Factor"
+      ],
+      "sourceAliases": [
+        "40s Converted Factor"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 58
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-59",
+      "name": "Converted GPSS",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "conv_factor_40s * gpss",
+      "keys": [
+        "conv_gpss"
+      ],
+      "unit": "",
+      "mongoKey": "conv_gpss",
+      "tdEngineKey": "",
+      "aliases": [
+        "Converted GPSS"
+      ],
+      "sourceAliases": [
+        "Converted GPSS"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 59
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-60",
+      "name": "Converted Production Kgs",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "conv_gpss * no_of_spindles/1000",
+      "keys": [
+        "conv_production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "conv_production_kgs",
+      "tdEngineKey": "",
+      "aliases": [
+        "Converted Production Kgs"
+      ],
+      "sourceAliases": [
+        "Converted Production Kgs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/RINGFRAME.json",
+        "sheet": "pms_RINGFRAME_minutes_time_series",
+        "row": 60
+      },
+      "definitionPriority": 2
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 41,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 42,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 48,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 35,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Run Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Run Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-19"
+      ]
+    },
+    {
+      "title": "DOFF Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-24"
+      ]
+    },
+    {
+      "title": "DOFF Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-25"
+      ]
+    },
+    {
+      "title": "delivery speed",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-34"
+      ]
+    },
+    {
+      "title": "Run Time Hour trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Minute trend readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22",
+        "row-23"
+      ]
+    },
+    {
+      "title": "Minute trend readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34",
+        "row-36"
+      ]
+    },
+    {
+      "title": "Minute trend readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-40"
+      ]
+    }
+  ]
+}

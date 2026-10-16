@@ -1,0 +1,3954 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-drawframebreaker-pms-drawframebreaker-hours",
+  "name": "PMS / DrawFrameBreaker / Hourly",
+  "service": "PMS",
+  "machine": "DrawFrameBreaker",
+  "view": "Hourly",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_DRAWFRAMEBREAKER_hours",
+    "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_hour",
+      "mongoKey": "idle_time_minute",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "idle_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_hour",
+      "mongoKey": "power_fail_time_minute",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_fail_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "DOFF Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_hour",
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_hour",
+      "mongoKey": "doff_time_minute",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "DOFF Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Production in kg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_in_kg",
+        "production_kgs"
+      ],
+      "unit": "",
+      "tdEngineKey": "production_in_kg",
+      "mongoKey": "production_kgs",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hanks"
+      ],
+      "unit": "",
+      "tdEngineKey": "hank",
+      "mongoKey": "hanks",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffs",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffs",
+      "mongoKey": "no_of_doffs",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_delivery",
+      "mongoKey": "average_delivery",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg",
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "ukg",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Average Doff Time",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_doff_time",
+        "average_doff_time"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_doff_time",
+      "mongoKey": "average_doff_time",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Average Can Filling Time",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_can_filling_time",
+        "average_can_filling_time"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_can_filling_time",
+      "mongoKey": "average_can_filling_time",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Can Waiting Time",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "can_waiting_time",
+        "can_waiting_time"
+      ],
+      "unit": "",
+      "tdEngineKey": "can_waiting_time",
+      "mongoKey": "can_waiting_time",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Current length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_length",
+        "current_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_length",
+      "mongoKey": "current_length",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "required_hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "U %",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_%",
+        "u_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "u_%",
+      "mongoKey": "u_percent",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "CV %",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_%",
+        "cv_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv_%",
+      "mongoKey": "cv_percent",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Delivery Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "delivery_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_speed",
+      "mongoKey": "delivery_speed",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Doff length",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "doff_length",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "LOT Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "Production efficiency",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute_direct / (run_time_minute_direct + idle_time_minute_direct + doff_time_minute_direct) )* 100",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_eff",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "production_efficiency_formula",
+      "definitionSource": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 48
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "Machine utilization",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute_direct + doff_time_minute_direct) / (run_time_minute_direct + idle_time_minute_direct + doff_time_minute_direct + power_fail_time_minute_direct) * 100",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "machine_uti",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "originalFormula": "machine_utilization_formula",
+      "definitionSource": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 49
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-50",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "avg_delivery_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_delivery",
+      "mongoKey": "avg_delivery_speed",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-51",
+      "name": "Shift Cumulative Thick place",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "Number_of_thickplace in doff1 + Number_of_thickplace in doff 2 + ... upto No of doffs",
+      "keys": [
+        "number_of_thickplace",
+        "thick_place"
+      ],
+      "unit": "",
+      "tdEngineKey": "number_of_thickplace",
+      "mongoKey": "thick_place",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 51
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-52",
+      "name": "Feed Roller Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_roller_stoppage",
+        "feed_roller_stoppage"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_roller_stoppage",
+      "mongoKey": "feed_roller_stoppage",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 52
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-53",
+      "name": "Feed Sensor Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_sensor_stoppage",
+        "feed_sensor_stoppage"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_sensor_stoppage",
+      "mongoKey": "feed_sensor_stoppage",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 53
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-54",
+      "name": "Draft /Cylinder Roller Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_/cylinder_roller_stoppage",
+        "draft_cylinder_roller_stoppage"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_/cylinder_roller_stoppage",
+      "mongoKey": "draft_cylinder_roller_stoppage",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 54
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-55",
+      "name": "Web guide Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "web_guide_stoppage",
+        "web_guide_stoppage"
+      ],
+      "unit": "",
+      "tdEngineKey": "web_guide_stoppage",
+      "mongoKey": "web_guide_stoppage",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 55
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-56",
+      "name": "Coiler Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_stoppage",
+        "coiler_stoppage"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_stoppage",
+      "mongoKey": "coiler_stoppage",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 56
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-57",
+      "name": "Sliver Monitor Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_monitor_stops",
+      "mongoKey": "sliver_monitor_stops",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 57
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-58",
+      "name": "U Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "u_stops",
+      "mongoKey": "u_stops",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 58
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-59",
+      "name": "CV stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv_stops",
+      "mongoKey": "cv_stops",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 59
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-60",
+      "name": "Thick Place stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place_stops",
+        "thick_place_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "thick_place_stops",
+      "mongoKey": "thick_place_stops",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 60
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-61",
+      "name": "Spectrogram stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "spectrogram_stops",
+      "mongoKey": "spectrogram_stops",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 61
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-62",
+      "name": "Servo Drive stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_drive_stops",
+        "servo_drive_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "servo_drive_stops",
+      "mongoKey": "servo_drive_stops",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 62
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-63",
+      "name": "Total Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_breaks",
+        "total_breaks"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_breaks",
+      "mongoKey": "total_breaks",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 63
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-64",
+      "name": "Total Feed Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_feed_breaks",
+        "total_feed_breaks"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_feed_breaks",
+      "mongoKey": "total_feed_breaks",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 64
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-65",
+      "name": "Total Quality Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_quality_breaks",
+        "total_quality_breaks"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_quality_breaks",
+      "mongoKey": "total_quality_breaks",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 65
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-66",
+      "name": "Total Delivery Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_delivery_breaks",
+        "total_delivery_breaks"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_delivery_breaks",
+      "mongoKey": "total_delivery_breaks",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 66
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_hour"
+      ],
+      "unit": "",
+      "mongoKey": "run_hour",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Run Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "run_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_minute",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "run_hour * 60 + run_minute",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "run_hour * 60 + run_minute",
+      "keys": [
+        "run_time_minute_direct"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute_direct",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Idle Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_hour",
+        "idle_hour"
+      ],
+      "unit": "",
+      "mongoKey": "idle_hour",
+      "tdEngineKey": "idle_time_hour",
+      "aliases": [
+        "Idle Time Hour"
+      ],
+      "sourceAliases": [
+        "Idle Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Idle Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "idle_time_minute",
+        "idle_minute"
+      ],
+      "unit": "",
+      "mongoKey": "idle_minute",
+      "tdEngineKey": "idle_time_minute",
+      "aliases": [
+        "Idle Time Minutes",
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minutes",
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "idle_hour * 60 + idle_minute",
+      "keys": [
+        "idle_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "idle_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Idle Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "idle_hour * 60 + idle_minute",
+      "keys": [
+        "idle_time_minute_direct"
+      ],
+      "unit": "",
+      "mongoKey": "idle_time_minute_direct",
+      "tdEngineKey": "",
+      "aliases": [
+        "Idle Time Minute"
+      ],
+      "sourceAliases": [
+        "Idle Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Power Fail Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_hour",
+        "power_fail_hour"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_hour",
+      "tdEngineKey": "power_fail_time_hour",
+      "aliases": [
+        "Power Fail Time Hour"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Power Fail Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_fail_time_minute",
+        "power_fail_minute"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_minute",
+      "tdEngineKey": "power_fail_time_minute",
+      "aliases": [
+        "Power Fail Time Minutes",
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minutes",
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "power_fail_hour * 60 + power_fail_minute",
+      "keys": [
+        "power_fail_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Power Fail Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "power_fail_hour * 60 + power_fail_minute",
+      "keys": [
+        "power_fail_time_minute_direct"
+      ],
+      "unit": "",
+      "mongoKey": "power_fail_time_minute_direct",
+      "tdEngineKey": "",
+      "aliases": [
+        "Power Fail Time Minute"
+      ],
+      "sourceAliases": [
+        "Power Fail Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "DOFF Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_hour",
+        "doff_time_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_hour",
+      "tdEngineKey": "doff_time_hour",
+      "aliases": [
+        "DOFF Time Hour"
+      ],
+      "sourceAliases": [
+        "DOFF Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "DOFF Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minutes",
+      "tdEngineKey": "doff_time_minute",
+      "aliases": [
+        "DOFF Time Minutes",
+        "DOFF Time Minute"
+      ],
+      "sourceAliases": [
+        "DOFF Time Minutes",
+        "DOFF Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Doff Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "doff_time_hour* 60 + doff_time_minutes",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Time Minute",
+        "DOFF Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Time Minute",
+        "DOFF Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Doff Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "doff_time_hour* 60 + doff_time_minutes",
+      "keys": [
+        "doff_time_minute_direct"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute_direct",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Time Minute",
+        "DOFF Time Minute"
+      ],
+      "sourceAliases": [
+        "Doff Time Minute",
+        "DOFF Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Production Kgs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_in_kg",
+        "production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "production_kgs",
+      "tdEngineKey": "production_in_kg",
+      "aliases": [
+        "Production Kgs",
+        "Production in kg"
+      ],
+      "sourceAliases": [
+        "Production Kgs",
+        "Production in kg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hanks"
+      ],
+      "unit": "",
+      "mongoKey": "hanks",
+      "tdEngineKey": "hank",
+      "aliases": [
+        "Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffs",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_doffs",
+      "tdEngineKey": "doffs",
+      "aliases": [
+        "Doffs"
+      ],
+      "sourceAliases": [
+        "Doffs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Total kWh",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "Total kWh"
+      ],
+      "sourceAliases": [
+        "Total kWh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "mongoKey": "average_delivery",
+      "tdEngineKey": "average_delivery",
+      "aliases": [
+        "Average Delivery"
+      ],
+      "sourceAliases": [
+        "Average Delivery"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg",
+        "ukg"
+      ],
+      "unit": "",
+      "mongoKey": "ukg",
+      "tdEngineKey": "ukg",
+      "aliases": [
+        "Ukg"
+      ],
+      "sourceAliases": [
+        "Ukg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Avg Doff Time",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_doff_time",
+        "average_doff_time"
+      ],
+      "unit": "",
+      "mongoKey": "average_doff_time",
+      "tdEngineKey": "average_doff_time",
+      "aliases": [
+        "Avg Doff Time",
+        "Average Doff Time"
+      ],
+      "sourceAliases": [
+        "Avg Doff Time",
+        "Average Doff Time"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "Average Can Filling Time",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_can_filling_time",
+        "average_can_filling_time"
+      ],
+      "unit": "",
+      "mongoKey": "average_can_filling_time",
+      "tdEngineKey": "average_can_filling_time",
+      "aliases": [
+        "Average Can Filling Time"
+      ],
+      "sourceAliases": [
+        "Average Can Filling Time"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Can Waiting Time",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "can_waiting_time",
+        "can_waiting_time"
+      ],
+      "unit": "",
+      "mongoKey": "can_waiting_time",
+      "tdEngineKey": "can_waiting_time",
+      "aliases": [
+        "Can Waiting Time"
+      ],
+      "sourceAliases": [
+        "Can Waiting Time"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Current Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_length",
+        "current_length"
+      ],
+      "unit": "",
+      "mongoKey": "current_length",
+      "tdEngineKey": "current_length",
+      "aliases": [
+        "Current Length",
+        "Current length"
+      ],
+      "sourceAliases": [
+        "Current Length",
+        "Current length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "mongoKey": "hank_ne",
+      "tdEngineKey": "required_hank",
+      "aliases": [
+        "Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "U",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_%",
+        "u_percent"
+      ],
+      "unit": "",
+      "mongoKey": "u_percent",
+      "tdEngineKey": "u_%",
+      "aliases": [
+        "U",
+        "U %"
+      ],
+      "sourceAliases": [
+        "U",
+        "U %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "CV",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_%",
+        "cv_percent"
+      ],
+      "unit": "",
+      "mongoKey": "cv_percent",
+      "tdEngineKey": "cv_%",
+      "aliases": [
+        "CV",
+        "CV %"
+      ],
+      "sourceAliases": [
+        "CV",
+        "CV %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Delivery Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "delivery_speed"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_speed",
+      "tdEngineKey": "delivery_speed",
+      "aliases": [
+        "Delivery Speed"
+      ],
+      "sourceAliases": [
+        "Delivery Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "DOFF Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "DOFF Length",
+        "Doff length"
+      ],
+      "sourceAliases": [
+        "DOFF Length",
+        "Doff length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name",
+        "LOT Name"
+      ],
+      "sourceAliases": [
+        "Lot Name",
+        "LOT Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute_direct / (run_time_minute_direct + idle_time_minute_direct + doff_time_minute_direct) )* 100",
+      "keys": [
+        "production_eff"
+      ],
+      "unit": "",
+      "mongoKey": "production_eff",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production Efficiency",
+        "-"
+      ],
+      "sourceAliases": [
+        "Production Efficiency",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute_direct + doff_time_minute_direct) / (run_time_minute_direct + idle_time_minute_direct + doff_time_minute_direct + power_fail_time_minute_direct) * 100",
+      "keys": [
+        "machine_uti"
+      ],
+      "unit": "",
+      "mongoKey": "machine_uti",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Utilization",
+        "-"
+      ],
+      "sourceAliases": [
+        "Machine Utilization",
+        "-"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "Machine Utilization Formula 1 - KM",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute_direct) / (run_time_minute_direct + idle_time_minute_direct + doff_time_minute_direct) * 100",
+      "keys": [
+        "machine_uti_formula_1"
+      ],
+      "unit": "",
+      "mongoKey": "machine_uti_formula_1",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Utilization Formula 1 - KM"
+      ],
+      "sourceAliases": [
+        "Machine Utilization Formula 1 - KM"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Machine Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_time_minute_direct/(run_time_minute_direct+idle_time_minute_direct+doff_time_minute_direct+power_fail_time_minute_direct))*100",
+      "keys": [
+        "machine_eff"
+      ],
+      "unit": "",
+      "mongoKey": "machine_eff",
+      "tdEngineKey": "",
+      "aliases": [
+        "Machine Efficiency"
+      ],
+      "sourceAliases": [
+        "Machine Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Target Ukg",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "UKG",
+        "tgt_ukg"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_ukg",
+      "tdEngineKey": "UKG",
+      "aliases": [
+        "Target Ukg",
+        "Ukg"
+      ],
+      "sourceAliases": [
+        "Target Ukg",
+        "Ukg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "Target Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PE",
+        "tgt_production_eff"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_eff",
+      "tdEngineKey": "PE",
+      "aliases": [
+        "Target Production Efficiency"
+      ],
+      "sourceAliases": [
+        "Target Production Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 53
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-54",
+      "name": "Target Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MU",
+        "tgt_machine_uti"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_machine_uti",
+      "tdEngineKey": "MU",
+      "aliases": [
+        "Target Machine Utilization"
+      ],
+      "sourceAliases": [
+        "Target Machine Utilization"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 54
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-55",
+      "name": "Target Production Kgs",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PKG",
+        "tgt_production_kgs"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_kgs",
+      "tdEngineKey": "PKG",
+      "aliases": [
+        "Target Production Kgs"
+      ],
+      "sourceAliases": [
+        "Target Production Kgs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 55
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-56",
+      "name": "Target Production Efficiency Loss",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "PL",
+        "tgt_production_eff_loss"
+      ],
+      "unit": "",
+      "mongoKey": "tgt_production_eff_loss",
+      "tdEngineKey": "PL",
+      "aliases": [
+        "Target Production Efficiency Loss"
+      ],
+      "sourceAliases": [
+        "Target Production Efficiency Loss"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 56
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-57",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "avg_delivery_speed"
+      ],
+      "unit": "",
+      "mongoKey": "avg_delivery_speed",
+      "tdEngineKey": "average_delivery",
+      "aliases": [
+        "Average Delivery"
+      ],
+      "sourceAliases": [
+        "Average Delivery"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 57
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-58",
+      "name": "Number of Thick place",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_thickplace",
+        "number_of_thickplace"
+      ],
+      "unit": "",
+      "mongoKey": "number_of_thickplace",
+      "tdEngineKey": "no_of_thickplace",
+      "aliases": [
+        "Number of Thick place",
+        "Shift Cumulative Thick place"
+      ],
+      "sourceAliases": [
+        "Number of Thick place",
+        "Shift Cumulative Thick place"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 58
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-59",
+      "name": "Feed Roller Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_roller_stoppage",
+        "feed_roller_stoppage"
+      ],
+      "unit": "",
+      "mongoKey": "feed_roller_stoppage",
+      "tdEngineKey": "feed_roller_stoppage",
+      "aliases": [
+        "Feed Roller Stoppage"
+      ],
+      "sourceAliases": [
+        "Feed Roller Stoppage"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 59
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-60",
+      "name": "Feed Sensor Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_sensor_stoppage",
+        "feed_sensor_stoppage"
+      ],
+      "unit": "",
+      "mongoKey": "feed_sensor_stoppage",
+      "tdEngineKey": "feed_sensor_stoppage",
+      "aliases": [
+        "Feed Sensor Stoppage"
+      ],
+      "sourceAliases": [
+        "Feed Sensor Stoppage"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 60
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-61",
+      "name": "Draft/Cylinder Roller stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_/cylinder_roller_stoppage",
+        "draft_cylinder_roller_stoppage"
+      ],
+      "unit": "",
+      "mongoKey": "draft_cylinder_roller_stoppage",
+      "tdEngineKey": "draft_/cylinder_roller_stoppage",
+      "aliases": [
+        "Draft/Cylinder Roller stoppage",
+        "Draft /Cylinder Roller Stoppage"
+      ],
+      "sourceAliases": [
+        "Draft/Cylinder Roller stoppage",
+        "Draft /Cylinder Roller Stoppage"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 61
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-62",
+      "name": "Web Guide Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "web_guide_stoppage",
+        "web_guide_stoppage"
+      ],
+      "unit": "",
+      "mongoKey": "web_guide_stoppage",
+      "tdEngineKey": "web_guide_stoppage",
+      "aliases": [
+        "Web Guide Stoppage",
+        "Web guide Stoppage"
+      ],
+      "sourceAliases": [
+        "Web Guide Stoppage",
+        "Web guide Stoppage"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 62
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-63",
+      "name": "Coiler Stoppage",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_stoppage",
+        "coiler_stoppage"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_stoppage",
+      "tdEngineKey": "coiler_stoppage",
+      "aliases": [
+        "Coiler Stoppage"
+      ],
+      "sourceAliases": [
+        "Coiler Stoppage"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 63
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-64",
+      "name": "Sliver Monitor Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "mongoKey": "sliver_monitor_stops",
+      "tdEngineKey": "sliver_monitor_stops",
+      "aliases": [
+        "Sliver Monitor Stops"
+      ],
+      "sourceAliases": [
+        "Sliver Monitor Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 64
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-65",
+      "name": "U Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "mongoKey": "u_stops",
+      "tdEngineKey": "u_stops",
+      "aliases": [
+        "U Stops"
+      ],
+      "sourceAliases": [
+        "U Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 65
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-66",
+      "name": "CV Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "mongoKey": "cv_stops",
+      "tdEngineKey": "cv_stops",
+      "aliases": [
+        "CV Stops",
+        "CV stops"
+      ],
+      "sourceAliases": [
+        "CV Stops",
+        "CV stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 66
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-67",
+      "name": "Thick Places Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place_stops",
+        "thick_place_stops"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place_stops",
+      "tdEngineKey": "thick_place_stops",
+      "aliases": [
+        "Thick Places Stops",
+        "Thick Place stops"
+      ],
+      "sourceAliases": [
+        "Thick Places Stops",
+        "Thick Place stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 67
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-68",
+      "name": "Spectrogram Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_stops"
+      ],
+      "unit": "",
+      "mongoKey": "spectrogram_stops",
+      "tdEngineKey": "spectrogram_stops",
+      "aliases": [
+        "Spectrogram Stops",
+        "Spectrogram stops"
+      ],
+      "sourceAliases": [
+        "Spectrogram Stops",
+        "Spectrogram stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 68
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-69",
+      "name": "Servo Drive Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_drive_stops",
+        "servo_drive_stops"
+      ],
+      "unit": "",
+      "mongoKey": "servo_drive_stops",
+      "tdEngineKey": "servo_drive_stops",
+      "aliases": [
+        "Servo Drive Stops",
+        "Servo Drive stops"
+      ],
+      "sourceAliases": [
+        "Servo Drive Stops",
+        "Servo Drive stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 69
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-70",
+      "name": "Total Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total__breaks",
+        "total_breaks"
+      ],
+      "unit": "",
+      "mongoKey": "total_breaks",
+      "tdEngineKey": "total__breaks",
+      "aliases": [
+        "Total Breaks"
+      ],
+      "sourceAliases": [
+        "Total Breaks"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 70
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-71",
+      "name": "Total Feed Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_feed_breaks",
+        "total_feed_breaks"
+      ],
+      "unit": "",
+      "mongoKey": "total_feed_breaks",
+      "tdEngineKey": "total_feed_breaks",
+      "aliases": [
+        "Total Feed Breaks"
+      ],
+      "sourceAliases": [
+        "Total Feed Breaks"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 71
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-72",
+      "name": "Total Quality Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_quality_breaks",
+        "total_quality_breaks"
+      ],
+      "unit": "",
+      "mongoKey": "total_quality_breaks",
+      "tdEngineKey": "total_quality_breaks",
+      "aliases": [
+        "Total Quality Breaks"
+      ],
+      "sourceAliases": [
+        "Total Quality Breaks"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 72
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-73",
+      "name": "Total Delivery Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_delivery_breaks",
+        "total_delivery_breaks"
+      ],
+      "unit": "",
+      "mongoKey": "total_delivery_breaks",
+      "tdEngineKey": "total_delivery_breaks",
+      "aliases": [
+        "Total Delivery Breaks"
+      ],
+      "sourceAliases": [
+        "Total Delivery Breaks"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 73
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-74",
+      "name": "Shift Cumulative Thick place",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "Number_of_thickplace in doff1 + Number_of_thickplace in doff 2 + ... upto No of doffs",
+      "keys": [
+        "number_of_thickplace",
+        "thick_place"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place",
+      "tdEngineKey": "number_of_thickplace",
+      "aliases": [
+        "Shift Cumulative Thick place"
+      ],
+      "sourceAliases": [
+        "Shift Cumulative Thick place"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/DRAWFRAMEBREAKER.json",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "row": 74
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 43,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 40,
+      "name": "LOT Name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Run Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Run Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "DOFF Time Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-23"
+      ]
+    },
+    {
+      "title": "DOFF Time Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-24"
+      ]
+    },
+    {
+      "title": "Production in kg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-25"
+      ]
+    },
+    {
+      "title": "Doffs",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-27"
+      ]
+    },
+    {
+      "title": "Run Time Hour trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Hourly readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    },
+    {
+      "title": "Hourly readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-23",
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34"
+      ]
+    },
+    {
+      "title": "Hourly readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-35",
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-41",
+        "row-42",
+        "row-50",
+        "row-51",
+        "row-52",
+        "row-53",
+        "row-54"
+      ]
+    },
+    {
+      "title": "Hourly readings 4",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-55",
+        "row-56",
+        "row-57",
+        "row-58",
+        "row-59",
+        "row-60",
+        "row-61",
+        "row-62",
+        "row-63",
+        "row-64",
+        "row-65",
+        "row-66"
+      ]
+    }
+  ]
+}

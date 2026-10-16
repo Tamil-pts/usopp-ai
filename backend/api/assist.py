@@ -43,7 +43,7 @@ def assist_start(payload: dict):
             raise HTTPException(429, 'Wait for your current Chopper questions to finish.')
         ASSIST_JOBS[sid] = {'status': 'running', 'owner': owner, 'started': now, 'stage': 'Preparing project context', 'current': 0, 'total': 0}
 
-    def update(stage, current=None, total=None):
+    def update(stage, current=None, total=None, **telemetry):
         with ASSIST_JOBS_LOCK:
             job = ASSIST_JOBS[sid]
             if job['stage'] != stage:
@@ -51,6 +51,7 @@ def assist_start(payload: dict):
             job['stage'] = stage
             if current is not None: job['current'] = current
             if total is not None: job['total'] = total
+            job.update({key:value for key,value in telemetry.items() if key in {'contextUsage','retrieval','modelStatus'}})
 
     def worker():
         token = reporter.set(update)
@@ -272,9 +273,16 @@ def assist(payload:dict):
 def _assist(payload:dict):
     task=payload.get('task','Validation analysis'); context=payload.get('context',{})
     context=context if isinstance(context,dict) else {}; question=payload.get('question','Explain the current validation result.')
+    from backend.core.window_help import guide as window_guide, answer as window_answer
+    current_guide=window_guide(context)
+    if task=='Window assistant' and payload.get('guideOnly') and current_guide:
+        return {'answer':window_answer(context),'source':'local-window-guide','model':None,'evidence':[]}
     from backend.api.assist_flow import is_flow_question, flow_reply
     if is_flow_question(question):
         return flow_reply(str(question), context)
+    if context.get('intelligenceProjectId') and not context.get('comparisonFocus') and not context.get('logSummary') and not feature_question(question):
+        from backend.core.project_assistant import answer as indexed_answer
+        return indexed_answer(payload)
     project_root, project_evidence, project_details, knowledge, comparison = None, [], None, None, None
     intent = question_intent(question)
     analysis = None
@@ -287,7 +295,7 @@ def _assist(payload:dict):
         from backend.api.comparison import _comparison_result_for_export
         data, work = _comparison_result_for_export(sid)
         comparison = comparison_knowledge(data, work, str(question))
-    elif context.get('projectPath'):
+    elif context.get('projectPath') and not feature_question(question):
         report('Reading selected project')
         project_root = locate_root(_local_path(str(context['projectPath']), True, True))
         from backend.core.runtime import WORK
@@ -311,6 +319,7 @@ def _assist(payload:dict):
     relevant_learning=search_observations(question,limit=12,approved_only=True)
     known={item.get('id') for item in learning}; learning.extend(item for item in relevant_learning if item.get('id') not in known)
     assist_context={k:v for k,v in context.items() if k not in {'validationResult','ruleResults','applicationFeatures'}}
+    if current_guide:assist_context['currentWindowGuide']=current_guide
     assist_context.update(projectDetails=project_details,projectEvidence=project_evidence,approvedLearning=learning[-8:],projectKnowledge=knowledge,comparisonKnowledge=comparison)
     report('Retrieving B&R format and library help')
     # Search documentation by resolved library block type, not an arbitrary instance name.
@@ -328,6 +337,8 @@ def _assist(payload:dict):
     system += ' Follow engineeringTask for the requested analysis. projectAnalysis contains bounded static traces and review candidates, not proven defects. RS485 is a physical interface, not a protocol; serial/Modbus blocks alone do not establish it. Trace device/mode values and status/recovery paths. Understand informal spelling without changing exact source identifiers. Do not claim a missing guard, complete sequence or live connectivity from a partial excerpt.'
     if machine_summary:
         system += '\n' + SUMMARY_SYSTEM
+    if current_guide:
+        system += ' This question comes from a small window assistant. Explain currentWindowGuide and the supplied currentWindow findings concisely. Reported statuses are evidence, not new verdicts. An absent capture is not a failed PLC check; distinguish manual, simulator, stored and PLC captures. Do not claim to run actions or change configuration. Ask the user to open the relevant control when needed.'
     # Keep JSON complete and evidence ahead of conversation/attachment previews.
     # Small local models have finite context; report any reduction explicitly.
     if knowledge:
@@ -409,7 +420,7 @@ def _assist(payload:dict):
                 model_notice=reason+' Showing the source findings below. This citation check does not determine whether a feature is available.'
             else:
                 observation=_learn_assist_result(payload,context,rule_result,answer) if rule_result else None
-                return {'answer':answer,'source':generated['provider'],'model':generated['model'],'evidence':model_evidence,'helpEvidence':help_evidence,'projectAnalysis':analysis,'machineSummary':machine_summary,'semanticReviewRequired':bool(knowledge or comparison or help_evidence),'learningId':observation.get('id') if observation else None}
+                return {'answer':answer,'source':generated['provider'],'model':generated['model'],'evidence':model_evidence,'helpEvidence':help_evidence,'projectAnalysis':analysis,'machineSummary':machine_summary,'semanticReviewRequired':bool(knowledge or comparison or help_evidence),'learningId':observation.get('id') if observation else None,'contextUsage':generated.get('contextUsage'),'responseSeconds':generated.get('responseSeconds')}
     except Exception as error:
         log.warning('ASSIST_LLM_ERROR type=%s; using local engineering evidence',type(error).__name__)
         if isinstance(error, ModelBusyError):
@@ -457,6 +468,8 @@ def _assist(payload:dict):
         project_name=project_details.get('projectName') if project_details else project_root.name
         answer=f"I found {len(project_evidence)} relevant source locations in {project_name}. Best match: {first['file']} at line {first['line']}. Related evidence: {names}."
         return {'answer':answer,'source':'project-search','model':None,'modelNotice':model_notice,'evidence':project_evidence,'projectDetails':project_details}
+    if current_guide:
+        return {'answer':window_answer(context),'source':'local-window-guide','model':None,'modelNotice':model_notice,'evidence':[]}
     if help_evidence and not context.get('attachments'):
         return {'answer':help_answer(help_evidence),'source':'local-br-help','model':None,'modelNotice':model_notice,'evidence':[],'helpEvidence':help_evidence}
     features=context.get('applicationFeatures',{})

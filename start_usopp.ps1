@@ -1,6 +1,7 @@
 param([switch]$NoBrowser, [switch]$CheckOnly, [switch]$Lan, [int]$Port=0)
 $ErrorActionPreference='Stop'
 $AppRoot=$PSScriptRoot
+. (Join-Path $AppRoot 'model_process.ps1')
 Set-Location -LiteralPath $AppRoot
 $LogDir=Join-Path $AppRoot 'logs'
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
@@ -54,6 +55,7 @@ if($Health){
         if(-not $LanListener){throw 'The running server is not in LAN mode. Run Stop_uSOPp.bat, then Start_uSOPp_LAN.bat.'}
     }
 }else{
+    Stop-OwnedChopperModel -ApplicationRoot $AppRoot -OrphanOnly
     $Listener=New-Object System.Net.Sockets.TcpListener([System.Net.IPAddress]::Loopback,$Port)
     try{$Listener.Start()}catch{throw "Port $Port is already occupied. Use -Port 8201 or close the existing server."}finally{$Listener.Stop()}
     $Stamp=Get-Date -Format 'yyyyMMdd_HHmmss'

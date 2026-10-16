@@ -1,0 +1,1502 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "qms-lapformer-qms-lapformer-shift-live",
+  "name": "QMS / LapFormer / LIVE",
+  "service": "QMS",
+  "machine": "LapFormer",
+  "view": "LIVE",
+  "mode": "live",
+  "columns": 3,
+  "source": {
+    "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "qms_LAPFORMER_shift_live",
+    "sha256": "d34cc8a91dcd7e37149418197014f34536d862a2c51c0740efdbc6f790adad0d"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Lap Weight (g/m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "tdEngineKey": "target_weight",
+      "mongoKey": "target_weight",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Actual Lab Weight (g/m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_weight",
+        "lap_weight"
+      ],
+      "unit": "",
+      "tdEngineKey": "lap_weight",
+      "mongoKey": "lap_weight",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "B/w Lap CV",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "b/w_lap_cv",
+        "b_w_lap_cv"
+      ],
+      "unit": "",
+      "tdEngineKey": "b/w_lap_cv",
+      "mongoKey": "b_w_lap_cv",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Lap weight Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_weight_stops",
+        "lap_weight_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "lap_weight_stops",
+      "mongoKey": "lap_weight_stops",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Number Of Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "number_of_doff",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "tdEngineKey": "number_of_doff",
+      "mongoKey": "no_of_doffs",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Avg. Doff Lap Weight (g/m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "formula",
+      "formula": "(grams_per_metre in doff1 + grams_per_metre in doff2 ... )/ No Of Doffs",
+      "keys": [
+        "Formula",
+        "avg_lap_weight"
+      ],
+      "unit": "",
+      "tdEngineKey": "Formula",
+      "mongoKey": "avg_lap_weight",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift Date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Target Weight",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_LAPFORMER_minutes_time_series",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "mongoKey": "target_weight",
+      "tdEngineKey": "target_weight",
+      "aliases": [
+        "Target Weight",
+        "Lap Weight (g/m)"
+      ],
+      "sourceAliases": [
+        "Target Weight",
+        "Lap Weight (g/m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Lap Weight",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_LAPFORMER_minutes_time_series",
+      "keys": [
+        "lap_weight",
+        "lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "lap_weight",
+      "tdEngineKey": "lap_weight",
+      "aliases": [
+        "Lap Weight",
+        "Actual Lab Weight (g/m)"
+      ],
+      "sourceAliases": [
+        "Lap Weight",
+        "Actual Lab Weight (g/m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Max Lap Weight",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_LAPFORMER_minutes_time_series",
+      "keys": [
+        "lap_weight",
+        "max_lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "max_lap_weight",
+      "tdEngineKey": "lap_weight",
+      "aliases": [
+        "Max Lap Weight",
+        "Actual Lab Weight (g/m)"
+      ],
+      "sourceAliases": [
+        "Max Lap Weight",
+        "Actual Lab Weight (g/m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Min Lap Weight",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_LAPFORMER_minutes_time_series",
+      "keys": [
+        "lap_weight",
+        "min_lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "min_lap_weight",
+      "tdEngineKey": "lap_weight",
+      "aliases": [
+        "Min Lap Weight",
+        "Actual Lab Weight (g/m)"
+      ],
+      "sourceAliases": [
+        "Min Lap Weight",
+        "Actual Lab Weight (g/m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name",
+        "Lot name"
+      ],
+      "sourceAliases": [
+        "Lot Name",
+        "Lot name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Between Lap CV",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_LAPFORMER_minutes_time_series",
+      "keys": [
+        "b_w_lap_cv",
+        "b_w_lap_cv"
+      ],
+      "unit": "",
+      "mongoKey": "b_w_lap_cv",
+      "tdEngineKey": "b_w_lap_cv",
+      "aliases": [
+        "Between Lap CV",
+        "B/w Lap CV"
+      ],
+      "sourceAliases": [
+        "Between Lap CV",
+        "B/w Lap CV"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Max Between Lap CV",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_LAPFORMER_minutes_time_series",
+      "keys": [
+        "b_w_lap_cv",
+        "max_b_w_lap_cv"
+      ],
+      "unit": "",
+      "mongoKey": "max_b_w_lap_cv",
+      "tdEngineKey": "b_w_lap_cv",
+      "aliases": [
+        "Max Between Lap CV",
+        "B/w Lap CV"
+      ],
+      "sourceAliases": [
+        "Max Between Lap CV",
+        "B/w Lap CV"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Min Between Lap CV",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_LAPFORMER_minutes_time_series",
+      "keys": [
+        "b_w_lap_cv",
+        "min_b_w_lap_cv"
+      ],
+      "unit": "",
+      "mongoKey": "min_b_w_lap_cv",
+      "tdEngineKey": "b_w_lap_cv",
+      "aliases": [
+        "Min Between Lap CV",
+        "B/w Lap CV"
+      ],
+      "sourceAliases": [
+        "Min Between Lap CV",
+        "B/w Lap CV"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Lap Weight Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_weight_stops",
+        "lap_weight_stops"
+      ],
+      "unit": "",
+      "mongoKey": "lap_weight_stops",
+      "tdEngineKey": "lap_weight_stops",
+      "aliases": [
+        "Lap Weight Stops",
+        "Lap weight Stops"
+      ],
+      "sourceAliases": [
+        "Lap Weight Stops",
+        "Lap weight Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Number of Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "number_of_doff",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_doffs",
+      "tdEngineKey": "number_of_doff",
+      "aliases": [
+        "Number of Doffs",
+        "Number Of Doffs"
+      ],
+      "sourceAliases": [
+        "Number of Doffs",
+        "Number Of Doffs"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Avg. Doff Lap Weight (g/m)",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "pms_LAPFORMER_doff",
+      "keys": [
+        "grams_per_metre",
+        "avg_lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "avg_lap_weight",
+      "tdEngineKey": "grams_per_metre",
+      "aliases": [
+        "Avg. Doff Lap Weight (g/m)"
+      ],
+      "sourceAliases": [
+        "Avg. Doff Lap Weight (g/m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Avg. Doff Lap Weight (g/m) Minimum",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "pms_LAPFORMER_doff",
+      "keys": [
+        "grams_per_metre",
+        "min_avg_lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "min_avg_lap_weight",
+      "tdEngineKey": "grams_per_metre",
+      "aliases": [
+        "Avg. Doff Lap Weight (g/m) Minimum"
+      ],
+      "sourceAliases": [
+        "Avg. Doff Lap Weight (g/m) Minimum"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Avg. Doff Lap Weight (g/m) Maximum",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "pms_LAPFORMER_doff",
+      "keys": [
+        "grams_per_metre",
+        "max_avg_lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "max_avg_lap_weight",
+      "tdEngineKey": "grams_per_metre",
+      "aliases": [
+        "Avg. Doff Lap Weight (g/m) Maximum"
+      ],
+      "sourceAliases": [
+        "Avg. Doff Lap Weight (g/m) Maximum"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Lap Weight (g/m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "mongoKey": "target_weight",
+      "tdEngineKey": "target_weight",
+      "aliases": [
+        "Lap Weight (g/m)"
+      ],
+      "sourceAliases": [
+        "Lap Weight (g/m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 29
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-30",
+      "name": "Actual Lab Weight (g/m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_weight",
+        "lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "lap_weight",
+      "tdEngineKey": "lap_weight",
+      "aliases": [
+        "Actual Lab Weight (g/m)"
+      ],
+      "sourceAliases": [
+        "Actual Lab Weight (g/m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 30
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-31",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot name"
+      ],
+      "sourceAliases": [
+        "Lot name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 31
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-32",
+      "name": "B/w Lap CV",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "b/w_lap_cv",
+        "b_w_lap_cv"
+      ],
+      "unit": "",
+      "mongoKey": "b_w_lap_cv",
+      "tdEngineKey": "b/w_lap_cv",
+      "aliases": [
+        "B/w Lap CV"
+      ],
+      "sourceAliases": [
+        "B/w Lap CV"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 32
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-33",
+      "name": "Avg. Doff Lap Weight (g/m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        500
+      ],
+      "kind": "formula",
+      "formula": "(grams_per_metre in doff1 + grams_per_metre in doff2 ... )/ No Of Doffs",
+      "keys": [
+        "Formula",
+        "avg_lap_weight"
+      ],
+      "unit": "",
+      "mongoKey": "avg_lap_weight",
+      "tdEngineKey": "Formula",
+      "aliases": [
+        "Avg. Doff Lap Weight (g/m)"
+      ],
+      "sourceAliases": [
+        "Avg. Doff Lap Weight (g/m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/LAPFORMER.json",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "row": 33
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 23,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 24,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 21,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "B/w Lap CV",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "B/w Lap CV trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "LIVE readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-22",
+        "row-25",
+        "row-26",
+        "row-27"
+      ]
+    }
+  ]
+}

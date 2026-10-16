@@ -7,10 +7,10 @@ export const FEATURES:Record<EngineeringFeature,{name:string;purpose:string;step
     'Open MetaWorks to generate metadata, review both worksheets and export the workbook. Rerun checks after a source or mapping change.'
   ],recommendation:'Start with the earliest incorrect packet offset. Check the source write size and nw_i increment, then compare the payload-relative offset, datatype and Sheet2 mappings.'},
   plc:{name:'DataInspect',purpose:'Read live PLC packets and verify their decoded values against metadata.',steps:[
-    'Open PLC Settings. Choose the machine type and Simulator or Real PLC.',
+    'Open Manage targets. Choose the machine/department and Real PLC, Automation Studio simulation or Data simulator.',
     'For a real target, enter the controller IP, its TCP server port, Machine ID, byte order and timeout. Use GC 10 Test, then Save & Apply.',
     'Load the machine metadata, select a Group Code or Run All, and inspect values, offsets and packet findings.',
-    'Use Live polling for repeated reads and Generate Full Report for evidence. Confirm the active target before Manual Frame or RTC writes.'
+    'Use My dashboards for personal live/report layouts and formulas. Enable server collection and optional storage per target; it starts disabled and retains at most 30 days. Confirm the active target before Manual Frame or RTC writes.'
   ],recommendation:'If GC 10 fails, resolve the connection or frame error before checking other groups. If it passes, compare payload length, byte order, offsets and scale factors with the selected machine metadata.'},
   compare:{name:'MatchView',purpose:'Trace changes between two Automation Studio project revisions.',steps:[
     'Choose the baseline project and the revised project in the correct order.',

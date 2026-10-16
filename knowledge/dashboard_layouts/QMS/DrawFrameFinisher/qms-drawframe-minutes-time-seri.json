@@ -1,0 +1,418 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "qms-drawframefinisher-qms-drawframe-minutes-time-seri",
+  "name": "QMS / DrawFrameFinisher / Minute trend",
+  "service": "QMS",
+  "machine": "DrawFrameFinisher",
+  "view": "Minute trend",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "qms_DRAWFRAME_minutes_time_seri",
+    "sha256": "1991bbcabee6605d7aaa5559cc1b271074e6821d102041bb4d30d610d5bb341a"
+  },
+  "parameters": [
+    {
+      "id": "row-9",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 9
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-10",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-11",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 11
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Hank",
+        "Process Hank"
+      ],
+      "canonicalName": "Hank",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-16",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "U%",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "U",
+        "U%"
+      ],
+      "canonicalName": "U%",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-19",
+      "name": "CV%(1m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(1m)",
+        "CV 1m"
+      ],
+      "canonicalName": "CV%(1m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-20",
+      "name": "A%",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Spectogram",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "U%",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "",
+      "aliases": [
+        "U%",
+        "U"
+      ],
+      "sourceAliases": [
+        "U%"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "row": 1
+      },
+      "definitionPriority": 1,
+      "canonicalName": "U%",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    }
+  ],
+  "excluded": [
+    {
+      "row": 17,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 16,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Hank",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-15"
+      ]
+    },
+    {
+      "title": "U%",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "CV%(1m)",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-19"
+      ]
+    },
+    {
+      "title": "Hank trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-15"
+      ]
+    },
+    {
+      "title": "Minute trend readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-9",
+        "row-10",
+        "row-11",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21"
+      ]
+    }
+  ]
+}

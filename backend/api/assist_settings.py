@@ -3,6 +3,29 @@ from backend.core.assist_model import public_configuration,save_configuration,ch
 
 router=APIRouter(tags=['Chopper model'])
 
+@router.get('/api/assist/model/status')
+def public_status():
+    from backend.core.assist_model import configuration
+    from backend.core.local_model_runtime import status
+    from backend.core.cpu_model import model_path
+    from pathlib import Path
+    cfg=configuration();state=status()
+    safe={key:state.get(key) for key in ('running','ready','runtimeAvailable','modelName','contextLimit','ramMB','responseSeconds','fallbackReason','failed')}
+    return {**safe,'provider':cfg['provider'],'modelName':safe['modelName'] or Path(str(cfg.get('modelPath') or cfg.get('model') or '')).stem,
+            'contextLimit':safe['contextLimit'] or cfg.get('contextSize',4096),'installed':Path(str(cfg.get('modelPath') or '')).is_file(),
+            'primaryInstalled':model_path('primary').is_file(),'fallbackInstalled':model_path('fallback').is_file()}
+
+@router.post('/api/assist/model/cpu/select')
+def select_cpu(payload:dict,request:Request):
+    admin(request)
+    from backend.core.cpu_model import model_path
+    from backend.core.assist_model import configuration
+    target=model_path(payload.get('modelId','primary'))
+    if not target.is_file():raise HTTPException(409,'Install this model before selecting it.')
+    cfg=configuration()
+    result=save_configuration({**cfg,'provider':'embedded','modelPath':str(target),'contextSize':4096,'maxTokens':768,'autoStart':True})
+    return result
+
 @router.get('/api/assist/model/cpu')
 def cpu_status(request:Request):
     admin(request)
@@ -10,10 +33,10 @@ def cpu_status(request:Request):
     return status()
 
 @router.post('/api/assist/model/cpu/install')
-def install_cpu(request:Request):
+def install_cpu(request:Request,payload:dict=None):
     admin(request)
     from backend.core.cpu_model import begin_install
-    return begin_install()
+    return begin_install((payload or {}).get('modelId','primary'))
 
 def admin(request):
     if request.state.user.get('role')!='admin': raise HTTPException(403,'Only an administrator can view or change the shared Chopper model connection.')

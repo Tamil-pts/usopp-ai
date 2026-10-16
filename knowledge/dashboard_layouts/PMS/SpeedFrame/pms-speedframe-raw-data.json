@@ -1,0 +1,529 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-speedframe-pms-speedframe-raw-data",
+  "name": "PMS / SpeedFrame / Raw data",
+  "service": "PMS",
+  "machine": "SpeedFrame",
+  "view": "Raw data",
+  "mode": "live",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_SPEEDFRAME_raw_data",
+    "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+  },
+  "parameters": [
+    {
+      "id": "row-2",
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 2
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Overall Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "overall_machine_utilization"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "overall_machine_utilization",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_efficiency"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_efficiency",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Production Kg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_kg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_kg",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "GPSS",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "gpss"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "gpss",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "",
+      "aliases": [
+        "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained"
+      ],
+      "sourceAliases": [
+        "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 1
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-2",
+      "name": "Overall Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "overall_machine_utilization"
+      ],
+      "unit": "",
+      "mongoKey": "overall_machine_utilization",
+      "tdEngineKey": "",
+      "aliases": [
+        "Overall Machine Utilization"
+      ],
+      "sourceAliases": [
+        "Overall Machine Utilization"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 2
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-3",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_efficiency"
+      ],
+      "unit": "",
+      "mongoKey": "production_efficiency",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production Efficiency"
+      ],
+      "sourceAliases": [
+        "Production Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 3
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-4",
+      "name": "Production Kg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_kg"
+      ],
+      "unit": "",
+      "mongoKey": "production_kg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production Kg"
+      ],
+      "sourceAliases": [
+        "Production Kg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 4
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-5",
+      "name": "GPSS",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "gpss"
+      ],
+      "unit": "",
+      "mongoKey": "gpss",
+      "tdEngineKey": "",
+      "aliases": [
+        "GPSS"
+      ],
+      "sourceAliases": [
+        "GPSS"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "row": 5
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 4,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 5,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 6,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 7,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 8,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 9,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 10,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 11,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 12,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 13,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 14,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 15,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 16,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 17,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 18,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 19,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 20,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 21,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 22,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 23,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 24,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 25,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 26,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 27,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 28,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 29,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 30,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 31,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 32,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 2,
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Overall Machine Utilization",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-34"
+      ]
+    },
+    {
+      "title": "Production Efficiency",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-35"
+      ]
+    },
+    {
+      "title": "Production Kg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-36"
+      ]
+    },
+    {
+      "title": "Overall Machine Utilization trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-34"
+      ]
+    },
+    {
+      "title": "Raw data readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-34",
+        "row-35",
+        "row-36",
+        "row-37",
+        "row-38"
+      ]
+    }
+  ]
+}

@@ -5,6 +5,7 @@
 .unifiedComposer{position:relative}.chatAttachmentMenu{position:absolute;bottom:100%;left:10px;display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--panel,#fff);border:1px solid var(--line,#cbd5e1);box-shadow:0 8px 25px #0002;z-index:15;border-radius:10px}.chatAttachmentMenu .btn{text-align:left}
 
 /* Chopper inherits the same light/dark palette and accent as the workspace. */
+.chopperInterface .chopperWorkspace .chopperChat{display:flex;flex-direction:column;max-height:1100px}.chopperInterface .chopperChat>.chopperMessages{flex:1;min-height:320px;overflow:auto}.chopperInterface .chopperChat>.chopperComposer{flex-shrink:0}
 .workspaceApp .assistantMain { background:var(--bg); }
 .workspaceApp .assistantContent {
   min-height:100%;color:var(--text);padding:clamp(20px,3vw,44px);

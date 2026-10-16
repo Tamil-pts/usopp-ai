@@ -64,6 +64,22 @@ The Validation summary shows the selected project and reference workbook. Genera
 
 Select a single Automation Studio root containing `Logical` or an `.apj` file. If a parent folder contains multiple projects, select the intended project explicitly.
 
+### Generated names and Sheet2 mappings
+
+Generated parameter captions use spaces: `Idle_Time_Minute` becomes
+`Idle Time Minute`. JSON source details retain the original PLC comments and
+tags. Regenerate the workbook to apply the display format to existing exports.
+
+Choose **Blow Room** as the department when generating its metadata. Product
+code uses the approved Sheet2 mapping **0 = Blow room**, with the matching
+generated TAG_CODE and `IS_SHOWN_VALUE_DIFFERENT=YES`.
+
+Manage these labels in **KnowHub → Dropdown mappings**. **Allow missing PLC tag**
+permits a blank tag and an exact approved parameter-name match within a named
+department. It can be edited in the table or through Chopper configuration;
+CSV import/export includes `ALLOW_MISSING_PLC_TAG`. Sheet2 rows use actual
+generated metadata TAG_CODEs.
+
 ## Pages
 
 | Page | Functions |

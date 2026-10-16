@@ -1,0 +1,4753 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "cms-lapformer-cms-lapformer-hourwise",
+  "name": "CMS / LapFormer / Hourly",
+  "service": "CMS",
+  "machine": "LapFormer",
+  "view": "Hourly",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "cms_LAPFORMER_hourwise",
+    "sha256": "159134c61ae95e7bac32584ac22c20a17e14b6d7494aa05bd84d387bf83c1c92"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Target Weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "tdEngineKey": "target_weight",
+      "mongoKey": "target_weight",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lot_Name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "Lot_Name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "voltage_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg"
+      ],
+      "unit": "",
+      "tdEngineKey": "voltage_avg",
+      "mongoKey": "voltage_avg",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "current_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_avg",
+      "mongoKey": "current_avg",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "power_factor",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_factor",
+      "mongoKey": "power_factor",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "frequency",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency"
+      ],
+      "unit": "",
+      "tdEngineKey": "frequency",
+      "mongoKey": "frequency",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "total_active_power",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_active_power",
+      "mongoKey": "total_active_power",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "total_kva",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kva",
+      "mongoKey": "total_kva",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "total_kvar",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvar",
+      "mongoKey": "total_kvar",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "total_kwh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "total_kvah",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvah",
+      "mongoKey": "total_kvah",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "total_kvarh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvarh",
+      "mongoKey": "total_kvarh",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Main drive bearing Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_temperature",
+        "main_drive_bearing_Temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_drive_bearing_temperature",
+      "mongoKey": "main_drive_bearing_Temp",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Lap Roller Gearbox Vibration",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_roller_gearbox_vibration",
+        "lap_roller_gearbox_vibration"
+      ],
+      "unit": "",
+      "tdEngineKey": "lap_roller_gearbox_vibration",
+      "mongoKey": "lap_roller_gearbox_vibration",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Main Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "main_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_power",
+      "mongoKey": "main_motor_power",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Main Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "main_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_current",
+      "mongoKey": "main_motor_current",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Main Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "main_motor_torque"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_torque",
+      "mongoKey": "main_motor_torque",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Main Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "main_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "mongoKey": "main_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Main Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "main_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_speed",
+      "mongoKey": "main_motor_speed",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "voltage_avg_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "voltage_avg",
+      "mongoKey": "voltage_avg_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "current_avg_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_avg",
+      "mongoKey": "current_avg_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "power_factor_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_factor",
+      "mongoKey": "power_factor_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "frequency_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "frequency",
+      "mongoKey": "frequency_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "total_active_power_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power_miax"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_active_power",
+      "mongoKey": "total_active_power_miax",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-43",
+      "name": "total_kva_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kva",
+      "mongoKey": "total_kva_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-44",
+      "name": "total_kvar_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvar",
+      "mongoKey": "total_kvar_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 44
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-45",
+      "name": "total_kwh_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 45
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-46",
+      "name": "total_kvah_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvah",
+      "mongoKey": "total_kvah_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 46
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-47",
+      "name": "total_kvarh_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh__min"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvarh",
+      "mongoKey": "total_kvarh__min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 47
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-48",
+      "name": "Main drive bearing Temperature_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main drive bearing Temperature",
+        "main_drive_bearing_Tempmax_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main drive bearing Temperature",
+      "mongoKey": "main_drive_bearing_Tempmax_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 48
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-49",
+      "name": "Lap Roller Gearbox Vibration_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lap Roller Gearbox Vibration",
+        "lap_roller_gearbox_vibration_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "Lap Roller Gearbox Vibration",
+      "mongoKey": "lap_roller_gearbox_vibration_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-50",
+      "name": "Main Motor Power_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Power",
+        "main_motor_power_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Power",
+      "mongoKey": "main_motor_power_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-51",
+      "name": "Main Motor Current_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Current",
+        "main_motor_current_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Current",
+      "mongoKey": "main_motor_current_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 51
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-52",
+      "name": "Main Motor Torque_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Torque",
+        "main_motor_torque_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Torque",
+      "mongoKey": "main_motor_torque_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 52
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-53",
+      "name": "Main Motor Inverter Heat Sink Temperature_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Inverter Heat Sink Temperature",
+        "main_motor_ihs_temp_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Inverter Heat Sink Temperature",
+      "mongoKey": "main_motor_ihs_temp_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 53
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-54",
+      "name": "Main Motor Speed_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Speed",
+        "main_motor_speed_max"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Speed",
+      "mongoKey": "main_motor_speed_max",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 54
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-55",
+      "name": "voltage_avg_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "voltage_avg",
+      "mongoKey": "voltage_avg_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 55
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-56",
+      "name": "current_avg_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_avg",
+      "mongoKey": "current_avg_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 56
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-57",
+      "name": "power_factor_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_factor",
+      "mongoKey": "power_factor_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 57
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-58",
+      "name": "frequency_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "frequency",
+      "mongoKey": "frequency_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 58
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-59",
+      "name": "total_active_power_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_active_power",
+      "mongoKey": "total_active_power_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 59
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-60",
+      "name": "total_kva_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kva",
+      "mongoKey": "total_kva_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 60
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-61",
+      "name": "total_kvar_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvar",
+      "mongoKey": "total_kvar_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 61
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-62",
+      "name": "total_kwh_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 62
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-63",
+      "name": "total_kvah_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvah",
+      "mongoKey": "total_kvah_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 63
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-64",
+      "name": "total_kvarh_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvarh",
+      "mongoKey": "total_kvarh_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 64
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-65",
+      "name": "Main drive bearing Temperature_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main drive bearing Temperature",
+        "main_drive_bearing_Temp_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main drive bearing Temperature",
+      "mongoKey": "main_drive_bearing_Temp_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 65
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-66",
+      "name": "Lap Roller Gearbox Vibration_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lap Roller Gearbox Vibration",
+        "lap_roller_gearbox_vibration_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "Lap Roller Gearbox Vibration",
+      "mongoKey": "lap_roller_gearbox_vibration_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 66
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-67",
+      "name": "Main Motor Power_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Power",
+        "main_motor_power_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Power",
+      "mongoKey": "main_motor_power_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 67
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-68",
+      "name": "Main Motor Current_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Current",
+        "main_motor_current_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Current",
+      "mongoKey": "main_motor_current_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 68
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-69",
+      "name": "Main Motor Torque_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Torque",
+        "main_motor_torque_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Torque",
+      "mongoKey": "main_motor_torque_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 69
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-70",
+      "name": "Main Motor Inverter Heat Sink Temperature_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Inverter Heat Sink Temperature",
+        "main_motor_ihs_temp_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Inverter Heat Sink Temperature",
+      "mongoKey": "main_motor_ihs_temp_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 70
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-71",
+      "name": "Main Motor Speed_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Speed",
+        "main_motor_speed_min"
+      ],
+      "unit": "",
+      "tdEngineKey": "Main Motor Speed",
+      "mongoKey": "main_motor_speed_min",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 71
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-72",
+      "name": "delivery_speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "delivery_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_speed",
+      "mongoKey": "delivery_speed",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "row": 72
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_hour"
+      ],
+      "unit": "",
+      "mongoKey": "run_hour",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Run Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "run_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_minute",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "run_hour * 60 + run_minute",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Target Weight",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "target_weight",
+        "target_weight"
+      ],
+      "unit": "",
+      "mongoKey": "target_weight",
+      "tdEngineKey": "target_weight",
+      "aliases": [
+        "Target Weight"
+      ],
+      "sourceAliases": [
+        "Target Weight"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name"
+      ],
+      "sourceAliases": [
+        "Lot Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "voltage_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg"
+      ],
+      "unit": "",
+      "mongoKey": "voltage_avg",
+      "tdEngineKey": "voltage_avg",
+      "aliases": [
+        "voltage_avg"
+      ],
+      "sourceAliases": [
+        "voltage_avg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "current_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg"
+      ],
+      "unit": "",
+      "mongoKey": "current_avg",
+      "tdEngineKey": "current_avg",
+      "aliases": [
+        "current_avg"
+      ],
+      "sourceAliases": [
+        "current_avg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "power_factor",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor"
+      ],
+      "unit": "",
+      "mongoKey": "power_factor",
+      "tdEngineKey": "power_factor",
+      "aliases": [
+        "power_factor"
+      ],
+      "sourceAliases": [
+        "power_factor"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "frequency",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency"
+      ],
+      "unit": "",
+      "mongoKey": "frequency",
+      "tdEngineKey": "frequency",
+      "aliases": [
+        "frequency"
+      ],
+      "sourceAliases": [
+        "frequency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "total_active_power",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power"
+      ],
+      "unit": "",
+      "mongoKey": "total_active_power",
+      "tdEngineKey": "total_active_power",
+      "aliases": [
+        "total_active_power"
+      ],
+      "sourceAliases": [
+        "total_active_power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "total_kva",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva"
+      ],
+      "unit": "",
+      "mongoKey": "total_kva",
+      "tdEngineKey": "total_kva",
+      "aliases": [
+        "total_kva"
+      ],
+      "sourceAliases": [
+        "total_kva"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "total_kvar",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvar",
+      "tdEngineKey": "total_kvar",
+      "aliases": [
+        "total_kvar"
+      ],
+      "sourceAliases": [
+        "total_kvar"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "total_kwh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "total_kwh"
+      ],
+      "sourceAliases": [
+        "total_kwh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "total_kvah",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvah",
+      "tdEngineKey": "total_kvah",
+      "aliases": [
+        "total_kvah"
+      ],
+      "sourceAliases": [
+        "total_kvah"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "total_kvarh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvarh",
+      "tdEngineKey": "total_kvarh",
+      "aliases": [
+        "total_kvarh"
+      ],
+      "sourceAliases": [
+        "total_kvarh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Main drive bearing Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_temperature",
+        "main_drive_bearing_Temp"
+      ],
+      "unit": "",
+      "mongoKey": "main_drive_bearing_Temp",
+      "tdEngineKey": "main_drive_bearing_temperature",
+      "aliases": [
+        "Main drive bearing Temperature"
+      ],
+      "sourceAliases": [
+        "Main drive bearing Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Main drive bearing Temperature CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_temperature",
+        "mdbt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mdbt_cms",
+      "tdEngineKey": "main_drive_bearing_temperature",
+      "aliases": [
+        "Main drive bearing Temperature CMS",
+        "Main drive bearing Temperature",
+        "Main drive bearing Temperature_max",
+        "Main drive bearing Temperature_min"
+      ],
+      "sourceAliases": [
+        "Main drive bearing Temperature CMS",
+        "Main drive bearing Temperature",
+        "Main drive bearing Temperature_max",
+        "Main drive bearing Temperature_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Main drive bearing Temperature Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MDBT_CMS",
+        "main_drive_bearing_Temp_target"
+      ],
+      "unit": "",
+      "mongoKey": "main_drive_bearing_Temp_target",
+      "tdEngineKey": "MDBT_CMS",
+      "aliases": [
+        "Main drive bearing Temperature Target"
+      ],
+      "sourceAliases": [
+        "Main drive bearing Temperature Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Lap Roller Gearbox Vibration",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_roller_gearbox_vibration",
+        "lap_roller_gearbox_vibration"
+      ],
+      "unit": "",
+      "mongoKey": "lap_roller_gearbox_vibration",
+      "tdEngineKey": "lap_roller_gearbox_vibration",
+      "aliases": [
+        "Lap Roller Gearbox Vibration"
+      ],
+      "sourceAliases": [
+        "Lap Roller Gearbox Vibration"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Lap Roller Gearbox Vibration CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lap_roller_gearbox_vibration",
+        "lrgv_cms"
+      ],
+      "unit": "",
+      "mongoKey": "lrgv_cms",
+      "tdEngineKey": "lap_roller_gearbox_vibration",
+      "aliases": [
+        "Lap Roller Gearbox Vibration CMS",
+        "Lap Roller Gearbox Vibration",
+        "Lap Roller Gearbox Vibration_max",
+        "Lap Roller Gearbox Vibration_min"
+      ],
+      "sourceAliases": [
+        "Lap Roller Gearbox Vibration CMS",
+        "Lap Roller Gearbox Vibration",
+        "Lap Roller Gearbox Vibration_max",
+        "Lap Roller Gearbox Vibration_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Lap Roller Gearbox Vibration Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "LRGV_CMS",
+        "lrgv_target"
+      ],
+      "unit": "",
+      "mongoKey": "lrgv_target",
+      "tdEngineKey": "LRGV_CMS",
+      "aliases": [
+        "Lap Roller Gearbox Vibration Target"
+      ],
+      "sourceAliases": [
+        "Lap Roller Gearbox Vibration Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Main Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "main_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_power",
+      "tdEngineKey": "main_motor_power",
+      "aliases": [
+        "Main Motor Power"
+      ],
+      "sourceAliases": [
+        "Main Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Main Motor Power CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "mmp_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmp_cms",
+      "tdEngineKey": "main_motor_power",
+      "aliases": [
+        "Main Motor Power CMS",
+        "Main Motor Power",
+        "Main Motor Power_max",
+        "Main Motor Power_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Power CMS",
+        "Main Motor Power",
+        "Main Motor Power_max",
+        "Main Motor Power_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "Main Motor Power Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMP_CMS",
+        "mmp_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmp_target",
+      "tdEngineKey": "MMP_CMS",
+      "aliases": [
+        "Main Motor Power Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Power Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Main Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "main_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_current",
+      "tdEngineKey": "main_motor_current",
+      "aliases": [
+        "Main Motor Current"
+      ],
+      "sourceAliases": [
+        "Main Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Main Motor Current CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "mmc_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmc_cms",
+      "tdEngineKey": "main_motor_current",
+      "aliases": [
+        "Main Motor Current CMS",
+        "Main Motor Current",
+        "Main Motor Current_max",
+        "Main Motor Current_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Current CMS",
+        "Main Motor Current",
+        "Main Motor Current_max",
+        "Main Motor Current_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Main Motor Current Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMC_CMS",
+        "mmc_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmc_target",
+      "tdEngineKey": "MMC_CMS",
+      "aliases": [
+        "Main Motor Current Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Current Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Main Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "main_motor_torque"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_torque",
+      "tdEngineKey": "main_motor_torque",
+      "aliases": [
+        "Main Motor Torque"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "Main Motor Torque CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "mmt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmt_cms",
+      "tdEngineKey": "main_motor_torque",
+      "aliases": [
+        "Main Motor Torque CMS",
+        "Main Motor Torque",
+        "Main Motor Torque_max",
+        "Main Motor Torque_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque CMS",
+        "Main Motor Torque",
+        "Main Motor Torque_max",
+        "Main Motor Torque_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Main Motor Torque Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMT_CMS",
+        "mmt_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmt_target",
+      "tdEngineKey": "MMT_CMS",
+      "aliases": [
+        "Main Motor Torque Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Main Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "main_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_ihs_temp",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "Main Motor Inverter Heat Sink Temperature CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "mmit_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmit_cms",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature CMS",
+        "Main Motor Inverter Heat Sink Temperature",
+        "Main Motor Inverter Heat Sink Temperature_max",
+        "Main Motor Inverter Heat Sink Temperature_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature CMS",
+        "Main Motor Inverter Heat Sink Temperature",
+        "Main Motor Inverter Heat Sink Temperature_max",
+        "Main Motor Inverter Heat Sink Temperature_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Main Motor Inverter Heat Sink Temperature Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMIT_CMS",
+        "mmit_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmit_target",
+      "tdEngineKey": "MMIT_CMS",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Main Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "main_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_speed",
+      "tdEngineKey": "main_motor_speed",
+      "aliases": [
+        "Main Motor Speed"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "Main Motor Speed CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "mms_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mms_cms",
+      "tdEngineKey": "main_motor_speed",
+      "aliases": [
+        "Main Motor Speed CMS",
+        "Main Motor Speed",
+        "Main Motor Speed_max",
+        "Main Motor Speed_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed CMS",
+        "Main Motor Speed",
+        "Main Motor Speed_max",
+        "Main Motor Speed_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Main Motor Speed Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMS_CMS",
+        "mms_target"
+      ],
+      "unit": "",
+      "mongoKey": "mms_target",
+      "tdEngineKey": "MMS_CMS",
+      "aliases": [
+        "Main Motor Speed Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "voltage_avg_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg_max"
+      ],
+      "unit": "",
+      "mongoKey": "voltage_avg_max",
+      "tdEngineKey": "voltage_avg",
+      "aliases": [
+        "voltage_avg_max"
+      ],
+      "sourceAliases": [
+        "voltage_avg_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "current_avg_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg_max"
+      ],
+      "unit": "",
+      "mongoKey": "current_avg_max",
+      "tdEngineKey": "current_avg",
+      "aliases": [
+        "current_avg_max"
+      ],
+      "sourceAliases": [
+        "current_avg_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 53
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-54",
+      "name": "power_factor_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor_max"
+      ],
+      "unit": "",
+      "mongoKey": "power_factor_max",
+      "tdEngineKey": "power_factor",
+      "aliases": [
+        "power_factor_max"
+      ],
+      "sourceAliases": [
+        "power_factor_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 54
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-55",
+      "name": "frequency_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency_max"
+      ],
+      "unit": "",
+      "mongoKey": "frequency_max",
+      "tdEngineKey": "frequency",
+      "aliases": [
+        "frequency_max"
+      ],
+      "sourceAliases": [
+        "frequency_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 55
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-56",
+      "name": "total_active_power_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power_miax"
+      ],
+      "unit": "",
+      "mongoKey": "total_active_power_miax",
+      "tdEngineKey": "total_active_power",
+      "aliases": [
+        "total_active_power_max"
+      ],
+      "sourceAliases": [
+        "total_active_power_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 56
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-57",
+      "name": "total_kva_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva_max"
+      ],
+      "unit": "",
+      "mongoKey": "total_kva_max",
+      "tdEngineKey": "total_kva",
+      "aliases": [
+        "total_kva_max"
+      ],
+      "sourceAliases": [
+        "total_kva_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 57
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-58",
+      "name": "total_kvar_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar_max"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvar_max",
+      "tdEngineKey": "total_kvar",
+      "aliases": [
+        "total_kvar_max"
+      ],
+      "sourceAliases": [
+        "total_kvar_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 58
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-59",
+      "name": "total_kwh_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh_max"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh_max",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "total_kwh_max"
+      ],
+      "sourceAliases": [
+        "total_kwh_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 59
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-60",
+      "name": "total_kvah_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah_max"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvah_max",
+      "tdEngineKey": "total_kvah",
+      "aliases": [
+        "total_kvah_max"
+      ],
+      "sourceAliases": [
+        "total_kvah_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 60
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-61",
+      "name": "total_kvarh_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh__min"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvarh__min",
+      "tdEngineKey": "total_kvarh",
+      "aliases": [
+        "total_kvarh_max"
+      ],
+      "sourceAliases": [
+        "total_kvarh_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 61
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-62",
+      "name": "Main drive bearing Temperature_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main drive bearing Temperature",
+        "main_drive_bearing_Tempmax_max"
+      ],
+      "unit": "",
+      "mongoKey": "main_drive_bearing_Tempmax_max",
+      "tdEngineKey": "Main drive bearing Temperature",
+      "aliases": [
+        "Main drive bearing Temperature_max"
+      ],
+      "sourceAliases": [
+        "Main drive bearing Temperature_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 62
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-63",
+      "name": "Lap Roller Gearbox Vibration_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lap Roller Gearbox Vibration",
+        "lap_roller_gearbox_vibration_max"
+      ],
+      "unit": "",
+      "mongoKey": "lap_roller_gearbox_vibration_max",
+      "tdEngineKey": "Lap Roller Gearbox Vibration",
+      "aliases": [
+        "Lap Roller Gearbox Vibration_max"
+      ],
+      "sourceAliases": [
+        "Lap Roller Gearbox Vibration_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 63
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-64",
+      "name": "Main Motor Power_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Power",
+        "main_motor_power_max"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_power_max",
+      "tdEngineKey": "Main Motor Power",
+      "aliases": [
+        "Main Motor Power_max"
+      ],
+      "sourceAliases": [
+        "Main Motor Power_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 64
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-65",
+      "name": "Main Motor Current_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Current",
+        "main_motor_current_max"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_current_max",
+      "tdEngineKey": "Main Motor Current",
+      "aliases": [
+        "Main Motor Current_max"
+      ],
+      "sourceAliases": [
+        "Main Motor Current_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 65
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-66",
+      "name": "Main Motor Torque_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Torque",
+        "main_motor_torque_max"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_torque_max",
+      "tdEngineKey": "Main Motor Torque",
+      "aliases": [
+        "Main Motor Torque_max"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 66
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-67",
+      "name": "Main Motor Inverter Heat Sink Temperature_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Inverter Heat Sink Temperature",
+        "main_motor_ihs_temp_max"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_ihs_temp_max",
+      "tdEngineKey": "Main Motor Inverter Heat Sink Temperature",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature_max"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 67
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-68",
+      "name": "Main Motor Speed_max",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Speed",
+        "main_motor_speed_max"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_speed_max",
+      "tdEngineKey": "Main Motor Speed",
+      "aliases": [
+        "Main Motor Speed_max"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed_max"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 68
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-69",
+      "name": "voltage_avg_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg_min"
+      ],
+      "unit": "",
+      "mongoKey": "voltage_avg_min",
+      "tdEngineKey": "voltage_avg",
+      "aliases": [
+        "voltage_avg_min"
+      ],
+      "sourceAliases": [
+        "voltage_avg_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 69
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-70",
+      "name": "current_avg_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg_min"
+      ],
+      "unit": "",
+      "mongoKey": "current_avg_min",
+      "tdEngineKey": "current_avg",
+      "aliases": [
+        "current_avg_min"
+      ],
+      "sourceAliases": [
+        "current_avg_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 70
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-71",
+      "name": "power_factor_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor_min"
+      ],
+      "unit": "",
+      "mongoKey": "power_factor_min",
+      "tdEngineKey": "power_factor",
+      "aliases": [
+        "power_factor_min"
+      ],
+      "sourceAliases": [
+        "power_factor_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 71
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-72",
+      "name": "frequency_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency_min"
+      ],
+      "unit": "",
+      "mongoKey": "frequency_min",
+      "tdEngineKey": "frequency",
+      "aliases": [
+        "frequency_min"
+      ],
+      "sourceAliases": [
+        "frequency_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 72
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-73",
+      "name": "total_active_power_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power_min"
+      ],
+      "unit": "",
+      "mongoKey": "total_active_power_min",
+      "tdEngineKey": "total_active_power",
+      "aliases": [
+        "total_active_power_min"
+      ],
+      "sourceAliases": [
+        "total_active_power_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 73
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-74",
+      "name": "total_kva_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva_min"
+      ],
+      "unit": "",
+      "mongoKey": "total_kva_min",
+      "tdEngineKey": "total_kva",
+      "aliases": [
+        "total_kva_min"
+      ],
+      "sourceAliases": [
+        "total_kva_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 74
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-75",
+      "name": "total_kvar_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar_min"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvar_min",
+      "tdEngineKey": "total_kvar",
+      "aliases": [
+        "total_kvar_min"
+      ],
+      "sourceAliases": [
+        "total_kvar_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 75
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-76",
+      "name": "total_kwh_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh_min"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh_min",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "total_kwh_min"
+      ],
+      "sourceAliases": [
+        "total_kwh_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 76
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-77",
+      "name": "total_kvah_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah_min"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvah_min",
+      "tdEngineKey": "total_kvah",
+      "aliases": [
+        "total_kvah_min"
+      ],
+      "sourceAliases": [
+        "total_kvah_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 77
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-78",
+      "name": "total_kvarh_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh_min"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvarh_min",
+      "tdEngineKey": "total_kvarh",
+      "aliases": [
+        "total_kvarh_min"
+      ],
+      "sourceAliases": [
+        "total_kvarh_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 78
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-79",
+      "name": "Main drive bearing Temperature_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main drive bearing Temperature",
+        "main_drive_bearing_Temp_min"
+      ],
+      "unit": "",
+      "mongoKey": "main_drive_bearing_Temp_min",
+      "tdEngineKey": "Main drive bearing Temperature",
+      "aliases": [
+        "Main drive bearing Temperature_min"
+      ],
+      "sourceAliases": [
+        "Main drive bearing Temperature_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 79
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-80",
+      "name": "Lap Roller Gearbox Vibration_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lap Roller Gearbox Vibration",
+        "lap_roller_gearbox_vibration_min"
+      ],
+      "unit": "",
+      "mongoKey": "lap_roller_gearbox_vibration_min",
+      "tdEngineKey": "Lap Roller Gearbox Vibration",
+      "aliases": [
+        "Lap Roller Gearbox Vibration_min"
+      ],
+      "sourceAliases": [
+        "Lap Roller Gearbox Vibration_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 80
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-81",
+      "name": "Main Motor Power_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Power",
+        "main_motor_power_min"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_power_min",
+      "tdEngineKey": "Main Motor Power",
+      "aliases": [
+        "Main Motor Power_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Power_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 81
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-82",
+      "name": "Main Motor Current_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Current",
+        "main_motor_current_min"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_current_min",
+      "tdEngineKey": "Main Motor Current",
+      "aliases": [
+        "Main Motor Current_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Current_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 82
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-83",
+      "name": "Main Motor Torque_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Torque",
+        "main_motor_torque_min"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_torque_min",
+      "tdEngineKey": "Main Motor Torque",
+      "aliases": [
+        "Main Motor Torque_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 83
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-84",
+      "name": "Main Motor Inverter Heat Sink Temperature_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Inverter Heat Sink Temperature",
+        "main_motor_ihs_temp_min"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_ihs_temp_min",
+      "tdEngineKey": "Main Motor Inverter Heat Sink Temperature",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 84
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-85",
+      "name": "Main Motor Speed_min",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Main Motor Speed",
+        "main_motor_speed_min"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_speed_min",
+      "tdEngineKey": "Main Motor Speed",
+      "aliases": [
+        "Main Motor Speed_min"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed_min"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 85
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-86",
+      "name": "Delivery Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "delivery_speed"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_speed",
+      "tdEngineKey": "delivery_speed",
+      "aliases": [
+        "Delivery Speed",
+        "delivery_speed"
+      ],
+      "sourceAliases": [
+        "Delivery Speed",
+        "delivery_speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/LAPFORMER.json",
+        "sheet": "cms_LAPFORMER_hours",
+        "row": 86
+      },
+      "definitionPriority": 2
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 20,
+      "name": "Lot Name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "voltage_avg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-21"
+      ]
+    },
+    {
+      "title": "current_avg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "power_factor",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-23"
+      ]
+    },
+    {
+      "title": "total_active_power",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-25"
+      ]
+    },
+    {
+      "title": "Main drive bearing Temperature",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-31"
+      ]
+    },
+    {
+      "title": "Main Motor Power",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-33"
+      ]
+    },
+    {
+      "title": "voltage_avg trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-21"
+      ]
+    },
+    {
+      "title": "Hourly readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-21",
+        "row-22",
+        "row-23"
+      ]
+    },
+    {
+      "title": "Hourly readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34",
+        "row-35"
+      ]
+    },
+    {
+      "title": "Hourly readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-40",
+        "row-41",
+        "row-42",
+        "row-43",
+        "row-44",
+        "row-45",
+        "row-46",
+        "row-47"
+      ]
+    },
+    {
+      "title": "Hourly readings 4",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-48",
+        "row-49",
+        "row-50",
+        "row-51",
+        "row-52",
+        "row-53",
+        "row-54",
+        "row-55",
+        "row-56",
+        "row-57",
+        "row-58",
+        "row-59"
+      ]
+    },
+    {
+      "title": "Hourly readings 5",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-60",
+        "row-61",
+        "row-62",
+        "row-63",
+        "row-64",
+        "row-65",
+        "row-66",
+        "row-67",
+        "row-68",
+        "row-69",
+        "row-70",
+        "row-71"
+      ]
+    },
+    {
+      "title": "Hourly readings 6",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-72"
+      ]
+    }
+  ]
+}

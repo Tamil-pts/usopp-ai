@@ -69,8 +69,14 @@ export interface PLCConfig {
   port: number;
   machineId: number;
   isSimulated: boolean;
+  targetMode?: 'plc'|'automation-studio'|'data-simulator';
   endianness: 'little' | 'big';
   timeoutMs: number;
+  liveEnabled?: boolean;
+  storeLiveData?: boolean;
+  liveIntervalSeconds?: number;
+  retentionDays?: number;
+  liveGroupCodes?: number[];
   interRequestDelayMs?: number;
   closeMode?: 'graceful' | 'wait_for_plc';
   status?: 'idle' | 'connected' | 'error' | 'testing';

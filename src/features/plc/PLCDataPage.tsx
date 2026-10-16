@@ -1,8 +1,23 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
-export function PLCDataPage({theme, setTheme,historyId='',onLive}:{theme:'light'|'dark';setTheme:(theme:'light'|'dark')=>void;historyId?:string;onLive:()=>void}){
+export function PLCDataPage({theme, setTheme,historyId='',onLive,onContext}:{theme:'light'|'dark';setTheme:(theme:'light'|'dark')=>void;historyId?:string;onLive:()=>void;onContext?:(value:Record<string,unknown>)=>void}){
   const [ready, setReady] = useState(false);
   const [error, setError] = useState('');
+  const frame=useRef<HTMLIFrameElement>(null);
+  useEffect(()=>{
+    onContext?.({});
+    const receive=(event:MessageEvent)=>{
+      if(event.origin!==window.location.origin||event.source!==frame.current?.contentWindow||event.data?.type!=='usopp:datainspect-context')return;
+      const supplied=event.data.context;if(!supplied||typeof supplied!=='object')return;
+      const safe:Record<string,unknown>={};
+      for(const key of ['view','dialog','target','machine','groupCode','captureTime','captureSource','captureStatus','dataCheckStatus','findingSummary','parameterCount']){
+        if(typeof supplied[key]==='string')safe[key]=supplied[key].slice(0,300);
+        else if(typeof supplied[key]==='number'&&Number.isFinite(supplied[key]))safe[key]=supplied[key];
+      }
+      onContext?.(safe);
+    };
+    window.addEventListener('message',receive);return()=>window.removeEventListener('message',receive);
+  },[onContext,historyId]);
   useEffect(() => {
     const controller = new AbortController();
     // Request the actual feature document. Older running backends otherwise
@@ -31,6 +46,6 @@ export function PLCDataPage({theme, setTheme,historyId='',onLive}:{theme:'light'
 
       </div>
     </div>
-    <iframe key={historyId} title="Nami PLC Data Verification V1.5" src={`/nami/index.html${historyId?'?historyId='+encodeURIComponent(historyId):''}`} style={{width:'100%',height:'100%',minHeight:0,flex:1,border:0,display:'block',background:theme==='light'?'#ffffff':'#020617'}}/>
+    <iframe ref={frame} key={historyId} title="Nami PLC Data Verification V1.5" src={`/nami/index.html${historyId?'?historyId='+encodeURIComponent(historyId):''}`} style={{width:'100%',height:'100%',minHeight:0,flex:1,border:0,display:'block',background:theme==='light'?'#ffffff':'#020617'}}/>
   </div>;
 }

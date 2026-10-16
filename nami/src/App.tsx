@@ -11,6 +11,9 @@ import { PLCManagerModal } from './components/PLCManagerModal';
 import { MetadataUploaderModal } from './components/MetadataUploaderModal';
 import { GroupSelectorBar } from './components/GroupSelectorBar';
 import { GroupDataView } from './components/GroupDataView';
+import {CalculationDashboard} from './components/CalculationDashboard';
+import {migrateTarget,targetMode} from './utils/targetMode';
+import {useLiveCollection} from './hooks/useLiveCollection';
 import { RawPacketInspector } from './components/RawPacketInspector';
 import { SimulatorControlsModal } from './components/SimulatorControlsModal';
 import { TestReportModal } from './components/TestReportModal';
@@ -24,12 +27,13 @@ import { FileText, Cpu, AlertCircle, RefreshCw, CheckCircle2, AlertTriangle, X, 
 const INITIAL_PLCS: PLCConfig[] = [
   {
     id: 'plc-carding-sim',
-    name: 'Carding (xcarding) Simulator',
+    name: 'Carding Data simulator',
     machineType: 'Carding',
     ip: '127.0.0.1',
-    port: 21010,
+    port: 21210,
     machineId: 0,
-    isSimulated: true,
+    isSimulated: false,
+    targetMode: 'data-simulator',
     endianness: 'little',
     timeoutMs: 2500,
     status: 'idle',
@@ -74,6 +78,7 @@ const INITIAL_PLCS: PLCConfig[] = [
 
 export default function App({initialHistory}: {initialHistory?: SavedInspectRun}) {
   const archived = Boolean(initialHistory);
+  const [workspaceView,setWorkspaceView]=useState<'packets'|'dashboard'>('packets');
   const [latestTestId, setLatestTestId] = useState(initialHistory?.testId || '');
   const [historyWarning, setHistoryWarning] = useState('');
   const [metadata, setMetadata] = useState<MetadataItem[]>(initialHistory?.metadata || []);
@@ -90,7 +95,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
       // A browser reload must never imply that a PLC is still physically connected.
       // Connection status is re-established only after a successful communication test/read.
       return parsed.map((p: PLCConfig) => ({
-        ...p,
+        ...migrateTarget(p),
         status: 'idle',
         tcpConnected: false,
         programVersion: undefined,
@@ -112,9 +117,15 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
   const [selectedGroupCode, setSelectedGroupCode] = useState<number>(initialHistory ? Number(Object.keys(responsesForHistory(initialHistory))[0] ?? initialHistory.metadata?.[0]?.groupCode ?? 20) : 20);
   const [groupResponses, setGroupResponses] = useState<Record<number, GroupResponseData>>(() => initialHistory ? responsesForHistory(initialHistory) : {});
   const responseContext = useMemo(() => ({}), [selectedPLC.id, selectedPLC.ip, selectedPLC.port,
-    selectedPLC.machineId, selectedPLC.isSimulated, selectedPLC.endianness, metadata]);
+    selectedPLC.machineId, selectedPLC.isSimulated, selectedPLC.targetMode, selectedPLC.endianness, metadata]);
   const responseContextRef = useRef(responseContext);
   responseContextRef.current = responseContext;
+  const live = useLiveCollection(plcs, selectedPLC, metadata, !archived, items => {
+    setPLCs(previous => previous.map(target => {
+      const saved=items.find(item=>item.id===target.id);
+      return saved?{...target,...migrateTarget(saved)}:{...target,liveEnabled:false,storeLiveData:false};
+    }));
+  },groupResponses,responseContext);
 
   const [isPollingSingle, setIsPollingSingle] = useState<boolean>(false);
   const [isPollingAll, setIsPollingAll] = useState<boolean>(false);
@@ -145,6 +156,20 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
     dataModelSnapshot.machine === currentMachineType &&
     dataModelSnapshot.check.model.id === dataModelSelection.modelId ? dataModelSnapshot.check : null;
   const liveReferenceData = useDataModelReferences(currentMachineType, dataModelSelection.modelId);
+  useEffect(()=>{
+    if(window.parent===window)return;
+    const capture=groupResponses[selectedGroupCode];
+    window.parent.postMessage({type:'usopp:datainspect-context',context:{
+      view:archived?'Stored report':workspaceView==='dashboard'?'My dashboards':'Packet checks',
+      dialog:isPLCModalOpen?'PLC connections and targets':isManualDataOpen?'Manual PLC received data':isDataModelsOpen?'Data model references':isRTCModalOpen?'RTC settings':isSimulatorModalOpen?'Data simulator':isReportModalOpen?'Report export':isUploadModalOpen?'Metadata upload':'',
+      target:selectedPLC.name,machine:currentMachineType,groupCode:selectedGroupCode,
+      parameterCount:metadata.filter(item=>item.groupCode===selectedGroupCode).length,
+      captureTime:capture?.timestamp||'',captureSource:archived?'Stored report':capture?.source==='manual'?'Manual capture':capture?targetMode(selectedPLC):'No capture',
+      captureStatus:capture?(capture.source==='manual'?'Manual frame decoded':capture.success?'Read succeeded':'Read failed'):'Not read yet',
+      dataCheckStatus:capture?groupOutcome(capture):'Not checked',
+      findingSummary:capture?.parsedValues.filter(value=>value.qualityIssue||!value.isInRange).slice(0,5).map(value=>`${value.parameter}: ${value.formattedValue} — ${value.qualityIssue||'Review decoded value'}`).join('; ')||'',
+    }},window.location.origin);
+  },[archived,workspaceView,selectedPLC,currentMachineType,selectedGroupCode,metadata,groupResponses,isPLCModalOpen,isManualDataOpen,isDataModelsOpen,isRTCModalOpen,isSimulatorModalOpen,isReportModalOpen,isUploadModalOpen]);
   const referenceData = initialHistory?.dataModelReferenceSource
     ? {...initialHistory.dataModelReferenceSource, snapshot: true} : liveReferenceData;
   const persistDecoded = async (identity: {historyId?: string; testId?: string}, groups: Record<number, GroupResponseData>) => {
@@ -728,7 +753,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
           setPLCModalTab('manual-frame');
           setIsPLCModalOpen(true);
         }}
-        onOpenSimulatorModal={() => setIsSimulatorModalOpen(true)}
+        onOpenSimulatorModal={() => {if(!archived)setIsSimulatorModalOpen(true)}}
         onOpenMetadataModal={() => setIsUploadModalOpen(true)}
         onConfigureConnection={(values) => setPLCs((prev) => prev.map((p) => p.id === selectedPLC.id
           ? {...p, ...values, status: 'idle', tcpConnected: false, error: undefined,
@@ -803,8 +828,15 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
         </div>
       )}
 
+      <div className="di-workspace-tabs" role="tablist" aria-label="DataInspect workspace">
+        <button role="tab" aria-selected={workspaceView==='packets'} onClick={()=>setWorkspaceView('packets')}>Packet checks</button>
+        <button role="tab" aria-selected={workspaceView==='dashboard'} onClick={()=>setWorkspaceView('dashboard')}>My dashboard</button>
+      </div>
+      <div className="di-workspace-panel" hidden={workspaceView!=='dashboard'}>
+        <CalculationDashboard metadata={metadataLoading?[]:metadata} responses={groupResponses} plc={selectedPLC} plcs={plcs} contexts={live.contexts} overview={live.overview} liveError={live.error} onManage={()=>{setPLCModalTab('targets');setIsPLCModalOpen(true)}} active={workspaceView==='dashboard'} archived={archived}/>
+      </div>
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-h-0">
+      <main className="di-workspace-panel flex-1 flex flex-col min-h-0" hidden={workspaceView!=='packets'}>
         {/* Group Selector Horizontal Bar */}
         <GroupSelectorBar
           groups={distinctGroups}
@@ -827,9 +859,9 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
               <Cpu className="w-3.5 h-3.5 text-emerald-400" />
               <span>Target: {selectedPLC.name}</span>
             </span>
-            {selectedPLC.isSimulated && (
+            {targetMode(selectedPLC)==='data-simulator' && (
               <span className="px-1.5 py-0.5 rounded text-[10px] bg-purple-950 text-purple-300 border border-purple-800">
-                Built-in B&R Simulation
+                Synthetic data ? Virtual PLC TCP
               </span>
             )}
           </div>
@@ -904,6 +936,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
         onClose={() => setIsDataModelsOpen(false)}
       />}
       {isManualDataOpen && <ManualDataModal metadata={metadata} plc={selectedPLC} initialGroup={selectedGroupCode} onClose={()=>setIsManualDataOpen(false)} onDecoded={result=>{
+        const captureContext=responseContext;
         setSelectedGroupCode(result.groupCode);
         setGroupResponses(prev=>({...prev,[result.groupCode]:result}));
         setConnectionNotice(null);
@@ -913,6 +946,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
             if (!response.ok) throw new Error('Manual decoded data could not be saved in history.');
             const identity = await response.json();
             const row = {...result, testId: identity.testId, historyId: identity.historyId};
+            if(responseContextRef.current!==captureContext)return;
             setGroupResponses(prev => ({...prev, [result.groupCode]: row}));
             await persistDecoded(identity, {[result.groupCode]: row});
           } catch (error) {setHistoryWarning(error instanceof Error ? error.message : 'Manual history could not be saved.');}
@@ -922,7 +956,8 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
         isOpen={isPLCModalOpen}
         onClose={() => setIsPLCModalOpen(false)}
         plcs={plcs}
-        onSavePLCs={setPLCs}
+        liveStatus={Object.fromEntries((live.overview?.targets||[]).map(item=>[item.plc.id,item]))}
+        onSavePLCs={async items=>{await live.save(items);setPLCs(items)}}
         selectedPLCId={selectedPLCId}
         onSelectPLCId={setSelectedPLCId}
         initialTab={plcModalTab}
@@ -975,6 +1010,10 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
       />
 
       <SimulatorControlsModal
+        plc={selectedPLC}
+        metadata={metadata}
+        metadataSource={metadataSource}
+        onOpenMetadata={()=>{setIsSimulatorModalOpen(false);setIsUploadModalOpen(true)}}
         isOpen={isSimulatorModalOpen}
         onClose={() => setIsSimulatorModalOpen(false)}
         onSimulatorUpdated={() => {

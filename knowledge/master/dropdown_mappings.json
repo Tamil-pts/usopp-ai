@@ -104,6 +104,23 @@
           "SHOWNVAL": "MACHINE OFF"
         }
       ]
+    },
+    {
+      "plc_parameter": "Product code to identify the machine type",
+      "plc_tag": "Blow_room_product_code",
+      "metadata_parameter": "Product code",
+      "machine_department": "Blow Room",
+      "plc_type": "INT",
+      "metadata_type": "INT",
+      "allowed": true,
+      "allow_missing_plc_tag": true,
+      "reason": "Approved Blow Room product identification: PLC value 0 displays Blow room. If the PLC tag is missing, use the exact approved product-code parameter within Blow Room.",
+      "mapping": [
+        {
+          "PLCVAL": 0,
+          "SHOWNVAL": "Blow room"
+        }
+      ]
     }
   ],
   "entry_schema": {
@@ -123,7 +140,8 @@
         "PLCVAL": 1,
         "SHOWNVAL": "ON"
       }
-    ]
+    ],
+    "allow_missing_plc_tag": "Optional boolean; explicit parameter-name match when the PLC tag is missing, restricted to a named department."
   },
   "description": "Approved dropdown and shown-value mappings. IS_SHOWN_VALUE_DIFFERENT=YES in metadata activates Sheet2 TAG_CODE/PLCVAL/SHOWNVAL validation."
 }

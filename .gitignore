@@ -41,6 +41,7 @@ artifacts/
 
 knowledge/br_help/
 knowledge/projects/
+knowledge/dashboard_layouts/users/
 local_ai/training/
 chopper_reviewed_project_training.jsonl
 local_ai/models/

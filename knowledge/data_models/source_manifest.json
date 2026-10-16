@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "selection": "Own-service database JSON; other-service JSON collections; workbook fallback.",
+  "selection": "Database JSON plus all named workbook requirements; original definitions and conflicts retained.",
   "sources": [
     {
       "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
@@ -200,98 +200,98 @@
       "department": "CARDING",
       "file": "CMS/CARDING.json",
       "originalSource": "PMS/JSON Key V5/CARDING.json",
-      "parameters": 692
+      "parameters": 732
     },
     {
       "service": "CMS",
       "department": "COMBER",
       "file": "CMS/COMBER.json",
       "originalSource": "PMS/JSON Key V5/COMBER.json",
-      "parameters": 262
+      "parameters": 269
     },
     {
       "service": "CMS",
       "department": "DRAWFRAMEBREAKER",
       "file": "CMS/DRAWFRAMEBREAKER.json",
       "originalSource": "PMS/JSON Key V5/DRAWFRAMEBREAKER.json",
-      "parameters": 455
+      "parameters": 463
     },
     {
       "service": "CMS",
       "department": "DRAWFRAMEFINISHER",
       "file": "CMS/DRAWFRAMEFINISHER.json",
       "originalSource": "PMS/JSON Key V5/DRAWFRAMEFINISHER.json",
-      "parameters": 455
+      "parameters": 463
     },
     {
       "service": "CMS",
       "department": "LAPFORMER",
       "file": "CMS/LAPFORMER.json",
       "originalSource": "PMS/JSON Key V5/LAPFORMER.json",
-      "parameters": 241
+      "parameters": 256
     },
     {
       "service": "CMS",
       "department": "RINGFRAME",
       "file": "CMS/RINGFRAME.json",
       "originalSource": "PMS/JSON Key V5/RINGFRAME.json",
-      "parameters": 987
+      "parameters": 1076
     },
     {
       "service": "CMS",
       "department": "SPEEDFRAME",
       "file": "CMS/SPEEDFRAME.json",
       "originalSource": "PMS/JSON Key V5/SPEEDFRAME.json",
-      "parameters": 597
+      "parameters": 603
     },
     {
       "service": "PMS",
       "department": "BLOWROOM",
       "file": "PMS/BLOWROOM.json",
       "originalSource": "PMS/JSON Key V5/BLOWROOM.json",
-      "parameters": 58
+      "parameters": 121
     },
     {
       "service": "PMS",
       "department": "CARDING",
       "file": "PMS/CARDING.json",
       "originalSource": "PMS/JSON Key V5/CARDING.json",
-      "parameters": 282
+      "parameters": 299
     },
     {
       "service": "PMS",
       "department": "COMBER",
       "file": "PMS/COMBER.json",
       "originalSource": "PMS/JSON Key V5/COMBER.json",
-      "parameters": 278
+      "parameters": 307
     },
     {
       "service": "PMS",
       "department": "DRAWFRAMEBREAKER",
       "file": "PMS/DRAWFRAMEBREAKER.json",
       "originalSource": "PMS/JSON Key V5/DRAWFRAMEBREAKER.json",
-      "parameters": 318
+      "parameters": 365
     },
     {
       "service": "PMS",
       "department": "DRAWFRAMEFINISHER",
       "file": "PMS/DRAWFRAMEFINISHER.json",
       "originalSource": "PMS/JSON Key V5/DRAWFRAMEFINISHER.json",
-      "parameters": 338
+      "parameters": 385
     },
     {
       "service": "PMS",
       "department": "LAPFORMER",
       "file": "PMS/LAPFORMER.json",
       "originalSource": "PMS/JSON Key V5/LAPFORMER.json",
-      "parameters": 254
+      "parameters": 284
     },
     {
       "service": "PMS",
       "department": "RINGFRAME",
       "file": "PMS/RINGFRAME.json",
       "originalSource": "PMS/JSON Key V5/RINGFRAME.json",
-      "parameters": 380
+      "parameters": 416
     },
     {
       "service": "PMS",
@@ -305,56 +305,56 @@
       "department": "SPEEDFRAME",
       "file": "PMS/SPEEDFRAME.json",
       "originalSource": "PMS/JSON Key V5/SPEEDFRAME.json",
-      "parameters": 409
+      "parameters": 443
     },
     {
       "service": "QMS",
       "department": "CARDING",
       "file": "QMS/CARDING.json",
       "originalSource": "QMS/JSON Keys V1/CARDING.json",
-      "parameters": 90
+      "parameters": 127
     },
     {
       "service": "QMS",
       "department": "COMBER",
       "file": "QMS/COMBER.json",
       "originalSource": "PMS/JSON Key V5/COMBER.json",
-      "parameters": 152
+      "parameters": 171
     },
     {
       "service": "QMS",
       "department": "DRAWFRAMEBREAKER",
       "file": "QMS/DRAWFRAMEBREAKER.json",
       "originalSource": "PMS/JSON Key V5/DRAWFRAMEBREAKER.json",
-      "parameters": 170
+      "parameters": 182
     },
     {
       "service": "QMS",
       "department": "DRAWFRAMEFINISHER",
       "file": "QMS/DRAWFRAMEFINISHER.json",
       "originalSource": "QMS/JSON Keys V1/DRAWFRAMEFINISHER.json",
-      "parameters": 86
+      "parameters": 132
     },
     {
       "service": "QMS",
       "department": "LAPFORMER",
       "file": "QMS/LAPFORMER.json",
       "originalSource": "PMS/JSON Key V5/LAPFORMER.json",
-      "parameters": 98
+      "parameters": 107
     },
     {
       "service": "QMS",
       "department": "RINGFRAME",
       "file": "QMS/RINGFRAME.json",
       "originalSource": "PMS/JSON Key V5/RINGFRAME.json",
-      "parameters": 116
+      "parameters": 118
     },
     {
       "service": "QMS",
       "department": "SPEEDFRAME",
       "file": "QMS/SPEEDFRAME.json",
       "originalSource": "QMS/JSON Keys V1/SPEEDFRAME.json",
-      "parameters": 104
+      "parameters": 116
     }
   ]
 }

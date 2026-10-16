@@ -4,7 +4,7 @@ from fastapi import APIRouter,File,Form,HTTPException,UploadFile
 from fastapi.responses import FileResponse
 from pydantic import BaseModel,Field
 from starlette.concurrency import run_in_threadpool
-from backend.core.runtime import RESOURCE_ROOT,WORK
+from backend.core.runtime import RESOURCE_ROOT,WORK,KNOWLEDGE
 from backend.core.run_history import current_user,write_json
 from backend.core.data_models import parse_model,validate_model,machine_key,database_json
 
@@ -25,6 +25,9 @@ def user_folder():
 def models():
     bundled=RESOURCE_ROOT/'knowledge/data_models/catalog.json'
     items=json.loads(bundled.read_text(encoding='utf-8')).get('models',[]) if bundled.is_file() else []
+    from backend.core.data_model_rules import load_rules,apply_model
+    config,revision=load_rules(KNOWLEDGE/'master/data_model_rules.json')
+    items=[{**apply_model(model,config),'mappingRulesRevision':revision} for model in items]
     saved=user_folder()
     for path in saved.glob('*.json'):
         try:

@@ -1,0 +1,379 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-lapformer-pms-lapformer-stoppages",
+  "name": "PMS / LapFormer / Stoppages",
+  "service": "PMS",
+  "machine": "LapFormer",
+  "view": "Stoppages",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_LAPFORMER_stoppages",
+    "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+  },
+  "parameters": [
+    {
+      "id": "row-2",
+      "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 2
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Overall Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "overall_machine_utilization"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "overall_machine_utilization",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_efficiency"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_efficiency",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Production Kg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_kg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "production_kg",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Ukg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ukg"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ukg",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "GPSS",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "gpss"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "gpss",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "",
+      "aliases": [
+        "Requirements has been provided this collection will be handled by Data Bridge Team"
+      ],
+      "sourceAliases": [
+        "Requirements has been provided this collection will be handled by Data Bridge Team"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 1
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-2",
+      "name": "Overall Machine Utilization",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "overall_machine_utilization"
+      ],
+      "unit": "",
+      "mongoKey": "overall_machine_utilization",
+      "tdEngineKey": "",
+      "aliases": [
+        "Overall Machine Utilization"
+      ],
+      "sourceAliases": [
+        "Overall Machine Utilization"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 2
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-3",
+      "name": "Production Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_efficiency"
+      ],
+      "unit": "",
+      "mongoKey": "production_efficiency",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production Efficiency"
+      ],
+      "sourceAliases": [
+        "Production Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 3
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-4",
+      "name": "Production Kg",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "production_kg"
+      ],
+      "unit": "",
+      "mongoKey": "production_kg",
+      "tdEngineKey": "",
+      "aliases": [
+        "Production Kg"
+      ],
+      "sourceAliases": [
+        "Production Kg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 4
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-5",
+      "name": "GPSS",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "gpss"
+      ],
+      "unit": "",
+      "mongoKey": "gpss",
+      "tdEngineKey": "",
+      "aliases": [
+        "GPSS"
+      ],
+      "sourceAliases": [
+        "GPSS"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/LAPFORMER.json",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "row": 5
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 2,
+      "name": "Requirements has been provided this collection will be handled by Data Bridge Team",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Overall Machine Utilization",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-37"
+      ]
+    },
+    {
+      "title": "Production Efficiency",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-38"
+      ]
+    },
+    {
+      "title": "Production Kg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-39"
+      ]
+    },
+    {
+      "title": "Overall Machine Utilization trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-37"
+      ]
+    },
+    {
+      "title": "Stoppages readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-40",
+        "row-41"
+      ]
+    }
+  ]
+}

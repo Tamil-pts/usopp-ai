@@ -3,6 +3,11 @@ from collections import defaultdict
 import re
 
 
+def metadata_display_name(value):
+    """Use readable spaces in output captions; retain PLC identities separately."""
+    return re.sub(r'\s+', ' ', str(value or '').replace('_', ' ')).strip()
+
+
 def resolve_name_collisions(candidates):
     """Reject aliases that merge different source captions in one group.
 

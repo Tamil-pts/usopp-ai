@@ -1,0 +1,3544 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "cms-comber-cms-comber-minutes-time-seri",
+  "name": "CMS / Comber / Minute trend",
+  "service": "CMS",
+  "machine": "Comber",
+  "view": "Minute trend",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "cms_COMBER_minutes_time_seri",
+    "sha256": "eabaafda264713d7a414ebcec56f0dcdd12709c1423b108897073c4ea231946b"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "required_hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "lot_name",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "delivery_speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "delivery_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_speed",
+      "mongoKey": "delivery_speed",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "voltage_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg"
+      ],
+      "unit": "",
+      "tdEngineKey": "voltage_avg",
+      "mongoKey": "voltage_avg",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Average Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_avg",
+      "mongoKey": "current_avg",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Power Factor",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_factor",
+      "mongoKey": "power_factor",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Frequency",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency"
+      ],
+      "unit": "",
+      "tdEngineKey": "frequency",
+      "mongoKey": "frequency",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Total Active Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_active_power",
+      "mongoKey": "total_active_power",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Total Kva",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kva",
+      "mongoKey": "total_kva",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "total Kvar",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvar",
+      "mongoKey": "total_kvar",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "totak kwh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "total kvah",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvah",
+      "mongoKey": "total_kvah",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "total kvarh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvarh",
+      "mongoKey": "total_kvarh",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Main Drive bearing Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_temperature",
+        "main_drive_bearing_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_drive_bearing_temperature",
+      "mongoKey": "main_drive_bearing_temp",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Main Drive bearing Vibration",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_vibration",
+        "main_drive_bearing_vibration"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_drive_bearing_vibration",
+      "mongoKey": "main_drive_bearing_vibration",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Main Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "main_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_power",
+      "mongoKey": "main_motor_power",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Main Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "main_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_current",
+      "mongoKey": "main_motor_current",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Main Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "main_motor_torque"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_torque",
+      "mongoKey": "main_motor_torque",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Main Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "main_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "mongoKey": "main_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Main Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "main_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_speed",
+      "mongoKey": "main_motor_speed",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Doffer Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffer_motor_power",
+        "doffer_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffer_motor_power",
+      "mongoKey": "doffer_motor_power",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Doffer Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffer_motor_current",
+        "doffer_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffer_motor_current",
+      "mongoKey": "doffer_motor_current",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "Doffer Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffer_motor_torque",
+        "doffer_motor_torque"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffer_motor_torque",
+      "mongoKey": "doffer_motor_torque",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "Doffer Motor Inverter Heat Sink Temp",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffer_motor_inverter_heat_sink_temp",
+        "doffer_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffer_motor_inverter_heat_sink_temp",
+      "mongoKey": "doffer_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-43",
+      "name": "DofferMotor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffermotor_speed",
+        "doffer_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffermotor_speed",
+      "mongoKey": "doffer_motor_speed",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-44",
+      "name": "Delivery Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_power",
+        "delivery_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_motor_power",
+      "mongoKey": "delivery_motor_power",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 44
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-45",
+      "name": "Delivery Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_current",
+        "delivery_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_motor_current",
+      "mongoKey": "delivery_motor_current",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 45
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-46",
+      "name": "Delivery Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_torque",
+        "delivery_motor_torque"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_motor_torque",
+      "mongoKey": "delivery_motor_torque",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 46
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-47",
+      "name": "Delivery Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_inverter_heat_sink_temperature",
+        "delivery_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_motor_inverter_heat_sink_temperature",
+      "mongoKey": "delivery_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 47
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-48",
+      "name": "Delivery Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_speed",
+        "delivery_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "delivery_motor_speed",
+      "mongoKey": "delivery_motor_speed",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 48
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-49",
+      "name": "Coiler Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_power",
+        "coiler_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_power",
+      "mongoKey": "coiler_motor_power",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-50",
+      "name": "Coiler Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_current",
+        "oiler_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_current",
+      "mongoKey": "oiler_motor_current",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-51",
+      "name": "Coiler Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_torque",
+        "colier_motor_torque"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_torque",
+      "mongoKey": "colier_motor_torque",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 51
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-52",
+      "name": "Coiler Motor Inverter Heat Sink Temp",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_inverter_heat_sink_temp",
+        "coiler_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_inverter_heat_sink_temp",
+      "mongoKey": "coiler_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 52
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-53",
+      "name": "Coiler Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_speed",
+        "coiler_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_speed",
+      "mongoKey": "coiler_motor_speed",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "row": 53
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "runtimehr"
+      ],
+      "unit": "",
+      "mongoKey": "runtimehr",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "runtimemins"
+      ],
+      "unit": "",
+      "mongoKey": "runtimemins",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "runtimehr * 60 + runtimemins",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "mongoKey": "hank_ne",
+      "tdEngineKey": "required_hank",
+      "aliases": [
+        "Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "lot_name",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "lot_name"
+      ],
+      "sourceAliases": [
+        "lot_name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "delivery_speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_speed",
+        "delivery_speed"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_speed",
+      "tdEngineKey": "delivery_speed",
+      "aliases": [
+        "delivery_speed"
+      ],
+      "sourceAliases": [
+        "delivery_speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "voltage_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg"
+      ],
+      "unit": "",
+      "mongoKey": "voltage_avg",
+      "tdEngineKey": "voltage_avg",
+      "aliases": [
+        "voltage_avg"
+      ],
+      "sourceAliases": [
+        "voltage_avg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Average Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg"
+      ],
+      "unit": "",
+      "mongoKey": "current_avg",
+      "tdEngineKey": "current_avg",
+      "aliases": [
+        "Average Current"
+      ],
+      "sourceAliases": [
+        "Average Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Power Factor",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor"
+      ],
+      "unit": "",
+      "mongoKey": "power_factor",
+      "tdEngineKey": "power_factor",
+      "aliases": [
+        "Power Factor"
+      ],
+      "sourceAliases": [
+        "Power Factor"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Frequency",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency"
+      ],
+      "unit": "",
+      "mongoKey": "frequency",
+      "tdEngineKey": "frequency",
+      "aliases": [
+        "Frequency"
+      ],
+      "sourceAliases": [
+        "Frequency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Total Active Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power"
+      ],
+      "unit": "",
+      "mongoKey": "total_active_power",
+      "tdEngineKey": "total_active_power",
+      "aliases": [
+        "Total Active Power"
+      ],
+      "sourceAliases": [
+        "Total Active Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Total Kva",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva"
+      ],
+      "unit": "",
+      "mongoKey": "total_kva",
+      "tdEngineKey": "total_kva",
+      "aliases": [
+        "Total Kva"
+      ],
+      "sourceAliases": [
+        "Total Kva"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "total Kvar",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvar",
+      "tdEngineKey": "total_kvar",
+      "aliases": [
+        "total Kvar"
+      ],
+      "sourceAliases": [
+        "total Kvar"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "totak kwh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "totak kwh"
+      ],
+      "sourceAliases": [
+        "totak kwh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "total kvah",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvah",
+      "tdEngineKey": "total_kvah",
+      "aliases": [
+        "total kvah"
+      ],
+      "sourceAliases": [
+        "total kvah"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "total kvarh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvarh",
+      "tdEngineKey": "total_kvarh",
+      "aliases": [
+        "total kvarh"
+      ],
+      "sourceAliases": [
+        "total kvarh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Main Drive bearing Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_temperature",
+        "main_drive_bearing_temp"
+      ],
+      "unit": "",
+      "mongoKey": "main_drive_bearing_temp",
+      "tdEngineKey": "main_drive_bearing_temperature",
+      "aliases": [
+        "Main Drive bearing Temperature"
+      ],
+      "sourceAliases": [
+        "Main Drive bearing Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Main Drive bearing Temperature CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_temperature",
+        "mdbt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mdbt_cms",
+      "tdEngineKey": "main_drive_bearing_temperature",
+      "aliases": [
+        "Main Drive bearing Temperature CMS",
+        "Main Drive bearing Temperature"
+      ],
+      "sourceAliases": [
+        "Main Drive bearing Temperature CMS",
+        "Main Drive bearing Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Main Drive bearing Temperature Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MDBT_CMS",
+        "mdbt_target"
+      ],
+      "unit": "",
+      "mongoKey": "mdbt_target",
+      "tdEngineKey": "MDBT_CMS",
+      "aliases": [
+        "Main Drive bearing Temperature Target"
+      ],
+      "sourceAliases": [
+        "Main Drive bearing Temperature Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Main Drive bearing Vibration",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_vibration",
+        "main_drive_bearing_vibration"
+      ],
+      "unit": "",
+      "mongoKey": "main_drive_bearing_vibration",
+      "tdEngineKey": "main_drive_bearing_vibration",
+      "aliases": [
+        "Main Drive bearing Vibration"
+      ],
+      "sourceAliases": [
+        "Main Drive bearing Vibration"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Main Drive bearing Vibration CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_drive_bearing_vibration",
+        "mdbv_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mdbv_cms",
+      "tdEngineKey": "main_drive_bearing_vibration",
+      "aliases": [
+        "Main Drive bearing Vibration CMS",
+        "Main Drive bearing Vibration"
+      ],
+      "sourceAliases": [
+        "Main Drive bearing Vibration CMS",
+        "Main Drive bearing Vibration"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Main Drive bearing Vibration Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MDBV_CMS",
+        "mdbv_target"
+      ],
+      "unit": "",
+      "mongoKey": "mdbv_target",
+      "tdEngineKey": "MDBV_CMS",
+      "aliases": [
+        "Main Drive bearing Vibration Target"
+      ],
+      "sourceAliases": [
+        "Main Drive bearing Vibration Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Main Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "main_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_power",
+      "tdEngineKey": "main_motor_power",
+      "aliases": [
+        "Main Motor Power"
+      ],
+      "sourceAliases": [
+        "Main Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "Main Motor Power CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "mmp_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmp_cms",
+      "tdEngineKey": "main_motor_power",
+      "aliases": [
+        "Main Motor Power CMS",
+        "Main Motor Power"
+      ],
+      "sourceAliases": [
+        "Main Motor Power CMS",
+        "Main Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Main Motor Power Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMP_CMS",
+        "mmp_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmp_target",
+      "tdEngineKey": "MMP_CMS",
+      "aliases": [
+        "Main Motor Power Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Power Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Main Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "main_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_current",
+      "tdEngineKey": "main_motor_current",
+      "aliases": [
+        "Main Motor Current"
+      ],
+      "sourceAliases": [
+        "Main Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Main Motor Current CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "mmc_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmc_cms",
+      "tdEngineKey": "main_motor_current",
+      "aliases": [
+        "Main Motor Current CMS",
+        "Main Motor Current"
+      ],
+      "sourceAliases": [
+        "Main Motor Current CMS",
+        "Main Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Main Motor Current Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMC_CMS",
+        "mmc_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmc_target",
+      "tdEngineKey": "MMC_CMS",
+      "aliases": [
+        "Main Motor Current Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Current Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "Main Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "main_motor_torque"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_torque",
+      "tdEngineKey": "main_motor_torque",
+      "aliases": [
+        "Main Motor Torque"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Main Motor Torque CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "mmt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmt_cms",
+      "tdEngineKey": "main_motor_torque",
+      "aliases": [
+        "Main Motor Torque CMS",
+        "Main Motor Torque"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque CMS",
+        "Main Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Main Motor Torque Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMT_CMS",
+        "mmt_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmt_target",
+      "tdEngineKey": "MMT_CMS",
+      "aliases": [
+        "Main Motor Torque Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "Main Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "main_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_ihs_temp",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Main Motor Inverter Heat Sink Temperature CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "mmit_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmit_cms",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature CMS",
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature CMS",
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Main Motor Inverter Heat Sink Temperature Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMIT_CMS",
+        "mmit_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmit_target",
+      "tdEngineKey": "MMIT_CMS",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "Main Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "main_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_speed",
+      "tdEngineKey": "main_motor_speed",
+      "aliases": [
+        "Main Motor Speed"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Main Motor Speed CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "mms_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mms_cms",
+      "tdEngineKey": "main_motor_speed",
+      "aliases": [
+        "Main Motor Speed CMS",
+        "Main Motor Speed"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed CMS",
+        "Main Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Main Motor Speed Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMS_CMS",
+        "mms_target"
+      ],
+      "unit": "",
+      "mongoKey": "mms_target",
+      "tdEngineKey": "MMS_CMS",
+      "aliases": [
+        "Main Motor Speed Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "Doffer Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffer_motor_power",
+        "doffer_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "doffer_motor_power",
+      "tdEngineKey": "doffer_motor_power",
+      "aliases": [
+        "Doffer Motor Power"
+      ],
+      "sourceAliases": [
+        "Doffer Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 53
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-54",
+      "name": "Doffer Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffer_motor_current",
+        "doffer_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "doffer_motor_current",
+      "tdEngineKey": "doffer_motor_current",
+      "aliases": [
+        "Doffer Motor Current"
+      ],
+      "sourceAliases": [
+        "Doffer Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 54
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-55",
+      "name": "Doffer Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffer_motor_torque",
+        "doffer_motor_torque"
+      ],
+      "unit": "",
+      "mongoKey": "doffer_motor_torque",
+      "tdEngineKey": "doffer_motor_torque",
+      "aliases": [
+        "Doffer Motor Torque"
+      ],
+      "sourceAliases": [
+        "Doffer Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 55
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-56",
+      "name": "Doffer Motor Inverter Heat Sink Temp",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffer_motor_inverter_heat_sink_temp",
+        "doffer_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "doffer_motor_ihs_temp",
+      "tdEngineKey": "doffer_motor_inverter_heat_sink_temp",
+      "aliases": [
+        "Doffer Motor Inverter Heat Sink Temp"
+      ],
+      "sourceAliases": [
+        "Doffer Motor Inverter Heat Sink Temp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 56
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-57",
+      "name": "DofferMotor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffermotor_speed",
+        "doffer_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "doffer_motor_speed",
+      "tdEngineKey": "doffermotor_speed",
+      "aliases": [
+        "DofferMotor Speed"
+      ],
+      "sourceAliases": [
+        "DofferMotor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 57
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-58",
+      "name": "Delivery Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_power",
+        "delivery_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_motor_power",
+      "tdEngineKey": "delivery_motor_power",
+      "aliases": [
+        "Delivery Motor Power"
+      ],
+      "sourceAliases": [
+        "Delivery Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 58
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-59",
+      "name": "Delivery Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_current",
+        "delivery_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_motor_current",
+      "tdEngineKey": "delivery_motor_current",
+      "aliases": [
+        "Delivery Motor Current"
+      ],
+      "sourceAliases": [
+        "Delivery Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 59
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-60",
+      "name": "Delivery Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_torque",
+        "delivery_motor_torque"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_motor_torque",
+      "tdEngineKey": "delivery_motor_torque",
+      "aliases": [
+        "Delivery Motor Torque"
+      ],
+      "sourceAliases": [
+        "Delivery Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 60
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-61",
+      "name": "Delivery Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_inverter_heat_sink_temperature",
+        "delivery_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_motor_ihs_temp",
+      "tdEngineKey": "delivery_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Delivery Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Delivery Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 61
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-62",
+      "name": "Delivery Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "delivery_motor_speed",
+        "delivery_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "delivery_motor_speed",
+      "tdEngineKey": "delivery_motor_speed",
+      "aliases": [
+        "Delivery Motor Speed"
+      ],
+      "sourceAliases": [
+        "Delivery Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 62
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-63",
+      "name": "Coiler Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_power",
+        "coiler_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_motor_power",
+      "tdEngineKey": "coiler_motor_power",
+      "aliases": [
+        "Coiler Motor Power"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 63
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-64",
+      "name": "Coiler Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_current",
+        "oiler_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "oiler_motor_current",
+      "tdEngineKey": "coiler_motor_current",
+      "aliases": [
+        "Coiler Motor Current"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 64
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-65",
+      "name": "Coiler Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_torque",
+        "colier_motor_torque"
+      ],
+      "unit": "",
+      "mongoKey": "colier_motor_torque",
+      "tdEngineKey": "coiler_motor_torque",
+      "aliases": [
+        "Coiler Motor Torque"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 65
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-66",
+      "name": "Coiler Motor Inverter Heat Sink Temp",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_inverter_heat_sink_temp",
+        "coiler_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_motor_ihs_temp",
+      "tdEngineKey": "coiler_motor_inverter_heat_sink_temp",
+      "aliases": [
+        "Coiler Motor Inverter Heat Sink Temp"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Inverter Heat Sink Temp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 66
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-67",
+      "name": "Coiler Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_speed",
+        "coiler_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_motor_speed",
+      "tdEngineKey": "coiler_motor_speed",
+      "aliases": [
+        "Coiler Motor Speed"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/COMBER.json",
+        "sheet": "cms_COMBER_minutes_time_series",
+        "row": 67
+      },
+      "definitionPriority": 2
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "voltage_avg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "Average Current",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-23"
+      ]
+    },
+    {
+      "title": "Power Factor",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-24"
+      ]
+    },
+    {
+      "title": "Total Active Power",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-26"
+      ]
+    },
+    {
+      "title": "Main Drive bearing Temperature",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-32"
+      ]
+    },
+    {
+      "title": "Main Motor Power",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-34"
+      ]
+    },
+    {
+      "title": "voltage_avg trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "Minute trend readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    },
+    {
+      "title": "Minute trend readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-23",
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34"
+      ]
+    },
+    {
+      "title": "Minute trend readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-35",
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-40",
+        "row-41",
+        "row-42",
+        "row-43",
+        "row-44",
+        "row-45",
+        "row-46"
+      ]
+    },
+    {
+      "title": "Minute trend readings 4",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-47",
+        "row-48",
+        "row-49",
+        "row-50",
+        "row-51",
+        "row-52",
+        "row-53"
+      ]
+    }
+  ]
+}

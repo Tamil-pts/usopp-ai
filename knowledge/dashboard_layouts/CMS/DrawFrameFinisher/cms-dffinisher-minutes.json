@@ -1,0 +1,4567 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "cms-drawframefinisher-cms-dffinisher-minutes",
+  "name": "CMS / DrawFrameFinisher / Minute trend",
+  "service": "CMS",
+  "machine": "DrawFrameFinisher",
+  "view": "Minute trend",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "cms_DFFinisher_minutes",
+    "sha256": "0c9d451366e5ac448fb69e90a44af6140f79dfc79d0b884faa39459e612b0714"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lot_Name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "Lot_Name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "voltage_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg"
+      ],
+      "unit": "",
+      "tdEngineKey": "voltage_avg",
+      "mongoKey": "voltage_avg",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "current_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg"
+      ],
+      "unit": "",
+      "tdEngineKey": "current_avg",
+      "mongoKey": "current_avg",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "power_factor",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor"
+      ],
+      "unit": "",
+      "tdEngineKey": "power_factor",
+      "mongoKey": "power_factor",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "frequency",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency"
+      ],
+      "unit": "",
+      "tdEngineKey": "frequency",
+      "mongoKey": "frequency",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Total Active Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_active_power",
+      "mongoKey": "total_active_power",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Total Kva",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kva",
+      "mongoKey": "total_kva",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "total Kvar",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvar",
+      "mongoKey": "total_kvar",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "totak kwh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kwh",
+      "mongoKey": "total_kwh",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "total kvah",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvah",
+      "mongoKey": "total_kvah",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "total kvarh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_kvarh",
+      "mongoKey": "total_kvarh",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Drafting Zone Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting_zone_temperature",
+        "drafting_zone_Temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "drafting_zone_temperature",
+      "mongoKey": "drafting_zone_Temp",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Drafting Zone Vibration",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting_zone_vibration",
+        "drafting_zone_vibraton"
+      ],
+      "unit": "",
+      "tdEngineKey": "drafting_zone_vibration",
+      "mongoKey": "drafting_zone_vibraton",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Main Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "main_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_power",
+      "mongoKey": "main_motor_power",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Main Motor Power",
+        "Main Motor Output Power"
+      ],
+      "canonicalName": "Main Motor Power",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-34",
+      "name": "Main Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "main_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_current",
+      "mongoKey": "main_motor_current",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Main Motor Current",
+        "Main Motor Output Current"
+      ],
+      "canonicalName": "Main Motor Current",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-35",
+      "name": "Main Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "main_motor_torque"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_torque",
+      "mongoKey": "main_motor_torque",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Main Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "main_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "mongoKey": "main_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Main Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "main_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_motor_speed",
+      "mongoKey": "main_motor_speed",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Coiler Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_power",
+        "coiler_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_power",
+      "mongoKey": "coiler_motor_power",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Coiler Motor Power",
+        "Coiler Output Power"
+      ],
+      "canonicalName": "Coiler Motor Power",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-39",
+      "name": "Coiler Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_current",
+        "coiler_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_current",
+      "mongoKey": "coiler_motor_current",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Coiler Motor Current",
+        "Coiler Output Current"
+      ],
+      "canonicalName": "Coiler Motor Current",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-40",
+      "name": "Coiler Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_torque",
+        "coiler_motor_rotque"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_torque",
+      "mongoKey": "coiler_motor_rotque",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "Coiler Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_inverter_heat_sink_temperature",
+        "coiler_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_inverter_heat_sink_temperature",
+      "mongoKey": "coiler_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "Coiler Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_speed",
+        "coiler_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_motor_speed",
+      "mongoKey": "coiler_motor_speed",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-43",
+      "name": "Suction Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_power",
+        "suction_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "suction_motor_power",
+      "mongoKey": "suction_motor_power",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-44",
+      "name": "Suction Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_current",
+        "suction_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "suction_motor_current",
+      "mongoKey": "suction_motor_current",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 44
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-45",
+      "name": "Suction Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_torque",
+        "suction_motor_torque"
+      ],
+      "unit": "",
+      "tdEngineKey": "suction_motor_torque",
+      "mongoKey": "suction_motor_torque",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 45
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-46",
+      "name": "Suction Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_inverter_heat_sink_temperature",
+        "suction_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "suction_motor_inverter_heat_sink_temperature",
+      "mongoKey": "suction_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 46
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-47",
+      "name": "Suction Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_speed",
+        "suction_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "suction_motor_speed",
+      "mongoKey": "suction_motor_speed",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 47
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-48",
+      "name": "Draft Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_power",
+        "draft_motor_power"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_motor_power",
+      "mongoKey": "draft_motor_power",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 48
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Draft Motor Power",
+        "Drafting Motor Output Power"
+      ],
+      "canonicalName": "Draft Motor Power",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-49",
+      "name": "Draft Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_current",
+        "draft_motor_current"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_motor_current",
+      "mongoKey": "draft_motor_current",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Draft Motor Current",
+        "Drafting Motor Output Current"
+      ],
+      "canonicalName": "Draft Motor Current",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-50",
+      "name": "Draft Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_torque",
+        "draft_motor_torque"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_motor_torque",
+      "mongoKey": "draft_motor_torque",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Draft Motor Torque",
+        "Drafting Motor Motor Torque"
+      ],
+      "canonicalName": "Draft Motor Torque",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-51",
+      "name": "Draft Motor Inverter Heat Sink Temp",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_inverter_heat_sink_temp",
+        "draft_motor_ihs_temp"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_motor_inverter_heat_sink_temp",
+      "mongoKey": "draft_motor_ihs_temp",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 51
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-52",
+      "name": "Head Stock Draft Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "head_stock_draft_motor_speed",
+        "draft_motor_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "head_stock_draft_motor_speed",
+      "mongoKey": "draft_motor_speed",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 52
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift Date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_hour"
+      ],
+      "unit": "",
+      "mongoKey": "run_hour",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Run Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "run_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_minute",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minutes",
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "run_hour * 60 + run_minute",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "mongoKey": "hank_ne",
+      "tdEngineKey": "hank",
+      "aliases": [
+        "Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Lot_Name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "Lot_Name",
+      "aliases": [
+        "Lot Name"
+      ],
+      "sourceAliases": [
+        "Lot Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "voltage_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "voltage_avg",
+        "voltage_avg"
+      ],
+      "unit": "",
+      "mongoKey": "voltage_avg",
+      "tdEngineKey": "voltage_avg",
+      "aliases": [
+        "voltage_avg"
+      ],
+      "sourceAliases": [
+        "voltage_avg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "current_avg",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "current_avg",
+        "current_avg"
+      ],
+      "unit": "",
+      "mongoKey": "current_avg",
+      "tdEngineKey": "current_avg",
+      "aliases": [
+        "current_avg"
+      ],
+      "sourceAliases": [
+        "current_avg"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "power_factor",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "power_factor",
+        "power_factor"
+      ],
+      "unit": "",
+      "mongoKey": "power_factor",
+      "tdEngineKey": "power_factor",
+      "aliases": [
+        "power_factor"
+      ],
+      "sourceAliases": [
+        "power_factor"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "frequency",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "frequency",
+        "frequency"
+      ],
+      "unit": "",
+      "mongoKey": "frequency",
+      "tdEngineKey": "frequency",
+      "aliases": [
+        "frequency"
+      ],
+      "sourceAliases": [
+        "frequency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Total Active Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_active_power",
+        "total_active_power"
+      ],
+      "unit": "",
+      "mongoKey": "total_active_power",
+      "tdEngineKey": "total_active_power",
+      "aliases": [
+        "Total Active Power"
+      ],
+      "sourceAliases": [
+        "Total Active Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Total Kva",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kva",
+        "total_kva"
+      ],
+      "unit": "",
+      "mongoKey": "total_kva",
+      "tdEngineKey": "total_kva",
+      "aliases": [
+        "Total Kva"
+      ],
+      "sourceAliases": [
+        "Total Kva"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "total Kvar",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvar",
+        "total_kvar"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvar",
+      "tdEngineKey": "total_kvar",
+      "aliases": [
+        "total Kvar"
+      ],
+      "sourceAliases": [
+        "total Kvar"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "totak kwh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kwh",
+        "total_kwh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kwh",
+      "tdEngineKey": "total_kwh",
+      "aliases": [
+        "totak kwh"
+      ],
+      "sourceAliases": [
+        "totak kwh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "total kvah",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvah",
+        "total_kvah"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvah",
+      "tdEngineKey": "total_kvah",
+      "aliases": [
+        "total kvah"
+      ],
+      "sourceAliases": [
+        "total kvah"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "total kvarh",
+      "dataType": "REAL",
+      "groupCodes": [
+        410
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_kvarh",
+        "total_kvarh"
+      ],
+      "unit": "",
+      "mongoKey": "total_kvarh",
+      "tdEngineKey": "total_kvarh",
+      "aliases": [
+        "total kvarh"
+      ],
+      "sourceAliases": [
+        "total kvarh"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Drafting Zone Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting_zone_temperature",
+        "drafting_zone_Temp"
+      ],
+      "unit": "",
+      "mongoKey": "drafting_zone_Temp",
+      "tdEngineKey": "drafting_zone_temperature",
+      "aliases": [
+        "Drafting Zone Temperature"
+      ],
+      "sourceAliases": [
+        "Drafting Zone Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Drafting Zone Temperature CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting_zone_temperature",
+        "dzt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "dzt_cms",
+      "tdEngineKey": "drafting_zone_temperature",
+      "aliases": [
+        "Drafting Zone Temperature CMS",
+        "Drafting Zone Temperature"
+      ],
+      "sourceAliases": [
+        "Drafting Zone Temperature CMS",
+        "Drafting Zone Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Drafting Zone Temperature Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "DZT_CMS",
+        "dzt_target"
+      ],
+      "unit": "",
+      "mongoKey": "dzt_target",
+      "tdEngineKey": "DZT_CMS",
+      "aliases": [
+        "Drafting Zone Temperature Target"
+      ],
+      "sourceAliases": [
+        "Drafting Zone Temperature Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Drafting Zone Vibration",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting_zone_vibration",
+        "drafting_zone_vibraton"
+      ],
+      "unit": "",
+      "mongoKey": "drafting_zone_vibraton",
+      "tdEngineKey": "drafting_zone_vibration",
+      "aliases": [
+        "Drafting Zone Vibration"
+      ],
+      "sourceAliases": [
+        "Drafting Zone Vibration"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Drafting Zone Vibration CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting_zone_vibration",
+        "dzv_cms"
+      ],
+      "unit": "",
+      "mongoKey": "dzv_cms",
+      "tdEngineKey": "drafting_zone_vibration",
+      "aliases": [
+        "Drafting Zone Vibration CMS",
+        "Drafting Zone Vibration"
+      ],
+      "sourceAliases": [
+        "Drafting Zone Vibration CMS",
+        "Drafting Zone Vibration"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Drafting Zone Vibration Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "DZV_CMS",
+        "dzv_target"
+      ],
+      "unit": "",
+      "mongoKey": "dzv_target",
+      "tdEngineKey": "DZV_CMS",
+      "aliases": [
+        "Drafting Zone Vibration Target"
+      ],
+      "sourceAliases": [
+        "Drafting Zone Vibration Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Main Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "main_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_power",
+      "tdEngineKey": "main_motor_power",
+      "aliases": [
+        "Main Motor Power",
+        "Main Motor Output Power"
+      ],
+      "sourceAliases": [
+        "Main Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 37
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Main Motor Power",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-38",
+      "name": "Main Motor Power CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_power",
+        "mmp_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmp_cms",
+      "tdEngineKey": "main_motor_power",
+      "aliases": [
+        "Main Motor Power CMS",
+        "Main Motor Power"
+      ],
+      "sourceAliases": [
+        "Main Motor Power CMS",
+        "Main Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "Main Motor Power Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMP_CMS",
+        "mmp_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmp_target",
+      "tdEngineKey": "MMP_CMS",
+      "aliases": [
+        "Main Motor Power Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Power Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Main Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "main_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_current",
+      "tdEngineKey": "main_motor_current",
+      "aliases": [
+        "Main Motor Current",
+        "Main Motor Output Current"
+      ],
+      "sourceAliases": [
+        "Main Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 40
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Main Motor Current",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-41",
+      "name": "Main Motor Current CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_current",
+        "mmc_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmc_cms",
+      "tdEngineKey": "main_motor_current",
+      "aliases": [
+        "Main Motor Current CMS",
+        "Main Motor Current"
+      ],
+      "sourceAliases": [
+        "Main Motor Current CMS",
+        "Main Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Main Motor Current Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMC_CMS",
+        "mmc_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmc_target",
+      "tdEngineKey": "MMC_CMS",
+      "aliases": [
+        "Main Motor Current Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Current Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Main Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "main_motor_torque"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_torque",
+      "tdEngineKey": "main_motor_torque",
+      "aliases": [
+        "Main Motor Torque"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "Main Motor Torque CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_torque",
+        "mmt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmt_cms",
+      "tdEngineKey": "main_motor_torque",
+      "aliases": [
+        "Main Motor Torque CMS",
+        "Main Motor Torque"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque CMS",
+        "Main Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Main Motor Torque Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMT_CMS",
+        "mmt_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmt_target",
+      "tdEngineKey": "MMT_CMS",
+      "aliases": [
+        "Main Motor Torque Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Torque Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Main Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "main_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_ihs_temp",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "Main Motor Inverter Heat Sink Temperature CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_inverter_heat_sink_temperature",
+        "mmit_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mmit_cms",
+      "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature CMS",
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature CMS",
+        "Main Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Main Motor Inverter Heat Sink Temperature Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMIT_CMS",
+        "mmit_target"
+      ],
+      "unit": "",
+      "mongoKey": "mmit_target",
+      "tdEngineKey": "MMIT_CMS",
+      "aliases": [
+        "Main Motor Inverter Heat Sink Temperature Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Inverter Heat Sink Temperature Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Main Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "main_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "main_motor_speed",
+      "tdEngineKey": "main_motor_speed",
+      "aliases": [
+        "Main Motor Speed"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "Main Motor Speed CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_motor_speed",
+        "mms_cms"
+      ],
+      "unit": "",
+      "mongoKey": "mms_cms",
+      "tdEngineKey": "main_motor_speed",
+      "aliases": [
+        "Main Motor Speed CMS",
+        "Main Motor Speed"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed CMS",
+        "Main Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Main Motor Speed Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "MMS_CMS",
+        "mms_target"
+      ],
+      "unit": "",
+      "mongoKey": "mms_target",
+      "tdEngineKey": "MMS_CMS",
+      "aliases": [
+        "Main Motor Speed Target"
+      ],
+      "sourceAliases": [
+        "Main Motor Speed Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Coiler Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_power",
+        "coiler_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_motor_power",
+      "tdEngineKey": "coiler_motor_power",
+      "aliases": [
+        "Coiler Motor Power",
+        "Coiler Output Power"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 52
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Coiler Motor Power",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-53",
+      "name": "Coiler Motor Power CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_power",
+        "cmp_cms"
+      ],
+      "unit": "",
+      "mongoKey": "cmp_cms",
+      "tdEngineKey": "coiler_motor_power",
+      "aliases": [
+        "Coiler Motor Power CMS",
+        "Coiler Motor Power"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Power CMS",
+        "Coiler Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 53
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-54",
+      "name": "Coiler Motor Power Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "CMP_CMS",
+        "cmp_target"
+      ],
+      "unit": "",
+      "mongoKey": "cmp_target",
+      "tdEngineKey": "CMP_CMS",
+      "aliases": [
+        "Coiler Motor Power Target"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Power Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 54
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-55",
+      "name": "Coiler Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_current",
+        "coiler_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_motor_current",
+      "tdEngineKey": "coiler_motor_current",
+      "aliases": [
+        "Coiler Motor Current",
+        "Coiler Output Current"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 55
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Coiler Motor Current",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-56",
+      "name": "Coiler Motor Current CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_current",
+        "cmc_cms"
+      ],
+      "unit": "",
+      "mongoKey": "cmc_cms",
+      "tdEngineKey": "coiler_motor_current",
+      "aliases": [
+        "Coiler Motor Current CMS",
+        "Coiler Motor Current"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Current CMS",
+        "Coiler Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 56
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-57",
+      "name": "Coiler Motor Current Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "CMC_CMS",
+        "cmc_target"
+      ],
+      "unit": "",
+      "mongoKey": "cmc_target",
+      "tdEngineKey": "CMC_CMS",
+      "aliases": [
+        "Coiler Motor Current Target"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Current Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 57
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-58",
+      "name": "Coiler Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_torque",
+        "coiler_motor_rotque"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_motor_rotque",
+      "tdEngineKey": "coiler_motor_torque",
+      "aliases": [
+        "Coiler Motor Torque"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 58
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-59",
+      "name": "Coiler Motor Torque CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_torque",
+        "cmt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "cmt_cms",
+      "tdEngineKey": "coiler_motor_torque",
+      "aliases": [
+        "Coiler Motor Torque CMS",
+        "Coiler Motor Torque"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Torque CMS",
+        "Coiler Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 59
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-60",
+      "name": "Coiler Motor Torque Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "CMT_CMS",
+        "cmt_target"
+      ],
+      "unit": "",
+      "mongoKey": "cmt_target",
+      "tdEngineKey": "CMT_CMS",
+      "aliases": [
+        "Coiler Motor Torque Target"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Torque Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 60
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-61",
+      "name": "Coiler Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_inverter_heat_sink_temperature",
+        "coiler_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_motor_ihs_temp",
+      "tdEngineKey": "coiler_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Coiler Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 61
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-62",
+      "name": "Coiler Motor Inverter Heat Sink Temperature CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_inverter_heat_sink_temperature",
+        "cmit_cms"
+      ],
+      "unit": "",
+      "mongoKey": "cmit_cms",
+      "tdEngineKey": "coiler_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Coiler Motor Inverter Heat Sink Temperature CMS",
+        "Coiler Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Inverter Heat Sink Temperature CMS",
+        "Coiler Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 62
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-63",
+      "name": "Coiler Motor Inverter Heat Sink Temperature Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "CMIT_CMS",
+        "cmit_target"
+      ],
+      "unit": "",
+      "mongoKey": "cmit_target",
+      "tdEngineKey": "CMIT_CMS",
+      "aliases": [
+        "Coiler Motor Inverter Heat Sink Temperature Target"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Inverter Heat Sink Temperature Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 63
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-64",
+      "name": "Coiler Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_speed",
+        "coiler_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_motor_speed",
+      "tdEngineKey": "coiler_motor_speed",
+      "aliases": [
+        "Coiler Motor Speed"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 64
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-65",
+      "name": "Coiler Motor Speed CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_motor_speed",
+        "cms_cms"
+      ],
+      "unit": "",
+      "mongoKey": "cms_cms",
+      "tdEngineKey": "coiler_motor_speed",
+      "aliases": [
+        "Coiler Motor Speed CMS",
+        "Coiler Motor Speed"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Speed CMS",
+        "Coiler Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 65
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-66",
+      "name": "Coiler Motor Speed Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "CMS_CMS",
+        "cms_target"
+      ],
+      "unit": "",
+      "mongoKey": "cms_target",
+      "tdEngineKey": "CMS_CMS",
+      "aliases": [
+        "Coiler Motor Speed Target"
+      ],
+      "sourceAliases": [
+        "Coiler Motor Speed Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 66
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-67",
+      "name": "Suction Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_power",
+        "suction_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "suction_motor_power",
+      "tdEngineKey": "suction_motor_power",
+      "aliases": [
+        "Suction Motor Power"
+      ],
+      "sourceAliases": [
+        "Suction Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 67
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-68",
+      "name": "Suction Motor Power CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_power",
+        "smp_cms"
+      ],
+      "unit": "",
+      "mongoKey": "smp_cms",
+      "tdEngineKey": "suction_motor_power",
+      "aliases": [
+        "Suction Motor Power CMS",
+        "Suction Motor Power"
+      ],
+      "sourceAliases": [
+        "Suction Motor Power CMS",
+        "Suction Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 68
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-69",
+      "name": "Suction Motor Power Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "SMP_CMS",
+        "smp_target"
+      ],
+      "unit": "",
+      "mongoKey": "smp_target",
+      "tdEngineKey": "SMP_CMS",
+      "aliases": [
+        "Suction Motor Power Target"
+      ],
+      "sourceAliases": [
+        "Suction Motor Power Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 69
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-70",
+      "name": "Suction Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_current",
+        "suction_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "suction_motor_current",
+      "tdEngineKey": "suction_motor_current",
+      "aliases": [
+        "Suction Motor Current"
+      ],
+      "sourceAliases": [
+        "Suction Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 70
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-71",
+      "name": "Suction Motor Current CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_current",
+        "smc_cms"
+      ],
+      "unit": "",
+      "mongoKey": "smc_cms",
+      "tdEngineKey": "suction_motor_current",
+      "aliases": [
+        "Suction Motor Current CMS",
+        "Suction Motor Current"
+      ],
+      "sourceAliases": [
+        "Suction Motor Current CMS",
+        "Suction Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 71
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-72",
+      "name": "Suction Motor Current Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "SMC_CMS",
+        "smc_target"
+      ],
+      "unit": "",
+      "mongoKey": "smc_target",
+      "tdEngineKey": "SMC_CMS",
+      "aliases": [
+        "Suction Motor Current Target"
+      ],
+      "sourceAliases": [
+        "Suction Motor Current Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 72
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-73",
+      "name": "Suction Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_torque",
+        "suction_motor_torque"
+      ],
+      "unit": "",
+      "mongoKey": "suction_motor_torque",
+      "tdEngineKey": "suction_motor_torque",
+      "aliases": [
+        "Suction Motor Torque"
+      ],
+      "sourceAliases": [
+        "Suction Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 73
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-74",
+      "name": "Suction Motor Torque CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_torque",
+        "smt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "smt_cms",
+      "tdEngineKey": "suction_motor_torque",
+      "aliases": [
+        "Suction Motor Torque CMS",
+        "Suction Motor Torque"
+      ],
+      "sourceAliases": [
+        "Suction Motor Torque CMS",
+        "Suction Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 74
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-75",
+      "name": "Suction Motor Torque Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "SMT_CMS",
+        "smt_target"
+      ],
+      "unit": "",
+      "mongoKey": "smt_target",
+      "tdEngineKey": "SMT_CMS",
+      "aliases": [
+        "Suction Motor Torque Target"
+      ],
+      "sourceAliases": [
+        "Suction Motor Torque Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 75
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-76",
+      "name": "Suction Motor Inverter Heat Sink Temperature",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_inverter_heat_sink_temperature",
+        "suction_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "suction_motor_ihs_temp",
+      "tdEngineKey": "suction_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Suction Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Suction Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 76
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-77",
+      "name": "Suction Motor Inverter Heat Sink Temperature CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_inverter_heat_sink_temperature",
+        "smit_cms"
+      ],
+      "unit": "",
+      "mongoKey": "smit_cms",
+      "tdEngineKey": "suction_motor_inverter_heat_sink_temperature",
+      "aliases": [
+        "Suction Motor Inverter Heat Sink Temperature CMS",
+        "Suction Motor Inverter Heat Sink Temperature"
+      ],
+      "sourceAliases": [
+        "Suction Motor Inverter Heat Sink Temperature CMS",
+        "Suction Motor Inverter Heat Sink Temperature"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 77
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-78",
+      "name": "Suction Motor Inverter Heat Sink Temperature Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "SMIT_CMS",
+        "smit_target"
+      ],
+      "unit": "",
+      "mongoKey": "smit_target",
+      "tdEngineKey": "SMIT_CMS",
+      "aliases": [
+        "Suction Motor Inverter Heat Sink Temperature Target"
+      ],
+      "sourceAliases": [
+        "Suction Motor Inverter Heat Sink Temperature Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 78
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-79",
+      "name": "Suction Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_speed",
+        "suction_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "suction_motor_speed",
+      "tdEngineKey": "suction_motor_speed",
+      "aliases": [
+        "Suction Motor Speed"
+      ],
+      "sourceAliases": [
+        "Suction Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 79
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-80",
+      "name": "Suction Motor Speed CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "suction_motor_speed",
+        "sms_cms"
+      ],
+      "unit": "",
+      "mongoKey": "sms_cms",
+      "tdEngineKey": "suction_motor_speed",
+      "aliases": [
+        "Suction Motor Speed CMS",
+        "Suction Motor Speed"
+      ],
+      "sourceAliases": [
+        "Suction Motor Speed CMS",
+        "Suction Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 80
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-81",
+      "name": "Suction Motor Speed Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "SMS_CMS",
+        "sms_target"
+      ],
+      "unit": "",
+      "mongoKey": "sms_target",
+      "tdEngineKey": "SMS_CMS",
+      "aliases": [
+        "Suction Motor Speed Target"
+      ],
+      "sourceAliases": [
+        "Suction Motor Speed Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 81
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-82",
+      "name": "Draft Motor Power",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_power",
+        "draft_motor_power"
+      ],
+      "unit": "",
+      "mongoKey": "draft_motor_power",
+      "tdEngineKey": "draft_motor_power",
+      "aliases": [
+        "Draft Motor Power",
+        "Drafting Motor Output Power"
+      ],
+      "sourceAliases": [
+        "Draft Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 82
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Draft Motor Power",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-83",
+      "name": "Draft Motor Power CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_power",
+        "dmp_cms"
+      ],
+      "unit": "",
+      "mongoKey": "dmp_cms",
+      "tdEngineKey": "draft_motor_power",
+      "aliases": [
+        "Draft Motor Power CMS",
+        "Draft Motor Power"
+      ],
+      "sourceAliases": [
+        "Draft Motor Power CMS",
+        "Draft Motor Power"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 83
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-84",
+      "name": "Draft Motor Power Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "DMP_CMS",
+        "dmp_target"
+      ],
+      "unit": "",
+      "mongoKey": "dmp_target",
+      "tdEngineKey": "DMP_CMS",
+      "aliases": [
+        "Draft Motor Power Target"
+      ],
+      "sourceAliases": [
+        "Draft Motor Power Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 84
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-85",
+      "name": "Draft Motor Current",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_current",
+        "draft_motor_current"
+      ],
+      "unit": "",
+      "mongoKey": "draft_motor_current",
+      "tdEngineKey": "draft_motor_current",
+      "aliases": [
+        "Draft Motor Current",
+        "Drafting Motor Output Current"
+      ],
+      "sourceAliases": [
+        "Draft Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 85
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Draft Motor Current",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-86",
+      "name": "Draft Motor Current CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_current",
+        "dmc_cms"
+      ],
+      "unit": "",
+      "mongoKey": "dmc_cms",
+      "tdEngineKey": "draft_motor_current",
+      "aliases": [
+        "Draft Motor Current CMS",
+        "Draft Motor Current"
+      ],
+      "sourceAliases": [
+        "Draft Motor Current CMS",
+        "Draft Motor Current"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 86
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-87",
+      "name": "Draft Motor Current Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "DMC_CMS",
+        "dmc_target"
+      ],
+      "unit": "",
+      "mongoKey": "dmc_target",
+      "tdEngineKey": "DMC_CMS",
+      "aliases": [
+        "Draft Motor Current Target"
+      ],
+      "sourceAliases": [
+        "Draft Motor Current Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 87
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-88",
+      "name": "Draft Motor Torque",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_torque",
+        "draft_motor_torque"
+      ],
+      "unit": "",
+      "mongoKey": "draft_motor_torque",
+      "tdEngineKey": "draft_motor_torque",
+      "aliases": [
+        "Draft Motor Torque",
+        "Drafting Motor Motor Torque"
+      ],
+      "sourceAliases": [
+        "Draft Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 88
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Draft Motor Torque",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-89",
+      "name": "Draft Motor Torque CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_torque",
+        "dmt_cms"
+      ],
+      "unit": "",
+      "mongoKey": "dmt_cms",
+      "tdEngineKey": "draft_motor_torque",
+      "aliases": [
+        "Draft Motor Torque CMS",
+        "Draft Motor Torque"
+      ],
+      "sourceAliases": [
+        "Draft Motor Torque CMS",
+        "Draft Motor Torque"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 89
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-90",
+      "name": "Draft Motor Torque Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "DMT_CMS",
+        "dmt_target"
+      ],
+      "unit": "",
+      "mongoKey": "dmt_target",
+      "tdEngineKey": "DMT_CMS",
+      "aliases": [
+        "Draft Motor Torque Target"
+      ],
+      "sourceAliases": [
+        "Draft Motor Torque Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 90
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-91",
+      "name": "Draft Motor Inverter Heat Sink Temp",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_inverter_heat_sink_temp",
+        "draft_motor_ihs_temp"
+      ],
+      "unit": "",
+      "mongoKey": "draft_motor_ihs_temp",
+      "tdEngineKey": "draft_motor_inverter_heat_sink_temp",
+      "aliases": [
+        "Draft Motor Inverter Heat Sink Temp"
+      ],
+      "sourceAliases": [
+        "Draft Motor Inverter Heat Sink Temp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 91
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-92",
+      "name": "Draft Motor Inverter Heat Sink Temp CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_motor_inverter_heat_sink_temp",
+        "dmit_cms"
+      ],
+      "unit": "",
+      "mongoKey": "dmit_cms",
+      "tdEngineKey": "draft_motor_inverter_heat_sink_temp",
+      "aliases": [
+        "Draft Motor Inverter Heat Sink Temp CMS",
+        "Draft Motor Inverter Heat Sink Temp"
+      ],
+      "sourceAliases": [
+        "Draft Motor Inverter Heat Sink Temp CMS",
+        "Draft Motor Inverter Heat Sink Temp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 92
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-93",
+      "name": "Draft Motor Inverter Heat Sink Temp Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "DMIT_CMS",
+        "dmit_target"
+      ],
+      "unit": "",
+      "mongoKey": "dmit_target",
+      "tdEngineKey": "DMIT_CMS",
+      "aliases": [
+        "Draft Motor Inverter Heat Sink Temp Target"
+      ],
+      "sourceAliases": [
+        "Draft Motor Inverter Heat Sink Temp Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 93
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-94",
+      "name": "Head Stock Draft Motor Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "head_stock_draft_motor_speed",
+        "draft_motor_speed"
+      ],
+      "unit": "",
+      "mongoKey": "draft_motor_speed",
+      "tdEngineKey": "head_stock_draft_motor_speed",
+      "aliases": [
+        "Head Stock Draft Motor Speed"
+      ],
+      "sourceAliases": [
+        "Head Stock Draft Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 94
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-95",
+      "name": "Head Stock Draft Motor Speed CMS",
+      "dataType": "REAL",
+      "groupCodes": [
+        600
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "head_stock_draft_motor_speed",
+        "dms_cms"
+      ],
+      "unit": "",
+      "mongoKey": "dms_cms",
+      "tdEngineKey": "head_stock_draft_motor_speed",
+      "aliases": [
+        "Head Stock Draft Motor Speed CMS",
+        "Head Stock Draft Motor Speed"
+      ],
+      "sourceAliases": [
+        "Head Stock Draft Motor Speed CMS",
+        "Head Stock Draft Motor Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 95
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-96",
+      "name": "Head Stock Draft Motor Speed Target",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "DMS_CMS",
+        "dms_target"
+      ],
+      "unit": "",
+      "mongoKey": "dms_target",
+      "tdEngineKey": "DMS_CMS",
+      "aliases": [
+        "Head Stock Draft Motor Speed Target"
+      ],
+      "sourceAliases": [
+        "Head Stock Draft Motor Speed Target"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DRAWFRAMEFINISHER_minutes_time_series",
+        "row": 96
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-97",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "CMS/DRAWFRAMEFINISHER.json",
+        "sheet": "cms_DFFinisher_minutes",
+        "row": 1
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 20,
+      "name": "Lot Name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "voltage_avg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-21"
+      ]
+    },
+    {
+      "title": "current_avg",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "power_factor",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-23"
+      ]
+    },
+    {
+      "title": "Total Active Power",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-25"
+      ]
+    },
+    {
+      "title": "Drafting Zone Temperature",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-31"
+      ]
+    },
+    {
+      "title": "Main Motor Power",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-33"
+      ]
+    },
+    {
+      "title": "voltage_avg trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-21"
+      ]
+    },
+    {
+      "title": "Minute trend readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-21",
+        "row-22",
+        "row-23"
+      ]
+    },
+    {
+      "title": "Minute trend readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34",
+        "row-35"
+      ]
+    },
+    {
+      "title": "Minute trend readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-40",
+        "row-41",
+        "row-42",
+        "row-43",
+        "row-44",
+        "row-45",
+        "row-46",
+        "row-47"
+      ]
+    },
+    {
+      "title": "Minute trend readings 4",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-48",
+        "row-49",
+        "row-50",
+        "row-51",
+        "row-52"
+      ]
+    }
+  ]
+}

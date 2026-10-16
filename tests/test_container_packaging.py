@@ -20,8 +20,9 @@ class ContainerPackagingTests(unittest.TestCase):
                      'python_engine/__init__.py', 'python_engine/engine.py',
                      'scripts/container_bootstrap.py', 'scripts/container_maintenance.py'):
             self.write(root, name, 'VALUE = 1\n')
-        for name in ('dist/index.html', 'dist/nami/index.html', 'rules/default.json',
+        for name in ('dist/index.html', 'dist/nami/index.html', 'rules/default.json', 'rules/references/lapformer.json',
                      'knowledge/master/default.json', 'knowledge/data_models/default.json',
+                     'knowledge/dashboard_layouts/catalog.json', 'knowledge/lapformer/catalog.json',
                      'knowledge/chopper/engineering_tasks.json',
                      'knowledge/help_index/project_guide.json',
                      'knowledge/help_index/BR_PROJECT_HELP.md',
@@ -39,6 +40,7 @@ class ContainerPackagingTests(unittest.TestCase):
             for name in ('rules/learning/private.json', 'rules/feedback/private.json',
                          'rules/archive/private.json', 'knowledge/projects/private.json',
                          'knowledge/br_help/private.html', 'knowledge/help_index/br_help.sqlite3',
+                         'knowledge/dashboard_layouts/users/1/private.json',
                          'local_ai/models/private.gguf', '.env', 'accounts.sqlite3'):
                 self.write(root, name)
             output = base / 'runtime'
@@ -51,6 +53,9 @@ class ContainerPackagingTests(unittest.TestCase):
             self.assertTrue((output / 'knowledge/chopper/engineering_tasks.json').is_file())
             self.assertTrue((output / 'knowledge/master/default.json').is_file())
             self.assertTrue((output / 'knowledge/data_models/default.json').is_file())
+            self.assertTrue((output / 'knowledge/dashboard_layouts/catalog.json').is_file())
+            self.assertTrue((output / 'knowledge/lapformer/catalog.json').is_file())
+            self.assertTrue((output / 'rules/references/lapformer.json').is_file())
             self.assertEqual(sorted(p.name for p in (output / 'knowledge/help_index').iterdir()),
                              ['BR_PROJECT_HELP.md', 'project_guide.json'])
             paths = {p.relative_to(output).as_posix() for p in output.rglob('*') if p.is_file()}

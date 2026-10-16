@@ -40,23 +40,21 @@ The example illustrates the schema. Each generated file preserves its supplied d
 
 1. Prefer a database JSON from the matching service's JSON Key folder.
 2. Otherwise use that service's collections embedded in another department JSON, such as `qms_` or `cms_` collections inside PMS V5.
-3. Use the department Excel workbook only if no matching database JSON collections exist.
+3. Supplement missing requirements from the department Excel workbook, with workbook/sheet/row evidence.
 
-Excel clarifies names, types and groups and supplies original worksheet/row locations. It does not overwrite an available JSON definition. The supplied Carding attachment matches the archived QMS Carding JSON. Default references are fixed; the app does not combine every workbook/JSON version.
-
-The builder cross-checks the normalized datatype of matching Excel and JSON rows within the same service, department, parameter name and Group Code. Disagreement is retained as a **reference conflict**, including both source datatypes and worksheet locations. It requires reference review and does not count as a PLC datatype failure. The original database JSON and source workbooks remain unchanged.
+Excel supplies omitted requirements and source locations. Existing database keys and equations are retained. If matching Excel rows consistently identify a numeric output type where legacy JSON declared a conflicting nonnumeric type, the generated knowledge applies the Excel clarification and records both values in `reference_corrections.json`. Original files under `reference_sources` remain unchanged. Other source conflicts remain explicit.
 
 **Source discrepancy:** `QMS/JSON Keys V1/DRAWFRAMEBREAKER.json` declares `DRAWFRAMEFINISHER` and contains Finisher collections. It is archived but excluded from fixed Breaker requirements. QMS Breaker uses the correctly labeled `qms_DRAWFRAMEBREAKER` collections from `PMS/JSON Key V5/DRAWFRAMEBREAKER.json`. The warning is retained in the model and manifest.
 
 ## Checks and display
 
-Names ignore letter case and surrounding whitespace. Different words, punctuation or internal spacing still differ. A similar spelling may be attached to a metadata row to explain a failure; it is never accepted as a match. The parameter must exist in its specified Group Code and have the mapped PLC datatype: FLOAT → REAL, NCHAR/NVARCHAR/VARCHAR/CHAR → STRING, USINT → BYTE.
+Names ignore letter case. The configured policy also accepts space/underscore formatting and explicit aliases scoped to service, department and Group Code. Ambiguous matches remain errors. Database FLOAT/REAL output types can map to numeric integer PLC inputs; this checks value compatibility, not independent wire-type conformance. Machine metadata determines decoding widths and signedness. Explicit `plcDataType` requirements remain strict.
 
 The Data model column shows the reference name, matching services and result. Repeated collections are grouped only when they have the same outcome. Source details retain every collection/entry and Excel location. Expected parameters absent from metadata are listed above the table and in the complete requirements view. Wrong-group requirements remain separate with their expected and actual groups.
 
-An unmatched metadata name is labeled **No matching reference for this department**. Letter case is accepted; `Delivery Hanks` and `Hanks`, for example, remain different names until an explicit mapping is supplied. Missing requirements for another Group Code do not turn a valid current-group row into a failure.
+An unmatched metadata name is labeled **No matching reference for this department**. Configured aliases, such as the supplied Finisher `Delivery Hanks` / `Hanks` mapping, are shown in source details. Missing requirements for another Group Code do not turn a valid current-group row into a failure.
 
-Database-only types such as `TIMESTAMP`, `INTEGER` and `SMALLINT UNSIGNED` do not define a PLC wire representation. These PLC requirements are **UNRESOLVED**, rather than incorrectly compared to a guessed wire type. A source may declare `plcDataType` explicitly when its wire representation is known. A conflicting Excel type can be suggested for review without silently replacing the JSON type.
+Database-only types such as `TIMESTAMP`, `INTEGER` and `SMALLINT UNSIGNED` do not define a PLC wire representation. These PLC requirements are **UNRESOLVED**, rather than incorrectly compared to a guessed wire type. A source may declare `plcDataType` explicitly when its wire representation is known. A consistent numeric Excel clarification is applied with a correction record; remaining conflicts stay visible for review.
 
 Current table and exported evaluations are recalculated from the loaded metadata. Saved validation outcomes cannot override newer metadata or reference rules. Archived runs retain their saved reference snapshots, labeled separately from the current department catalog. Historical results remain available as original saved evidence.
 
@@ -79,3 +77,15 @@ On Ubuntu with the same source folder beside the app:
 ```
 
 The builder writes canonical JSON and the parsed catalog together. Copy the complete `knowledge/data_models` folder to the deployed app. This release also changes backend and frontend code: rebuild and restart as described in `UBUNTU_DEMO.md`. Current private user imports and test history are not overwritten by this operation.
+
+## Editable knowledge rules and dashboard equations
+
+`knowledge/master/data_model_rules.json` holds numeric value-type policy, scoped
+name aliases, optional explicit PLC wire requirements and formula overrides.
+Admin can edit it through DataInspect → Data model requirements → Review and
+edit reference configuration. Shared knowledge export includes this file.
+
+Dashboard starters in `knowledge/dashboard_layouts` resolve named workbook
+functions using concrete equations from the same department/service/period of
+the supplied JSON. Missing inputs stay unavailable; source instructions do not
+become invented calculations or default pass conditions.

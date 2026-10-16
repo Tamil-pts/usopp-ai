@@ -38,6 +38,8 @@ def _data_files(root: Path, prefix: str, include_br_help: bool):
         if not path.is_file() or path.is_symlink() or path.name in EXCLUDED_NAMES:
             continue
         rel = path.relative_to(root).as_posix()
+        if prefix == 'knowledge' and rel.startswith('dashboard_layouts/users/'):
+            continue
         if prefix == 'knowledge' and rel.startswith('br_help/') and not include_br_help:
             continue
         if prefix == 'knowledge' and rel.startswith('help_index/') and path.suffix.casefold() in {'.sqlite', '.sqlite3'}:
@@ -96,6 +98,8 @@ def _safe_name(name: str) -> PurePosixPath:
 def _destination(rel: PurePosixPath, usernames: dict[str, int]) -> Path | None:
     parts = rel.parts
     if len(parts) >= 2 and parts[0] in {'knowledge', 'rules'}:
+        if parts[:3] == ('knowledge','dashboard_layouts','users'):
+            return None
         if parts[0] == 'rules' and 'archive' in parts:
             return None
         return BASE.joinpath(*parts)

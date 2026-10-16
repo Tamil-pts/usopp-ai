@@ -1,0 +1,859 @@
+{
+  "schemaVersion": 1,
+  "numericValueTypes": [
+    "FLOAT",
+    "REAL",
+    "LREAL",
+    "DOUBLE"
+  ],
+  "note": "These are database/output value types in fixed data models. PLC byte width, signedness and decoding always come from machine metadata. An explicit plcDataType remains a strict wire requirement.",
+  "aliases": [
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "U%",
+      "names": [
+        "U",
+        "U%"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CVM%",
+      "names": [
+        "CVM%",
+        "CVM %"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CV%(2cm)",
+      "names": [
+        "CV%(2cm)",
+        "CV% (2cm)"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CV%(5cm)",
+      "names": [
+        "CV%(5cm)",
+        "CV 5cm%"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CV%(10cm)",
+      "names": [
+        "CV%(10cm)",
+        "CV 10cm"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CV%(25cm)",
+      "names": [
+        "CV%(25cm)",
+        "CV 25cm"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CV%(50cm)",
+      "names": [
+        "CV%(50cm)",
+        "CV 50cm"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CV%(1m)",
+      "names": [
+        "CV%(1m)",
+        "CV 1m"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CV%(3m)",
+      "names": [
+        "CV%(3m)",
+        "CV 3m"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher",
+        "DrawFrameBreaker",
+        "Comber"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "CV%(5m)",
+      "names": [
+        "CV%(5m)",
+        "CV 5m"
+      ]
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Power Fail Time Hour",
+      "names": [
+        "Power Fail Time Hour",
+        "Powerfail_Time_Hour"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Power Fail Time Hour",
+      "names": [
+        "Power Fail Time Hour",
+        "Powerfail_Time_Hour"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Power Fail Time Minute",
+      "names": [
+        "Power Fail Time Minute",
+        "Powerfail_Time_Minute"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Power Fail Time Minute",
+      "names": [
+        "Power Fail Time Minute",
+        "Powerfail_Time_Minute"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Hanks",
+      "names": [
+        "Hanks",
+        "Delivery Hanks"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Hanks",
+      "names": [
+        "Hanks",
+        "Delivery Hanks"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Kgs",
+      "names": [
+        "Kgs",
+        "Production Kgs",
+        "Production in kg"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Kgs",
+      "names": [
+        "Kgs",
+        "Production Kgs",
+        "Production in kg"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Feed roller stops",
+      "names": [
+        "Feed roller stops",
+        "Feed Roller Stoppage"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Feed roller stops",
+      "names": [
+        "Feed roller stops",
+        "Feed Roller Stoppage"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Feed sensor stops",
+      "names": [
+        "Feed sensor stops",
+        "Feed Sensor Stoppage"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Feed sensor stops",
+      "names": [
+        "Feed sensor stops",
+        "Feed Sensor Stoppage"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Scanning roller stops",
+      "names": [
+        "Scanning roller stops",
+        "Current_Shift_Scanning_roller_stops"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Scanning roller stops",
+      "names": [
+        "Scanning roller stops",
+        "Current_Shift_Scanning_roller_stops"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Web Guide stops",
+      "names": [
+        "Web Guide stops",
+        "Web guide Stoppage"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Web Guide stops",
+      "names": [
+        "Web Guide stops",
+        "Web guide Stoppage"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Coiler stops",
+      "names": [
+        "Coiler stops",
+        "Coiler Stoppage"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Coiler stops",
+      "names": [
+        "Coiler stops",
+        "Coiler Stoppage"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Sliver Monitor stops",
+      "names": [
+        "Sliver Monitor stops",
+        "Current_Shift_Sliver_Monitor_stops"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Sliver Monitor stops",
+      "names": [
+        "Sliver Monitor stops",
+        "Current_Shift_Sliver_Monitor_stops"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Servo Drive stops",
+      "names": [
+        "Servo Drive stops",
+        "Current_Shift_Servo_Drive_stops"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Servo Drive stops",
+      "names": [
+        "Servo Drive stops",
+        "Current_Shift_Servo_Drive_stops"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Total Breaks",
+      "names": [
+        "Total Breaks",
+        "PMS_TOTAL_BREAKS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Total Breaks",
+      "names": [
+        "Total Breaks",
+        "PMS_TOTAL_BREAKS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Total Breaks in Min",
+      "names": [
+        "Total Breaks in Min",
+        "PMS_TOTAL_BREAKS_IN_MINS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Total Breaks in Min",
+      "names": [
+        "Total Breaks in Min",
+        "PMS_TOTAL_BREAKS_IN_MINS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Total Feed Breaks",
+      "names": [
+        "Total Feed Breaks",
+        "PMS_TOTAL_FEED_BREAKS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Total Feed Breaks",
+      "names": [
+        "Total Feed Breaks",
+        "PMS_TOTAL_FEED_BREAKS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Total Delivery Breaks",
+      "names": [
+        "Total Delivery Breaks",
+        "PMS_TOTAL_DEL_BREAKS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Total Delivery Breaks",
+      "names": [
+        "Total Delivery Breaks",
+        "PMS_TOTAL_DEL_BREAKS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Total Quality Breaks",
+      "names": [
+        "Total Quality Breaks",
+        "PMS_TOTAL_QUALITY_BREAKS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Total Quality Breaks",
+      "names": [
+        "Total Quality Breaks",
+        "PMS_TOTAL_QUALITY_BREAKS"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Can Filling Time",
+      "names": [
+        "Can Filling Time",
+        "PMS_CAN_FILLING_TIME"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Can Filling Time",
+      "names": [
+        "Can Filling Time",
+        "PMS_CAN_FILLING_TIME"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Can Waiting Time",
+      "names": [
+        "Can Waiting Time",
+        "PMS_CAN_WAITING_TIME"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Can Waiting Time",
+      "names": [
+        "Can Waiting Time",
+        "PMS_CAN_WAITING_TIME"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Number Of doff",
+      "names": [
+        "Number Of doff",
+        "Doffs"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Number Of doff",
+      "names": [
+        "Number Of doff",
+        "Doffs"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Can Rejection",
+      "names": [
+        "Can Rejection",
+        "Thick place can rejection"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Can Rejection",
+      "names": [
+        "Can Rejection",
+        "Thick place can rejection"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 20,
+      "canonicalName": "Hank",
+      "names": [
+        "Hank",
+        "Process Hank"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 20,
+      "canonicalName": "Hank",
+      "names": [
+        "Hank",
+        "Process Hank"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 20,
+      "canonicalName": "U",
+      "names": [
+        "U",
+        "U%"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 20,
+      "canonicalName": "U",
+      "names": [
+        "U",
+        "U%"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "PMS",
+      "groupCode": 20,
+      "canonicalName": "CV 1m",
+      "names": [
+        "CV 1m",
+        "1m CV"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 20,
+      "canonicalName": "CV 1m",
+      "names": [
+        "CV 1m",
+        "1m CV"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "QMS",
+      "groupCode": 260,
+      "canonicalName": "Thick place",
+      "names": [
+        "Thick place",
+        "Thickplaces",
+        "Thick places"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "CMS",
+      "groupCode": 600,
+      "canonicalName": "Main Motor Power",
+      "names": [
+        "Main Motor Power",
+        "Main Motor Output Power"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "CMS",
+      "groupCode": 600,
+      "canonicalName": "Main Motor Current",
+      "names": [
+        "Main Motor Current",
+        "Main Motor Output Current"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "CMS",
+      "groupCode": 600,
+      "canonicalName": "Coiler Motor Power",
+      "names": [
+        "Coiler Motor Power",
+        "Coiler Output Power"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "CMS",
+      "groupCode": 600,
+      "canonicalName": "Coiler Motor Current",
+      "names": [
+        "Coiler Motor Current",
+        "Coiler Output Current"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "CMS",
+      "groupCode": 600,
+      "canonicalName": "Draft Motor Power",
+      "names": [
+        "Draft Motor Power",
+        "Drafting Motor Output Power"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "CMS",
+      "groupCode": 600,
+      "canonicalName": "Draft Motor Current",
+      "names": [
+        "Draft Motor Current",
+        "Drafting Motor Output Current"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "DrawFrameFinisher"
+      ],
+      "service": "CMS",
+      "groupCode": 600,
+      "canonicalName": "Draft Motor Torque",
+      "names": [
+        "Draft Motor Torque",
+        "Drafting Motor Motor Torque"
+      ],
+      "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    }
+  ],
+  "ignoreNameSeparators": true,
+  "formulaOverrides": []
+}

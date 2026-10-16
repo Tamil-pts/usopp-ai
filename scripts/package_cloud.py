@@ -16,7 +16,7 @@ ROOT_FILES = {
     'LADDER_REFERENCE_REVIEW.md', 'RTC_PROTOCOL.md',
 }
 TREES = ('backend', 'python_engine', 'assist', 'src', 'nami', 'scripts', 'deploy',
-         'dist', 'knowledge/master', 'knowledge/data_models', 'rules')
+         'dist', 'knowledge/master', 'knowledge/data_models', 'knowledge/dashboard_layouts', 'knowledge/lapformer', 'rules')
 SKIP_DIRS = {'node_modules', '__pycache__', '.git', '.venv', '.venv-ubuntu',
              '.usopp_workspaces', '.usopp_exports', '.usopp_server', 'logs',
              'archive', 'learning', 'feedback', 'projects', 'release', '.build'}
@@ -24,6 +24,8 @@ SKIP_DIRS = {'node_modules', '__pycache__', '.git', '.venv', '.venv-ubuntu',
 
 def included(path: Path) -> bool:
     relative = path.relative_to(ROOT)
+    if relative.parts[:3]==('knowledge','dashboard_layouts','users'):
+        return False
     if not path.is_file() or path.is_symlink():
         return False
     if any(part in SKIP_DIRS for part in relative.parts[:-1]):

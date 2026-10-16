@@ -12,6 +12,25 @@ def tag(node):
 def properties(node):
     return {child.get('Name'):child.get('Value','') for child in node if tag(child)=='Property'}
 
+
+def selected_nodes(document, variant):
+    """Keep identically named datasource points in their explicit folders."""
+    entity=variant.get('entity','Control');name=variant.get('name','')
+    nodes=[node for node in document.iter() if tag(node)==entity
+           and (not name or (node.get('Name','').casefold().startswith(name.casefold()) if variant.get('nameMatch')=='prefix' else node.get('Name','').casefold()==name.casefold()))
+           and (not variant.get('classId') or node.get('ClassId')==variant['classId'])]
+    if 'ancestorFolders' not in variant:
+        return nodes
+    parents={child:parent for parent in document.iter() for child in parent}
+    def folders(node):
+        names=[];parent=parents.get(node)
+        while parent is not None:
+            if tag(parent)=='Folder':names.insert(0,parent.get('Name','').casefold())
+            parent=parents.get(parent)
+        return names
+    expected=[str(value).casefold() for value in variant['ancestorFolders']]
+    return [node for node in nodes if folders(node)==expected]
+
 def property_name(value):
     aliases={'Runtime/ControlID':'ControlID','Runtime/ControllD':'ControlID','Runtime/StatusDatapoint':'StatusDatapoint',
              'Completion/Datapoint':'CompletionDatapoint','Completion/Value':'CompletionValue','Completion/Locking':'Locking'}
@@ -66,6 +85,10 @@ def parse_declarations(text):
 
 def normalize_check(check):
     check=dict(check)
+    if check.get('type')=='reference':
+        if not check.get('referenceFile') or not check.get('checkId'):
+            raise ValueError('A reference check needs its saved definition file and check ID.')
+        return check
     check['file']=str(check.get('file') or '').strip().replace('\\','/')
     check['groupCodes']=codes(check.get('groupCodes'))
     if check.get('type') not in {'logic','hmi','ladder'}: raise ValueError('Choose a PLC or HMI requirement.')
@@ -74,6 +97,8 @@ def normalize_check(check):
     if check.get('type')=='hmi':
         def normalize_variant(value):
             variant=dict(value)
+            if 'ancestorFolders' in variant and (not isinstance(variant['ancestorFolders'],list) or any(not isinstance(name,str) or not name for name in variant['ancestorFolders'])):
+                raise ValueError('Datasource folder paths must be a list of folder names.')
             props={property_name(k):str(v).strip() for k,v in (variant.get('properties') or {}).items() if str(v).strip()}
             props.update(parse_properties(variant.get('propertyText','')))
             variant['name']=str(props.pop('Name',variant.get('name',''))).strip()
@@ -137,6 +162,7 @@ def normalize_check(check):
 def configuration(answers):
     checks=[normalize_check(x) for x in answers.get('checks') or []]
     def complete(c):
+        if c.get('type')=='reference':return bool(c.get('referenceFile') and c.get('checkId'))
         if not c['file']: return False
         if c.get('groupMode') in {'selected','exclude'} and not c['groupCodes']: return False
         if c.get('type')=='hmi':
@@ -162,6 +188,9 @@ def matching_files(root,pattern,engine):
         pattern=pattern[2:]
     if not pattern or pattern.startswith('/') or ':' in pattern or '..' in pattern.split('/'):
         return []
+    indexed=getattr(engine,'reference_path_index',None)
+    if indexed is not None and root.resolve()==engine.reference_project_root and pattern.split('/')[0] in {'logical','physical','configuration','configurations'} and not any(char in pattern for char in '*?['):
+        return list(indexed.get(pattern,[]))
     def matches(path):
         relative=path.relative_to(root).as_posix().casefold()
         if source_pattern_matches(relative,pattern):
@@ -199,6 +228,8 @@ def matching_hmi_files(root,pattern,engine,variants):
     else:
         patterns=[pattern]
         allowed={'.page','.pages','.layer','.txtgrp'}
+        if variants and all(variant.get('entity')=='DataPoint' for variant in variants):
+            allowed.add('.dso')
     found=set()
     for item in patterns:
         found.update(path for path in matching_files(root,item,engine) if path.suffix.casefold() in allowed)
@@ -299,11 +330,26 @@ def referenced_hmi_requirements(path,node,variant):
     return rows
 
 def evaluate(root,rule,engine):
+    original_engine=engine
+    project_paths=list(engine.all_files(root))
+    project_texts={}
+    class ProjectEngine:
+        reference_project_root=root.resolve()
+        reference_path_index={path.relative_to(root).as_posix().casefold():[path] for path in project_paths}
+        def __getattr__(self,name):return getattr(original_engine,name)
+        def read_text(self,path):
+            if path not in project_texts:project_texts[path]=original_engine.read_text(path)
+            return project_texts[path]
+        def all_files(self,folder,suffix=None):
+            folder=folder.resolve()
+            return (path for path in project_paths if path.resolve().is_relative_to(folder) and (suffix is None or path.suffix.casefold()==suffix.casefold()))
+    engine=ProjectEngine()
     normalized=configuration({**rule,'ruleId':rule.get('id'),'machineDepartment':(rule.get('machineScope') or ['All'])[0]})['rules'][0]
     if normalized['needsRuleConfiguration']:
         return engine.result(rule['id'],rule.get('name',rule['id']),'FAIL',rule.get('expected',''),'Complete the grouped requirements before validation.')
     rule={**rule,'checks':normalized['checks']}
     evidence=[]
+    reference_cache={};reference_stack=set()
     hmi_scope=None
     def record(label,file,status,**extra):
         evidence.append({'check':label,'file':file,'status':status,**extra})
@@ -357,7 +403,7 @@ def evaluate(root,rule,engine):
         except ET.ParseError as error:
             return {'check':label,'file':relative,'status':'FAIL','acceptedConfiguration':configuration_index,'actual':'Invalid XML: '+str(error)}
         entity=variant.get('entity','Control');name=variant.get('name','')
-        nodes=[node for node in xml.iter() if tag(node)==entity and (not name or (node.get('Name','').casefold().startswith(name.casefold()) if variant.get('nameMatch')=='prefix' else node.get('Name','').casefold()==name.casefold())) and (not variant.get('classId') or node.get('ClassId')==variant['classId'])]
+        nodes=selected_nodes(xml,variant)
         attempts=[]
         if not nodes:
             available=[node for node in xml.iter() if tag(node)==entity]
@@ -414,6 +460,30 @@ def evaluate(root,rule,engine):
         evidence.extend(attempts)
     def evaluate_check(check,label):
         nonlocal hmi_scope
+        variants=list(check.get('variants') or [])+[item.get('variant',{}) for item in check.get('acceptedHmiAlternatives') or []]
+        datasource_check=check.get('type')=='hmi' and bool(variants) and all(variant.get('entity')=='DataPoint' for variant in variants)
+        if check.get('type')=='reference':
+            key=(check['referenceFile'],check['checkId'],check.get('referenceHash',''))
+            if key in reference_stack:
+                record(label,check.get('file',''),'FAIL',actual='Circular saved reference.',referenceFile=key[0],checkId=key[1]);return
+            if key not in reference_cache:
+                start=len(evidence)
+                try:
+                    try:from python_engine.rule_references import load_reference
+                    except ModuleNotFoundError:from rule_references import load_reference
+                    definition=normalize_check(load_reference(check));reference_stack.add(key)
+                    evaluate_check(definition,check.get('name') or label)
+                    rows=evidence[start:];del evidence[start:]
+                    reference_cache[key]=rows
+                except (ValueError,OSError,KeyError,TypeError) as error:
+                    del evidence[start:];reference_cache[key]=[{'status':'FAIL','actual':str(error),'file':check.get('file','')}]
+                finally:reference_stack.discard(key)
+            rows=reference_cache[key];failures=[row for row in rows if row.get('status') not in {'PASS','NOT_REQUIRED'}]
+            record(label,check.get('file',''),'PASS' if rows and not failures else 'FAIL',
+                   actual=f'{len(rows)-len(failures)} of {len(rows)} saved reference checks matched.',
+                   referenceFile=key[0],checkId=key[1],referenceHash=key[2],
+                   line=check.get('line'),referenceFailures=failures)
+            return
         if check.get('type')=='ladder':
             try: from python_engine.ladder_requirements import evaluate as evaluate_ladder
             except ModuleNotFoundError: from ladder_requirements import evaluate as evaluate_ladder
@@ -447,19 +517,20 @@ def evaluate(root,rule,engine):
             evaluate_cross_checks(check,label)
             return
         if check.get('type')=='hmi' and check.get('acceptedHmiAlternatives'):
-            if hmi_scope is None:
+            if not datasource_check and hmi_scope is None:
                 try: from python_engine.project_info import local_project_details
                 except ModuleNotFoundError: from project_info import local_project_details
                 hmi_scope=local_project_details(root)
-            roots=hmi_roots();candidates=[{'file':check.get('file',''),'variant':(check.get('variants') or [{}])[0]}]+list(check.get('acceptedHmiAlternatives') or [])
+            roots=[] if datasource_check else hmi_roots();candidates=[{'file':check.get('file',''),'variant':(check.get('variants') or [{}])[0]}]+list(check.get('acceptedHmiAlternatives') or [])
             failed=[];chosen=None
-            if not roots:
+            if not datasource_check and not roots:
                 evidence.append({'check':label,'file':check.get('file',''),'status':'FAIL','actual':'No HMI screen folder containing a Pages directory was found. '+hmi_scope.get('configurationMessage','')})
             else:
                 for configuration_index,candidate in enumerate(candidates,1):
-                    paths=paths_in_hmi_scope(matching_hmi_files(root,candidate.get('file',''),engine,[candidate['variant']]))
+                    paths=matching_hmi_files(root,candidate.get('file',''),engine,[candidate['variant']])
+                    if not datasource_check:paths=paths_in_hmi_scope(paths)
                     if not paths:
-                        searched=', '.join(f'Logical/{name}' for name,_ in roots)
+                        searched='configured datasource file' if datasource_check else ', '.join(f'Logical/{name}' for name,_ in roots)
                         rows=[{'check':label,'file':candidate.get('file',''),'status':'FAIL','acceptedConfiguration':configuration_index,'expected':candidate['variant'],'actual':f'Configured HMI file was not found in the checked HMI folder(s): {searched}.'}]
                     else: rows=[hmi_candidate_path(path,candidate['variant'],label,configuration_index) for path in paths]
                     if rows and all(row['status']=='PASS' for row in rows): chosen=rows;break
@@ -480,7 +551,7 @@ def evaluate(root,rule,engine):
             return
         paths=(matching_hmi_files(root,check.get('file',''),engine,check.get('variants',[]))
                if check.get('type')=='hmi' else matching_files(root,check.get('file',''),engine))
-        if check.get('type')=='hmi':
+        if check.get('type')=='hmi' and not datasource_check:
             if hmi_scope is None:
                 try: from python_engine.project_info import local_project_details
                 except ModuleNotFoundError: from project_info import local_project_details
@@ -506,7 +577,7 @@ def evaluate(root,rule,engine):
                 for index,variant in enumerate(check.get('variants') or []):
                     entity=variant.get('entity','Control')
                     name=variant.get('name','')
-                    nodes=[n for n in xml.iter() if tag(n)==entity and (not name or (n.get('Name','').casefold().startswith(name.casefold()) if variant.get('nameMatch')=='prefix' else n.get('Name','').casefold()==name.casefold())) and (not variant.get('classId') or n.get('ClassId')==variant['classId'])]
+                    nodes=selected_nodes(xml,variant)
                     if not nodes:
                         available=[n for n in xml.iter() if tag(n)==entity]
                         selection=f'{entity} name {variant.get("nameMatch","exact")} {name!r}'

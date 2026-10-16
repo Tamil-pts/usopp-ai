@@ -1,0 +1,367 @@
+{
+  "id": "LH203390",
+  "project": "LH20_3390_REV1",
+  "rules": 75,
+  "module": "LAPFORMER-LH203390_v1.0.json",
+  "moduleSha256": "a02820c56d0c5a3a4abfb9762a6aa54bfe5c695b8948d6c7c43a8ade6c115a1f",
+  "referenceSha256": "2196f0d6b69b4b15e9c4267cc35bbb13fc0631ffc2ead9887f7c6cd168ac8a7d",
+  "referenceFileCount": 75,
+  "crossReferences": 12425,
+  "savedReferenceDefinitions": 5879,
+  "groupCodes": [
+    10,
+    11,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100,
+    110,
+    120,
+    130,
+    140,
+    150,
+    160,
+    170,
+    240,
+    250,
+    300,
+    410,
+    420,
+    500,
+    510,
+    520,
+    530,
+    600
+  ],
+  "referenceFiles": [
+    {
+      "file": "Logical/ah_usb/ah_usbCyclic.st",
+      "ruleId": "LP-LH203390-9F3B673561"
+    },
+    {
+      "file": "Logical/ah_usb/ah_usbInit.st",
+      "ruleId": "LP-LH203390-3E7289E563"
+    },
+    {
+      "file": "Logical/ala_help/ala_helpCyclic.ab",
+      "ruleId": "LP-LH203390-F2AF0C6053"
+    },
+    {
+      "file": "Logical/ala_help/ala_helpInit.ab",
+      "ruleId": "LP-LH203390-DB94B95D70"
+    },
+    {
+      "file": "Logical/alarm/alarmCyclic.ab",
+      "ruleId": "LP-LH203390-C63AB677EF"
+    },
+    {
+      "file": "Logical/autodrft/autodrftCyclic.st",
+      "ruleId": "LP-LH203390-03C8A39A35"
+    },
+    {
+      "file": "Logical/autodrft/autodrftInit.st",
+      "ruleId": "LP-LH203390-7C94C92D7C"
+    },
+    {
+      "file": "Logical/cal_roll/cal_rollCyclic.st",
+      "ruleId": "LP-LH203390-2422F6B3E6"
+    },
+    {
+      "file": "Logical/can/canCyclic.ab",
+      "ruleId": "LP-LH203390-4A5D812145"
+    },
+    {
+      "file": "Logical/can/canInit.ab",
+      "ruleId": "LP-LH203390-F9377205B9"
+    },
+    {
+      "file": "Logical/contbrit/contbritCyclic.ld",
+      "ruleId": "LP-LH203390-A86031B8CF"
+    },
+    {
+      "file": "Logical/contbrit/contbritInit.ld",
+      "ruleId": "LP-LH203390-EE4AE0B9BE"
+    },
+    {
+      "file": "Logical/cpu_temp/cpu_tempCyclic.ab",
+      "ruleId": "LP-LH203390-E1722AED2B"
+    },
+    {
+      "file": "Logical/creelsen/creelsenCyclic.ld",
+      "ruleId": "LP-LH203390-6F4CDB2A09"
+    },
+    {
+      "file": "Logical/crel_dyn/crel_dynCyclic.st",
+      "ruleId": "LP-LH203390-C542B27DAB"
+    },
+    {
+      "file": "Logical/crlfault/crlfaultCyclic.ab",
+      "ruleId": "LP-LH203390-FCDA38CE5C"
+    },
+    {
+      "file": "Logical/crlfault/crlfaultInit.ab",
+      "ruleId": "LP-LH203390-E397010F0C"
+    },
+    {
+      "file": "Logical/cv_calc/cv_calcCyclic.st",
+      "ruleId": "LP-LH203390-C141523500"
+    },
+    {
+      "file": "Logical/del_rate/del_rateCyclic.ab",
+      "ruleId": "LP-LH203390-81DE9D714D"
+    },
+    {
+      "file": "Logical/doff_rst/doff_rstCyclic.ab",
+      "ruleId": "LP-LH203390-1CE5E81C9C"
+    },
+    {
+      "file": "Logical/doffalam/doffalamCyclic.ld",
+      "ruleId": "LP-LH203390-8F58DD5695"
+    },
+    {
+      "file": "Logical/dofflog/dofflogCyclic.st",
+      "ruleId": "LP-LH203390-847D34744C"
+    },
+    {
+      "file": "Logical/draft/draftCyclic.ab",
+      "ruleId": "LP-LH203390-2BECF0D39C"
+    },
+    {
+      "file": "Logical/draft/draftInit.ab",
+      "ruleId": "LP-LH203390-C70F2F4B6C"
+    },
+    {
+      "file": "Logical/draftent/draftentCyclic.ld",
+      "ruleId": "LP-LH203390-AF5E8524C0"
+    },
+    {
+      "file": "Logical/encoder/encoderCyclic.ab",
+      "ruleId": "LP-LH203390-C89826DCF0"
+    },
+    {
+      "file": "Logical/encoder/encoderInit.ab",
+      "ruleId": "LP-LH203390-29CFF66F3B"
+    },
+    {
+      "file": "Logical/Energy/ap31x1/ap31x1Cyclic.st",
+      "ruleId": "LP-LH203390-F321435400"
+    },
+    {
+      "file": "Logical/Energy/d_report/d_reportCyclic.st",
+      "ruleId": "LP-LH203390-B36AB4CB1F"
+    },
+    {
+      "file": "Logical/Energy/fltmode/fltmodeCyclic.st",
+      "ruleId": "LP-LH203390-EF6AFDCBC2"
+    },
+    {
+      "file": "Logical/Energy/fltmode/fltmodeInit.st",
+      "ruleId": "LP-LH203390-85A34606B0"
+    },
+    {
+      "file": "Logical/gen/genCyclic.ab",
+      "ruleId": "LP-LH203390-B83FE4689E"
+    },
+    {
+      "file": "Logical/gen/genInit.ab",
+      "ruleId": "LP-LH203390-5C444A0B98"
+    },
+    {
+      "file": "Logical/genera/generaCyclic.ab",
+      "ruleId": "LP-LH203390-9AB4184F65"
+    },
+    {
+      "file": "Logical/gh_load/gh_loadCyclic.ld",
+      "ruleId": "LP-LH203390-4402739105"
+    },
+    {
+      "file": "Logical/hmicalib/hmicalibCyclic.ld",
+      "ruleId": "LP-LH203390-05C85E6379"
+    },
+    {
+      "file": "Logical/hms_nw_0/hms_nw_0Cyclic.st",
+      "ruleId": "LP-LH203390-75A4DD67DE"
+    },
+    {
+      "file": "Logical/ip_add/ip_addCyclic.ab",
+      "ruleId": "LP-LH203390-86D8C83243"
+    },
+    {
+      "file": "Logical/IP_ping/Icmp_Ping/Icmp_Ping.st",
+      "ruleId": "LP-LH203390-C7D8E9A6A5"
+    },
+    {
+      "file": "Logical/lap_time/lap_timeCyclic.ld",
+      "ruleId": "LP-LH203390-D89E42A43F"
+    },
+    {
+      "file": "Logical/lc_timer/lc_timerCyclic.ld",
+      "ruleId": "LP-LH203390-23E5BE9164"
+    },
+    {
+      "file": "Logical/ld_curve/ld_curveCyclic.ab",
+      "ruleId": "LP-LH203390-BD767AFDDA"
+    },
+    {
+      "file": "Logical/load/loadCyclic.ld",
+      "ruleId": "LP-LH203390-4863CC7FDF"
+    },
+    {
+      "file": "Logical/loadcell/loadcellCyclic.st",
+      "ruleId": "LP-LH203390-4D50939F74"
+    },
+    {
+      "file": "Logical/loadcell/loadcellInit.st",
+      "ruleId": "LP-LH203390-8B6F41C764"
+    },
+    {
+      "file": "Logical/loginout/loginoutCyclic.ab",
+      "ruleId": "LP-LH203390-628F124B70"
+    },
+    {
+      "file": "Logical/loginout/loginoutInit.ab",
+      "ruleId": "LP-LH203390-C269119103"
+    },
+    {
+      "file": "Logical/lub/lubCyclic.ld",
+      "ruleId": "LP-LH203390-D343ABBDB6"
+    },
+    {
+      "file": "Logical/mh_usb/mh_usbCyclic.st",
+      "ruleId": "LP-LH203390-1E543D9C10"
+    },
+    {
+      "file": "Logical/mh_usb/mh_usbInit.st",
+      "ruleId": "LP-LH203390-B52FC76B78"
+    },
+    {
+      "file": "Logical/modinv/modinvCyclic.ab",
+      "ruleId": "LP-LH203390-BD2C08C572"
+    },
+    {
+      "file": "Logical/modrtu/modrtuCyclic.ab",
+      "ruleId": "LP-LH203390-2266D9FAEE"
+    },
+    {
+      "file": "Logical/modrtu/modrtuInit.ab",
+      "ruleId": "LP-LH203390-A456427FD0"
+    },
+    {
+      "file": "Logical/password/passwordCyclic.st",
+      "ruleId": "LP-LH203390-63FAD1E66B"
+    },
+    {
+      "file": "Logical/password/passwordInit.st",
+      "ruleId": "LP-LH203390-585C98AC8D"
+    },
+    {
+      "file": "Logical/pfail/pfailCyclic.ab",
+      "ruleId": "LP-LH203390-CEA52A27A1"
+    },
+    {
+      "file": "Logical/prg1/prg1Cyclic.ld",
+      "ruleId": "LP-LH203390-5CB869FF8C"
+    },
+    {
+      "file": "Logical/prg2/prg2Cyclic.ld",
+      "ruleId": "LP-LH203390-A4DF4DD95F"
+    },
+    {
+      "file": "Logical/prg3/prg3Cyclic.ld",
+      "ruleId": "LP-LH203390-9E1755C079"
+    },
+    {
+      "file": "Logical/prg4/prg4Cyclic.ld",
+      "ruleId": "LP-LH203390-0292FDE2EA"
+    },
+    {
+      "file": "Logical/prg5/prg5Cyclic.ld",
+      "ruleId": "LP-LH203390-5B5ED5EC58"
+    },
+    {
+      "file": "Logical/prg6/prg6Cyclic.ld",
+      "ruleId": "LP-LH203390-F9DF6B3D9B"
+    },
+    {
+      "file": "Logical/prg7/prg7Cyclic.ld",
+      "ruleId": "LP-LH203390-076AFEE158"
+    },
+    {
+      "file": "Logical/scrnlock/scrnlockCyclic.ab",
+      "ruleId": "LP-LH203390-6EAF0CA525"
+    },
+    {
+      "file": "Logical/set_log/set_logCyclic.ab",
+      "ruleId": "LP-LH203390-941DC88D2E"
+    },
+    {
+      "file": "Logical/shift/shiftCyclic.ld",
+      "ruleId": "LP-LH203390-82C2DFBEF2"
+    },
+    {
+      "file": "Logical/Spinconnect/mms_MS/Main.st",
+      "ruleId": "LP-LH203390-ABA0009610"
+    },
+    {
+      "file": "Logical/Spinconnect/mms_nw_2/mms_nw_2Cyclic.st",
+      "ruleId": "LP-LH203390-B993B9B07F"
+    },
+    {
+      "file": "Logical/Spinconnect/mms_nw_r/mms_nw_rCyclic.st",
+      "ruleId": "LP-LH203390-34538CDD13"
+    },
+    {
+      "file": "Logical/Spinconnect/mms_nw_w/mms_nw_wCyclic.st",
+      "ruleId": "LP-LH203390-44C9537F26"
+    },
+    {
+      "file": "Logical/stop1/stop1Cyclic.ld",
+      "ruleId": "LP-LH203390-FDDF9DFF4E"
+    },
+    {
+      "file": "Logical/stop2/stop2Cyclic.ab",
+      "ruleId": "LP-LH203390-59CE53104D"
+    },
+    {
+      "file": "Logical/usb_val/usb_valCyclic.st",
+      "ruleId": "LP-LH203390-5D7771521D"
+    },
+    {
+      "file": "Logical/usb_val/usb_valInit.st",
+      "ruleId": "LP-LH203390-B6537F8F82"
+    },
+    {
+      "file": "Logical/WARNINGS_CLEAR/Main.st",
+      "ruleId": "LP-LH203390-FA9975566F"
+    }
+  ],
+  "parserNotices": [
+    {
+      "file": "Logical/can/canCyclic.ab",
+      "message": "Unmatched ENDIF at line 229; no branch relationship was guessed."
+    },
+    {
+      "file": "Logical/can/canCyclic.ab",
+      "message": "Unmatched ENDIF at line 230; no branch relationship was guessed."
+    },
+    {
+      "file": "Logical/can/canCyclic.ab",
+      "message": "Unclosed control structure at line 232; inspect this source."
+    },
+    {
+      "file": "Logical/pfail/pfailCyclic.ab",
+      "message": "Unmatched ENDIF at line 289; no branch relationship was guessed."
+    },
+    {
+      "file": "Logical/pfail/pfailCyclic.ab",
+      "message": "Unclosed control structure at line 511; inspect this source."
+    }
+  ],
+  "sourceConcerns": [],
+  "reviewStatus": "Source reference draft - engineer review required"
+}

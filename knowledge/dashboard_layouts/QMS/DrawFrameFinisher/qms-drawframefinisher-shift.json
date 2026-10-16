@@ -1,0 +1,3453 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "qms-drawframefinisher-qms-drawframefinisher-shift",
+  "name": "QMS / DrawFrameFinisher / Shift",
+  "service": "QMS",
+  "machine": "DrawFrameFinisher",
+  "view": "Shift",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "qms_DRAWFRAMEFINISHER_shift",
+    "sha256": "1991bbcabee6605d7aaa5559cc1b271074e6821d102041bb4d30d610d5bb341a"
+  },
+  "parameters": [
+    {
+      "id": "row-9",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 9
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-10",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-11",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 11
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Hank",
+        "Process Hank"
+      ],
+      "canonicalName": "Hank",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-16",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "U",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u%",
+        "u_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "u%",
+      "mongoKey": "u_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "U",
+        "U%"
+      ],
+      "canonicalName": "U%",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-20",
+      "name": "A%",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "a%",
+        "a_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "a%",
+      "mongoKey": "a_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "CV%(1m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(1m)",
+        "cv_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(1m)",
+      "mongoKey": "cv_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(1m)",
+        "CV 1m"
+      ],
+      "canonicalName": "CV%(1m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-26",
+      "name": "Spectogram",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectogram_stops",
+        "spectrogram_peak"
+      ],
+      "unit": "",
+      "tdEngineKey": "spectogram_stops",
+      "mongoKey": "spectrogram_peak",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Cumulative Thick place",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "no_of_thickplace in doff1 + no_of_thickplace in doff 2 + ... upto No of doffs",
+      "keys": [
+        "thick_place"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "thick_place",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Feed roller stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_roller_stops",
+        "feed_roller_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_roller_stops",
+      "mongoKey": "feed_roller_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Feed sensor stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_sensor_stops",
+        "feed_sensor_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_sensor_stops",
+      "mongoKey": "feed_sensor_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Scanning roller stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "scanning_roller_stops",
+        "scanning_roller_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "scanning_roller_stops",
+      "mongoKey": "scanning_roller_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Drafting/Calender Roller stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting/calender_roller_stops",
+        "drafting_calender_roller_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "drafting/calender_roller_stops",
+      "mongoKey": "drafting_calender_roller_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Web Guide stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "web_guide_stops",
+        "web_guide_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "web_guide_stops",
+      "mongoKey": "web_guide_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Coiler stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_stops",
+        "coiler_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_stops",
+      "mongoKey": "coiler_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Infeed Limit stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "infeed_limit_stops",
+        "infeed_limit_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "infeed_limit_stops",
+      "mongoKey": "infeed_limit_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Sliver Monitor stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_monitor_stops",
+      "mongoKey": "sliver_monitor_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "U Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "u_stops",
+      "mongoKey": "u_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "CV Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv_stops",
+      "mongoKey": "cv_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Thick Places Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_places_stops",
+        "thick_place_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "thick_places_stops",
+      "mongoKey": "thick_place_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "Servo Drive stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_drive_stops",
+        "servo_drive_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "servo_drive_stops",
+      "mongoKey": "servo_drive_stops",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "CVM%",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cvm%",
+        "cvm_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cvm%",
+      "mongoKey": "cvm_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CVM%",
+        "CVM %"
+      ],
+      "canonicalName": "CVM%",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-43",
+      "name": "CV%(2Cm)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(2cm)",
+        "cv_2cm_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(2cm)",
+      "mongoKey": "cv_2cm_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(2cm)",
+        "CV% (2cm)"
+      ],
+      "canonicalName": "CV%(2cm)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-44",
+      "name": "CV%(5Cm)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(5cm)",
+        "cv_5cm_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(5cm)",
+      "mongoKey": "cv_5cm_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 44
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(5cm)",
+        "CV 5cm%"
+      ],
+      "canonicalName": "CV%(5cm)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-45",
+      "name": "CV%(10Cm)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(10cm)",
+        "cv_10cm_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(10cm)",
+      "mongoKey": "cv_10cm_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 45
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(10cm)",
+        "CV 10cm"
+      ],
+      "canonicalName": "CV%(10cm)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-46",
+      "name": "CV%(25Cm)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(25cm)",
+        "cv_25cm_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(25cm)",
+      "mongoKey": "cv_25cm_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 46
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(25cm)",
+        "CV 25cm"
+      ],
+      "canonicalName": "CV%(25cm)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-47",
+      "name": "CV%(50Cm)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(50cm)",
+        "cv_50cm_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(50cm)",
+      "mongoKey": "cv_50cm_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 47
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(50cm)",
+        "CV 50cm"
+      ],
+      "canonicalName": "CV%(50cm)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-48",
+      "name": "CV%(1m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(1m)",
+        "cv_1m_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(1m)",
+      "mongoKey": "cv_1m_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 48
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(1m)",
+        "CV 1m"
+      ],
+      "canonicalName": "CV%(1m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-49",
+      "name": "CV%(3m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(3m)",
+        "cv_3m_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(3m)",
+      "mongoKey": "cv_3m_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(3m)",
+        "CV 3m"
+      ],
+      "canonicalName": "CV%(3m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-50",
+      "name": "CV%(5m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(5m)",
+        "cv_5m_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(5m)",
+      "mongoKey": "cv_5m_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(5m)",
+        "CV 5m"
+      ],
+      "canonicalName": "CV%(5m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-51",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 51
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-52",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 52
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-53",
+      "name": "Thick Place Per Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "thick_place / run_time_minute * 60",
+      "keys": [
+        "thickplace_hr"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "thickplace_hr",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 53
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-54",
+      "name": "Number Of doff",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffs",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffs",
+      "mongoKey": "no_of_doffs",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 54
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Number Of doff",
+        "Doffs"
+      ],
+      "canonicalName": "Number Of doff",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-55",
+      "name": "Thick place_AvgCan",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(thick_place )/ no_of_doffs",
+      "keys": [
+        "thick_place_AvgCan"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "thick_place_AvgCan",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 55
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-56",
+      "name": "Can Rejection",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_places_can_rejection_count",
+        "can_rejection_count"
+      ],
+      "unit": "",
+      "tdEngineKey": "thick_places_can_rejection_count",
+      "mongoKey": "can_rejection_count",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 56
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "Can Rejection",
+        "Thick place can rejection"
+      ],
+      "canonicalName": "Can Rejection",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-57",
+      "name": "Feed Weight  g/m",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_sliver_weight",
+        "feed_weight_gm"
+      ],
+      "unit": "",
+      "tdEngineKey": "feed_sliver_weight",
+      "mongoKey": "feed_weight_gm",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 57
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-58",
+      "name": "Sliver Trip count Dev",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_fault_dev_%",
+        "sliver_trip_count_dev_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_monitor_fault_dev_%",
+      "mongoKey": "sliver_trip_count_dev_percent",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 58
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "hank",
+        "count"
+      ],
+      "unit": "",
+      "mongoKey": "count",
+      "tdEngineKey": "hank",
+      "aliases": [
+        "Hank",
+        "Process Hank"
+      ],
+      "sourceAliases": [
+        "Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 16
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Hank",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-17",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot name"
+      ],
+      "sourceAliases": [
+        "Lot name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "U",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u",
+        "u%"
+      ],
+      "unit": "",
+      "mongoKey": "u%",
+      "tdEngineKey": "u",
+      "aliases": [
+        "U",
+        "U%"
+      ],
+      "sourceAliases": [
+        "U"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 18
+      },
+      "definitionPriority": 2,
+      "canonicalName": "U%",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-19",
+      "name": "Max U",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_u%"
+      ],
+      "unit": "",
+      "mongoKey": "max_u%",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max U"
+      ],
+      "sourceAliases": [
+        "Max U"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Min U",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_u%"
+      ],
+      "unit": "",
+      "mongoKey": "min_u%",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min U"
+      ],
+      "sourceAliases": [
+        "Min U"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "A%",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "a%"
+      ],
+      "unit": "",
+      "mongoKey": "a%",
+      "tdEngineKey": "",
+      "aliases": [
+        "A%"
+      ],
+      "sourceAliases": [
+        "A%"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Max A",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_a%"
+      ],
+      "unit": "",
+      "mongoKey": "max_a%",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max A"
+      ],
+      "sourceAliases": [
+        "Max A"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Min A",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_a%"
+      ],
+      "unit": "",
+      "mongoKey": "min_a%",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min A"
+      ],
+      "sourceAliases": [
+        "Min A"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "CV%(1m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(1m)",
+        "cv%"
+      ],
+      "unit": "",
+      "mongoKey": "cv%",
+      "tdEngineKey": "cv%(1m)",
+      "aliases": [
+        "CV%(1m)",
+        "CV 1m"
+      ],
+      "sourceAliases": [
+        "CV%(1m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 24
+      },
+      "definitionPriority": 2,
+      "canonicalName": "CV%(1m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-25",
+      "name": "Max CV",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_cv%"
+      ],
+      "unit": "",
+      "mongoKey": "max_cv%",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max CV"
+      ],
+      "sourceAliases": [
+        "Max CV"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Min CV",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_cv%"
+      ],
+      "unit": "",
+      "mongoKey": "min_cv%",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min CV"
+      ],
+      "sourceAliases": [
+        "Min CV"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Spectogram",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectogram",
+        "spectogram_peak"
+      ],
+      "unit": "",
+      "mongoKey": "spectogram_peak",
+      "tdEngineKey": "spectogram",
+      "aliases": [
+        "Spectogram"
+      ],
+      "sourceAliases": [
+        "Spectogram"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Max Spectogram Peak",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_spectogram_peak"
+      ],
+      "unit": "",
+      "mongoKey": "max_spectogram_peak",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max Spectogram Peak"
+      ],
+      "sourceAliases": [
+        "Max Spectogram Peak"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Min Spectogram Peak",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_spectogram_peak"
+      ],
+      "unit": "",
+      "mongoKey": "min_spectogram_peak",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min Spectogram Peak"
+      ],
+      "sourceAliases": [
+        "Min Spectogram Peak"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Thick place",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place",
+        "thick_place"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place",
+      "tdEngineKey": "thick_place",
+      "aliases": [
+        "Thick place",
+        "Cumulative Thick place",
+        "Thickplaces",
+        "Thick places"
+      ],
+      "sourceAliases": [
+        "Thick place",
+        "Cumulative Thick place"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 30
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Thick place",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-31",
+      "name": "Feed roller stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_roller_stops",
+        "feed_roller_stops"
+      ],
+      "unit": "",
+      "mongoKey": "feed_roller_stops",
+      "tdEngineKey": "feed_roller_stops",
+      "aliases": [
+        "Feed roller stops",
+        "Feed Roller Stoppage"
+      ],
+      "sourceAliases": [
+        "Feed roller stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 31
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Feed roller stops",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-32",
+      "name": "Feed sensor stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_sensor_stops",
+        "feed_sensor_stops"
+      ],
+      "unit": "",
+      "mongoKey": "feed_sensor_stops",
+      "tdEngineKey": "feed_sensor_stops",
+      "aliases": [
+        "Feed sensor stops",
+        "Feed Sensor Stoppage"
+      ],
+      "sourceAliases": [
+        "Feed sensor stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 32
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Feed sensor stops",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-33",
+      "name": "Scanning roller stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "scanning_roller_stops",
+        "scanning_roller_stops"
+      ],
+      "unit": "",
+      "mongoKey": "scanning_roller_stops",
+      "tdEngineKey": "scanning_roller_stops",
+      "aliases": [
+        "Scanning roller stops",
+        "Current_Shift_Scanning_roller_stops"
+      ],
+      "sourceAliases": [
+        "Scanning roller stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 33
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Scanning roller stops",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-34",
+      "name": "Drafting/Calender Roller stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting/calender_roller_stops",
+        "drafting/calender_roller_stops"
+      ],
+      "unit": "",
+      "mongoKey": "drafting/calender_roller_stops",
+      "tdEngineKey": "drafting/calender_roller_stops",
+      "aliases": [
+        "Drafting/Calender Roller stops"
+      ],
+      "sourceAliases": [
+        "Drafting/Calender Roller stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Web Guide stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "web_guide_stops",
+        "web_guide_stops"
+      ],
+      "unit": "",
+      "mongoKey": "web_guide_stops",
+      "tdEngineKey": "web_guide_stops",
+      "aliases": [
+        "Web Guide stops",
+        "Web guide Stoppage"
+      ],
+      "sourceAliases": [
+        "Web Guide stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 35
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Web Guide stops",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-36",
+      "name": "Coiler stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_stops",
+        "coiler_stops"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_stops",
+      "tdEngineKey": "coiler_stops",
+      "aliases": [
+        "Coiler stops",
+        "Coiler Stoppage"
+      ],
+      "sourceAliases": [
+        "Coiler stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 36
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Coiler stops",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-37",
+      "name": "Infeed Limit stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "infeed_limit_stops",
+        "infeed_limit_stops"
+      ],
+      "unit": "",
+      "mongoKey": "infeed_limit_stops",
+      "tdEngineKey": "infeed_limit_stops",
+      "aliases": [
+        "Infeed Limit stops"
+      ],
+      "sourceAliases": [
+        "Infeed Limit stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Sliver Monitor stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "mongoKey": "sliver_monitor_stops",
+      "tdEngineKey": "sliver_monitor_stops",
+      "aliases": [
+        "Sliver Monitor stops",
+        "Current_Shift_Sliver_Monitor_stops"
+      ],
+      "sourceAliases": [
+        "Sliver Monitor stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 38
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Sliver Monitor stops",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-39",
+      "name": "U Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "mongoKey": "u_stops",
+      "tdEngineKey": "u_stops",
+      "aliases": [
+        "U Stops"
+      ],
+      "sourceAliases": [
+        "U Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "CV Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "mongoKey": "cv_stops",
+      "tdEngineKey": "cv_stops",
+      "aliases": [
+        "CV Stops"
+      ],
+      "sourceAliases": [
+        "CV Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Thick Places Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_places_stops",
+        "thick_places_stops"
+      ],
+      "unit": "",
+      "mongoKey": "thick_places_stops",
+      "tdEngineKey": "thick_places_stops",
+      "aliases": [
+        "Thick Places Stops"
+      ],
+      "sourceAliases": [
+        "Thick Places Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Thick Places Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_places_stops",
+        "thick_places_stops"
+      ],
+      "unit": "",
+      "mongoKey": "thick_places_stops",
+      "tdEngineKey": "thick_places_stops",
+      "aliases": [
+        "Thick Places Stops"
+      ],
+      "sourceAliases": [
+        "Thick Places Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Servo Drive stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_drive_stops",
+        "servo_drive_stops"
+      ],
+      "unit": "",
+      "mongoKey": "servo_drive_stops",
+      "tdEngineKey": "servo_drive_stops",
+      "aliases": [
+        "Servo Drive stops",
+        "Current_Shift_Servo_Drive_stops"
+      ],
+      "sourceAliases": [
+        "Servo Drive stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 43
+      },
+      "definitionPriority": 2,
+      "canonicalName": "Servo Drive stops",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-44",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 44
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-45",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 45
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-46",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 46
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-47",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 47
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-48",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour(HH:MM)",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 48
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-49",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 49
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-50",
+      "name": "Spectogram",
+      "dataType": "REAL",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectogram_stops",
+        "spectrogram_peak"
+      ],
+      "unit": "",
+      "mongoKey": "spectrogram_peak",
+      "tdEngineKey": "spectogram_stops",
+      "aliases": [
+        "Spectogram"
+      ],
+      "sourceAliases": [
+        "Spectogram"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 50
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-51",
+      "name": "Feed roller stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_roller_stops",
+        "feed_roller_stops"
+      ],
+      "unit": "",
+      "mongoKey": "feed_roller_stops",
+      "tdEngineKey": "feed_roller_stops",
+      "aliases": [
+        "Feed roller stops"
+      ],
+      "sourceAliases": [
+        "Feed roller stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 51
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-52",
+      "name": "Feed sensor stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "feed_sensor_stops",
+        "feed_sensor_stops"
+      ],
+      "unit": "",
+      "mongoKey": "feed_sensor_stops",
+      "tdEngineKey": "feed_sensor_stops",
+      "aliases": [
+        "Feed sensor stops"
+      ],
+      "sourceAliases": [
+        "Feed sensor stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 52
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-53",
+      "name": "Scanning roller stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "scanning_roller_stops",
+        "scanning_roller_stops"
+      ],
+      "unit": "",
+      "mongoKey": "scanning_roller_stops",
+      "tdEngineKey": "scanning_roller_stops",
+      "aliases": [
+        "Scanning roller stops"
+      ],
+      "sourceAliases": [
+        "Scanning roller stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 53
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-54",
+      "name": "Drafting/Calender Roller stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "drafting/calender_roller_stops",
+        "drafting_calender_roller_stops"
+      ],
+      "unit": "",
+      "mongoKey": "drafting_calender_roller_stops",
+      "tdEngineKey": "drafting/calender_roller_stops",
+      "aliases": [
+        "Drafting/Calender Roller stops"
+      ],
+      "sourceAliases": [
+        "Drafting/Calender Roller stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 54
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-55",
+      "name": "Web Guide stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "web_guide_stops",
+        "web_guide_stops"
+      ],
+      "unit": "",
+      "mongoKey": "web_guide_stops",
+      "tdEngineKey": "web_guide_stops",
+      "aliases": [
+        "Web Guide stops"
+      ],
+      "sourceAliases": [
+        "Web Guide stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 55
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-56",
+      "name": "Coiler stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_stops",
+        "coiler_stops"
+      ],
+      "unit": "",
+      "mongoKey": "coiler_stops",
+      "tdEngineKey": "coiler_stops",
+      "aliases": [
+        "Coiler stops"
+      ],
+      "sourceAliases": [
+        "Coiler stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 56
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-57",
+      "name": "Infeed Limit stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "infeed_limit_stops",
+        "infeed_limit_stops"
+      ],
+      "unit": "",
+      "mongoKey": "infeed_limit_stops",
+      "tdEngineKey": "infeed_limit_stops",
+      "aliases": [
+        "Infeed Limit stops"
+      ],
+      "sourceAliases": [
+        "Infeed Limit stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 57
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-58",
+      "name": "Sliver Monitor stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "mongoKey": "sliver_monitor_stops",
+      "tdEngineKey": "sliver_monitor_stops",
+      "aliases": [
+        "Sliver Monitor stops"
+      ],
+      "sourceAliases": [
+        "Sliver Monitor stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 58
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-59",
+      "name": "U Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "mongoKey": "u_stops",
+      "tdEngineKey": "u_stops",
+      "aliases": [
+        "U Stops"
+      ],
+      "sourceAliases": [
+        "U Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 59
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-60",
+      "name": "CV Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "mongoKey": "cv_stops",
+      "tdEngineKey": "cv_stops",
+      "aliases": [
+        "CV Stops"
+      ],
+      "sourceAliases": [
+        "CV Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 60
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-61",
+      "name": "Thick Places Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_places_stops",
+        "thick_place_stops"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place_stops",
+      "tdEngineKey": "thick_places_stops",
+      "aliases": [
+        "Thick Places Stops"
+      ],
+      "sourceAliases": [
+        "Thick Places Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 61
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-62",
+      "name": "Servo Drive stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        50
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_drive_stops",
+        "servo_drive_stops"
+      ],
+      "unit": "",
+      "mongoKey": "servo_drive_stops",
+      "tdEngineKey": "servo_drive_stops",
+      "aliases": [
+        "Servo Drive stops"
+      ],
+      "sourceAliases": [
+        "Servo Drive stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/DRAWFRAMEFINISHER.json",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "row": 62
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 18,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 19,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 24,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 25,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 16,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 30,
+      "name": "Feed roller stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 31,
+      "name": "Feed sensor stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 32,
+      "name": "Scanning roller stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 33,
+      "name": "Drafting/Calender Roller stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 34,
+      "name": "Web Guide stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 35,
+      "name": "Coiler stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 36,
+      "name": "Infeed Limit stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 37,
+      "name": "Sliver Monitor stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 38,
+      "name": "U Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 39,
+      "name": "CV Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 40,
+      "name": "Thick Places Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 41,
+      "name": "Servo Drive stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Hank",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-15"
+      ]
+    },
+    {
+      "title": "CV%(1m)",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-23"
+      ]
+    },
+    {
+      "title": "Cumulative Thick place",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-29"
+      ]
+    },
+    {
+      "title": "CVM%",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-42"
+      ]
+    },
+    {
+      "title": "CV%(2Cm)",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-43"
+      ]
+    },
+    {
+      "title": "CV%(5Cm)",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-44"
+      ]
+    },
+    {
+      "title": "Hank trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-15"
+      ]
+    },
+    {
+      "title": "Shift readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-9",
+        "row-10",
+        "row-11",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-17",
+        "row-20",
+        "row-23",
+        "row-26",
+        "row-29"
+      ]
+    },
+    {
+      "title": "Shift readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-42",
+        "row-43",
+        "row-44",
+        "row-45",
+        "row-46",
+        "row-47",
+        "row-48",
+        "row-49",
+        "row-50",
+        "row-51",
+        "row-52",
+        "row-53"
+      ]
+    },
+    {
+      "title": "Shift readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-54",
+        "row-55",
+        "row-56",
+        "row-57",
+        "row-58"
+      ]
+    }
+  ]
+}

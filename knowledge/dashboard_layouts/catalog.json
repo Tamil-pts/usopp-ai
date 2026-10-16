@@ -1,0 +1,2237 @@
+{
+  "schemaVersion": 1,
+  "templates": [
+    {
+      "id": "cms-carding-cms-carding-minutes-time-seri",
+      "name": "CMS / Carding / Minute trend",
+      "service": "CMS",
+      "machine": "Carding",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_CARDING_minutes_time_seri",
+        "sha256": "6cd78349fa57f17cf27ecdc43a029e557a6f1cc16c04e344f2766ab879d5b900"
+      },
+      "file": "CMS/Carding/cms-carding-minutes-time-seri.json",
+      "parameterCount": 212,
+      "displayCount": 62,
+      "widgetCount": 13,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-carding-cms-carding-shift-live",
+      "name": "CMS / Carding / LIVE",
+      "service": "CMS",
+      "machine": "Carding",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_CARDING_shift_live",
+        "sha256": "6cd78349fa57f17cf27ecdc43a029e557a6f1cc16c04e344f2766ab879d5b900"
+      },
+      "file": "CMS/Carding/cms-carding-shift-live.json",
+      "parameterCount": 212,
+      "displayCount": 62,
+      "widgetCount": 13,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-carding-cms-carding-hourwise",
+      "name": "CMS / Carding / Hourly",
+      "service": "CMS",
+      "machine": "Carding",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_CARDING_hourwise",
+        "sha256": "6cd78349fa57f17cf27ecdc43a029e557a6f1cc16c04e344f2766ab879d5b900"
+      },
+      "file": "CMS/Carding/cms-carding-hourwise.json",
+      "parameterCount": 404,
+      "displayCount": 158,
+      "widgetCount": 21,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-carding-cms-carding-shift",
+      "name": "CMS / Carding / Shift",
+      "service": "CMS",
+      "machine": "Carding",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_CARDING_shift",
+        "sha256": "6cd78349fa57f17cf27ecdc43a029e557a6f1cc16c04e344f2766ab879d5b900"
+      },
+      "file": "CMS/Carding/cms-carding-shift.json",
+      "parameterCount": 387,
+      "displayCount": 197,
+      "widgetCount": 24,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-ringframe-cms-ringframe-shift-live",
+      "name": "CMS / RingFrame / LIVE",
+      "service": "CMS",
+      "machine": "RingFrame",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_RINGFRAME_shift_live",
+        "sha256": "7afbe4fdd5a3ebd831072d10ca829fb24b17c39c8b833339dc054fdf4746ca06"
+      },
+      "file": "CMS/RingFrame/cms-ringframe-shift-live.json",
+      "parameterCount": 271,
+      "displayCount": 92,
+      "widgetCount": 15,
+      "excludedCount": 10
+    },
+    {
+      "id": "cms-ringframe-cms-ringframe-minutes-time-seri",
+      "name": "CMS / RingFrame / Minute trend",
+      "service": "CMS",
+      "machine": "RingFrame",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_RINGFRAME_minutes_time_seri",
+        "sha256": "7afbe4fdd5a3ebd831072d10ca829fb24b17c39c8b833339dc054fdf4746ca06"
+      },
+      "file": "CMS/RingFrame/cms-ringframe-minutes-time-seri.json",
+      "parameterCount": 251,
+      "displayCount": 91,
+      "widgetCount": 15,
+      "excludedCount": 9
+    },
+    {
+      "id": "cms-ringframe-cms-ringframe-hourwise",
+      "name": "CMS / RingFrame / Hourly",
+      "service": "CMS",
+      "machine": "RingFrame",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_RINGFRAME_hourwise",
+        "sha256": "7afbe4fdd5a3ebd831072d10ca829fb24b17c39c8b833339dc054fdf4746ca06"
+      },
+      "file": "CMS/RingFrame/cms-ringframe-hourwise.json",
+      "parameterCount": 597,
+      "displayCount": 224,
+      "widgetCount": 26,
+      "excludedCount": 9
+    },
+    {
+      "id": "cms-ringframe-cms-ringframe-shift",
+      "name": "CMS / RingFrame / Shift",
+      "service": "CMS",
+      "machine": "RingFrame",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_RINGFRAME_shift",
+        "sha256": "7afbe4fdd5a3ebd831072d10ca829fb24b17c39c8b833339dc054fdf4746ca06"
+      },
+      "file": "CMS/RingFrame/cms-ringframe-shift.json",
+      "parameterCount": 627,
+      "displayCount": 254,
+      "widgetCount": 29,
+      "excludedCount": 9
+    },
+    {
+      "id": "cms-lapformer-cms-lapformer-minutes-time-seri",
+      "name": "CMS / LapFormer / Minute trend",
+      "service": "CMS",
+      "machine": "LapFormer",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_minutes_time_seri",
+        "sha256": "159134c61ae95e7bac32584ac22c20a17e14b6d7494aa05bd84d387bf83c1c92"
+      },
+      "file": "CMS/LapFormer/cms-lapformer-minutes-time-seri.json",
+      "parameterCount": 80,
+      "displayCount": 26,
+      "widgetCount": 10,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-lapformer-cms-lapformer-shift-live",
+      "name": "CMS / LapFormer / LIVE",
+      "service": "CMS",
+      "machine": "LapFormer",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_shift_live",
+        "sha256": "159134c61ae95e7bac32584ac22c20a17e14b6d7494aa05bd84d387bf83c1c92"
+      },
+      "file": "CMS/LapFormer/cms-lapformer-shift-live.json",
+      "parameterCount": 81,
+      "displayCount": 27,
+      "widgetCount": 10,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-lapformer-cms-lapformer-hourwise",
+      "name": "CMS / LapFormer / Hourly",
+      "service": "CMS",
+      "machine": "LapFormer",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_hourwise",
+        "sha256": "159134c61ae95e7bac32584ac22c20a17e14b6d7494aa05bd84d387bf83c1c92"
+      },
+      "file": "CMS/LapFormer/cms-lapformer-hourwise.json",
+      "parameterCount": 148,
+      "displayCount": 61,
+      "widgetCount": 13,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-lapformer-cms-lapformer-shift",
+      "name": "CMS / LapFormer / Shift",
+      "service": "CMS",
+      "machine": "LapFormer",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_LAPFORMER_shift",
+        "sha256": "159134c61ae95e7bac32584ac22c20a17e14b6d7494aa05bd84d387bf83c1c92"
+      },
+      "file": "CMS/LapFormer/cms-lapformer-shift.json",
+      "parameterCount": 133,
+      "displayCount": 68,
+      "widgetCount": 13,
+      "excludedCount": 9
+    },
+    {
+      "id": "cms-comber-cms-comber-shift-live",
+      "name": "CMS / Comber / LIVE",
+      "service": "CMS",
+      "machine": "Comber",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_shift_live",
+        "sha256": "eabaafda264713d7a414ebcec56f0dcdd12709c1423b108897073c4ea231946b"
+      },
+      "file": "CMS/Comber/cms-comber-shift-live.json",
+      "parameterCount": 83,
+      "displayCount": 29,
+      "widgetCount": 10,
+      "excludedCount": 7
+    },
+    {
+      "id": "cms-comber-cms-comber-hourwise",
+      "name": "CMS / Comber / Hourly",
+      "service": "CMS",
+      "machine": "Comber",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_hourwise",
+        "sha256": "eabaafda264713d7a414ebcec56f0dcdd12709c1423b108897073c4ea231946b"
+      },
+      "file": "CMS/Comber/cms-comber-hourwise.json",
+      "parameterCount": 160,
+      "displayCount": 67,
+      "widgetCount": 13,
+      "excludedCount": 7
+    },
+    {
+      "id": "cms-comber-cms-comber-shift",
+      "name": "CMS / Comber / Shift",
+      "service": "CMS",
+      "machine": "Comber",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_shift",
+        "sha256": "eabaafda264713d7a414ebcec56f0dcdd12709c1423b108897073c4ea231946b"
+      },
+      "file": "CMS/Comber/cms-comber-shift.json",
+      "parameterCount": 107,
+      "displayCount": 52,
+      "widgetCount": 12,
+      "excludedCount": 7
+    },
+    {
+      "id": "cms-comber-cms-comber-minutes-time-seri",
+      "name": "CMS / Comber / Minute trend",
+      "service": "CMS",
+      "machine": "Comber",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_COMBER_minutes_time_seri",
+        "sha256": "eabaafda264713d7a414ebcec56f0dcdd12709c1423b108897073c4ea231946b"
+      },
+      "file": "CMS/Comber/cms-comber-minutes-time-seri.json",
+      "parameterCount": 110,
+      "displayCount": 43,
+      "widgetCount": 11,
+      "excludedCount": 7
+    },
+    {
+      "id": "cms-drawframebreaker-cms-dfbreaker-minutes",
+      "name": "CMS / DrawFrameBreaker / Minute trend",
+      "service": "CMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFBreaker_minutes",
+        "sha256": "176c4de0485713c87c8304ca7a3cb8822ea891bba5064fac1c3dc09969d2481a"
+      },
+      "file": "CMS/DrawFrameBreaker/cms-dfbreaker-minutes.json",
+      "parameterCount": 139,
+      "displayCount": 41,
+      "widgetCount": 11,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-drawframebreaker-cms-dfbreaker-shift-live",
+      "name": "CMS / DrawFrameBreaker / LIVE",
+      "service": "CMS",
+      "machine": "DrawFrameBreaker",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFBreaker_shift_live",
+        "sha256": "176c4de0485713c87c8304ca7a3cb8822ea891bba5064fac1c3dc09969d2481a"
+      },
+      "file": "CMS/DrawFrameBreaker/cms-dfbreaker-shift-live.json",
+      "parameterCount": 144,
+      "displayCount": 44,
+      "widgetCount": 11,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-drawframebreaker-cms-dfbreaker-hourwise",
+      "name": "CMS / DrawFrameBreaker / Hourly",
+      "service": "CMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFBreaker_hourwise",
+        "sha256": "176c4de0485713c87c8304ca7a3cb8822ea891bba5064fac1c3dc09969d2481a"
+      },
+      "file": "CMS/DrawFrameBreaker/cms-dfbreaker-hourwise.json",
+      "parameterCount": 277,
+      "displayCount": 110,
+      "widgetCount": 17,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-drawframebreaker-cms-dfbreaker-shift",
+      "name": "CMS / DrawFrameBreaker / Shift",
+      "service": "CMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFBreaker_shift",
+        "sha256": "176c4de0485713c87c8304ca7a3cb8822ea891bba5064fac1c3dc09969d2481a"
+      },
+      "file": "CMS/DrawFrameBreaker/cms-dfbreaker-shift.json",
+      "parameterCount": 212,
+      "displayCount": 110,
+      "widgetCount": 17,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-drawframefinisher-cms-dffinisher-minutes",
+      "name": "CMS / DrawFrameFinisher / Minute trend",
+      "service": "CMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_minutes",
+        "sha256": "0c9d451366e5ac448fb69e90a44af6140f79dfc79d0b884faa39459e612b0714"
+      },
+      "file": "CMS/DrawFrameFinisher/cms-dffinisher-minutes.json",
+      "parameterCount": 139,
+      "displayCount": 41,
+      "widgetCount": 11,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-drawframefinisher-cms-dffinisher-shift-live",
+      "name": "CMS / DrawFrameFinisher / LIVE",
+      "service": "CMS",
+      "machine": "DrawFrameFinisher",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_shift_live",
+        "sha256": "0c9d451366e5ac448fb69e90a44af6140f79dfc79d0b884faa39459e612b0714"
+      },
+      "file": "CMS/DrawFrameFinisher/cms-dffinisher-shift-live.json",
+      "parameterCount": 144,
+      "displayCount": 44,
+      "widgetCount": 11,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-drawframefinisher-cms-dffinisher-hourwise",
+      "name": "CMS / DrawFrameFinisher / Hourly",
+      "service": "CMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_hourwise",
+        "sha256": "0c9d451366e5ac448fb69e90a44af6140f79dfc79d0b884faa39459e612b0714"
+      },
+      "file": "CMS/DrawFrameFinisher/cms-dffinisher-hourwise.json",
+      "parameterCount": 278,
+      "displayCount": 110,
+      "widgetCount": 17,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-drawframefinisher-cms-dffinisher-shift",
+      "name": "CMS / DrawFrameFinisher / Shift",
+      "service": "CMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_DFFinisher_shift",
+        "sha256": "0c9d451366e5ac448fb69e90a44af6140f79dfc79d0b884faa39459e612b0714"
+      },
+      "file": "CMS/DrawFrameFinisher/cms-dffinisher-shift.json",
+      "parameterCount": 211,
+      "displayCount": 110,
+      "widgetCount": 17,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-speedframe-cms-speedframe-minutes",
+      "name": "CMS / SpeedFrame / Minute trend",
+      "service": "CMS",
+      "machine": "SpeedFrame",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_SpeedFrame_minutes",
+        "sha256": "4f98867961df1b5b9a8323f99f9903ef9958df65ce9e5807898448f73f29837f"
+      },
+      "file": "CMS/SpeedFrame/cms-speedframe-minutes.json",
+      "parameterCount": 177,
+      "displayCount": 51,
+      "widgetCount": 12,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-speedframe-cms-speedframe-shift-live",
+      "name": "CMS / SpeedFrame / LIVE",
+      "service": "CMS",
+      "machine": "SpeedFrame",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_SpeedFrame_shift_live",
+        "sha256": "4f98867961df1b5b9a8323f99f9903ef9958df65ce9e5807898448f73f29837f"
+      },
+      "file": "CMS/SpeedFrame/cms-speedframe-shift-live.json",
+      "parameterCount": 189,
+      "displayCount": 55,
+      "widgetCount": 12,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-speedframe-cms-speedframe-hourwise",
+      "name": "CMS / SpeedFrame / Hourly",
+      "service": "CMS",
+      "machine": "SpeedFrame",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_SpeedFrame_hourwise",
+        "sha256": "4f98867961df1b5b9a8323f99f9903ef9958df65ce9e5807898448f73f29837f"
+      },
+      "file": "CMS/SpeedFrame/cms-speedframe-hourwise.json",
+      "parameterCount": 348,
+      "displayCount": 135,
+      "widgetCount": 19,
+      "excludedCount": 8
+    },
+    {
+      "id": "cms-speedframe-cms-speedframe-shift",
+      "name": "CMS / SpeedFrame / Shift",
+      "service": "CMS",
+      "machine": "SpeedFrame",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "cms_SpeedFrame_shift",
+        "sha256": "4f98867961df1b5b9a8323f99f9903ef9958df65ce9e5807898448f73f29837f"
+      },
+      "file": "CMS/SpeedFrame/cms-speedframe-shift.json",
+      "parameterCount": 282,
+      "displayCount": 148,
+      "widgetCount": 20,
+      "excludedCount": 8
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-shift-live",
+      "name": "PMS / RingFrame / LIVE",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_shift_live",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-shift-live.json",
+      "parameterCount": 150,
+      "displayCount": 52,
+      "widgetCount": 12,
+      "excludedCount": 17
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-shift",
+      "name": "PMS / RingFrame / Shift",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_shift",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-shift.json",
+      "parameterCount": 134,
+      "displayCount": 45,
+      "widgetCount": 11,
+      "excludedCount": 15
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-doff",
+      "name": "PMS / RingFrame / Doff",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Doff",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_doff",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-doff.json",
+      "parameterCount": 77,
+      "displayCount": 29,
+      "widgetCount": 10,
+      "excludedCount": 10
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-hours",
+      "name": "PMS / RingFrame / Hourly",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_hours",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-hours.json",
+      "parameterCount": 104,
+      "displayCount": 34,
+      "widgetCount": 10,
+      "excludedCount": 11
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-minutes-time-seri",
+      "name": "PMS / RingFrame / Minute trend",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_minutes_time_seri",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-minutes-time-seri.json",
+      "parameterCount": 89,
+      "displayCount": 28,
+      "widgetCount": 9,
+      "excludedCount": 11
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-speed-pattern",
+      "name": "PMS / RingFrame / Speed pattern",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Speed pattern",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_speed_pattern",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-speed-pattern.json",
+      "parameterCount": 92,
+      "displayCount": 39,
+      "widgetCount": 4,
+      "excludedCount": 7
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-raw-data",
+      "name": "PMS / RingFrame / Raw data",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Raw data",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_raw_data",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-raw-data.json",
+      "parameterCount": 11,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 29
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-events",
+      "name": "PMS / RingFrame / Events",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Events",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_events",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-events.json",
+      "parameterCount": 7,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-stoppages",
+      "name": "PMS / RingFrame / Stoppages",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Stoppages",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_stoppages",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-stoppages.json",
+      "parameterCount": 6,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-ringframe-pms-ringframe-faults",
+      "name": "PMS / RingFrame / Faults",
+      "service": "PMS",
+      "machine": "RingFrame",
+      "view": "Faults",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_RINGFRAME_faults",
+        "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      },
+      "file": "PMS/RingFrame/pms-ringframe-faults.json",
+      "parameterCount": 2,
+      "displayCount": 0,
+      "widgetCount": 0,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-shift-live",
+      "name": "PMS / SpeedFrame / LIVE",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_shift_live",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-shift-live.json",
+      "parameterCount": 145,
+      "displayCount": 51,
+      "widgetCount": 12,
+      "excludedCount": 12
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-shift",
+      "name": "PMS / SpeedFrame / Shift",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_shift",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-shift.json",
+      "parameterCount": 137,
+      "displayCount": 47,
+      "widgetCount": 11,
+      "excludedCount": 12
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-doff",
+      "name": "PMS / SpeedFrame / Doff",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Doff",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-doff.json",
+      "parameterCount": 101,
+      "displayCount": 41,
+      "widgetCount": 11,
+      "excludedCount": 8
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-hours",
+      "name": "PMS / SpeedFrame / Hourly",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_hours",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-hours.json",
+      "parameterCount": 120,
+      "displayCount": 39,
+      "widgetCount": 11,
+      "excludedCount": 13
+    },
+    {
+      "id": "pms-speedframe-pms-speedfram-minutes-time-seri",
+      "name": "PMS / SpeedFrame / Minute trend",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAM_minutes_time_seri",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedfram-minutes-time-seri.json",
+      "parameterCount": 116,
+      "displayCount": 41,
+      "widgetCount": 10,
+      "excludedCount": 12
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-speed-pattern",
+      "name": "PMS / SpeedFrame / Speed pattern",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Speed pattern",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-speed-pattern.json",
+      "parameterCount": 71,
+      "displayCount": 29,
+      "widgetCount": 3,
+      "excludedCount": 7
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-raw-data",
+      "name": "PMS / SpeedFrame / Raw data",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Raw data",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_raw_data",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-raw-data.json",
+      "parameterCount": 11,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 31
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-events",
+      "name": "PMS / SpeedFrame / Events",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Events",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_events",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-events.json",
+      "parameterCount": 7,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-stoppages",
+      "name": "PMS / SpeedFrame / Stoppages",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Stoppages",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_stoppages",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-stoppages.json",
+      "parameterCount": 6,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-speedframe-pms-speedframe-faults",
+      "name": "PMS / SpeedFrame / Faults",
+      "service": "PMS",
+      "machine": "SpeedFrame",
+      "view": "Faults",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_faults",
+        "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+      },
+      "file": "PMS/SpeedFrame/pms-speedframe-faults.json",
+      "parameterCount": 7,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframefinishe-shift-live",
+      "name": "PMS / DrawFrameFinisher / LIVE",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframefinishe-shift-live.json",
+      "parameterCount": 160,
+      "displayCount": 60,
+      "widgetCount": 12,
+      "excludedCount": 10
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframefinisher-shift",
+      "name": "PMS / DrawFrameFinisher / Shift",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEFINISHER_shift",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframefinisher-shift.json",
+      "parameterCount": 165,
+      "displayCount": 60,
+      "widgetCount": 12,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframefinisher-doff",
+      "name": "PMS / DrawFrameFinisher / Doff",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Doff",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEFINISHER_doff",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframefinisher-doff.json",
+      "parameterCount": 60,
+      "displayCount": 6,
+      "widgetCount": 5,
+      "excludedCount": 22
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframefinisher-hours",
+      "name": "PMS / DrawFrameFinisher / Hourly",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEFINISHER_hours",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframefinisher-hours.json",
+      "parameterCount": 128,
+      "displayCount": 49,
+      "widgetCount": 12,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframe-minutes-time-seri",
+      "name": "PMS / DrawFrameFinisher / Minute trend",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAME_minutes_time_seri",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframe-minutes-time-seri.json",
+      "parameterCount": 85,
+      "displayCount": 30,
+      "widgetCount": 10,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframefinisher-raw-data",
+      "name": "PMS / DrawFrameFinisher / Raw data",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Raw data",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframefinisher-raw-data.json",
+      "parameterCount": 12,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 36
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframefinisher-events",
+      "name": "PMS / DrawFrameFinisher / Events",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Events",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEFINISHER_events",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframefinisher-events.json",
+      "parameterCount": 11,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframefinisher-stoppages",
+      "name": "PMS / DrawFrameFinisher / Stoppages",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Stoppages",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEFINISHER_stoppages",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframefinisher-stoppages.json",
+      "parameterCount": 6,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-drawframefinisher-pms-drawframefinisher-faults",
+      "name": "PMS / DrawFrameFinisher / Faults",
+      "service": "PMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Faults",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEFINISHER_faults",
+        "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
+      },
+      "file": "PMS/DrawFrameFinisher/pms-drawframefinisher-faults.json",
+      "parameterCount": 7,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-comber-pms-comber-shift",
+      "name": "PMS / Comber / Shift",
+      "service": "PMS",
+      "machine": "Comber",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift",
+        "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+      },
+      "file": "PMS/Comber/pms-comber-shift.json",
+      "parameterCount": 117,
+      "displayCount": 45,
+      "widgetCount": 10,
+      "excludedCount": 8
+    },
+    {
+      "id": "pms-comber-pms-comber-shift-live",
+      "name": "PMS / Comber / LIVE",
+      "service": "PMS",
+      "machine": "Comber",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_shift_live",
+        "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+      },
+      "file": "PMS/Comber/pms-comber-shift-live.json",
+      "parameterCount": 117,
+      "displayCount": 46,
+      "widgetCount": 10,
+      "excludedCount": 8
+    },
+    {
+      "id": "pms-comber-pms-comber-doff",
+      "name": "PMS / Comber / Doff",
+      "service": "PMS",
+      "machine": "Comber",
+      "view": "Doff",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_doff",
+        "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+      },
+      "file": "PMS/Comber/pms-comber-doff.json",
+      "parameterCount": 73,
+      "displayCount": 23,
+      "widgetCount": 9,
+      "excludedCount": 8
+    },
+    {
+      "id": "pms-comber-comber-minute-seri",
+      "name": "PMS / Comber / Minute trend",
+      "service": "PMS",
+      "machine": "Comber",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "COMBER_minute_seri",
+        "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+      },
+      "file": "PMS/Comber/comber-minute-seri.json",
+      "parameterCount": 74,
+      "displayCount": 28,
+      "widgetCount": 9,
+      "excludedCount": 8
+    },
+    {
+      "id": "pms-comber-pms-comber-hours",
+      "name": "PMS / Comber / Hourly",
+      "service": "PMS",
+      "machine": "Comber",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_hours",
+        "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+      },
+      "file": "PMS/Comber/pms-comber-hours.json",
+      "parameterCount": 103,
+      "displayCount": 40,
+      "widgetCount": 10,
+      "excludedCount": 8
+    },
+    {
+      "id": "pms-comber-pms-comber-raw-data",
+      "name": "PMS / Comber / Raw data",
+      "service": "PMS",
+      "machine": "Comber",
+      "view": "Raw data",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_raw_data",
+        "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+      },
+      "file": "PMS/Comber/pms-comber-raw-data.json",
+      "parameterCount": 2,
+      "displayCount": 0,
+      "widgetCount": 0,
+      "excludedCount": 26
+    },
+    {
+      "id": "pms-comber-pms-comber-events",
+      "name": "PMS / Comber / Events",
+      "service": "PMS",
+      "machine": "Comber",
+      "view": "Events",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_events",
+        "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+      },
+      "file": "PMS/Comber/pms-comber-events.json",
+      "parameterCount": 11,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-comber-pms-comber-stoppages",
+      "name": "PMS / Comber / Stoppages",
+      "service": "PMS",
+      "machine": "Comber",
+      "view": "Stoppages",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_stoppages",
+        "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+      },
+      "file": "PMS/Comber/pms-comber-stoppages.json",
+      "parameterCount": 6,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-lapformer-pms-lapformer-shift-live",
+      "name": "PMS / LapFormer / LIVE",
+      "service": "PMS",
+      "machine": "LapFormer",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift_live",
+        "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+      },
+      "file": "PMS/LapFormer/pms-lapformer-shift-live.json",
+      "parameterCount": 112,
+      "displayCount": 37,
+      "widgetCount": 11,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-lapformer-pms-lapformer-shift",
+      "name": "PMS / LapFormer / Shift",
+      "service": "PMS",
+      "machine": "LapFormer",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_shift",
+        "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+      },
+      "file": "PMS/LapFormer/pms-lapformer-shift.json",
+      "parameterCount": 109,
+      "displayCount": 37,
+      "widgetCount": 11,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-lapformer-pms-lapformer-doff",
+      "name": "PMS / LapFormer / Doff",
+      "service": "PMS",
+      "machine": "LapFormer",
+      "view": "Doff",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_doff",
+        "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+      },
+      "file": "PMS/LapFormer/pms-lapformer-doff.json",
+      "parameterCount": 61,
+      "displayCount": 22,
+      "widgetCount": 9,
+      "excludedCount": 8
+    },
+    {
+      "id": "pms-lapformer-pms-lapformer-hours",
+      "name": "PMS / LapFormer / Hourly",
+      "service": "PMS",
+      "machine": "LapFormer",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_hours",
+        "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+      },
+      "file": "PMS/LapFormer/pms-lapformer-hours.json",
+      "parameterCount": 81,
+      "displayCount": 27,
+      "widgetCount": 10,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-lapformer-pms-lapformer-minute",
+      "name": "PMS / LapFormer / Minute trend",
+      "service": "PMS",
+      "machine": "LapFormer",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_minute",
+        "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+      },
+      "file": "PMS/LapFormer/pms-lapformer-minute.json",
+      "parameterCount": 65,
+      "displayCount": 22,
+      "widgetCount": 9,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-lapformer-pms-lapformer-raw-data",
+      "name": "PMS / LapFormer / Raw data",
+      "service": "PMS",
+      "machine": "LapFormer",
+      "view": "Raw data",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_raw_data",
+        "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+      },
+      "file": "PMS/LapFormer/pms-lapformer-raw-data.json",
+      "parameterCount": 2,
+      "displayCount": 0,
+      "widgetCount": 0,
+      "excludedCount": 29
+    },
+    {
+      "id": "pms-lapformer-pms-lapformer-stoppages",
+      "name": "PMS / LapFormer / Stoppages",
+      "service": "PMS",
+      "machine": "LapFormer",
+      "view": "Stoppages",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_stoppages",
+        "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+      },
+      "file": "PMS/LapFormer/pms-lapformer-stoppages.json",
+      "parameterCount": 11,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-lapformer-pms-lapformer-events",
+      "name": "PMS / LapFormer / Events",
+      "service": "PMS",
+      "machine": "LapFormer",
+      "view": "Events",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_LAPFORMER_events",
+        "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
+      },
+      "file": "PMS/LapFormer/pms-lapformer-events.json",
+      "parameterCount": 6,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-drawframebreaker-pms-drawframebreaker-shift-live",
+      "name": "PMS / DrawFrameBreaker / LIVE",
+      "service": "PMS",
+      "machine": "DrawFrameBreaker",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+        "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+      },
+      "file": "PMS/DrawFrameBreaker/pms-drawframebreaker-shift-live.json",
+      "parameterCount": 156,
+      "displayCount": 58,
+      "widgetCount": 12,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-drawframebreaker-pms-drawframebreaker-hours",
+      "name": "PMS / DrawFrameBreaker / Hourly",
+      "service": "PMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_hours",
+        "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+      },
+      "file": "PMS/DrawFrameBreaker/pms-drawframebreaker-hours.json",
+      "parameterCount": 123,
+      "displayCount": 48,
+      "widgetCount": 11,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-drawframebreaker-pms-drawframebreaker-shift",
+      "name": "PMS / DrawFrameBreaker / Shift",
+      "service": "PMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_shift",
+        "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+      },
+      "file": "PMS/DrawFrameBreaker/pms-drawframebreaker-shift.json",
+      "parameterCount": 160,
+      "displayCount": 60,
+      "widgetCount": 12,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-drawframebreaker-pms-drawframebreaker-doff",
+      "name": "PMS / DrawFrameBreaker / Doff",
+      "service": "PMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Doff",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_doff",
+        "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+      },
+      "file": "PMS/DrawFrameBreaker/pms-drawframebreaker-doff.json",
+      "parameterCount": 58,
+      "displayCount": 5,
+      "widgetCount": 4,
+      "excludedCount": 23
+    },
+    {
+      "id": "pms-drawframebreaker-pms-drawframebreaker-raw-data",
+      "name": "PMS / DrawFrameBreaker / Raw data",
+      "service": "PMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Raw data",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_raw_data",
+        "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+      },
+      "file": "PMS/DrawFrameBreaker/pms-drawframebreaker-raw-data.json",
+      "parameterCount": 2,
+      "displayCount": 0,
+      "widgetCount": 0,
+      "excludedCount": 32
+    },
+    {
+      "id": "pms-drawframebreaker-pms-drawframeb-minutes-time-ser",
+      "name": "PMS / DrawFrameBreaker / Minute trend",
+      "service": "PMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEB_minutes_time_ser",
+        "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+      },
+      "file": "PMS/DrawFrameBreaker/pms-drawframeb-minutes-time-ser.json",
+      "parameterCount": 84,
+      "displayCount": 31,
+      "widgetCount": 10,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-drawframebreaker-pms-drawframebreaker-events",
+      "name": "PMS / DrawFrameBreaker / Events",
+      "service": "PMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Events",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_events",
+        "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+      },
+      "file": "PMS/DrawFrameBreaker/pms-drawframebreaker-events.json",
+      "parameterCount": 11,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-drawframebreaker-pms-drawframebreaker-stoppages",
+      "name": "PMS / DrawFrameBreaker / Stoppages",
+      "service": "PMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Stoppages",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_DRAWFRAMEBREAKER_stoppages",
+        "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
+      },
+      "file": "PMS/DrawFrameBreaker/pms-drawframebreaker-stoppages.json",
+      "parameterCount": 6,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-carding-pms-carding-shift",
+      "name": "PMS / Carding / Shift",
+      "service": "PMS",
+      "machine": "Carding",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_CARDING_shift",
+        "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
+      },
+      "file": "PMS/Carding/pms-carding-shift.json",
+      "parameterCount": 118,
+      "displayCount": 41,
+      "widgetCount": 9,
+      "excludedCount": 12
+    },
+    {
+      "id": "pms-carding-pms-carding-shift-live",
+      "name": "PMS / Carding / LIVE",
+      "service": "PMS",
+      "machine": "Carding",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_CARDING_shift_live",
+        "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
+      },
+      "file": "PMS/Carding/pms-carding-shift-live.json",
+      "parameterCount": 117,
+      "displayCount": 42,
+      "widgetCount": 9,
+      "excludedCount": 12
+    },
+    {
+      "id": "pms-carding-pms-carding-doff",
+      "name": "PMS / Carding / Doff",
+      "service": "PMS",
+      "machine": "Carding",
+      "view": "Doff",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_CARDING_doff",
+        "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
+      },
+      "file": "PMS/Carding/pms-carding-doff.json",
+      "parameterCount": 50,
+      "displayCount": 18,
+      "widgetCount": 9,
+      "excludedCount": 6
+    },
+    {
+      "id": "pms-carding-pms-carding-minutes-time-seri",
+      "name": "PMS / Carding / Minute trend",
+      "service": "PMS",
+      "machine": "Carding",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_CARDING_minutes_time_seri",
+        "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
+      },
+      "file": "PMS/Carding/pms-carding-minutes-time-seri.json",
+      "parameterCount": 82,
+      "displayCount": 29,
+      "widgetCount": 7,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-carding-pms-carding-hours",
+      "name": "PMS / Carding / Hourly",
+      "service": "PMS",
+      "machine": "Carding",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_CARDING_hours",
+        "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
+      },
+      "file": "PMS/Carding/pms-carding-hours.json",
+      "parameterCount": 99,
+      "displayCount": 35,
+      "widgetCount": 7,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-carding-pms-carding-raw-data",
+      "name": "PMS / Carding / Raw data",
+      "service": "PMS",
+      "machine": "Carding",
+      "view": "Raw data",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_CARDING_raw_data",
+        "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
+      },
+      "file": "PMS/Carding/pms-carding-raw-data.json",
+      "parameterCount": 2,
+      "displayCount": 0,
+      "widgetCount": 0,
+      "excludedCount": 32
+    },
+    {
+      "id": "pms-carding-pms-carding-events",
+      "name": "PMS / Carding / Events",
+      "service": "PMS",
+      "machine": "Carding",
+      "view": "Events",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_CARDING_events",
+        "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
+      },
+      "file": "PMS/Carding/pms-carding-events.json",
+      "parameterCount": 12,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-carding-pms-carding-stoppages",
+      "name": "PMS / Carding / Stoppages",
+      "service": "PMS",
+      "machine": "Carding",
+      "view": "Stoppages",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_CARDING_stoppages",
+        "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
+      },
+      "file": "PMS/Carding/pms-carding-stoppages.json",
+      "parameterCount": 6,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-shift-live",
+      "name": "PMS / BlowRoom / LIVE",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_shift_live",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-shift-live.json",
+      "parameterCount": 48,
+      "displayCount": 14,
+      "widgetCount": 6,
+      "excludedCount": 10
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-shift",
+      "name": "PMS / BlowRoom / Shift",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_shift",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-shift.json",
+      "parameterCount": 51,
+      "displayCount": 15,
+      "widgetCount": 6,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-doff",
+      "name": "PMS / BlowRoom / Doff",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "Doff",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_doff",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-doff.json",
+      "parameterCount": 61,
+      "displayCount": 27,
+      "widgetCount": 10,
+      "excludedCount": 9
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-hours",
+      "name": "PMS / BlowRoom / Hourly",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_hours",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-hours.json",
+      "parameterCount": 51,
+      "displayCount": 34,
+      "widgetCount": 10,
+      "excludedCount": 11
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-minutes-time-seri",
+      "name": "PMS / BlowRoom / Minute trend",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_minutes_time_seri",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-minutes-time-seri.json",
+      "parameterCount": 29,
+      "displayCount": 28,
+      "widgetCount": 9,
+      "excludedCount": 11
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-raw-data",
+      "name": "PMS / BlowRoom / Raw data",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "Raw data",
+      "mode": "live",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_raw_data",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-raw-data.json",
+      "parameterCount": 11,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 29
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-events",
+      "name": "PMS / BlowRoom / Events",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "Events",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_events",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-events.json",
+      "parameterCount": 7,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-stoppages",
+      "name": "PMS / BlowRoom / Stoppages",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "Stoppages",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_stoppages",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-stoppages.json",
+      "parameterCount": 6,
+      "displayCount": 5,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "pms-blowroom-pms-blowroom-faults",
+      "name": "PMS / BlowRoom / Faults",
+      "service": "PMS",
+      "machine": "BlowRoom",
+      "view": "Faults",
+      "mode": "report",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_faults",
+        "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+      },
+      "file": "PMS/BlowRoom/pms-blowroom-faults.json",
+      "parameterCount": 2,
+      "displayCount": 0,
+      "widgetCount": 0,
+      "excludedCount": 1
+    },
+    {
+      "id": "qms-ringframe-qms-ringframe-shift-live",
+      "name": "QMS / RingFrame / LIVE",
+      "service": "QMS",
+      "machine": "RingFrame",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift_live",
+        "sha256": "fef804eee1498ec6cf2c75f1228994b0ceefd57a427550256fbbf80f15f5171b"
+      },
+      "file": "QMS/RingFrame/qms-ringframe-shift-live.json",
+      "parameterCount": 66,
+      "displayCount": 15,
+      "widgetCount": 2,
+      "excludedCount": 6
+    },
+    {
+      "id": "qms-ringframe-qms-ringframe-shift",
+      "name": "QMS / RingFrame / Shift",
+      "service": "QMS",
+      "machine": "RingFrame",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_shift",
+        "sha256": "fef804eee1498ec6cf2c75f1228994b0ceefd57a427550256fbbf80f15f5171b"
+      },
+      "file": "QMS/RingFrame/qms-ringframe-shift.json",
+      "parameterCount": 61,
+      "displayCount": 15,
+      "widgetCount": 2,
+      "excludedCount": 2
+    },
+    {
+      "id": "qms-ringframe-qms-ringframe-minutes-time-seri",
+      "name": "QMS / RingFrame / Minute trend",
+      "service": "QMS",
+      "machine": "RingFrame",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_RINGFRAME_minutes_time_seri",
+        "sha256": "fef804eee1498ec6cf2c75f1228994b0ceefd57a427550256fbbf80f15f5171b"
+      },
+      "file": "QMS/RingFrame/qms-ringframe-minutes-time-seri.json",
+      "parameterCount": 37,
+      "displayCount": 13,
+      "widgetCount": 2,
+      "excludedCount": 8
+    },
+    {
+      "id": "qms-speedframe-qms-speedframe-shift-live",
+      "name": "QMS / SpeedFrame / LIVE",
+      "service": "QMS",
+      "machine": "SpeedFrame",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift_live",
+        "sha256": "1549ba4cb47a8b549fd373eae010663e6a5b0c8ba22275d88e37fc4ee38c6deb"
+      },
+      "file": "QMS/SpeedFrame/qms-speedframe-shift-live.json",
+      "parameterCount": 111,
+      "displayCount": 27,
+      "widgetCount": 8,
+      "excludedCount": 28
+    },
+    {
+      "id": "qms-speedframe-qms-speedframe-shift",
+      "name": "QMS / SpeedFrame / Shift",
+      "service": "QMS",
+      "machine": "SpeedFrame",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "sha256": "1549ba4cb47a8b549fd373eae010663e6a5b0c8ba22275d88e37fc4ee38c6deb"
+      },
+      "file": "QMS/SpeedFrame/qms-speedframe-shift.json",
+      "parameterCount": 102,
+      "displayCount": 27,
+      "widgetCount": 8,
+      "excludedCount": 28
+    },
+    {
+      "id": "qms-speedframe-qms-speeframe-minutes-time-seri",
+      "name": "QMS / SpeedFrame / Minute trend",
+      "service": "QMS",
+      "machine": "SpeedFrame",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "sha256": "1549ba4cb47a8b549fd373eae010663e6a5b0c8ba22275d88e37fc4ee38c6deb"
+      },
+      "file": "QMS/SpeedFrame/qms-speeframe-minutes-time-seri.json",
+      "parameterCount": 15,
+      "displayCount": 12,
+      "widgetCount": 1,
+      "excludedCount": 8
+    },
+    {
+      "id": "qms-drawframefinisher-qms-drawframefinishe-shift-live",
+      "name": "QMS / DrawFrameFinisher / LIVE",
+      "service": "QMS",
+      "machine": "DrawFrameFinisher",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
+        "sha256": "1991bbcabee6605d7aaa5559cc1b271074e6821d102041bb4d30d610d5bb341a"
+      },
+      "file": "QMS/DrawFrameFinisher/qms-drawframefinishe-shift-live.json",
+      "parameterCount": 114,
+      "displayCount": 43,
+      "widgetCount": 11,
+      "excludedCount": 16
+    },
+    {
+      "id": "qms-drawframefinisher-qms-drawframefinisher-shift",
+      "name": "QMS / DrawFrameFinisher / Shift",
+      "service": "QMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHER_shift",
+        "sha256": "1991bbcabee6605d7aaa5559cc1b271074e6821d102041bb4d30d610d5bb341a"
+      },
+      "file": "QMS/DrawFrameFinisher/qms-drawframefinisher-shift.json",
+      "parameterCount": 104,
+      "displayCount": 29,
+      "widgetCount": 10,
+      "excludedCount": 17
+    },
+    {
+      "id": "qms-drawframefinisher-qms-drawframefinishe-hour",
+      "name": "QMS / DrawFrameFinisher / Hourly",
+      "service": "QMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEFINISHE_Hour",
+        "sha256": "1991bbcabee6605d7aaa5559cc1b271074e6821d102041bb4d30d610d5bb341a"
+      },
+      "file": "QMS/DrawFrameFinisher/qms-drawframefinishe-hour.json",
+      "parameterCount": 15,
+      "displayCount": 13,
+      "widgetCount": 7,
+      "excludedCount": 8
+    },
+    {
+      "id": "qms-drawframefinisher-qms-drawframe-minutes-time-seri",
+      "name": "QMS / DrawFrameFinisher / Minute trend",
+      "service": "QMS",
+      "machine": "DrawFrameFinisher",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "sha256": "1991bbcabee6605d7aaa5559cc1b271074e6821d102041bb4d30d610d5bb341a"
+      },
+      "file": "QMS/DrawFrameFinisher/qms-drawframe-minutes-time-seri.json",
+      "parameterCount": 13,
+      "displayCount": 11,
+      "widgetCount": 5,
+      "excludedCount": 2
+    },
+    {
+      "id": "qms-comber-qms-comber-shift",
+      "name": "QMS / Comber / Shift",
+      "service": "QMS",
+      "machine": "Comber",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift",
+        "sha256": "f977ff38c61c52cbc3803001156cdfe62f3c2c32c4f23e9265ba9856fc5f1641"
+      },
+      "file": "QMS/Comber/qms-comber-shift.json",
+      "parameterCount": 95,
+      "displayCount": 22,
+      "widgetCount": 9,
+      "excludedCount": 16
+    },
+    {
+      "id": "qms-comber-qms-comber-shift-live",
+      "name": "QMS / Comber / LIVE",
+      "service": "QMS",
+      "machine": "Comber",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "sha256": "f977ff38c61c52cbc3803001156cdfe62f3c2c32c4f23e9265ba9856fc5f1641"
+      },
+      "file": "QMS/Comber/qms-comber-shift-live.json",
+      "parameterCount": 92,
+      "displayCount": 22,
+      "widgetCount": 9,
+      "excludedCount": 16
+    },
+    {
+      "id": "qms-comber-qms-comber-hour",
+      "name": "QMS / Comber / Hourly",
+      "service": "QMS",
+      "machine": "Comber",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_Hour",
+        "sha256": "f977ff38c61c52cbc3803001156cdfe62f3c2c32c4f23e9265ba9856fc5f1641"
+      },
+      "file": "QMS/Comber/qms-comber-hour.json",
+      "parameterCount": 49,
+      "displayCount": 19,
+      "widgetCount": 9,
+      "excludedCount": 1
+    },
+    {
+      "id": "qms-comber-qms-comber-minutes-time-seri",
+      "name": "QMS / Comber / Minute trend",
+      "service": "QMS",
+      "machine": "Comber",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_minutes_time_seri",
+        "sha256": "f977ff38c61c52cbc3803001156cdfe62f3c2c32c4f23e9265ba9856fc5f1641"
+      },
+      "file": "QMS/Comber/qms-comber-minutes-time-seri.json",
+      "parameterCount": 35,
+      "displayCount": 11,
+      "widgetCount": 5,
+      "excludedCount": 1
+    },
+    {
+      "id": "qms-lapformer-qms-lapformer-shift-live",
+      "name": "QMS / LapFormer / LIVE",
+      "service": "QMS",
+      "machine": "LapFormer",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift_live",
+        "sha256": "d34cc8a91dcd7e37149418197014f34536d862a2c51c0740efdbc6f790adad0d"
+      },
+      "file": "QMS/LapFormer/qms-lapformer-shift-live.json",
+      "parameterCount": 46,
+      "displayCount": 12,
+      "widgetCount": 3,
+      "excludedCount": 3
+    },
+    {
+      "id": "qms-lapformer-qms-lapformer-hour",
+      "name": "QMS / LapFormer / Hourly",
+      "service": "QMS",
+      "machine": "LapFormer",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_Hour",
+        "sha256": "d34cc8a91dcd7e37149418197014f34536d862a2c51c0740efdbc6f790adad0d"
+      },
+      "file": "QMS/LapFormer/qms-lapformer-hour.json",
+      "parameterCount": 35,
+      "displayCount": 12,
+      "widgetCount": 3,
+      "excludedCount": 1
+    },
+    {
+      "id": "qms-lapformer-qms-lapformer-shift",
+      "name": "QMS / LapFormer / Shift",
+      "service": "QMS",
+      "machine": "LapFormer",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_shift",
+        "sha256": "d34cc8a91dcd7e37149418197014f34536d862a2c51c0740efdbc6f790adad0d"
+      },
+      "file": "QMS/LapFormer/qms-lapformer-shift.json",
+      "parameterCount": 43,
+      "displayCount": 12,
+      "widgetCount": 3,
+      "excludedCount": 3
+    },
+    {
+      "id": "qms-lapformer-qms-lapformer-minutes-time-seri",
+      "name": "QMS / LapFormer / Minute trend",
+      "service": "QMS",
+      "machine": "LapFormer",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_LAPFORMER_minutes_time_seri",
+        "sha256": "d34cc8a91dcd7e37149418197014f34536d862a2c51c0740efdbc6f790adad0d"
+      },
+      "file": "QMS/LapFormer/qms-lapformer-minutes-time-seri.json",
+      "parameterCount": 33,
+      "displayCount": 10,
+      "widgetCount": 3,
+      "excludedCount": 2
+    },
+    {
+      "id": "qms-drawframebreaker-qms-drawframebreaker-shift",
+      "name": "QMS / DrawFrameBreaker / Shift",
+      "service": "QMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEBREAKER_shift",
+        "sha256": "2cbde97d454cbb3af309e3882e7786ee0b684ccb368c9495d0e0d220c8d409d0"
+      },
+      "file": "QMS/DrawFrameBreaker/qms-drawframebreaker-shift.json",
+      "parameterCount": 106,
+      "displayCount": 28,
+      "widgetCount": 10,
+      "excludedCount": 16
+    },
+    {
+      "id": "qms-drawframebreaker-qms-drawframebreaker-shift-live",
+      "name": "QMS / DrawFrameBreaker / LIVE",
+      "service": "QMS",
+      "machine": "DrawFrameBreaker",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
+        "sha256": "2cbde97d454cbb3af309e3882e7786ee0b684ccb368c9495d0e0d220c8d409d0"
+      },
+      "file": "QMS/DrawFrameBreaker/qms-drawframebreaker-shift-live.json",
+      "parameterCount": 102,
+      "displayCount": 28,
+      "widgetCount": 10,
+      "excludedCount": 16
+    },
+    {
+      "id": "qms-drawframebreaker-qms-drawframebreaker-hour",
+      "name": "QMS / DrawFrameBreaker / Hourly",
+      "service": "QMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAMEBREAKER_Hour",
+        "sha256": "2cbde97d454cbb3af309e3882e7786ee0b684ccb368c9495d0e0d220c8d409d0"
+      },
+      "file": "QMS/DrawFrameBreaker/qms-drawframebreaker-hour.json",
+      "parameterCount": 55,
+      "displayCount": 22,
+      "widgetCount": 9,
+      "excludedCount": 1
+    },
+    {
+      "id": "qms-drawframebreaker-qms-drawframe-minutes-time-seri",
+      "name": "QMS / DrawFrameBreaker / Minute trend",
+      "service": "QMS",
+      "machine": "DrawFrameBreaker",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_DRAWFRAME_minutes_time_seri",
+        "sha256": "2cbde97d454cbb3af309e3882e7786ee0b684ccb368c9495d0e0d220c8d409d0"
+      },
+      "file": "QMS/DrawFrameBreaker/qms-drawframe-minutes-time-seri.json",
+      "parameterCount": 35,
+      "displayCount": 12,
+      "widgetCount": 6,
+      "excludedCount": 1
+    },
+    {
+      "id": "qms-carding-qms-carding-shift",
+      "name": "QMS / Carding / Shift",
+      "service": "QMS",
+      "machine": "Carding",
+      "view": "Shift",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_shift",
+        "sha256": "dcb225cc9f4488e0f9066c2a1539dfbf2a2c5d19b4355b96dd58c004d649df6c"
+      },
+      "file": "QMS/Carding/qms-carding-shift.json",
+      "parameterCount": 142,
+      "displayCount": 46,
+      "widgetCount": 11,
+      "excludedCount": 21
+    },
+    {
+      "id": "qms-carding-qms-carding-shift-live",
+      "name": "QMS / Carding / LIVE",
+      "service": "QMS",
+      "machine": "Carding",
+      "view": "LIVE",
+      "mode": "live",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_shift_live",
+        "sha256": "dcb225cc9f4488e0f9066c2a1539dfbf2a2c5d19b4355b96dd58c004d649df6c"
+      },
+      "file": "QMS/Carding/qms-carding-shift-live.json",
+      "parameterCount": 103,
+      "displayCount": 46,
+      "widgetCount": 11,
+      "excludedCount": 18
+    },
+    {
+      "id": "qms-carding-qms-carding-hour",
+      "name": "QMS / Carding / Hourly",
+      "service": "QMS",
+      "machine": "Carding",
+      "view": "Hourly",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_Hour",
+        "sha256": "dcb225cc9f4488e0f9066c2a1539dfbf2a2c5d19b4355b96dd58c004d649df6c"
+      },
+      "file": "QMS/Carding/qms-carding-hour.json",
+      "parameterCount": 27,
+      "displayCount": 25,
+      "widgetCount": 10,
+      "excludedCount": 8
+    },
+    {
+      "id": "qms-carding-qms-carding-minutes-time-seri",
+      "name": "QMS / Carding / Minute trend",
+      "service": "QMS",
+      "machine": "Carding",
+      "view": "Minute trend",
+      "mode": "report",
+      "source": {
+        "workbook": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_CARDING_minutes_time_seri",
+        "sha256": "dcb225cc9f4488e0f9066c2a1539dfbf2a2c5d19b4355b96dd58c004d649df6c"
+      },
+      "file": "QMS/Carding/qms-carding-minutes-time-seri.json",
+      "parameterCount": 17,
+      "displayCount": 16,
+      "widgetCount": 7,
+      "excludedCount": 1
+    }
+  ]
+}

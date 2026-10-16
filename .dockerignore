@@ -28,6 +28,10 @@
 !knowledge/master/**
 !knowledge/data_models/
 !knowledge/data_models/**
+!knowledge/dashboard_layouts/
+!knowledge/dashboard_layouts/**
+!knowledge/lapformer/
+!knowledge/lapformer/**
 !knowledge/chopper/
 !knowledge/chopper/**
 !knowledge/help_index/
@@ -65,3 +69,4 @@
 rules/archive/**
 rules/learning/**
 rules/feedback/**
+knowledge/dashboard_layouts/users/**

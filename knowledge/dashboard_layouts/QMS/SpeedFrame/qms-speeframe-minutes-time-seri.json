@@ -1,0 +1,488 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "qms-speedframe-qms-speeframe-minutes-time-seri",
+  "name": "QMS / SpeedFrame / Minute trend",
+  "service": "QMS",
+  "machine": "SpeedFrame",
+  "view": "Minute trend",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "qms_SPEEFRAME_minutes_time_seri",
+    "sha256": "1549ba4cb47a8b549fd373eae010663e6a5b0c8ba22275d88e37fc4ee38c6deb"
+  },
+  "parameters": [
+    {
+      "id": "row-3",
+      "name": "Adjusted Timestamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "ts",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 3
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-9",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 9
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-11",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 11
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Roving Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "roving_count",
+        "roving_count"
+      ],
+      "unit": "",
+      "tdEngineKey": "roving_count",
+      "mongoKey": "roving_count",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tpi",
+        "tpi"
+      ],
+      "unit": "",
+      "tdEngineKey": "tpi",
+      "mongoKey": "tpi",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Main Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_draft",
+        "main_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_draft",
+      "mongoKey": "main_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Break Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "break_draft",
+        "break_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "break_draft",
+      "mongoKey": "break_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Total Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_draft",
+        "total_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_draft",
+      "mongoKey": "total_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Creal Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "creal_draft",
+        "creal_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "creal_draft",
+      "mongoKey": "creal_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Creal Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "creal_draft",
+        "creal_draft"
+      ],
+      "unit": "",
+      "mongoKey": "creal_draft",
+      "tdEngineKey": "creal_draft",
+      "aliases": [
+        "Creal Draft"
+      ],
+      "sourceAliases": [
+        "Creal Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEFRAME_minutes_time_seri",
+        "row": 1
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 2,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 3,
+      "name": "Adjusted Timestamp",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 17,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Minute trend readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-9",
+        "row-11",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    }
+  ]
+}

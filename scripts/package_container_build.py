@@ -14,7 +14,7 @@ ROOT_FILES = {
 }
 DIRECTORIES = (
     'backend', 'python_engine', 'src', 'nami', 'knowledge/master',
-    'knowledge/data_models', 'knowledge/chopper', 'knowledge/help_index',
+    'knowledge/data_models', 'knowledge/dashboard_layouts', 'knowledge/lapformer', 'knowledge/chopper', 'knowledge/help_index',
     'rules',
 )
 EXTRA_FILES = (
@@ -35,6 +35,8 @@ EXCLUDED_SUFFIXES = {'.pyc', '.pyo', '.sqlite', '.sqlite3', '.gguf', '.safetenso
 
 def allowed_file(path: Path) -> bool:
     relative = path.relative_to(ROOT)
+    if relative.parts[:3]==('knowledge','dashboard_layouts','users'):
+        return False
     if any(part in EXCLUDED_PARTS for part in relative.parts):
         return False
     if path.suffix.casefold() in EXCLUDED_SUFFIXES or path.name.startswith('.env'):

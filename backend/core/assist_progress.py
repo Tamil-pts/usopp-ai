@@ -4,7 +4,7 @@ from contextvars import ContextVar
 reporter = ContextVar('chopper_progress', default=None)
 
 
-def report(stage, current=None, total=None):
+def report(stage, current=None, total=None, **telemetry):
     callback = reporter.get()
     if callback:
-        callback(stage, current, total)
+        callback(stage, current, total, **telemetry)

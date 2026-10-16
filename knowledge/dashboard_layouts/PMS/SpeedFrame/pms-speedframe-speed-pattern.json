@@ -1,0 +1,2259 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-speedframe-pms-speedframe-speed-pattern",
+  "name": "PMS / SpeedFrame / Speed pattern",
+  "service": "PMS",
+  "machine": "SpeedFrame",
+  "view": "Speed pattern",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_SPEEDFRAME_speed_pattern",
+    "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+  },
+  "parameters": [
+    {
+      "id": "row-9",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 9
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Speed 1",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_1",
+        "01_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_1",
+      "mongoKey": "01_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Length 1",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_1",
+        "01_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_1",
+      "mongoKey": "01_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Speed 2",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_2",
+        "02_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_2",
+      "mongoKey": "02_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Length 2",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_2",
+        "02_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_2",
+      "mongoKey": "02_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Speed 3",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_3",
+        "03_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_3",
+      "mongoKey": "03_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Length 3",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_3",
+        "03_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_3",
+      "mongoKey": "03_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Speed 4",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_4",
+        "04_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_4",
+      "mongoKey": "04_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Length 4",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_4",
+        "04_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_4",
+      "mongoKey": "04_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Speed 5",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_5",
+        "05_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_5",
+      "mongoKey": "05_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Length 5",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_5",
+        "05_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_5",
+      "mongoKey": "05_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Speed 6",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_6",
+        "06_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_6",
+      "mongoKey": "06_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Length 6",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_6",
+        "06_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_6",
+      "mongoKey": "06_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Speed 7",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_7",
+        "07_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_7",
+      "mongoKey": "07_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Length 7",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_7",
+        "07_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_7",
+      "mongoKey": "07_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Speed 8",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_8",
+        "08_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_8",
+      "mongoKey": "08_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Length 8",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_8",
+        "08_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_8",
+      "mongoKey": "08_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Speed 9",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_9",
+        "09_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_9",
+      "mongoKey": "09_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Length 9",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_9",
+        "09_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_9",
+      "mongoKey": "09_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Speed 10",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_10",
+        "10_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "speed_10",
+      "mongoKey": "10_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Length 10",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_10",
+        "10_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "length_10",
+      "mongoKey": "10_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Average Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_speed",
+        "average_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_speed",
+      "mongoKey": "average_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "OHTC Park length in meters",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ohtc_park_length_in_meters",
+        "ohtc_park_length_in_meters"
+      ],
+      "unit": "",
+      "tdEngineKey": "ohtc_park_length_in_meters",
+      "mongoKey": "ohtc_park_length_in_meters",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "OHTC Start length in meters",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ohtc_start_length_in_meters",
+        "ohtc_start_length_in_meters"
+      ],
+      "unit": "",
+      "tdEngineKey": "ohtc_start_length_in_meters",
+      "mongoKey": "ohtc_start_length_in_meters",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Doff End Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "doff_end_date",
+      "aliases": [
+        "Doff End Date"
+      ],
+      "sourceAliases": [
+        "Doff End Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Doff End Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "doff_end_month",
+      "aliases": [
+        "Doff End Month"
+      ],
+      "sourceAliases": [
+        "Doff End Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Doff End Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "doff_end_year",
+      "aliases": [
+        "Doff End Year"
+      ],
+      "sourceAliases": [
+        "Doff End Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Doff Date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "doff_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Date"
+      ],
+      "sourceAliases": [
+        "Doff Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Doff End Hours",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_hour",
+        "hour"
+      ],
+      "unit": "",
+      "mongoKey": "hour",
+      "tdEngineKey": "doff_end_hour",
+      "aliases": [
+        "Doff End Hours"
+      ],
+      "sourceAliases": [
+        "Doff End Hours"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Doff End Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_minute",
+        "minute"
+      ],
+      "unit": "",
+      "mongoKey": "minute",
+      "tdEngineKey": "doff_end_minute",
+      "aliases": [
+        "Doff End Minute"
+      ],
+      "sourceAliases": [
+        "Doff End Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Doff End Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hour, ':', minute)",
+      "keys": [
+        "doff_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff End Hour"
+      ],
+      "sourceAliases": [
+        "Doff End Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Doff End Date",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-' ,date, ' ' ,hour, ':', minute, ':00')",
+      "keys": [
+        "doff_end_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_end_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff End Date"
+      ],
+      "sourceAliases": [
+        "Doff End Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Speed 1",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_1",
+        "01_speed"
+      ],
+      "unit": "",
+      "mongoKey": "01_speed",
+      "tdEngineKey": "speed_1",
+      "aliases": [
+        "Speed 1"
+      ],
+      "sourceAliases": [
+        "Speed 1"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Length 1",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_1",
+        "01_length"
+      ],
+      "unit": "",
+      "mongoKey": "01_length",
+      "tdEngineKey": "length_1",
+      "aliases": [
+        "Length 1"
+      ],
+      "sourceAliases": [
+        "Length 1"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Speed 2",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_2",
+        "02_speed"
+      ],
+      "unit": "",
+      "mongoKey": "02_speed",
+      "tdEngineKey": "speed_2",
+      "aliases": [
+        "Speed 2"
+      ],
+      "sourceAliases": [
+        "Speed 2"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Length 2",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_2",
+        "02_length"
+      ],
+      "unit": "",
+      "mongoKey": "02_length",
+      "tdEngineKey": "length_2",
+      "aliases": [
+        "Length 2"
+      ],
+      "sourceAliases": [
+        "Length 2"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Speed 3",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_3",
+        "03_speed"
+      ],
+      "unit": "",
+      "mongoKey": "03_speed",
+      "tdEngineKey": "speed_3",
+      "aliases": [
+        "Speed 3"
+      ],
+      "sourceAliases": [
+        "Speed 3"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Length 3",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_3",
+        "03_length"
+      ],
+      "unit": "",
+      "mongoKey": "03_length",
+      "tdEngineKey": "length_3",
+      "aliases": [
+        "Length 3"
+      ],
+      "sourceAliases": [
+        "Length 3"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Speed 4",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_4",
+        "04_speed"
+      ],
+      "unit": "",
+      "mongoKey": "04_speed",
+      "tdEngineKey": "speed_4",
+      "aliases": [
+        "Speed 4"
+      ],
+      "sourceAliases": [
+        "Speed 4"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Length 4",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_4",
+        "04_length"
+      ],
+      "unit": "",
+      "mongoKey": "04_length",
+      "tdEngineKey": "length_4",
+      "aliases": [
+        "Length 4"
+      ],
+      "sourceAliases": [
+        "Length 4"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Speed 5",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_5",
+        "05_speed"
+      ],
+      "unit": "",
+      "mongoKey": "05_speed",
+      "tdEngineKey": "speed_5",
+      "aliases": [
+        "Speed 5"
+      ],
+      "sourceAliases": [
+        "Speed 5"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Length 5",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_5",
+        "05_length"
+      ],
+      "unit": "",
+      "mongoKey": "05_length",
+      "tdEngineKey": "length_5",
+      "aliases": [
+        "Length 5"
+      ],
+      "sourceAliases": [
+        "Length 5"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Speed 6",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_6",
+        "06_speed"
+      ],
+      "unit": "",
+      "mongoKey": "06_speed",
+      "tdEngineKey": "speed_6",
+      "aliases": [
+        "Speed 6"
+      ],
+      "sourceAliases": [
+        "Speed 6"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Length 6",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_6",
+        "06_length"
+      ],
+      "unit": "",
+      "mongoKey": "06_length",
+      "tdEngineKey": "length_6",
+      "aliases": [
+        "Length 6"
+      ],
+      "sourceAliases": [
+        "Length 6"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Speed 7",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_7",
+        "07_speed"
+      ],
+      "unit": "",
+      "mongoKey": "07_speed",
+      "tdEngineKey": "speed_7",
+      "aliases": [
+        "Speed 7"
+      ],
+      "sourceAliases": [
+        "Speed 7"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Length 7",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_7",
+        "07_length"
+      ],
+      "unit": "",
+      "mongoKey": "07_length",
+      "tdEngineKey": "length_7",
+      "aliases": [
+        "Length 7"
+      ],
+      "sourceAliases": [
+        "Length 7"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Speed 8",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_8",
+        "08_speed"
+      ],
+      "unit": "",
+      "mongoKey": "08_speed",
+      "tdEngineKey": "speed_8",
+      "aliases": [
+        "Speed 8"
+      ],
+      "sourceAliases": [
+        "Speed 8"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Length 8",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_8",
+        "08_length"
+      ],
+      "unit": "",
+      "mongoKey": "08_length",
+      "tdEngineKey": "length_8",
+      "aliases": [
+        "Length 8"
+      ],
+      "sourceAliases": [
+        "Length 8"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Speed 9",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_9",
+        "09_speed"
+      ],
+      "unit": "",
+      "mongoKey": "09_speed",
+      "tdEngineKey": "speed_9",
+      "aliases": [
+        "Speed 9"
+      ],
+      "sourceAliases": [
+        "Speed 9"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Length 9",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_9",
+        "09_length"
+      ],
+      "unit": "",
+      "mongoKey": "09_length",
+      "tdEngineKey": "length_9",
+      "aliases": [
+        "Length 9"
+      ],
+      "sourceAliases": [
+        "Length 9"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Speed 10",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "speed_10",
+        "10_speed"
+      ],
+      "unit": "",
+      "mongoKey": "10_speed",
+      "tdEngineKey": "speed_10",
+      "aliases": [
+        "Speed 10"
+      ],
+      "sourceAliases": [
+        "Speed 10"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Length 10",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "length_10",
+        "10_length"
+      ],
+      "unit": "",
+      "mongoKey": "10_length",
+      "tdEngineKey": "length_10",
+      "aliases": [
+        "Length 10"
+      ],
+      "sourceAliases": [
+        "Length 10"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Average Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_speed",
+        "average_speed"
+      ],
+      "unit": "",
+      "mongoKey": "average_speed",
+      "tdEngineKey": "average_speed",
+      "aliases": [
+        "Average Speed"
+      ],
+      "sourceAliases": [
+        "Average Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "OHTC Park length in meters",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ohtc_park_length_in_meters",
+        "ohtc_park_length_in_meters"
+      ],
+      "unit": "",
+      "mongoKey": "ohtc_park_length_in_meters",
+      "tdEngineKey": "ohtc_park_length_in_meters",
+      "aliases": [
+        "OHTC Park length in meters"
+      ],
+      "sourceAliases": [
+        "OHTC Park length in meters"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "OHTC Start length in meters",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ohtc_start_length_in_meters",
+        "ohtc_start_length_in_meters"
+      ],
+      "unit": "",
+      "mongoKey": "ohtc_start_length_in_meters",
+      "tdEngineKey": "ohtc_start_length_in_meters",
+      "aliases": [
+        "OHTC Start length in meters"
+      ],
+      "sourceAliases": [
+        "OHTC Start length in meters"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 41
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-42",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_speed_pattern",
+        "row": 42
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 2,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 3,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Speed pattern readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-9",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    },
+    {
+      "title": "Speed pattern readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-23",
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-27",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34"
+      ]
+    },
+    {
+      "title": "Speed pattern readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-35",
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39"
+      ]
+    }
+  ]
+}

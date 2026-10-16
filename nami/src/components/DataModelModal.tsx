@@ -3,6 +3,7 @@ import type {MetadataItem} from '../types';
 import {dataModelDepartmentLabel, dataModelMachineKey, dataModelResultLabel, evaluateDataModel,
   type DataModel, type DataModelCheck, type DataModelResult, type DataModelSelection, type DataModelSummary} from '../utils/dataModelChecks';
 import './data-model.css';
+import {ReferenceRulesEditor} from './ReferenceRulesEditor';
 
 async function read(response: Response) {
   const value = await response.json();
@@ -27,6 +28,7 @@ export function DataModelModal({metadata, machine, selection, check, onSelection
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('all');
+  const [referenceRevision,setReferenceRevision]=useState(0);
   const operation = useRef<AbortController | null>(null);
   const busy = readingModel || processing;
   const savedCheck = check?.model.id === modelId ? check : null;
@@ -42,7 +44,7 @@ export function DataModelModal({metadata, machine, selection, check, onSelection
       .then(value => {if (!request.signal.aborted) setCatalog(value);})
       .catch(reason => {if (!request.signal.aborted) setError(reason.message);});
     return () => request.abort();
-  }, []);
+  }, [referenceRevision]);
   useEffect(() => {
     if (modelId) return;
     const fixed = catalog.find(item => item.fixed && item.service === service &&
@@ -66,7 +68,7 @@ export function DataModelModal({metadata, machine, selection, check, onSelection
       .catch(reason => {if (!request.signal.aborted) setError(reason.message);})
       .finally(() => {if (!request.signal.aborted) setReadingModel(false);});
     return () => request.abort();
-  }, [modelId]);
+  }, [modelId,referenceRevision]);
   // Closing the window or changing inputs cancels an unfinished check/import.
   useEffect(() => () => {operation.current?.abort();}, [modelId, metadata, machine]);
 
@@ -138,7 +140,8 @@ export function DataModelModal({metadata, machine, selection, check, onSelection
         {model && !available.some(item => item.id === model.id) && <option value={model.id}>{dataModelDepartmentLabel(model.machine)} · Saved reference · {model.source}</option>}
       </select></label>
     </div>
-    <p>Uppercase and lowercase names are equivalent. Words, punctuation, Group Code and datatype must match. FLOAT maps to REAL; NCHAR/VARCHAR map to STRING. Server-generated IDs, timestamps and host fields are skipped. Calculated fields are shown for reference. Conflicting source definitions and database types without a PLC wire type require reference review; they do not prove a PLC failure.</p>
+    <p>Letter case is ignored. Configured formatting and name mappings are scoped to the department and Group Code. A numeric database value can use an integer PLC source; the decoder uses the machine metadata datatype. This is value mapping, not independent wire-type verification. Explicit PLC datatype requirements stay strict. Server fields are skipped; calculated fields use editable dashboard definitions.</p>
+    <ReferenceRulesEditor onSaved={()=>{setReferenceRevision(value=>value+1);onChecked(null);onSelectionChange({...selection,modelId:''})}}/>
     <p>The Data model column groups the parameter name, services and result. All fixed services for the current department remain visible. Missing required parameters are listed here and above the parameter table.</p>
     <details><summary>Import an additional reference</summary><label className="dataModelUpload">XLSX / database JSON<input type="file" accept=".xlsx,.json" disabled={busy} onChange={event => {const file = event.target.files?.[0]; if (file) void upload(file); event.target.value = '';}}/></label></details>
     <div className="dataModelTools">
@@ -152,8 +155,8 @@ export function DataModelModal({metadata, machine, selection, check, onSelection
     {error && <p role="alert" className="dataModelError">{error}</p>}
     {result && <p role="status"><strong>{result.status}</strong> · {preview ? 'Current metadata check' : 'Saved check'} · {Object.entries(result.summary).map(([key, value]) => key + ': ' + value).join(' · ')}{savedCheck && <> · Last saved {new Date(savedCheck.validatedAt).toLocaleString()}</>}</p>}
     {model?.warnings.length ? <details><summary>{model.warnings.length} reference warnings</summary>{model.warnings.map((warning, index) => <p key={index}>{warning}</p>)}</details> : null}
-    <div className="dataModelTableScroll"><table><thead><tr><th>Reference parameter name</th><th>Data type → PLC</th><th>Group Code</th><th>Source / collection / row</th><th>Result</th><th>Details / formula / actual metadata</th></tr></thead>
-      <tbody>{rows.map((row, index) => <tr key={index} data-status={row.status || row.kind}><td>{row.name || 'Missing name'}</td><td>{row.dataType || 'Not specified'} → {row.reasonCodes?.some(code => code === 'REFERENCE_CONFLICT' || code === 'REFERENCE_TYPE_UNSUPPORTED') ? 'PLC type requires review' : row.plcType || 'Unresolved'}</td><td>{row.groupCodes.join(', ') || 'Not specified'}</td><td>{model?.sourceRelativePath || row.source}<br/>{row.sheet}:{row.row}
+    <div className="dataModelTableScroll"><table><thead><tr><th>Reference parameter name</th><th>Reference type / purpose</th><th>Group Code</th><th>Source / collection / row</th><th>Result</th><th>Details / formula / actual metadata</th></tr></thead>
+      <tbody>{rows.map((row, index) => <tr key={index} data-status={row.status || row.kind}><td>{row.name || 'Missing name'}</td><td>Reference: {row.dataType || 'Not specified'}<br/>{row.dataTypeRole==='value'?'Database/output value; decode using machine metadata':'Required PLC wire type: '} {row.dataTypeRole==='value'?'':row.reasonCodes?.some(code => code === 'REFERENCE_CONFLICT' || code === 'REFERENCE_TYPE_UNSUPPORTED') ? 'PLC type requires review' : row.plcType || 'Unresolved'}</td><td>{row.groupCodes.join(', ') || 'Not specified'}</td><td>{model?.sourceRelativePath || row.source}<br/>{row.sheet}:{row.row}
         {!!row.excelReferences?.length && <details><summary>Excel reference</summary>{row.excelReferences.map((source, number) => <div key={number}>{source.source} / {source.sheet}:{source.row}{source.dataType && ` · ${source.dataType}`}</div>)}</details>}
       </td><td>{row.status ? dataModelResultLabel(row) : row.kind}</td><td>{row.detail}{row.formula && <pre>{row.formula}</pre>}{row.actual?.map((item, i) => <div key={i}>{item.parameter} · GC {item.groupCode} · {item.dataType} · Tag {item.tagCode}</div>)}</td></tr>)}</tbody>
     </table>{!rows.length && <p>{busy ? 'Reading model...' : model ? 'No entries match this filter.' : 'No fixed model for this department and service. Select or import a reference.'}</p>}</div>

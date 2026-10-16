@@ -1,6 +1,7 @@
 param([int]$Port=0)
 $ErrorActionPreference='Stop'
 $AppRoot=$PSScriptRoot
+. (Join-Path $AppRoot 'model_process.ps1')
 if(-not $Port){
     if($env:USOPP_API_PORT){$Port=[int]$env:USOPP_API_PORT}
     else{
@@ -14,7 +15,7 @@ if(-not $Port){
 }
 if($Port -lt 1024 -or $Port -gt 65535){throw 'Choose a port between 1024 and 65535.'}
 $Listeners=@(Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue)
-if(-not $Listeners){Write-Host "uSOPp.ai is already stopped on port $Port.";exit 0}
+if(-not $Listeners){Stop-OwnedChopperModel -ApplicationRoot $AppRoot -OrphanOnly;Write-Host "uSOPp.ai is already stopped on port $Port.";exit 0}
 $ServerScript=Join-Path $AppRoot 'server.py'
 foreach($ServerProcessId in ($Listeners.OwningProcess | Sort-Object -Unique)){
     $ServerProcess=Get-CimInstance Win32_Process -Filter "ProcessId = $ServerProcessId"
@@ -23,6 +24,7 @@ foreach($ServerProcessId in ($Listeners.OwningProcess | Sort-Object -Unique)){
     $QuotedScript='"'+$ServerScript+'"'
     $ScriptMatches=$Command.Contains($QuotedScript) -or $Command.EndsWith(' '+$ServerScript)
     if(-not $ScriptMatches){throw "Port $Port belongs to a process outside this start script. Refusing to stop PID $ServerProcessId."}
+    Stop-OwnedChopperModel -ApplicationRoot $AppRoot -ParentProcessId $ServerProcessId
     Stop-Process -Id $ServerProcessId -ErrorAction Stop
     Write-Host "Stopped uSOPp.ai on port $Port (PID $ServerProcessId)."
 }

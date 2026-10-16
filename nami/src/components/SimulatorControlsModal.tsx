@@ -1,227 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { X, Sliders, Play, CheckCircle2, AlertTriangle, RefreshCw } from 'lucide-react';
-
-interface SimulatorControlsModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSimulatorUpdated: () => void;
+import {useEffect,useState} from 'react';
+import {Play,Square,RefreshCw,X,Upload} from 'lucide-react';
+import type {MetadataItem,PLCConfig} from '../types';
+import './calculation-dashboard.css';
+type Override={mode:'auto'|'constant'|'wave'|'counter';minimum:number;maximum:number;value:number;period:number};
+type Settings={timeScale:number;cycleSeconds:number;startingRunSeconds:number;programVersion:number;autoStart:boolean};
+type Status={running:boolean;address?:string;requests:number;lastRequest?:number;config?:{settings:Settings;overrides:Record<string,Override>;metadata:MetadataItem[]}};
+type Preview={key:string;parameter:string;groupCode:number;tagCode:number;dataType:string;units:string;value:number|string;behavior:string};
+const defaults:Settings={timeScale:1,cycleSeconds:300,startingRunSeconds:3600,programVersion:5.296,autoStart:false};
+const baseOverride:Override={mode:'auto',minimum:0,maximum:100,value:0,period:60};
+async function api<T>(path:string,data?:unknown):Promise<T>{const response=await fetch(`/api/nami/data-simulator${path}`,{cache:'no-store',...(data?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}:{})});const result=await response.json();if(!response.ok)throw new Error(result.detail||'Simulator request failed.');return result}
+export function SimulatorControlsModal({isOpen,onClose,onSimulatorUpdated,plc,metadata,metadataSource,onOpenMetadata}:{isOpen:boolean;onClose:()=>void;onSimulatorUpdated:()=>void;plc:PLCConfig;metadata:MetadataItem[];metadataSource:string;onOpenMetadata:()=>void}){
+ const [settings,setSettings]=useState(defaults),[overrides,setOverrides]=useState<Record<string,Override>>({}),[status,setStatus]=useState<Status|null>(null),[accountId,setAccountId]=useState<number|null>(null);
+ const [rows,setRows]=useState<Preview[]>([]),[query,setQuery]=useState(''),[group,setGroup]=useState('all'),[error,setError]=useState(''),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
+ useEffect(()=>{if(!isOpen)return;let cancelled=false;setError('');setMessage('');setRows([]);
+  Promise.all([api<Status>(`/${encodeURIComponent(plc.id)}`),fetch('/api/auth/session').then(response=>response.json())]).then(([next,session])=>{if(cancelled)return;setStatus(next);setAccountId(session.user?.id??null);setSettings(next.config?.settings||defaults);const valid=new Set(metadata.map(row=>`${row.groupCode}:${row.tagCode}`));setOverrides(Object.fromEntries(Object.entries(next.config?.overrides||{}).filter(([id])=>valid.has(id))))}).catch(reason=>{if(!cancelled)setError(reason.message)});
+  return()=>{cancelled=true};
+ },[isOpen,plc.id]);
+ if(!isOpen)return null;
+ const payload={accountId,plc:{...plc,isSimulated:false,targetMode:'data-simulator'},metadata,metadataSource,settings,overrides};
+ const action=async(name:'preview'|'start'|'configure'|'stop'|'refresh')=>{setBusy(true);setError('');setMessage('');try{
+  if(name==='preview'){const result=await api<{rows:Preview[]}>('/preview',payload);setRows(result.rows);setMessage('Preview of your draft configuration. This does not open a TCP connection.')}
+  else if(name==='refresh')setStatus(await api<Status>(`/${encodeURIComponent(plc.id)}`));
+  else {const next=await api<Status>(name==='stop'?`/${encodeURIComponent(plc.id)}/stop`:`/${name}`,name==='stop'?{accountId}:payload);setStatus(next);setMessage(name==='stop'?'Virtual PLC stopped.':name==='start'?'Virtual PLC is listening. Read groups or enable live collection to receive changing packets.':'Simulator configuration saved.');if(name==='start')onSimulatorUpdated()}
+ }catch(reason){setError(reason instanceof Error?reason.message:'Could not configure the simulator.')}finally{setBusy(false)}};
+ const update=(id:string,value:Partial<Override>)=>{setOverrides(previous=>({...previous,[id]:{...baseOverride,...previous[id],...value}}));setMessage('')};
+ const shown=(rows.length?rows:metadata.map(row=>({key:`${row.groupCode}:${row.tagCode}`,parameter:row.parameter,groupCode:row.groupCode,tagCode:row.tagCode,dataType:row.dataType,units:row.units,value:'—',behavior:'Preview to see the assigned behavior'}))).filter(row=>(group==='all'||row.groupCode===Number(group))&&`${row.parameter} ${row.tagCode}`.toLowerCase().includes(query.toLowerCase()));
+ return <div className="di-dashboard di-simulator-backdrop"><section className="di-dashboard-editor di-simulator" role="dialog" aria-modal="true" aria-labelledby="data-simulator-title" onKeyDown={event=>{if(event.key==='Escape')onClose()}}><header><div><span className="di-dashboard-eyebrow">METADATA-DRIVEN VIRTUAL PLC</span><h3 id="data-simulator-title">Data simulator · {plc.name}</h3></div><button aria-label="Close data simulator" onClick={onClose}><X size={20}/></button></header>
+ <p className="di-dashboard-notice">Synthetic textile data for {plc.machineType||'Custom'} using your metadata's groups, tags, datatypes and byte offsets. Values change over time and are sent through the normal PLC TCP protocol.</p>
+ <div className="di-dashboard-explainer"><div><strong>{status?.running?'Listening':'Stopped'} · {status?.address||`${plc.ip}:${plc.port}`}</strong><p>{status?.requests||0} requests served{status?.lastRequest?` · Last request ${new Date(status.lastRequest).toLocaleString()}`:''}</p><p>Metadata: {metadataSource} · {metadata.length} parameters. Synthetic values are for display and calculation trials; they do not model the machine's PLC program.</p></div></div>
+ <div className="di-dashboard-actions"><button disabled={busy||status?.running} onClick={onOpenMetadata}><Upload size={15}/>Upload / change metadata</button><button disabled={busy} onClick={()=>void action('refresh')}><RefreshCw size={15}/>Refresh status</button></div>
+ <fieldset disabled={busy||status?.running}><div className="di-editor-fields"><label>Time speed multiplier<input type="number" min={.1} max={120} step={.1} value={settings.timeScale} onChange={event=>setSettings({...settings,timeScale:Number(event.target.value)})}/></label><label>Machine cycle (simulated seconds)<input type="number" min={30} max={86400} value={settings.cycleSeconds} onChange={event=>setSettings({...settings,cycleSeconds:Number(event.target.value)})}/></label><label>Starting elapsed time (seconds)<input type="number" min={0} value={settings.startingRunSeconds} onChange={event=>setSettings({...settings,startingRunSeconds:Number(event.target.value)})}/></label><label>PLC program version<input type="number" step={.001} value={settings.programVersion} onChange={event=>setSettings({...settings,programVersion:Number(event.target.value)})}/></label></div>
+ <label className="di-sim-checkbox"><input type="checkbox" checked={settings.autoStart} onChange={event=>setSettings({...settings,autoStart:event.target.checked})}/>Start this virtual PLC when the uSOPp server starts</label>
+ <p className="di-dashboard-notice">Automatic profiles cover hank, CV%, U%, TPI, draft, speed, doffs, production, run/idle time and energy. H:M:S and humidification temperature / humidity / pressure are included. Unknown names use an identified generic waveform. Preview and override behavior for your project. Each cycle runs for 85% of its duration and stops for 15%.</p>
+ <div className="di-dashboard-toolbar"><label>Find parameter<input aria-label="Find simulator parameter" value={query} onChange={event=>setQuery(event.target.value)} placeholder="hank, humidity, run time…"/></label><label>Group<select value={group} onChange={event=>setGroup(event.target.value)}><option value="all">All groups</option>{[...new Set(metadata.map(row=>row.groupCode))].map(code=><option key={code}>{code}</option>)}</select></label><button className="di-dashboard-secondary" onClick={()=>void action('preview')}>Preview profiles</button></div>
+ <div className="di-sim-parameters"><table><thead><tr><th>Parameter</th><th>Behavior</th><th>Configure</th><th>Preview</th></tr></thead><tbody>{shown.slice(0,100).map(row=>{const setting=overrides[row.key]||baseOverride;return <tr key={row.key}><td><strong>{row.parameter}</strong><small>GC {row.groupCode} · Tag {row.tagCode} · {row.dataType} · {row.units}</small></td><td><select aria-label={`Behavior for ${row.parameter}`} value={setting.mode} onChange={event=>update(row.key,{mode:event.target.value as Override['mode']})}><option value="auto">Automatic textile profile</option>{!row.dataType.startsWith('STRING')&&<><option value="constant">Constant</option><option value="wave">Changing wave</option><option value="counter">Increasing counter</option></>}</select><small>{row.behavior}</small></td><td>{setting.mode==='constant'?<label>Value<input type="number" step="any" value={setting.value} onChange={event=>update(row.key,{value:Number(event.target.value)})}/></label>:setting.mode!=='auto'?<div className="di-sim-limits"><label>Min<input type="number" value={setting.minimum} onChange={event=>update(row.key,{minimum:Number(event.target.value)})}/></label><label>Max<input type="number" value={setting.maximum} onChange={event=>update(row.key,{maximum:Number(event.target.value)})}/></label><label>Period (s)<input type="number" min={.1} value={setting.period} onChange={event=>update(row.key,{period:Number(event.target.value)})}/></label></div>:<span>Department profile</span>}</td><td>{String(row.value)}</td></tr>})}</tbody></table></div><p className="di-dashboard-notice">Showing {Math.min(100,shown.length)} of {shown.length} matching parameters. Integer values are constrained to their PLC datatype. Enter engineering conversions explicitly in dashboard formulas.</p></fieldset>
+ {error&&<p role="alert" className="di-dashboard-error">{error}</p>}{message&&<p role="status" className="di-dashboard-notice">{message}</p>}
+ <footer><button className="di-dashboard-secondary" onClick={onClose}>Close</button>{status?.running?<button disabled={busy} className="di-dashboard-secondary" onClick={()=>void action('stop')}><Square size={15}/>Stop virtual PLC</button>:<><button disabled={busy||!metadata.length||accountId===null} className="di-dashboard-secondary" onClick={()=>void action('configure')}>Save configuration</button><button disabled={busy||!metadata.length||accountId===null} className="di-dashboard-primary" onClick={()=>void action('start')}><Play size={15}/>Start virtual PLC</button></>}</footer>
+ </section></div>;
 }
-
-export const SimulatorControlsModal: React.FC<SimulatorControlsModalProps> = ({
-  isOpen,
-  onClose,
-  onSimulatorUpdated,
-}) => {
-  const [speed, setSpeed] = useState<number>(285.5);
-  const [sliverHank, setSliverHank] = useState<number>(0.128);
-  const [machineStatus, setMachineStatus] = useState<number>(8);
-  const [alarm1, setAlarm1] = useState<boolean>(true);
-  const [alarm2, setAlarm2] = useState<boolean>(false);
-  const [lotName, setLotName] = useState<string>('CARD-COTTON-T40');
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (isOpen) {
-      setError('');
-      fetch('/api/nami/simulator/state')
-        .then((r) => r.json())
-        .then((data) => {
-          if (data.deliverySpeed !== undefined) setSpeed(data.deliverySpeed);
-          if (data.sliverHank !== undefined) setSliverHank(data.sliverHank);
-          if (data.machineStatus !== undefined) setMachineStatus(data.machineStatus);
-          if (data.lotName !== undefined) setLotName(data.lotName);
-          if (data.alarms) {
-            setAlarm1((data.alarms[1] & 0x04) !== 0);
-            setAlarm2((data.alarms[3] & 0x10) !== 0);
-          }
-        })
-        .catch(() => {});
-    }
-  }, [isOpen]);
-
-  if (!isOpen) return null;
-
-  const handleApply = async () => {
-    setSaving(true);
-    try {
-      const alarms = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      if (alarm1) alarms[1] |= 0x04;
-      if (alarm2) alarms[3] |= 0x10;
-
-      const response = await fetch('/api/nami/simulator/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          deliverySpeed: speed,
-          sliverHank: sliverHank,
-          machineStatus: machineStatus,
-          lotName: lotName,
-          alarms: alarms,
-        }),
-      });
-      const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.detail || result.error || 'Simulator update failed.');
-
-      onSimulatorUpdated();
-      onClose();
-    } catch (err: any) {
-      setError(err.message || 'Simulator update failed.');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-w-lg w-full flex flex-col">
-        {error && <p role="alert" className="p-3 text-rose-300">{error}</p>}
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-          <div className="flex items-center gap-2">
-            <Sliders className="w-5 h-5 text-purple-400" />
-            <div>
-              <h2 className="text-base font-bold text-white">PLC Logic Simulator Controls</h2>
-              <p className="text-xs text-slate-400">
-                Inject dynamic variables to test frontend metadata scaling and bitmask decoders.
-              </p>
-            </div>
-          </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white p-1 rounded-md">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Content */}
-        <div className="p-6 space-y-4 text-xs">
-          {/* Machine Status */}
-          <div>
-            <label className="block text-slate-300 font-semibold mb-1">
-              Machine Status (Group 20 Offset 42 UINT)
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => setMachineStatus(8)}
-                className={`py-2 px-3 rounded-lg border font-medium transition-all ${
-                  machineStatus === 8
-                    ? 'bg-emerald-950 border-emerald-500 text-emerald-300'
-                    : 'bg-slate-800 border-slate-700 text-slate-400'
-                }`}
-              >
-                8: RUNNING
-              </button>
-              <button
-                type="button"
-                onClick={() => setMachineStatus(0)}
-                className={`py-2 px-3 rounded-lg border font-medium transition-all ${
-                  machineStatus === 0
-                    ? 'bg-amber-950 border-amber-500 text-amber-300'
-                    : 'bg-slate-800 border-slate-700 text-slate-400'
-                }`}
-              >
-                0: IDLE
-              </button>
-              <button
-                type="button"
-                onClick={() => setMachineStatus(11)}
-                className={`py-2 px-3 rounded-lg border font-medium transition-all ${
-                  machineStatus === 11
-                    ? 'bg-blue-950 border-blue-500 text-blue-300'
-                    : 'bg-slate-800 border-slate-700 text-slate-400'
-                }`}
-              >
-                11: DOFFING
-              </button>
-            </div>
-          </div>
-
-          {/* Delivery Speed */}
-          <div>
-            <label className="block text-slate-300 font-semibold mb-1">
-              Delivery Speed (Group 20 Offset 0 REAL, m/min): <span className="text-emerald-400 font-mono">{speed}</span>
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="350"
-              step="0.5"
-              value={speed}
-              onChange={(e) => setSpeed(Number(e.target.value))}
-              className="w-full accent-emerald-500"
-            />
-          </div>
-
-          {/* Sliver Hank */}
-          <div>
-            <label className="block text-slate-300 font-semibold mb-1">
-              Sliver Hank (Group 20 Offset 4 REAL, Ne): <span className="text-emerald-400 font-mono">{sliverHank}</span>
-            </label>
-            <input
-              type="number"
-              step="0.001"
-              value={sliverHank}
-              onChange={(e) => setSliverHank(Number(e.target.value))}
-              className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-white font-mono"
-            />
-          </div>
-
-          {/* Lot Name */}
-          <div>
-            <label className="block text-slate-300 font-semibold mb-1">
-              Lot Name (Group 40 STRING 50B)
-            </label>
-            <input
-              type="text"
-              value={lotName}
-              onChange={(e) => setLotName(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-white font-mono"
-            />
-          </div>
-
-          {/* Alarm Bit Toggles */}
-          <div className="bg-slate-800/60 p-3.5 rounded-lg border border-slate-700">
-            <div className="font-semibold text-slate-300 mb-2">Group 30 Alarm Bit Injections</div>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 cursor-pointer text-slate-300">
-                <input
-                  type="checkbox"
-                  checked={alarm1}
-                  onChange={(e) => setAlarm1(e.target.checked)}
-                  className="rounded accent-emerald-500 w-4 h-4"
-                />
-                <span>CARD_WOCC_ALARM Bit 10 (Byte 1, Bit 2) Active</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer text-slate-300">
-                <input
-                  type="checkbox"
-                  checked={alarm2}
-                  onChange={(e) => setAlarm2(e.target.checked)}
-                  className="rounded accent-emerald-500 w-4 h-4"
-                />
-                <span>CARD_WOCC_ALARM Bit 28 (Byte 3, Bit 4) Active</span>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-slate-800 bg-slate-900/50">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 text-slate-400 hover:text-white text-xs font-medium"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleApply}
-            disabled={saving}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
-          >
-            {saving ? 'Updating Simulator...' : 'Apply to Simulator'}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};

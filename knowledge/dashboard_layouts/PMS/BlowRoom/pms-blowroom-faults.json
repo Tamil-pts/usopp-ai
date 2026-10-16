@@ -1,0 +1,76 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-blowroom-pms-blowroom-faults",
+  "name": "PMS / BlowRoom / Faults",
+  "service": "PMS",
+  "machine": "BlowRoom",
+  "view": "Faults",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_BLOWROOM_faults",
+    "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
+  },
+  "parameters": [
+    {
+      "id": "row-2",
+      "name": "Yet to provide the requirements",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_BLOWROOM_faults",
+        "row": 2
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Yet to provide the requirements",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "",
+      "aliases": [
+        "Yet to provide the requirements"
+      ],
+      "sourceAliases": [
+        "Yet to provide the requirements"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/BLOWROOM.json",
+        "sheet": "pms_BLOWROOM_faults",
+        "row": 1
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 2,
+      "name": "Yet to provide the requirements",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": []
+}

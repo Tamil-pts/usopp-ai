@@ -13,11 +13,12 @@ import {requestChopper} from './chopperRequest';
 import {CHAT_PROMPTS} from './chatPrompts';
 import {ChopperFunctionFlow,flowConversationText,type ChopperFlowData} from './ChopperFunctionFlow';
 import {ChopperReply} from './ChopperReply';
+import {ProjectIntelligence,useProjectIntelligence,ChopperModelStatus,ContextUsage} from './ProjectIntelligence';
 
 type Evidence={file:string;line?:number;excerpt?:string;sourceId?:string};
 type HelpEvidence=Evidence&{id:string;sourceId:string;title:string;helpSet:string;truncated?:boolean};
 type Choice={label:string;action:string};
-type ChatMessage={role:'user'|'assist';text:string;historyText?:string;source?:string;evidence?:Evidence[];helpEvidence?:HelpEvidence[];logs?:ChatLogData[];functionFlow?:ChopperFlowData;choices?:Choice[];elapsedSeconds?:number;review?:boolean;trainingExampleId?:string};
+type ChatMessage={role:'user'|'assist';text:string;historyText?:string;source?:string;evidence?:Evidence[];helpEvidence?:HelpEvidence[];logs?:ChatLogData[];functionFlow?:ChopperFlowData;choices?:Choice[];elapsedSeconds?:number;review?:boolean;trainingExampleId?:string;contextUsage?:any;retrieval?:any};
 const GREETING='Hi, I am Chopper, your uSOPp assistant. Ask about ByteMap, MetaWorks, DataInspect, MatchView, LogicScan or KnowHub. Attach a log and its metadata, or paste the log here, and I will show the decoded values in this chat. A selected project is optional.';
 const SHORTCUTS=[['decode','Log decoder'],['home','WorkHub'],['validation','ByteMap'],['metadata','MetaWorks'],['plc','DataInspect'],['compare','MatchView'],['rules','LogicScan'],['results','ResultView'],['learning','KnowHub'],['settings','Settings / AI models']] as const;
 
@@ -33,6 +34,7 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
  const projects=attachments.filter(a=>a.kind==='project');
  const attachedProject=projects.find(a=>a.id===projectId);
  const effectiveProjectPath=attachedProject?.projectPath||projectPath;
+ const intelligence=useProjectIntelligence(effectiveProjectPath);
  const effectiveProjectName=attachedProject?.projectName||projectName;
  const sessionId=attachedProject?undefined:result?.sessionId||ruleResults?.sessionId;
  const [progress,setProgress]=useState<any>(null);
@@ -96,6 +98,7 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
  async function ask(textOverride?:string,selectedCapture?:Record<string,unknown>,focusOverride?:boolean) {
   if(lock.current)return;
   const text=(textOverride??question).trim()||(attachments.length?'Review my attachments.':'');if(!text)return;
+  if(/^(?:guide me|how (?:do i|to) use (?:this |the )?app|step by step guide)/i.test(text)){setQuestion('');choose('coach');return;}
   let files=attachments;
   setQuestion('');setCopyNotice('');setMessages(current=>[...current,{role:'user',text:looksLikeLog(text)?`Decode pasted PLC log (${text.length.toLocaleString()} characters).`:text}]);
   if(text.length>20*1024*1024){reply('Paste a log smaller than 20 MB.');return;}
@@ -112,15 +115,20 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
    const captures=selectedCapture?[selectedCapture]:latestLog?.flatMap(log=>decodeCollectedLog(log.text,log.metadata).captures.filter(c=>!requestedGroup||c.groupCode===Number(requestedGroup)).map(c=>({groupCode:c.groupCode,asset:c.asset,timestamp:c.timestamp,status:c.status,resultCode:c.resultCode,issues:c.issues,logErrors:c.logErrors,payloadLength:c.payloadLength,expectedLength:c.expectedLength,values:c.values.slice(0,80).map(v=>({tagCode:v.tagCode,parameter:v.parameter,offset:v.offset,dataType:v.dataType,value:v.formattedValue,qualityIssue:v.qualityIssue}))}))).slice(0,40);
    let remaining=40000;
    const documents=files.map(file=>{const preview=file.kind==='document'?file.text.slice(0,Math.min(remaining,20000)):'';remaining-=preview.length;return {name:file.name,kind:file.kind,notice:file.notice,text:preview,previewTruncated:preview.length<file.text.length,metadataParameters:file.metadata?.length};});
-   const status=await requestChopper({task:'uSOPp feature and engineering assistant',question:text.slice(0,20000),history:messages.slice(1).slice(-12).map(m=>({role:m.role==='assist'?'assistant':'user',content:(m.historyText||m.text).slice(0,8000)})),context:{comparisonFocus:focusOverride??comparisonFocus,comparisonSessionId:comparisonResult?.sessionId,projectPath:effectiveProjectPath,projectName:effectiveProjectName||result?.projectName||'',applicationFeatures:FEATURES,attachments:documents,logSummary:captures?{captures}:undefined,validationResult:result,ruleResults,counts:normalized?.counts||{},score:normalized?.score??null}},abort.signal,status=>{if(turn===generation.current)setProgress(status)});
+   const status=await requestChopper({task:'uSOPp feature and engineering assistant',question:text.slice(0,20000),history:messages.slice(1).slice(-12).map(m=>({role:m.role==='assist'?'assistant':'user',content:(m.historyText||m.text).slice(0,8000)})),context:{intelligenceProjectId:intelligence.state?.projectId,comparisonFocus:focusOverride??comparisonFocus,comparisonSessionId:comparisonResult?.sessionId,projectPath:effectiveProjectPath,projectName:effectiveProjectName||result?.projectName||'',applicationFeatures:FEATURES,attachments:documents,logSummary:captures?{captures}:undefined,validationResult:result,ruleResults,counts:normalized?.counts||{},score:normalized?.score??null}},abort.signal,status=>{if(turn===generation.current)setProgress(status)});
    const data=status.result;
-   if(turn===generation.current)setMessages(current=>[...current,{role:'assist',text:[data.modelNotice,data.answer||'No answer returned.',data.trainingDraftNotice].filter(Boolean).join('\n'),historyText:data.functionFlow?.view?flowConversationText(data.functionFlow.view):undefined,source:data.source,evidence:data.evidence||[],helpEvidence:data.helpEvidence||[],functionFlow:data.functionFlow,choices:data.choices,elapsedSeconds:status.elapsedSeconds,review:data.semanticReviewRequired,trainingExampleId:data.trainingExampleId}]);
+   if(turn===generation.current)setMessages(current=>[...current,{role:'assist',text:[data.answer||'No answer returned.',data.trainingDraftNotice].filter(Boolean).join('\n'),historyText:data.functionFlow?.view?flowConversationText(data.functionFlow.view):undefined,source:data.source,evidence:data.evidence||[],helpEvidence:data.helpEvidence||[],functionFlow:data.functionFlow,choices:data.choices,elapsedSeconds:status.elapsedSeconds,review:data.semanticReviewRequired,trainingExampleId:data.trainingExampleId,contextUsage:data.contextUsage,retrieval:data.retrieval}]);
   }catch(error){if(turn===generation.current&&!abort.signal.aborted)reply(error instanceof Error?error.message:'Chopper is unavailable.');}
   finally{if(turn===generation.current){lock.current=false;setBusy(false);}}
  }
 
  function choose(action:string) {
   if(lock.current)return;
+  if(action==='coach'){reply('I can guide you one step at a time. What would you like to do first? You can ask another question at any point.',Object.entries(FEATURES).map(([key,feature])=>({label:feature.name,action:`coach:${key}:0`})));return;}
+  if(action.startsWith('coach:')){
+   const [,key,position]=action.split(':');const feature=FEATURES[key as keyof typeof FEATURES];const step=Number(position);if(!feature)return;
+   reply(`${feature.name} · Step ${step+1} of ${feature.steps.length}\n\n${feature.steps[step]}\n\nTell me what you see or ask about this step. Use Next step when you are ready.`,[{label:`Open ${feature.name}`,action:`open:${key}`},...(step+1<feature.steps.length?[{label:'Next step',action:`coach:${key}:${step+1}`}]:[{label:'Choose another workflow',action:'coach'}])]);return;
+  }
   if(action.startsWith('suggest:')){setQuestion(action.slice(8));composer.current?.focus();return;}
   if(action==='understand'){setComparisonFocus(false);void ask('Explain the machine functions and operating sequence of the selected project, with source evidence and active task scope.',undefined,false);return;}
   if(action==='flow'){void ask('Show a step-by-step function flow for a PLC routine in the selected project.',undefined,comparisonFocus||(!effectiveProjectPath&&!!comparisonResult?.sessionId));return;}
@@ -149,13 +157,14 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
   {admin&&<details className="chopperConnectionBar"><summary>Chopper connection: {modelLabel}</summary><div className="actions"><button className="btn" onClick={()=>void refreshModel()}>Refresh connection</button><small>Local tools work without a model. Configure optional Ollama / API models in Settings.</small></div></details>}
   {sourceNotice&&<p role="status">{sourceNotice}</p>}
   <div className="chopperWorkspace card">
-   <aside className="chopperSidebar"><button className="btn primary newChat" onClick={newChat}><Plus size={14}/> New chat</button>
+   <aside className="chopperSidebar"><button className="btn primary newChat" onClick={newChat}><Plus size={14}/> New chat</button><button className="btn" disabled={busy||reading} onClick={()=>choose('coach')}>Guide me step by step</button>
     <div className="chopperSideSection"><span>PROJECT KNOWLEDGE</span><button disabled={busy||reading||!effectiveProjectPath} onClick={()=>choose("understand")}>Understand this project</button><button disabled={busy||reading||(!effectiveProjectPath&&!comparisonResult?.sessionId)} onClick={()=>choose('flow')}>Routine function flow</button><button disabled={busy||reading||!comparisonResult?.sessionId} onClick={()=>choose("differences")}>Explain MatchView changes</button><small>{comparisonResult?`${comparisonResult.baseName} vs ${comparisonResult.newName}`:"Run MatchView to explain two projects."}</small></div><div className="chopperSideSection"><span>uSOPp TOOLS</span>{SHORTCUTS.map(([key,label])=><button key={key} disabled={busy||reading} onClick={()=>choose(key)}><Search size={13}/>{key==='settings'&&!admin?'Settings':label}</button>)}</div>
     <details className="chopperSideSection"><summary>Optional project context</summary><label><input type="checkbox" checked={comparisonFocus} disabled={!comparisonResult?.sessionId||busy||reading} onChange={e=>setComparisonFocus(e.target.checked)}/> Follow-up questions use MatchView</label><label>Project for this chat<select value={projectId} disabled={busy||reading} onChange={e=>setProjectId(e.target.value)}><option value="">{projectName||'Selected ByteMap / LogicScan project'}</option>{projects.map(a=><option key={a.id} value={a.id}>{a.projectName||a.name}</option>)}</select></label><b>{contextLabel}</b><small>{effectiveProjectPath||'Chat and log decoding do not require a project.'}</small></details>
     <div className="chopperLearningBadge"><BrainCircuit size={16}/><div><b>{learningCount}</b><span>learning records</span></div></div>
    </aside>
    <section className="chopperChat"><header><span className="chopperAvatar"><Bot size={22}/></span><div><b>Chopper</b><span>All uSOPp features in one chat</span></div><i><Sparkles size={12}/>{admin?'Local tools + optional AI':'Project assistant'}</i></header>
     <div className="chopperContextBanner"><Cpu size={20}/><span>{effectiveProjectPath?<>Project context · <b>{contextLabel}</b></>:'Ready for your questions. Attach a project or paste a PLC log to add context.'}</span></div>
+    <ChopperModelStatus/><ProjectIntelligence project={intelligence}/>
     <div className={`chopperMessages${showWelcome?' isWelcome':''}`} role="log" aria-live="polite">
      {showWelcome&&<section className="chopperWelcome" aria-labelledby="chopperWelcomeHeading"><Bot className="chopperWelcomeIcon" size={48} strokeWidth={1.7}/><span className="chopperWelcomeEyebrow">CHOPPER · ENGINEERING ASSISTANT</span><h2 id="chopperWelcomeHeading">Your engineering thinking partner.</h2><p>{effectiveProjectPath?<>Explore <strong>{contextLabel}</strong>, trace its logic and understand findings with source evidence.</>:'Explain PLC logic, review project differences and investigate validation findings. Add a project or log whenever you need source context.'}</p><div className="chopperWelcomePrompts">
       <button className="btn" onClick={()=>choose('suggest:Trace the motor start and stop logic and its interlocks in the selected project. Cite source files and show what can prevent the motor from running.')}>Explain the motor interlock <ArrowUpRight size={16}/></button>
@@ -173,6 +182,7 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
       {message.functionFlow&&<ChopperFunctionFlow data={message.functionFlow} onOpened={opened=>setMessages(current=>current.map((item,i)=>i===index&&item.functionFlow?{...item,text:`Working sequence for ${opened.selectedPath}.`,historyText:flowConversationText(opened.view),functionFlow:{...item.functionFlow,...opened}}:item))}/>}
       {message.choices&&<div className="chatFriendlyChoices">{message.choices.map(choice=><button className="btn" key={choice.action} disabled={busy||reading} onClick={()=>choose(choice.action)}>{choice.label}</button>)}</div>}
       {message.role==='assist'&&!message.logs&&<button className="chatCopy" aria-label="Copy Chopper reply" onClick={()=>void copyChatText(message.text).then(ok=>setCopyNotice(ok?'Reply copied.':'Select the reply and copy it manually.'))}>Copy reply</button>}
+      <ContextUsage usage={message.contextUsage} retrieval={message.retrieval}/>
       {message.source&&<div className="assistSource">Source: {message.source==='local-function-flow'?'PLC source function flow':admin?message.source:message.source==='ollama'||message.source==='api'||message.source==='embedded'?'Chopper':message.source}{message.elapsedSeconds!==undefined&&` | Completed in ${message.elapsedSeconds}s`}{message.review&&" | Source references checked; explanation requires engineer review"}</div>}
       {message.trainingExampleId&&<button className="chatCopy" onClick={()=>onOpenFeature?.('learning')}>Training draft saved · Review in KnowHub</button>}
       {!!message.evidence?.length&&<div className="assistEvidenceList">{message.evidence.map((item,i)=><details id={`chopper-evidence-${index}-${i}`} key={`${item.file}:${i}`}><summary>[{item.sourceId||`S${i+1}`}] {item.file}{item.line?` : line ${item.line}`:''}</summary><pre>{item.excerpt||'No excerpt returned.'}</pre><button className="btn" disabled={!sessionId} onClick={()=>setSource({path:item.file,line:item.line||1})}>Open source / edit</button>{!sessionId&&<small>Run ByteMap or LogicScan once to enable source editing.</small>}</details>)}</div>}
@@ -181,6 +191,7 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
      {(busy||reading)&&<div className="chopperTyping"><Bot size={15}/><span>{reading?`${progress?.stage||'Reading attachments'}${progress?.name?` | ${progress.name}`:''}${progress?.total?` | ${progress.current}/${progress.total} files`:''}`:`${progress?.stage||'Processing'} | ${progress?.elapsedSeconds||0}s elapsed${progress?.total?` | ${progress.current}/${progress.total} files`:''}${progress?.estimatedStageRemainingSeconds!==undefined?` | about ${progress.estimatedStageRemainingSeconds}s remaining in this stage`:' | completion time depends on project size and model speed'}`}</span></div>}<div ref={messageEnd}/>
     </div>
     <div className="chopperAttachments">{attachments.map(item=><div className="chatAttachment" key={item.id}><Paperclip size={13}/><span title={item.notice}>{item.name}<small>{item.kind}</small></span><button aria-label={`Remove ${item.name}`} disabled={busy||reading} onClick={()=>{setAttachments(current=>current.filter(a=>a.id!==item.id));if(projectId===item.id)setProjectId('');pendingDecode.current=true;}}><X size={14}/></button></div>)}</div>
+    {busy&&<ContextUsage usage={progress?.contextUsage} retrieval={progress?.retrieval}/>}
     <div className="chatFriendlyChoices chatPromptSuggestions" aria-label="Suggested Chopper questions">{CHAT_PROMPTS.slice(0,5).map(item=><button className="btn" disabled={busy||reading} key={item.title} onClick={()=>choose(item.title==='Function flow'?'flow':`suggest:${item.prompt}`)}>{item.title}</button>)}<button className="btn" onClick={()=>onOpenFeature?.("help")}>How to chat</button></div><div className="chopperComposer unifiedComposer">
      <input type="file" multiple hidden ref={projectPicker} {...({webkitdirectory:'',directory:''} as any)} onChange={e=>{const files=Array.from(e.target.files||[]);e.target.value='';void attachProject(files);}}/>
      <input type="file" multiple hidden ref={picker} onChange={e=>{const files=Array.from(e.target.files||[]);e.target.value='';void attach(files);}}/>

@@ -1,0 +1,3060 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "qms-comber-qms-comber-shift-live",
+  "name": "QMS / Comber / LIVE",
+  "service": "QMS",
+  "machine": "Comber",
+  "view": "LIVE",
+  "mode": "live",
+  "columns": 3,
+  "source": {
+    "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "qms_COMBER_shift_live",
+    "sha256": "f977ff38c61c52cbc3803001156cdfe62f3c2c32c4f23e9265ba9856fc5f1641"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Process Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "process_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "tdEngineKey": "process_hank",
+      "mongoKey": "hank_ne",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "U",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u%",
+        "u_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "u%",
+      "mongoKey": "u_percent",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "U",
+        "U%"
+      ],
+      "canonicalName": "U%",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-22",
+      "name": "CV %",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_%",
+        "cv_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv_%",
+      "mongoKey": "cv_percent",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Spectogram cv",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_peak"
+      ],
+      "unit": "",
+      "tdEngineKey": "spectrogram_stops",
+      "mongoKey": "spectrogram_peak",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Noil %",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "noil_%",
+        "noil_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "noil_%",
+      "mongoKey": "noil_percent",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Cumulative Thick place",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "no_of_thickplace in doff1 + no_of_thickplace in doff 2 + ... upto No of doffs",
+      "keys": [
+        "thick_place"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "thick_place",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Draft Cond. Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_cond._stops",
+        "draft_cond_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_cond._stops",
+      "mongoKey": "draft_cond_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Draft Earth Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_earth_stops",
+        "draft_earth_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "draft_earth_stops",
+      "mongoKey": "draft_earth_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Coiler Chock Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "coiler_chock_stops",
+        "coiler_chock_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "coiler_chock_stops",
+      "mongoKey": "coiler_chock_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Empty Lap Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "empty_lap_stops",
+        "empty_lap_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "empty_lap_stops",
+      "mongoKey": "empty_lap_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Table Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "table_stops",
+        "table_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "table_stops",
+      "mongoKey": "table_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Sliver Monitor Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_monitor_stops",
+      "mongoKey": "sliver_monitor_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "U% Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u%_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "u%_stops",
+      "mongoKey": "u_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "CV% Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%_stops",
+      "mongoKey": "cv_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Thick Place Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place_stops",
+        "thick_place_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "thick_place_stops",
+      "mongoKey": "thick_place_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Spectrogram Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "spectrogram_stops",
+      "mongoKey": "spectrogram_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Servo Fault Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_fault_stops",
+        "servo_fault_stops"
+      ],
+      "unit": "",
+      "tdEngineKey": "servo_fault_stops",
+      "mongoKey": "servo_fault_stops",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "CVM%",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cvm%",
+        "cvm_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cvm%",
+      "mongoKey": "cvm_percent",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CVM%",
+        "CVM %"
+      ],
+      "canonicalName": "CVM%",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-42",
+      "name": "CV%(1m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(1m)",
+        "cv_1m_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(1m)",
+      "mongoKey": "cv_1m_percent",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(1m)",
+        "CV 1m"
+      ],
+      "canonicalName": "CV%(1m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-43",
+      "name": "CV%(3m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(3m)",
+        "cv_3m_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(3m)",
+      "mongoKey": "cv_3m_percent",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(3m)",
+        "CV 3m"
+      ],
+      "canonicalName": "CV%(3m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-44",
+      "name": "CV%(5m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(5m)",
+        "cv_5m_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "cv%(5m)",
+      "mongoKey": "cv_5m_percent",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 44
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": [
+        "CV%(5m)",
+        "CV 5m"
+      ],
+      "canonicalName": "CV%(5m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "row-45",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "run_time_minute",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 45
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-46",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 46
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-47",
+      "name": "ThikPlace Per Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "formula",
+      "formula": "(thick_place / run_time_minute) * 100",
+      "keys": [
+        "thickplace_hr"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "thickplace_hr",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 47
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "originalFormula": "thick_place / run_time_minute * 60",
+      "definitionSource": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 49
+      },
+      "aliases": []
+    },
+    {
+      "id": "row-48",
+      "name": "Number Of doff",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffs",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "tdEngineKey": "doffs",
+      "mongoKey": "no_of_doffs",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 48
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-49",
+      "name": "Thick place_AvgCan",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(thick_place )/ no_of_doffs",
+      "keys": [
+        "thick_place_AvgCan"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "thick_place_AvgCan",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-50",
+      "name": "A%",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor%",
+        "A_percent"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_monitor%",
+      "mongoKey": "A_percent",
+      "source": {
+        "workbook": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Process Hank",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "process_hank",
+        "hank_ne"
+      ],
+      "unit": "",
+      "mongoKey": "hank_ne",
+      "tdEngineKey": "process_hank",
+      "aliases": [
+        "Process Hank"
+      ],
+      "sourceAliases": [
+        "Process Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        140
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name",
+        "Lot name"
+      ],
+      "sourceAliases": [
+        "Lot Name",
+        "Lot name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "U",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "u_percent",
+        "u_percent"
+      ],
+      "unit": "",
+      "mongoKey": "u_percent",
+      "tdEngineKey": "u_percent",
+      "aliases": [
+        "U"
+      ],
+      "sourceAliases": [
+        "U"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Max U",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "u_percent",
+        "max_u_percent"
+      ],
+      "unit": "",
+      "mongoKey": "max_u_percent",
+      "tdEngineKey": "u_percent",
+      "aliases": [
+        "Max U",
+        "U"
+      ],
+      "sourceAliases": [
+        "Max U",
+        "U"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Min U",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "u_percent",
+        "min_u_percent"
+      ],
+      "unit": "",
+      "mongoKey": "min_u_percent",
+      "tdEngineKey": "u_percent",
+      "aliases": [
+        "Min U",
+        "U"
+      ],
+      "sourceAliases": [
+        "Min U",
+        "U"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "CV",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "cv_percent",
+        "cv_percent"
+      ],
+      "unit": "",
+      "mongoKey": "cv_percent",
+      "tdEngineKey": "cv_percent",
+      "aliases": [
+        "CV",
+        "CV %"
+      ],
+      "sourceAliases": [
+        "CV",
+        "CV %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Max CV",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "cv_percent",
+        "max_cv_percent"
+      ],
+      "unit": "",
+      "mongoKey": "max_cv_percent",
+      "tdEngineKey": "cv_percent",
+      "aliases": [
+        "Max CV",
+        "CV %"
+      ],
+      "sourceAliases": [
+        "Max CV",
+        "CV %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Min CV",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "cv_percent",
+        "min_cv_percent"
+      ],
+      "unit": "",
+      "mongoKey": "min_cv_percent",
+      "tdEngineKey": "cv_percent",
+      "aliases": [
+        "Min CV",
+        "CV %"
+      ],
+      "sourceAliases": [
+        "Min CV",
+        "CV %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Noil Percent",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "noil_%",
+        "noil_percent"
+      ],
+      "unit": "",
+      "mongoKey": "noil_percent",
+      "tdEngineKey": "noil_%",
+      "aliases": [
+        "Noil Percent",
+        "Noil %"
+      ],
+      "sourceAliases": [
+        "Noil Percent",
+        "Noil %"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Doffs",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doffs",
+        "no_of_doffs"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_doffs",
+      "tdEngineKey": "doffs",
+      "aliases": [
+        "Doffs",
+        "Number Of doff"
+      ],
+      "sourceAliases": [
+        "Doffs",
+        "Number Of doff"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Thick place",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "pms_COMBER_doff",
+      "keys": [
+        "number_of_thickplace",
+        "thick_place"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place",
+      "tdEngineKey": "number_of_thickplace",
+      "aliases": [
+        "Thick place",
+        "Cumulative Thick place"
+      ],
+      "sourceAliases": [
+        "Thick place",
+        "Cumulative Thick place"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Thick Place Average Per Can",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "pms_COMBER_doff",
+      "keys": [
+        "number_of_thickplace",
+        "thick_place_avgcan"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place_avgcan",
+      "tdEngineKey": "number_of_thickplace",
+      "aliases": [
+        "Thick Place Average Per Can",
+        "Thick place_AvgCan"
+      ],
+      "sourceAliases": [
+        "Thick Place Average Per Can",
+        "Thick place_AvgCan"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Spectrogram",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_peak"
+      ],
+      "unit": "",
+      "mongoKey": "spectrogram_peak",
+      "tdEngineKey": "spectrogram_stops",
+      "aliases": [
+        "Spectrogram",
+        "Spectogram cv",
+        "Spectrogram Stops"
+      ],
+      "sourceAliases": [
+        "Spectrogram",
+        "Spectogram cv",
+        "Spectrogram Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Min Spectrogram",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "spectrogram_peak",
+        "min_spectrogram_peak"
+      ],
+      "unit": "",
+      "mongoKey": "min_spectrogram_peak",
+      "tdEngineKey": "spectrogram_peak",
+      "aliases": [
+        "Min Spectrogram",
+        "Spectogram cv"
+      ],
+      "sourceAliases": [
+        "Min Spectrogram",
+        "Spectogram cv"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Max Spectrogram",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "spectrogram_peak",
+        "max_spectrogram_peak"
+      ],
+      "unit": "",
+      "mongoKey": "max_spectrogram_peak",
+      "tdEngineKey": "spectrogram_peak",
+      "aliases": [
+        "Max Spectrogram",
+        "Spectogram cv"
+      ],
+      "sourceAliases": [
+        "Max Spectrogram",
+        "Spectogram cv"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Thick Place",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "currenty_produced_sliver_thick_places",
+        "thick_place"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place",
+      "tdEngineKey": "currenty_produced_sliver_thick_places",
+      "aliases": [
+        "Thick Place",
+        "Cumulative Thick place"
+      ],
+      "sourceAliases": [
+        "Thick Place",
+        "Cumulative Thick place"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Draft Condition Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_cond._stops",
+        "draft_cond._stops"
+      ],
+      "unit": "",
+      "mongoKey": "draft_cond._stops",
+      "tdEngineKey": "draft_cond._stops",
+      "aliases": [
+        "Draft Condition Stops",
+        "Draft Cond. Stops"
+      ],
+      "sourceAliases": [
+        "Draft Condition Stops",
+        "Draft Cond. Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Draft Earth Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_earth_stops",
+        "draft_earth_stops"
+      ],
+      "unit": "",
+      "mongoKey": "draft_earth_stops",
+      "tdEngineKey": "draft_earth_stops",
+      "aliases": [
+        "Draft Earth Stops"
+      ],
+      "sourceAliases": [
+        "Draft Earth Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Coiler Chock Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "colier_chock_stops",
+        "colier_chock_stops"
+      ],
+      "unit": "",
+      "mongoKey": "colier_chock_stops",
+      "tdEngineKey": "colier_chock_stops",
+      "aliases": [
+        "Coiler Chock Stops"
+      ],
+      "sourceAliases": [
+        "Coiler Chock Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Empty Lap Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "empty_lap_stops",
+        "empty_lap_stops"
+      ],
+      "unit": "",
+      "mongoKey": "empty_lap_stops",
+      "tdEngineKey": "empty_lap_stops",
+      "aliases": [
+        "Empty Lap Stops"
+      ],
+      "sourceAliases": [
+        "Empty Lap Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Table Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "table_stops",
+        "table_stops"
+      ],
+      "unit": "",
+      "mongoKey": "table_stops",
+      "tdEngineKey": "table_stops",
+      "aliases": [
+        "Table Stops"
+      ],
+      "sourceAliases": [
+        "Table Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Sliver Monitor Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_monitor_stops",
+        "sliver_monitor_stops"
+      ],
+      "unit": "",
+      "mongoKey": "sliver_monitor_stops",
+      "tdEngineKey": "sliver_monitor_stops",
+      "aliases": [
+        "Sliver Monitor Stops"
+      ],
+      "sourceAliases": [
+        "Sliver Monitor Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "U Percentage Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u%_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "mongoKey": "u_stops",
+      "tdEngineKey": "u%_stops",
+      "aliases": [
+        "U Percentage Stops",
+        "U% Stops"
+      ],
+      "sourceAliases": [
+        "U Percentage Stops",
+        "U% Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "CV Percentage Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "mongoKey": "cv_stops",
+      "tdEngineKey": "cv%_stops",
+      "aliases": [
+        "CV Percentage Stops",
+        "CV% Stops"
+      ],
+      "sourceAliases": [
+        "CV Percentage Stops",
+        "CV% Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Thick Place Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "thick_place_stops",
+        "thick_place_stops"
+      ],
+      "unit": "",
+      "mongoKey": "thick_place_stops",
+      "tdEngineKey": "thick_place_stops",
+      "aliases": [
+        "Thick Place Stops"
+      ],
+      "sourceAliases": [
+        "Thick Place Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Servo Fault Stops",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "servo_fault_stops",
+        "servo_fault_stops"
+      ],
+      "unit": "",
+      "mongoKey": "servo_fault_stops",
+      "tdEngineKey": "servo_fault_stops",
+      "aliases": [
+        "Servo Fault Stops"
+      ],
+      "sourceAliases": [
+        "Servo Fault Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "runtimehr"
+      ],
+      "unit": "",
+      "mongoKey": "runtimehr",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour"
+      ],
+      "sourceAliases": [
+        "Run Time Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "runtimemins"
+      ],
+      "unit": "",
+      "mongoKey": "runtimemins",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "runtimehr * 60 + runtimemins",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute"
+      ],
+      "sourceAliases": [
+        "Run Time Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "CVM%",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cvm%",
+        "cvm_percent"
+      ],
+      "unit": "",
+      "mongoKey": "cvm_percent",
+      "tdEngineKey": "cvm%",
+      "aliases": [
+        "CVM%",
+        "CVM %"
+      ],
+      "sourceAliases": [
+        "CVM%"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 45
+      },
+      "definitionPriority": 2,
+      "canonicalName": "CVM%",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-46",
+      "name": "CV%(1m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(1m)",
+        "cv_1m_percent"
+      ],
+      "unit": "",
+      "mongoKey": "cv_1m_percent",
+      "tdEngineKey": "cv%(1m)",
+      "aliases": [
+        "CV%(1m)",
+        "CV 1m"
+      ],
+      "sourceAliases": [
+        "CV%(1m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 46
+      },
+      "definitionPriority": 2,
+      "canonicalName": "CV%(1m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-47",
+      "name": "CV%(3m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(3m)",
+        "cv_3m_percent"
+      ],
+      "unit": "",
+      "mongoKey": "cv_3m_percent",
+      "tdEngineKey": "cv%(3m)",
+      "aliases": [
+        "CV%(3m)",
+        "CV 3m"
+      ],
+      "sourceAliases": [
+        "CV%(3m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 47
+      },
+      "definitionPriority": 2,
+      "canonicalName": "CV%(3m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-48",
+      "name": "CV%(5m)",
+      "dataType": "REAL",
+      "groupCodes": [
+        260
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%(5m)",
+        "cv_5m_percent"
+      ],
+      "unit": "",
+      "mongoKey": "cv_5m_percent",
+      "tdEngineKey": "cv%(5m)",
+      "aliases": [
+        "CV%(5m)",
+        "CV 5m"
+      ],
+      "sourceAliases": [
+        "CV%(5m)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 48
+      },
+      "definitionPriority": 2,
+      "canonicalName": "CV%(5m)",
+      "mappingSource": "knowledge/master/data_model_rules.json"
+    },
+    {
+      "id": "definition-49",
+      "name": "Thick Place Per Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(thick_place / run_time_minute) * 100",
+      "keys": [
+        "thickplace_hr"
+      ],
+      "unit": "",
+      "mongoKey": "thickplace_hr",
+      "tdEngineKey": "",
+      "aliases": [
+        "Thick Place Per Hour",
+        "ThikPlace Per Hour"
+      ],
+      "sourceAliases": [
+        "Thick Place Per Hour",
+        "ThikPlace Per Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "A%",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "a_percent",
+        "a_percent"
+      ],
+      "unit": "",
+      "mongoKey": "a_percent",
+      "tdEngineKey": "a_percent",
+      "aliases": [
+        "A%"
+      ],
+      "sourceAliases": [
+        "A%"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Minimum A%",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "a_percent",
+        "min_a_percent"
+      ],
+      "unit": "",
+      "mongoKey": "min_a_percent",
+      "tdEngineKey": "a_percent",
+      "aliases": [
+        "Minimum A%",
+        "A%"
+      ],
+      "sourceAliases": [
+        "Minimum A%",
+        "A%"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Maximum A%",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "qms_COMBER_minutes_time_series",
+      "keys": [
+        "a_percent",
+        "max_a_percent"
+      ],
+      "unit": "",
+      "mongoKey": "max_a_percent",
+      "tdEngineKey": "a_percent",
+      "aliases": [
+        "Maximum A%",
+        "A%"
+      ],
+      "sourceAliases": [
+        "Maximum A%",
+        "A%"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "Spectogram cv",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_peak"
+      ],
+      "unit": "",
+      "mongoKey": "spectrogram_peak",
+      "tdEngineKey": "spectrogram_stops",
+      "aliases": [
+        "Spectogram cv"
+      ],
+      "sourceAliases": [
+        "Spectogram cv"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 53
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-54",
+      "name": "Draft Cond. Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "draft_cond._stops",
+        "draft_cond_stops"
+      ],
+      "unit": "",
+      "mongoKey": "draft_cond_stops",
+      "tdEngineKey": "draft_cond._stops",
+      "aliases": [
+        "Draft Cond. Stops"
+      ],
+      "sourceAliases": [
+        "Draft Cond. Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 54
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-55",
+      "name": "U% Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "u%_stops",
+        "u_stops"
+      ],
+      "unit": "",
+      "mongoKey": "u_stops",
+      "tdEngineKey": "u%_stops",
+      "aliases": [
+        "U% Stops"
+      ],
+      "sourceAliases": [
+        "U% Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 55
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-56",
+      "name": "CV% Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv%_stops",
+        "cv_stops"
+      ],
+      "unit": "",
+      "mongoKey": "cv_stops",
+      "tdEngineKey": "cv%_stops",
+      "aliases": [
+        "CV% Stops"
+      ],
+      "sourceAliases": [
+        "CV% Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 56
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-57",
+      "name": "Spectrogram Stops",
+      "dataType": "INTEGER",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "spectrogram_stops",
+        "spectrogram_stops"
+      ],
+      "unit": "",
+      "mongoKey": "spectrogram_stops",
+      "tdEngineKey": "spectrogram_stops",
+      "aliases": [
+        "Spectrogram Stops"
+      ],
+      "sourceAliases": [
+        "Spectrogram Stops"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 57
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-58",
+      "name": "ThikPlace Per Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "formula",
+      "formula": "thick_place / run_time_minute * 60",
+      "keys": [
+        "thickplace_hr"
+      ],
+      "unit": "",
+      "mongoKey": "thickplace_hr",
+      "tdEngineKey": "",
+      "aliases": [
+        "ThikPlace Per Hour"
+      ],
+      "sourceAliases": [
+        "ThikPlace Per Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/COMBER.json",
+        "sheet": "qms_COMBER_shift_live",
+        "row": 58
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 20,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 21,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 23,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 24,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 18,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 30,
+      "name": "Draft Cond. Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 31,
+      "name": "Draft Earth Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 32,
+      "name": "Coiler Chock Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 33,
+      "name": "Empty Lap Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 34,
+      "name": "Table Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 35,
+      "name": "Sliver Monitor Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 36,
+      "name": "U% Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 37,
+      "name": "CV% Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 38,
+      "name": "Thick Place Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 39,
+      "name": "Spectrogram Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 40,
+      "name": "Servo Fault Stops",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Process Hank",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "CV %",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "Spectogram cv",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-25"
+      ]
+    },
+    {
+      "title": "Cumulative Thick place",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-29"
+      ]
+    },
+    {
+      "title": "CVM%",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-41"
+      ]
+    },
+    {
+      "title": "CV%(1m)",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-42"
+      ]
+    },
+    {
+      "title": "Process Hank trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "LIVE readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-19",
+        "row-22",
+        "row-25",
+        "row-28",
+        "row-29"
+      ]
+    },
+    {
+      "title": "LIVE readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-41",
+        "row-42",
+        "row-43",
+        "row-44",
+        "row-45",
+        "row-46",
+        "row-47",
+        "row-48",
+        "row-49",
+        "row-50"
+      ]
+    }
+  ]
+}

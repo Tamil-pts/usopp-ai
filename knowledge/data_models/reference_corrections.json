@@ -1,0 +1,587 @@
+{
+  "schemaVersion": 1,
+  "corrections": [
+    {
+      "service": "CMS",
+      "machine": "COMBER",
+      "name": "Minimum total kvarh",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_COMBER_hourwise",
+          "row": 75,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Production in kg",
+      "groupCodes": [
+        40
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_shift_live",
+          "row": 54,
+          "dataType": "FLOAT"
+        },
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 98,
+          "dataType": "FLOAT"
+        },
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_shift",
+          "row": 121,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum voltage_avg",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 100,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum current_avg",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 101,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum power_factor",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 102,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum frequency",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 103,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum Total Active Power",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 104,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum Total Kva",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 105,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum total Kvar",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 106,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum total kvah",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 108,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Maximum total kvarh",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 109,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum voltage_avg",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 111,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum current_avg",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 112,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum power_factor",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 113,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum frequency",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 114,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum Total Active Power",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 115,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum Total Kva",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 116,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum total Kvar",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 117,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum total kvah",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 119,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "CMS",
+      "machine": "DRAWFRAMEFINISHER",
+      "name": "Minimum total kvarh",
+      "groupCodes": [
+        410
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "TIMESTAMP",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "cms_DFFinisher_hourwise",
+          "row": 120,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "CARDING",
+      "name": "Lot Name",
+      "groupCodes": [
+        50
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "VARCHAR(100)",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_CARDING_shift",
+          "row": 34,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "DRAWFRAMEBREAKER",
+      "name": "DOFF Length",
+      "groupCodes": [
+        140
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "VARCHAR(100)",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift_live",
+          "row": 62,
+          "dataType": "FLOAT"
+        },
+        {
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_hours",
+          "row": 39,
+          "dataType": "FLOAT"
+        },
+        {
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEBREAKER_shift",
+          "row": 62,
+          "dataType": "FLOAT"
+        },
+        {
+          "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_DRAWFRAMEB_minutes_time_ser",
+          "row": 39,
+          "dataType": "FLOAT"
+        }
+      ]
+    },
+    {
+      "service": "PMS",
+      "machine": "SPEEDFRAME",
+      "name": "COP Content",
+      "groupCodes": [
+        170
+      ],
+      "changes": [
+        {
+          "field": "dataType",
+          "previous": "VARCHAR(100)",
+          "value": "REAL",
+          "source": "Consistent numeric Excel definition for the same name and Group Code."
+        }
+      ],
+      "excelReferences": [
+        {
+          "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+          "sheet": "pms_SPEEDFRAME_doff",
+          "row": 32,
+          "dataType": "FLOAT"
+        }
+      ]
+    }
+  ]
+}

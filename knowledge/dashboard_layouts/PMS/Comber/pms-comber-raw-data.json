@@ -1,0 +1,201 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-comber-pms-comber-raw-data",
+  "name": "PMS / Comber / Raw data",
+  "service": "PMS",
+  "machine": "Comber",
+  "view": "Raw data",
+  "mode": "live",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_COMBER_raw_data",
+    "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
+  },
+  "parameters": [
+    {
+      "id": "row-2",
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_COMBER_raw_data",
+        "row": 2
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "",
+      "aliases": [
+        "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained"
+      ],
+      "sourceAliases": [
+        "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/COMBER.json",
+        "sheet": "pms_COMBER_raw_data",
+        "row": 1
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 4,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 5,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 6,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 7,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 8,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 9,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 10,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 11,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 12,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 13,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 14,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 15,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 16,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 17,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 18,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 19,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 20,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 21,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 22,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 23,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 24,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 25,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 26,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 27,
+      "name": "",
+      "reason": "Unnamed workbook row"
+    },
+    {
+      "row": 2,
+      "name": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": []
+}

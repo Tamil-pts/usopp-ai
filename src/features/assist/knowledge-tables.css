@@ -12,3 +12,7 @@
 .mappingConversation{padding:20px;margin-top:16px}.mappingConversation header{display:flex;align-items:start;gap:12px}.mappingConversation header>div{flex:1}.mappingConversationHistory{max-height:260px;overflow:auto;display:flex;flex-direction:column;gap:12px}.mappingConversationHistory .engineerBubble{display:flex;justify-content:space-between;gap:16px;white-space:pre-wrap}.mappingConversation .actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.mappingConversation .btn{white-space:pre-wrap}.mappingPrompt textarea{min-height:90px}.mappingConversation th{width:30%}
 
 .dropdownPairs{min-width:380px;max-height:260px;overflow:auto}.dropdownPair{display:flex;align-items:center;gap:8px;margin:6px 0}.dropdownPair input:first-child{min-width:75px;width:80px}.dropdownPair span{overflow-wrap:anywhere}.dropdownPair b{min-width:65px}
+.unitRulePreview { margin-top:22px;padding-top:16px;border-top:1px solid var(--line); }
+.unitRulePreview h4 { margin:0 0 12px; }
+.unitRulePreview .textInput { width:min(100%,420px); }
+.unitRules .knowledgeTableScroll input:not([type=checkbox]) { min-width:100px;max-width:220px; }

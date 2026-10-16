@@ -1,0 +1,3133 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "qms-speedframe-qms-speedframe-shift",
+  "name": "QMS / SpeedFrame / Shift",
+  "service": "QMS",
+  "machine": "SpeedFrame",
+  "view": "Shift",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "qms_SPEEDFRAME_shift",
+    "sha256": "1549ba4cb47a8b549fd373eae010663e6a5b0c8ba22275d88e37fc4ee38c6deb"
+  },
+  "parameters": [
+    {
+      "id": "row-4",
+      "name": "Adjusted Timestamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "time_stamp",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 4
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-11",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(DD:MM:YYYY)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(DD:MM:YYYY)",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 11
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Roving Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "roving_count",
+        "roving_count"
+      ],
+      "unit": "",
+      "tdEngineKey": "roving_count",
+      "mongoKey": "roving_count",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_number",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Twist",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "twist",
+        "twist"
+      ],
+      "unit": "",
+      "tdEngineKey": "twist",
+      "mongoKey": "twist",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "TPI (measured TPI)",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tpi",
+        "tpi"
+      ],
+      "unit": "",
+      "tdEngineKey": "tpi",
+      "mongoKey": "tpi",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Max TPI",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Min TPI",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "CV TPI",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Avg TPI",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Required Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required draft",
+        "required draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "required draft",
+      "mongoKey": "required draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Main Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_draft",
+        "main_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "main_draft",
+      "mongoKey": "main_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Max Main Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "Min Main Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "CV Main Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Avg Main Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Breaking Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "breaking_draft",
+        "breaking_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "breaking_draft",
+      "mongoKey": "breaking_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Break Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "break_draft",
+        "break_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "break_draft",
+      "mongoKey": "break_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Max Break Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Min Break Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "CV Break Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Avg Break Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Count of Sliver",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "formula",
+      "formula": "Count_of_Roving/Count_of_Sliver",
+      "keys": [
+        "count_of_sliver",
+        "count_of_sliver"
+      ],
+      "unit": "",
+      "tdEngineKey": "count_of_sliver",
+      "mongoKey": "count_of_sliver",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "Count of Roving",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "count_of_roving",
+        "count_of_roving"
+      ],
+      "unit": "",
+      "tdEngineKey": "count_of_roving",
+      "mongoKey": "count_of_roving",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "Total Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_draft",
+        "total_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "total_draft",
+      "mongoKey": "total_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Max Total Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Min Total Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "CV  Total Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "Avg Total Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-43",
+      "name": "Set Creel Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        160
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "set_creel_draft",
+        "set_creel_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "set_creel_draft",
+      "mongoKey": "set_creel_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-44",
+      "name": "Creel Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "creal_draft",
+        "creel_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "creal_draft",
+      "mongoKey": "creel_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 44
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-45",
+      "name": "Max creel Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 45
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-46",
+      "name": "Min creel Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 46
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-47",
+      "name": "CV  creel Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 47
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-48",
+      "name": "Avg creel Draft",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 48
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-49",
+      "name": "Rovo Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "rovo_stop",
+        "roving_break_ebsh"
+      ],
+      "unit": "",
+      "tdEngineKey": "rovo_stop",
+      "mongoKey": "roving_break_ebsh",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-50",
+      "name": "Creel Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "creel_stop",
+        "Sliver_break_ebsh"
+      ],
+      "unit": "",
+      "tdEngineKey": "creel_stop",
+      "mongoKey": "Sliver_break_ebsh",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-51",
+      "name": "Head Stock Hank",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "Tag not Available",
+      "keys": [
+        "head_stock_hank"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "head_stock_hank",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 51
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-52",
+      "name": "Tail Stack Hank",
+      "dataType": "",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "Tag Not Available",
+      "keys": [
+        "tail_stock_hank"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "tail_stock_hank",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 52
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-53",
+      "name": "Set Main Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        160
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "corrected_draft",
+        "set_main_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "corrected_draft",
+      "mongoKey": "set_main_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 53
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-54",
+      "name": "Set Total Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(breaking_draft + 1.085 +  set_creel_draft)",
+      "keys": [
+        "set_total_draft"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "set_total_draft",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 54
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-55",
+      "name": "Number of Roving Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "roving_breaks",
+        "roving_breaks"
+      ],
+      "unit": "",
+      "tdEngineKey": "roving_breaks",
+      "mongoKey": "roving_breaks",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 55
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-56",
+      "name": "Number of Sliver Breaks",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_breaks",
+        "sliver_breaks"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_breaks",
+      "mongoKey": "sliver_breaks",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 56
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-57",
+      "name": "Set TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "='Twist / 39.37",
+      "keys": [
+        "set_tpi"
+      ],
+      "unit": "",
+      "tdEngineKey": "",
+      "mongoKey": "set_tpi",
+      "source": {
+        "workbook": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 57
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp",
+        "Adjusted Timestamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp",
+        "Adjusted Timestamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "hours"
+      ],
+      "unit": "",
+      "mongoKey": "hours",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "minutes"
+      ],
+      "unit": "",
+      "mongoKey": "minutes",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hours, ':', minutes)",
+      "keys": [
+        "shift_hour"
+      ],
+      "unit": "",
+      "mongoKey": "shift_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Roving Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "roving count",
+        "count"
+      ],
+      "unit": "",
+      "mongoKey": "count",
+      "tdEngineKey": "roving count",
+      "aliases": [
+        "Roving Count"
+      ],
+      "sourceAliases": [
+        "Roving Count"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Lot name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot name"
+      ],
+      "sourceAliases": [
+        "Lot name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Twist",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "twist",
+        "twist"
+      ],
+      "unit": "",
+      "mongoKey": "twist",
+      "tdEngineKey": "twist",
+      "aliases": [
+        "Twist"
+      ],
+      "sourceAliases": [
+        "Twist"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "TPI",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tpi",
+        "tpi"
+      ],
+      "unit": "",
+      "mongoKey": "tpi",
+      "tdEngineKey": "tpi",
+      "aliases": [
+        "TPI",
+        "TPI (measured TPI)"
+      ],
+      "sourceAliases": [
+        "TPI",
+        "TPI (measured TPI)"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Max TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "max_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max TPI"
+      ],
+      "sourceAliases": [
+        "Max TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Min TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "min_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min TPI"
+      ],
+      "sourceAliases": [
+        "Min TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "CV TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "cv_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV TPI"
+      ],
+      "sourceAliases": [
+        "CV TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Avg TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "avg_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "avg_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "Avg TPI"
+      ],
+      "sourceAliases": [
+        "Avg TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Required Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "required draft",
+        "required draft"
+      ],
+      "unit": "",
+      "mongoKey": "required draft",
+      "tdEngineKey": "required draft",
+      "aliases": [
+        "Required Draft"
+      ],
+      "sourceAliases": [
+        "Required Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Main Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "main_draft",
+        "main_draft"
+      ],
+      "unit": "",
+      "mongoKey": "main_draft",
+      "tdEngineKey": "main_draft",
+      "aliases": [
+        "Main Draft"
+      ],
+      "sourceAliases": [
+        "Main Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Max Main Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_main_draft"
+      ],
+      "unit": "",
+      "mongoKey": "max_main_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max Main Draft"
+      ],
+      "sourceAliases": [
+        "Max Main Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Min Main Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_main_draft"
+      ],
+      "unit": "",
+      "mongoKey": "min_main_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min Main Draft"
+      ],
+      "sourceAliases": [
+        "Min Main Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "CV Main Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_main_draft"
+      ],
+      "unit": "",
+      "mongoKey": "cv_main_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV Main Draft"
+      ],
+      "sourceAliases": [
+        "CV Main Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Avg Main Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "avg_main_draft"
+      ],
+      "unit": "",
+      "mongoKey": "avg_main_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Avg Main Draft"
+      ],
+      "sourceAliases": [
+        "Avg Main Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Breaking Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "breaking_draft",
+        "breaking_draft"
+      ],
+      "unit": "",
+      "mongoKey": "breaking_draft",
+      "tdEngineKey": "breaking_draft",
+      "aliases": [
+        "Breaking Draft"
+      ],
+      "sourceAliases": [
+        "Breaking Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Break Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "break_draft",
+        "break_draft"
+      ],
+      "unit": "",
+      "mongoKey": "break_draft",
+      "tdEngineKey": "break_draft",
+      "aliases": [
+        "Break Draft"
+      ],
+      "sourceAliases": [
+        "Break Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Max Break Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_break_draft"
+      ],
+      "unit": "",
+      "mongoKey": "max_break_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max Break Draft"
+      ],
+      "sourceAliases": [
+        "Max Break Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Min Break Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_break_draft"
+      ],
+      "unit": "",
+      "mongoKey": "min_break_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min Break Draft"
+      ],
+      "sourceAliases": [
+        "Min Break Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "CV Break Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_break_draft"
+      ],
+      "unit": "",
+      "mongoKey": "cv_break_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV Break Draft"
+      ],
+      "sourceAliases": [
+        "CV Break Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Avg Break Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "avg_break_draft"
+      ],
+      "unit": "",
+      "mongoKey": "avg_break_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Avg Break Draft"
+      ],
+      "sourceAliases": [
+        "Avg Break Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Count of Sliver",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "count_of_sliver",
+        "count_of_sliver"
+      ],
+      "unit": "",
+      "mongoKey": "count_of_sliver",
+      "tdEngineKey": "count_of_sliver",
+      "aliases": [
+        "Count of Sliver"
+      ],
+      "sourceAliases": [
+        "Count of Sliver"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "Count of Roving",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "count_of_roving",
+        "count_of_roving"
+      ],
+      "unit": "",
+      "mongoKey": "count_of_roving",
+      "tdEngineKey": "count_of_roving",
+      "aliases": [
+        "Count of Roving"
+      ],
+      "sourceAliases": [
+        "Count of Roving"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Total Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "total_draft",
+        "total_draft"
+      ],
+      "unit": "",
+      "mongoKey": "total_draft",
+      "tdEngineKey": "total_draft",
+      "aliases": [
+        "Total Draft"
+      ],
+      "sourceAliases": [
+        "Total Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "Max Total Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_total_draft"
+      ],
+      "unit": "",
+      "mongoKey": "max_total_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max Total Draft"
+      ],
+      "sourceAliases": [
+        "Max Total Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Min Total Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_total_draft"
+      ],
+      "unit": "",
+      "mongoKey": "min_total_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min Total Draft"
+      ],
+      "sourceAliases": [
+        "Min Total Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "CV  Total Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_total_draft"
+      ],
+      "unit": "",
+      "mongoKey": "cv_total_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV  Total Draft"
+      ],
+      "sourceAliases": [
+        "CV  Total Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "Avg Total Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "avg_total_draft"
+      ],
+      "unit": "",
+      "mongoKey": "avg_total_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Avg Total Draft"
+      ],
+      "sourceAliases": [
+        "Avg Total Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "Set Creel Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "Tag NA",
+      "keys": [],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "",
+      "aliases": [
+        "Set Creel Draft"
+      ],
+      "sourceAliases": [
+        "Set Creel Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "Creel Draft",
+      "dataType": "REAL",
+      "groupCodes": [
+        20
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "creal_draft",
+        "creal_draft"
+      ],
+      "unit": "",
+      "mongoKey": "creal_draft",
+      "tdEngineKey": "creal_draft",
+      "aliases": [
+        "Creel Draft"
+      ],
+      "sourceAliases": [
+        "Creel Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Max creel Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_creel_draft"
+      ],
+      "unit": "",
+      "mongoKey": "max_creel_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Max creel Draft"
+      ],
+      "sourceAliases": [
+        "Max creel Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Min creel Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "min_creel_draft"
+      ],
+      "unit": "",
+      "mongoKey": "min_creel_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Min creel Draft"
+      ],
+      "sourceAliases": [
+        "Min creel Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "CV  creel Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cv_creel_draft"
+      ],
+      "unit": "",
+      "mongoKey": "cv_creel_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "CV  creel Draft"
+      ],
+      "sourceAliases": [
+        "CV  creel Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Avg creel Draft",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "avg_creel_draft"
+      ],
+      "unit": "",
+      "mongoKey": "avg_creel_draft",
+      "tdEngineKey": "",
+      "aliases": [
+        "Avg creel Draft"
+      ],
+      "sourceAliases": [
+        "Avg creel Draft"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Rovo Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "rovo_stop",
+        "roving_break_ebsh"
+      ],
+      "unit": "",
+      "mongoKey": "roving_break_ebsh",
+      "tdEngineKey": "rovo_stop",
+      "aliases": [
+        "Rovo Stop"
+      ],
+      "sourceAliases": [
+        "Rovo Stop"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "Creel Stop",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "creel_stop",
+        "Sliver_break_ebsh"
+      ],
+      "unit": "",
+      "mongoKey": "Sliver_break_ebsh",
+      "tdEngineKey": "creel_stop",
+      "aliases": [
+        "Creel Stop"
+      ],
+      "sourceAliases": [
+        "Creel Stop"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Head Stock hank",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "Tag NA",
+      "keys": [
+        "head_stock_hank"
+      ],
+      "unit": "",
+      "mongoKey": "head_stock_hank",
+      "tdEngineKey": "",
+      "aliases": [
+        "Head Stock hank",
+        "Head Stock Hank"
+      ],
+      "sourceAliases": [
+        "Head Stock hank",
+        "Head Stock Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Tail Stack Hank",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "Tag NA",
+      "keys": [
+        "tail_stock_hank"
+      ],
+      "unit": "",
+      "mongoKey": "tail_stock_hank",
+      "tdEngineKey": "",
+      "aliases": [
+        "Tail Stack Hank"
+      ],
+      "sourceAliases": [
+        "Tail Stack Hank"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "Set TPI",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "='Twist / 39.37",
+      "keys": [
+        "set_tpi"
+      ],
+      "unit": "",
+      "mongoKey": "set_tpi",
+      "tdEngineKey": "",
+      "aliases": [
+        "Set TPI"
+      ],
+      "sourceAliases": [
+        "Set TPI"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "QMS/SPEEDFRAME.json",
+        "sheet": "qms_SPEEDFRAME_shift",
+        "row": 53
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Timestamp",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 17,
+      "name": "Lot name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 20,
+      "name": "Max TPI",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 21,
+      "name": "Min TPI",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 22,
+      "name": "CV TPI",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 23,
+      "name": "Avg TPI",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 26,
+      "name": "Max Main Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 27,
+      "name": "Min Main Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 28,
+      "name": "CV Main Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 29,
+      "name": "Avg Main Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 32,
+      "name": "Max Break Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 33,
+      "name": "Min Break Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 34,
+      "name": "CV Break Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 35,
+      "name": "Avg Break Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 39,
+      "name": "Max Total Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 40,
+      "name": "Min Total Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 41,
+      "name": "CV  Total Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 42,
+      "name": "Avg Total Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 45,
+      "name": "Max creel Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 46,
+      "name": "Min creel Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 47,
+      "name": "CV  creel Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    },
+    {
+      "row": 48,
+      "name": "Avg creel Draft",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Count of Sliver",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-36"
+      ]
+    },
+    {
+      "title": "Head Stock Hank",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-51"
+      ]
+    },
+    {
+      "title": "Tail Stack Hank",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-52"
+      ]
+    },
+    {
+      "title": "Number of Sliver Breaks",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-56"
+      ]
+    },
+    {
+      "title": "Count of Sliver trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-36"
+      ]
+    },
+    {
+      "title": "Shift readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-11",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-18",
+        "row-19",
+        "row-24",
+        "row-25",
+        "row-30"
+      ]
+    },
+    {
+      "title": "Shift readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-31",
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-43",
+        "row-44",
+        "row-49",
+        "row-50",
+        "row-51",
+        "row-52",
+        "row-53",
+        "row-54"
+      ]
+    },
+    {
+      "title": "Shift readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-55",
+        "row-56",
+        "row-57"
+      ]
+    }
+  ]
+}

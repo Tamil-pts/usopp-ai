@@ -23,11 +23,13 @@ from openpyxl import Workbook, load_workbook
 try:
     from python_engine.workbook_bounds import value_rows
     from python_engine.metadata_cells import metadata_numeric_value, normalize_metadata_workbook
-    from python_engine.metadata_names import resolve_name_collisions
+    from python_engine.metadata_names import metadata_display_name, resolve_name_collisions
+    from python_engine.unit_rules import load_unit_rules, resolve_unit
 except ModuleNotFoundError:
     from workbook_bounds import value_rows
     from metadata_cells import metadata_numeric_value, normalize_metadata_workbook
-    from metadata_names import resolve_name_collisions
+    from metadata_names import metadata_display_name, resolve_name_collisions
+    from unit_rules import load_unit_rules, resolve_unit
 try:
     import xlrd
 except ImportError:
@@ -689,7 +691,8 @@ def load_master_dropdown_mappings() -> List[dict]:
             mapping for mapping in mappings
             if isinstance(mapping, dict)
             and mapping.get("plc_parameter")
-            and mapping.get("plc_tag")
+            and (mapping.get("plc_tag") or mapping.get("allow_missing_plc_tag") is True)
+            and mapping.get("allowed", True) is True
             and _machine_mapping_scope(mapping)
             and isinstance(mapping.get("mapping"), list)
         ]
@@ -699,24 +702,44 @@ def load_master_dropdown_mappings() -> List[dict]:
     except Exception:
         return []
 
-def master_dropdown_pairs(plc_parameter: str, plc_tag: str) -> List[Tuple[str, str]]:
-    """Get an approved dropdown only when its PLC comment and tag both match."""
+def _configured_dropdown_pairs(mapping: dict) -> List[Tuple[str, str]]:
+    return [
+        (str(item['PLCVAL']), str(item['SHOWNVAL']).strip())
+        for item in mapping.get('mapping', [])
+        if isinstance(item, dict) and 'PLCVAL' in item and 'SHOWNVAL' in item
+    ]
+
+
+def _matching_dropdown_pairs(plc_parameter: str, plc_tag: str, mappings: List[dict]) -> List[Tuple[str, str]]:
+    """Prefer exact identities; missing tags need explicit department approval."""
     parameter_norm = normalize_name(plc_parameter)
     tag_norm = normalize_name(plc_tag)
-    for mapping in load_master_dropdown_mappings():
-        if (
-            parameter_norm != normalize_name(str(mapping.get("plc_parameter", "")))
-            or tag_norm != normalize_name(str(mapping.get("plc_tag", "")))
-        ):
+    if not parameter_norm:
+        return []
+    fallbacks = []
+    for mapping in mappings:
+        if mapping.get('allowed', True) is not True or not _machine_mapping_scope(mapping):
             continue
-        pairs = []
-        for item in mapping["mapping"]:
-            if not isinstance(item, dict) or "PLCVAL" not in item or "SHOWNVAL" not in item:
-                continue
-            pairs.append((str(item["PLCVAL"]), str(item["SHOWNVAL"]).strip()))
-        if pairs:
+        configured_parameter = normalize_name(str(mapping.get('plc_parameter') or ''))
+        configured_tag = normalize_name(str(mapping.get('plc_tag') or ''))
+        pairs = _configured_dropdown_pairs(mapping)
+        if parameter_norm == configured_parameter and tag_norm and tag_norm == configured_tag and pairs:
             return pairs
-    return []
+        # A blank tag is not a wildcard for ordinary mappings. Opted-in rules
+        # match an exact approved parameter name within one named department.
+        department = str(mapping.get('machine_department') or 'All').strip()
+        if (mapping.get('allow_missing_plc_tag') is True and (not tag_norm or not configured_tag)
+                and department.casefold() != 'all'
+                and parameter_norm in {configured_parameter, normalize_name(str(mapping.get('metadata_parameter') or ''))}
+                and pairs):
+            fallbacks.append(pairs)
+    unique = {tuple(sorted(pairs)) for pairs in fallbacks}
+    return fallbacks[0] if len(unique) == 1 else []
+
+
+def master_dropdown_pairs(plc_parameter: str, plc_tag: str) -> List[Tuple[str, str]]:
+    """Resolve the same approved Sheet2 mapping used by metadata generation."""
+    return _matching_dropdown_pairs(plc_parameter, plc_tag, load_master_dropdown_mappings())
 
 
 def master_min_max_values(plc_parameter: str, plc_tag: str) -> Tuple[Optional[Any], Optional[Any]]:
@@ -790,7 +813,7 @@ def generated_metadata_parameter(plc_parameter: str, plc_tag: str) -> Tuple[str,
     parameter_norm = normalize_name(plc_parameter)
     tag_norm = normalize_name(plc_tag)
     if not parameter_norm or not tag_norm:
-        return plc_parameter, "PLC name"
+        return metadata_display_name(plc_parameter), "PLC name"
 
     for mapping in load_master_parameter_mappings():
         mapping_parameter = str(mapping.get("plc_parameter", "")).strip()
@@ -801,8 +824,8 @@ def generated_metadata_parameter(plc_parameter: str, plc_tag: str) -> Tuple[str,
             and parameter_norm == normalize_name(mapping_parameter)
             and tag_norm == normalize_name(mapping_tag)
         ):
-            return metadata_parameter, "Master Knowledge configured mapping"
-    return plc_parameter, "PLC name"
+            return metadata_display_name(metadata_parameter), "Master Knowledge configured mapping"
+    return metadata_display_name(plc_parameter), "PLC name"
 
 
 def normalize_header(value: object) -> str:
@@ -4987,7 +5010,8 @@ def _build_generated_sheet2(
                 output.append([tag_code, plc_val, shown_val, "BOTH", "NO"])
 
     # Engineer-approved mappings take precedence over a display's TextGroup.
-    # They are keyed by an exact PLC logic-comment/tag pair at generation time.
+    # They use exact PLC identities, or an explicitly approved missing-tag rule
+    # scoped to the selected department, at generation time.
     for tag_code, pairs in master_dropdown_pairs_by_tag.items():
         if normalize_bool_metadata_mode(BOOL_METADATA_MODE) == "USINT" and tag_code in bool_tag_codes:
             continue
@@ -5218,6 +5242,7 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
     # master data are picked up on the next Generate Metadata operation.
     # ------------------------------------------------------------------
     master_mappings = load_master_parameter_mappings()
+    unit_config, unit_revision = load_unit_rules(KNOWLEDGE_MASTER_FILE.with_name('unit_rules.json'))
     master_by_pair: Dict[Tuple[str, str], Dict[str, Any]] = {}
     master_by_metadata: Dict[str, Dict[str, Any]] = {}
     for mapping in sorted(master_mappings, key=lambda m: str(m.get("machine_department") or "All").casefold() != "all"):
@@ -5228,17 +5253,7 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
             master_by_pair[(mp, mt)] = mapping
             master_by_metadata[mm] = mapping
 
-    master_dropdown_by_pair: Dict[Tuple[str, str], List[Tuple[str, str]]] = {}
-    for mapping in sorted(load_master_dropdown_mappings(), key=lambda m: str(m.get("machine_department") or "All").casefold() != "all"):
-        key = (normalize_name(str(mapping.get("plc_parameter", ""))), normalize_name(str(mapping.get("plc_tag", ""))))
-        if not key[0] or not key[1]:
-            continue
-        pairs: List[Tuple[str, str]] = []
-        for item in mapping.get("mapping", []):
-            if isinstance(item, dict) and "PLCVAL" in item and "SHOWNVAL" in item:
-                pairs.append((str(item["PLCVAL"]), str(item["SHOWNVAL"]).strip()))
-        if pairs:
-            master_dropdown_by_pair[key] = pairs
+    master_dropdown_mappings = load_master_dropdown_mappings()
 
     master_minmax_by_pair: Dict[Tuple[str, str], Tuple[Any, Any]] = {}
     try:
@@ -5348,7 +5363,7 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
             tag_code = tag_counter
             plc_parameter = naming['plc_parameter']
             plc_tag = naming['plc_tag']
-            metadata_parameter, mapping_source = naming['parameter'], naming['mapping_source']
+            metadata_parameter, mapping_source = metadata_display_name(naming['parameter']), naming['mapping_source']
             tag_by_parameter.setdefault(normalize_name(plc_tag), tag_code)
             tag_by_parameter.setdefault(normalize_name(plc_parameter), tag_code)
             tag_by_parameter.setdefault(normalize_name(metadata_parameter), tag_code)
@@ -5361,7 +5376,7 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
             is_bool = normalize_type_name(str(param.data_type or "")) == "BOOL"
             if is_bool and grp.code != 30:
                 bool_tag_codes.add(tag_code)
-            approved_dropdown_pairs = master_dropdown_by_pair.get((normalize_name(plc_parameter), normalize_name(plc_tag)), [])
+            approved_dropdown_pairs = _matching_dropdown_pairs(plc_parameter, plc_tag, master_dropdown_mappings)
             if grp.code == 240 and re.fullmatch(r"HW_\d+_[A-Z0-9_]+_STATUS", plc_tag, re.I):
                 approved_dropdown_pairs = [("0", "MODULE MISSING"), ("1", "MODULE OK")]
             if approved_dropdown_pairs:
@@ -5375,7 +5390,8 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
             hmi_min = metadata_numeric_value(hmi_min)
             hmi_max = metadata_numeric_value(hmi_max)
             master_fields = fast_master_metadata_fields(metadata_parameter)
-            metadata_units = master_fields.get("units") or "<null>"
+            unit_result = resolve_unit(unit_config, metadata_parameter, ACTIVE_MACHINE_DEPARTMENT, master_fields.get("units"))
+            metadata_units = unit_result['unit']
             metadata_offset_factor = metadata_numeric_value(master_fields.get("offset_factor", 1))
             metadata_scale_factor = metadata_numeric_value(master_fields.get("scale_factor", 1))
             metadata_visible = master_fields.get("is_visible", "YES")
@@ -5423,6 +5439,9 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
                 "offset": offset_val,
                 "size": size_val,
                 "units": metadata_units,
+                "unit_source": unit_result['source'],
+                "unit_rule_id": unit_result['ruleId'],
+                "unit_rules_revision": unit_revision,
                 "min": hmi_min if hmi_min is not None else "<null>",
                 "max": hmi_max if hmi_max is not None else "<null>",
                 "offset_factor": metadata_offset_factor,

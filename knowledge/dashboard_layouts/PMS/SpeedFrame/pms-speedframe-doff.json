@@ -1,0 +1,3251 @@
+{
+  "format": "usopp-dashboard-template",
+  "schemaVersion": 1,
+  "id": "pms-speedframe-pms-speedframe-doff",
+  "name": "PMS / SpeedFrame / Doff",
+  "service": "PMS",
+  "machine": "SpeedFrame",
+  "view": "Doff",
+  "mode": "report",
+  "columns": 3,
+  "source": {
+    "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+    "sheet": "pms_SPEEDFRAME_doff",
+    "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
+  },
+  "parameters": [
+    {
+      "id": "row-10",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [
+        40
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_number",
+      "mongoKey": "shift_id",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 10
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-12",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "shift_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "shift_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 12
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-13",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 13
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-14",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 14
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-15",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "shift_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "shift_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 15
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-16",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 16
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-17",
+      "name": "Doff End Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_date",
+        "doff_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_end_date",
+      "mongoKey": "doff_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 17
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-18",
+      "name": "Doff End Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_end_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 18
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-19",
+      "name": "Doff End Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_end_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 19
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-20",
+      "name": "Doff End Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_hour",
+        "doff_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_end_hour",
+      "mongoKey": "doff_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 20
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-21",
+      "name": "Doff End Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_end_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 21
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-22",
+      "name": "Run Time HOUR",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_hour",
+      "mongoKey": "doff_run_time_minute",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 22
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-23",
+      "name": "Run Time MINUTE",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 23
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-24",
+      "name": "Run Time SECONDS",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_seconds"
+      ],
+      "unit": "",
+      "tdEngineKey": "run_time_seconds",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 24
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-25",
+      "name": "Doff Time HOUR",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_hour",
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_hour",
+      "mongoKey": "doff_time_minute",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 25
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-26",
+      "name": "Doff Time MINUTE",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 26
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-27",
+      "name": "LOT Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_name"
+      ],
+      "unit": "",
+      "tdEngineKey": "lot_name",
+      "mongoKey": "lot_name",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 27
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-28",
+      "name": "Sliver Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_count",
+        "sliver_count"
+      ],
+      "unit": "",
+      "tdEngineKey": "sliver_count",
+      "mongoKey": "sliver_count",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 28
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-29",
+      "name": "Roving Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "roving_count",
+        "roving_count"
+      ],
+      "unit": "",
+      "tdEngineKey": "roving_count",
+      "mongoKey": "roving_count",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 29
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-30",
+      "name": "Doff Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_length",
+      "mongoKey": "doff_length",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 30
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-31",
+      "name": "Layers",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "layers",
+        "layers"
+      ],
+      "unit": "",
+      "tdEngineKey": "layers",
+      "mongoKey": "layers",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 31
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-32",
+      "name": "Cop Content",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cop_content",
+        "cop_content"
+      ],
+      "unit": "",
+      "tdEngineKey": "cop_content",
+      "mongoKey": "cop_content",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 32
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-33",
+      "name": "Doff Reason",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_reason",
+        "doff_reason"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_reason",
+      "mongoKey": "doff_reason",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 33
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-34",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_delivery",
+      "mongoKey": "average_delivery",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 34
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-35",
+      "name": "Average Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_speed",
+        "average_speed"
+      ],
+      "unit": "",
+      "tdEngineKey": "average_speed",
+      "mongoKey": "average_speed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 35
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-36",
+      "name": "Doff Diameter",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_diameter",
+        "doff_diameter"
+      ],
+      "unit": "",
+      "tdEngineKey": "doff_diameter",
+      "mongoKey": "doff_diameter",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 36
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-37",
+      "name": "BTS Time HOUR",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "bts_time_hour",
+        "bts_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "bts_time_hour",
+      "mongoKey": "bts_time_minute",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 37
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-38",
+      "name": "BTS Time MINUTE",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "bts_time_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "bts_time_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 38
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-39",
+      "name": "Units Consumed",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "tdEngineKey": "units_consumed",
+      "mongoKey": "units_consumed",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 39
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-40",
+      "name": "Max Flyer RPM",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_flyer_rpm",
+        "max_flyer_rpm"
+      ],
+      "unit": "",
+      "tdEngineKey": "max_flyer_rpm",
+      "mongoKey": "max_flyer_rpm",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 40
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-41",
+      "name": "Exchanger Start Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_start_hour",
+        "exchanger_start_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "exchanger_start_hour",
+      "mongoKey": "exchanger_start_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 41
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-42",
+      "name": "Exchanger Start Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_start_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "exchanger_start_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 42
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-43",
+      "name": "Exchanger End Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_end_hour",
+        "exchanger_end_hour(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "exchanger_end_hour",
+      "mongoKey": "exchanger_end_hour(HH:MM)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 43
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-44",
+      "name": "Exchanger End Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_end_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "exchanger_end_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 44
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-45",
+      "name": "Exchanger Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_efficiency",
+        "exchanger_efficiency"
+      ],
+      "unit": "",
+      "tdEngineKey": "exchanger_efficiency",
+      "mongoKey": "exchanger_efficiency",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 45
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-46",
+      "name": "Flyer Speed Change",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "Flyer_Speed_Change",
+        "Speed_up_or_down"
+      ],
+      "unit": "",
+      "tdEngineKey": "Flyer_Speed_Change",
+      "mongoKey": "Speed_up_or_down",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 46
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-47",
+      "name": "No of Spindles",
+      "dataType": "REAL",
+      "groupCodes": [
+        320
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_spindles",
+        "no_of_spindles"
+      ],
+      "unit": "",
+      "tdEngineKey": "no_of_spindles",
+      "mongoKey": "no_of_spindles",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 47
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-49",
+      "name": "Shift Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "doff_start_date(yyyy-mm-dd)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_date",
+      "mongoKey": "doff_start_date(yyyy-mm-dd)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 49
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-50",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_month",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 50
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-51",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_year",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 51
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-52",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "doff_start_time(HH:MM)"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_hour",
+      "mongoKey": "doff_start_time(HH:MM)",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 52
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "row-53",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute"
+      ],
+      "unit": "",
+      "tdEngineKey": "shift_minute",
+      "mongoKey": "",
+      "source": {
+        "workbook": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 53
+      },
+      "sourceAliases": [],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "aliases": []
+    },
+    {
+      "id": "definition-1",
+      "name": "Time Stamp Actual",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "ts",
+        "ts_act"
+      ],
+      "unit": "",
+      "mongoKey": "ts_act",
+      "tdEngineKey": "ts",
+      "aliases": [
+        "Time Stamp Actual"
+      ],
+      "sourceAliases": [
+        "Time Stamp Actual"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 1
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-2",
+      "name": "Adjusted Time Stamp",
+      "dataType": "TIMESTAMP",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "time_stamp"
+      ],
+      "unit": "",
+      "mongoKey": "time_stamp",
+      "tdEngineKey": "",
+      "aliases": [
+        "Adjusted Time Stamp"
+      ],
+      "sourceAliases": [
+        "Adjusted Time Stamp"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 2
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-3",
+      "name": "Tenant Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "tenant",
+        "tenant_id"
+      ],
+      "unit": "",
+      "mongoKey": "tenant_id",
+      "tdEngineKey": "tenant",
+      "aliases": [
+        "Tenant Id"
+      ],
+      "sourceAliases": [
+        "Tenant Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 3
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-4",
+      "name": "Business Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "business",
+        "business_id"
+      ],
+      "unit": "",
+      "mongoKey": "business_id",
+      "tdEngineKey": "business",
+      "aliases": [
+        "Business Id"
+      ],
+      "sourceAliases": [
+        "Business Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 4
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-5",
+      "name": "Asset Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "asset",
+        "asset_id"
+      ],
+      "unit": "",
+      "mongoKey": "asset_id",
+      "tdEngineKey": "asset",
+      "aliases": [
+        "Asset Id"
+      ],
+      "sourceAliases": [
+        "Asset Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 5
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-6",
+      "name": "Unit Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "unit",
+        "unit_id"
+      ],
+      "unit": "",
+      "mongoKey": "unit_id",
+      "tdEngineKey": "unit",
+      "aliases": [
+        "Unit Id"
+      ],
+      "sourceAliases": [
+        "Unit Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 6
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-7",
+      "name": "Shed Id",
+      "dataType": "STRING",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shed",
+        "shed_id"
+      ],
+      "unit": "",
+      "mongoKey": "shed_id",
+      "tdEngineKey": "shed",
+      "aliases": [
+        "Shed Id"
+      ],
+      "sourceAliases": [
+        "Shed Id"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 7
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-8",
+      "name": "Shift date",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date",
+        "doff_st_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_st_date",
+      "tdEngineKey": "shift_date",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 8
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-9",
+      "name": "Shift Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_month",
+        "doff_st_month"
+      ],
+      "unit": "",
+      "mongoKey": "doff_st_month",
+      "tdEngineKey": "shift_month",
+      "aliases": [
+        "Shift Month"
+      ],
+      "sourceAliases": [
+        "Shift Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 9
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-10",
+      "name": "Shift Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_year",
+        "doff_st_year"
+      ],
+      "unit": "",
+      "mongoKey": "doff_st_year",
+      "tdEngineKey": "shift_year",
+      "aliases": [
+        "Shift Year"
+      ],
+      "sourceAliases": [
+        "Shift Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 10
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-11",
+      "name": "Shift Date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(doff_st_year, '-', doff_st_month, '-', doff_st_date)",
+      "keys": [
+        "doff_start_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_start_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 11
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-12",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_hour",
+        "start_hour"
+      ],
+      "unit": "",
+      "mongoKey": "start_hour",
+      "tdEngineKey": "shift_hour",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 12
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-13",
+      "name": "Shift Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_minute",
+        "start_minute"
+      ],
+      "unit": "",
+      "mongoKey": "start_minute",
+      "tdEngineKey": "shift_minute",
+      "aliases": [
+        "Shift Minute"
+      ],
+      "sourceAliases": [
+        "Shift Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 13
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-14",
+      "name": "Shift Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(start_hour, ':', start_minute)",
+      "keys": [
+        "doff_start_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_start_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift Hour"
+      ],
+      "sourceAliases": [
+        "Shift Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 14
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-15",
+      "name": "Doff End Date",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_date",
+        "date"
+      ],
+      "unit": "",
+      "mongoKey": "date",
+      "tdEngineKey": "doff_end_date",
+      "aliases": [
+        "Doff End Date"
+      ],
+      "sourceAliases": [
+        "Doff End Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 15
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-16",
+      "name": "Doff End Month",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_month",
+        "month"
+      ],
+      "unit": "",
+      "mongoKey": "month",
+      "tdEngineKey": "doff_end_month",
+      "aliases": [
+        "Doff End Month"
+      ],
+      "sourceAliases": [
+        "Doff End Month"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 16
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-17",
+      "name": "Doff End Year",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_year",
+        "year"
+      ],
+      "unit": "",
+      "mongoKey": "year",
+      "tdEngineKey": "doff_end_year",
+      "aliases": [
+        "Doff End Year"
+      ],
+      "sourceAliases": [
+        "Doff End Year"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 17
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-18",
+      "name": "Doff Date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-', date)",
+      "keys": [
+        "doff_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Date"
+      ],
+      "sourceAliases": [
+        "Doff Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 18
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-19",
+      "name": "Shift Number",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_number",
+        "shift_id"
+      ],
+      "unit": "",
+      "mongoKey": "shift_id",
+      "tdEngineKey": "shift_number",
+      "aliases": [
+        "Shift Number"
+      ],
+      "sourceAliases": [
+        "Shift Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 19
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-20",
+      "name": "Shift date",
+      "dataType": "STRING",
+      "groupCodes": [],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "shift_date"
+      ],
+      "unit": "",
+      "mongoKey": "shift_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "sourceAliases": [
+        "Shift date",
+        "Shift Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 20
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-21",
+      "name": "Doff End Hours",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_hour",
+        "hour"
+      ],
+      "unit": "",
+      "mongoKey": "hour",
+      "tdEngineKey": "doff_end_hour",
+      "aliases": [
+        "Doff End Hours",
+        "Doff End Hour"
+      ],
+      "sourceAliases": [
+        "Doff End Hours",
+        "Doff End Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 21
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-22",
+      "name": "Doff End Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_minute",
+        "minute"
+      ],
+      "unit": "",
+      "mongoKey": "minute",
+      "tdEngineKey": "doff_end_minute",
+      "aliases": [
+        "Doff End Minute"
+      ],
+      "sourceAliases": [
+        "Doff End Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 22
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-23",
+      "name": "Doff End Hour",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(hour, ':', minute)",
+      "keys": [
+        "doff_hour"
+      ],
+      "unit": "",
+      "mongoKey": "doff_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff End Hour"
+      ],
+      "sourceAliases": [
+        "Doff End Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 23
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-24",
+      "name": "Doff End Date",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "CONCAT(year, '-', month, '-' ,date, ' ' ,hour, ':', minute, ':00')",
+      "keys": [
+        "doff_end_date"
+      ],
+      "unit": "",
+      "mongoKey": "doff_end_date",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff End Date"
+      ],
+      "sourceAliases": [
+        "Doff End Date"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 24
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-25",
+      "name": "Run Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_hour",
+        "run_hour"
+      ],
+      "unit": "",
+      "mongoKey": "run_hour",
+      "tdEngineKey": "run_time_hour",
+      "aliases": [
+        "Run Time Hour",
+        "Run Time HOUR"
+      ],
+      "sourceAliases": [
+        "Run Time Hour",
+        "Run Time HOUR"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 25
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-26",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_minute",
+        "run_minute"
+      ],
+      "unit": "",
+      "mongoKey": "run_minute",
+      "tdEngineKey": "run_time_minute",
+      "aliases": [
+        "Run Time Minute",
+        "Run Time MINUTE"
+      ],
+      "sourceAliases": [
+        "Run Time Minute",
+        "Run Time MINUTE"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 26
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-27",
+      "name": "Run time seconds",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "run_time_seconds",
+        "run_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "run_seconds",
+      "tdEngineKey": "run_time_seconds",
+      "aliases": [
+        "Run time seconds",
+        "Run Time SECONDS"
+      ],
+      "sourceAliases": [
+        "Run time seconds",
+        "Run Time SECONDS"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 27
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-28",
+      "name": "Run Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "(run_hour * 60) + run_minute + (gte(run_seconds, 30) * 1)",
+      "keys": [
+        "doff_run_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_run_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Run Time Minute",
+        "Run Time MINUTE"
+      ],
+      "sourceAliases": [
+        "Run Time Minute",
+        "Run Time MINUTE"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 28
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-29",
+      "name": "Doff Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_hour",
+        "doff_time_seconds"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_seconds",
+      "tdEngineKey": "doff_time_hour",
+      "aliases": [
+        "Doff Time Hour",
+        "Doff Time HOUR"
+      ],
+      "sourceAliases": [
+        "Doff Time Hour",
+        "Doff Time HOUR"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 29
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-30",
+      "name": "Doff Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_time_minute",
+        "doff_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minutes",
+      "tdEngineKey": "doff_time_minute",
+      "aliases": [
+        "Doff Time Minute",
+        "Doff Time MINUTE"
+      ],
+      "sourceAliases": [
+        "Doff Time Minute",
+        "Doff Time MINUTE"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 30
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-31",
+      "name": "Doff Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "doff_time_seconds * 60 + doff_time_minutes",
+      "keys": [
+        "doff_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "doff_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Time Minutes",
+        "Doff Time HOUR",
+        "Doff Time MINUTE"
+      ],
+      "sourceAliases": [
+        "Doff Time Minutes",
+        "Doff Time HOUR",
+        "Doff Time MINUTE"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 31
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-32",
+      "name": "Lot Name",
+      "dataType": "STRING",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "lot_name",
+        "lot_number"
+      ],
+      "unit": "",
+      "mongoKey": "lot_number",
+      "tdEngineKey": "lot_name",
+      "aliases": [
+        "Lot Name",
+        "LOT Name"
+      ],
+      "sourceAliases": [
+        "Lot Name",
+        "LOT Name"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 32
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-33",
+      "name": "Sliver Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "sliver_count",
+        "sliver_count"
+      ],
+      "unit": "",
+      "mongoKey": "sliver_count",
+      "tdEngineKey": "sliver_count",
+      "aliases": [
+        "Sliver Count"
+      ],
+      "sourceAliases": [
+        "Sliver Count"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 33
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-34",
+      "name": "Roving Count",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "roving_count",
+        "roving_count"
+      ],
+      "unit": "",
+      "mongoKey": "roving_count",
+      "tdEngineKey": "roving_count",
+      "aliases": [
+        "Roving Count"
+      ],
+      "sourceAliases": [
+        "Roving Count"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 34
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-35",
+      "name": "Doff Length",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_length",
+        "doff_length"
+      ],
+      "unit": "",
+      "mongoKey": "doff_length",
+      "tdEngineKey": "doff_length",
+      "aliases": [
+        "Doff Length"
+      ],
+      "sourceAliases": [
+        "Doff Length"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 35
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-36",
+      "name": "Layers",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "layers",
+        "layers"
+      ],
+      "unit": "",
+      "mongoKey": "layers",
+      "tdEngineKey": "layers",
+      "aliases": [
+        "Layers"
+      ],
+      "sourceAliases": [
+        "Layers"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 36
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-37",
+      "name": "COP Content",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "cop_content",
+        "cop_content"
+      ],
+      "unit": "",
+      "mongoKey": "cop_content",
+      "tdEngineKey": "cop_content",
+      "aliases": [
+        "COP Content",
+        "Cop Content"
+      ],
+      "sourceAliases": [
+        "COP Content",
+        "Cop Content"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 37
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-38",
+      "name": "Doff Reaon",
+      "dataType": "STRING",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_reason",
+        "doff_reason"
+      ],
+      "unit": "",
+      "mongoKey": "doff_reason",
+      "tdEngineKey": "doff_reason",
+      "aliases": [
+        "Doff Reaon",
+        "Doff Reason"
+      ],
+      "sourceAliases": [
+        "Doff Reaon",
+        "Doff Reason"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": false,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 38
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-39",
+      "name": "Average Delivery",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_delivery",
+        "average_delivery"
+      ],
+      "unit": "",
+      "mongoKey": "average_delivery",
+      "tdEngineKey": "average_delivery",
+      "aliases": [
+        "Average Delivery"
+      ],
+      "sourceAliases": [
+        "Average Delivery"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 39
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-40",
+      "name": "Average Speed",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "average_speed",
+        "average_speed"
+      ],
+      "unit": "",
+      "mongoKey": "average_speed",
+      "tdEngineKey": "average_speed",
+      "aliases": [
+        "Average Speed"
+      ],
+      "sourceAliases": [
+        "Average Speed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 40
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-41",
+      "name": "Doff Diameter",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_diameter",
+        "doff_diameter"
+      ],
+      "unit": "",
+      "mongoKey": "doff_diameter",
+      "tdEngineKey": "doff_diameter",
+      "aliases": [
+        "Doff Diameter"
+      ],
+      "sourceAliases": [
+        "Doff Diameter"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 41
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-42",
+      "name": "BTS Time Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "bts_time_hour",
+        "bts_time_hour"
+      ],
+      "unit": "",
+      "mongoKey": "bts_time_hour",
+      "tdEngineKey": "bts_time_hour",
+      "aliases": [
+        "BTS Time Hour",
+        "BTS Time HOUR"
+      ],
+      "sourceAliases": [
+        "BTS Time Hour",
+        "BTS Time HOUR"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 42
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-43",
+      "name": "BTS Time Minutes",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "bts_time_minute",
+        "bts_time_minutes"
+      ],
+      "unit": "",
+      "mongoKey": "bts_time_minutes",
+      "tdEngineKey": "bts_time_minute",
+      "aliases": [
+        "BTS Time Minutes",
+        "BTS Time MINUTE"
+      ],
+      "sourceAliases": [
+        "BTS Time Minutes",
+        "BTS Time MINUTE"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 43
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-44",
+      "name": "BTS Time Minute",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "bts_time_hour * 60 + bts_time_minutes",
+      "keys": [
+        "bts_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "bts_time_minute",
+      "tdEngineKey": "",
+      "aliases": [
+        "BTS Time Minute",
+        "BTS Time MINUTE"
+      ],
+      "sourceAliases": [
+        "BTS Time Minute",
+        "BTS Time MINUTE"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 44
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-45",
+      "name": "Units Consumed",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "units_consumed",
+        "units_consumed"
+      ],
+      "unit": "",
+      "mongoKey": "units_consumed",
+      "tdEngineKey": "units_consumed",
+      "aliases": [
+        "Units Consumed"
+      ],
+      "sourceAliases": [
+        "Units Consumed"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 45
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-46",
+      "name": "Max Flyer RPM",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "max_flyer_rpm",
+        "max_flyer_rpm"
+      ],
+      "unit": "",
+      "mongoKey": "max_flyer_rpm",
+      "tdEngineKey": "max_flyer_rpm",
+      "aliases": [
+        "Max Flyer RPM"
+      ],
+      "sourceAliases": [
+        "Max Flyer RPM"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 46
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-47",
+      "name": "Exchanger Start Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_start_hour",
+        "exchanger_start_hour"
+      ],
+      "unit": "",
+      "mongoKey": "exchanger_start_hour",
+      "tdEngineKey": "exchanger_start_hour",
+      "aliases": [
+        "Exchanger Start Hour"
+      ],
+      "sourceAliases": [
+        "Exchanger Start Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 47
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-48",
+      "name": "Exchanger Start Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_start_minute",
+        "exchanger_start_minute"
+      ],
+      "unit": "",
+      "mongoKey": "exchanger_start_minute",
+      "tdEngineKey": "exchanger_start_minute",
+      "aliases": [
+        "Exchanger Start Minute"
+      ],
+      "sourceAliases": [
+        "Exchanger Start Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 48
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-49",
+      "name": "Exchanger Start Hours",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "exchanger_start_hour * 60 + exchanger_start_minute",
+      "keys": [
+        "exchanger_start_hour"
+      ],
+      "unit": "",
+      "mongoKey": "exchanger_start_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Exchanger Start Hours",
+        "Exchanger Start Hour"
+      ],
+      "sourceAliases": [
+        "Exchanger Start Hours",
+        "Exchanger Start Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 49
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-50",
+      "name": "Exchanger End Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_end_hour",
+        "exchanger_end_hour"
+      ],
+      "unit": "",
+      "mongoKey": "exchanger_end_hour",
+      "tdEngineKey": "exchanger_end_hour",
+      "aliases": [
+        "Exchanger End Hour"
+      ],
+      "sourceAliases": [
+        "Exchanger End Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 50
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-51",
+      "name": "Exchanger End Minute",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_end_minute",
+        "exchanger_end_minute"
+      ],
+      "unit": "",
+      "mongoKey": "exchanger_end_minute",
+      "tdEngineKey": "exchanger_end_minute",
+      "aliases": [
+        "Exchanger End Minute"
+      ],
+      "sourceAliases": [
+        "Exchanger End Minute"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 51
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-52",
+      "name": "Exchanger End Hours",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "exchanger_end_hour * 60 + exchanger_end_minute",
+      "keys": [
+        "exchanger_end_hour"
+      ],
+      "unit": "",
+      "mongoKey": "exchanger_end_hour",
+      "tdEngineKey": "",
+      "aliases": [
+        "Exchanger End Hours",
+        "Exchanger End Hour"
+      ],
+      "sourceAliases": [
+        "Exchanger End Hours",
+        "Exchanger End Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 52
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-53",
+      "name": "Exchanger Efficiency",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "exchanger_efficiency",
+        "exchanger_efficiency"
+      ],
+      "unit": "",
+      "mongoKey": "exchanger_efficiency",
+      "tdEngineKey": "exchanger_efficiency",
+      "aliases": [
+        "Exchanger Efficiency"
+      ],
+      "sourceAliases": [
+        "Exchanger Efficiency"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 53
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-54",
+      "name": "Flyer Speed Change",
+      "dataType": "REAL",
+      "groupCodes": [
+        130
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "flyer_speed_change",
+        "speed_up_or_down"
+      ],
+      "unit": "",
+      "mongoKey": "speed_up_or_down",
+      "tdEngineKey": "flyer_speed_change",
+      "aliases": [
+        "Flyer Speed Change"
+      ],
+      "sourceAliases": [
+        "Flyer Speed Change"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 54
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-55",
+      "name": "No of Spindles",
+      "dataType": "REAL",
+      "groupCodes": [
+        320
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "no_of_spindles",
+        "no_of_spindles"
+      ],
+      "unit": "",
+      "mongoKey": "no_of_spindles",
+      "tdEngineKey": "no_of_spindles",
+      "aliases": [
+        "No of Spindles"
+      ],
+      "sourceAliases": [
+        "No of Spindles"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 55
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-56",
+      "name": "Doff Number",
+      "dataType": "REAL",
+      "groupCodes": [],
+      "kind": "formula",
+      "formula": "",
+      "keys": [
+        "doff_number"
+      ],
+      "unit": "",
+      "mongoKey": "doff_number",
+      "tdEngineKey": "",
+      "aliases": [
+        "Doff Number"
+      ],
+      "sourceAliases": [
+        "Doff Number"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 56
+      },
+      "definitionPriority": 2
+    },
+    {
+      "id": "definition-57",
+      "name": "Doff End Hour",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_end_hour",
+        "doff_hour(HH:MM)"
+      ],
+      "unit": "",
+      "mongoKey": "doff_hour(HH:MM)",
+      "tdEngineKey": "doff_end_hour",
+      "aliases": [
+        "Doff End Hour"
+      ],
+      "sourceAliases": [
+        "Doff End Hour"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 57
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-58",
+      "name": "Doff Reason",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "doff_reason",
+        "doff_reason"
+      ],
+      "unit": "",
+      "mongoKey": "doff_reason",
+      "tdEngineKey": "doff_reason",
+      "aliases": [
+        "Doff Reason"
+      ],
+      "sourceAliases": [
+        "Doff Reason"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 58
+      },
+      "definitionPriority": 1
+    },
+    {
+      "id": "definition-59",
+      "name": "BTS Time MINUTE",
+      "dataType": "REAL",
+      "groupCodes": [
+        170
+      ],
+      "kind": "plc",
+      "formula": "",
+      "keys": [
+        "bts_time_minute"
+      ],
+      "unit": "",
+      "mongoKey": "",
+      "tdEngineKey": "bts_time_minute",
+      "aliases": [
+        "BTS Time MINUTE"
+      ],
+      "sourceAliases": [
+        "BTS Time MINUTE"
+      ],
+      "dataTypeRole": "value",
+      "numericValueType": true,
+      "ignoreNameSeparators": true,
+      "bindingRole": "dependency",
+      "source": {
+        "workbook": "PMS/SPEEDFRAME.json",
+        "sheet": "pms_SPEEDFRAME_doff",
+        "row": 59
+      },
+      "definitionPriority": 1
+    }
+  ],
+  "excluded": [
+    {
+      "row": 3,
+      "name": "Time Stamp Actual",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 4,
+      "name": "Adjusted Time Stamp",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 5,
+      "name": "Tenant Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 6,
+      "name": "Business Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 7,
+      "name": "Asset Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 8,
+      "name": "Unit Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 9,
+      "name": "Shed Id",
+      "reason": "Server/context field"
+    },
+    {
+      "row": 27,
+      "name": "LOT Name",
+      "reason": "Text, date or unresolved PLC datatype; retained in parameters for review"
+    }
+  ],
+  "widgets": [
+    {
+      "title": "Doff End Date",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Doff End Month",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-18"
+      ]
+    },
+    {
+      "title": "Doff End Year",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-19"
+      ]
+    },
+    {
+      "title": "Doff End Hour",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-20"
+      ]
+    },
+    {
+      "title": "Doff End Minute",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-21"
+      ]
+    },
+    {
+      "title": "Run Time HOUR",
+      "widget": "value",
+      "span": 1,
+      "parameterIds": [
+        "row-22"
+      ]
+    },
+    {
+      "title": "Doff End Date trend",
+      "widget": "line",
+      "span": 3,
+      "parameterIds": [
+        "row-17"
+      ]
+    },
+    {
+      "title": "Doff readings 1",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-10",
+        "row-12",
+        "row-13",
+        "row-14",
+        "row-15",
+        "row-16",
+        "row-17",
+        "row-18",
+        "row-19",
+        "row-20",
+        "row-21",
+        "row-22"
+      ]
+    },
+    {
+      "title": "Doff readings 2",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-23",
+        "row-24",
+        "row-25",
+        "row-26",
+        "row-28",
+        "row-29",
+        "row-30",
+        "row-31",
+        "row-32",
+        "row-33",
+        "row-34",
+        "row-35"
+      ]
+    },
+    {
+      "title": "Doff readings 3",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-36",
+        "row-37",
+        "row-38",
+        "row-39",
+        "row-40",
+        "row-41",
+        "row-42",
+        "row-43",
+        "row-44",
+        "row-45",
+        "row-46",
+        "row-47"
+      ]
+    },
+    {
+      "title": "Doff readings 4",
+      "widget": "table",
+      "span": 3,
+      "parameterIds": [
+        "row-49",
+        "row-50",
+        "row-51",
+        "row-52",
+        "row-53"
+      ]
+    }
+  ]
+}
