@@ -79,7 +79,14 @@ def status():
 def start(cfg):
     global PROCESS,IDENTITY,LOG,LAST_EXIT_CODE,FALLBACK_REASON
     model=Path(str(cfg.get('modelPath') or '')).expanduser()
-    if not model.is_file():raise HTTPException(400,'Choose a local GGUF model file on the uSOPp computer.')
+    if not model.is_file():
+        from backend.core.cpu_model import model_path
+        fallback=model_path('fallback')
+        if cfg.get('allowFallback',True) and model.resolve()==model_path('primary').resolve() and fallback.is_file():
+            result=start({**cfg,'modelPath':str(fallback),'allowFallback':False})
+            FALLBACK_REASON='Primary model file is missing; using the installed 1.5B fallback.'
+            return result|{'fallbackReason':FALLBACK_REASON}
+        raise HTTPException(400,'Choose a local GGUF model file on the uSOPp computer.')
     with model.open('rb') as stream:
         if stream.read(4)!=b'GGUF':raise HTTPException(400,'The selected file is not a GGUF model.')
     port=int(cfg.get('localPort',8202))
@@ -142,7 +149,9 @@ def autostart():
         try:
             cfg=configuration()
             if cfg.get('provider')=='embedded' and cfg.get('autoStart',True):
-                if Path(str(cfg.get('modelPath') or '')).is_file():start(cfg)
+                from backend.core.cpu_model import model_path
+                selected=Path(str(cfg.get('modelPath') or ''))
+                if selected.is_file() or (cfg.get('allowFallback',True) and selected.resolve()==model_path('primary').resolve() and model_path('fallback').is_file()):start(cfg)
                 else:log.info('LOCAL_MODEL_SETUP_REQUIRED; install or select a GGUF in Settings')
         except Exception:log.exception('LOCAL_MODEL_AUTOSTART_ERROR; engineering tools remain available')
     threading.Thread(target=worker,name='chopper-model-autostart',daemon=True).start()

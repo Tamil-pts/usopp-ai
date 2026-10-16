@@ -158,16 +158,27 @@ class Index:
     def parse(self,path,text):
         relative=path.relative_to(self.root).as_posix();kind=category(path);suffix=path.suffix.casefold()
         lines=text.splitlines();scope=path.parent.relative_to(self.root).as_posix().casefold()
+        ranges=[]
+        for header in re.finditer(r'(?im)^\s*(FUNCTION_BLOCK|FUNCTION|PROGRAM)\s+([A-Za-z_]\w*)',_mask(text)):
+            end=re.search(r'(?im)^\s*END_'+header[1]+r'\b',text[header.end():])
+            ranges.append((_line(text,header.start()),_line(text,header.end()+end.end()) if end else len(lines),scope+'/'+header[2].casefold()))
+        def scoped(line):return next((name for first,last,name in ranges if first<=line<=last),scope)
         sections=[];symbols=[];refs=[];edges=[];tasks=[];notices=[]
         def ref(name,line,role):
+            if len(refs)>=100000:
+                if 'Reference extraction bound reached.' not in notices:notices.append('Reference extraction bound reached.')
+                return
             name=symbol(name)
-            if name and name not in KEYWORDS:refs.append((name,relative,line,role,scope))
+            if name and name not in KEYWORDS:refs.append((name,relative,line,role,scoped(line)))
         def edge(a,b,role,line,detail=''):
-            if symbol(a) and symbol(b):edges.append((symbol(a),symbol(b),role,relative,line,scope,detail))
+            if len(edges)>=100000:
+                if 'Dependency extraction bound reached.' not in notices:notices.append('Dependency extraction bound reached.')
+                return
+            if symbol(a) and symbol(b):edges.append((symbol(a),symbol(b),role,relative,line,scoped(line),detail))
         def section(first,last,label,complete=True,enabled=True,body=None):
             body='\n'.join(lines[first-1:last]) if body is None else body
             # Preserve complete sections on disk; retrieval has its own token bound.
-            sections.append((relative,first,last,body,kind,str(label)[:160],int(complete),int(enabled),scope))
+            sections.append((relative,first,last,body,kind,str(label)[:160],int(complete),int(enabled),scoped(first)))
         if suffix=='.ld' or '<networks' in text:
             networks=fragment(text);originals=list(re.finditer(r'<network\b[^>]*>.*?</network\s*>',text,re.I|re.S))
             for index,network in enumerate(networks):
@@ -196,12 +207,21 @@ class Index:
             role=match[1].casefold();name=match[2];datatype=(match[3] or '').strip()
             symbols.append((name.casefold(),name,role,datatype,relative,_line(clean,match.start(2)),scope))
         if suffix in {'.var','.typ','.fun','.pgp','.h','.prg'} or re.search(r'\bVAR(?:_GLOBAL|_INPUT|_OUTPUT|_IN_OUT)?\b',clean,re.I):
+            structs=[]
+            if suffix=='.typ':
+                for match in re.finditer(r'(?im)^\s*([A-Za-z_]\w*)\s*:\s*STRUCT\b',clean):
+                    end=re.search(r'\bEND_STRUCT\b',clean[match.end():],re.I)
+                    structs.append((match.end(),match.end()+end.end() if end else len(clean)))
+                    symbols.append((match[1].casefold(),match[1],'data_type','STRUCT',relative,_line(clean,match.start(1)),scope))
             for match in re.finditer(r'(?im)^\s*([A-Za-z_]\w*)\s*(?:AT\s+[^:;]+)?\s*:(?!=)\s*([^;\n]+);',clean):
                 name=match[1];dtype=match[2].split(':=',1)[0].strip()
                 if name.casefold() in KEYWORDS:continue
                 local=(suffix in {'.st','.ab'} or any(path.parent.glob('*.prg'))) and not re.search(r'\bVAR_GLOBAL\b',clean,re.I)
                 declared_scope=scope if local else '@global/'+scope
-                role='data_type' if suffix=='.typ' and re.match(r'STRUCT|ARRAY|\(',dtype,re.I) else 'variable'
+                # Each library function has private inputs and retained state, even
+                # when many declarations are stored in the same GENERAL.fun file.
+                if scoped(_line(clean,match.start(1)))!=scope:declared_scope=scoped(_line(clean,match.start(1)))
+                role='data_type' if suffix=='.typ' and not any(first<=match.start()<last for first,last in structs) else 'variable'
                 symbols.append((name.casefold(),name,role,dtype,relative,_line(clean,match.start(1)),declared_scope))
                 target=re.findall(r'[A-Za-z_]\w*',dtype)
                 if target:edge(name,target[-1],'instance-of',_line(clean,match.start(1)),declared_scope)
@@ -313,17 +333,24 @@ class Index:
                 previous=candidates.get(row['id'])
                 if previous is None or score>previous['score']:candidates[row['id']]=item
             named_files=re.findall(r'\b[\w-]+\.(?:st|ab|src|ld|var|fun|typ|c|h)\b',question,re.I)
+            named_scopes=set()
             for name in named_files[:4]:
-                for row in db.execute('SELECT * FROM sections WHERE lower(file)=? OR lower(file) LIKE ? LIMIT 40',(name.casefold(),'%/'+name.casefold())):
+                for row in db.execute("SELECT * FROM sections WHERE lower(file)=? OR lower(file) LIKE ? ESCAPE '\\' LIMIT 40",(name.casefold(),'%/'+name.casefold().replace('_','\\_'))):
                     add(row,220+sum(term in row['text'].casefold() for term in terms),'Explicit source file '+name,1)
+                    named_scopes.add(row['scope'])
+                for row in db.execute("SELECT * FROM symbols WHERE name=? AND kind IN ('function','function_block','program') LIMIT 12",(Path(name).stem.casefold(),)):
+                    add(db.execute('SELECT * FROM sections WHERE file=? AND first<=? AND last>=? ORDER BY complete DESC,(last-first) ASC LIMIT 1',(row['file'],row['line'],row['line'])).fetchone(),200,'Named routine declaration',1)
+            def scope_matches(scope):return not named_scopes or scope.startswith('@global/') or any(scope==named or scope.startswith(named+'/') or named.startswith(scope+'/') for named in named_scopes)
             for token in terms:
                 declared=db.execute('SELECT DISTINCT name FROM symbols WHERE name=? UNION SELECT name FROM refs WHERE name=? LIMIT 8',(symbol(token),symbol(token))).fetchall()
                 if declared:query_symbols.append(symbol(token))
                 if declared or '_' in token:
-                    for row in db.execute('SELECT file,line,kind FROM refs WHERE name=? ORDER BY CASE kind WHEN \'write\' THEN 0 WHEN \'call\' THEN 1 ELSE 2 END LIMIT 40',(symbol(token),)):
+                    for row in db.execute('SELECT file,line,kind,scope FROM refs WHERE name=? ORDER BY CASE kind WHEN \'write\' THEN 0 WHEN \'call\' THEN 1 ELSE 2 END LIMIT 80',(symbol(token),)):
+                        if not scope_matches(row['scope']):continue
                         section=db.execute('SELECT * FROM sections WHERE file=? AND first<=? AND last>=? ORDER BY complete DESC,(last-first) ASC LIMIT 1',(row['file'],row['line'],row['line'])).fetchone()
                         add(section,100,'Exact symbol '+token,1)
-                    for row in db.execute('SELECT file,line FROM symbols WHERE name=? LIMIT 12',(symbol(token),)):
+                    for row in db.execute('SELECT file,line,scope,kind FROM symbols WHERE name=? LIMIT 40',(symbol(token),)):
+                        if not scope_matches(row['scope']) and row['kind'] not in {'function','function_block'}:continue
                         add(db.execute('SELECT * FROM sections WHERE file=? AND first<=? AND last>=? ORDER BY (last-first) ASC LIMIT 1',(row['file'],row['line'],row['line'])).fetchone(),105,'Declaration '+token,1)
             if terms:
                 expression=' OR '.join('"'+term.replace('"','""')+'"' for term in terms)
@@ -333,15 +360,21 @@ class Index:
                 for row in db.execute("SELECT * FROM sections WHERE enabled=1 AND kind IN ('Logic','Ladder') ORDER BY complete DESC,length(text) DESC LIMIT 20"):add(row,10,'Project overview candidate',1)
             pass_log.append({'pass':1,'strategy':'Exact symbols and SQLite FTS5','candidates':len(candidates)})
             frontier=set(query_symbols)
+            relevant_scopes={}
             for row in sorted(candidates.values(),key=lambda value:-value['score'])[:8]:
-                frontier.update(value['name'] for value in db.execute("SELECT DISTINCT name FROM refs WHERE file=? AND line BETWEEN ? AND ? AND kind IN ('call','write','condition','call-instance') LIMIT 12",(row['file'],row['first'],row['last'])))
+                for value in db.execute("SELECT DISTINCT name,scope FROM refs WHERE file=? AND line BETWEEN ? AND ? AND kind IN ('call','write','condition','call-instance') LIMIT 12",(row['file'],row['first'],row['last'])):
+                    frontier.add(value['name']);relevant_scopes.setdefault(value['name'],set()).add(value['scope'])
             traced=set()
             for number in range(2,min(4,passes)+1):
                 before=len(candidates);next_frontier=set()
                 for name in sorted(frontier-traced)[:32]:
                     traced.add(name)
+                    shared=db.execute("SELECT 1 FROM symbols WHERE name=? AND (scope LIKE '@global/%' OR kind IN ('function','function_block','data_type')) LIMIT 1",(name,)).fetchone()
                     for edge in db.execute('SELECT * FROM edges WHERE a=? OR b=? LIMIT 25',(name,name)):
+                        scopes=relevant_scopes.get(name,set())
+                        if scopes and not shared and not any(edge['scope']==scope or edge['scope'].startswith(scope+'/') or scope.startswith(edge['scope']+'/') for scope in scopes):continue
                         next_frontier.update([edge['a'],edge['b']])
+                        relevant_scopes.setdefault(edge['a'],set()).add(edge['scope']);relevant_scopes.setdefault(edge['b'],set()).add(edge['scope'])
                         line=edge['line'];section=db.execute('SELECT * FROM sections WHERE file=? AND first<=? AND last>=? ORDER BY complete DESC,(last-first) ASC LIMIT 1',(edge['file'],line,line)).fetchone()
                         add(section,65-number,'Dependency: '+edge['kind']+' '+name,number)
                     for decl in db.execute('SELECT * FROM symbols WHERE name=? LIMIT 8',(name,)):
@@ -379,6 +412,8 @@ class Index:
         notices=[]
         if not state.get('ready'):notices.append('Indexing is incomplete. Findings cover only the indexed sources currently available.')
         if state.get('failedFilesCount'):notices.append(f"{state['failedFilesCount']} source files failed indexing; their behavior is unresolved.")
+        if state.get('analysisNotices'):notices.append('Some files reached extraction bounds or contain constructs needing manual review; their complete dependency coverage is not established.')
+        if state.get('unreadableFolders'):notices.append('Some project folders could not be enumerated. Their sources are unavailable to this analysis.')
         if ambiguous:notices.append('Same-named symbols occur in multiple scopes; do not merge their behavior: '+', '.join(ambiguous[:12]))
         if any(not item['completeSection'] for item in chosen):notices.append('Some retrieved sections are bounded source windows. Full sequence or branch completeness is not established by those windows.')
         return {'evidence':chosen,'passes':pass_log,'notices':notices,'tasks':tasks,'identity':identity,'characters':used,'candidateCount':len(candidates),'projectId':self.key}
@@ -388,6 +423,10 @@ def start(root,owner,mode='refresh'):
     if mode not in {'refresh','rebuild','retry'}:raise ValueError('Choose refresh, rebuild or retry.')
     index=Index(root,owner)
     with JOBS_LOCK:
+        if len(JOBS)>32:
+            for key in list(JOBS):
+                if len(JOBS)<=24:break
+                if not JOBS[key]['thread'].is_alive():JOBS.pop(key)
         previous=JOBS.get(index.key)
         if previous and previous['thread'].is_alive():return status(index,owner)
         if sum(job['thread'].is_alive() for job in JOBS.values())>=3:raise ValueError('Wait for the current project indexing jobs to finish, or cancel an indexing job.')

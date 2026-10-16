@@ -86,6 +86,29 @@ def test_control_facts_keep_unconditional_conversion_outside_if(project,monkeypa
     assert r['source']=='embedded'
 
 
+def test_scope_question_uses_parsed_facts_without_model(project,monkeypatch):
+    from backend.core import project_assistant as pa
+    from backend.core.run_history import current_user
+    root,put=project
+    put('Logical/LUB.ab','FUNCTION_BLOCK LUB\nTIME_IN_SEC = HOURS * 3600\nIF START THEN\nENABLED = 1\nENDIF\nEND_FUNCTION_BLOCK')
+    i=pi.Index(root,'alice');i.build()
+    monkeypatch.setattr(pa,'reference_evidence',lambda *args:[])
+    monkeypatch.setattr(pa,'chat_model',lambda *args,**kwargs:pytest.fail('A parsed scope answer should not require inference'))
+    token=current_user.set({'id':'alice'})
+    try:r=pa.answer({'question':'In LUB.ab is TIME_IN_SEC inside START or outside it?','context':{'intelligenceProjectId':i.key}})
+    finally:current_user.reset(token)
+    assert r['source']=='local-control-flow' and '[S1]' in r['answer'] and 'no enclosing' in r['answer']
+
+
+def test_function_library_fields_keep_separate_scopes(project):
+    root,put=project
+    put('Logical/Library/Blocks.fun','FUNCTION_BLOCK One\nVAR_INPUT\nEnable : BOOL;\nEND_VAR\nEND_FUNCTION_BLOCK\nFUNCTION_BLOCK Two\nVAR_INPUT\nEnable : BOOL;\nEND_VAR\nEND_FUNCTION_BLOCK')
+    i=pi.Index(root,'alice');i.build()
+    with pi.connection(i.path) as db:
+        scopes=[r[0] for r in db.execute("SELECT scope FROM symbols WHERE name='enable'")]
+    assert len(set(scopes))==2 and any(s.endswith('/one') for s in scopes) and any(s.endswith('/two') for s in scopes)
+
+
 def test_read_only_project_answer_uses_offline_transport(project,monkeypatch):
     from backend.core import project_assistant as pa
     from backend.core.run_history import current_user

@@ -126,6 +126,8 @@ def run():
                 (fixture/'Main.st').write_text('PROGRAM Main\nIF Start AND NOT Fault THEN\nMotor := TRUE;\nEND_IF;\nEND_PROGRAM',encoding='utf-8')
                 chat.locator('input[type=file][multiple]').first.set_input_files(str(fixture))
                 expect(chat.locator('.projectIntelligence summary')).to_contain_text('Ready',timeout=30000)
+                expect(chat.locator('.projectIntelligence')).not_to_have_attribute('open','')
+                page.screenshot(path=str(ARTIFACTS/'chopper-intelligence-collapsed.png'))
                 chat.locator('.projectIntelligence summary').click()
                 expect(chat.get_by_role('button',name='Refresh changes',exact=True)).to_be_visible()
                 expect(chat.locator('.intelligenceCounts')).to_contain_text('Programs')
@@ -147,7 +149,7 @@ def run():
                 anonymous.close()
                 page.screenshot(path=str(ARTIFACTS/'chopper-project-intelligence.png'))
                 assert not errors,errors
-                (ARTIFACTS/'verification.json').write_text(json.dumps({'version':health['version'],'browserErrors':errors,'checks':['UI/API agreement','embedded default','collapsed advanced settings','saved connection mode','window guides','manual capture context','frame message guard']},indent=2),encoding='utf-8')
+                (ARTIFACTS/'verification.json').write_text(json.dumps({'version':health['version'],'browserErrors':errors,'checks':['UI/API agreement','embedded default','collapsed advanced settings','saved connection mode','window guides','manual capture context','frame message guard','step-by-step coaching','project folder upload','collapsed and expanded Project Intelligence','incremental project indexing','local source retrieval','unauthenticated index rejection']},indent=2),encoding='utf-8')
                 browser.close()
         finally:
             process.terminate()

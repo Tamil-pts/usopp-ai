@@ -273,6 +273,7 @@ def assist(payload:dict):
 def _assist(payload:dict):
     task=payload.get('task','Validation analysis'); context=payload.get('context',{})
     context=context if isinstance(context,dict) else {}; question=payload.get('question','Explain the current validation result.')
+    application_help=bool(re.search(r'\b(?:WorkHub|ByteMap|MetaWorks|DataInspect|MatchView|LogicScan|KnowHub|ResultView|uSOPp)\b|how\s+(?:do\s+I\s+)?use\s+(?:this\s+)?app',str(question),re.I))
     from backend.core.window_help import guide as window_guide, answer as window_answer
     current_guide=window_guide(context)
     if task=='Window assistant' and payload.get('guideOnly') and current_guide:
@@ -280,7 +281,7 @@ def _assist(payload:dict):
     from backend.api.assist_flow import is_flow_question, flow_reply
     if is_flow_question(question):
         return flow_reply(str(question), context)
-    if context.get('intelligenceProjectId') and not context.get('comparisonFocus') and not context.get('logSummary') and not feature_question(question):
+    if context.get('intelligenceProjectId') and not context.get('comparisonFocus') and not context.get('logSummary') and not application_help:
         from backend.core.project_assistant import answer as indexed_answer
         return indexed_answer(payload)
     project_root, project_evidence, project_details, knowledge, comparison = None, [], None, None, None
@@ -295,7 +296,7 @@ def _assist(payload:dict):
         from backend.api.comparison import _comparison_result_for_export
         data, work = _comparison_result_for_export(sid)
         comparison = comparison_knowledge(data, work, str(question))
-    elif context.get('projectPath') and not feature_question(question):
+    elif context.get('projectPath') and not application_help:
         report('Reading selected project')
         project_root = locate_root(_local_path(str(context['projectPath']), True, True))
         from backend.core.runtime import WORK
@@ -338,7 +339,7 @@ def _assist(payload:dict):
     if machine_summary:
         system += '\n' + SUMMARY_SYSTEM
     if current_guide:
-        system += ' This question comes from a small window assistant. Explain currentWindowGuide and the supplied currentWindow findings concisely. Reported statuses are evidence, not new verdicts. An absent capture is not a failed PLC check; distinguish manual, simulator, stored and PLC captures. Do not claim to run actions or change configuration. Ask the user to open the relevant control when needed.'
+        system += ' The currentWindowGuide is optional background. Answer the actual question, including general engineering questions. For application coaching, give one actionable step, ask what happened, and continue from the user reply. Use currentWindow findings only when relevant. Reported statuses are evidence, not new verdicts. An absent capture is not a failed PLC check; distinguish manual, simulator, stored and PLC captures. Do not claim to run actions or change configuration. Ask the user to open the relevant control when needed.'
     # Keep JSON complete and evidence ahead of conversation/attachment previews.
     # Small local models have finite context; report any reduction explicitly.
     if knowledge:
@@ -400,6 +401,8 @@ def _assist(payload:dict):
         model_timeout=model_response_timeout()
         report(f'Generating explanation with the configured model (response window: {model_timeout / 60:g} minutes)')
         history=[{**h,'content':str(h.get('content',''))[:600]} for h in (payload.get('history') or [])[-4:] if isinstance(h,dict)]
+        from backend.core.assist_model import configuration
+        if context.get('offlineOnly') and configuration()['provider'] not in {'embedded','local'}:raise ValueError('Offline Chopper needs the bundled local CPU model.')
         generated=chat_model(system,prompt,history,timeout=model_timeout,
                              max_tokens=1100 if machine_summary else None,on_progress=report)
         if generated:
@@ -468,7 +471,7 @@ def _assist(payload:dict):
         project_name=project_details.get('projectName') if project_details else project_root.name
         answer=f"I found {len(project_evidence)} relevant source locations in {project_name}. Best match: {first['file']} at line {first['line']}. Related evidence: {names}."
         return {'answer':answer,'source':'project-search','model':None,'modelNotice':model_notice,'evidence':project_evidence,'projectDetails':project_details}
-    if current_guide:
+    if current_guide and application_help:
         return {'answer':window_answer(context),'source':'local-window-guide','model':None,'modelNotice':model_notice,'evidence':[]}
     if help_evidence and not context.get('attachments'):
         return {'answer':help_answer(help_evidence),'source':'local-br-help','model':None,'modelNotice':model_notice,'evidence':[],'helpEvidence':help_evidence}

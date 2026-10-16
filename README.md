@@ -16,6 +16,8 @@ For one shared server reached over the existing LAN/VPN, follow
 [the server installation and update guide](distribution/LAN_SERVER.md).
 See [persistent storage and CPU AI](PERSISTENT_STORAGE_AND_CPU_AI.md) for SQLite,
 retained rule/knowledge JSON and the included llama.cpp model setup.
+For the 3B/1.5B offline Chopper, incremental project index and guided chat, see
+[Chopper 4.66.0](CHOPPER_OFFLINE_UPGRADE.md).
 
 ## Ubuntu server deployment
 

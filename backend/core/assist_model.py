@@ -145,6 +145,9 @@ def _fit_context(messages,cfg,reserve,evidence=None):
         elif selected and len(selected[0].get('excerpt',''))>500:
             selected[0]['excerpt']=selected[0]['excerpt'][:int(len(selected[0]['excerpt'])*.65)].rsplit('\n',1)[0]
             selected[0]['completeSection']=False;selected[0]['contextTruncated']=True;truncated=True;compose()
+            selected[0]['endLine']=int(selected[0].get('line') or 1)+selected[0]['excerpt'].count('\n')
+            selected[0]['controlFacts']=[fact for fact in selected[0].get('controlFacts',[]) if fact.get('line',0)<=selected[0]['endLine']]
+            compose()
         elif evidence is None and len(messages[-1]['content'])>2000:
             # Compatibility for older tools whose evidence is already serialized.
             messages[-1]['content']=messages[-1]['content'][:int(len(messages[-1]['content'])*.7)]+'\n[Context truncated; analysis incomplete.]'
@@ -157,7 +160,7 @@ def _fit_context(messages,cfg,reserve,evidence=None):
     return usage,selected
 
 
-def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None,evidence=None):
+def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None,evidence=None,structured=False):
     cfg=configuration()
     if cfg['provider']=='local': return None
     timeout=model_response_timeout(cfg=cfg) if timeout is None else timeout
@@ -187,6 +190,12 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
         started=time.monotonic();context_usage={};sent_evidence=evidence
         if cfg['provider']=='embedded':
             context_usage,sent_evidence=_fit_context(messages,cfg,int(body['max_tokens']),evidence)
+            if structured and sent_evidence:
+                source_ids=[item['sourceId'] for item in sent_evidence]
+                schema={'type':'object','properties':{'paragraphs':{'type':'array','minItems':1,'maxItems':8,'items':{'type':'object','properties':{
+                    'text':{'type':'string'},'sourceIds':{'type':'array','minItems':1,'maxItems':4,'items':{'type':'string','enum':source_ids}}},
+                    'required':['text','sourceIds'],'additionalProperties':False}}},'required':['paragraphs'],'additionalProperties':False}
+                body['response_format']={'type':'json_schema','json_schema':{'name':'source_cited_answer','strict':True,'schema':schema}}
         log.info('CHOPPER_MODEL_REQUEST provider=%s input_chars=%s answer_limit=%s response_timeout_s=%s',cfg['provider'],sum(len(m['content']) for m in messages),body.get('max_tokens','provider-default'),timeout)
         try:
             # A short connect limit and a separate answer limit: a loaded CPU
@@ -199,6 +208,14 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
             raise
         answer=(data.get('message',{}).get('content') or data.get('response','')) if cfg['provider']=='ollama' else data.get('choices',[{}])[0].get('message',{}).get('content','')
         if not isinstance(answer,str) or not answer.strip(): raise ValueError('The model returned no text answer.')
+        if structured and sent_evidence:
+            try:
+                paragraphs=json.loads(answer)['paragraphs'];allowed={item['sourceId'] for item in sent_evidence};parts=[]
+                for part in paragraphs:
+                    if not part['sourceIds'] or any(value not in allowed for value in part['sourceIds']):raise ValueError('Unknown source citation.')
+                    parts.append(' '.join('['+value+']' for value in part['sourceIds'])+' '+part['text'])
+                answer='\n\n'.join(parts)
+            except (ValueError,KeyError,TypeError):raise ValueError('The model did not finish a valid source-cited answer. Ask a narrower question or increase answer tokens in Settings.')
         elapsed=round(time.monotonic()-started,1)
         usage=data.get('usage') or {}
         log.info('CHOPPER_MODEL_RESPONSE provider=%s response_elapsed_s=%s prompt_tokens=%s answer_tokens=%s',cfg['provider'],elapsed,usage.get('prompt_tokens','unknown'),usage.get('completion_tokens','unknown'))

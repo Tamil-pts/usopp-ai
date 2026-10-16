@@ -3,6 +3,15 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.66.0 - 2026-10-16
+
+- Upgrade offline Chopper to pinned, checksum-verified Qwen2.5-Coder 3B Instruct Q4_K_M with the installed 1.5B fallback. Default to 4096 context tokens, four CPU threads, 128-token batches, CPU inference and one active generation. Preserve saved connections. Show actual running model, context, resident RAM, response time and fallback reason; recover an owned orphan model on Windows restart.
+- Add incremental SQLite FTS5 Project Intelligence for uploaded projects. Extract source sections, programs, functions, block declarations/instances, variables, types, calls, variable reads/writes, conditions, tasks and HMI/I/O relationships. Reuse existing source and ladder parsers. Exclude Temp, Binaries, Diagnosis, AS, caches and generated folders. Refresh changed/deleted sources; support cancel, retry and rebuild. Keep the panel collapsed until requested.
+- Retrieve explicit filenames and symbols first, then full-text matches and bounded dependency passes. Preserve small complete function blocks, original source paths/lines, task scope and parsing limits. Supply parsed condition facts so unconditional assignments remain separate from guarded actions. Complex questions use checked intermediate analysis passes; unresolved or omitted evidence remains explicit.
+- Count the actual llama.cpp chat template with its tokenizer, reserve answer capacity and trim older messages/lower-ranked code before inference. Display context usage, remaining capacity, retrieved files, line ranges and retrieval passes. Project knowledge survives a new chat. Failed AI requests leave existing engineering results available.
+- Add conversational, one-step-at-a-time application coaching in the main chat, with open engineering questions and the existing log, comparison and routine-flow tools. The corner launcher opens general Chopper conversation. Generated PLC changes are review-only proposals with before/after instructions; Chopper never writes PLC source.
+- Verify the local runtime and inference, supplied project indexing, a separate synthetic 10,000-file fixture, browser project upload, collapsed/expanded indexing details, coaching and manual-frame context. See CHOPPER_OFFLINE_UPGRADE.md for limits and reproducible checks. Container builds and deployment remain separate release actions.
+
 ## 4.65.15 - 2026-10-16
 
 - Simplify Chopper setup with connection cards, a browser/server/model diagram, startup stages, one-click local activation and collapsed advanced controls. Use the bundled CPU model by default on new installations, auto-start an installed model and preserve explicitly saved connection choices. Missing model files show setup instructions; validation remains available during loading. Reject model/API port collisions.
