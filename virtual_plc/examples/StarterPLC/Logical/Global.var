@@ -1,0 +1,8 @@
+VAR_GLOBAL
+    StartCommand : BOOL := FALSE;
+    StopCommand : BOOL := FALSE;
+    DoorClosed : BOOL := TRUE;
+    ResetCounter : BOOL := FALSE;
+    MotorRunning : BOOL := FALSE;
+    ScanCounter : DINT := 0;
+END_VAR

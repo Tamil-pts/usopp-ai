@@ -1,0 +1,24 @@
+import {useEffect,useState} from 'react';
+import {Clock3,Save} from 'lucide-react';
+import {Item,Project,list,request} from './model';
+
+export function CPUServices({project}:{project:Project}){
+  const current=project.runtime?.cpuServices||{};
+  const [draft,setDraft]=useState<Item>(()=>structuredClone(current.configuration||{}));
+  const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState(''),[newInterface,setNewInterface]=useState('');
+  useEffect(()=>{setDraft(structuredClone(project.runtime?.cpuServices?.configuration||{}));setMessage('');setError('');},[project.id]);
+  const change=(key:string,value:any)=>setDraft(old=>({...old,[key]:value}));
+  const interfaces=draft.interfaces||{},battery=draft.battery||{},serials=draft.serialNumbers||{};
+  const hardware=project.model?.hardware||{},nodes=list(hardware.topology?.nodes).length?list(hardware.topology.nodes):[...list(hardware.controllers),...list(hardware.modules)];
+  const save=async()=>{setBusy(true);setError('');try{const result=await request(`/projects/${project.id}/cpu-services`,{method:'PUT',body:JSON.stringify(draft)});setDraft(result.configuration);setMessage('Virtual CPU configuration saved.');}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
+  return <section className="data-view"><div className="view-toolbar"><Clock3 size={16}/><strong>Virtual CPU services</strong><span className="spacer"/><button className="primary" disabled={busy||project.runtime?.status==='running'} onClick={()=>void save()}><Save size={14}/>{busy?'Saving...':'Save CPU configuration'}</button></div><div className="table-scroll" style={{padding:16}}>
+    <p>RTC, Ethernet configuration, battery state and serial numbers belong to the simulated CPU. These values are local to this workspace. RTC uses the PC local clock by default. Choose a custom clock to edit it; PLC timers still use simulation time.</p>
+    <div className="form-grid"><label>RTC clock source<select aria-label="RTC clock source" value={draft.clockMode||'pc'} onChange={e=>change('clockMode',e.target.value)}><option value="pc">PC local date and time (live)</option><option value="manual">Custom virtual RTC</option></select></label><label>Custom RTC date and time<input disabled={(draft.clockMode||'pc')==='pc'} aria-label="Virtual RTC seed" type="datetime-local" min="1990-01-01T00:00" max="2089-12-31T23:59" step="1" value={String(draft.dateTime||'').slice(0,19)} onChange={e=>change('dateTime',e.target.value)}/><small>Current virtual RTC: {current.dateTime||'Not configured'}</small></label>{['LOCAL.BATT1','LOCAL.BATT2'].map(name=><label key={name}>{name==='LOCAL.BATT2'?'CPU battery':'Backplane / APM battery'}<select aria-label={name+' state'} value={battery[name]??1} onChange={e=>change('battery',{...battery,[name]:Number(e.target.value)})}>{[[1,'OK'],[0,'Low'],[2,'Not testable'],[3,'Missing']].map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>)}</div>
+    <h3>Virtual Ethernet interfaces</h3><p className="muted">CfgGet / CfgSet calls use these interface names. Address changes affect this simulated registry.</p>
+    <table><thead><tr><th>Interface</th><th>IPv4 address</th><th>Subnet mask</th><th>Gateway</th><th/></tr></thead><tbody>{Object.entries(interfaces).map(([name,settings])=><tr key={name}><td>{name}</td>{['ipAddress','subnetMask','gateway'].map(field=><td key={field}><input aria-label={name+' '+field} value={(settings as Item)[field]||''} onChange={e=>change('interfaces',{...interfaces,[name]:{...(settings as Item),[field]:e.target.value}})}/></td>)}<td><button onClick={()=>{const next={...interfaces};delete next[name];change('interfaces',next);}}>Remove</button></td></tr>)}</tbody></table>
+    <div className="view-toolbar"><input aria-label="New CPU interface" placeholder="IF3 or SL1.SS1.IF1" value={newInterface} onChange={e=>setNewInterface(e.target.value)}/><button disabled={!newInterface.trim()} onClick={()=>{change('interfaces',{...interfaces,[newInterface.trim().toUpperCase()]:{ipAddress:'192.0.2.10',subnetMask:'255.255.255.0',gateway:'192.0.2.1'}});setNewInterface('');}}>Add interface</button></div>
+    <h3>Virtual module serial numbers</h3><p className="muted">0 means unconfigured. Only SerialNumber inputs mapped by the project I/O map are published to PLC memory. Forces take precedence.</p>
+    <table><thead><tr><th>Module</th><th>Model</th><th>Simulated serial number (UDINT)</th></tr></thead><tbody>{nodes.map(node=><tr key={node.id}><td>{node.name}</td><td>{node.model}</td><td><input aria-label={node.name+' serial number'} type="number" min="0" max="4294967295" value={serials[node.id]??0} onChange={e=>change('serialNumbers',{...serials,[node.id]:Number(e.target.value)})}/></td></tr>)}</tbody></table>
+    {message&&<p role="status" className="notice">{message}</p>}{error&&<p role="alert" className="notice error">{error}</p>}
+  </div></section>;
+}

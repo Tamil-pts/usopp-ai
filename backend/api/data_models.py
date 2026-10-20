@@ -32,7 +32,8 @@ def models():
     for path in saved.glob('*.json'):
         try:
             item=json.loads(path.read_text(encoding='utf-8'))
-            if isinstance(item,dict) and item.get('id') and isinstance(item.get('parameters'),list):items.append(item)
+            if isinstance(item,dict) and item.get('id') and isinstance(item.get('parameters'),list):
+                items.append({**apply_model(item,config),'mappingRulesRevision':revision})
         except (ValueError,OSError):continue
     return list({item['id']:item for item in items}.values())
 
@@ -74,7 +75,9 @@ async def import_model(file:UploadFile=File(...),service:str=Form(''),machine:st
     try:model=await run_in_threadpool(parse_model,content,Path((file.filename or '').replace('\\','/')).name,service,machine)
     except Exception as error:raise HTTPException(400,str(error))
     await run_in_threadpool(write_json,user_folder()/(model['id']+'.json'),model)
-    return model
+    from backend.core.data_model_rules import load_rules,apply_model
+    config,revision=load_rules(KNOWLEDGE/'master/data_model_rules.json')
+    return {**apply_model(model,config),'mappingRulesRevision':revision}
 
 
 class ValidationRequest(BaseModel):

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "name": "Project 2 bounded serial transmit copy",
+  "corrections": [
+    {
+      "source": "Logical/COMMUNICATION/Cyclic.ab",
+      "line": 104,
+      "codeSha256": "3c9c4ddf51c29eebb1a575c51289d0e065944e7e7f63c4663fc63622053ac4c7",
+      "original": "memcpy(CS1030_send_buffer, ADR(CS1030_SENDBUFFER), CS1030_FRM_gbuf_01.buflng)",
+      "replacement": "memcpy(CS1030_send_buffer, ADR(CS1030_SENDBUFFER), SIZEOF(CS1030_SENDBUFFER))",
+      "reason": "Serial buffer capacity is 255 bytes, but the declared source array contains 17 bytes. Copy the declared source extent before transmitting its configured message length.",
+      "reference": "B&R AsString memcpy and SIZEOF; original CS1030_SENDBUFFER declaration in Logical/COMMUNICATION/VARIABLE.var:15"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "name": "Project 3 bounded serial transmit copies",
+  "corrections": [
+    {
+      "source": "Logical/cs_read/cs_readCyclic.ab",
+      "line": 98,
+      "codeSha256": "68462555d5c532b46a0bd6cf6d07af1bae4c28d6530f61c4a26a0c7cada56bbb",
+      "original": "\t\t\t\tCS1030_FRM_gbuf_01.enable = 0\r\n\t\t\t\tmemcpy(send_buffer, ADR(SENDBUFFER), CS1030_FRM_gbuf_01.buflng)\r\n\t\t\t\tCS1030_FRM_write_01.enable = 1\r\n",
+      "replacement": "\t\t\t\tCS1030_FRM_gbuf_01.enable = 0\r\n\t\t\t\tmemcpy(send_buffer, ADR(SENDBUFFER), SIZEOF(SENDBUFFER))\r\n\t\t\t\tCS1030_FRM_write_01.enable = 1\r\n",
+      "reason": "Serial transmit capacity is 255 bytes, but SENDBUFFER contains 25 bytes. Copy the declared source extent; FRM_write retains the original configured message length.",
+      "reference": "B&R AsString memcpy and SIZEOF; Logical/cs_read/cs_read.var:4; tx_len=255 at cs_readCyclic.ab:26/328.",
+      "sourceArrayBytes": 25,
+      "destinationCapacityBytes": 255
+    },
+    {
+      "source": "Logical/cs_read/cs_readCyclic.ab",
+      "line": 197,
+      "codeSha256": "68462555d5c532b46a0bd6cf6d07af1bae4c28d6530f61c4a26a0c7cada56bbb",
+      "original": "\t\t\t\tCS1030_FRM_gbuf_02.enable = 0\r\n\t\t\t\tmemcpy(send_buffer, ADR(SENDBUFFER), CS1030_FRM_gbuf_02.buflng)\r\n\t\t\t\tCS1030_FRM_write_02.enable = 1\r\n",
+      "replacement": "\t\t\t\tCS1030_FRM_gbuf_02.enable = 0\r\n\t\t\t\tmemcpy(send_buffer, ADR(SENDBUFFER), SIZEOF(SENDBUFFER))\r\n\t\t\t\tCS1030_FRM_write_02.enable = 1\r\n",
+      "reason": "Serial transmit capacity is 255 bytes, but SENDBUFFER contains 25 bytes. Copy the declared source extent; FRM_write retains the original configured message length.",
+      "reference": "B&R AsString memcpy and SIZEOF; Logical/cs_read/cs_read.var:4; tx_len=255 at cs_readCyclic.ab:26/328.",
+      "sourceArrayBytes": 25,
+      "destinationCapacityBytes": 255
+    },
+    {
+      "source": "Logical/cs_read/cs_readCyclic.ab",
+      "line": 420,
+      "codeSha256": "68462555d5c532b46a0bd6cf6d07af1bae4c28d6530f61c4a26a0c7cada56bbb",
+      "original": "\t\t\tACTION 24:\r\n\t\t\t\tmemcpy(send_buffer, ADR(SENDBUFFER), CS1030_FRM_gbuf_01.buflng)\r\n\t\t\t\tCommStep\t=\t25\r\n",
+      "replacement": "\t\t\tACTION 24:\r\n\t\t\t\tmemcpy(send_buffer, ADR(SENDBUFFER), SIZEOF(SENDBUFFER))\r\n\t\t\t\tCommStep\t=\t25\r\n",
+      "reason": "Serial transmit capacity is 255 bytes, but SENDBUFFER contains 25 bytes. Copy the declared source extent; FRM_write retains the original configured message length.",
+      "reference": "B&R AsString memcpy and SIZEOF; Logical/cs_read/cs_read.var:4; tx_len=255 at cs_readCyclic.ab:26/328.",
+      "sourceArrayBytes": 25,
+      "destinationCapacityBytes": 255
+    },
+    {
+      "source": "Logical/cs_read/cs_readCyclic.ab",
+      "line": 554,
+      "codeSha256": "68462555d5c532b46a0bd6cf6d07af1bae4c28d6530f61c4a26a0c7cada56bbb",
+      "original": "\t\t\tACTION 124:\r\n\t\t\t\tmemcpy(send_buffer, ADR(SENDBUFFER), CS1030_FRM_gbuf_02.buflng)\r\n\t\t\t\tCommStep\t=\t125\r\n",
+      "replacement": "\t\t\tACTION 124:\r\n\t\t\t\tmemcpy(send_buffer, ADR(SENDBUFFER), SIZEOF(SENDBUFFER))\r\n\t\t\t\tCommStep\t=\t125\r\n",
+      "reason": "Serial transmit capacity is 255 bytes, but SENDBUFFER contains 25 bytes. Copy the declared source extent; FRM_write retains the original configured message length.",
+      "reference": "B&R AsString memcpy and SIZEOF; Logical/cs_read/cs_read.var:4; tx_len=255 at cs_readCyclic.ab:26/328.",
+      "sourceArrayBytes": 25,
+      "destinationCapacityBytes": 255
+    }
+  ]
+}

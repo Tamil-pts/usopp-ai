@@ -1,0 +1,5 @@
+<Hardware>
+  <Module Name="CPU" Type="VirtualTrainingCPU">
+    <Parameter ID="Cyclic1Duration" Value="10000"/>
+  </Module>
+</Hardware>

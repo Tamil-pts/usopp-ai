@@ -3985,25 +3985,11 @@ def extract_alarm_descriptions() -> List[Tuple[int, str]]:
 
 
 def extract_group30_alarm_transport() -> Optional[Tuple[str, int, int]]:
-    """Read the transmitted alarm array, last bit, and first packed byte from PLC."""
-    if not PLC_PACKET_FILE.exists():
-        return None
-    text = PLC_PACKET_FILE.read_text(encoding="utf-8", errors="ignore")
-    match = re.search(
-        r"(?P<byte_counter>[A-Za-z_]\w*)\s*:=\s*(?P<first_byte>\d+)\s*;"
-        r".*?FOR\s+(?P<bit_counter>[A-Za-z_]\w*)\s*:=\s*0\s+TO\s+(?P<last_bit>\d+)\s+BY\s+1\s+DO"
-        r".*?IF\s*\(\s*(?P<alarm_array>[A-Za-z_]\w*)\s*\[\s*(?P=bit_counter)\s*\]"
-        r".*?Temp_nw_snd_buffer\s*\[\s*(?P=byte_counter)\s*\]",
-        text,
-        re.IGNORECASE | re.DOTALL,
-    )
-    if not match:
-        return None
-    return (
-        match.group("alarm_array"),
-        int(match.group("last_bit")),
-        int(match.group("first_byte")),
-    )
+    """Compatibility summary; buffer names come from the actual BIT_SET write."""
+    for packing in extract_alarm_packings():
+        if packing["upper"] is not None and packing["firstByte"] is not None:
+            return packing["array"], packing["upper"], packing["firstByte"]
+    return None
 
 
 def alarm_packing_sources() -> List[Path]:
@@ -4013,6 +3999,22 @@ def alarm_packing_sources() -> List[Path]:
                    and path.suffix.casefold() in {".st", ".src", ".ab"}
                    and not is_ignored_project_path(path))
     return sorted(sources, key=lambda path: str(path).casefold())
+
+
+def group30_alarm_buffers() -> set:
+    """Resolve buffers from the packet copies, rather than from their names."""
+    if not PLC_PACKET_FILE.is_file():
+        return set()
+    lines = packet_code_lines(PLC_PACKET_FILE.read_text(encoding="utf-8", errors="ignore"))
+    buffers = set()
+    for code, _, start, end in extract_case_blocks(PLC_PACKET_FILE):
+        if code != 30:
+            continue
+        block = "\n".join(lines[start - 1:end + 1])
+        buffers.update(match.casefold() for match in re.findall(
+            r"\bmemcpy\s*\(\s*ADR\s*\([^)]*\)\s*,\s*ADR\s*\(\s*"
+            r"([A-Za-z_]\w*(?:\.\w+)*)\s*(?:\[[^]]+\])?\s*\)", block, re.I))
+    return buffers
 
 
 def extract_direct_alarm_packings(path: Path, lines: List[str]) -> List[Dict[str, Any]]:
@@ -4025,8 +4027,8 @@ def extract_direct_alarm_packings(path: Path, lines: List[str]) -> List[Dict[str
     tokens = re.compile(
         r"\b(?P<branch>IF|ELSIF)\b\s*(?P<condition>.*?)\bTHEN\b"
         r"|\b(?P<end>END_IF|ELSE)\b"
-        r"|(?P<write>(?P<buffer>\w+)\s*\[\s*(?P<byte>-?\d+)\s*\]\s*:=\s*"
-        r"BIT_SET\s*\(\s*(?P<read_buffer>\w+)\s*\[\s*(?P<read_byte>-?\d+)\s*\]"
+        r"|(?P<write>(?P<buffer>[A-Za-z_]\w*(?:\.\w+)*)\s*\[\s*(?P<byte>-?\d+)\s*\]\s*:=\s*"
+        r"BIT_SET\s*\(\s*(?P<read_buffer>[A-Za-z_]\w*(?:\.\w+)*)\s*\[\s*(?P<read_byte>-?\d+)\s*\]"
         r"\s*,\s*(?P<bit>-?\d+)\s*\)\s*;)", re.I | re.S,
     )
     conditions = []
@@ -4039,7 +4041,7 @@ def extract_direct_alarm_packings(path: Path, lines: List[str]) -> List[Dict[str
             while condition.startswith("(") and condition.endswith(")"):
                 condition = condition[1:-1].strip()
             alarm = re.fullmatch(
-                r"([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]"
+                r"([A-Za-z_]\w*(?:\.\w+)*)\s*\[\s*(\d+)\s*\]"
                 r"(?:\s*(?:=\s*(?:TRUE|1)|<>\s*(?:FALSE|0)))?", condition, re.I,
             )
             binding = (alarm.group(1), int(alarm.group(2))) if alarm else None
@@ -4059,7 +4061,7 @@ def extract_direct_alarm_packings(path: Path, lines: List[str]) -> List[Dict[str
         else:
             bindings = {(name.casefold(), index): name for binding in conditions if binding
                         for name, index in [binding]}
-            if len(bindings) != 1 or not re.fullmatch(r"temp_nw_snd_buffer\d*", token.group("buffer"), re.I):
+            if len(bindings) != 1:
                 continue
             (_, alarm_index), array = next(iter(bindings.items()))
             buffer = token.group("buffer")
@@ -4107,10 +4109,13 @@ def extract_alarm_packings() -> List[Dict[str, Any]]:
                     break
             body = "\n".join(lines[index + 1:end])
             counter = loop.group(1)
-            alarm = re.search(r"\bIF\s*\(?\s*([A-Za-z_]\w*)\s*\[\s*" + re.escape(counter) + r"\s*\]", body, re.I)
-            write = re.search(r"(\w+)\s*\[\s*(\w+)\s*\]\s*:=\s*BIT_SET\s*\(\s*(\w+)\s*\[\s*(\w+)\s*\]\s*,\s*(\w+)\s*\)", body, re.I)
-            if not alarm or not write or not any(re.fullmatch(r"temp_nw_snd_buffer\d*", name, re.I)
-                                                for name in (write.group(1), write.group(3))):
+            alarm = re.search(r"\bIF\s*\(?\s*([A-Za-z_]\w*(?:\.\w+)*)\s*\[\s*" + re.escape(counter)
+                              + r"\s*\]\s*(?:=\s*(?:TRUE|1)|<>\s*(?:FALSE|0))?\s*\)?\s*THEN\b", body, re.I)
+            write = re.search(r"([A-Za-z_]\w*(?:\.\w+)*)\s*\[\s*(\w+)\s*\]\s*:=\s*BIT_SET\s*\(\s*([A-Za-z_]\w*(?:\.\w+)*)\s*\[\s*(\w+)\s*\]\s*,\s*(\w+)\s*\)", body, re.I)
+            if not alarm or not write or write.start() < alarm.end():
+                continue
+            branch_end = re.search(r"\b(?:ELSE|ELSIF|END_IF)\b", body[alarm.end():], re.I)
+            if branch_end and write.start() >= alarm.end() + branch_end.start():
                 continue
             prefix = "\n".join(lines[:index])
             def initialized(name):
@@ -4131,7 +4136,10 @@ def extract_alarm_packings() -> List[Dict[str, Any]]:
                 "body": body,
             })
         packings.extend(extract_direct_alarm_packings(path, lines))
-    return packings
+    buffers = group30_alarm_buffers()
+    return [packing for packing in packings
+            if packing["path"].parent == PLC_PACKET_FILE.parent
+            or {packing["buffer"].casefold(), packing["readBuffer"].casefold()} & buffers]
 
 
 def alarm_array_type(name: str, path: Path) -> Optional[TypeInfo]:
@@ -4146,19 +4154,20 @@ def alarm_array_type(name: str, path: Path) -> Optional[TypeInfo]:
 
 def validate_alarm_packings(packings: List[Dict[str, Any]], parameters: List[PacketParameter]) -> List[ValidationIssue]:
     issues = []
-    array_names = {packing["array"].casefold() for packing in packings}
-    if array_names:
-        for path in discover_alarm_group_files():
-            try:
-                root = ET.parse(path).getroot()
-            except ET.ParseError:
-                continue
-            image_name = alarm_image_name(root)
-            if image_name not in array_names:
-                issues.append(create_issue(30, image_name or path.stem, "Alarm definition binding", "Alarm Packing Ambiguous",
-                                           "AlarmImage bound to one of: " + ", ".join(sorted(array_names)), image_name or "Not configured",
-                                           str(safe_relative_path(path)), 1,
-                                           "Verify this alarm group's AlarmImage against the packed array. Legacy single-array caption fallback is not proof that the variables are connected; correct the binding or verify an explicit alias.", severity="WARNING"))
+    definitions = []
+    for path in discover_alarm_group_files():
+        try:
+            definitions.append((path, ET.parse(path).getroot()))
+        except (ET.ParseError, OSError):
+            continue
+    # Other HMI alarm groups may be entirely unrelated to this packet. Report
+    # missing definitions for packed arrays, rather than rejecting those groups.
+    for packing in packings:
+        if not any(alarm_binding_matches(root, packing) for _, root in definitions):
+            issues.append(create_issue(30, packing["array"], "Alarm definition binding", "Alarm Packing Ambiguous",
+                                       f"AlarmImage bound to {packing['array']}", "No matching alarm group",
+                                       packing["file"], packing["line"],
+                                       "Provide an .algrp with an AlarmImage bound to this packed variable, or verify an explicit PLC alias. Captions from other alarm groups are not substituted.", severity="WARNING"))
     direct_bits = defaultdict(list)
     for packing in packings:
         for entry in packing.get("entries", []):
@@ -4208,14 +4217,7 @@ def validate_alarm_packings(packings: List[Dict[str, Any]], parameters: List[Pac
                 f"Reads {packing['readBuffer']}[{packing['readCounter']}] but writes {buffer}[{packing['byteCounter']}]",
                 f"Use the same buffer and byte counter on both sides of BIT_SET. Verify this alarm group belongs to {buffer}.", packing["writeLine"])
         if packing.get("kind") != "direct":
-            body = packing["body"]
-            bit, byte = map(re.escape, (packing["bitCounter"], packing["byteCounter"]))
-            sequence_ok = (packing["step"] == 1 and packing["firstBit"] == 0
-                           and re.search(r"\b" + bit + r"\s*:=\s*" + bit + r"\s*\+\s*1\s*;", body, re.I)
-                           and re.search(r"\bIF\s*\(?\s*" + bit + r"\s*=\s*8\b", body, re.I)
-                           and re.search(r"\b" + byte + r"\s*:=\s*" + byte + r"\s*\+\s*1\s*;", body, re.I)
-                           and re.search(r"\b" + bit + r"\s*:=\s*0\s*;", body, re.I))
-            if not sequence_ok:
+            if not alarm_loop_sequence_valid(packing):
                 add("Alarm Packing Sequence", "One bit per iteration; move to the next byte after 8 bits", packing["boundsText"],
                     "Start bit_pos at 0, increment it by 1 each iteration, and at 8 increment the byte index and reset bit_pos to 0.")
         for buffer_name in dict.fromkeys((buffer, packing["readBuffer"])):
@@ -4259,60 +4261,121 @@ def alarm_image_name(root) -> str:
     return re.sub(r"\[.*", "", (match.group(1) if match else image).split(".")[-1]).casefold()
 
 
-def extract_group30_alarm_bits(include_buffer: bool = False) -> List[tuple]:
-    """Map all non-system alarm definitions to the transmitted Group 30 bytes.
+def alarm_binding_matches(root, packing: Dict[str, Any]) -> bool:
+    properties = {node.get("Name"): node.get("Value") for node in root.findall("./{*}Property")}
+    binding = re.fullmatch(r"Source\[([^]]+)\]\.Variable\[([^]]+)\]",
+                           str(properties.get("AlarmImage") or ""), re.I)
+    if not binding:
+        return False
+    scope, variable = binding.groups()
+    def identity(value):
+        return re.sub(r"^(?:Local\.|Global\.)+", "", value.strip(), flags=re.I).casefold()
+    expected, actual = identity(variable), identity(packing["array"])
+    if expected != actual:
+        return False
+    # A named local/program source must belong to the packer's task; matching
+    # another task's identically named local array is not evidence of a link.
+    if scope.casefold() not in {"global", "local"}:
+        task_names = {part.casefold() for part in packing["path"].parts}
+        task_names.add(packing["path"].stem.casefold())
+        if scope.casefold() not in task_names:
+            return False
+    return True
 
-    Legacy projects can retain a different AlarmImage name from the packet
-    array. The configured IndexMap and ImageOffset supply alarm positions;
-    filenames, XML ordering, and variable-name equality do not supply positions.
+
+def alarm_loop_sequence_valid(packing: Dict[str, Any]) -> bool:
+    if packing.get("kind") == "direct":
+        return True
+    body = packing["body"]
+    bit, byte = map(re.escape, (packing["bitCounter"], packing["byteCounter"]))
+    return bool(packing["step"] == 1 and packing["firstBit"] == 0
+                and re.search(r"\b" + bit + r"\s*:=\s*" + bit + r"\s*\+\s*1\s*;", body, re.I)
+                and re.search(r"\bIF\s*\(?\s*" + bit + r"\s*=\s*8\b", body, re.I)
+                and re.search(r"\b" + byte + r"\s*:=\s*" + byte + r"\s*\+\s*1\s*;", body, re.I)
+                and re.search(r"\b" + bit + r"\s*:=\s*0\s*;", body, re.I))
+
+
+def extract_group30_alarm_records(packings=None, alarm_byte_tags=None) -> List[Dict[str, Any]]:
+    """Trace every caption, retaining the reason when it cannot enter Sheet2.
+
+    AlarmImage selects the variable; IndexMap and ImageOffset select its index.
+    Only verified writes to bytes actually copied by GC 30 receive a TAG_CODE.
     """
-    rows: List[Tuple[int, int, str, str]] = []
-    packings = [item for item in extract_alarm_packings() if item["count"] is not None
-                and item["firstByte"] is not None and item["firstBit"] in {0, None}
-                and item["buffer"].casefold() == item["readBuffer"].casefold()]
-    if not packings:
-        return rows
-    array_names = {item["array"].casefold() for item in packings}
+    records = []
+    packings = extract_alarm_packings() if packings is None else packings
     for path in discover_alarm_group_files():
         try:
             root = ET.parse(path).getroot()
-        except Exception:
+        except (ET.ParseError, OSError):
             continue
         properties = {node.get("Name"): node.get("Value")
                       for node in root.findall("./{*}Property")}
         image_offset = to_int(properties.get("ImageOffset", "0"))
-        if image_offset is None or image_offset < 0:
-            continue
         english = english_text_values(root)
-        image_name = alarm_image_name(root)
-        matched_packings = [item for item in packings if item["array"].casefold() == image_name]
-        # Retain the verified legacy alias fallback only when one alarm array
-        # is packed. Multiple arrays require an unambiguous AlarmImage binding.
-        if not matched_packings and len(array_names) == 1:
-            matched_packings = packings
+        matched_packings = [item for item in packings if alarm_binding_matches(root, item)]
         for index in root.findall(".//{*}IndexMap/{*}Index"):
             alarm_index = to_int(index.attrib.get("Value"))
             description = english.get(str(index.attrib.get("ID", "")), "").strip()
             if alarm_index is None or not description or alarm_index < 0:
                 continue
-            alarm_index += image_offset
+            if skip_ring_frame_alarm(description, alarm_image_name(root)):
+                continue
+            adjusted = alarm_index + image_offset if image_offset is not None and image_offset >= 0 else None
+            base = {"group": path.stem, "alarmImage": properties.get("AlarmImage", ""),
+                    "alarmIndex": adjusted if adjusted is not None else alarm_index,
+                    "caption": description, "sourceFile": str(safe_relative_path(path)),
+                    "packingFile": "", "packingLine": None, "buffer": "", "byte": None,
+                    "bit": None, "tagCode": None}
+            if adjusted is None:
+                records.append({**base, "status": "UNRESOLVED_OFFSET", "detail": "ImageOffset must be a nonnegative integer."})
+                continue
+            if not matched_packings:
+                records.append({**base, "status": "NOT_TRANSMITTED", "detail": "No GC 30 packing loop is bound to this AlarmImage. Other alarm groups are not used as substitutes."})
+                continue
             for packing in matched_packings:
-                if skip_ring_frame_alarm(description, packing["array"]):
+                row = {**base, "packingFile": packing["file"], "packingLine": packing["writeLine"], "buffer": packing["buffer"]}
+                if packing["count"] is None or packing["firstByte"] is None or packing["firstBit"] is None:
+                    records.append({**row, "status": "UNRESOLVED_PACKING", "detail": "Loop bounds or starting byte/bit cannot be resolved."})
                     continue
-                if not packing["lower"] <= alarm_index <= packing["upper"]:
+                if not packing["lower"] <= adjusted <= packing["upper"]:
+                    records.append({**row, "status": "OUTSIDE_PACKING_RANGE", "detail": f"The PLC packs indices {packing['lower']}..{packing['upper']}; this index is outside that range."})
                     continue
-                source = str(safe_relative_path(path))
                 if packing.get("kind") == "direct":
-                    positions = [(entry["byte"], entry["bit"]) for entry in packing["entries"]
-                                 if entry["index"] == alarm_index and entry["byte"] >= 0 and 0 <= entry["bit"] <= 7
-                                 and entry["buffer"].casefold() == entry["readBuffer"].casefold()
-                                 and entry["byte"] == entry["readByte"]]
+                    entries = [entry for entry in packing["entries"] if entry["index"] == adjusted]
+                    positions = [(entry["byte"], entry["bit"], entry["buffer"].casefold() == entry["readBuffer"].casefold()
+                                  and entry["byte"] == entry["readByte"]) for entry in entries]
                 else:
-                    relative_bit = alarm_index - packing["lower"]
-                    positions = [(packing["firstByte"] + relative_bit // 8, relative_bit % 8)]
-                for byte, bit in positions:
-                    rows.append((packing["buffer"], byte, bit, description, source) if include_buffer
-                                else (byte, bit, description, source))
+                    if not alarm_loop_sequence_valid(packing):
+                        records.append({**row, "status": "UNRESOLVED_PACKING", "detail": "The byte/bit progression is not a verified sequential alarm packer."})
+                        continue
+                    relative_bit = adjusted - packing["lower"]
+                    same_buffer = (packing["buffer"].casefold() == packing["readBuffer"].casefold()
+                                   and packing["byteCounter"].casefold() == packing["readCounter"].casefold())
+                    positions = [(packing["firstByte"] + relative_bit // 8, relative_bit % 8, same_buffer)]
+                if not positions:
+                    records.append({**row, "status": "NOT_PACKED", "detail": "No explicit BIT_SET assignment writes this alarm index."})
+                for byte, bit, same_buffer in positions:
+                    position = {**row, "byte": byte, "bit": bit}
+                    if not same_buffer:
+                        records.append({**position, "status": "BUFFER_MISMATCH", "detail": "BIT_SET reads and writes different buffers or byte indices. A reliable caption cannot be assigned to the transmitted bit."})
+                        continue
+                    if byte < 0 or not 0 <= bit <= 7:
+                        records.append({**position, "status": "INVALID_BIT", "detail": "The write requires a nonnegative byte and bit 0..7."})
+                        continue
+                    tag = None if alarm_byte_tags is None else alarm_byte_tags.get((packing["buffer"].casefold(), byte), alarm_byte_tags.get(byte))
+                    if alarm_byte_tags is not None and tag is None:
+                        records.append({**position, "status": "NOT_COPIED", "detail": "GC 30 does not copy this buffer byte; it is omitted from Sheet2."})
+                    else:
+                        records.append({**position, "tagCode": tag, "status": "MAPPED", "detail": "AlarmImage, alarm index and packed byte/bit are resolved."})
+    return records
+
+
+def extract_group30_alarm_bits(include_buffer: bool = False, records=None) -> List[tuple]:
+    rows = []
+    for row in extract_group30_alarm_records() if records is None else records:
+        if row["status"] == "MAPPED":
+            values = (row["byte"], row["bit"], row["caption"], row["sourceFile"])
+            rows.append((row["buffer"], *values) if include_buffer else values)
     return sorted(set(rows), key=lambda row: tuple(str(value) if isinstance(value, str) else value for value in row[:3]))
 
 
@@ -4983,6 +5046,7 @@ def _build_generated_sheet2(
     bool_tag_codes: Optional[set[Any]] = None,
     alarm_byte_tags: Optional[Dict[int, Any]] = None,
     master_dropdown_pairs_by_tag: Optional[Dict[Any, List[Tuple[str, str]]]] = None,
+    alarm_source_records: Optional[List[Dict[str, Any]]] = None,
 ) -> List[List[Any]]:
     """
     Build generated Sheet2 from actual HMI dropdown/TextGroup implementation.
@@ -5021,11 +5085,11 @@ def _build_generated_sheet2(
                 seen.add(key)
                 output.append([tag_code, plc_val, shown_val, "BOTH", "NO"])
 
-    # Group 30 serializes the project's alarm bits into Temp_nw_snd_buffer.
+    # Group 30 serializes the project's alarm bits into its actual copy buffers.
     # Preserve the byte TAG_CODE while making each individual alarm bit visible.
     described_alarm_bits = set()
     alarm_captions = defaultdict(list)
-    for buffer, byte_no, bit_no, description, source_file in extract_group30_alarm_bits(include_buffer=True):
+    for buffer, byte_no, bit_no, description, source_file in extract_group30_alarm_bits(include_buffer=True, records=alarm_source_records):
         tag_code = alarm_byte_tags.get((buffer.casefold(), byte_no), alarm_byte_tags.get(byte_no))
         if tag_code is None or not description.strip():
             continue
@@ -5301,7 +5365,8 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
                 "HMI" if hmin is not None or hmax is not None else ("Master MIN/MAX" if mmin is not None or mmax is not None else "Not configured"))
     tag_by_parameter: Dict[str, Any] = {}
     bool_tag_codes: set[Any] = set()
-    alarm_byte_tags: Dict[int, Any] = {}
+    alarm_byte_tags: Dict[Any, Any] = {}
+    alarm_buffers = group30_alarm_buffers()
     configured_dropdown_pairs_by_tag: Dict[Any, List[Tuple[str, str]]] = {}
     tag_counter = 0
     metadata_naming_warnings = []
@@ -5368,8 +5433,8 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
             tag_by_parameter.setdefault(normalize_name(plc_parameter), tag_code)
             tag_by_parameter.setdefault(normalize_name(metadata_parameter), tag_code)
             if grp.code == 30:
-                alarm_byte = re.search(r"(temp_nw_snd_buffer\d*)\s*\[\s*(\d+)\s*\]", plc_tag, re.I)
-                if alarm_byte:
+                alarm_byte = re.fullmatch(r"([A-Za-z_]\w*(?:\.\w+)*)\s*\[\s*(\d+)\s*\]", plc_tag, re.I)
+                if alarm_byte and alarm_byte.group(1).casefold() in alarm_buffers:
                     alarm_byte_tags[(alarm_byte.group(1).casefold(), int(alarm_byte.group(2)))] = tag_code
             offset_val = param.offset_buffer if param.offset_buffer is not None else 0
             size_val = param.memcpy_size if param.memcpy_size is not None else 1
@@ -5467,9 +5532,10 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
     # Sheet2 is generated from the actual HMI TextGroup mappings in the PLC
     # workspace, not from a default/reference workbook.
     sheet2 = wb.create_sheet("Sheet2")
+    alarm_source_records = extract_group30_alarm_records(alarm_byte_tags=alarm_byte_tags)
     sheet2_rows = _build_generated_sheet2(
         results, tag_by_parameter, bool_tag_codes, alarm_byte_tags,
-        configured_dropdown_pairs_by_tag,
+        configured_dropdown_pairs_by_tag, alarm_source_records,
     )
     for row in sheet2_rows:
         sheet2.append(row)
@@ -5477,12 +5543,23 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
         cell.font = Font(bold=True, color="FFFFFF")
         cell.fill = PatternFill(fill_type="solid", fgColor="17365D")
 
+    # Keep the five-column Sheet2 contract unchanged. Captions which cannot be
+    # safely assigned to transmitted bits remain reviewable in this trace sheet.
+    alarm_sources = wb.create_sheet("Alarm Sources")
+    alarm_fields = ["group", "alarmImage", "alarmIndex", "caption", "sourceFile",
+                    "packingFile", "packingLine", "buffer", "byte", "bit", "tagCode", "status", "detail"]
+    alarm_sources.append(["ALARM_GROUP", "ALARM_IMAGE", "ALARM_INDEX", "CAPTION", "ALARM_SOURCE",
+                          "PACKING_SOURCE", "PACKING_LINE", "WRITE_BUFFER", "BUFFER_BYTE", "BIT", "TAG_CODE", "STATUS", "DETAIL"])
+    for record in alarm_source_records:
+        alarm_sources.append([record.get(field) for field in alarm_fields])
+    alarm_sources.freeze_panes = "A2"
+
     # Freeze/filter generated metadata tables.
     ws.freeze_panes = "A2"
     # AutoFilter intentionally disabled (do not enable — causes highlighted column headers)
     sheet2.freeze_panes = "A2"
 
-    for sheet in (ws, sheet2):
+    for sheet in (ws, sheet2, alarm_sources):
         for cell in sheet[1]:
             cell.font = Font(bold=True, italic=True, color="000000")
             cell.fill = PatternFill(fill_type=None)
@@ -5538,6 +5615,8 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
         "excelPath": str(output_excel_path),
         "records": all_params,
         "metadataNamingWarnings": metadata_naming_warnings,
+        "alarmSources": alarm_source_records,
+        "alarmSourceSummary": dict(Counter(row["status"] for row in alarm_source_records)),
         "alarmWarnings": [asdict(issue) for issue in source_issues if str(issue.group_code) == "30" and issue.validation_type.startswith("Alarm")],
     }
 

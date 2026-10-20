@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "project3-textile-baseline",
+  "name": "Textile baseline - 27 mm front roller (simulation)",
+  "project": "LR9SXPV6338",
+  "configuration": "Config7_REG_MCMT_CTL_HPM_ECS",
+  "reference": "Representative ring-spinning simulation setting: 27 mm front roller, raw value 270. Rieter identifies 27 mm as a regular bottom roller size. This also matches this project's commented test value; it is not a verified setting for the physical machine or a universal textile standard.",
+  "values": {
+    "@global:FRD_VW1904": 270
+  },
+  "variableReferences": {
+    "FRD_VW1904": {
+      "engineeringValue": 27,
+      "unit": "mm",
+      "rawUnitsPerEngineeringUnit": 10,
+      "scaleEvidence": "Logical/set_log/set_logCyclic.ab:3-4 converts FRD_VW1904 to REAL then divides by 10 for display.",
+      "hmiEvidence": "Logical/hmi/Pages/MACHINE_SETTINGS1.page:215 configures AddFractionDigits=1; line 238 binds FRD_VW1904.",
+      "projectEvidence": "Logical/main/mainInit.ab:233-235 contains the commented test value FRD_VW1904 = 270.",
+      "sourceUrl": "https://www.rieter.com/products/after-sales/ring-and-compact-spinning/parts-and-maintenance",
+      "corroboratingSourceUrl": "https://www.ctmtc.com/products/spinning/ring-spinning-frame/26",
+      "assumption": "Representative manufacturer-documented geometry selected for simulation under user instruction.",
+      "retrievedDate": "2026-10-18"
+    }
+  }
+}

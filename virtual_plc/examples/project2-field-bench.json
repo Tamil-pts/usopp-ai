@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "id": "project2-field-bench",
+  "name": "Project 2 healthy simulation jig",
+  "project": "project 2",
+  "configuration": "LDF3S_WO_SUCTION",
+  "sourceSignatures": {
+    "Logical/motor/motorCyclic.ld": "6e6be8075c68e8ef0dbf33ff3967798f222f64b486b5a9fe16814777e6c1fbca",
+    "Logical/main/mainCyclic.ab": "1aa73ad12c4fd89d60d4e5748b1be7a3a4cb977f3fb9f18668ece575a9d6a9cc",
+    "Logical/fault/faultCyclic.ld": "99244a404b9ba8f41a0791940c47994e8e7969f3d4de7adc2e227ce6d26bf1d4",
+    "Logical/encoder/encoderCyclic.ab": "6bcec02b63db514f9ea7c623f10ee09258e2e2aae26c9c048c6b80a14975fbfd",
+    "Logical/len_del/len_delCyclic.ab": "514c126a6b0698fc034ab3cc98ca26073905c940e7b744cb68c3cf7dc905e207"
+  },
+  "contacts": {
+    "DI_EMERGENCY_OFF_LHS": 1,
+    "DI_EMERGENCY_OFF_RHS": 1,
+    "DI_MACHINE_OFF_LHS": 1,
+    "DI_MACHINE_OFF_RHS": 1,
+    "DI_MACHINE_OFF_CREEL": 1,
+    "DI_DOOR_SAFETY_LHS": 1,
+    "DI_DOOR_SAFETY_RHS": 1,
+    "DI_MOTOR_TRIP": 1,
+    "DI_SIDE_DOOR_RHS": 1,
+    "DI_DOOR_SAFETY_MAIN_MOTOR": 1,
+    "DI_AIR_PRESSURE": 1,
+    "DI_CAN_INDEX": 1,
+    "DI_WEB_GUIDE_CHOCK": 1,
+    "DI_UNDER_OVER_VOLTAGE_TRIP": 1,
+    "DI_SAFETY_SWITCH": 1,
+    "DI_SERVO_DRIVE_DC_BUS_READY": 0,
+    "DI_DRAFTING_DOOR": 1,
+    "DI_EMPTY_CAN": 1
+  },
+  "reference": [
+    "Logical/motor/motorCyclic.ld:49-71: raw contacts required by the inch/start interlock",
+    "Logical/motor/motorCyclic.ld:695: DC bus contact is negated in the active start network",
+    "Logical/main/mainCyclic.ab:3-10: Web_Guide_Status selects contact polarity",
+    "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom: exact input mapping",
+    "Logical/motor/motorCyclic.ld:1196: Non-CE FAST start requires drafting door closed (raw 1).",
+    "Logical/fault/faultCyclic.ld:1213-1226: empty can present is raw 1; missing raw 0 for 6 s raises the original alarm."
+  ],
+  "assumptions": [
+    "Virtual commissioning defaults, not measured physical machine states. All contacts remain editable.",
+    "MACHINE_OFF buttons are released at 1 and pressed at 0 in this configuration.",
+    "Unspecified contacts keep their configured value. Mechanical timing, gearing and pulse resolution are editable jig assumptions."
+  ],
+  "deviceOverrides": [
+    {
+      "name": "ED_DO_INVERTER_START / encoder",
+      "kind": "encoder",
+      "replacesAssumptions": [
+        "Counter01 and DigitalInput01 belong to the delivery-counter module in IoMap.iom. The virtual VFD shaft supplies the bench speed. Resolution 1024 pulses/revolution and 1:1 shaft coupling are editable simulation assumptions; confirm gearing for quantitative delivery-speed checks."
+      ],
+      "bindings": {
+        "count": "@global:HSC_1_CURRENTVALUE",
+        "channelA": "@global:DI_DELIVERY_COUNTER"
+      },
+      "config": {
+        "rollover": 65536,
+        "countsPerRevolution": 1
+      },
+      "reason": "Counter01 and DigitalInput01 belong to the delivery-counter module in IoMap.iom. The virtual VFD shaft supplies the bench speed. Use a conservative 1 effective pulse per modeled motor revolution. The active len_delCyclic.ab:80-85 sets DELIVERY_METRE_PER_PULSE to 0.00999, giving 14.985 m/min at 1500 RPM. Resolution and coupling are editable bench assumptions, not measured machine calibration; enter actual gearing for production-speed checks."
+    },
+    {
+      "name": "DI_TOP_ARM",
+      "kind": "digital_input",
+      "bindings": {
+        "command": "@global:DO_DRAFTING_LOAD"
+      },
+      "config": {
+        "automatic": 1,
+        "activeValue": 0,
+        "delayOnMs": 150,
+        "delayOffMs": 150,
+        "value": 0
+      },
+      "reason": "Drafting load closes the top arm; its open indication becomes 0. The source uses NOT DI_TOP_ARM for the loaded/start path (motorCyclic.ld:802-810). Jig travel delay 150 ms is editable."
+    },
+    {
+      "name": "DI_MAIN_MOTOR_FAST",
+      "kind": "pushbutton",
+      "config": {
+        "releasedValue": 0,
+        "pulseMs": 2000
+      },
+      "reason": "The source latches FAST while drafting load is confirmed. Drafting-load confirmation uses a 1 s TON, while releasing FAST starts a 1 s cancellation timer (motorCyclic.ld:872-899). A 2 s jig press allows the normal load feedback/start sequence; editable in Configure."
+    },
+    {
+      "name": "DO_ENABLE_TO_SERVO_DRIVE / encoder",
+      "kind": "encoder",
+      "bindings": {
+        "count": "@global:B4ScanningPulse"
+      },
+      "config": {
+        "countsPerRevolution": 1024,
+        "rollover": 65536
+      },
+      "reason": "The scanning encoder count feeds B4ScanningPulse; its shaft follows the servo. Resolution and gearing are editable jig assumptions. B4Freq and the original scan-encoder monitor evaluate this feedback."
+    },
+    {
+      "name": "DI_DRAFTING_LOAD",
+      "kind": "digital_input",
+      "bindings": {
+        "command": "@global:DO_DRAFTING_LOAD"
+      },
+      "config": {
+        "automatic": 1,
+        "activeValue": 1,
+        "delayOnMs": 150,
+        "delayOffMs": 150,
+        "value": 0
+      },
+      "reason": "Virtual load-confirmation switch follows DO_DRAFTING_LOAD with editable 150 ms actuator travel."
+    },
+    {
+      "name": "DI_SCANNING_LOAD",
+      "kind": "digital_input",
+      "bindings": {
+        "command": "@global:DO_SCANNING_LOAD"
+      },
+      "config": {
+        "automatic": 1,
+        "activeValue": 1,
+        "delayOnMs": 150,
+        "delayOffMs": 150,
+        "value": 0
+      },
+      "reason": "Virtual load-confirmation switch follows DO_SCANNING_LOAD with editable 150 ms actuator travel."
+    },
+    {
+      "name": "DI_SUCTION_MONITOR",
+      "kind": "digital_input",
+      "bindings": {
+        "command": "@global:DO_FAN_MOTOR"
+      },
+      "config": {
+        "automatic": 1,
+        "activeValue": 1,
+        "delayOnMs": 500,
+        "delayOffMs": 500,
+        "value": 0
+      },
+      "reason": "Pressure-switch feedback follows the fan with an editable 500 ms pressure build/decay delay. faultCyclic.ld:687-701 raises suction-box-full when the fan runs without this input for 5 s in pressure-switch mode."
+    },
+    {
+      "name": "AI_SUCTION_PRESSURE",
+      "kind": "analog_input",
+      "bindings": {
+        "enable": "@global:DO_FAN_MOTOR",
+        "command": "@global:REQUIRED_SUCTION_PRESSURE"
+      },
+      "config": {
+        "automatic": 1,
+        "minimum": 0,
+        "maximum": 32767,
+        "gain": 6.5534,
+        "offset": 0,
+        "offValue": 0,
+        "onValue": 9175,
+        "slewPerSecond": 30000,
+        "value": 0
+      },
+      "reason": "Fan pressure ramps toward REQUIRED_SUCTION_PRESSURE. Raw scaling in mainCyclic.ab:1927 is pressure = ADC * 5000 / 32767, so jig ADC = requested pressure * 6.5534. Response rate is editable."
+    }
+  ],
+  "version": 3,
+  "sourceCorrections": "project2-source-corrections.json",
+  "statusSignals": {
+    "machineReady": "@global:M1200",
+    "motorCommand": "@global:DO_INVERTER_START",
+    "fastRunning": "@global:INV_START_COND_2",
+    "vfdCommand": "@global:ED_DO_INVERTER_START",
+    "servoReady": "@global:DI_SERVO_DRIVE_READY"
+  },
+  "devices": [
+    {
+      "name": "B5 delivery encoder",
+      "kind": "encoder",
+      "bindings": {
+        "count": "@global:B5DeliveryPulse",
+        "channelA": "@global:D_DELIVERY_COUNTER"
+      },
+      "links": {
+        "speed": {
+          "component": "field-0cb0e40b17df7c66",
+          "port": "speed"
+        }
+      },
+      "config": {
+        "countsPerRevolution": 1,
+        "rollover": 65536
+      },
+      "evidence": {
+        "source": "Logical/AL/B5Freq/Main.st",
+        "line": 20
+      },
+      "reason": "B5 delivery counter follows the same modeled VFD shaft and effective 1 pulse/revolution used for HSC_1_CURRENTVALUE. Pulse resolution and 1:1 coupling are editable jig assumptions."
+    },
+    {
+      "name": "Main coiler rotation sensor",
+      "kind": "encoder",
+      "bindings": {
+        "channelA": "@global:DI_MAIN_COILER_ENCODER"
+      },
+      "links": {
+        "speed": {
+          "component": "field-0cb0e40b17df7c66",
+          "port": "speed"
+        }
+      },
+      "config": {
+        "countsPerRevolution": 1,
+        "rollover": 65536
+      },
+      "evidence": {
+        "source": "Logical/fault/faultCyclic.ld",
+        "line": 1693
+      },
+      "reason": "Rotating coiler sensor follows the main drive shaft with one pulse/revolution. The source checks for this sensor while FAST runs; gearing and pulse resolution are editable."
+    }
+  ]
+}

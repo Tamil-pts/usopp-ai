@@ -852,6 +852,1168 @@
         "Drafting Motor Motor Torque"
       ],
       "note": "Editable department mapping prepared against the supplied Finisher machine metadata. Review with the selected project during validation."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 40,
+      "canonicalName": "Run Time Hour",
+      "names": [
+        "Run Time Hour",
+        "Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 40,
+      "canonicalName": "Run Time Minute",
+      "names": [
+        "Run Time Minute",
+        "Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 50,
+      "canonicalName": "Run Time Hour",
+      "names": [
+        "Run Time Hour",
+        "Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 50,
+      "canonicalName": "Run Time Minute",
+      "names": [
+        "Run Time Minute",
+        "Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 40,
+      "canonicalName": "Idle Time Hour",
+      "names": [
+        "Idle Time Hour",
+        "Idle Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 40,
+      "canonicalName": "Idle Time Minute",
+      "names": [
+        "Idle Time Minute",
+        "Idle Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 40,
+      "canonicalName": "Power Fail Time Hour",
+      "names": [
+        "Power Fail Time Hour",
+        "Power Fail Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 40,
+      "canonicalName": "Power Fail Time Minute",
+      "names": [
+        "Power Fail Time Minute",
+        "Power Fail Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 40,
+      "canonicalName": "DOFF Time Hour",
+      "names": [
+        "DOFF Time Hour",
+        "DOFF Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 40,
+      "canonicalName": "DOFF Time Minute",
+      "names": [
+        "DOFF Time Minute",
+        "DOFF Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 50,
+      "canonicalName": "Idle Time Hour",
+      "names": [
+        "Idle Time Hour",
+        "Idle Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 50,
+      "canonicalName": "Idle Time Minute",
+      "names": [
+        "Idle Time Minute",
+        "Idle Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 50,
+      "canonicalName": "Power Fail Time Hour",
+      "names": [
+        "Power Fail Time Hour",
+        "Power Fail Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 50,
+      "canonicalName": "Power Fail Time Minute",
+      "names": [
+        "Power Fail Time Minute",
+        "Power Fail Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 50,
+      "canonicalName": "DOFF Time Hour",
+      "names": [
+        "DOFF Time Hour",
+        "DOFF Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "RINGFRAME"
+      ],
+      "service": "CMS",
+      "groupCode": 50,
+      "canonicalName": "DOFF Time Minute",
+      "names": [
+        "DOFF Time Minute",
+        "DOFF Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Run Time Hour",
+      "names": [
+        "Run Time Hour",
+        "Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Run Time Minute",
+      "names": [
+        "Run Time Minute",
+        "Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Idle Time Hour",
+      "names": [
+        "Idle Time Hour",
+        "Idle Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Idle Time Minute",
+      "names": [
+        "Idle Time Minute",
+        "Idle Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Power Fail Time Hour",
+      "names": [
+        "Power Fail Time Hour",
+        "Power Fail Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Power Fail Time Minute",
+      "names": [
+        "Power Fail Time Minute",
+        "Power Fail Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Run Time Hour",
+      "names": [
+        "Run Time Hour",
+        "Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Run Time Minute",
+      "names": [
+        "Run Time Minute",
+        "Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Idle Time Hour",
+      "names": [
+        "Idle Time Hour",
+        "Idle Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Idle Time Minute",
+      "names": [
+        "Idle Time Minute",
+        "Idle Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Power Fail Time Hour",
+      "names": [
+        "Power Fail Time Hour",
+        "Power Fail Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Power Fail Time Minute",
+      "names": [
+        "Power Fail Time Minute",
+        "Power Fail Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "RINGFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 190,
+      "canonicalName": "DOFF Run Time Hour",
+      "names": [
+        "DOFF Run Time Hour",
+        "DOFF Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "RINGFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 190,
+      "canonicalName": "DOFF Run Time Minute",
+      "names": [
+        "DOFF Run Time Minute",
+        "DOFF Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "RINGFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 190,
+      "canonicalName": "DOFF Run Time Second",
+      "names": [
+        "DOFF Run Time Second",
+        "DOFF Run Time Seconds"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "RINGFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 190,
+      "canonicalName": "Doff Time Minute",
+      "names": [
+        "Doff Time Minute",
+        "Doff Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "RINGFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 190,
+      "canonicalName": "Doff Time Second",
+      "names": [
+        "Doff Time Second",
+        "Doff Time Seconds"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "DOFF Time Hour",
+      "names": [
+        "DOFF Time Hour",
+        "DOFF Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "BLOWROOM",
+        "CARDING",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "DOFF Time Minute",
+      "names": [
+        "DOFF Time Minute",
+        "DOFF Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "DOFF Time Hour",
+      "names": [
+        "DOFF Time Hour",
+        "DOFF Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "RINGFRAME",
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "DOFF Time Minute",
+      "names": [
+        "DOFF Time Minute",
+        "DOFF Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 500,
+      "canonicalName": "DOFF Run Time Hour",
+      "names": [
+        "DOFF Run Time Hour",
+        "DOFF Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 500,
+      "canonicalName": "Doff Run Time Minute",
+      "names": [
+        "Doff Run Time Minute",
+        "Doff Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "CARDING",
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER",
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 500,
+      "canonicalName": "Doff Run Time Second",
+      "names": [
+        "Doff Run Time Second",
+        "Doff Run Time Seconds"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "COMBER",
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 500,
+      "canonicalName": "Doff Time Minute",
+      "names": [
+        "Doff Time Minute",
+        "Doff Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "COMBER",
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 500,
+      "canonicalName": "Doff Time Second",
+      "names": [
+        "Doff Time Second",
+        "Doff Time Seconds"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Feed Stoppage Time Hour",
+      "names": [
+        "Feed Stoppage Time Hour",
+        "Feed Stoppage Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Feed Stoppage Time Minute",
+      "names": [
+        "Feed Stoppage Time Minute",
+        "Feed Stoppage Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Delivery Stoppage Time Hour",
+      "names": [
+        "Delivery Stoppage Time Hour",
+        "Delivery Stoppage Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Delivery Stoppage Time Minute",
+      "names": [
+        "Delivery Stoppage Time Minute",
+        "Delivery Stoppage Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Other Stoppage Time Hour",
+      "names": [
+        "Other Stoppage Time Hour",
+        "Other Stoppage Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Other Stoppage Time Minute",
+      "names": [
+        "Other Stoppage Time Minute",
+        "Other Stoppage Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Feed Stoppage Time Hour",
+      "names": [
+        "Feed Stoppage Time Hour",
+        "Feed Stoppage Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Feed Stoppage Time Minute",
+      "names": [
+        "Feed Stoppage Time Minute",
+        "Feed Stoppage Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Delivery Stoppage Time Hour",
+      "names": [
+        "Delivery Stoppage Time Hour",
+        "Delivery Stoppage Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Delivery Stoppage Time Minute",
+      "names": [
+        "Delivery Stoppage Time Minute",
+        "Delivery Stoppage Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Other Stoppage Time Hour",
+      "names": [
+        "Other Stoppage Time Hour",
+        "Other Stoppage Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Other Stoppage Time Minute",
+      "names": [
+        "Other Stoppage Time Minute",
+        "Other Stoppage Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Auto DOFF Time Hour",
+      "names": [
+        "Auto DOFF Time Hour",
+        "Auto DOFF Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Auto DOFF Time Minute",
+      "names": [
+        "Auto DOFF Time Minute",
+        "Auto DOFF Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Auto DOFF Time Hour",
+      "names": [
+        "Auto DOFF Time Hour",
+        "Auto DOFF Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "LAPFORMER"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Auto DOFF Time Minute",
+      "names": [
+        "Auto DOFF Time Minute",
+        "Auto DOFF Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Rovo Stop Time Hour",
+      "names": [
+        "Rovo Stop Time Hour",
+        "Rovo Stop Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Rovo Stop Time Minute",
+      "names": [
+        "Rovo Stop Time Minute",
+        "Rovo Stop Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Creel Stop Time Hour",
+      "names": [
+        "Creel Stop Time Hour",
+        "Creel Stop Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 40,
+      "canonicalName": "Creel stop time Minute",
+      "names": [
+        "Creel stop time Minute",
+        "Creel stop time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Rovo stop time Hour",
+      "names": [
+        "Rovo stop time Hour",
+        "Rovo stop time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Rovo stop time Minute",
+      "names": [
+        "Rovo stop time Minute",
+        "Rovo stop time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Creel Stop time Hour",
+      "names": [
+        "Creel Stop time Hour",
+        "Creel Stop time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 50,
+      "canonicalName": "Creel Stop Time Minute",
+      "names": [
+        "Creel Stop Time Minute",
+        "Creel Stop Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 170,
+      "canonicalName": "Run Time Hour",
+      "names": [
+        "Run Time Hour",
+        "Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 170,
+      "canonicalName": "Run Time Minute",
+      "names": [
+        "Run Time Minute",
+        "Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 170,
+      "canonicalName": "Run time Second",
+      "names": [
+        "Run time Second",
+        "Run time Seconds"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 170,
+      "canonicalName": "Doff Time Hour",
+      "names": [
+        "Doff Time Hour",
+        "Doff Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 170,
+      "canonicalName": "Doff Time Minute",
+      "names": [
+        "Doff Time Minute",
+        "Doff Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 170,
+      "canonicalName": "BTS Time Hour",
+      "names": [
+        "BTS Time Hour",
+        "BTS Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "SPEEDFRAME"
+      ],
+      "service": "PMS",
+      "groupCode": 170,
+      "canonicalName": "BTS Time Minute",
+      "names": [
+        "BTS Time Minute",
+        "BTS Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Run Time Hour",
+      "names": [
+        "Run Time Hour",
+        "Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "COMBER",
+        "DRAWFRAMEBREAKER",
+        "DRAWFRAMEFINISHER"
+      ],
+      "service": "QMS",
+      "groupCode": 40,
+      "canonicalName": "Run Time Minute",
+      "names": [
+        "Run Time Minute",
+        "Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER"
+      ],
+      "service": "QMS",
+      "groupCode": 50,
+      "canonicalName": "Run Time Hour",
+      "names": [
+        "Run Time Hour",
+        "Run Time Hours"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
+    },
+    {
+      "departments": [
+        "DRAWFRAMEBREAKER"
+      ],
+      "service": "QMS",
+      "groupCode": 50,
+      "canonicalName": "Run Time Minute",
+      "names": [
+        "Run Time Minute",
+        "Run Time Minutes"
+      ],
+      "note": "Raw PLC time component: singular/plural unit spelling is equivalent in this department and Group Code. Formula totals remain dashboard calculations; this mapping does not calculate or replace a PLC value."
     }
   ],
   "ignoreNameSeparators": true,

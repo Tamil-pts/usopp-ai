@@ -158,7 +158,9 @@ export function buildDataModelRowReferences(items: MetadataItem[], models: DataM
   const result = new Map<string, DataModelReference[]>();
   const keys = new Set(items.map(metadataRowKey));
   for (const checked of checkedDataModels(items, models, check)) for (const row of checked.result.rows) {
-    if (!row.name || row.kind === 'server') continue;
+    // Packet checks describe PLC inputs. Formula outputs are configured and
+    // evaluated in the dashboard, even when their names resemble raw inputs.
+    if (!row.name || row.kind !== 'plc') continue;
     for (const item of row.actual || []) {
       // A same-name parameter found in another GC is evidence for the
       // unavailable requirement, not a failure on this metadata row. Keep the

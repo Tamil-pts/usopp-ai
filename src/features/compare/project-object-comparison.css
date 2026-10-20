@@ -22,3 +22,27 @@
 .projectObjectAbsent{color:var(--muted,#64748b);font-style:italic;font-size:12px}.projectObjectName.absent{background:var(--panel2,#f1f5f9);opacity:.6}.projectObjectScroll td.descriptionChanged{background:#d99c1722}.projectObjectNotice{margin:0;padding:10px 14px;font-size:13px;background:#d99c1722}.projectObjectEmpty{text-align:center;color:var(--muted,#64748b);padding:30px!important}
 [data-theme=dark] .projectObjectStatus.added{color:#58dca3}[data-theme=dark] .projectObjectStatus.modified{color:#e9b951}[data-theme=dark] .projectObjectStatus.removed{color:#ee8383}
 @media(max-width:800px){.projectObjectHeading{align-items:flex-start;flex-direction:column}.projectObjectLegend{margin-left:0}.projectObjectToolbar input:not([type=checkbox]){width:220px}}
+
+/* Match the project explorer while keeping both project identities visible. */
+.projectObjectComparison{--project-tree-icon:#1597be;--project-tree-selected:#d5e8f5;--project-tree-hover:#eaf3f9}
+[data-theme=dark] .projectObjectComparison{--project-tree-icon:#47b8db;--project-tree-selected:#1b3a52;--project-tree-hover:#152b3e}
+.projectObjectHeading h2{display:flex;align-items:center;gap:9px;font-size:17px}.projectObjectHeading h2 svg{color:var(--project-tree-icon)}
+.projectObjectToolbar{gap:9px;background:var(--panel,#f8fbfe)}
+.projectObjectToolbar label:first-child{padding:0 9px;border:1px solid var(--line,#cbd5e1);border-radius:6px;background:var(--panel,#fff);color:var(--muted,#64748b)}
+.projectObjectToolbar label:first-child input{border:0;background:transparent;padding-left:2px;min-width:0}
+.projectObjectToolbar button,.projectObjectToolbar select{border-radius:6px}
+.projectObjectScroll tbody tr,.projectObjectScroll tbody td{background:transparent;border-bottom:0;box-shadow:none}
+.projectObjectScroll td{height:36px;padding-top:4px;padding-bottom:4px}
+.projectObjectScroll tbody tr:hover>td{background:var(--project-tree-hover)}
+.projectObjectScroll tbody tr.selected>td{background:var(--project-tree-selected)}
+.projectObjectScroll .projectObjectRoot>td{background:var(--panel2,#edf4f9);height:44px}
+.projectObjectScroll .projectObjectRoot svg,.projectObjectLine>svg{color:var(--project-tree-icon)}
+.projectObjectIndent{min-height:0;margin:0;align-self:auto}
+.projectObjectToggle{display:inline-flex;align-items:center;justify-content:center;width:18px;height:24px;border:0;border-radius:4px;background:transparent;color:var(--muted,#64748b)}
+.projectObjectToggle:hover{color:var(--project-tree-icon);background:var(--project-tree-hover)}
+.projectObjectToggleSpacer{width:18px}
+.projectObjectOpen{line-height:22px;padding:0}.projectObjectOpen:hover{text-decoration:none}
+.projectObjectLine{gap:8px;min-height:27px}.projectObjectLine .projectObjectStatus{margin-left:auto}
+.projectObjectLine>svg.program,.projectObjectLine>svg.library,.projectObjectLine>svg.dataobject,.projectObjectFileIcon{color:var(--project-tree-icon)}
+.projectObjectScroll td.descriptionChanged{background:#d99c1718}
+.projectObjectScroll tbody tr.selected>td.descriptionChanged{box-shadow:inset 0 -2px #d99c1760}

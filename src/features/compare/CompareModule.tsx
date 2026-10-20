@@ -2,7 +2,7 @@ import {userStorage} from '../../shared/userStorage';
 import {CompareReports} from './CompareReports';
 import './compare.css';
 import React,{useEffect,useState} from 'react';
-import {LayoutDashboard,FolderOpen,ArrowRightLeft,Table2,SlidersHorizontal,MessageSquare,Settings,Download,FileText,ChevronRight,Clock3,Search,Sparkles,FolderTree,FileSpreadsheet,Play,Plus,Trash2,Save,RefreshCw,ShieldCheck,Upload,CheckCircle2,AlertTriangle,AlertCircle,XCircle,Eye,GitCompare,GitCompareArrows,BookOpen,ChevronDown,Minus,X,Monitor} from 'lucide-react';
+import {LayoutDashboard,FolderOpen,ArrowRightLeft,Table2,SlidersHorizontal,MessageSquare,Settings,Download,FileText,ChevronRight,Clock3,Search,Sparkles,FolderTree,FileSpreadsheet,Play,Plus,Trash2,Save,RefreshCw,ShieldCheck,Upload,CheckCircle2,AlertTriangle,AlertCircle,XCircle,Eye,GitCompare,GitCompareArrows,BookOpen,ChevronDown,Minus,X,Monitor,Folder,FileCode2,ChevronsDownUp,ChevronsUpDown} from 'lucide-react';
 import {downloadCSV} from '../../shared/download';
 import {LocalFolderTree} from '../../shared/LocalFileBrowser';
 import {ResizeHandle} from './ResizeHandle';
@@ -361,33 +361,47 @@ function buildCompareTree(items:any[]):CompareTreeNode[]{
   const sort=(nodes:CompareTreeNode[])=>{nodes.sort((a,b)=>{const af=!!a.diff,bf=!!b.diff;if(af!==bf)return af?1:-1;return a.name.localeCompare(b.name)});nodes.forEach(n=>sort(n.children))};
   sort(root.children);return root.children;
 }
-function CompareTree({items,selectedIndex,onSelect,baseLabel,newLabel}:{items:any[],selectedIndex:number,onSelect:(i:number)=>void;baseLabel:string;newLabel:string}){
+function CompareTree({items,selectedIndex,onSelect,baseLabel,newLabel,searching=false}:{items:any[],selectedIndex:number,onSelect:(i:number)=>void;baseLabel:string;newLabel:string;searching?:boolean}){
   const [open,setOpen]=React.useState<Set<string>>(()=>new Set());
-  const flat=new Map(items.map((d:any,i:number)=>[d.tree_path||d.path||d.file_name,i]));
-  const treeSignature=items.map(item=>item.tree_path||item.path||item.file_name).join('|');
+  const [selectedFolder,setSelectedFolder]=React.useState('');
+  const tree=React.useMemo(()=>buildCompareTree(items),[items]);
+  const normalizedPath=(entry:any)=>String(entry.tree_path||entry.path||entry.file_name||'').replace(/\\/g,'/');
+  const flat=new Map(items.map((entry:any,index:number)=>[normalizedPath(entry),index]));
+  const folders=React.useMemo(()=>{
+    const paths:string[]=[];const visit=(nodes:CompareTreeNode[])=>nodes.forEach(node=>{if(!node.diff){paths.push(node.path);visit(node.children)}});visit(tree);return paths;
+  },[tree]);
+  const treeSignature=folders.join('|');
   React.useEffect(()=>{
-    const next=new Set<string>();
-    items.forEach((d:any)=>{const parts=String(d.tree_path||d.path||d.file_name||'').replace(/\\/g,'/').split('/');for(let i=1;i<parts.length;i++)next.add(parts.slice(0,i).join('/'))});
-    setOpen(next);
-  },[treeSignature]);
-  const tree=buildCompareTree(items);
-  const toggle=(path:string)=>setOpen(prev=>{const n=new Set(prev);n.has(path)?n.delete(path):n.add(path);return n});
-  const render=(nodes:CompareTreeNode[],depth=0):React.ReactNode=>nodes.map(n=>{
-    const idx=n.diff?flat.get(n.diff.tree_path||n.diff.path||n.diff.file_name):-1;
-    const isOpen=open.has(n.path);
-    if(n.diff){
-      const d=n.diff;const count=(d.added_lines?.length||0)+(d.removed_lines?.length||0);
-      return <button key={n.path} className={'compareTreeLeaf '+(idx===selectedIndex?'active':'')} style={{paddingLeft:10+depth*14}} onClick={()=>onSelect(idx??0)}>
-        <span className={`treeStatusIcon ${d.status}`}>{d.status==='added'?'+':d.status==='removed'?'-':d.status==='modified'?String.fromCharCode(8594):'='}</span>{/\.(var|typ)$/i.test(n.name)?<FileSpreadsheet size={13}/>:<FileText size={13}/>}<span className="compareTreeLeafText"><span className="compareTreeLeafName">{n.name}</span><small><b>B:</b> {d.base_file_name||'Not present'} <b>D:</b> {d.new_file_name||'Not present'}</small></span>{count>0&&<span className="compareTreeCount">{count}</span>}
+    setOpen(previous=>searching?new Set(folders):new Set([...previous].filter(path=>folders.includes(path)).concat(tree.filter(node=>!node.diff).map(node=>node.path))));
+  },[treeSignature,searching]);
+  const selectedPath=items[selectedIndex]?normalizedPath(items[selectedIndex]):'';
+  React.useEffect(()=>{
+    if(!selectedPath)return;
+    const parts=selectedPath.split('/');setOpen(previous=>{const next=new Set(previous);for(let i=1;i<parts.length;i++)next.add(parts.slice(0,i).join('/'));return next});
+    setSelectedFolder('');
+  },[selectedPath]);
+  const toggle=(path:string)=>{setSelectedFolder(path);setOpen(previous=>{const next=new Set(previous);next.has(path)?next.delete(path):next.add(path);return next})};
+  const countFiles=(node:CompareTreeNode):number=>node.diff?1:node.children.reduce((count,child)=>count+countFiles(child),0);
+  const render=(nodes:CompareTreeNode[],depth=0):React.ReactNode=>nodes.map(node=>{
+    const index=node.diff?flat.get(node.path):-1;
+    const isOpen=open.has(node.path);
+    if(node.diff){
+      const entry=node.diff,status=entry.status||'unchanged';const count=(entry.added_lines?.length||0)+(entry.removed_lines?.length||0);
+      const baseName=entry.base_file_name||(status==='added'?'Not present':node.name);
+      const developedName=entry.new_file_name||(status==='removed'?'Not present':node.name);
+      const provenanceDiffers=baseName!==developedName;
+      return <button key={node.path} className={'compareTreeLeaf '+(index===selectedIndex&&!selectedFolder?'active':'')} style={{paddingLeft:12+depth*18}} aria-current={index===selectedIndex&&!selectedFolder?'true':undefined} title={`${node.path}\nBase: ${baseName}\nDeveloped: ${developedName}\n${status}`} onClick={()=>{setSelectedFolder('');onSelect(index??0)}}>
+        <span className="compareTreeChevronSpacer"/>{/\.(var|typ)$/i.test(node.name)?<FileSpreadsheet size={15}/>:<FileCode2 size={15}/>}<span className="compareTreeLeafText"><span className="compareTreeLeafName">{node.name}</span>{provenanceDiffers&&<small><b>B:</b> {baseName} <b>D:</b> {developedName}</small>}</span><span className={`treeStatusIcon ${status}`} aria-label={status}>{status==='added'?'+':status==='removed'?'-':status==='modified'?'~':'='}</span>{count>0&&<span className="compareTreeCount" title={`${count} changed lines`}>{count}</span>}
       </button>;
     }
-    return <div key={n.path} className="compareTreeNode">
-      <button className={`compareTreeFolder depth-${depth%4}`} aria-expanded={isOpen} style={{paddingLeft:8+depth*14}} onClick={()=>toggle(n.path)}><span className="compareObjectToggle">{isOpen?'−':'+'}</span><FolderOpen size={13}/><span>{n.name}</span></button>
-      {isOpen&&<div>{render(n.children,depth+1)}</div>}
+    return <div key={node.path} className="compareTreeNode">
+      <button className={'compareTreeFolder '+(selectedFolder===node.path?'active':'')} aria-expanded={isOpen} aria-label={`${isOpen?'Collapse':'Expand'} ${node.path}`} title={node.path} style={{paddingLeft:12+depth*18}} onClick={()=>toggle(node.path)}>{isOpen?<ChevronDown size={14} className="compareTreeChevron"/>:<ChevronRight size={14} className="compareTreeChevron"/>}{isOpen?<FolderOpen size={17}/>:<Folder size={17}/>}<span className="compareTreeFolderName">{node.name}</span><span className="compareTreeCount">{countFiles(node)}</span></button>
+      {isOpen&&<div className="compareTreeChildren">{render(node.children,depth+1)}</div>}
     </div>;
   });
-  return <div className="compareTree"><div className="compareTreeProjects"><span className="base"><b>BASE</b>{baseLabel}</span><span className="developed"><b>DEVELOPED</b>{newLabel}</span></div>{tree.length?render(tree):<div className="compareDarkEmpty">No files match this view.</div>}</div>;
+  return <nav className="compareTree" aria-label="Comparison project explorer"><div className="compareTreeActions"><span><FolderTree size={16}/> Project explorer</span><button type="button" title="Expand all folders" aria-label="Expand all comparison folders" onClick={()=>setOpen(new Set(folders))}><ChevronsUpDown size={15}/></button><button type="button" title="Collapse all folders" aria-label="Collapse all comparison folders" onClick={()=>setOpen(new Set())}><ChevronsDownUp size={15}/></button></div><div className="compareTreeProjects"><span className="base" title={baseLabel}><b>BASE</b><span>{baseLabel}</span></span><span className="developed" title={newLabel}><b>DEVELOPED</b><span>{newLabel}</span></span></div><div className="compareTreeContent">{tree.length?render(tree):<div className="compareDarkEmpty">No files match this view.</div>}</div></nav>;
 }
+
 type CompareFilter='all'|'logic'|'screen'|'hardware'|'config';
 const CAT_COLOR:Record<string,string>={logic:'var(--accent)',screen:'var(--pass)',hardware:'var(--warn)',config:'var(--muted)'};
 const STATUS_COLOR:Record<string,string>={added:'var(--pass)',removed:'var(--fail)',modified:'var(--warn)'};
@@ -590,14 +604,14 @@ export function CompareModule({
 
     {result&&activeTab==='changes'&&<><div className="compareSizeToolbar"><label>Workspace height <select value={workspacePages} onChange={e=>setWorkspacePages(Number(e.target.value))}><option value={1}>1 screen</option><option value={2}>2 screens</option><option value={3}>3 screens</option></select></label><label>Tree width <input aria-label="Project tree width" type="range" min="200" max="650" step="10" value={treeWidth} onChange={event=>resizeTree(Number(event.target.value))}/><output>{treeWidth}px</output></label><span>Drag the tree divider to adjust width; drag the bottom-right corner to adjust height.</span></div><div className="compareDarkWorkspaceBody compareAdjustableTree" style={{height:`${workspacePages*85}vh`,gridTemplateColumns:`${treeWidth}px 7px minmax(0,1fr)`}}>
       <aside className="compareDarkFilePane">
-        <div className="compareDarkSearch"><Search size={13}/><input placeholder="Filter files or subroutines..." value={search} onChange={e=>setSearch(e.target.value)}/></div>
+        <div className="compareDarkSearch"><Search size={13}/><input aria-label="Search comparison project" placeholder="Search project files and folders" value={search} onChange={e=>setSearch(e.target.value)}/></div>
         <label className="compareStatusSelect compareTreeScope"><span>Tree</span><select value={treeScope} onChange={event=>{setTreeScope(event.target.value as typeof treeScope);setSelectedIndex(0)}}><option value="all">All projects</option><option value="base">Base project</option><option value="developed">Developed project</option></select></label>
         <label className="compareStatusSelect"><span>Show</span><select value={fileStatus} onChange={e=>setFileStatus(e.target.value as typeof fileStatus)}><option value="all">All</option><option value="modified">Modified / differences</option><option value="removed">Removed</option><option value="added">Added</option></select></label>
         <div className="compareDarkFilterRow">{cats.map(c=><button key={c} className={filter===c?'active':''} onClick={()=>setFilter(c)}>{c==='all'?'All':c==='logic'?'Logic':c==='screen'?'HMI':c==='hardware'?'HW':'Config'}</button>)}</div>
         <div className="compareTreeLegend"><span><i className="treeStatusIcon added">+</i>Added</span><span><i className="treeStatusIcon modified">{String.fromCharCode(8594)}</i>Modified</span><span><i className="treeStatusIcon removed">-</i>Removed</span><span><i className="treeStatusIcon unchanged">=</i>Same</span></div>
         <div className="compareDarkFileCount">{treeItems.length} file(s) | {treeScope==='all'?'combined':treeScope} tree</div>
         <div className="compareDarkFiles compareTreeFiles">
-          <CompareTree items={treeItems} selectedIndex={selectedIndex} onSelect={setSelectedIndex} baseLabel={baseLabel} newLabel={newLabel}/>
+          <CompareTree items={treeItems} selectedIndex={selectedIndex} onSelect={setSelectedIndex} baseLabel={baseLabel} newLabel={newLabel} searching={!!search.trim()}/>
         </div>
       </aside>
       <TreeWidthHandle width={treeWidth} onChange={resizeTree}/>

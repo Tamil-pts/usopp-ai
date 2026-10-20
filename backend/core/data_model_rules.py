@@ -1,6 +1,7 @@
 """Editable, scoped interpretation of reference value types and parameter names."""
 import hashlib
 import json
+import re
 from backend.core.data_models import PLC_TYPES,machine_key,name_key,plc_type,entry
 
 
@@ -37,7 +38,8 @@ def apply_parameter(row,service,machine,rules):
     for rule in rules.get('aliases',[]):
         if rule.get('enabled') is False:continue
         if service!=rule['service'] or machine_key(machine) not in {machine_key(value) for value in rule['departments']} or row.get('groupCodes')!=[rule['groupCode']]:continue
-        if name_key(row.get('name')) not in {name_key(value) for value in rule['names']}:continue
+        normalize=lambda value:re.sub(r'[\s_]+','',name_key(value)) if row['ignoreNameSeparators'] else name_key(value)
+        if normalize(row.get('name')) not in {normalize(value) for value in rule['names']}:continue
         row.update(aliases=list(dict.fromkeys([*row.get('aliases',[]),*rule['names']])),canonicalName=rule['canonicalName'],mappingSource='knowledge/master/data_model_rules.json')
         if rule.get('plcDataType'):
             row.update(dataTypeRole='wire',plcType=plc_type(rule['plcDataType']),numericValueType=False)

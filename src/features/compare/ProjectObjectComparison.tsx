@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {BookOpen, Boxes, FileCode2, FileText, Folder, Search} from 'lucide-react';
+import {BookOpen, Boxes, FileCode2, FileText, Folder, FolderOpen, Search, ChevronRight, ChevronDown, FolderTree} from 'lucide-react';
 import './project-object-comparison.css';
 
 type Status = 'unchanged'|'modified'|'added'|'removed';
@@ -44,17 +44,18 @@ function mergeTrees(base:ObjectNode[],developed:ObjectNode[],entries:Map<string,
   });
 }
 
-function NodeIcon({node}:{node:ObjectNode}) {
+function NodeIcon({node,expanded=false}:{node:ObjectNode;expanded?:boolean}) {
   if(node.extension)return <span className="projectObjectFileIcon"><FileCode2 size={15}/><small>{node.extension.slice(1).toUpperCase()}</small></span>;
   if(node.kind==='library'||node.kind==='libraries')return <BookOpen size={16} className="library"/>;
   if(node.kind==='program')return <Boxes size={16} className="program"/>;
   if(node.kind==='dataobject')return <FileText size={16} className="dataobject"/>;
-  return <Folder size={16} className="package"/>;
+  return expanded?<FolderOpen size={17} className="package"/>:<Folder size={17} className="package"/>;
 }
 
 export function ProjectObjectComparison({result,onOpen}:{result:any;onOpen:(entry:any)=>void}) {
   const [expanded,setExpanded]=useState<Set<string>>(()=>new Set(['$project','Logical/Libraries','Physical']));
   const [query,setQuery]=useState('');
+  const [selectedKey,setSelectedKey]=useState('');
   const [status,setStatus]=useState('all');
   const [descriptors,setDescriptors]=useState(false);
   const baseName=result.baseName||result.knowledge?.base?.project_name||'Base project';
@@ -89,22 +90,22 @@ export function ProjectObjectComparison({result,onOpen}:{result:any;onOpen:(entr
   const toggle=(key:string)=>setExpanded(previous=>{const next=new Set(previous);next.has(key)?next.delete(key):next.add(key);return next});
   const statusLabel={unchanged:'Same',modified:'Modified',added:'Added',removed:'Removed'};
   const cell=(row:Row,side:'base'|'developed')=>{
-    const {pair,last,lines}=row,node=pair[side];
+    const {pair,depth}=row,node=pair[side];
     return <td className={`projectObjectName ${node?pair.status:'absent'}`} data-side={side}>
       <div className="projectObjectLine" title={node?.relative_path||'Object not present in this project'}>
-        <span className="projectObjectIndent" aria-hidden="true">{lines.map((line,i)=><i key={i} className={line?'vertical':''}/>)}<i className={last?'elbow':'junction'}/></span>
-        {pair.children.length?<button className="projectObjectToggle" aria-label={`${expanded.has(pair.key)?'Collapse':'Expand'} ${node?.name||(pair.base||pair.developed)?.name} (${side==='base'?baseName:newName})`} aria-expanded={expanded.has(pair.key)} onClick={()=>toggle(pair.key)}>{expanded.has(pair.key)?'−':'+'}</button>:<span className="projectObjectToggleSpacer"/>}
-        {node?<><NodeIcon node={node}/>{pair.entry?<button className="projectObjectOpen" aria-label={`Open comparison for ${node.relative_path||pair.key} (${side==='base'?baseName:newName})`} onClick={()=>onOpen(pair.entry)}>{node.name}</button>:<span className="projectObjectLabel">{node.name}</span>}<span className={`projectObjectStatus ${pair.status}`} title={`${statusLabel[pair.status]}${pair.children.length?` · ${pair.changed} changed file(s)`:' — open to inspect'}`}>{pair.status==='unchanged'?'=':pair.status==='modified'?'→':pair.status==='added'?'+':'−'}{pair.children.length&&pair.changed>0?<small>{pair.changed}</small>:null}</span></>:<span className="projectObjectAbsent">Not present</span>}
+        <span className="projectObjectIndent" aria-hidden="true" style={{width:Math.max(0,depth-1)*18}}/>
+        {pair.children.length?<button className="projectObjectToggle" aria-label={`${expanded.has(pair.key)?'Collapse':'Expand'} ${node?.name||(pair.base||pair.developed)?.name} (${side==='base'?baseName:newName})`} aria-expanded={expanded.has(pair.key)} onClick={()=>{setSelectedKey(pair.key);toggle(pair.key)}}>{expanded.has(pair.key)?<ChevronDown size={14}/>:<ChevronRight size={14}/>}</button>:<span className="projectObjectToggleSpacer"/>}
+        {node?<><NodeIcon node={node} expanded={expanded.has(pair.key)}/>{pair.entry?<button className="projectObjectOpen" aria-label={`Open comparison for ${node.relative_path||pair.key} (${side==='base'?baseName:newName})`} onClick={()=>{setSelectedKey(pair.key);onOpen(pair.entry)}}>{node.name}</button>:<span className="projectObjectLabel">{node.name}</span>}<span className={`projectObjectStatus ${pair.status}`} title={`${statusLabel[pair.status]}${pair.children.length?` · ${pair.changed} changed file(s)`:' — open to inspect'}`}>{pair.status==='unchanged'?'=':pair.status==='modified'?'→':pair.status==='added'?'+':'−'}{pair.children.length&&pair.changed>0?<small>{pair.changed}</small>:null}</span></>:<span className="projectObjectAbsent">Not present</span>}
       </div>
     </td>;
   };
   return <section className="projectObjectComparison" aria-label="Project object comparison">
-    <div className="projectObjectHeading"><div><h2>Project objects</h2><p>Expand programs, packages and libraries. Open a file to inspect its comparison.</p></div><div className="projectObjectCounts"><span>{result.summary?.modified||0} modified</span><span>{result.summary?.added||0} added</span><span>{result.summary?.removed||0} removed</span></div></div>
+    <div className="projectObjectHeading"><div><h2><FolderTree size={18}/> Project explorer</h2><p>Browse both project hierarchies. Select a file to open its comparison.</p></div><div className="projectObjectCounts"><span>{result.summary?.modified||0} modified</span><span>{result.summary?.added||0} added</span><span>{result.summary?.removed||0} removed</span></div></div>
     <div className="projectObjectToolbar"><label><Search size={15}/><input aria-label="Search project objects" placeholder="Find an object, file or description…" value={query} onChange={event=>setQuery(event.target.value)}/></label><label>Show <select aria-label="Project object status" value={status} onChange={event=>setStatus(event.target.value)}><option value="all">All objects</option><option value="changed">Changed only</option><option value="modified">Modified</option><option value="added">Added</option><option value="removed">Removed</option></select></label><label><input type="checkbox" checked={descriptors} onChange={event=>setDescriptors(event.target.checked)}/> Project descriptors</label><button onClick={()=>setExpanded(new Set(allFolders))}>Expand all</button><button onClick={()=>setExpanded(new Set(['$project']))}>Collapse all</button><span className="projectObjectLegend"><i>→ Modified</i><i>+ Added</i><i>− Removed</i><i>= Same</i></span></div>
     {!complete&&<p className="projectObjectNotice">This saved comparison contains a partial file inventory. Rerun it to load all project objects, library files and source descriptions.</p>}
     <div className="projectObjectScroll"><table aria-label="Base and Developed project objects"><colgroup><col style={{width:'31%'}}/><col style={{width:'19%'}}/><col style={{width:'31%'}}/><col style={{width:'19%'}}/></colgroup><thead><tr className="projectObjectProjects"><th colSpan={2} className="base"><span>BASE / REFERENCE</span>{baseName}<small>{result.projects?.base?.active_configuration||'No active configuration'}</small></th><th colSpan={2} className="developed"><span>DEVELOPED / COMPARE</span>{newName}<small>{result.projects?.developed?.active_configuration||'No active configuration'}</small></th></tr><tr><th>Object Name</th><th>Description</th><th>Object Name</th><th>Description</th></tr></thead><tbody>
-      <tr className="projectObjectRoot">{(['base','developed'] as const).map(side=><React.Fragment key={side}><td><button className="projectObjectToggle" aria-label={`${expanded.has('$project')?'Collapse':'Expand'} project roots`} aria-expanded={expanded.has('$project')} onClick={()=>toggle('$project')}>{expanded.has('$project')?'−':'+'}</button><Folder size={17}/><b>{side==='base'?baseName:newName}</b></td><td>{side==='base'?result.knowledge?.base?.project_tree?.file_count:result.knowledge?.developed?.project_tree?.file_count} {complete?'scoped files':'project'}</td></React.Fragment>)}</tr>
-      {rows.map(row=><tr key={row.pair.key} data-object-key={row.pair.key} data-depth={row.depth} data-status={row.pair.status}>{cell(row,'base')}<td className={(row.pair.base?.description||'')!==(row.pair.developed?.description||'')?'descriptionChanged':''}>{row.pair.base?.description||'—'}</td>{cell(row,'developed')}<td className={(row.pair.base?.description||'')!==(row.pair.developed?.description||'')?'descriptionChanged':''}>{row.pair.developed?.description||'—'}</td></tr>)}
+      <tr className="projectObjectRoot">{(['base','developed'] as const).map(side=><React.Fragment key={side}><td><button className="projectObjectToggle" aria-label={`${expanded.has('$project')?'Collapse':'Expand'} project roots`} aria-expanded={expanded.has('$project')} onClick={()=>toggle('$project')}>{expanded.has('$project')?<ChevronDown size={14}/>:<ChevronRight size={14}/>}</button><Folder size={17}/><b>{side==='base'?baseName:newName}</b></td><td>{side==='base'?result.knowledge?.base?.project_tree?.file_count:result.knowledge?.developed?.project_tree?.file_count} {complete?'scoped files':'project'}</td></React.Fragment>)}</tr>
+      {rows.map(row=><tr key={row.pair.key} className={selectedKey===row.pair.key?'selected':undefined} data-object-key={row.pair.key} data-depth={row.depth} data-status={row.pair.status}>{cell(row,'base')}<td className={(row.pair.base?.description||'')!==(row.pair.developed?.description||'')?'descriptionChanged':''}>{row.pair.base?.description||'—'}</td>{cell(row,'developed')}<td className={(row.pair.base?.description||'')!==(row.pair.developed?.description||'')?'descriptionChanged':''}>{row.pair.developed?.description||'—'}</td></tr>)}
       {!rows.length&&expanded.has('$project')&&<tr><td colSpan={4} className="projectObjectEmpty">No objects match the selected filters.</td></tr>}
     </tbody></table></div>
   </section>;

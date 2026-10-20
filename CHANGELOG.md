@@ -3,6 +3,25 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## Virtual PLC 0.3.0 - 2026-10-17 (development extension)
+
+- Add a configurable dark topology with DI/DO/AI/AO, motor, servo, VFD and encoder devices, saved positions, shared PLC-variable connections and live DI/AI inputs. Order hardware stations naturally.
+- Use supplied B&R help for explicit bounded string/memory calls, 10 ms timers and in-memory FileIO blocks. Keep unsupported active dependencies blocked; do not open host files or native vendor libraries.
+- Add HMI zoom to 900%, confirmed numeric/string keypads, key actions, bitmaps and live alarm-image captions. Reuse the MatchView Ladder renderer and handle supported RETURN coils. Add Windows batch launchers and detailed topology/library guides in virtual_plc.
+
+## Virtual PLC 0.2.0 - 2026-10-17 (development extension)
+
+- Add private workspace configuration for generic analog input/output, servo, VFD and encoder components, with graphical cards, scoped PLC port bindings, live feedback, explicit enable/save and portable configuration. Imported devices start disabled; forces take precedence.
+- Fix false Ladder BOOL mismatches for array elements and function-block/structure members. Preserve scope identity across ST, Ladder, HMI and virtual components. Add conservative single IEC block wiring, source lines and per-network edge-contact state.
+- Keep unsupported active dependencies as execution blockers. Python syntax, strict module TypeScript and the module production build passed; device/Ladder execution and browser tests have not been run for this update. Base application remains 4.66.0.
+
+## Unreleased - DataInspect and alarm metadata corrections
+
+- Leave the DataInspect data-model cell blank when a department has no matching reference. Show PLC input checks in the packet table; keep formula-output checks in dashboards.
+- Add editable, department/service/Group Code time-component name mappings for singular/plural Minute, Hour and Second captions. Apply current reference rules to user-imported models as well as bundled models; preserve group and datatype checks.
+- Resolve alarm captions through the .algrp AlarmImage, IndexMap/ImageOffset, actual BIT_SET write buffer and Group 30 byte copies. Buffer names are discovered from PLC code. Remove the unproven single-array caption fallback; report missing definitions for packed arrays without treating unrelated HMI groups as invalid.
+- Preserve the Sheet2 schema and add an Alarm Sources worksheet/JSON trace containing mapped captions and reasons for omitted definitions, including buffer mismatches, unresolved packing, out-of-range indices and uncopied bytes. Preserve PLC source findings without changing customer source files.
+
 ## 4.66.0 - 2026-10-16
 
 - Upgrade offline Chopper to pinned, checksum-verified Qwen2.5-Coder 3B Instruct Q4_K_M with the installed 1.5B fallback. Default to 4096 context tokens, four CPU threads, 128-token batches, CPU inference and one active generation. Preserve saved connections. Show actual running model, context, resident RAM, response time and fallback reason; recover an owned orphan model on Windows restart.

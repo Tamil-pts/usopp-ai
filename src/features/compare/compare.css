@@ -484,5 +484,51 @@
 @media(max-width:760px){.workspaceApp .compareDarkWorkspaceBody{min-height:750px}.compareSourceCommonScroll .compareSourceSplit{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 .hmiSkipLayout{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--card);border-bottom:1px solid var(--border);flex-wrap:wrap;font-size:12px;cursor:pointer}
 .hmiSkipLayout input{accent-color:var(--accent)}
+
+/* Project explorer: one calm hierarchy, with changes identified by their badges. */
+.compareDarkWorkspace{--compare-explorer-bg:#0d1925;--compare-explorer-hover:#152b3e;--compare-explorer-selected:#1b3a52;--compare-explorer-icon:#47b8db;--compare-editor-bg:#101c28}
+[data-theme=light] .compareDarkWorkspace{--compare-explorer-bg:#f8fbfe;--compare-explorer-hover:#eaf3f9;--compare-explorer-selected:#d5e8f5;--compare-explorer-icon:#1597be;--compare-editor-bg:#f5f9fc}
+.compareDarkWorkspace .compareDarkFilePane,.compareDarkWorkspace .compareTreeFiles{background:var(--compare-explorer-bg)}
+.compareDarkWorkspace .compareTreeFiles{overflow:hidden;scrollbar-gutter:auto}
+.compareDarkWorkspace .compareTree{display:flex;flex-direction:column;height:100%;min-height:0;min-width:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif}
+.compareTreeContent{flex:1;min-height:0;overflow:auto;padding:0 0 14px;scrollbar-gutter:stable;scrollbar-width:thin}
+.compareTreeActions{display:flex;align-items:center;gap:4px;min-height:42px;padding:7px 10px;border-bottom:1px solid var(--line,#294050);background:var(--panel2,#142433)}
+.compareTreeActions>span{display:flex;align-items:center;gap:9px;flex:1;font-size:13px;font-weight:600;color:var(--text,#d5e2ec)}
+.compareTreeActions>span svg{color:var(--compare-explorer-icon)}
+.compareTreeActions>button{display:grid;place-items:center;width:26px;height:26px;padding:0;border:0;border-radius:4px;background:transparent;color:var(--muted,#87a4bb)}
+.compareTreeActions>button:hover{background:var(--compare-explorer-hover);color:var(--text,#d5e2ec)}
+.compareDarkWorkspace .compareTreeProjects{position:static;padding:9px 12px 12px;background:transparent;border-bottom:1px solid var(--line,#294050);margin-bottom:6px}
+.compareDarkWorkspace .compareTreeProjects>span{display:flex;align-items:center;gap:7px;min-width:0;padding:3px 0;color:var(--text,#d5e2ec);font-size:12px}
+.compareDarkWorkspace .compareTreeProjects>span>span{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:12px}
+.compareDarkWorkspace .compareTreeProjects b{min-width:67px;text-align:center;font-size:10px;letter-spacing:.03em}
+.compareDarkWorkspace .compareTreeNode>.compareTreeChildren{margin:0;border:0}
+.compareDarkWorkspace .compareTreeFolder,.compareDarkWorkspace .compareTreeLeaf{gap:8px;min-height:35px;padding-top:7px!important;padding-bottom:7px!important;padding-right:12px;border:0;background:transparent!important;color:var(--text,#d5e2ec)!important;box-shadow:none;font:400 13px/20px 'Segoe UI',system-ui,sans-serif}
+.compareDarkWorkspace .compareTreeFolder:hover,.compareDarkWorkspace .compareTreeLeaf:hover{background:var(--compare-explorer-hover)!important}
+.compareDarkWorkspace .compareTreeFolder.active,.compareDarkWorkspace .compareTreeLeaf.active{background:var(--compare-explorer-selected)!important;box-shadow:inset 3px 0 var(--compare-explorer-icon)}
+.compareDarkWorkspace .compareTreeFolder>svg:not(.compareTreeChevron),.compareDarkWorkspace .compareTreeLeaf>svg{color:var(--compare-explorer-icon);flex:none}
+.compareDarkWorkspace .compareTreeFolder .compareTreeChevron{color:var(--muted,#87a4bb);flex:none}
+.compareTreeChevronSpacer{width:14px;flex:none}
+.compareTreeFolderName{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.compareDarkWorkspace .compareTreeLeafName{font-size:13px!important;line-height:20px}
+.compareDarkWorkspace .compareTreeCount{padding:0 4px;min-width:20px;text-align:center;border-radius:4px;background:var(--panel2,#142433);font:11px/18px 'Segoe UI',system-ui,sans-serif;color:var(--muted,#87a4bb)}
+.compareDarkWorkspace .compareTreeLeaf .treeStatusIcon{width:16px;height:16px;font-size:11px;border-radius:4px;opacity:.85}
+.compareDarkWorkspace .compareTreeLeaf .treeStatusIcon.unchanged{background:transparent;color:var(--muted,#87a4bb)!important;opacity:.6}
+.compareDarkWorkspace .compareTreeLeafText small{display:block;overflow:hidden;text-overflow:ellipsis;font:10px/15px 'Segoe UI',system-ui,sans-serif;color:var(--muted,#87a4bb)}
+.compareDarkWorkspace .compareDarkSearch{margin:10px;border-radius:6px;background:var(--compare-explorer-bg)}
+.compareDarkWorkspace .compareDarkSearch input{min-width:0;font-family:'Segoe UI',system-ui,sans-serif}
+.compareDarkWorkspace .compareTreeFolder:focus-visible,.compareDarkWorkspace .compareTreeLeaf:focus-visible,.compareTreeActions>button:focus-visible{outline:2px solid var(--compare-explorer-icon);outline-offset:-2px}
+
+/* Logical view is a continuous editor surface. Only actual changes get a fill. */
+.compareDarkWorkspace .compareSourceView,.compareDarkWorkspace .compareSourceScroller,.compareDarkWorkspace .compareDarkDiff,.compareDarkWorkspace .compareDarkDiff .splitSide{background:var(--compare-editor-bg);background-image:none}
+.compareDarkWorkspace .compareDarkDiff .splitLine,.compareDarkWorkspace .compareSourceLine{border:0;box-shadow:none;background-image:none}
+.compareDarkWorkspace .compareDarkDiff .splitLine.ctx,.compareDarkWorkspace .compareSourceLine.unchanged{background:transparent;opacity:1}
+.compareDarkWorkspace .compareDarkDiff .splitCode{margin:0;border:0;border-radius:0;box-shadow:none;background:transparent;padding:0 10px;font-family:Consolas,'IBM Plex Mono',monospace;line-height:22px!important;tab-size:4}
+.compareDarkWorkspace .compareDarkDiff .splitLn,.compareDarkWorkspace .compareDarkDiff .splitPfx{border:0;padding-top:0;padding-bottom:0;background:transparent;line-height:22px;font-weight:400}
+.compareDarkWorkspace .compareDarkDiff .splitLine.ctx .splitCode{color:var(--text,#d5e2ec)}
+.compareDarkWorkspace .compareSourceScroller>code{border:0;border-spacing:0;box-shadow:none;background:transparent;padding:12px 0;font-weight:400;tab-size:4}
+.compareDarkWorkspace .compareSourceLine>i,.compareDarkWorkspace .compareSourceLine>em{border:0;box-shadow:none;border-radius:0;background:transparent;line-height:22px}
+.compareDarkWorkspace .compareSourceLine>i{color:var(--muted,#87a4bb);padding-right:14px;font-size:11px;min-width:56px}
+.compareDarkWorkspace .compareSourceLine:hover:not(.added):not(.removed):not(.modified){background:var(--compare-explorer-hover)}
+.compareDarkWorkspace .compareSourceNotice{border-bottom:1px solid var(--line,#294050);background:var(--panel2,#142433);color:var(--muted,#87a4bb);font:12px/1.5 'Segoe UI',system-ui,sans-serif}
 .hmiSkipLayout small{color:var(--muted);font-size:11px}
 .compareReportsDialog{padding:24px}.compareReportFormats{display:flex;gap:18px;border:1px solid #ccd7e3;border-radius:8px;padding:12px}.compareReportFormats label{display:flex;align-items:center;gap:6px}.compareReportFormats input{width:auto}.compareReportDownloads{display:grid;gap:12px}.compareReportDownloads>div{display:flex;align-items:center;gap:12px;border:1px solid #ccd7e3;padding:12px;border-radius:8px}.compareReportDownloads span{flex:1;overflow-wrap:anywhere}.compareReportError{font-size:12px;color:#e59393;max-width:320px}.compareReportsDialog select{width:100%;padding:8px;margin:8px 0}

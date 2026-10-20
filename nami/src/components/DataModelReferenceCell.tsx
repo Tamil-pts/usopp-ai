@@ -6,11 +6,9 @@ export function DataModelReferenceCell({references, loading, error, parameterNam
   error: string;
   parameterName: string;
 }) {
-  if (!references.length) return <div className="text-[11px] text-slate-500">
-    {loading ? 'Loading references...' : error ? 'References unavailable' : <>
-      <div className="font-medium">{parameterName}</div><div>No matching reference for this department</div>
-    </>}
-  </div>;
+  if (!references.length) return loading || error
+    ? <div className="text-[11px] text-slate-500">{loading ? 'Loading references...' : 'References unavailable'}</div>
+    : null;
 
   const groups = groupDataModelReferences(references);
   return <div className="space-y-2 max-w-[320px] break-words">
