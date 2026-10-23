@@ -358,9 +358,14 @@ class MultiUserHTTPTests(unittest.TestCase):
         capacity=self.ok(self.clients[0].get('/api/auth/users'))['capacity']
         self.assertEqual(capacity['activeUsers'],ACCOUNT_COUNT)
         self.assertEqual(capacity['maxActiveUsers'],ACCOUNT_COUNT)
+        extra=self.clients[0].post('/api/auth/users',json={'username':'extra_enabled',
+            'password':PASSWORD,'designation':'Test','company':'Test'})
+        self.assertEqual(extra.status_code,409)
         responses=self.concurrent(lambda i,c:c.post('/api/auth/register',json={'username':f'extra{i}',
             'password':PASSWORD,'designation':'Test','company':'Test'}))
-        self.assertEqual([r.status_code for r in responses],[409]*ACCOUNT_COUNT)
+        self.assertEqual([r.status_code for r in responses],[202]*ACCOUNT_COUNT)
+        self.assertTrue(all(response.json()['pending'] for response in responses))
+        self.assertEqual(self.ok(self.clients[0].get('/api/auth/users'))['capacity']['activeUsers'],ACCOUNT_COUNT)
 
     def test_07_same_plc_connections_do_not_interleave(self):
         # This small TCP controller closes after GC11 and refuses overlapping
