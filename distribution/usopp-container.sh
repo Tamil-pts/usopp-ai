@@ -13,6 +13,7 @@ if [[ "$action" == update-release ]]; then
   [[ "$release_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]] || { echo 'Supply a published version such as 4.65.13 or v4.65.13.' >&2; exit 1; }
   [[ -f "$config_root/image" ]] || { echo 'Run install before updating a server.' >&2; exit 1; }
   command -v docker >/dev/null || { echo 'Install Docker Engine and its Compose plugin first; see README.md.' >&2; exit 1; }
+  docker compose version >/dev/null 2>&1 || { echo 'Docker Compose plugin is missing. Install it first: https://docs.docker.com/compose/install/linux/' >&2; exit 1; }
   [[ $(docker info --format '{{.OSType}}') == linux ]] || { echo 'Start Docker in Linux containers mode.' >&2; exit 1; }
   for tool in curl sha256sum unzip; do command -v "$tool" >/dev/null || { echo "Install $tool before downloading a release." >&2; exit 1; }; done
   download_root=$(mktemp -d "${TMPDIR:-/tmp}/usopp-release-${release_version}.XXXXXX")
@@ -37,6 +38,7 @@ if [[ "$action" == update-release ]]; then
   exit $?
 fi
 command -v docker >/dev/null || { echo 'Install Docker Engine and its Compose plugin first; see README.md.' >&2; exit 1; }
+docker compose version >/dev/null 2>&1 || { echo 'Docker Compose plugin is missing. Install it first: https://docs.docker.com/compose/install/linux/' >&2; exit 1; }
 [[ $(docker info --format '{{.OSType}}') == linux ]] || { echo 'Start Docker in Linux containers mode.' >&2; exit 1; }
 case "$action" in
   install|update)

@@ -24,7 +24,7 @@ class MemoryPath:
         return (Path.cwd() / self.name).resolve()
 
 
-def parse_fixture(text: str, group_code: int):
+def parse_fixture(text: str, group_code: int, extra_symbols=None):
     declarations = re.findall(r"ADR\(([A-Za-z_]\w*)\)\s*,\s*(\d+)\)", text)
     aliases = {1: "BYTE", 2: "UINT", 4: "REAL"}
     ENGINE.VARIABLES = {
@@ -41,6 +41,7 @@ def parse_fixture(text: str, group_code: int):
         if name != "nw_snd_buffer"
     }
     ENGINE.resolve_type_info.cache_clear()
+    if extra_symbols: ENGINE.VARIABLES.update(extra_symbols)
     return ENGINE.parse_group(
         MemoryPath(text, f"gc{group_code}.st"),
         group_code,
@@ -116,6 +117,42 @@ nw_i := nw_i+2;
 
 
 class PacketBranchVariantTests(unittest.TestCase):
+    def test_gc10_single_fixed_program_version_copy_needs_no_cursor(self):
+        source='''10:(*Program version*)
+nw_snd_buffer[3] := 0;
+nw_snd_buffer[4] := 4;
+memcpy(ADR(nw_snd_buffer[5]),ADR(PLC_PROGRAM_VERSION),4);
+nw_snd_buffer_length := ((nw_snd_buffer[3] * 256) + nw_snd_buffer[4] + 5);
+nw_snd_response := TRUE;
+'''
+        for size in ('4','SIZEOF(PLC_PROGRAM_VERSION)'):
+            with self.subTest(size=size):
+                symbols={'PLC_PROGRAM_VERSION':ENGINE.SymbolInfo('PLC_PROGRAM_VERSION',ENGINE.TypeInfo('REAL','alias'),'fixture.var')}
+                parameters,_,_,_,issues,variants=parse_fixture(source.replace('VERSION),4);','VERSION),'+size+');'),10,symbols)
+                self.assertEqual('PASS',variants[0]['status'],[(i.validation_type,i.actual) for i in issues])
+                self.assertEqual('fixed',variants[0]['addressingMode'])
+                self.assertEqual((4,4,4),(variants[0]['configuredBytes'],variants[0]['writtenBytes'],variants[0]['calculatedByOffset']))
+                self.assertEqual(5,parameters[0].running_offset)
+                self.assertFalse(any(i.validation_type in ('Packet Cursor Initialization','Offset Increment Missing') for i in issues))
+
+    def test_gc10_fixed_reply_exception_does_not_hide_invalid_layouts(self):
+        source='''10:
+nw_snd_buffer[3] := 0;
+nw_snd_buffer[4] := 4;
+memcpy(ADR(nw_snd_buffer[5]),ADR(PLC_PROGRAM_VERSION),4);
+'''
+        for label,changed,gc in [
+            ('cursor',source.replace('buffer[5]','buffer[nw_i]'),10),
+            ('wrong fixed offset',source.replace('buffer[5]','buffer[6]'),10),
+            ('other group',source,20),
+            ('overflow',source.replace('[4] := 4','[4] := 2'),10),
+            ('extra field',source+'memcpy(ADR(nw_snd_buffer[9]),ADR(OTHER),2);',10),
+        ]:
+            with self.subTest(case=label):
+                _,_,_,_,issues,variants=parse_fixture(changed,gc)
+                self.assertEqual('FAIL',variants[0]['status'])
+                self.assertTrue(issues)
+
     def test_gc260_empty_statements_advance_cursor_once(self):
         for terminator in (';', ';;', '; ; ;'):
             with self.subTest(terminator=terminator):

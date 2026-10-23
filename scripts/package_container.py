@@ -6,20 +6,26 @@ import json
 from pathlib import Path
 import py_compile
 import shutil
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_SUFFIXES = {'.py', '.pyw', '.ts', '.tsx', '.map'}
 
 
 def stage(destination: Path) -> None:
+    sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+    from backend.core.build_info import require_frontend_build
+    package=json.loads((ROOT/'package.json').read_text(encoding='utf-8'))
+    require_frontend_build(ROOT/'dist',package['version'])
     destination = destination.resolve()
     if destination == ROOT or ROOT.is_relative_to(destination):
         raise ValueError('Runtime staging must not be the application or its parent.')
     destination.mkdir(parents=True, exist_ok=True)
     if any(destination.iterdir()):
         raise ValueError('Choose an empty runtime staging directory.')
-    for name in ('backend', 'python_engine'):
+    for name in ('backend', 'python_engine', 'virtual_plc'):
         for source in sorted((ROOT / name).rglob('*.py')):
+            if name=='virtual_plc' and 'tests' in source.relative_to(ROOT/name).parts:continue
             relative = source.relative_to(ROOT)
             target = (destination / relative).with_suffix('.pyc')
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -35,9 +41,14 @@ def stage(destination: Path) -> None:
         if not (ROOT / 'dist' / page).is_file():
             raise ValueError(f'Build the frontend first: dist/{page} is missing.')
     shutil.copytree(ROOT / 'dist', destination / 'dist')
+    if not (ROOT/'virtual_plc/dist/index.html').is_file():
+        raise ValueError('Build the Virtual PLC frontend before staging the runtime.')
+    for name in ('dist','examples'):
+        shutil.copytree(ROOT/'virtual_plc'/name,destination/'virtual_plc'/name)
+    shutil.copy2(ROOT/'virtual_plc/navigation.js',destination/'virtual_plc/navigation.js')
     shutil.copytree(ROOT / 'rules', destination / 'rules',
                     ignore=shutil.ignore_patterns('archive', 'learning', 'feedback', '__pycache__'))
-    for name in ('master', 'data_models', 'chopper', 'dashboard_layouts', 'lapformer'):
+    for name in ('master', 'data_models', 'chopper', 'dashboard_layouts', 'lapformer', 'virtual_plc'):
         shutil.copytree(ROOT / 'knowledge' / name, destination / 'knowledge' / name,
                         ignore=shutil.ignore_patterns('users') if name=='dashboard_layouts' else None)
     help_target = destination / 'knowledge' / 'help_index'
@@ -51,7 +62,6 @@ def stage(destination: Path) -> None:
     for name in ('MODEL_LICENSE.txt', 'MODEL_CARD.md'):
         shutil.copy2(ROOT / 'local_ai' / name, destination / 'local_ai' / name)
     # Runtime needs only the version, not developer build commands/dependencies.
-    package = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))
     (destination / 'package.json').write_text(
         json.dumps({'name': package['name'], 'version': package['version']}), encoding='utf-8')
     raw = [p.relative_to(destination).as_posix() for p in destination.rglob('*')

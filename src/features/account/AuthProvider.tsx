@@ -9,26 +9,26 @@ import engineeringHero from './assets/engineering-factory-hero-v1.png';
 import {PasswordInput} from './PasswordInput';
 import '../../styles.css';
 import './account.css';
-export type AccountUser={id:number;username:string;designation:string;company:string;role:'admin'|'user';approved?:boolean;isDemo?:boolean;sessionExpiresAt?:number};
+export type AccountUser={id:number;username:string;designation:string;company:string;role:'admin'|'user';avatarUrl?:string|null;approved?:boolean;isDemo?:boolean;sessionExpiresAt?:number};
 const LANDING_FEATURES=[
-  {name:'ByteMap',headline:'Every Spin Connect byte. Mapped and verified.',description:'Map PLC packet structures, byte offsets, parameters and HMI data into clear, traceable insights for faster validation and troubleshooting.'},
-  {name:'DataInspect',headline:'Decode data. Detect issues.',description:'Inspect live and recorded PLC packets, verify decoded values and identify communication or mapping issues.'},
+  {name:'ByteMap',headline:'Every SpinConnect byte. Mapped and verified.',description:'Map PLC packet structures, byte offsets, parameters and HMI data into clear, traceable insights for faster validation and troubleshooting.'},
+  {name:'DataInspect',headline:'Decode data. Detect issues.',description:'Inspect live and recorded SpinConnect packets, verify decoded values and identify communication or mapping issues. YBS device frames are also supported.'},
   {name:'MatchView',headline:'Every change. Clearly traced.',description:'Compare Automation Studio project revisions and identify changes in logic, configuration and HMI.'},
-  {name:'LogicScan',headline:'Smarter project validation.',description:'Validate Spin Connect PLC logic against engineering requirements and identify deviations.'},
+  {name:'LogicScan',headline:'Smarter project validation.',description:'Validate SpinConnect PLC logic against engineering requirements and identify deviations.'},
   {name:'AI Assistant — Chopper',headline:'Your engineering knowledge partner.',description:'Decode PLC logs, explain technical findings, configure rules and provide troubleshooting insights.'},
 ] as const;
-const Context=createContext<{user:AccountUser;logout:()=>Promise<void>}|null>(null);
+const Context=createContext<{user:AccountUser;logout:()=>Promise<void>;refreshUser:()=>Promise<void>}|null>(null);
 export function useAccount(){const value=useContext(Context);if(!value)throw new Error('Account is not signed in');return value;}
 class AccountServiceError extends Error {}
 export async function accountRequest(path:string,data?:unknown,method?:'POST'|'DELETE'){
   let response:Response;
   try{response=await fetch('/api/auth/'+path,{credentials:'same-origin',cache:'no-store',...(data||method?{method:method||'POST',...(data?{headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}:{})}:{})})}
-  catch{throw new AccountServiceError('Cannot reach the uSOPp server. Start the application, then check the connection again.')}
-  if(response.status===404||response.status===405)throw new AccountServiceError('The running server needs an update. Stop and restart uSOPp.ai, then check the connection again.');
+  catch{throw new AccountServiceError('Cannot reach the usop.ai server. Start the application, then check the connection again.')}
+  if(response.status===404||response.status===405)throw new AccountServiceError('The running server needs an update. Stop and restart usop.ai, then check the connection again.');
   let result:any;
-  try{result=await response.json()}catch{throw new AccountServiceError('The accounts service is unavailable. Start the updated uSOPp server, then check the connection again.')}
+  try{result=await response.json()}catch{throw new AccountServiceError('The accounts service is unavailable. Start the updated usop.ai server, then check the connection again.')}
   if(!response.ok)throw new Error(typeof result.detail==='string'?result.detail:'Account request failed.');
-  if(['session','login'].includes(path)&&(!result||!('user' in result)))throw new AccountServiceError('The running server does not support accounts. Restart the updated uSOPp application.');
+  if(['session','login'].includes(path)&&(!result||!('user' in result)))throw new AccountServiceError('The running server does not support accounts. Restart the updated usop.ai application.');
   return result;
 }
 const originalFetch=window.fetch.bind(window);
@@ -82,6 +82,7 @@ export function AuthProvider({children}:{children:ReactNode}){
     try{const result=await accountRequest('session');await setUser(result.user);setServiceReady(true)}
     catch(reason:any){setError(reason.message);setServiceReady(false)}finally{setBusy(false)}
   };
+  const refreshUser=async()=>{const result=await accountRequest('session');if(!result.user){expireSession('Your session expired. Sign in again.');return}setUserState(current=>current?.id===result.user.id?result.user:current)};
   const logout=async()=>{await flushUserStorage();await accountRequest('logout',{});await setUser(null);setRegister(false)};
   const enterWorkspace=()=>{
     if(register){setRegister(false);setForm(value=>({...value,password:'',confirm:''}));if(serviceReady)setError('')}
@@ -92,21 +93,21 @@ export function AuthProvider({children}:{children:ReactNode}){
     setForm({username:'demo',password:'demo',confirm:'',designation:'',company:''});
     usernameInput.current?.focus({preventScroll:true});
   };
-  if(loading)return <div className="accountScreen"><div className="accountOpening" role="status"><img src={usoppLogo} alt="uSOPp.ai" width={68}/><p>Opening your engineering workspace…</p></div></div>;
-  if(user)return <Context.Provider key={user.id} value={{user,logout}}>{children}<StorageNotice/></Context.Provider>;
+  if(loading)return <div className="accountScreen"><div className="accountOpening" role="status"><img src={usoppLogo} alt="usop.ai" width={68}/><p>Opening your engineering workspace…</p></div></div>;
+  if(user)return <Context.Provider key={user.id} value={{user,logout,refreshUser}}>{children}<StorageNotice/></Context.Provider>;
   const featureIcons=[ShieldCheck,Activity,GitCompare,BookOpen,MessageSquare];
   return <div className="accountScreen">
-    <header className="accountLandingHeader"><a className="accountBrand" href="#accountLanding" aria-label="uSOPp.ai home"><img src={usoppLogo} alt=""/><div><b>uSOPp.ai</b><span>ENGINEERING WORKSPACE</span></div></a><nav aria-label="Welcome page"><a href="#accountCard" onClick={exploreDemo}>Explore demo</a><a href="#accountCard" onClick={enterWorkspace}>Sign in <ArrowUpRight size={16}/></a></nav><img className="accountPetrus" src={petrusLogo} alt="Petrus"/></header>
+    <header className="accountLandingHeader"><a className="accountBrand" href="#accountLanding" aria-label="usop.ai home"><img src={usoppLogo} alt=""/><div><b>usop.ai</b><span>ENGINEERING WORKSPACE</span></div></a><nav aria-label="Welcome page"><a href="#accountCard" onClick={exploreDemo}>Explore demo</a><a href="#accountCard" onClick={enterWorkspace}>Sign in <ArrowUpRight size={16}/></a></nav><img className="accountPetrus" src={petrusLogo} alt="Petrus"/></header>
     <main id="accountLanding"><div className={`accountPortal${register?' accountRegister':''}`}>
     <img className="accountHeroImage" src={engineeringHero} alt="" fetchPriority="high"/>
-    <aside className="accountOverview" aria-label="About uSOPp.ai">
-      <div className="accountIntroduction"><span className="accountEyebrow"><i/>BUILT FOR AUTOMATION ENGINEERS</span><h2>Engineering Intelligence.<br/><em>At Your Command</em></h2><p>Your intelligent engineering assistant for Spin Connect project validation, PLC data and byte-level analysis, logic verification, and troubleshooting.</p><p className="accountValueLine"><em>Reduce manual engineering effort by accelerating validation, providing accurate data analysis, <strong>improving engineering accuracy</strong>, and using AI-powered troubleshooting.</em></p></div>
+    <aside className="accountOverview" aria-label="About usop.ai">
+      <div className="accountIntroduction"><span className="accountEyebrow"><i/>BUILT FOR AUTOMATION ENGINEERS</span><h2>Engineering Intelligence.<br/><em>At Your Command</em></h2><p>Your intelligent engineering assistant for SpinConnect project validation, PLC data and byte-level analysis, logic verification, and troubleshooting.</p><p className="accountValueLine"><em>Reduce manual engineering effort by accelerating validation, providing accurate data analysis, <strong>improving engineering accuracy</strong>, and using AI-powered troubleshooting.</em></p></div>
       <div className="accountHeroActions"><a className="btn primary" href="#accountCard" onClick={enterWorkspace}>Enter your work hub <ArrowUpRight size={19}/></a><a className="btn" href="#accountCard" onClick={exploreDemo}>Explore demo <ArrowRight size={19}/></a></div>
       <div className="accountTrust"><span><Check size={17}/>Built around your projects</span><span><Check size={17}/>Engineer stays in control</span></div>
       <div className="accountOverviewFooter">LESS GUESSWORK. MORE ENGINEERING.</div>
     </aside>
     <section id="accountCard" className="accountCard" aria-labelledby="accountHeading">
-    <div className="accountFormHeader"><span className="accountEyebrow">{register?'REQUEST ACCESS':'WELCOME BACK'}</span><h1 id="accountHeading">{register?'Request an account':'Sign in to uSOPp.ai'}</h1><p>{register?'Send your details to Admin. Your account will be ready after it is enabled.':'Sign in to continue your projects and engineering checks.'}</p></div>
+    <div className="accountFormHeader"><span className="accountEyebrow">{register?'REQUEST ACCESS':'WELCOME BACK'}</span><h1 id="accountHeading">{register?'Request an account':'Sign in to usop.ai'}</h1><p>{register?'Send your details to Admin. Your account will be ready after it is enabled.':'Sign in to continue your projects and engineering checks.'}</p></div>
     {notice&&<p className="accountSuccess" role="status">{notice}</p>}
     {!serviceReady&&<div className="accountConnection" role="alert"><b>Server connection needs attention</b><p>{error}</p><button type="button" className="btn" disabled={busy} onClick={()=>void retryConnection()}><RefreshCw size={16}/>{busy?'Checking…':'Check connection'}</button></div>}
     <form onSubmit={submit} className="accountForm">
@@ -122,6 +123,6 @@ export function AuthProvider({children}:{children:ReactNode}){
     <div className="accountSwitch"><p>{register?'Already have an account?':'Need access to the workspace?'}</p><button className="btn" disabled={busy} onClick={()=>{setRegister(!register);setNotice('');if(serviceReady)setError('');setForm({...form,password:'',confirm:''})}}>{register?'Back to sign in':'New user? Request an account'}</button></div>
     <p className="accountFooter">Shared tools. Traceable engineering.</p>
   </section></div>
-    <section id="accountFeatures" className="accountPlatform" aria-labelledby="accountPlatformHeading"><div className="accountPlatformHead"><span className="accountEyebrow">FROM PLC DATA TO ENGINEERING INTELLIGENCE</span><h2 id="accountPlatformHeading">One smart assistant. Complete engineering insights.</h2><p>A unified workspace to validate Spin Connect projects, understand PLC data, inspect communication packets, and simplify complex engineering analysis.</p></div><div className="accountFeatureList">{LANDING_FEATURES.map((feature,index)=>{const Icon=featureIcons[index];return <article className="accountFeature" key={feature.name}><span className="accountFeatureIcon"><Icon size={23}/></span><h3>{feature.name}</h3><strong>{feature.headline}</strong><p>{feature.description}</p></article>})}</div></section>
-    </main><footer className="accountLandingFooter"><span>uSOPp.ai · Engineering workspace</span><span>Shared tools. Traceable engineering.</span></footer></div>;
+    <section id="accountFeatures" className="accountPlatform" aria-labelledby="accountPlatformHeading"><div className="accountPlatformHead"><span className="accountEyebrow">FROM PLC DATA TO ENGINEERING INTELLIGENCE</span><h2 id="accountPlatformHeading">One smart assistant. Complete engineering insights.</h2><p>A unified workspace to validate SpinConnect projects, understand PLC data, inspect communication packets, and simplify complex engineering analysis.</p></div><div className="accountFeatureList">{LANDING_FEATURES.map((feature,index)=>{const Icon=featureIcons[index];return <article className="accountFeature" key={feature.name}><span className="accountFeatureIcon"><Icon size={23}/></span><h3>{feature.name}</h3><strong>{feature.headline}</strong><p>{feature.description}</p></article>})}</div></section>
+    </main><footer className="accountLandingFooter"><span>usop.ai · Engineering workspace</span><span>Shared tools. Traceable engineering.</span></footer></div>;
 }

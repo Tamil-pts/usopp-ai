@@ -1,1 +1,61 @@
+name: Build and verify container
 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'codex/container-*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: container-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Build exact Git revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(python3 -c "import json; print(json.load(open('package.json'))['version'])")
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          echo "USOPP_BUILD_VERSION=$version" >> "$GITHUB_ENV"
+          docker build --platform linux/amd64 --build-arg APP_VERSION="$version" --build-arg SOURCE_COMMIT="$GITHUB_SHA" -t "usopp-ai:$version" .
+      - name: Start isolated container and check UI and APIs
+        shell: bash
+        run: |
+          set -euo pipefail
+          secret_dir=$(mktemp -d "$RUNNER_TEMP/usopp-smoke.XXXXXX")
+          openssl rand -base64 30 > "$secret_dir/admin-password.txt"
+          chmod 644 "$secret_dir/admin-password.txt"
+          volume="usopp-smoke-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          cleanup() { docker rm -f usopp-build-check >/dev/null 2>&1 || true; docker volume rm "$volume" >/dev/null 2>&1 || true; rm -f "$secret_dir/admin-password.txt"; rmdir "$secret_dir"; }
+          trap cleanup EXIT
+          docker volume create "$volume" >/dev/null
+          docker run -d --name usopp-build-check --read-only --tmpfs /tmp:rw,nosuid,nodev,size=1g --cap-drop ALL --security-opt no-new-privileges:true -p 127.0.0.1:18200:8200 -v "$volume:/data" -v "$secret_dir/admin-password.txt:/run/secrets/usopp_admin_password:ro" -e USOPP_INITIAL_ADMIN_PASSWORD_FILE=/run/secrets/usopp_admin_password "usopp-ai:$USOPP_BUILD_VERSION"
+          if ! python3 scripts/container_smoke.py --version "$USOPP_BUILD_VERSION" --password-file "$secret_dir/admin-password.txt"; then docker logs --tail 120 usopp-build-check; exit 1; fi
+          docker exec usopp-build-check python -c "import os,pathlib,tempfile; assert os.getuid()==10001; root=pathlib.Path('/opt/usopp'); bad=[str(p) for p in root.rglob('*') if p.is_file() and p.suffix in ('.py','.pyw','.ts','.tsx','.map')]; assert not bad,bad[:10]; f=tempfile.TemporaryFile(dir='/data'); f.write(b'checked'); f.close(); print('Unprivileged compiled runtime and persistent-data permissions passed.')"
+          test "$(docker inspect -f '{{.Config.Labels.org.opencontainers.image.revision}}' "usopp-ai:$USOPP_BUILD_VERSION")" = "$GITHUB_SHA"
+      - name: Export verified image and checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p release/downloads/ci
+          image="uSOPp_AI_${USOPP_BUILD_VERSION}_Container_linux_amd64.tar.gz"
+          docker image save "usopp-ai:$USOPP_BUILD_VERSION" | gzip -1 > "release/downloads/ci/$image"
+          (cd release/downloads/ci && sha256sum "$image" > "$image.sha256")
+      - uses: actions/upload-artifact@v7
+        with:
+          name: verified-container
+          path: release/downloads/ci/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14

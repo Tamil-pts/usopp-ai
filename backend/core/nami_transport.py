@@ -6,12 +6,14 @@ import time
 import uuid
 from contextlib import contextmanager
 from backend.core.nami_simulator import frame
+from python_engine import ybs
 
 log = logging.getLogger('usopp.nami')
 _targets = {}
 _guard = threading.Lock()
 
-def read_request(machine_id, group):
+def read_request(machine_id, group, protocol='spinconnect'):
+    if protocol == 'ybs': return ybs.request(machine_id, int(group))
     return frame(machine_id, int(group).to_bytes(2, 'big'), 1)
 
 class ReceiveError(OSError):
@@ -35,7 +37,7 @@ def connection(ip, port, timeout_ms):
             # Some controllers need time to release their previous TCP session.
             time.sleep(.18)
 
-def receive(sock):
+def receive(sock, protocol='spinconnect'):
     data = bytearray()
     expected = 5
     timeout = sock.gettimeout()
@@ -51,11 +53,13 @@ def receive(sock):
                 raise ConnectionError(f'PLC closed with an incomplete frame ({len(data)}/{expected} bytes)')
             data.extend(part)
             if len(data) == 5:
-                expected = int.from_bytes(data[3:5], 'big') + 7
+                expected = int.from_bytes(data[3:5], 'big') + (0 if protocol == 'ybs' else 7)
+                if expected < (9 if protocol == 'ybs' else 7):
+                    raise ConnectionError('Invalid response length in frame header.')
     except OSError as exc:
         if isinstance(exc, TimeoutError):
-            message = ('No response from PLC. Check that the SpinConnect function is enabled, '
-                       'the Machine ID matches, and no previous client session is still active.'
+            message = (('No response from YBS. Check the device TCP service, port and Machine ID.' if protocol=='ybs' else
+                       'No response from PLC. Check that the SpinConnect function is enabled, the Machine ID matches, and no previous client session is still active.')
                        if not data else f'Incomplete PLC response: received {len(data)}/{expected} bytes before timeout.')
         else:
             message = str(exc) or type(exc).__name__
@@ -64,19 +68,23 @@ def receive(sock):
         sock.settimeout(timeout)
     return list(data)
 
-def exchange(sock, request):
+def exchange(sock, request, protocol='spinconnect'):
     started = time.monotonic()
     result = dict(success=False, rawBytes=[], sentBytes=[], tcpConnected=True, stage='send')
     try:
         sock.sendall(request)
         result.update(sentBytes=list(request), stage='receive')
-        result.update(rawBytes=receive(sock), success=True, stage='complete')
+        result.update(rawBytes=receive(sock, protocol), success=True, stage='complete')
         raw = result['rawBytes']
-        checksum = 0
-        for byte in raw[:-2]:
-            checksum ^= byte
-        if raw[0] != 3 or raw[-1] != 2 or raw[1] != request[1] or checksum != raw[-2]:
-            result.update(success=False, stage='validate', error='Invalid PLC response marker, Machine ID or checksum.')
+        if protocol == 'ybs':
+            parsed = ybs.parse_frame(raw, request[1], int.from_bytes(request[5:7], 'big'))
+            if not parsed['success']: result.update(success=False, stage='validate', error=parsed['error'])
+        else:
+            checksum = 0
+            for byte in raw[:-2]:
+                checksum ^= byte
+            if raw[0] != 3 or raw[-1] != 2 or raw[1] != request[1] or checksum != raw[-2]:
+                result.update(success=False, stage='validate', error='Invalid PLC response marker, Machine ID or checksum.')
     except OSError as exc:
         result['error'] = str(exc) or type(exc).__name__
         if isinstance(exc, ReceiveError):
@@ -118,7 +126,7 @@ def request_close(sock, machine_id, trace):
              result.get('error') or result.get('warning') or 'complete')
     return result
 
-def sequence(ip, port, machine_id, groups, timeout_ms, stop_event=None, max_duration=None):
+def sequence(ip, port, machine_id, groups, timeout_ms, stop_event=None, max_duration=None, protocol='spinconnect'):
     results = []
     close = None
     error = None
@@ -136,9 +144,9 @@ def sequence(ip, port, machine_id, groups, timeout_ms, stop_event=None, max_dura
                     if (stop_event is not None and stop_event.is_set()) or (max_duration is not None and time.monotonic()-started >= max_duration):
                         error = 'Collection cycle stopped before requesting the remaining groups.'
                         break
-                    request = read_request(machine_id, group)
+                    request = read_request(machine_id, group, protocol)
                     log.info('DataInspect [%s] GC%s request hex=%s', trace, group, request.hex(' '))
-                    result = dict(exchange(sock, request), groupCode=group, traceId=trace)
+                    result = dict(exchange(sock, request, protocol), groupCode=group, traceId=trace)
                     result['completedAt'] = time.time() * 1000
                     results.append(result)
                     log.info('DataInspect [%s] GC%s stage=%s sent=%s received=%s rtt_ms=%s error=%s',
@@ -150,7 +158,7 @@ def sequence(ip, port, machine_id, groups, timeout_ms, stop_event=None, max_dura
                         break
             finally:
                 sock.settimeout(timeout_ms / 1000)
-                close = request_close(sock, machine_id, trace)
+                close = request_close(sock, machine_id, trace) if protocol != 'ybs' else dict(success=True, sentBytes=[], warning='YBS TCP session closed locally. SpinConnect GC 11 is not sent to YBS.')
     except (OSError, ValueError) as exc:
         error = f'TCP connection to {ip}:{port} failed: {str(exc) or type(exc).__name__}'
         log.warning('DataInspect [%s] %s', trace, error)
@@ -164,11 +172,12 @@ def sequence(ip, port, machine_id, groups, timeout_ms, stop_event=None, max_dura
                 totalDurationMs=round((time.monotonic() - started) * 1000))
 
 def raw_exchange(ip, port, request, timeout_ms, close_session=False):
+    protocol = 'ybs' if request[0] == 241 else 'spinconnect'
     # Standard manual group reads use the same GC 11 cleanup as the main UI.
     if len(request) == 9 and request[2] == 1:
         group = int.from_bytes(request[5:7], 'big')
-        if group != 11 and request == read_request(request[1], group):
-            result = sequence(ip, port, request[1], [group], timeout_ms)
+        if group != 11 and request == read_request(request[1], group, protocol):
+            result = sequence(ip, port, request[1], [group], timeout_ms, protocol=protocol)
             return dict(result['results'][0], closeResult=result['closeResult'])
     try:
         with connection(ip, port, timeout_ms) as sock:
@@ -176,10 +185,10 @@ def raw_exchange(ip, port, request, timeout_ms, close_session=False):
             log.info('DataInspect [%s] raw request target=%s:%s length=%s hex=%s', trace, ip, port, len(request), request.hex(' '))
             result = None
             try:
-                result = dict(exchange(sock, request), traceId=trace)
+                result = dict(exchange(sock, request, protocol), traceId=trace)
                 return result
             finally:
-                if close_session:
+                if close_session and protocol != 'ybs':
                     sock.settimeout(timeout_ms / 1000)
                     close = request_close(sock, request[1], trace)
                     if result is not None:

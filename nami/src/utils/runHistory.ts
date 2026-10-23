@@ -15,6 +15,10 @@ export interface SavedInspectRun {
   dataModelCheck?: DataModelCheck;
   dataModelReferenceSource?: DataModelReferenceData;
   error?: string;
+  operation?:string;
+  verified?:boolean;
+  observedValue?:number;
+  writeEvidence?:{beforeValue:number;requestedValue:number;target:{ip:string;port:number;machineId:number}};
 }
 
 export function responsesForHistory(run: SavedInspectRun): Record<number, GroupResponseData> {
@@ -23,16 +27,16 @@ export function responsesForHistory(run: SavedInspectRun): Record<number, GroupR
   return Object.fromEntries(rows.filter(row => row.groupCode !== undefined).map(row => {
     const groupCode = row.groupCode!;
     const raw = row.rawBytes || [];
-    const frame = parsePLCResponse(raw, run.plc.machineId);
+    const frame = parsePLCResponse(raw, run.plc.machineId,groupCode);
     const metadata = (run.metadata || []).filter(item => item.groupCode === groupCode);
-    const expected = getExpectedGroupPayloadLength(metadata);
+    const expected = run.operation==='write-parameter'?0:getExpectedGroupPayloadLength(metadata);
     const success = Boolean(row.success && frame.success);
     const response: GroupResponseData = {...row, groupCode, success, rawBytes: raw,
       resultCode: frame.resultCode, dataLength: frame.dataLength, expectedLength: expected,
-      lengthMatch: frame.dataLength >= expected, rawHex: raw.map(byte => byte.toString(16).padStart(2, '0')).join(' '),
+      lengthMatch: frame.protocol==='ybs'?frame.dataLength===expected:frame.dataLength >= expected, rawHex: raw.map(byte => byte.toString(16).padStart(2, '0')).join(' '),
       rttMs: row.rttMs || 0, timestamp: row.timestamp || 'Saved test',
       error: row.error || frame.error, testId: run.testId, historyId: run.historyId,
-      parsedValues: success ? parseGroupValues(frame.dataBytes, metadata, run.plc.endianness !== 'big') : []};
+      parsedValues: success && run.operation!=='write-parameter' ? parseGroupValues(frame.dataBytes, metadata, run.plc.endianness !== 'big') : []};
     return [groupCode, response];
   }));
 }

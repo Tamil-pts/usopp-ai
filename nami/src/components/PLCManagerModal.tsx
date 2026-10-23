@@ -1,9 +1,11 @@
+import {frameProtocol,isYbsTarget,metadataMachine,frameProtocolUpdates} from '../utils/frameProfile';
 import {targetMode} from '../utils/targetMode';
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Plus, Trash2, CheckCircle2, AlertTriangle, RefreshCw, Cpu, Globe, Clock, FileSpreadsheet, Sliders, Upload } from 'lucide-react';
 import { PLCConfig, SpinningMachineType } from '../types';
 import { SPINNING_MACHINE_TYPES } from '../data/machinePresets';
 import { ManualFrameSender } from './ManualFrameSender';
+import {RequestFrameSelect} from './RequestFrameSelect';
 
 interface PLCManagerModalProps {
   isOpen: boolean;
@@ -86,7 +88,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
   const handleUpdateItem = (id: string, updates: Partial<PLCConfig>) => {
     setItems((prev) => prev.map((p) => (p.id === id ? { ...p, ...updates } : p)));
     setFormError('');
-    if (Object.keys(updates).some(key => ['ip','port','machineId','isSimulated','targetMode','endianness','timeoutMs','machineType'].includes(key))) {
+    if (Object.keys(updates).some(key => ['ip','port','machineId','isSimulated','targetMode','endianness','timeoutMs','machineType','frameProtocol'].includes(key))) {
       setItems((prev) => prev.map((p) => p.id === id ? {...p, status: 'idle', tcpConnected: false,
         error: undefined, programVersion: undefined, programVersionStr: undefined} : p));
       requestRef.current?.abort();
@@ -100,6 +102,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
       id: `plc-${crypto.randomUUID()}`,
       name: `Machine #${items.length + 1}`,
       machineType: 'Carding',
+      frameProtocol: 'spinconnect',
       ip: '192.168.1.100',
       port: 21010,
       machineId: 0,
@@ -132,6 +135,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          plc, machineType: plc.machineType,
           ip: plc.ip,
           port: plc.port,
           machineId: plc.machineId,
@@ -284,7 +288,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                         {onOpenMetadataModal && (
                           <button
                             onClick={async () => {
-                              if (await applyDraft(plc.id)) onOpenMetadataModal(plc.machineType || 'Carding');
+                              if (await applyDraft(plc.id)) onOpenMetadataModal(metadataMachine(plc));
                             }}
                             className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg border border-slate-600 transition-colors"
                             title="Upload/manage metadata for this PLC machine type"
@@ -306,7 +310,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                           <span>Edit Frame</span>
                         </button>
 
-                        {onOpenRTCModal && (
+                        {onOpenRTCModal && !isYbsTarget(plc) && (
                           <button
                             onClick={async () => {
                               if (await applyDraft(plc.id)) { onClose(); onOpenRTCModal(plc); }
@@ -333,11 +337,12 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
 
                     {/* Form fields */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                      <RequestFrameSelect className="block text-emerald-300 [&_select]:block [&_select]:w-full [&_select]:mt-1 [&_select]:bg-slate-800 [&_select]:border [&_select]:border-slate-600 [&_select]:rounded [&_select]:p-2" value={frameProtocol(plc)} onChange={protocol=>handleUpdateItem(plc.id,frameProtocolUpdates(plc,protocol))}/>
                       <div>
                         <label className="block text-slate-400 mb-1">Machine Type</label>
                         <select
                           value={plc.machineType || 'Carding'}
-                          onChange={(e) => handleUpdateItem(plc.id, { machineType: e.target.value as SpinningMachineType })}
+                          onChange={(e) => handleUpdateItem(plc.id, { machineType: e.target.value as SpinningMachineType, ...(e.target.value==='YBS'?frameProtocolUpdates(plc,'ybs'):{}) })}
                           className="w-full bg-indigo-950/40 border border-indigo-700/60 rounded px-2 py-1.5 text-indigo-200 font-semibold focus:outline-none"
                         >
                           {SPINNING_MACHINE_TYPES.map((m) => (
@@ -356,8 +361,8 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                           className="w-full bg-slate-700/50 border border-slate-600 rounded px-2 py-1.5 text-slate-200 focus:outline-none"
                         >
                           <option value="plc">Real PLC (Network TCP)</option>
-                          <option value="automation-studio">Automation Studio simulation</option>
-                          <option value="data-simulator">Data simulator (metadata-driven TCP)</option>
+                          <option disabled={isYbsTarget(plc)} value="automation-studio">Automation Studio simulation</option>
+                          <option disabled={isYbsTarget(plc)} value="data-simulator">Data simulator (metadata-driven TCP)</option>
                         </select>
                       </div>
 
@@ -412,7 +417,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                       <div>
                         <label className="block text-slate-400 mb-1">Byte Endianness</label>
                         <select
-                          value={plc.endianness}
+                          disabled={isYbsTarget(plc)} value={isYbsTarget(plc)?'big':plc.endianness}
                           onChange={(e) => handleUpdateItem(plc.id, { endianness: e.target.value as 'little' | 'big' })}
                           className="w-full bg-slate-700/50 border border-slate-600 rounded px-2 py-1.5 text-slate-200 focus:outline-none"
                         >

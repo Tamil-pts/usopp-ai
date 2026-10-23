@@ -72,7 +72,8 @@ class UbuntuDemoTests(unittest.TestCase):
                 demo.start('0.0.0.0',8200)
                 self.assertTrue(popen.call_args.kwargs['start_new_session'])
                 self.assertEqual(json.loads(state.read_text())['identity'],identity)
-                self.assertIn('backend.app:app',popen.call_args.args[0])
+                self.assertIn('virtual_plc.server:create_app',popen.call_args.args[0])
+                self.assertIn('--factory',popen.call_args.args[0])
 
 
 if __name__=='__main__':unittest.main()

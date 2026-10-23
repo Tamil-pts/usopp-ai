@@ -2680,6 +2680,16 @@ def parse_group(
     block = lines[start_line - 1 : end_line + 1]
     clean_block = packet_code_lines("\n".join(lines))[start_line - 1 : end_line + 1]
     source_file = str(safe_relative_path(path))
+    # GC10's single program-version copy can address payload byte 5 directly.
+    # Other groups and any layout using nw_i retain the cursor checks.
+    group_code_text = "\n".join(clean_block)
+    fixed_version_payload = (
+        code == 10
+        and not re.search(r"\bnw_i\b", group_code_text, re.I)
+        and len(re.findall(r"\bmemcpy\s*\(", group_code_text, re.I)) == 1
+        and bool(re.search(r"\bmemcpy\s*\(\s*ADR\(\s*nw_snd_buffer\s*\[\s*5\s*\]\s*\)", group_code_text, re.I))
+        and not re.search(r"nw_snd_buffer\s*\[\s*(?:[5-9]|\d{2,})\s*\]\s*:=", group_code_text, re.I)
+    )
     active_states: List[_PacketPathState] = [_PacketPathState()]
     conditional_stack: List[dict] = []
     operation_sequence = 0
@@ -3018,6 +3028,8 @@ def parse_group(
 
     def finalize_variant(state: _PacketPathState, variant_index: int) -> dict:
         validate_path(state)
+        if fixed_version_payload and len(state.parameters) == 1:
+            state.pending_index = None
         if state.pending_index is not None and state.pending_index < len(state.parameters):
             parameter = state.parameters[state.pending_index]
             parameter_issue(
@@ -3155,6 +3167,7 @@ def parse_group(
             "configuredBytes": configured_bytes,
             "writtenBytes": written_bytes,
             "cursorBytes": cursor_bytes,
+            "addressingMode": "fixed" if fixed_version_payload else "cursor",
             "calculatedByOffset": calculated_by_offset,
             "responseLengthSet": state.response_length_line is not None,
             "responseEnabled": state.response_trigger_value.upper() in {"TRUE", "1"},
@@ -3386,7 +3399,7 @@ def parse_group(
                     }],
                     condition_context=condition,
                 )
-                if not state.cursor_initialized and not state.initialization_reported:
+                if not state.cursor_initialized and not state.initialization_reported and not fixed_version_payload:
                     parameter_issue(
                         state,
                         parameter,

@@ -32,7 +32,7 @@ def project_upload_start(payload:dict):
 @router.post('/api/project-upload/chunk')
 async def project_upload_chunk(
     session_id:str=Form(...),
-    project_files:List[UploadFile]=File(...,max_files=MAX_PROJECT_FILES),
+    project_files:List[UploadFile]=File(...),
 ):
     return await append_project_upload(session_id,project_files)
 
@@ -134,7 +134,7 @@ async def upload_metadata(metadata:UploadFile=File(...)):
     return {'sessionId':sid,'path':str(path),'fileName':metadata.filename}
 
 @router.post('/api/validate')
-async def validate(project_files:Optional[List[UploadFile]]=File(None,max_files=MAX_PROJECT_FILES),
+async def validate(project_files:Optional[List[UploadFile]]=File(None),
                    metadata:Optional[UploadFile]=File(None),project_name:str=Form(''),metadata_path:str=Form(''),bool_metadata_mode:str=Form('BOOL')):
     sid,root=await stage_project(project_files,project_name)
     work=WORK/sid
@@ -142,6 +142,6 @@ async def validate(project_files:Optional[List[UploadFile]]=File(None,max_files=
     return await run_in_threadpool(_execute,sid,root,project_name,meta,False,False,'All',bool_metadata_mode)
 
 @router.post('/api/generate-metadata')
-async def generate_metadata(project_files:Optional[List[UploadFile]]=File(None,max_files=MAX_PROJECT_FILES),project_name:str=Form(''),bool_metadata_mode:str=Form('BOOL')):
+async def generate_metadata(project_files:Optional[List[UploadFile]]=File(None),project_name:str=Form(''),bool_metadata_mode:str=Form('BOOL')):
     sid,root=await stage_project(project_files,project_name)
     return await run_in_threadpool(_execute,sid,root,project_name,None,True,False,'All',bool_metadata_mode)

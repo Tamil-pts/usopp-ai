@@ -10,6 +10,7 @@ import time
 import zlib
 from concurrent.futures import ThreadPoolExecutor
 from backend.core import persistent_store as storage, accounts, nami_transport as tcp
+from backend.core.nami_profiles import frame_protocol
 from backend.core.nami_simulator import DEFAULT_STATE, frame, payload
 
 log = logging.getLogger('usopp.live')
@@ -84,9 +85,13 @@ def validate_config(item):
         raise ValueError('Choose a supported target mode.')
     if safe['endianness'] not in ('little', 'big') or not safe['name'].strip() or (not safe['isSimulated'] and not safe['ip'].strip()):
         raise ValueError('Each target needs a name, address and valid byte order.')
+    safe['frameProtocol']=frame_protocol(plc)
+    if safe['frameProtocol']=='ybs':
+        safe['endianness']='big'
+        if safe['isSimulated'] or safe['targetMode']=='data-simulator':raise ValueError('Use a network YBS target; its simulator profile is not installed.')
     rows = item.get('metadata', [])
-    if not isinstance(rows, list) or len(rows) > 10000:
-        raise ValueError('Live metadata supports at most 10,000 rows per target.')
+    if not isinstance(rows, list) or len(rows) > 30000:
+        raise ValueError('Live metadata supports at most 30,000 rows per target.')
     for row in rows:
         if not isinstance(row, dict) or not isinstance(row.get('parameter'), str) or len(row['parameter']) > 500:
             raise ValueError('Invalid live metadata parameter.')
@@ -95,6 +100,15 @@ def validate_config(item):
         integer(row.get('offset'), 'Metadata offset', 0, 65534)
         if not isinstance(row.get('dataType'), str) or not re.fullmatch(r'[A-Za-z]+(?:\[\d{1,5}\])?', row['dataType']):
             raise ValueError('Invalid live metadata datatype.')
+        if (row.get('protocol')=='ybs') != (safe['frameProtocol']=='ybs'):
+            raise ValueError('YBS targets require YBS metadata; SpinConnect targets require SpinConnect metadata.')
+        if safe['frameProtocol']=='ybs':
+            if row['dataType'] not in ('USINT','UINT','UDINT','REAL'):
+                raise ValueError('Unsupported YBS canonical datatype.')
+            for factor in ('divideFactor','multiplyFactor'):
+                value=row.get(factor)
+                if type(value) not in (int,float) or not math.isfinite(value) or factor=='divideFactor' and value<=0:
+                    raise ValueError('Invalid YBS division or multiplication factor.')
         if row.get('arraySize') is not None:
             integer(row['arraySize'], 'Array size', 1, 65535)
         if row['offset'] + metadata_width(row) > 65535:
@@ -111,8 +125,8 @@ def validate_config(item):
     safe['liveGroupCodes'] = groups
     snapshot = {'plc': safe, 'metadata': rows}
     encoded = json.dumps(snapshot, sort_keys=True, allow_nan=False, separators=(',', ':'))
-    if len(encoded.encode()) > 4 * 1024 * 1024:
-        raise ValueError('Live target metadata exceeds 4 MB.')
+    if len(encoded.encode()) > (16 if safe['frameProtocol']=='ybs' else 4) * 1024 * 1024:
+        raise ValueError('Live target metadata exceeds its size limit.')
     # Include physical identity so replacing a machine never reuses its old latest values.
     snapshot['hash'] = hashlib.sha256(encoded.encode()).hexdigest()
     return snapshot
@@ -171,13 +185,22 @@ def decode_cycle(config, transport):
         rows = [r for r in config['metadata'] if r['groupCode'] == group]
         raw = bytes(response.get('rawBytes') or [])
         length = int.from_bytes(raw[3:5], 'big') if len(raw) >= 7 else 0
+        is_ybs = frame_protocol(plc) == 'ybs'
         checksum = 0
         for byte in raw[:-2]: checksum ^= byte
         valid = (response.get('success') and len(raw) == length + 7 and raw[0] == 3 and
                  raw[-1] == 2 and raw[1] == plc['machineId'] and checksum == raw[-2] and raw[2] == 0)
+        if is_ybs:
+            from python_engine.ybs import parse_frame
+            parsed = parse_frame(raw, plc['machineId'], group)
+            valid = bool(response.get('success') and parsed['success'])
+            length = parsed['dataLength']
         expected = max((r['offset'] + metadata_width(r) for r in rows), default=0)
         values = []
-        if valid:
+        if valid and is_ybs:
+            from python_engine.ybs import decode_values
+            values = decode_values(parsed['payload'], rows)
+        elif valid:
             for item in rows:
                 kind = item['dataType'].upper()
                 if kind not in FORMATS or (item.get('arraySize') or 1) > 1:
@@ -194,8 +217,8 @@ def decode_cycle(config, transport):
                 values.append({**{k: item.get(k) for k in ('tagCode', 'parameter', 'screenName', 'groupCode', 'offset', 'dataType', 'units', 'min', 'max', 'scaleFactor', 'offsetFactor')},
                                'rawValue': value, 'formattedValue': str(value), 'rawHex': '',
                                'isInRange': not bool(issue), 'qualityIssue': issue or None})
-        groups[str(group)] = dict(groupCode=group, success=bool(valid), resultCode=raw[2] if len(raw)>2 else -1,
-            dataLength=length, expectedLength=expected, lengthMatch=length >= expected, parsedValues=values,
+        groups[str(group)] = dict(groupCode=group, success=bool(valid), resultCode=(0 if valid else -1) if is_ybs else raw[2] if len(raw)>2 else -1,
+            dataLength=length, expectedLength=expected, lengthMatch=length == expected if is_ybs else length >= expected, parsedValues=values,
             rawBytes=[], rawHex='', rttMs=response.get('rttMs', 0), timestamp='',
             completedAt=response.get('completedAt', time.time()*1000), source='plc', stage=response.get('stage'),
             error=response.get('error') or (None if valid else 'No valid PLC frame received.'))
@@ -212,7 +235,7 @@ def collect(user_id, config):
                             completedAt=time.time()*1000) for g in plc['liveGroupCodes']]
             transport = {'results': results}
         else:
-            transport = tcp.sequence(plc['ip'], plc['port'], plc['machineId'], plc['liveGroupCodes'], plc['timeoutMs'], stop_event=_stop, max_duration=60)
+            transport = tcp.sequence(plc['ip'], plc['port'], plc['machineId'], plc['liveGroupCodes'], plc['timeoutMs'], stop_event=_stop, max_duration=60, protocol='ybs' if frame_protocol(plc)=='ybs' else 'spinconnect')
         result = decode_cycle(config, transport)
         captured = time.time()
         sample = dict(result, capturedAt=captured*1000, metadataHash=config['hash'])

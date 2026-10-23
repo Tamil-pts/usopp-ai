@@ -1,9 +1,11 @@
 import type {MetadataItem, ParsedParamValue} from '../../../nami/src/types';
 import {parsePLCResponse, parseGroupValues, calculateXorChecksum} from '../../../nami/src/utils/packetParser';
 import {getExpectedGroupPayloadLength} from '../../../nami/src/utils/metadataParser';
+import {parseYbsFrame} from '../../../nami/src/utils/ybsProtocol';
 
 export type LogStatus = 'received'|'failed'|'mismatch'|'unconfirmed'|'close_requested';
 export interface LogCapture {
+  protocol?:'spinconnect'|'ybs';
   id:number; groupCode:number; asset:string; timestamp:string; requestTimestamp?:string;
   requestLine?:number; responseLine?:number; requestBytes?:number[]; responseBytes?:number[];
   machineId?:number; resultCode?:number; payloadLength?:number; expectedLength?:number;
@@ -21,12 +23,12 @@ export function decodeCollectedLog(text:string, metadata:MetadataItem[], littleE
   for(let index=0;index<lines.length;index++) {
     const line=lines[index], lineNo=index+1;
     const match=line.match(/\b(writeBuffer|buffer):\s*\[([^\]]*)\]\s*for groupCode\s+(\d+)/i);
-    const asset=line.match(/(?:for asset|deviceName)\s+([^\s",]+)/i)?.[1]||line.match(/(?:data|device)\s+(AST[A-Za-z0-9]+)/i)?.[1]||'';
+    const asset=line.match(/(?:for asset|deviceName|for device)\s+([^\s",]+)/i)?.[1]||line.match(/(?:data|device)\s+(AST[A-Za-z0-9_]+)/i)?.[1]||'';
     const timestamp=line.match(/\bts=([^\s]+)/)?.[1]||`Line ${lineNo}`;
     if(!match) {
       if(/level=ERROR|\btimeout\b|\btimed out\b/i.test(line)) {
         const error=line.match(/\bmsg="(.*)"\s*$/)?.[1]||line.trim();
-        const gc=line.match(/\bgroupCode\s*[=:]?\s*(\d+)/i)?.[1]||line.match(/float64=(\d+)/)?.[1]||line.match(/_([0-9]+)\s*[:-]/)?.[1];
+        const gc=line.match(/\bgroupCode\s*[=:]?\s*(\d+)/i)?.[1]||line.match(/\bgc\s*-\s*(\d+)/i)?.[1]||line.match(/float64=(\d+)/)?.[1]||line.match(/_([0-9]+)\s*[:-]/)?.[1];
         const target=gc?recent.get(`${asset}:${gc}`):recent.get(asset);
         if(target)target.logErrors.push(`Line ${lineNo}: ${error}`);else warnings.push(`Line ${lineNo}: ${error}`);
       }else if(/\b(?:writeBuffer|buffer):/i.test(line))warnings.push(`Line ${lineNo}: buffer format not recognized; expected decimal bytes and groupCode.`);
@@ -38,19 +40,20 @@ export function decodeCollectedLog(text:string, metadata:MetadataItem[], littleE
       warnings.push(`Line ${lineNo}: GC ${groupCode} has invalid decimal bytes (must be 0–255).`);continue;
     }
     const bytes=tokens.map(Number), isRequest=match[1].toLowerCase()==='writebuffer';
+    const isYbs=bytes[0]===241;
     let capture:LogCapture;
     if(isRequest) {
       capture={id:captures.length,groupCode,asset,timestamp,requestTimestamp:timestamp,requestLine:lineNo,requestBytes:bytes,
-        machineId:bytes[1],status:groupCode===11?'close_requested':'unconfirmed',issues:[],logErrors:[],values:[]};
+        machineId:bytes[1],protocol:isYbs?'ybs':'spinconnect',status:groupCode===11&&!isYbs?'close_requested':'unconfirmed',issues:[],logErrors:[],values:[]};
       captures.push(capture);
       const declared=bytes.length>=5?bytes[3]*256+bytes[4]:-1;
-      if(bytes.length<9||bytes[0]!==3||bytes[2]!==1||declared+7!==bytes.length||bytes.at(-1)!==2||calculateXorChecksum(bytes,0,bytes.length-2)!==bytes.at(-2)) {
+      if(isYbs?!parseYbsFrame(new Uint8Array(bytes),bytes[1],groupCode).success:bytes.length<9||bytes[0]!==3||bytes[2]!==1||declared+7!==bytes.length||bytes.at(-1)!==2||calculateXorChecksum(bytes,0,bytes.length-2)!==bytes.at(-2)) {
         capture.issues.push('Request header, function, length, checksum or ETX is invalid.');capture.status='failed';
       }
       if(bytes.length>=7&&bytes[5]*256+bytes[6]!==groupCode) {
         capture.issues.push(`Logged GC ${groupCode} differs from request GC ${bytes[5]*256+bytes[6]}.`);capture.status='failed';
       }
-      if(groupCode!==11)pending.set(key,[...(pending.get(key)||[]),capture]);
+      if(groupCode!==11||isYbs)pending.set(key,[...(pending.get(key)||[]),capture]);
     }else {
       const queue=pending.get(key)||[], matching=queue.filter(c=>c.machineId===bytes[1]);
       capture=matching.length===1?matching[0]:{id:captures.length,groupCode,asset,timestamp,machineId:bytes[1],status:'received',issues:[],logErrors:[],values:[]};
@@ -58,12 +61,13 @@ export function decodeCollectedLog(text:string, metadata:MetadataItem[], littleE
         captures.push(capture);warnings.push(`Line ${lineNo}: GC ${groupCode} response has ${matching.length?'ambiguous requests':'no matching request in this excerpt'}; mapped using its logged GC.`);
         if(queue.length&&matching.length===0)capture.issues.push(`Response Machine ID ${bytes[1]} does not match pending request IDs ${[...new Set(queue.map(c=>c.machineId))].join(', ')}.`);
       }
-      capture.responseLine=lineNo;capture.timestamp=timestamp;capture.responseBytes=bytes;
-      const parsed=parsePLCResponse(bytes,capture.machineId);
+      capture.responseLine=lineNo;capture.timestamp=timestamp;capture.responseBytes=bytes;capture.protocol=isYbs?'ybs':'spinconnect';
+      const parsed=parsePLCResponse(bytes,capture.machineId,groupCode);
       capture.resultCode=parsed.resultCode;capture.payloadLength=parsed.dataLength;
       capture.status=capture.issues.length?'failed':parsed.success?'received':'failed';
       if(!parsed.success)capture.issues.push(parsed.error||`PLC error ${parsed.resultCode}.`);
-      if(bytes.length!==parsed.dataLength+7){capture.issues.push(`Frame has ${bytes.length} bytes; header requires ${parsed.dataLength+7}.`);capture.status='failed'}
+      const expectedFrame=parsed.frameLength??parsed.dataLength+7;
+      if(bytes.length!==expectedFrame){capture.issues.push(`Frame has ${bytes.length} bytes; header requires ${expectedFrame}.`);capture.status='failed'}
       const loggedLength=line.match(/\blength\s+(\d+)/i)?.[1];
       if(loggedLength&&Number(loggedLength)!==bytes.length){capture.issues.push(`Logged length ${loggedLength} differs from ${bytes.length} captured bytes.`);capture.status='failed'}
       const items=groups.get(groupCode)||[];
@@ -73,6 +77,9 @@ export function decodeCollectedLog(text:string, metadata:MetadataItem[], littleE
         if(parsed.success&&capture.expectedLength!==parsed.dataLength) {
           if(capture.status!=='failed')capture.status='mismatch';
           capture.issues.push(`Metadata requires ${capture.expectedLength} payload bytes; PLC sent ${parsed.dataLength}. Check the workbook version and GC mapping.`);
+        }
+        if(parsed.success&&capture.status!=='failed'&&isYbs&&items.some(item=>item.protocol!=='ybs')){
+          capture.issues.push('Load YBS metadata: its integer widths and division/multiplication factors differ from SpinConnect.');capture.status='failed';
         }
         if(parsed.success&&capture.status!=='failed') {
           capture.values=parseGroupValues(parsed.dataBytes,items,littleEndian).map((v,i)=> {
@@ -106,7 +113,7 @@ export function decodeCollectedLog(text:string, metadata:MetadataItem[], littleE
     const item=groups.get(10)?.find(m=>m.tagCode===version?.tagCode);
     if(typeof version?.rawValue==='number'&&item) {
       const from=Number(item.fromVersion),to=Number(item.toVersion);
-      if(Number.isFinite(from)&&Number.isFinite(to)&&(version.rawValue<from||version.rawValue>to))
+      if(item.fromVersion&&item.toVersion&&Number.isFinite(from)&&Number.isFinite(to)&&(version.rawValue<from||version.rawValue>to))
         warnings.push(`GC 10 at ${c.timestamp}: PLC program version ${version.formattedValue} is outside this metadata row's FROM_VERSION ${item.fromVersion} / TO_VERSION ${item.toVersion}. Confirm the correct workbook before relying on mapped values.`);
     }
   }

@@ -3,6 +3,104 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.74.2 - 2026-10-23
+
+- Verify the main UI version and compiled asset checksum before packaging a container. Container health fails when the deployed interface and API do not match; image tags must match the compiled application version.
+- Show version mismatches as warnings, check health without browser caching, prevent caching of all three UI entry pages and provide a fresh reload URL while preserving existing parameters.
+- Add a GitHub Linux container build with HTTP checks for the UI assets, version agreement, authentication, API registration, runtime permissions and compiled-source audit before exporting the image and checksum.
+- Remove unsupported File schema arguments that prevented startup with current FastAPI. Preserve large project upload limits in the multipart parser and refresh checks for administrator-approved accounts, exact alarm bindings and the combined Ubuntu launcher.
+
+## 4.74.1 - 2026-10-23
+
+- Move Generate ST from the ByteMap project toolbar into the Write ST generator panel. The action starts analysis, reports required HMI choices and creates the reviewed draft. Keep analysis across tab changes and scroll to generated output.
+- Accept the single fixed-address GC10 program-version reply at nw_snd_buffer[5] without requiring an unused nw_i cursor or increment. Retain datatype, offset, length and response checks, and cursor validation for other layouts. Label this reply as using a fixed buffer offset.
+
+## 4.74.0 - 2026-10-23
+
+- Add the DataInspect pencil action for metadata rows with IS_WRITABLE = YES. Load the matching ByteMap write mapping, select the settings service and machine variant, read the current raw PLC value, then explicitly send and verify the change.
+- Preserve other fields using a fresh function 1 read on the write port and the complete source-derived function 2 layout, including readonly positions and conditional variants. Reject changed previews, overlapping/gapped layouts, out-of-range values and repeated or expired send tokens.
+- Record settings-write evidence, before/requested/observed values, target and acknowledgement in test history. A nonzero PLC result or unconfirmed readback is a failed write.
+- Regenerate Project 2 and Project 5 GC130/GC140 samples with portable DataInspect mappings. Check generated ST with the local parser and run localhost mock-controller transport regressions. Automation Studio target compilation and physical machine checks remain required integration steps.
+
+## 4.73.0 - 2026-10-23
+
+- Add ByteMap Write ST with project upload/path support, source and HMI-target selection, group review, native PLC-unit HMI limits and source-condition traceability.
+- Generate a complete selected-group mms_nw_w cyclic draft with the matching declarations/types/init files, a conditional wire-field map and copy/file/ZIP downloads. Preserve existing transport, machine interlocks, readonly positions and completion/recipe actions.
+- Convert numeric input limits through exact target/datasource/unit-group bindings. Retain dynamic limits and original source checks when additional reviewed limits are supplied.
+- Follow conditional receive cursors, guard frame lengths and BOOL wire values, derive draft read response lengths from the actual cursor, and block unsafe copy widths or unresolved buffer capacities.
+- Detect stale source analysis by fingerprint and add step-by-step Help and integration instructions. Include source-study findings for Project 2 and Project 5. Automation Studio compilation and physical PLC operation remain separate integration steps.
+
+## 4.72.0 - 2026-10-22
+
+- Use usop.ai in the application title and visible product branding. Identify ByteMap and DataInspect as SpinConnect tools while retaining the separate YBS frame profile.
+- Hide AI model identity and runtime resource details in Chopper and Help. Replace technical Help content with searchable, numbered end-user workflows for setup, operation, result review and troubleshooting.
+- Show every workspace feature in WorkHub, including Virtual PLC and My profile. Keep user management protected by Admin authorization on the interface and API.
+- Add explicit Admin/User role selection for account creation and management, session revocation after role changes and protection for the primary and last enabled administrator.
+- Add persistent personal profile photos with upload/removal controls, header avatars and Admin account-list thumbnails. Validate and re-encode PNG/JPEG/WebP uploads before storage.
+
+## 4.71.2 - 2026-10-22
+
+- Show YBS frame faults with byte positions, expected/received decimal and HEX values, checksum/end-marker checks and actionable next checks in Chopper and DataInspect.
+- Explain selected rejected YBS captures directly from their raw bytes before optional model generation. Preserve source lines and distinguish observed trailer patterns from unconfirmed causes.
+- Keep readings withheld after integrity failures; matching workbook/payload lengths never override checksum/end-marker failures.
+
+## 4.71.1 - 2026-10-22
+
+- Add an explicit Request frame selector: Server to B&R (SpinConnect) or Server to YBS (Embedded C), separate from Machine Type. Retain the choice in target settings, request history and live collection.
+- Add a read request builder with Machine ID, arbitrary group code, a YBS GC 70 shortcut, and decimal/HEX previews in the frame editor. Protocol changes rebuild the request and use the selected header/checksum profile.
+- Load matching metadata by request profile, invalidate earlier readings on profile changes, and preserve existing YBS targets through fallback selection.
+
+## 4.71.0 - 2026-10-22
+
+- Add a separate YBS F1/F0 DataInspect profile with total-frame length, embedded GC, XOR seed FF, big-endian wire types and local TCP closure.
+- Import the supplied 10,244-row YBS workbook with source-row offsets, original type names, division/multiplication factors, raw/actual readings and explicit bit meanings. Include the YBS factory asset and lossless metadata template exports.
+- Apply YBS decoding to manual receives, collected logs, network reads, live history, dashboard bindings and verification exports. Withhold invalid frames and flag mismatched metadata lengths and unavailable fields.
+- Add a reusable Python decoder and Excel/JSON capture audit. Record 80 invalid GC 21 responses and seven group layout mismatches from the supplied capture; physical device/firmware verification remains outstanding.
+
+## 4.70.0 - 2026-10-22
+
+- Add column-driven report query plans for multiple measures, independent questions, per-field totals/means/medians, rankings, lot/date/shift grouping and period differences.
+- Use the selected language model for unfamiliar comparison wording, validate every selected source/field/operation and enforce explicit requested-column coverage before calculation. Workbook text never becomes executable code.
+- Aggregate report sources independently and align their grouped results. Withhold cross-report derived calculations when coverage or units are incompatible; disclose missing values and zero denominators.
+- Retain validated plans through dashboard filters and PDF/CSV/JSON exports so recalculation uses the same interpreted question without repeating model generation. Show measures and filters for review.
+
+## 4.69.2 - 2026-10-22
+
+- Recognize common spindle/delivery spelling variations and include every recognized requested field. Disclose unmatched additional requests instead of substituting a default measure.
+- Keep lot identities alongside speed averages and show multiple requested chart measures with separate scales and source units.
+- Default to production data in the dashboard. Select report types explicitly, follow the question's matched sources, and retain those sources through filters and PDF/CSV/JSON exports.
+- Hide unrelated report navigation, KPI cards, charts and export columns; add production spindle-speed and delivery-speed indicators.
+
+## 4.69.1 - 2026-10-22
+
+- Resolve report questions against actual headers before calculation. Add TPI, twist multiplier, yarn-count and lot projections, multiple requested columns, source-specific rankings and fast explanations for unsupported columns.
+- Keep TPI/count/lot combinations distinct, preserve source coverage, and route lot questions locally. Unknown report questions no longer fall through to the optional model or substitute unrelated default measures.
+- Add a question-specific dashboard with matched result tables/charts and question-specific PDF/CSV exports. Date/shift/machine controls retain the current question.
+- Clear a previous single-machine focus when a new machine-wise or comparative machine query asks across machines, and replace fixed follow-up shortcuts with report question choices.
+
+## 4.69.0 - 2026-10-22
+
+- Add a responsive Chopper performance workspace with Chat, Split and Dashboard views, compact report attachments, machine drilldowns and an expandable layout.
+- Add daily production/utilization charts, stoppage distribution, top/bottom machines, quality/resource views, calculated findings and suggested action priorities.
+- Compare date ranges with explicit coverage checks. Add browser-saved user KPI limits, daily aggregate compliance and machine flags; absent metrics and unconfigured limits remain unassessed.
+- Read existing end-mending, idle/slip/rogue spindle and 40s GPSS columns. Refresh earlier report caches from their owned original workbook when needed.
+- Export calculated PDF, machine CSV and full evidence JSON reports with original source references and ownership checks.
+
+## 4.68.0 - 2026-10-21
+
+- Analyze uploaded production, quality, stoppage, breakage, air and power reports in Chopper from their full parsed machine records, independently of the optional local language model.
+- Calculate machine rankings, daily/shift/lot comparisons, date filters, stoppage event counts and the leading machine's recorded reason breakdown with worksheet provenance. Exclude report summaries from detail calculations and disclose source-summary differences.
+- Recognize operational report workbooks separately from PLC metadata. Keep source uploads private to their owner and provide KPI cards, original-workbook downloads and follow-up prompts.
+- Preserve separate production/actual-production measures, show missing targets, label unweighted quality means and calculate aggregate energy intensity from summed kWh and kg. Uploaded report records do not establish live machine state or create maintenance tickets.
+
+## 4.67.0 - 2026-10-20
+
+- Release Virtual PLC 0.9.0 with independent Run PLC and Simulation jig controls, editable healthy Project 2 contacts, automatic load/pressure feedback, and linked drive/shaft/encoder models.
+- Schedule INIT, CYCLIC and EXIT sections of combined Main.st/C sources at their original CPU assignments. Correct inactive encoder-frequency calculations and preserve assignment order for existing saved workspaces.
+- Use PC local RTC by default, with an editable custom virtual clock. Add scan batching and cache resolved variable identities. Preserve strict external input validation and C integer assignment conversions.
+- Keep commissioning defaults, physical assumptions, source fingerprints and virtual source corrections in reusable JSON. Original PLC files remain unchanged; use the existing Start_uSOPp.bat launcher.
+- Include compact topology cards, saved Operate/Edit/Move layouts and VC4 local virtual-key actions from the preceding module updates.
+
 ## Virtual PLC 0.3.0 - 2026-10-17 (development extension)
 
 - Add a configurable dark topology with DI/DO/AI/AO, motor, servo, VFD and encoder devices, saved positions, shared PLC-variable connections and live DI/AI inputs. Order hardware stations naturally.

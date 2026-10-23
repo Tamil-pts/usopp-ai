@@ -244,12 +244,12 @@ def initialize_bench(runtime, components, reserved_ids=(), reserved_outputs=()):
             component['bindings'].update(override.get('bindings', {}))
             component.setdefault('links',{}).update(override.get('links', {}))
             component['config'].update(override.get('config', {}))
-            prior=component['evidence'].get('jigProfile',{})
+            prior=component['evidence']
             obsolete=set(override.get('replacesAssumptions',[]))
-            if prior.get('id')==profile['id'] and prior.get('reason')!=override['reason']:
-                obsolete.add(prior.get('reason'))
+            if prior.get('jigProfileId')==profile['id'] and prior.get('jigProfileReason')!=override['reason']:
+                obsolete.add(prior.get('jigProfileReason'))
             component['assumptions']=[reason for reason in component['assumptions'] if reason not in obsolete]
-            component['evidence']['jigProfile']={'id':profile['id'],'version':profile.get('version',1),'reason':override['reason']}
+            component['evidence'].update(jigProfileId=profile['id'],jigProfileVersion=profile.get('version',1),jigProfileReason=override['reason'])
             if override['reason'] not in component['assumptions']:component['assumptions'].append(override['reason'])
         for component in components:
             if component['id'] in modeled:

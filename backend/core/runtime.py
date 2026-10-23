@@ -80,6 +80,7 @@ log.info('CONFIG MAX_PROJECT_FILES=%d ENGINE=%s RULE_ENGINE=%s MASTER_KB=%s repo
 # parser limit. Browser folder uploads from Automation Studio can contain
 # several thousand files, so raise that parser limit for this application.
 # This is intentionally local to this process and requires no admin access.
+# max_files is a parser option; FastAPI File() accepts only schema options.
 _ORIGINAL_GET_FORM = Request._get_form
 async def _usopp_get_form(self, *, max_files=1000, max_fields=1000, max_part_size=1024*1024):
     # Automation Studio workspaces can contain hundreds of thousands of files.
@@ -177,6 +178,10 @@ def clear_temporary_workspaces()->dict:
             # Download routes still serve reports from their session directory.
             # Clear only staged source trees; retain report/session artifacts.
             if child.is_dir():
+                if child.name.startswith('chopper_report_'):
+                    shutil.rmtree(resolved)
+                    removed += 1
+                    continue
                 upload=child/'project_upload.json'
                 if upload.is_file() and not json.loads(upload.read_text(encoding='utf-8')).get('complete'): continue
                 with workspace_cleanup(child) as available:

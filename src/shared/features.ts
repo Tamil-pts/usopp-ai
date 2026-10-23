@@ -1,12 +1,13 @@
 export type EngineeringFeature='validation'|'plc'|'compare'|'rules'|'chatbot';
 export const FEATURES:Record<EngineeringFeature,{name:string;purpose:string;steps:string[];recommendation:string}>={
-  validation:{name:'ByteMap',purpose:'Inspect PLC packet layouts, metadata, HMI mappings and generated workbooks.',steps:[
+  validation:{name:'ByteMap',purpose:'Validate SpinConnect packet layouts, offsets, metadata and HMI mappings from your B&R project.',steps:[
     'Select or upload the Automation Studio project and confirm the machine/department and active configuration.',
     'Run the packet checks. Metadata is optional; upload it when you want a workbook comparison.',
     'Expand a warning or failure for TAG_CODE, Group Code, file, line, expected value and suggested fix.',
-    'Open MetaWorks to generate metadata, review both worksheets and export the workbook. Rerun checks after a source or mapping change.'
+    'Open MetaWorks to generate metadata, review both worksheets and export the workbook. Rerun checks after a source or mapping change.',
+    'For write code, open Write ST, analyze the read/write routines, review groups and HMI limits, then generate and copy the complete ST draft with its declarations.'
   ],recommendation:'Start with the earliest incorrect packet offset. Check the source write size and nw_i increment, then compare the payload-relative offset, datatype and Sheet2 mappings.'},
-  plc:{name:'DataInspect',purpose:'Read live PLC packets and verify their decoded values against metadata.',steps:[
+  plc:{name:'DataInspect',purpose:'Read and decode SpinConnect PLC packets, monitor values and inspect captured data. Select the YBS profile for embedded device frames.',steps:[
     'Open Manage targets. Choose the machine/department and Real PLC, Automation Studio simulation or Data simulator.',
     'For a real target, enter the controller IP, its TCP server port, Machine ID, byte order and timeout. Use GC 10 Test, then Save & Apply.',
     'Load the machine metadata, select a Group Code or Run All, and inspect values, offsets and packet findings.',
@@ -26,7 +27,7 @@ export const FEATURES:Record<EngineeringFeature,{name:string;purpose:string;step
     'Open ResultView and export the complete run as HTML or PDF. Enter the project name, description, validated by, validation details, approved by and date for the cover.'
   ],recommendation:'Separate a wrong requirement from a source defect. Check the target file, accepted alternative and every cross-reference before teaching; add approved alternatives without replacing the original.'},
   chatbot:{name:'AI Assistant',purpose:'Explain findings, configure requirements and maintain engineering knowledge.',steps:[
-    'Ask Chopper about any uSOPp feature. A selected project is optional; use its evidence when discussing project findings.',
+    'Ask Chopper about any usop.ai feature. A selected project is optional; use its evidence when discussing project findings.',
     'Use the chat paperclip to attach a collected PLC log and metadata, or paste the log. Read and copy decoded tables directly in chat.',
     'Include the relevant file, PLC tag, datatype, Group Code and expected behaviour.',
     'Configure requirements, accepted alternatives and cross-references; run the draft against the selected project.',

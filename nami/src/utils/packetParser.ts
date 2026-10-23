@@ -1,8 +1,10 @@
 import { MetadataItem, ParsedParamValue } from '../types';
 import {formatDecodedValue} from './valueDisplay';
 import {dataQualityIssue} from './dataQuality';
+import {parseYbsFrame,buildYbsReadRequest} from './ybsProtocol';
 
-export function buildReadGroupRequest(machineId: number, groupCode: number): Uint8Array {
+export function buildReadGroupRequest(machineId: number, groupCode: number,protocol:'spinconnect'|'ybs'='spinconnect'): Uint8Array {
+  if(protocol==='ybs')return buildYbsReadRequest(machineId,groupCode);
   const buf = new Uint8Array(9);
   buf[0] = 0x03; // STX
   buf[1] = machineId & 0xff; // Machine ID
@@ -168,7 +170,8 @@ export function buildRTCPacket(machineId: number, functionCode: number = 2, asci
 
 export function parsePLCResponse(
   rawBytes: Uint8Array | number[],
-  expectedMachineId?: number
+  expectedMachineId?: number,
+  expectedGroupCode?:number
 ): {
   success: boolean;
   resultCode: number;
@@ -176,8 +179,10 @@ export function parsePLCResponse(
   dataBytes: Uint8Array;
   error?: string;
   checksumValid: boolean;
+  frameLength?:number;protocol?:'ybs'|'spinconnect';groupCode?:number;
 } {
   const bytes = rawBytes instanceof Uint8Array ? rawBytes : new Uint8Array(rawBytes);
+  if(bytes[0]===241)return parseYbsFrame(bytes,expectedMachineId,expectedGroupCode);
 
   if (bytes.length < 7) {
     return {
@@ -283,6 +288,7 @@ export function parseGroupValues(
   const results: ParsedParamValue[] = [];
 
   for (const item of metaItems) {
+    const littleEndian=item.protocol==='ybs'?false:isLittleEndian;
     const offset = item.offset;
     let rawValue: any = null;
     let hexValue = '';
@@ -312,12 +318,12 @@ export function parseGroupValues(
           }
           let value: any;
           switch (baseType) {
-            case 'REAL': value = dataView.getFloat32(elementOffset, isLittleEndian); break;
-            case 'LREAL': value = dataView.getFloat64(elementOffset, isLittleEndian); break;
-            case 'DINT': value = dataView.getInt32(elementOffset, isLittleEndian); break;
-            case 'UINT': value = dataView.getUint16(elementOffset, isLittleEndian); break;
-            case 'INT': value = dataView.getInt16(elementOffset, isLittleEndian); break;
-            case 'UDINT': value = dataView.getUint32(elementOffset, isLittleEndian); break;
+            case 'REAL': value = dataView.getFloat32(elementOffset, littleEndian); break;
+            case 'LREAL': value = dataView.getFloat64(elementOffset, littleEndian); break;
+            case 'DINT': value = dataView.getInt32(elementOffset, littleEndian); break;
+            case 'UINT': value = dataView.getUint16(elementOffset, littleEndian); break;
+            case 'INT': value = dataView.getInt16(elementOffset, littleEndian); break;
+            case 'UDINT': value = dataView.getUint32(elementOffset, littleEndian); break;
             case 'USINT': value = dataView.getUint8(elementOffset); break;
             case 'SINT': value = dataView.getInt8(elementOffset); break;
             case 'BOOL': value = dataView.getUint8(elementOffset) !== 0; break;
@@ -353,7 +359,7 @@ export function parseGroupValues(
       } else switch (baseType) {
         case 'REAL': {
           if (offset + 4 <= dataBytes.length) {
-            rawValue = dataView.getFloat32(offset, isLittleEndian);
+            rawValue = dataView.getFloat32(offset, littleEndian);
             formattedValue = formatDecodedValue(rawValue);
             const b = dataBytes.slice(offset, offset + 4);
             hexValue = Array.from(b).map(x => x.toString(16).padStart(2, '0')).join(' ');
@@ -364,7 +370,7 @@ export function parseGroupValues(
         }
         case 'LREAL': {
           if (offset + 8 <= dataBytes.length) {
-            rawValue = dataView.getFloat64(offset, isLittleEndian);
+            rawValue = dataView.getFloat64(offset, littleEndian);
             formattedValue = formatDecodedValue(rawValue);
             const b = dataBytes.slice(offset, offset + 8);
             hexValue = Array.from(b).map(x => x.toString(16).padStart(2, '0')).join(' ');
@@ -373,7 +379,7 @@ export function parseGroupValues(
         }
         case 'DINT': {
           if (offset + 4 <= dataBytes.length) {
-            rawValue = dataView.getInt32(offset, isLittleEndian);
+            rawValue = dataView.getInt32(offset, littleEndian);
             formattedValue = `${rawValue}`;
             const b = dataBytes.slice(offset, offset + 4);
             hexValue = Array.from(b).map(x => x.toString(16).padStart(2, '0')).join(' ');
@@ -382,7 +388,7 @@ export function parseGroupValues(
         }
         case 'UINT': {
           if (offset + 2 <= dataBytes.length) {
-            rawValue = dataView.getUint16(offset, isLittleEndian);
+            rawValue = dataView.getUint16(offset, littleEndian);
             formattedValue = `${rawValue}`;
             const b = dataBytes.slice(offset, offset + 2);
             hexValue = Array.from(b).map(x => x.toString(16).padStart(2, '0')).join(' ');
@@ -393,7 +399,7 @@ export function parseGroupValues(
         }
         case 'INT': {
           if (offset + 2 <= dataBytes.length) {
-            rawValue = dataView.getInt16(offset, isLittleEndian);
+            rawValue = dataView.getInt16(offset, littleEndian);
             formattedValue = `${rawValue}`;
             const b = dataBytes.slice(offset, offset + 2);
             hexValue = Array.from(b).map(x => x.toString(16).padStart(2, '0')).join(' ');
@@ -404,7 +410,7 @@ export function parseGroupValues(
         }
         case 'UDINT': {
           if (offset + 4 <= dataBytes.length) {
-            rawValue = dataView.getUint32(offset, isLittleEndian);
+            rawValue = dataView.getUint32(offset, littleEndian);
             formattedValue = `${rawValue}`;
             const b = dataBytes.slice(offset, offset + 4);
             hexValue = Array.from(b).map(x => x.toString(16).padStart(2, '0')).join(' ');
@@ -490,12 +496,25 @@ export function parseGroupValues(
         isInRange = false;
       }
 
-      const qualityIssue = dataQualityIssue(rawValue, item.parameter);
+      let actualValue:number|null|undefined;
+      if(item.protocol==='ybs'){
+        const divide=item.divideFactor??1,multiply=item.multiplyFactor??1;
+        actualValue=typeof rawValue==='number'&&Number.isFinite(rawValue)&&Number.isFinite(divide)&&divide>0&&Number.isFinite(multiply)?rawValue/divide*multiply:null;
+        if(actualValue!==null&&!Number.isFinite(actualValue))actualValue=null;
+        formattedValue=actualValue===null?'Unavailable':formatDecodedValue(actualValue);
+        if(actualValue!==null&&item.bitDefinitions?.length&&Number.isInteger(rawValue)){
+          const active=item.bitDefinitions.filter(bit=>Boolean(rawValue&(2**bit.bit))).map(bit=>`Bit ${bit.bit}: ${bit.label}`);
+          dropdownText=active.join(' | ')||undefined;
+          if(dropdownText)formattedValue+=` (${dropdownText})`;
+        }
+      }
+      const outsideLimits = typeof actualValue==='number' && ((item.min!==null && actualValue<item.min) || (item.max!==null && actualValue>item.max));
+      const qualityIssue = item.protocol==='ybs' ? (actualValue===null ? `Missing or invalid YBS value at payload offset ${offset} (${dataBytes.length} bytes received).` : outsideLimits ? 'Actual value is outside the metadata limits.' : undefined) : dataQualityIssue(rawValue, item.parameter);
       isInRange = !qualityIssue;
 
       // Check for Dropdown Reference mapping (Sheet 2)
       const isGroup30BitAlarm = item.groupCode === 30 && (item.dropdownOptions || []).some((opt) => opt.isAlarm === true);
-      if (!isGroup30BitAlarm && item.dropdownOptions && item.dropdownOptions.length > 0 && rawValue !== null && rawValue !== undefined) {
+      if (item.protocol!=='ybs' && !isGroup30BitAlarm && item.dropdownOptions && item.dropdownOptions.length > 0 && rawValue !== null && rawValue !== undefined) {
         const matchedOption = item.dropdownOptions.find(
           (opt) => Number(opt.value) === Number(rawValue) || String(opt.value) === String(rawValue)
         );
@@ -514,6 +533,7 @@ export function parseGroupValues(
         dataType: item.dataType,
         units: item.units,
         rawValue,
+        ...(item.protocol==='ybs'?{actualValue,protocol:'ybs' as const,wireDataType:item.wireDataType,divideFactor:item.divideFactor,multiplyFactor:item.multiplyFactor,sourceRow:item.sourceRow,sourceSheet:item.sourceSheet,layoutInferred:item.layoutInferred}:{}),
         formattedValue,
         rawHex: hexValue,
         min: item.min,

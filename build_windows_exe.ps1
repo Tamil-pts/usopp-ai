@@ -46,6 +46,9 @@ if (-not (Test-Path -LiteralPath (Join-Path $AppRoot 'dist\index.html'))) {
 if (-not (Test-Path -LiteralPath (Join-Path $AppRoot 'dist\nami\index.html'))) {
     throw 'dist\nami\index.html is missing. Run again with -RebuildFrontend to include PLC Data.'
 }
+if (-not (Test-Path -LiteralPath (Join-Path $AppRoot 'virtual_plc\dist\index.html'))) {
+    throw 'Virtual PLC interface is missing. Run again with -RebuildFrontend.'
+}
 
 & $Python -m pip install 'pyinstaller==6.22.3' --disable-pip-version-check
 if ($LASTEXITCODE -ne 0) { throw 'PyInstaller installation failed.' }
@@ -80,6 +83,10 @@ $Arguments = @(
     '--add-data', ((Join-Path $AppRoot 'src\petrus_logo.png') + ';src'),
     '--collect-submodules', 'uvicorn',
     '--collect-submodules', 'backend',
+    '--collect-submodules', 'virtual_plc.core',
+    '--add-data', ((Join-Path $AppRoot 'virtual_plc\dist') + ';virtual_plc/dist'),
+    '--add-data', ((Join-Path $AppRoot 'virtual_plc\examples') + ';virtual_plc/examples'),
+    '--add-data', ((Join-Path $AppRoot 'virtual_plc\navigation.js') + ';virtual_plc'),
     '--collect-submodules', 'fastapi',
     '--collect-submodules', 'multipart',
     '--collect-submodules', 'openpyxl', '--collect-data', 'openpyxl',

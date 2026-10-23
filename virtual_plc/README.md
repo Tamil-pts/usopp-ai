@@ -1,10 +1,14 @@
-# Virtual PLC 0.8.0
+# Virtual PLC 0.9.0
 
 An additive engineering and simulation module for uSOPp.ai 2.0. The launcher mounts it into the existing backend, reusing account sessions, project upload, project identity, source indexing, Ladder geometry, HMI decoding and the Chopper model runtime. MatchView's explorer and code-view styling are updated separately at the user's request. Validation engines and imported PLC sources are unchanged by these updates.
 
 ## Latest update
 
-Version 0.8.0 separates **Run PLC** from **Simulation jig ON/OFF**. Jig
+Version 0.9.0 schedules every INIT, CYCLIC and EXIT entry in combined source
+files at its original CPU assignment, and caches resolved variable identities.
+This includes the encoder frequency producers in Project 2.
+
+**Run PLC** is separate from **Simulation jig ON/OFF**. Jig
 preparation supplies reviewed healthy contacts, clears injected test faults and
 resets the virtual PLC. Delayed actuator-to-sensor rules support automatic
 feedback with persistent manual overrides. Project 2 includes load switches,

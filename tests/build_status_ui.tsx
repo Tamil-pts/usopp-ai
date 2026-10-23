@@ -1,0 +1,16 @@
+import React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import assert from 'node:assert/strict';
+import packageInfo from '../package.json';
+import {BuildVersionBadge,BuildVersionNotice,updatedInterfaceUrl} from '../src/shared/BuildStatus';
+const good={version:packageInfo.version,status:'ok'};
+assert.ok(renderToStaticMarkup(<BuildVersionBadge health={good}/>).includes('badge pass'));
+const old={version:'different',status:'ok'};
+assert.ok(renderToStaticMarkup(<BuildVersionBadge health={old}/>).includes('badge warn'));
+assert.ok(renderToStaticMarkup(<BuildVersionNotice health={old}/>).includes('Reload interface'));
+assert.equal(renderToStaticMarkup(<BuildVersionNotice health={good}/>),'');
+assert.ok(renderToStaticMarkup(<BuildVersionNotice health={{...good,status:'version-mismatch'}}/>).includes('matching container'));
+const refreshed=new URL(updatedInterfaceUrl('http://example.local:8200/?existing=1#workspace',good.version,123));
+assert.equal(refreshed.searchParams.get('existing'),'1');assert.equal(refreshed.hash,'#workspace');
+assert.equal(refreshed.searchParams.get('usopp_build'),`${good.version}-123`);
+console.log('Build-version UI checks passed: matching versions, mismatch warning and fresh reload URL.');

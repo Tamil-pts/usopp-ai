@@ -1,4 +1,5 @@
 import json
+import hashlib
 from pathlib import Path
 import tempfile
 import unittest
@@ -24,6 +25,7 @@ class ContainerPackagingTests(unittest.TestCase):
                      'knowledge/master/default.json', 'knowledge/data_models/default.json',
                      'knowledge/dashboard_layouts/catalog.json', 'knowledge/lapformer/catalog.json',
                      'knowledge/chopper/engineering_tasks.json',
+                     'knowledge/virtual_plc/catalog.json',
                      'knowledge/help_index/project_guide.json',
                      'knowledge/help_index/BR_PROJECT_HELP.md',
                      'src/usopp_logo.png', 'src/petrus_logo.png',
@@ -31,6 +33,12 @@ class ContainerPackagingTests(unittest.TestCase):
             self.write(root, name)
         self.write(root, 'package.json', json.dumps({'name': 'fixture', 'version': '1.2.3',
                                                    'scripts': {'dev': 'private-build-command'}}))
+        self.write(root,'virtual_plc/dist/index.html','<html>Virtual PLC</html>')
+        self.write(root,'virtual_plc/examples/example.json','{}')
+        self.write(root,'virtual_plc/navigation.js','// navigation')
+        entry=self.write(root,'dist/assets/fixture.js','const version="1.2.3";')
+        self.write(root,'dist/build-info.json',json.dumps({'version':'1.2.3','entryFile':'assets/fixture.js',
+                                                        'entrySha256':hashlib.sha256(entry.read_bytes()).hexdigest()}))
 
     def test_runtime_compiles_application_and_preserves_only_runtime_defaults(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -95,6 +103,19 @@ class ContainerPackagingTests(unittest.TestCase):
             self.assertIn('Dockerfile', paths)
             self.assertIn('scripts/package_container.py', paths)
             self.assertFalse(set(private) & paths)
+
+    def test_container_rejects_stale_or_tampered_frontend(self):
+        for condition in ('old version','changed asset','missing manifest'):
+            with self.subTest(condition=condition),tempfile.TemporaryDirectory() as directory:
+                root=Path(directory)/'source';self.runtime_fixture(root)
+                if condition=='old version':
+                    doc=json.loads((root/'dist/build-info.json').read_text());doc['version']='1.2.2'
+                    (root/'dist/build-info.json').write_text(json.dumps(doc))
+                elif condition=='changed asset':(root/'dist/assets/fixture.js').write_text('old interface')
+                else:(root/'dist/build-info.json').unlink()
+                with patch.object(package_container,'ROOT',root):
+                    with self.assertRaisesRegex(ValueError,'Matching compiled frontend required'):
+                        package_container.stage(Path(directory)/'runtime')
 
     def test_download_zip_rejects_original_application_source(self):
         with tempfile.TemporaryDirectory() as directory:

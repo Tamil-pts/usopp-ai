@@ -2,7 +2,8 @@ import type {MetadataItem} from '../../../nami/src/types';
 import {parseCSVMetadata,parseExcelMetadata} from '../../../nami/src/utils/metadataParser';
 
 export interface ChatAttachment {
- id:string;name:string;kind:'metadata'|'log'|'document'|'unsupported'|'project';text:string;notice?:string;metadata?:MetadataItem[];projectPath?:string;projectName?:string;
+ id:string;name:string;kind:'metadata'|'log'|'document'|'unsupported'|'project'|'report';text:string;notice?:string;metadata?:MetadataItem[];projectPath?:string;projectName?:string;
+ reportId?:string;report?:{id:string;kind:string;label:string;records:number;machines:number;dateFrom?:string;dateTo?:string;complete:boolean};
 }
 export const looksLikeLog=(text:string)=>/\b(?:writeBuffer|buffer):\s*\[[^\]]*\]\s*for groupCode\s+\d+/i.test(text);
 export async function readChatAttachment(file:File):Promise<ChatAttachment> {
@@ -30,6 +31,7 @@ export async function readChatAttachment(file:File):Promise<ChatAttachment> {
  if(response.status===404||response.status===405)throw new Error('The running server needs the attachment update. Stop and restart the updated uSOPp application.');
  const data=await response.json().catch(()=>({}));
  if(!response.ok)throw new Error(data.detail||`Cannot read ${file.name}. Restart uSOPp after updating it.`);
+ if(data.report?.id)return {...item,kind:'report',text:String(data.text||''),notice:data.notice,reportId:data.report.id,report:data.report};
  const text=String(data.text||'');
  return {...item,text,kind:looksLikeLog(text)?'log':data.readable?'document':'unsupported',notice:[mappingNotice,data.notice].filter(Boolean).join(' ')};
 }

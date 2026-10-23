@@ -366,8 +366,8 @@ def _export_comparison(sid:str,fmt:str,cover:dict|None=None,skip_layout_properti
 
 @router.post('/api/compare')
 async def compare_projects(
-    base_files:Optional[List[UploadFile]]=File(None,max_files=MAX_PROJECT_FILES),
-    new_files:Optional[List[UploadFile]]=File(None,max_files=MAX_PROJECT_FILES),
+    base_files:Optional[List[UploadFile]]=File(None),
+    new_files:Optional[List[UploadFile]]=File(None),
     base_name:str=Form(''),new_name:str=Form(''),base_hmi:str=Form(''),new_hmi:str=Form('')):
     if not base_files or not new_files:
         raise HTTPException(400,'Select both project folders using the same input method.')

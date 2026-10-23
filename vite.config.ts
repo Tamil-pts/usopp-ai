@@ -1,5 +1,8 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -10,7 +13,17 @@ export default defineConfig(({ mode }) => {
   }
   if (frontendPort === apiPort) throw new Error('Development frontend and backend must use different application ports.');
   return {
-    plugins: [react()],
+    plugins: [react(),{
+      name:'usopp-frontend-build-info',
+      writeBundle(output,bundle){
+        const entry=Object.values(bundle).find(item=>item.type==='chunk'&&item.isEntry);
+        if(!entry||!output.dir)throw new Error('The main interface build has no entry asset.');
+        const version=JSON.parse(readFileSync(resolve('package.json'),'utf8')).version;
+        const entrySha256=createHash('sha256').update(readFileSync(resolve(output.dir,entry.fileName))).digest('hex');
+        writeFileSync(resolve(output.dir,'build-info.json'),JSON.stringify({version,entryFile:entry.fileName,entrySha256,
+          sourceCommit:process.env.USOPP_SOURCE_COMMIT||null,builtAt:new Date().toISOString()},null,2)+'\n');
+      }
+    }],
     resolve: {dedupe: ['react', 'react-dom']},
     build: { sourcemap: false, minify: 'esbuild' },
     server: {

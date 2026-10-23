@@ -80,7 +80,7 @@ export const MetadataUploaderModal: React.FC<MetadataUploaderModalProps> = ({
         return;
       }
 
-      onMetadataLoaded(items, file.name, currentMachineType);
+      onMetadataLoaded(items, file.name, items[0]?.protocol === 'ybs' ? 'YBS' : currentMachineType === 'YBS' ? 'Custom' : currentMachineType);
       setMessage({
         type: 'success',
         text: `Metadata uploaded successfully: ${items.length} parameters, ${report.totalGroups} groups${sheet2Count ? `, ${sheet2Count} Sheet 2 mappings` : ''}.`,

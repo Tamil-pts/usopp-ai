@@ -112,7 +112,9 @@ END_IF''', encoding='utf-8')
                 self.assertEqual({('Temp_nw_snd_buffer', 3, 7, 'Main caption'), ('Temp_nw_snd_buffer1', 9, 1, 'Creel caption')}, {row[:4] for row in bits})
                 issues = ENGINE.validate_alarm_packings(packings, [])
                 self.assertIn('Alarm Buffer Mismatch', {issue.validation_type for issue in issues})
-                self.assertIn('Alarm Packing Ambiguous', {issue.validation_type for issue in issues})
+                # An unrelated HMI group does not make the two verified bindings ambiguous.
+                self.assertNotIn('Alarm Packing Ambiguous', {issue.validation_type for issue in issues})
+                self.assertIn('NOT_TRANSMITTED', {row['status'] for row in ENGINE.extract_group30_alarm_records() if row['caption']=='Must not guess'})
 
     def test_generated_excel_uses_active_hmi_shared_groups_and_keeps_byte(self):
         from tests.test_alarm_packing import write_alarm_project
@@ -154,7 +156,8 @@ END_IF''', encoding='utf-8')
             inactive = logical / 'T30' / 'AlarmGroups'
             inactive.mkdir(parents=True)
             source = root / 'mms_nw_r.src'
-            source.write_text('byte_len := 1;\nbit_pos := 0;\nFOR alarm_len := 0 TO 23 BY 1 DO\nIF (Alarms[alarm_len] = 1) THEN\nTemp_nw_snd_buffer[byte_len] := BIT_SET(Temp_nw_snd_buffer[byte_len],bit_pos);\nEND_IF\nEND_FOR', encoding='utf-8')
+            from tests.test_alarm_packing import packing
+            source.write_text(packing('Alarms','Temp_nw_snd_buffer',0,23), encoding='utf-8')
             for folder, name, index in [(shared,'Main',0),(shared,'Creel',8),(shared,'Doff',16),(shared,'SystemAlarms',3),(inactive,'Inactive',1)]:
                 (folder / (name + '.algrp')).write_text(f'<AlarmGroup><Property Name="AlarmImage" Value="Source[global].Variable[Local.Alarms]"/><TextGroup><TextLayer LanguageId="en"><Text ID="1" Value="{name} alarm"/></TextLayer><IndexMap><Index ID="1" Value="{index}"/></IndexMap></TextGroup></AlarmGroup>',encoding='utf-8')
             (shared/'AlarmSystem.alcfg').write_text('not an alarm group')
@@ -170,18 +173,12 @@ END_IF''', encoding='utf-8')
             groups = logical / "VCShared" / "AlarmGroups"
             groups.mkdir(parents=True)
             source = root / "mms_nw_r.src"
-            source.write_text("""
-                byte_len := 1;
-                FOR alarm_len := 0 TO 23 BY 1 DO
-                    IF (PacketAlarms[alarm_len] = 1) THEN
-                        Temp_nw_snd_buffer[byte_len] := BIT_SET(Temp_nw_snd_buffer[byte_len], bit_pos);
-                    END_IF
-                END_FOR
-            """, encoding="utf-8")
+            from tests.test_alarm_packing import packing
+            source.write_text(packing('PacketAlarms','Temp_nw_snd_buffer',0,23), encoding='utf-8')
 
             def write_group(path, label, index, offset=0):
                 path.write_text(f"""<AlarmGroup xmlns="http://br-automation.co.at/AS/VC/Project">
-                <Property Name="AlarmImage" Value="Source[global].Variable[Local.GLOBAL.LegacyAlarms]"/>
+                <Property Name="AlarmImage" Value="Source[global].Variable[Local.GLOBAL.PacketAlarms]"/>
                 <Property Name="ImageOffset" Value="{offset}"/>
                 <TextGroup>
                   <TextLayer LanguageId="en"><Text ID="55" Value="{label}"/><Text ID="56" Value="Group heading"/></TextLayer>
@@ -213,7 +210,7 @@ END_IF''', encoding='utf-8')
             self.assertEqual([f"NA{i}" for i in range(1,22)], [row[2] for row in rows if row[2].startswith("NA")])
             self.assertEqual(sorted((row[0], row[1]) for row in rows), [(row[0], row[1]) for row in rows])
 
-    def test_real_as27_shared_file_is_not_rejected_for_different_alarm_image_name(self):
+    def test_real_as27_shared_file_does_not_guess_a_different_alarm_image(self):
         project = Path(__file__).resolve().parents[2] / "Project in AS2.7" / "LD_22120.pgp"
         if not project.exists():
             self.skipTest("Local AS 2.7 reference project is unavailable")
@@ -221,10 +218,12 @@ END_IF''', encoding='utf-8')
         with patch.multiple(ENGINE, ROOT=project, LOGICAL_ROOT=project / "Logical", PLC_PACKET_FILE=source):
             self.assertEqual(("Drawframe_Alarms",159,1), ENGINE.extract_group30_alarm_transport())
             bits = ENGINE.extract_group30_alarm_bits()
-        self.assertEqual(28, len(bits))
-        self.assertEqual((1,0,"EMERGENCY STOP"), bits[0][:3])
-        self.assertEqual((1,1,"INCH PUSH BUTTON STRUCK UP"), bits[1][:3])
-        self.assertTrue(all("LD2_Alarm.algrp" in row[3] for row in bits))
+            records=ENGINE.extract_group30_alarm_records()
+        self.assertEqual([], bits)
+        reference=[row for row in records if 'LD2_Alarm.algrp' in row['sourceFile']]
+        self.assertEqual(28,len(reference))
+        self.assertEqual({'NOT_TRANSMITTED'},{row['status'] for row in reference})
+        self.assertTrue({'EMERGENCY STOP','INCH PUSH BUTTON STRUCK UP'} <= {row['caption'] for row in reference})
 
 
 if __name__ == "__main__":

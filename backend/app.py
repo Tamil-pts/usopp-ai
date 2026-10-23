@@ -15,6 +15,8 @@ from backend.core import accounts
 from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models, user_settings, br_help, admin_settings, admin_knowledge
 from backend.api import assist_training, assist_flow, project_intelligence
 from backend.api import live_data, data_simulator, dashboard_layouts
+from backend.api import spinconnect_write
+from backend.api import nami_edit
 from backend.core.mcp_tools import server as mcp_server, http_app as mcp_app
 from contextlib import asynccontextmanager
 
@@ -38,7 +40,7 @@ async def app_lifespan(app):
             from backend.core.local_model_runtime import shutdown
             shutdown()
 
-app = FastAPI(title='uSOPp.ai API', version=VERSION, debug=False,lifespan=app_lifespan)
+app = FastAPI(title='usop.ai API', version=VERSION, debug=False,lifespan=app_lifespan)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -64,8 +66,9 @@ async def request_logger(request, call_next):
         response=await call_next(request)
         elapsed=(datetime.now()-started).total_seconds()
         log.info('HTTP %s %s -> %s (%.3fs)', request.method, request.url.path, response.status_code, elapsed)
-        if request.url.path.startswith('/assets/'):
+        if request.url.path.startswith('/assets/') or response.headers.get('content-type','').startswith('text/html') or request.url.path in ('/api/health','/build-info.json'):
             response.headers['Cache-Control']='no-store'
+        response.headers['X-USOPP-Version']=VERSION
         return response
     except Exception:
         log.exception('HTTP ERROR %s %s', request.method, request.url.path)
@@ -89,7 +92,7 @@ async def account_session(request:Request,call_next):
             if path.startswith('/api/mcp') and request.headers.get('authorization','').startswith('Bearer '):token_value=request.headers['authorization'][7:]
             user=await run_in_threadpool(accounts.store.user_for_token,token_value)
             if not user:
-                return JSONResponse({'detail':'Sign in to uSOPp.ai to continue.'},status_code=401)
+                return JSONResponse({'detail':'Sign in to usop.ai to continue.'},status_code=401)
             request.state.user=user
     token=current_user.set(getattr(request.state,'user',None))
     try:
@@ -114,6 +117,8 @@ app.include_router(user_settings.router)
 app.include_router(live_data.router)
 app.include_router(data_simulator.router)
 app.include_router(dashboard_layouts.router)
+app.include_router(spinconnect_write.router)
+app.include_router(nami_edit.router)
 app.include_router(br_help.router)
 app.include_router(admin_settings.router)
 app.include_router(admin_knowledge.router)
@@ -132,7 +137,7 @@ if DIST.exists():
     def spa(path:str):
         if path == 'nami' or path.startswith('nami/'):
             from fastapi import HTTPException
-            raise HTTPException(503, 'PLC Data interface is missing. Build the frontend and restart uSOPp.ai.')
+            raise HTTPException(503, 'DataInspect interface is missing. Build the frontend and restart usop.ai.')
         if path.startswith('api/'):
             from fastapi import HTTPException
             raise HTTPException(404,'API endpoint not found')

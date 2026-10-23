@@ -31,7 +31,8 @@ def password_matches(password, encoded):
     return hmac.compare_digest(actual, digest)
 
 def public_user(row):
-    return {key:row[key] for key in ('id','username','designation','company','role')} | {'active':bool(row['active']), 'approved':bool(row['approved']), 'createdAt':row['created_at'], 'isDemo':bool(row['is_demo'])}
+    return {key:row[key] for key in ('id','username','designation','company','role')} | {'active':bool(row['active']), 'approved':bool(row['approved']), 'createdAt':row['created_at'], 'isDemo':bool(row['is_demo']),
+        'avatarUrl':f'/api/auth/profile-image/{row["id"]}?v={row["profile_image_version"]}' if row['profile_image'] else None}
 
 def session_seconds(user):
     return DEMO_SESSION_SECONDS if user.get('isDemo') else SESSION_SECONDS
@@ -80,22 +81,27 @@ class AccountStore:
                     connection.execute('ALTER TABLE users ADD COLUMN is_demo INTEGER NOT NULL DEFAULT 0')
                 if 'approved' not in columns:
                     connection.execute('ALTER TABLE users ADD COLUMN approved INTEGER NOT NULL DEFAULT 1')
+                if 'profile_image' not in columns:
+                    connection.execute('ALTER TABLE users ADD COLUMN profile_image BLOB')
+                if 'profile_image_version' not in columns:
+                    connection.execute('ALTER TABLE users ADD COLUMN profile_image_version INTEGER NOT NULL DEFAULT 0')
                 # Seed only once. A password change is never overwritten on restart.
                 if not connection.execute("SELECT 1 FROM users WHERE username_key='admin'").fetchone():
                     initial_password = os.getenv('USOPP_INITIAL_ADMIN_PASSWORD', 'usopp.2026')
                     if not 8 <= len(initial_password) <= 128:
                         raise ValueError('The initial Admin password must contain 8 to 128 characters.')
                     connection.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at) VALUES (?,?,?,?,?,?,?)',
-                        ('Admin','admin',password_hash(initial_password),'Administrator','uSOPp.ai','admin',time.time()))
+                        ('Admin','admin',password_hash(initial_password),'Administrator','usop.ai','admin',time.time()))
                 # Preserve existing accounts; reserve a separate demonstration
                 # account without using any regular-user capacity.
                 if not connection.execute("SELECT 1 FROM users WHERE username_key='demo'").fetchone():
                     connection.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at,is_demo) VALUES (?,?,?,?,?,?,?,1)',
-                        ('demo','demo',password_hash('demo'),'Demo user','uSOPp.ai','user',time.time()))
+                        ('demo','demo',password_hash('demo'),'Demo user','usop.ai','user',time.time()))
                 connection.commit()
             self._ready = True
 
-    def register(self, username, password, designation, company):
+    def register(self, username, password, designation, company, role='user'):
+        if role not in ('admin','user'): raise ValueError('Choose Admin or User.')
         encoded = password_hash(password)
         with self.db() as db:
             db.execute('BEGIN IMMEDIATE')
@@ -103,7 +109,7 @@ class AccountStore:
                 raise sqlite3.IntegrityError('Username already exists')
             self._check_capacity(db)
             result = db.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at) VALUES (?,?,?,?,?,?,?)',
-                (username,username.casefold(),encoded,designation,company,'user',time.time()))
+                (username,username.casefold(),encoded,designation,company,role,time.time()))
             return public_user(db.execute('SELECT * FROM users WHERE id=?',(result.lastrowid,)).fetchone())
 
     def request_account(self, username, password, designation, company):
@@ -174,22 +180,42 @@ class AccountStore:
         if db.execute('SELECT COUNT(*) FROM users WHERE active=1 AND is_demo=0').fetchone()[0] >= MAX_ACTIVE_USERS:
             raise AccountCapacityError(f'The {MAX_ACTIVE_USERS}-account limit is reached, including Admin. Disable an unused account or increase USOPP_MAX_USERS on the server.')
 
-    def manage_user(self, user_id, username, designation, company, active, password=None):
+    def manage_user(self, user_id, username, designation, company, active, password=None, role=None, actor_id=None):
         with self.db() as db:
             db.execute('BEGIN IMMEDIATE')
             row=db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone()
             if not row: raise ValueError('Account not found.')
             if row['is_demo']: raise ValueError('The demo account uses fixed demonstration credentials.')
-            if row['role']=='admin': raise ValueError('Use your account settings to change the administrator password. The administrator account cannot be disabled or renamed here.')
+            role=row['role'] if role is None else role
+            if role not in ('admin','user'): raise ValueError('Choose Admin or User.')
+            if row['username_key']=='admin' and (username.casefold()!='admin' or not active or role!='admin'):
+                raise ValueError('The primary Admin account must keep its username, Admin role and enabled access.')
+            if user_id==actor_id and (not active or role!='admin'):
+                raise ValueError('You cannot remove your own administrator access.')
+            if row['role']=='admin' and row['active'] and (not active or role!='admin'):
+                others=db.execute("SELECT COUNT(*) FROM users WHERE role='admin' AND active=1 AND is_demo=0 AND id!=?",(user_id,)).fetchone()[0]
+                if not others: raise ValueError('Keep at least one enabled administrator.')
             if active and not row['active']:
                 self._check_capacity(db)
-            db.execute('UPDATE users SET username=?,username_key=?,designation=?,company=?,active=?,approved=CASE WHEN ?=1 THEN 1 ELSE approved END WHERE id=?',
-                       (username,username.casefold(),designation,company,int(active),int(active),user_id))
+            db.execute('UPDATE users SET username=?,username_key=?,designation=?,company=?,role=?,active=?,approved=CASE WHEN ?=1 THEN 1 ELSE approved END WHERE id=?',
+                       (username,username.casefold(),designation,company,role,int(active),int(active),user_id))
             if password:
                 db.execute('UPDATE users SET password_hash=? WHERE id=?',(password_hash(password),user_id))
-            if password or not active or row['username']!=username:
+            if password or not active or row['username']!=username or row['role']!=role:
                 db.execute('DELETE FROM sessions WHERE user_id=?',(user_id,))
             return public_user(db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone())
+
+    def set_profile_image(self, user_id, image):
+        with self.db() as db:
+            row=db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone()
+            if not row or row['is_demo']: raise ValueError('Use a personal account to set a profile photo.')
+            db.execute('UPDATE users SET profile_image=?,profile_image_version=profile_image_version+1 WHERE id=?',(image,user_id))
+            return public_user(db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone())
+
+    def profile_image(self, user_id):
+        with self.db() as db:
+            row=db.execute('SELECT profile_image FROM users WHERE id=?',(user_id,)).fetchone()
+            return row['profile_image'] if row else None
 
     def delete_user(self, user_id):
         with self.db() as db:

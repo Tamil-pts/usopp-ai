@@ -79,7 +79,7 @@ function generateCompareReport(result:any){
     <b style="font-size:10px">Subroutines:</b><div class="kl">${(side?.subroutines||[]).map((x:any)=>`<div>${esc(x.path)}: ${(x.files||[]).join(', ')}</div>`).join('')}</div>
     <b style="font-size:10px">HMI Screens (${(side?.screens||[]).length}):</b><div class="kl">${(side?.screens||[]).join(', ')}</div>
   </div>`;
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>uSOPp Comparison Report</title><style>
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>usop.ai Comparison Report</title><style>
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,sans-serif;color:#1e293b;background:#fff;padding:32px;max-width:1200px;margin:0 auto;font-size:13px}
 h1{font-size:22px;font-weight:800;margin-bottom:2px}h2{font-size:13px;font-weight:700;margin:24px 0 8px;padding-bottom:5px;border-bottom:2px solid currentColor}h3{font-size:11px;font-weight:700;margin-bottom:8px}
 .meta{color:#64748b;font-size:11px;margin-bottom:20px}.prj-header{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin-bottom:20px}
@@ -97,7 +97,7 @@ section{margin-bottom:28px}
 @media print{.db{max-height:none!important}h2{page-break-before:always}}
 </style></head><body>
 <h1>uSOPp Project Comparison Report</h1>
-<p class="meta">Generated ${new Date().toLocaleString()} &nbsp;|&nbsp; uSOPp.ai</p>
+<p class="meta">Generated ${new Date().toLocaleString()} &nbsp;|&nbsp; usop.ai</p>
 <div class="prj-header">
   <div class="prj-card"><span class="prj-badge" style="background:#dbeafe;color:#1d4ed8">BASE / ORIGINAL</span><div class="prj-path">${esc(base)}</div></div>
   <div class="prj-arrow">to</div>
@@ -117,7 +117,7 @@ section{margin-bottom:28px}
 <h2 style="color:#1e293b">Project Knowledge Base</h2>
 <div class="kbg">${kbCard(kb.base,'BASE / '+esc(base))}${kbCard(kb.developed,'DEVELOPED / '+esc(dev))}</div>
 ${catSections}
-<p style="color:#94a3b8;font-size:10px;text-align:center;margin-top:24px;padding-top:10px;border-top:1px solid #e2e8f0">uSOPp.ai | B&amp;R Automation Studio Project Comparison</p>
+<p style="color:#94a3b8;font-size:10px;text-align:center;margin-top:24px;padding-top:10px;border-top:1px solid #e2e8f0">usop.ai | B&amp;R Automation Studio Project Comparison</p>
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});const url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;

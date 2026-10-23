@@ -94,8 +94,10 @@ class MultiUserHTTPTests(unittest.TestCase):
                 if index == 0:
                     response = client.post('/api/auth/login', json={'username':'Admin','password':'usopp.2026'})
                 else:
-                    response = client.post('/api/auth/register', json={'username':f'engineer{index}',
+                    created = cls.clients[0].post('/api/auth/users', json={'username':f'engineer{index}',
                         'password':PASSWORD,'designation':'Test engineer','company':'Isolated test'})
+                    assert created.status_code == 200, created.text
+                    response = client.post('/api/auth/login', json={'username':f'engineer{index}','password':PASSWORD})
                 assert response.status_code == 200, response.text
             cls.users = [client.get('/api/auth/session').json()['user'] for client in cls.clients]
             cls.projects = [cls.upload(index) for index in range(ACCOUNT_COUNT)]

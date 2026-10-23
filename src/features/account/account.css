@@ -118,3 +118,6 @@
   .accountTop span { display:none; }
 }
 @media(prefers-reduced-motion:reduce) { .accountHeroActions .btn:hover { transform:none; } }
+
+.userAvatar{display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;position:relative;overflow:hidden;border-radius:50%;background:var(--accentbg);color:var(--accent);border:1px solid var(--line2);font-weight:700}.userAvatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.profilePhoto{display:flex;gap:18px;align-items:center;margin:18px 0}.profilePhoto p{margin:6px 0}.accountProfileButton{border:0;background:transparent;padding:0;cursor:pointer;border-radius:50%}.accountProfileButton:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.accountRoleLabel{display:block;color:var(--muted);font-size:11px}.btn.disabled{opacity:.6;pointer-events:none}
+@media(max-width:480px){.accountTop .userAvatar{display:inline-flex}.accountTop .userAvatar>span{display:inline}}

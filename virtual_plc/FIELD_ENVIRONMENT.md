@@ -1,4 +1,4 @@
-# Field environment - Virtual PLC 0.8.0
+# Field environment - Virtual PLC 0.9.0
 
 ## Project 2
 
