@@ -3,6 +3,15 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.75.0 - 2026-10-23
+
+- Keep the PLC running and preserve task memory when Simulation jig is enabled. Restoring defaults is an explicit reset. Feed supported motors, cylinders, drives and sensors from real PLC commands at completed scan boundaries.
+- Use selected hardware direction and compiled logic dependencies to confirm automatic motor/cylinder mappings. Keep uncertain connections as review proposals with source evidence and an action badge.
+- Correct the reviewed Project 2 top-arm default: keep its closed contact independent of drafting-load output so the feedback delay cannot cancel the FAST latch. Preserve the existing exact-source bench motion models.
+- Show all topology components on one compact canvas with Fit all, Fit width, edit/move and per-component action indicators.
+- Add an account-owned component library for reusable models, make/model details, AI/AO/DI/DO/communication terminals and connected layouts. Vendor CAD/EPLAN references are optional attachments; reused devices require project connection review.
+- Align UI/API at 4.75.0, update Virtual PLC to 0.10.0 and correct the container revision-label verification before image export.
+
 ## 4.74.2 - 2026-10-23
 
 - Verify the main UI version and compiled asset checksum before packaging a container. Container health fails when the deployed interface and API do not match; image tags must match the compiled application version.

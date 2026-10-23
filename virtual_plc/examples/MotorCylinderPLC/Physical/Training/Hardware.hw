@@ -1,0 +1,5 @@
+<Hardware>
+  <Module Name="CPU" Type="X20CP1586"><Parameter ID="Cyclic1Duration" Value="10000"/></Module>
+  <Module Name="DI" Type="X20DI9371"/>
+  <Module Name="DO" Type="X20DO9322"/>
+</Hardware>

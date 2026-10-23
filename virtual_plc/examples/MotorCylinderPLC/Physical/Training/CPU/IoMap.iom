@@ -1,0 +1,10 @@
+VAR_CONFIG
+    StartButton AT %IX."DI".DigitalInput01;
+    StopButton AT %IX."DI".DigitalInput02;
+    DoorClosed AT %IX."DI".DigitalInput03;
+    Motor1Running AT %IX."DI".DigitalInput04;
+    Cylinder1Extended AT %IX."DI".DigitalInput05;
+    Cylinder1Retracted AT %IX."DI".DigitalInput06;
+    Motor1Cmd AT %QX."DO".DigitalOutput01;
+    Cylinder1Extend AT %QX."DO".DigitalOutput02;
+END_VAR

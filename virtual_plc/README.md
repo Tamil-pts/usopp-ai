@@ -128,6 +128,8 @@ IEC support includes TON, TOF, TP, CTU, CTD, R_TRIG and F_TRIG with persistent b
 
 ## Engineering views
 
+For current operation, see [Simulation jig and component library](JIG_AND_LIBRARY_GUIDE.md): closed loop field feedback, mapping review, the complete topology canvas and reusable vendor models/layouts.
+
 - Resizable/collapsible Explorer, inspector and console; dark and light themes.
 - Controller topology generated as SVG; original source hierarchy and paths retained.
 - Task timeline, execution counts and measured interpreter durations.

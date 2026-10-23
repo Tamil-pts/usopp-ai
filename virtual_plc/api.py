@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import List
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from starlette.concurrency import run_in_threadpool
 
 from backend.core.runtime import WORK, _local_path, locate_root, stage_project
@@ -90,6 +90,51 @@ def library_support(request: Request):
     return support_catalog()
 
 
+@router.get('/component-library')
+def component_library_items(request:Request):
+    return {'items':service.component_library(owner(request)).list(),'models':service.component_catalog()}
+
+
+@router.get('/component-library/{identity}')
+def component_library_item(identity:str,request:Request):
+    try:return service.component_library(owner(request)).load(identity)
+    except (ValueError,OSError) as error:fail(error)
+
+
+@router.put('/component-library/{identity}')
+def update_component_library_item(identity:str,payload:dict,request:Request):
+    try:return service.component_library(owner(request)).update(identity,payload)
+    except (ValueError,OSError) as error:fail(error)
+
+
+@router.post('/projects/{identity}/component-library')
+def save_component_library_item(identity:str,payload:dict,request:Request):
+    try:return service.save_component_library(opened(request,identity),payload)
+    except (ValueError,TypeError,KeyError,OSError) as error:fail(error)
+
+
+@router.post('/projects/{identity}/component-library/{library_id}/apply')
+def apply_component_library_item(identity:str,library_id:str,payload:dict,request:Request):
+    try:return service.apply_component_library(opened(request,identity),library_id,payload)
+    except (ValueError,TypeError,KeyError,OSError) as error:fail(error)
+
+
+@router.post('/component-library/{identity}/references')
+async def attach_component_reference(identity:str,request:Request,file:UploadFile=File(...)):
+    from .core.component_library import MAX_REFERENCE
+    try:return service.component_library(owner(request)).attach(identity,file.filename,await file.read(MAX_REFERENCE+1))
+    except (ValueError,OSError) as error:fail(error)
+    finally:await file.close()
+
+
+@router.get('/component-library/{identity}/references/{reference_id}')
+def component_reference(identity:str,reference_id:str,request:Request):
+    try:
+        path,name=service.component_library(owner(request)).reference(identity,reference_id)
+        return FileResponse(path,filename=name,media_type='application/octet-stream',headers={'X-Content-Type-Options':'nosniff','Cache-Control':'private, no-store'})
+    except (ValueError,OSError) as error:fail(error)
+
+
 @router.get('/library-reference')
 def library_reference(request:Request,name:str='',library:str=''):
     owner(request)
@@ -161,6 +206,12 @@ def environment_status(identity: str, request: Request, query: str = '', offset:
         return service.environment_status(opened(request, identity), query, offset, target, view)
     except (ValueError, TypeError, KeyError, OSError) as error:
         fail(error)
+
+
+@router.post('/projects/{identity}/environment/mappings/{mapping_id}/confirm')
+def confirm_environment_mapping(identity:str,mapping_id:str,payload:dict,request:Request):
+    try:return service.confirm_mapping(opened(request,identity),mapping_id,payload.get('bindings'),payload.get('config'))
+    except (ValueError,TypeError,KeyError,OSError) as error:fail(error)
 
 
 @router.put('/projects/{identity}/simulation-jig')

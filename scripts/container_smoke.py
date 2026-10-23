@@ -57,16 +57,21 @@ def main():
     with client.open(request,timeout=15) as response:assert response.status==200
     assert data('/api/auth/session')['user']['role']=='admin'
     data('/api/account/storage');data('/api/nami/server-status')
+    assert any(item['kind']=='cylinder' for item in data('/api/virtual-plc/component-catalog')['catalog'])
+    assert isinstance(data('/api/virtual-plc/component-library')['items'],list)
     schema=data('/openapi.json')
     routes={path for path in schema['paths'] if path.startswith('/api/')}
     assert len(routes)>100,len(routes)
     for required in ('/api/spinconnect/write-st/discover','/api/spinconnect/write-st/analyze',
-                     '/api/spinconnect/write-st/generate','/api/nami/plc/prepare-edit','/api/nami/plc/send-edit'):
+                     '/api/spinconnect/write-st/generate','/api/nami/plc/prepare-edit','/api/nami/plc/send-edit',
+                     '/api/virtual-plc/projects/{identity}/simulation-jig',
+                     '/api/virtual-plc/projects/{identity}/environment/mappings/{mapping_id}/confirm'):
         assert required in routes,required
     print(json.dumps({'result':'passed','ui':manifest['version'],'api':health['version'],
                       'apiPaths':len(routes),'sourceCommit':manifest.get('sourceCommit'),
                       'checks':['three UI entries and assets','compiled UI checksum','version agreement',
-                                'cache headers','authentication','account storage','registered feature APIs']}))
+                                'cache headers','authentication','account storage','registered feature APIs',
+                                'cylinder catalog and account component library']}))
 
 
 if __name__=='__main__':main()

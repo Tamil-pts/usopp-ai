@@ -290,40 +290,26 @@ def build_plan(runtime, existing=()):
                 'config':{f['key']:f['default'] for f in DEFINITIONS[kind]['configFields']},
                 'evidence':evidence or {},'assumptions':[]}
         added.append(item); return item
-    feedback_used = set()
-    grouped_commands = set()
-    for entry in outputs:
-        record, key = entry['record'], entry['identity']; name = record['name']
-        if key in occupied | grouped_commands or entry['spec'].get('type') != 'BOOL': continue
-        if not re.search(r'MOTOR|MTR|DRIVE|SERVO|INVERTER|VFD',name,re.I) or re.search(r'BRAKE|RESET|FAULT|ALARM|LAMP|STOP|CONTROL',name,re.I): continue
-        kind = 'velocity_servo' if 'SERVO' in name.upper() else 'vfd' if re.search(r'DRIVE|VFD|INVERTER',name,re.I) else 'motor'
-        run_port = 'run' if kind == 'vfd' else 'enable'
-        drive = add(kind, name, {run_port:key}, evidence={'source':entry['channel'].get('source'),'line':entry['channel'].get('line'),'command':key,'method':'Output mapping; mechanical model suggested from PLC tag'})
-        if not drive: continue
-        grouped_commands.add(key)
-        if kind == 'velocity_servo':
-            peer_name = name.replace('ENABLE_TO_', 'START_TO_') if 'ENABLE_TO_' in name else name.replace('START_TO_', 'ENABLE_TO_')
-            peers = [e for e in outputs if e['record']['name'] == peer_name and peer_name != name and e['identity'] not in occupied]
-            if len(peers) == 1:
-                peer = peers[0]; grouped_commands.add(peer['identity'])
-                drive['bindings']['run' if 'ENABLE_TO_' in name else 'enable'] = peer['identity']
-                if 'START_TO_' in name: drive['bindings']['run'] = key
-                drive['assumptions'].append('Enable and Start are separate exact output mappings for the same named drive.')
-        drive['assumptions'].append('Generic speed/ramp defaults; confirm the drive type, units and operating reference in Configure.')
-        for port, pattern in (('ready',r'RDY|READY'),('fault',r'FLT|FAULT')):
-            if kind == 'motor': continue
-            candidates = [(pair_score(name,e['record']['name']),e) for e in inputs if e['spec'].get('type')=='BOOL'
-                          and e['identity'] not in occupied|feedback_used and re.search(pattern,e['record']['name'],re.I)]
-            candidates.sort(key=lambda pair:pair[0],reverse=True)
-            if candidates and candidates[0][0]>=8 and (len(candidates)==1 or candidates[0][0]>candidates[1][0]):
-                candidate=candidates[0][1]; drive['bindings'][port]=candidate['identity']; feedback_used.add(candidate['identity'])
-                drive['assumptions'].append(port+' feedback paired by unique axis tokens: '+candidate['record']['name']+'. Review this inferred connection.')
-        if kind in {'vfd','velocity_servo'}:
-            motor=add('motor',name+' / shaft', links={'enable':{'component':drive['id'],'port':'running'},'targetSpeed':{'component':drive['id'],'port':'speed'}},evidence=deepcopy(drive['evidence']))
-            if motor:
-                encoder=add('encoder',name+' / encoder',links={'speed':{'component':motor['id'],'port':'speed'}},evidence=deepcopy(drive['evidence']))
-                if encoder: encoder['assumptions'].append('Encoder resolution is an editable model default; connect a documented PLC counter/feedback port in Configure.')
-    seen = set(occupied)|feedback_used
+    from .auto_mapping import discover
+    proposals=discover(runtime,LogicIndex(runtime))
+    feedback_used,grouped_commands=set(),set()
+    pending_mappings=[]
+    automatic_count=0
+    for proposal in proposals:
+        if any(c.get('evidence',{}).get('mappingSource') in {'automatic-analysis','operator-confirmed'} and c.get('bindings')==proposal['bindings'] for c in components):continue
+        if not proposal['automatic'] or set(proposal['bindings'].values()) & occupied:
+            pending_mappings.append({**proposal,'reason':proposal['reason']+(' Existing connections are preserved; confirm to replace overlapping field devices.' if set(proposal['bindings'].values()) & occupied else '')})
+            continue
+        item=add(proposal['kind'],proposal['name'],dict(proposal['bindings']),evidence=proposal['evidence'])
+        if not item:continue
+        item['id']=proposal['id']
+        item['config'].update(proposal['config'])
+        item['assumptions']=proposal['assumptions']
+        automatic_count+=1
+        for port in DEFINITIONS[item['kind']]['ports']:
+            if item['bindings'].get(port['key']):
+                (feedback_used if port['direction']=='output' else grouped_commands).add(item['bindings'][port['key']])
+    seen = set(occupied)|feedback_used|grouped_commands
     for entry in inputs+outputs:
         key, record, spec, channel = entry['identity'],entry['record'],entry['spec'],entry['channel']
         if key in seen: continue
@@ -355,9 +341,10 @@ def build_plan(runtime, existing=()):
     configured=validate_components(components+added,runtime)
     return {'components':configured,'added':len(added),'unresolved':unresolved[:1000],
             'cpuManaged':cpu_managed, 'initializationProfile': initialization,
+            'mappingVersion':1,'pendingMappings':pending_mappings,'automaticMappings':automatic_count,
             'summary':{'mappedChannels':len(inputs)+len(outputs)+len(cpu_managed),'cpuManagedChannels':len(cpu_managed),'unresolvedChannels':len(unresolved),
                        'components':len(configured),'alarms':sum(len(g.get('items',[])) for g in runtime.project.get('hmi',{}).get('alarmGroups',[]))},
-            'assumptions':['Mechanical associations from names are suggestions. Review each component source and assumptions.',
+            'assumptions':['Automatic mappings require exact hardware direction and compiled logic evidence. Confirm proposals with incomplete evidence.',
                            'PLC interlocks, alarm logic and timers execute unchanged. Input polarity and process feedback require the configured plant or operator input.',
                            'Drive-to-shaft-to-encoder links use the preceding completed model step. Quadrature is sampled; a high-speed counter binding is preferred.']}
 

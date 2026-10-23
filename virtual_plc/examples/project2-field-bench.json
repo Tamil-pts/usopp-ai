@@ -29,7 +29,8 @@
     "DI_SAFETY_SWITCH": 1,
     "DI_SERVO_DRIVE_DC_BUS_READY": 0,
     "DI_DRAFTING_DOOR": 1,
-    "DI_EMPTY_CAN": 1
+    "DI_EMPTY_CAN": 1,
+    "DI_TOP_ARM": 0
   },
   "reference": [
     "Logical/motor/motorCyclic.ld:49-71: raw contacts required by the inch/start interlock",
@@ -37,7 +38,8 @@
     "Logical/main/mainCyclic.ab:3-10: Web_Guide_Status selects contact polarity",
     "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom: exact input mapping",
     "Logical/motor/motorCyclic.ld:1196: Non-CE FAST start requires drafting door closed (raw 1).",
-    "Logical/fault/faultCyclic.ld:1213-1226: empty can present is raw 1; missing raw 0 for 6 s raises the original alarm."
+    "Logical/fault/faultCyclic.ld:1213-1226: empty can present is raw 1; missing raw 0 for 6 s raises the original alarm.",
+    "Logical/motor/motorCyclic.ld:65-67,125-127,840-845: top-arm closure must remain present while drafting load changes, or readiness and FAST latch drop."
   ],
   "assumptions": [
     "Virtual commissioning defaults, not measured physical machine states. All contacts remain editable.",
@@ -65,16 +67,16 @@
       "name": "DI_TOP_ARM",
       "kind": "digital_input",
       "bindings": {
-        "command": "@global:DO_DRAFTING_LOAD"
+        "command": ""
       },
       "config": {
-        "automatic": 1,
+        "automatic": 0,
         "activeValue": 0,
         "delayOnMs": 150,
         "delayOffMs": 150,
         "value": 0
       },
-      "reason": "Drafting load closes the top arm; its open indication becomes 0. The source uses NOT DI_TOP_ARM for the loaded/start path (motorCyclic.ld:802-810). Jig travel delay 150 ms is editable."
+      "reason": "The healthy jig starts with the top arm closed (raw 0). Keep this contact independent of DO_DRAFTING_LOAD: deriving it from that output with travel delay drops M1200 and cancels M1231 at motorCyclic.ld:840-845 before feedback arrives. Toggle this editable contact explicitly to model opening the arm; no PLC interlock is forced."
     },
     {
       "name": "DI_MAIN_MOTOR_FAST",
@@ -163,7 +165,7 @@
       "reason": "Fan pressure ramps toward REQUIRED_SUCTION_PRESSURE. Raw scaling in mainCyclic.ab:1927 is pressure = ADC * 5000 / 32767, so jig ADC = requested pressure * 6.5534. Response rate is editable."
     }
   ],
-  "version": 3,
+  "version": 5,
   "sourceCorrections": "project2-source-corrections.json",
   "statusSignals": {
     "machineReady": "@global:M1200",
@@ -217,6 +219,202 @@
         "line": 1693
       },
       "reason": "Rotating coiler sensor follows the main drive shaft with one pulse/revolution. The source checks for this sensor while FAST runs; gearing and pulse resolution are editable."
+    },
+    {
+      "name": "ED_DO_INVERTER_START",
+      "kind": "vfd",
+      "bindings": {
+        "run": "@global:ED_DO_INVERTER_START"
+      },
+      "links": {},
+      "config": {
+        "maximumFrequency": 60,
+        "rampUp": 10,
+        "rampDown": 20,
+        "ratedFrequency": 50,
+        "ratedSpeed": 1500,
+        "referenceFrequency": 50
+      },
+      "evidence": {
+        "source": "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom",
+        "line": 71,
+        "command": "@global:ED_DO_INVERTER_START",
+        "method": "Output mapping; mechanical model suggested from PLC tag"
+      },
+      "reason": "Existing reviewed Project 2 field-bench connection, guarded by exact active-configuration source fingerprints. Mechanical units, coupling and response settings remain editable."
+    },
+    {
+      "name": "DO_ENABLE_TO_SERVO_DRIVE",
+      "kind": "velocity_servo",
+      "bindings": {
+        "enable": "@global:DO_ENABLE_TO_SERVO_DRIVE",
+        "run": "@global:DO_START_TO_SERVO_DRIVE",
+        "ready": "@global:DI_SERVO_DRIVE_READY"
+      },
+      "links": {},
+      "config": {
+        "maximumSpeed": 3000,
+        "nominalSpeed": 1000,
+        "rampRate": 500
+      },
+      "evidence": {
+        "source": "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom",
+        "line": 55,
+        "command": "@global:DO_ENABLE_TO_SERVO_DRIVE",
+        "method": "Output mapping; mechanical model suggested from PLC tag"
+      },
+      "reason": "Existing reviewed Project 2 field-bench connection, guarded by exact active-configuration source fingerprints. Mechanical units, coupling and response settings remain editable."
+    },
+    {
+      "name": "ED_DO_INVERTER_START / shaft",
+      "kind": "motor",
+      "bindings": {},
+      "links": {
+        "enable": {
+          "component": "field-0cd83927d480eb0f",
+          "port": "running"
+        },
+        "targetSpeed": {
+          "component": "field-0cd83927d480eb0f",
+          "port": "speed"
+        }
+      },
+      "config": {
+        "maximumSpeed": 3000,
+        "rampRate": 500,
+        "nominalSpeed": 1000
+      },
+      "evidence": {
+        "source": "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom",
+        "line": 71,
+        "command": "@global:ED_DO_INVERTER_START",
+        "method": "Output mapping; mechanical model suggested from PLC tag"
+      },
+      "reason": "Existing reviewed Project 2 field-bench connection, guarded by exact active-configuration source fingerprints. Mechanical units, coupling and response settings remain editable."
+    },
+    {
+      "name": "ED_DO_INVERTER_START / encoder",
+      "kind": "encoder",
+      "bindings": {
+        "count": "@global:HSC_1_CURRENTVALUE",
+        "channelA": "@global:DI_DELIVERY_COUNTER"
+      },
+      "links": {
+        "speed": {
+          "component": "field-0cb0e40b17df7c66",
+          "port": "speed"
+        }
+      },
+      "config": {
+        "initialPosition": 0,
+        "countsPerRevolution": 1,
+        "rollover": 65536
+      },
+      "evidence": {
+        "source": "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom",
+        "line": 71,
+        "command": "@global:ED_DO_INVERTER_START",
+        "method": "Output mapping; mechanical model suggested from PLC tag",
+        "jigProfileId": "project2-field-bench",
+        "jigProfileVersion": 3,
+        "jigProfileReason": "Counter01 and DigitalInput01 belong to the delivery-counter module in IoMap.iom. The virtual VFD shaft supplies the bench speed. Use a conservative 1 effective pulse per modeled motor revolution. The active len_delCyclic.ab:80-85 sets DELIVERY_METRE_PER_PULSE to 0.00999, giving 14.985 m/min at 1500 RPM. Resolution and coupling are editable bench assumptions, not measured machine calibration; enter actual gearing for production-speed checks."
+      },
+      "reason": "Existing reviewed Project 2 field-bench connection, guarded by exact active-configuration source fingerprints. Mechanical units, coupling and response settings remain editable."
+    },
+    {
+      "name": "DO_FAN_MOTOR",
+      "kind": "motor",
+      "bindings": {
+        "enable": "@global:DO_FAN_MOTOR"
+      },
+      "links": {},
+      "config": {
+        "maximumSpeed": 3000,
+        "rampRate": 500,
+        "nominalSpeed": 1000
+      },
+      "evidence": {
+        "source": "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom",
+        "line": 53,
+        "command": "@global:DO_FAN_MOTOR",
+        "method": "Output mapping; mechanical model suggested from PLC tag"
+      },
+      "reason": "Existing reviewed Project 2 field-bench connection, guarded by exact active-configuration source fingerprints. Mechanical units, coupling and response settings remain editable."
+    },
+    {
+      "name": "DO_CAN_CHANGER_MOTOR",
+      "kind": "motor",
+      "bindings": {
+        "enable": "@global:DO_CAN_CHANGER_MOTOR"
+      },
+      "links": {},
+      "config": {
+        "maximumSpeed": 3000,
+        "rampRate": 500,
+        "nominalSpeed": 1000
+      },
+      "evidence": {
+        "source": "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom",
+        "line": 54,
+        "command": "@global:DO_CAN_CHANGER_MOTOR",
+        "method": "Output mapping; mechanical model suggested from PLC tag"
+      },
+      "reason": "Existing reviewed Project 2 field-bench connection, guarded by exact active-configuration source fingerprints. Mechanical units, coupling and response settings remain editable."
+    },
+    {
+      "name": "DO_ENABLE_TO_SERVO_DRIVE / shaft",
+      "kind": "motor",
+      "bindings": {},
+      "links": {
+        "enable": {
+          "component": "field-429b99c7bae61b30",
+          "port": "running"
+        },
+        "targetSpeed": {
+          "component": "field-429b99c7bae61b30",
+          "port": "speed"
+        }
+      },
+      "config": {
+        "maximumSpeed": 3000,
+        "rampRate": 500,
+        "nominalSpeed": 1000
+      },
+      "evidence": {
+        "source": "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom",
+        "line": 55,
+        "command": "@global:DO_ENABLE_TO_SERVO_DRIVE",
+        "method": "Output mapping; mechanical model suggested from PLC tag"
+      },
+      "reason": "Existing reviewed Project 2 field-bench connection, guarded by exact active-configuration source fingerprints. Mechanical units, coupling and response settings remain editable."
+    },
+    {
+      "name": "DO_ENABLE_TO_SERVO_DRIVE / encoder",
+      "kind": "encoder",
+      "bindings": {
+        "count": "@global:B4ScanningPulse"
+      },
+      "links": {
+        "speed": {
+          "component": "field-a7cb084b18d2cecb",
+          "port": "speed"
+        }
+      },
+      "config": {
+        "initialPosition": 0,
+        "countsPerRevolution": 1024,
+        "rollover": 65536
+      },
+      "evidence": {
+        "source": "Physical/LDF3S_WO_SUCTION/PLC1/IoMap.iom",
+        "line": 55,
+        "command": "@global:DO_ENABLE_TO_SERVO_DRIVE",
+        "method": "Output mapping; mechanical model suggested from PLC tag",
+        "jigProfileId": "project2-field-bench",
+        "jigProfileVersion": 3,
+        "jigProfileReason": "The scanning encoder count feeds B4ScanningPulse; its shaft follows the servo. Resolution and gearing are editable jig assumptions. B4Freq and the original scan-encoder monitor evaluate this feedback."
+      },
+      "reason": "Existing reviewed Project 2 field-bench connection, guarded by exact active-configuration source fingerprints. Mechanical units, coupling and response settings remain editable."
     }
   ]
 }

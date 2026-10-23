@@ -1,0 +1,23 @@
+import React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import assert from 'node:assert/strict';
+import {DeviceTopology,DeviceSymbol} from '../virtual_plc/ui/src/DeviceTopology';
+import {ComponentAction} from '../virtual_plc/ui/src/ComponentAction';
+import {ComponentLibrary} from '../virtual_plc/ui/src/ComponentLibrary';
+
+const noop=()=>{};
+const devices=Array.from({length:101},(_,index)=>({id:`motor-${index}`,name:`Motor ${index}`,kind:'motor',enabled:true,bindings:{},config:{},actionRequired:index===100?'Confirm the running feedback tag.':''}));
+const markup=renderToStaticMarkup(<DeviceTopology projectId="test" devices={devices} catalog={[]} live={[]} disabled={false} signalDisabled mode="operate" changeMode={noop} layoutSaving={false} automatic={noop} configure={noop} move={noop} moveEnd={noop} signal={noop} fault={noop}/>);
+assert.equal((markup.match(/class="topology-device motor /g)||[]).length,101);
+assert.ok(markup.includes('Fit all'));
+assert.ok(markup.includes('Fit width'));
+assert.ok(markup.includes('Action required for Motor 100'));
+assert.ok(!markup.includes('Previous'));
+assert.equal(renderToStaticMarkup(<ComponentAction name="Motor" onClick={noop}/>),'');
+assert.ok(renderToStaticMarkup(<DeviceSymbol kind="cylinder" value={.5} name="Delivery"/>).includes('CYLINDER'));
+const library=renderToStaticMarkup(<ComponentLibrary projectId="test" devices={devices} catalog={[]} close={noop} apply={async()=>{}}/>);
+assert.ok(library.includes('Manufacturer / make'));
+assert.ok(library.includes('I/O and communication terminals'));
+assert.ok(library.includes('Save layout positions'));
+assert.ok(library.includes('Vendor CAD / EPLAN / datasheet (optional)'));
+console.log('Jig UI checks passed: 101 devices on one canvas, Fit all, review action badge and cylinder symbol.');
