@@ -492,7 +492,7 @@ def default_rules():
         log.exception('RULES_DEFAULT_ERROR file=%s', DEFAULT_RULES)
         raise HTTPException(500,'Default rule configuration could not be loaded. Check the backend log.')
 @router.post('/api/rules/validate')
-async def validate_rules(project_files:Optional[List[UploadFile]]=File(None, max_files=MAX_PROJECT_FILES), rules_json:str=Form(...), project_name:str=Form('')):
+async def validate_rules(project_files:Optional[List[UploadFile]]=File(None), rules_json:str=Form(...), project_name:str=Form('')):
     sid,root=await stage_project(project_files,project_name); work=WORK/sid; rules_path=work/'rules.json'; out=work/'rule_results.json'
     log.info('RULE_VALIDATE_START session=%s project=%s rules_bytes=%d', sid, project_name, len(rules_json or ''))
     try:

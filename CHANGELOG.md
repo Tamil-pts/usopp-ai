@@ -8,6 +8,7 @@ Engine and rule schema versions are independent of the application release.
 - Verify the main UI version and compiled asset checksum before packaging a container. Container health fails when the deployed interface and API do not match; image tags must match the compiled application version.
 - Show version mismatches as warnings, check health without browser caching, prevent caching of all three UI entry pages and provide a fresh reload URL while preserving existing parameters.
 - Add a GitHub Linux container build with HTTP checks for the UI assets, version agreement, authentication, API registration, runtime permissions and compiled-source audit before exporting the image and checksum.
+- Remove unsupported File schema arguments that prevented startup with current FastAPI. Preserve large project upload limits in the multipart parser and refresh checks for administrator-approved accounts, exact alarm bindings and the combined Ubuntu launcher.
 
 ## 4.74.1 - 2026-10-23
 

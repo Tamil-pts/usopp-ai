@@ -40,8 +40,11 @@ class AccountTests(unittest.TestCase):
 
     def test_registration_fields_duplicate_and_hash(self):
         response=self.register()
-        self.assertEqual(response.status_code,200)
-        user=response.json()['user']
+        self.assertEqual(response.status_code,202)
+        self.assertTrue(response.json()['pending'])
+        self.assertIsNone(self.client.get('/api/auth/session').json()['user'])
+        self.assertEqual(self.client.post('/api/auth/login',json={'username':'engineer','password':'Test.pass.2026'}).status_code,403)
+        user=next(item for item in self.store.list_users() if item['username']=='engineer')
         self.assertEqual(user['role'],'user')
         self.assertEqual(user['designation'],'PLC Engineer')
         self.assertEqual(user['company'],'Test Company')
@@ -54,6 +57,9 @@ class AccountTests(unittest.TestCase):
 
     def test_password_change_revokes_other_sessions_and_persists(self):
         self.register()
+        user=next(item for item in self.store.list_users() if item['username']=='engineer')
+        self.store.manage_user(user['id'],'engineer','PLC Engineer','Test Company',True)
+        self.assertEqual(self.client.post('/api/auth/login',json={'username':'engineer','password':'Test.pass.2026'}).status_code,200)
         other=TestClient(app)
         other.post('/api/auth/login',json={'username':'engineer','password':'Test.pass.2026'})
         self.assertEqual(self.client.post('/api/auth/password',json={'currentPassword':'wrong','newPassword':'Changed.pass.2026'}).status_code,403)
