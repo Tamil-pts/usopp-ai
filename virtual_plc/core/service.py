@@ -182,6 +182,30 @@ class VirtualPLCService:
         self.workspaces = {}
         self.stop_event = threading.Event()
         self.worker = None
+        self.component_libraries={}
+
+    def component_library(self,owner):
+        from .component_library import ComponentLibrary
+        with self.guard:
+            key=str(owner)
+            if key not in self.component_libraries:self.component_libraries[key]=ComponentLibrary(self.store.folder(key)/'component-library')
+            return self.component_libraries[key]
+
+    def save_component_library(self,workspace,payload):
+        with workspace.lock:
+            selected=payload.get('componentIds')
+            if not isinstance(selected,list) or not selected or len(selected)>2048 or any(not isinstance(value,str) for value in selected):
+                raise ValueError('Select one or more configured components for the library item.')
+            components=[item for item in workspace.document.get('components',[]) if item['id'] in selected]
+            if len(components)!=len(set(selected)):raise ValueError('The selected components have changed. Refresh and select them again.')
+            return self.component_library(workspace.owner).save(payload,components,workspace.document.get('name',''))
+
+    def apply_component_library(self,workspace,identity,payload):
+        with workspace.lock:
+            if not workspace.runtime or workspace.document.get('status')!='ready':raise ValueError('Complete project analysis first.')
+            components=self.component_library(workspace.owner).instantiate(identity,workspace.runtime,payload.get('matchExact',False),payload.get('offsetX',0),payload.get('offsetY',0))
+            self.configure_components(workspace,workspace.document.get('components',[])+components)
+            return {**self.component_state(workspace),'message':'Library models and layout added as disabled drafts. Review PLC tags, enable the required devices and save connections.'}
 
     def _start_worker(self):
         with self.guard:
@@ -515,12 +539,14 @@ class VirtualPLCService:
             if not workspace.runtime or workspace.document.get('status')!='ready':
                 raise ValueError('Complete project analysis before enabling the simulation jig.')
             prepared=workspace.document.get('simulationJig',{}).get('prepared',False)
+            if enabled and workspace.runtime._pending is not None:
+                raise ValueError('Finish the pending PLC scan before changing the simulation jig.')
             if enabled and (reset_defaults or not prepared):
                 from .runtime import VirtualRuntime
                 base=self.store.model(workspace.owner,workspace.identity)
                 profile=bench_profile(workspace.runtime)
                 options=deepcopy(workspace.document.get('manualCorrections',{}))
-                if profile and profile.get('sourceCorrections') and 'sourceCorrections' not in options:
+                if reset_defaults and profile and profile.get('sourceCorrections') and 'sourceCorrections' not in options:
                     directory=Path(__file__).resolve().parents[1]/'examples'
                     path=(directory/profile['sourceCorrections']).resolve()
                     if not path.is_relative_to(directory.resolve()):raise ValueError('Invalid jig correction resource.')
@@ -529,31 +555,36 @@ class VirtualPLCService:
                     sources={p['source']:p.get('code','') for p in base.get('programs',[])}
                     if all(hashlib.sha256(sources.get(c['source'],'').encode()).hexdigest()==c['codeSha256'] for c in document['corrections']):
                         options['sourceCorrections']=document
-                model=corrections(base,options)
-                runtime=VirtualRuntime(model)
-                # Keep the operator's retained settings when preparing a fresh bench.
-                for identity,record in workspace.runtime.memory.records.items():
-                    if record.get('retain') and identity in runtime.memory.records:
-                        runtime.set_value(identity,deepcopy(record['value']),return_snapshot=False)
+                if reset_defaults:
+                    model=corrections(base,options)
+                    runtime=VirtualRuntime(model)
+                    for identity,record in workspace.runtime.memory.records.items():
+                        if record.get('retain') and identity in runtime.memory.records:
+                            runtime.set_value(identity,deepcopy(record['value']),return_snapshot=False)
+                else:
+                    # Enabling field feedback must not reset task state or stop a running PLC.
+                    model,runtime=workspace.model,workspace.runtime
                 plan=build_plan(runtime,workspace.document.get('components',[]))
                 components=plan['components']
-                initialization=initialize_bench(runtime,components)
+                initialization=(initialize_bench(runtime,components) if reset_defaults
+                                else plan.get('initializationProfile'))
                 for component in components:
-                    if 'faultInjected' in component['config']:component['config']['faultInjected']=0
+                    if reset_defaults and 'faultInjected' in component['config']:component['config']['faultInjected']=0
                 devices=DeviceComponents(components,runtime)
-                workspace.runtime.command('pause',return_snapshot=False)
+                if reset_defaults:workspace.runtime.command('pause',return_snapshot=False)
                 workspace.model,workspace.runtime=model,runtime
                 workspace.public_model=public_model(model,runtime)
                 workspace.devices,workspace.device_error=devices,''
                 workspace.environment_cache=None
-                workspace.hmi_pressed.clear()
-                workspace.scenario_cursor=0
+                if reset_defaults:
+                    workspace.hmi_pressed.clear()
+                    workspace.scenario_cursor=0
                 workspace.document.update(manualCorrections=options,components=devices.components,modelRevision=str(time.time_ns()))
                 workspace.document['environment']={k:v for k,v in plan.items() if k!='components'}
                 workspace.document['environment']['initializationProfile']=initialization
                 workspace.document['simulationJig']={'prepared':True,'profile':initialization,
-                    'message':'Healthy field defaults restored; PLC reset and stopped. Press Run PLC, then operate FAST or INCH.' if initialization
-                              else 'Jig prepared from configured devices. Review sensor defaults for this project; PLC reset and stopped.'}
+                    'message':('Jig defaults restored; PLC reset and stopped. Press Run PLC, then use the operator controls.' if reset_defaults
+                               else 'Jig connected. PLC task state is preserved; feedback follows actual output commands. Use START or a configured scenario when required.')}
             workspace.document.setdefault('settings',{})['simulationJigEnabled']=enabled
             if enabled:workspace.document['settings'].setdefault('backgroundLoad','fast')
             devices=self._devices(workspace)
@@ -578,6 +609,36 @@ class VirtualPLCService:
                 self.configure_components(workspace,plan['components'])
                 return {**self.component_state(workspace),'plan':workspace.document['environment']}
             return plan
+
+    def confirm_mapping(self,workspace,mapping_id,bindings=None,config=None):
+        from .environment import build_plan
+        with workspace.lock:
+            if not workspace.runtime or workspace.document.get('status')!='ready':raise ValueError('Complete project analysis first.')
+            if workspace.runtime.status=='running' or workspace.runtime._pending is not None:
+                raise ValueError('Pause the PLC and finish its scan before confirming connections.')
+            plan=build_plan(workspace.runtime,workspace.document.get('components',[]))
+            proposal=next((item for item in plan['pendingMappings'] if item['id']==mapping_id),None)
+            if not proposal:raise ValueError('This proposal is stale. Analyze the current project connections again.')
+            if proposal.get('candidates') and bindings is None:raise ValueError('Several exact tags match. Choose the required PLC tags in Configure component.')
+            if bindings is not None:proposal['bindings']=bindings
+            if config is not None:proposal['config']=config
+            proposal=validate_components([proposal],workspace.runtime)[0]
+            selected=set(proposal['bindings'].values())
+            kept=[]
+            for item in workspace.document.get('components',[]):
+                if selected.intersection(item.get('bindings',{}).values()):
+                    if item.get('evidence',{}).get('method')!='Exact selected-configuration I/O mapping':
+                        raise ValueError('An existing configured device owns this signal. Review its connections before replacing it.')
+                else:kept.append(item)
+            proposal['evidence'].update(confidence='confirmed',mappingSource='operator-confirmed')
+            configured=validate_components(kept+[proposal],workspace.runtime)
+            self.configure_components(workspace,configured)
+            updated=build_plan(workspace.runtime,configured)
+            # A confirmed device already owns its ports and needs no repeated proposal.
+            workspace.document['environment']={key:value for key,value in updated.items() if key!='components'}
+            workspace.document['environment']['pendingMappings']=[item for item in updated['pendingMappings'] if item['id']!=mapping_id]
+            self._persist(workspace)
+            return self.component_state(workspace)
 
     def environment_status(self, workspace, query='', offset=0, target='', view='alarms'):
         from .environment import LogicIndex, alarm_rows
@@ -701,7 +762,7 @@ class VirtualPLCService:
             if type(active) is not bool: raise ValueError('Fault injection requires true or false.')
             devices = self._devices(workspace)
             target = next((c for c in devices.components if c['id'] == identity), None) if devices else None
-            if not target or target['kind'] not in {'servo','vfd','velocity_servo'}: raise ValueError('Choose a servo or VFD component.')
+            if not target or target['kind'] not in {'servo','vfd','velocity_servo','motor','cylinder'}: raise ValueError('Choose a motor, cylinder, servo or VFD component.')
             target['config']['faultInjected'] = int(active)
             devices.states[identity]['current']['fault'] = active
             if active and devices.states[identity].get('faultSinceMs') is None:
@@ -849,6 +910,25 @@ class VirtualPLCService:
             if isinstance(point, dict) and point.get('source') and type(point.get('line')) is int:
                 workspace.runtime.set_breakpoint(point['source'], point['line'], point.get('enabled') is not False, return_snapshot=False)
 
+    def _scenario_event(self,workspace,event):
+        """Explicit scenario contacts must reach the same device inputs as manual controls."""
+        from .environment import scoped
+        runtime=workspace.runtime
+        devices=self._devices(workspace)
+        identity=scoped(runtime,event['name'])
+        runtime.set_value(event['name'],event.get('value'),force=event.get('force') is True,return_snapshot=False)
+        if not devices or not devices.active or not identity:return
+        for component in devices.components:
+            if component.get('bindings',{}).get('value')!=identity:continue
+            if component['kind']=='pushbutton':
+                pressed=bool(event.get('value'))!=bool(component['config']['releasedValue'])
+                devices.states[component['id']]['pressedUntilMs']=None if pressed else 0
+            elif component['kind'] in {'digital_input','analog_input'}:
+                component['config'].update(value=event.get('value'),automatic=0)
+                original=next(item for item in workspace.document['components'] if item['id']==component['id'])
+                original['config'].update(value=event.get('value'),automatic=0)
+                devices.pending_signals.add(component['id'])
+
     def _run(self):
         next_tick = {}
         while not self.stop_event.wait(.002):
@@ -876,7 +956,7 @@ class VirtualPLCService:
                                 events = sequence.get('events', [])
                                 while workspace.scenario_cursor < len(events) and events[workspace.scenario_cursor]['timeMs'] <= runtime.time_ms:
                                     event = events[workspace.scenario_cursor]
-                                    runtime.set_value(event['name'], event.get('value'), force=event.get('force') is True, return_snapshot=False)
+                                    self._scenario_event(workspace,event)
                                     workspace.scenario_cursor += 1
                             devices = self._devices(workspace)
                             if devices:

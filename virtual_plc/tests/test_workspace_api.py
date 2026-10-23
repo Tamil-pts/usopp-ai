@@ -92,6 +92,70 @@ def test_existing_routes_and_new_auth_are_preserved(client):
     assert primary.post('/api/virtual-plc/projects', json={}, headers={'origin': 'http://unrelated.invalid'}).status_code == 403
 
 
+def test_uploaded_motor_cylinder_runs_closed_loop_and_keeps_running_when_jig_enabled(client):
+    primary,_,service=client
+    example=Path(__file__).resolve().parents[1]/'examples/MotorCylinderPLC'
+    sources=[path for path in example.rglob('*') if path.is_file()]
+    started=primary.post('/api/project-upload/start',json={'project_name':'MotorCylinder','total_files':len(sources)})
+    assert started.status_code==200,started.text
+    session=started.json()['sessionId']
+    uploaded=primary.post('/api/project-upload/chunk',data={'session_id':session},files=[
+        ('project_files',('MotorCylinder/'+path.relative_to(example).as_posix(),path.read_bytes())) for path in sources])
+    assert uploaded.status_code==200,uploaded.text
+    finished=primary.post('/api/project-upload/finish',json={'session_id':session})
+    created=primary.post('/api/virtual-plc/projects',json={'projectPath':finished.json()['projectPath'],'name':'Closed loop acceptance'})
+    assert created.status_code==200,created.text
+    identity=created.json()['id'];path='/api/virtual-plc/projects/'+identity
+    ready=wait_ready(primary,identity)
+    assert ready['runtime']['compatibility']['runAllowed']
+    assert primary.post(path+'/control',json={'action':'run'}).status_code==200
+    enabled=primary.put(path+'/simulation-jig',json={'enabled':True})
+    assert enabled.status_code==200,enabled.text
+    assert enabled.json()['runtime']['status']=='running'
+    assert {item['kind'] for item in enabled.json()['components']} >= {'motor','cylinder'}
+    start=next(item for item in enabled.json()['components'] if item['name']=='StartButton')
+    assert primary.put(path+'/components/'+start['id']+'/signal',json={'value':1}).status_code==200
+    deadline=time.monotonic()+12
+    readings={}
+    while time.monotonic()<deadline:
+        result=primary.post(path+'/interface-values',json={'names':['Step','CycleComplete','Motor1Running','Cylinder1Retracted']})
+        assert result.status_code==200,result.text
+        readings=result.json()['values']
+        if readings['CycleComplete']:break
+        time.sleep(.04)
+    assert readings['CycleComplete'],readings
+    assert readings['Step']==4 and readings['Cylinder1Retracted'] is True
+    assert primary.post(path+'/control',json={'action':'pause'}).status_code==200
+
+
+def test_component_library_is_private_and_reuses_layout_with_vendor_reference(client,plc_folder):
+    primary,other,_=client
+    created=primary.post('/api/virtual-plc/projects',json={'projectPath':str(plc_folder)})
+    identity=created.json()['id'];path='/api/virtual-plc/projects/'+identity
+    state=wait_ready(primary,identity)
+    variable=next(item['id'] for item in state['model']['variables'] if item['name']=='Start')
+    configured=primary.put(path+'/components',json={'components':[{'id':'start','name':'Operator station','kind':'pushbutton',
+        'enabled':True,'bindings':{'value':variable},'config':{},'position':{'x':80,'y':120}}]})
+    assert configured.status_code==200,configured.text
+    saved=primary.post(path+'/component-library',json={'name':'Start station','manufacturer':'Fixture vendor','model':'PB-1',
+        'componentIds':['start'],'terminals':[{'type':'DI','terminal':'13-14','signal':'START'}]})
+    assert saved.status_code==200,saved.text
+    library_id=saved.json()['id']
+    assert other.get('/api/virtual-plc/component-library').json()['items']==[]
+    assert other.get('/api/virtual-plc/component-library/'+library_id).status_code in (400,404)
+    attached=primary.post('/api/virtual-plc/component-library/'+library_id+'/references',files={'file':('Vendor.dxf',b'0\nSECTION\n0\nEOF\n')})
+    assert attached.status_code==200,attached.text
+    reference=attached.json()['references'][0]
+    fetched=primary.get('/api/virtual-plc/component-library/'+library_id+'/references/'+reference['id'])
+    assert fetched.content==b'0\nSECTION\n0\nEOF\n'
+    assert 'attachment' in fetched.headers['content-disposition']
+    applied=primary.post(path+'/component-library/'+library_id+'/apply',json={'offsetX':300,'offsetY':0})
+    assert applied.status_code==200,applied.text
+    copied=next(item for item in applied.json()['components'] if item['id']!='start')
+    assert copied['position']=={'x':380,'y':120}
+    assert copied['enabled'] is False and copied['bindings']=={}
+
+
 def test_actual_analysis_hmi_memory_forcing_trace_and_export(client, plc_folder):
     primary, other, service = client
     hashes = {path.relative_to(plc_folder).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()

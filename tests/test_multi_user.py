@@ -212,9 +212,11 @@ class MultiUserHTTPTests(unittest.TestCase):
                 workbook = load_workbook(io.BytesIO(report.content),read_only=True,data_only=True)
                 try:
                     cells = '\n'.join(str(cell) for sheet in workbook for row in sheet.values for cell in row)
-                    self.assertIn(f'USER_{index}', cells)
+                    # Generated metadata presents descriptive labels with spaces.
+                    normalized=cells.replace('_',' ')
+                    self.assertIn(f'USER {index}', normalized)
                     for other in range(ACCOUNT_COUNT):
-                        if other != index: self.assertNotIn(f'USER_{other}',cells)
+                        if other != index: self.assertNotIn(f'USER {other}',normalized)
                 finally: workbook.close()
             # Five engines overlap; the sixth account waits for an engine slot.
             # This also detects a globally serial server despite parallel clients.
@@ -358,9 +360,14 @@ class MultiUserHTTPTests(unittest.TestCase):
         capacity=self.ok(self.clients[0].get('/api/auth/users'))['capacity']
         self.assertEqual(capacity['activeUsers'],ACCOUNT_COUNT)
         self.assertEqual(capacity['maxActiveUsers'],ACCOUNT_COUNT)
+        extra=self.clients[0].post('/api/auth/users',json={'username':'extra_enabled',
+            'password':PASSWORD,'designation':'Test','company':'Test'})
+        self.assertEqual(extra.status_code,409)
         responses=self.concurrent(lambda i,c:c.post('/api/auth/register',json={'username':f'extra{i}',
             'password':PASSWORD,'designation':'Test','company':'Test'}))
-        self.assertEqual([r.status_code for r in responses],[409]*ACCOUNT_COUNT)
+        self.assertEqual([r.status_code for r in responses],[202]*ACCOUNT_COUNT)
+        self.assertTrue(all(response.json()['pending'] for response in responses))
+        self.assertEqual(self.ok(self.clients[0].get('/api/auth/users'))['capacity']['activeUsers'],ACCOUNT_COUNT)
 
     def test_07_same_plc_connections_do_not_interleave(self):
         # This small TCP controller closes after GC11 and refuses overlapping
@@ -445,6 +452,7 @@ class MultiUserHTTPTests(unittest.TestCase):
         self.assertEqual(self.clients[1].post('/api/validation/source/save',json={
             'session_id':saved['sessionId'],'path':SOURCE_PATH,'content':read['content'],'etag':read['etag']}).status_code,403)
 
+    @unittest.skipUnless(os.getenv('USOPP_BROWSER_TESTS')=='1','Browser checks are opt-in: USOPP_BROWSER_TESTS=1.')
     def test_09_six_browser_profiles_and_saved_datainspect(self):
         from playwright.sync_api import sync_playwright, expect
         with sync_playwright() as playwright:

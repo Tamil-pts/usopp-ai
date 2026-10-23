@@ -43,7 +43,7 @@ jobs:
           docker run -d --name usopp-build-check --read-only --tmpfs /tmp:rw,nosuid,nodev,size=1g --cap-drop ALL --security-opt no-new-privileges:true -p 127.0.0.1:18200:8200 -v "$volume:/data" -v "$secret_dir/admin-password.txt:/run/secrets/usopp_admin_password:ro" -e USOPP_INITIAL_ADMIN_PASSWORD_FILE=/run/secrets/usopp_admin_password "usopp-ai:$USOPP_BUILD_VERSION"
           if ! python3 scripts/container_smoke.py --version "$USOPP_BUILD_VERSION" --password-file "$secret_dir/admin-password.txt"; then docker logs --tail 120 usopp-build-check; exit 1; fi
           docker exec usopp-build-check python -c "import os,pathlib,tempfile; assert os.getuid()==10001; root=pathlib.Path('/opt/usopp'); bad=[str(p) for p in root.rglob('*') if p.is_file() and p.suffix in ('.py','.pyw','.ts','.tsx','.map')]; assert not bad,bad[:10]; f=tempfile.TemporaryFile(dir='/data'); f.write(b'checked'); f.close(); print('Unprivileged compiled runtime and persistent-data permissions passed.')"
-          test "$(docker inspect -f '{{.Config.Labels.org.opencontainers.image.revision}}' "usopp-ai:$USOPP_BUILD_VERSION")" = "$GITHUB_SHA"
+          test "$(docker inspect -f '{{index .Config.Labels "org.opencontainers.image.revision"}}' "usopp-ai:$USOPP_BUILD_VERSION")" = "$GITHUB_SHA"
       - name: Export verified image and checksum
         shell: bash
         run: |

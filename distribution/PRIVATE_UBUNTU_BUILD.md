@@ -1,8 +1,8 @@
 # Copy and install the private Ubuntu build
 
-Current handover: **uSOPp 4.74.2 / Virtual PLC 0.9.0**.
+Current handover: **uSOPp 4.75.0 / Virtual PLC 0.10.0**.
 
-`uSOPp_4.74.2_server_build.tar.gz` contains Docker build inputs and the existing
+`uSOPp_4.75.0_server_build.tar.gz` contains Docker build inputs and the existing
 container installer. Build the image on the server using `docker build`.
 The server needs internet access for base images, npm, pip and llama.cpp.
 No Docker build or installation on the destination server has been performed
@@ -15,7 +15,7 @@ Run one section at a time and stop if a command fails.
 Open **Windows PowerShell**, separate from the Ubuntu SSH terminal:
 
 ```powershell
-scp -o "User=tamilselvan.p@petrus.local" "C:\Users\PTPL0241\Projects\AI_QC\uaopp.ai\usopp_ai_2.0\release\container-build\uSOPp_4.74.2_server_build.tar.gz" "pt-ws-0013.dx.petrus.local:/tmp/"
+scp -o "User=tamilselvan.p@petrus.local" "C:\Users\PTPL0241\Projects\AI_QC\uaopp.ai\usopp_ai_2.0\release\container-build\uSOPp_4.75.0_server_build.tar.gz" "pt-ws-0013.dx.petrus.local:/tmp/"
 ```
 
 Use your SSH password when prompted. The destination is `/tmp` so it does not
@@ -93,8 +93,8 @@ On `pt-ws-0013`, the reported LAN IPv4 is `10.20.31.137`. For a fresh install,
 the complete command avoids an interactive address prompt:
 
 ```bash
-cd /opt/usopp/build-4.74.2
-USOPP_PORT=8200 USOPP_BIND_ADDRESS=10.20.31.137 bash distribution/usopp-container.sh install usopp-ai:4.74.2
+cd /opt/usopp/build-4.75.0
+USOPP_PORT=8200 USOPP_BIND_ADDRESS=10.20.31.137 bash distribution/usopp-container.sh install usopp-ai:4.75.0
 ```
 
 Choose the Admin password when asked, then open
@@ -103,14 +103,14 @@ uSOPp is already installed under another account/configuration.
 
 ## 3. Extract and build
 
-Compare `sha256sum /tmp/uSOPp_4.74.2_server_build.tar.gz` against the checksum
+Compare `sha256sum /tmp/uSOPp_4.75.0_server_build.tar.gz` against the checksum
 supplied with the handover, then:
 
 ```bash
-mkdir -p /opt/usopp/build-4.74.2
-tar -xzf /tmp/uSOPp_4.74.2_server_build.tar.gz -C /opt/usopp/build-4.74.2
-cd /opt/usopp/build-4.74.2
-docker build --build-arg APP_VERSION=4.74.2 -t usopp-ai:4.74.2 .
+mkdir -p /opt/usopp/build-4.75.0
+tar -xzf /tmp/uSOPp_4.75.0_server_build.tar.gz -C /opt/usopp/build-4.75.0
+cd /opt/usopp/build-4.75.0
+docker build --build-arg APP_VERSION=4.75.0 -t usopp-ai:4.75.0 .
 ```
 
 Continue only after the image build succeeds. Leave the terminal open while it
@@ -124,10 +124,10 @@ works with the legacy Linux builder. If you already extracted the earlier
 archive and reached this error at the entrypoint copy, run in Ubuntu:
 
 ```bash
-cd /opt/usopp/build-4.74.2
+cd /opt/usopp/build-4.75.0
 sed -i 's/\r$//' Dockerfile
 sed -i 's|^COPY --chmod=755 deploy/container/entrypoint.sh /usr/local/bin/usopp-start$|COPY deploy/container/entrypoint.sh /usr/local/bin/usopp-start\nRUN chmod 755 /usr/local/bin/usopp-start|' Dockerfile
-docker build --build-arg APP_VERSION=4.74.2 -t usopp-ai:4.74.2 .
+docker build --build-arg APP_VERSION=4.75.0 -t usopp-ai:4.75.0 .
 ```
 
 This keeps the completed build stages available in Docker's cache. It does not
@@ -150,7 +150,7 @@ Choose the LAN IPv4 address reached by your browser, then run:
 ```bash
 read -r -p 'Server LAN IPv4 address: ' usopp_lan_ip
 USOPP_PORT=8200 USOPP_BIND_ADDRESS="$usopp_lan_ip" \
-  bash /opt/usopp/build-4.74.2/distribution/usopp-container.sh install usopp-ai:4.74.2
+  bash /opt/usopp/build-4.75.0/distribution/usopp-container.sh install usopp-ai:4.75.0
 ```
 
 Choose an initial Admin password of 12 to 128 characters when prompted.
@@ -171,7 +171,7 @@ In that original installation account's shell:
 test -f "$HOME/.config/usopp-container/image"
 cat "$HOME/.config/usopp-container/image"
 cat "$HOME/.config/usopp-container/port"
-bash /opt/usopp/build-4.74.2/distribution/usopp-container.sh update usopp-ai:4.74.2
+bash /opt/usopp/build-4.75.0/distribution/usopp-container.sh update usopp-ai:4.75.0
 ```
 
 The updater stops the app, creates a full backup and starts the new image on
@@ -185,12 +185,12 @@ do not initialize a fresh container expecting it to contain the old data.
 Use the same installation account as step 4:
 
 ```bash
-bash /opt/usopp/build-4.74.2/distribution/usopp-container.sh status
-bash /opt/usopp/build-4.74.2/distribution/usopp-container.sh logs
+bash /opt/usopp/build-4.75.0/distribution/usopp-container.sh status
+bash /opt/usopp/build-4.75.0/distribution/usopp-container.sh logs
 ```
 
 Open `http://pt-ws-0013.dx.petrus.local:8200/api/health` from the browser. Expected
-application version: `4.74.2`. Then open
+application version: `4.75.0`. Then open
 `http://pt-ws-0013.dx.petrus.local:8200` and sign in as `Admin` with the chosen
 password. Use the saved address/port for an existing installation.
 

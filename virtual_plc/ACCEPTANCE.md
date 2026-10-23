@@ -1,5 +1,16 @@
 # Virtual PLC acceptance
 
+## 0.10.0 / application 4.75.0 - 2026-10-23
+
+- All 153 Virtual PLC tests passed. The 29 jig, component-library and workspace API tests also passed with the container's current FastAPI dependency set. Eight application build-version/packaging tests passed separately.
+- Main app, DataInspect and Virtual PLC TypeScript/production builds passed. React server-render checks covered 101 components on one topology canvas, Fit all/Fit width, action badges, cylinder symbols and library forms. Interactive browser behavior was not tested in this run.
+- A real uploaded MotorCylinderPLC fixture passed the HTTP flow: Run PLC, enable jig without stopping the runtime, explicit START, motor start delay, motor feedback, cylinder extension/retraction and CycleComplete. Faults, manual mappings, explicit mapping confirmation and scenario contact persistence have separate tests.
+- Saved Project 2 (`LDF3S_WO_SUCTION`) ran with the reviewed source correction and profile version 5 for 16,250 scheduler scans / 6,500 virtual ms. FAST was explicitly pressed at 2,000 ms; readiness, the FAST latch, drafting/scanning load and inverter command became active. VFD/servo models moved and delivery encoder counts advanced. An explicit left STOP at 5,000 ms cleared the main inverter command and stopped its VFD/shaft. No PLC variables were forced. The servo run command remained under the original PLC stop-delay logic; this short check does not establish completion of that delayed stop or full machine-cycle equivalence.
+- The previous top-arm jig assumption was the concrete FAST blocker: its delayed inverse relationship to drafting-load output briefly dropped readiness and reset the latch. The reviewed default now keeps the top arm closed as an independent editable contact. Original PLC files were not changed.
+- The running local app reported UI/API 4.75.0, matching compiled UI checksum and no-store headers on all three UI entry pages. The container build was cancelled at the user's request; no 4.75.0 container image or destination-server deployment is claimed.
+
+See [the operation guide](JIG_AND_LIBRARY_GUIDE.md) for the one-time defaults refresh on older saved Project 2 workspaces and library reuse steps. Tests use virtual I/O; physical machine behavior and automatic vendor CAD/EPLAN interpretation are outside this result.
+
 ## 0.6.0 update - 2026-10-18
 
 Both complete selected configurations compile with zero active errors and reopen

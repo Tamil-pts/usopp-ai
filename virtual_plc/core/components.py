@@ -56,6 +56,8 @@ CATALOG = [
                _port('running', 'Running to PLC', 'output', 'BOOL')],
      'configFields': [_field('maximumSpeed', 'Maximum shaft speed', 3000, 1, 1e6, 'RPM'),
                       _field('rampRate', 'Speed ramp', 500, .01, 1e6, 'RPM/s'),
+                      _field('startDelayMs', 'Motor start delay', 0, 0, 60000, 'ms'),
+                      _field('faultInjected', 'Injected motor fault (0/1)', 0, 0, 1),
                       _field('nominalSpeed', 'Unbound speed reference', 1000, 0, 1e6, 'RPM')]},
     {'kind': 'analog_input', 'label': 'Analog input',
      'description': 'Generic configured signal into PLC memory. No physical sensor or network connection.',
@@ -135,6 +137,17 @@ CATALOG.append({'kind': 'velocity_servo', 'label': 'Velocity servo drive',
                      _field('nominalSpeed','Unbound speed reference',1000,0,1e6,'RPM'),
                      _field('rampRate','Acceleration',500,.01,1e6,'RPM/s'),
                      _field('faultInjected','Injected drive fault (0/1)',0,0,1)]})
+CATALOG.append({'kind':'cylinder','label':'Pneumatic cylinder',
+    'description':'A configurable virtual stroke with end-switch feedback, travel time and stuck-cylinder faults.',
+    'ports':[_port('extend','Extend solenoid from PLC','input','BOOL',True),
+             _port('retract','Retract solenoid from PLC','input','BOOL'),
+             _port('extended','Extended limit to PLC','output','BOOL'),
+             _port('retracted','Retracted limit to PLC','output','BOOL'),
+             _port('position','Stroke fraction to PLC','output')],
+    'configFields':[_field('travelMs','Full stroke travel time',1000,1,60000,'ms'),
+                    _field('initialPosition','Initial stroke fraction',0,0,1),
+                    _field('springReturn','Retract when extend is off (0/1)',1,0,1),
+                    _field('faultInjected','Stuck cylinder fault (0/1)',0,0,1)]})
 _CATALOG = {entry['kind']: entry for entry in CATALOG}
 
 
@@ -227,7 +240,7 @@ def validate_components(components, runtime=None):
             if type(value) not in {int, float} or not math.isfinite(value) or not field['min'] <= value <= field['max']:
                 raise ValueError(f"{name}: {field['label']} must be a finite number in {field['min']}..{field['max']}.")
             config[key] = value
-        for binary in ('releasedValue', 'faultInjected', 'automatic', 'activeValue'):
+        for binary in ('releasedValue', 'faultInjected', 'automatic', 'activeValue', 'springReturn'):
             if binary in config and config[binary] not in (0, 1):
                 raise ValueError(name + ': ' + binary + ' must be 0 or 1.')
         if kind in {'analog_input', 'analog_output'}:
@@ -378,6 +391,9 @@ class DeviceComponents:
             elif kind == 'analog_output': state['current'] = {'feedback': config['initialValue']}
             elif kind == 'servo': state['current'] = {'position': config['initialPosition'], 'speed': 0.0, 'fault': False}
             elif kind == 'vfd': state['current'] = {'frequency': 0.0, 'speed': 0.0, 'fault': False}
+            elif kind == 'cylinder':
+                position=config['initialPosition']
+                state['current']={'position':position,'extended':position>=1,'retracted':position<=0,'moving':False,'fault':False}
             elif kind == 'encoder': state['current'] = {'channelA': False, 'channelB': False, 'position': config['initialPosition'],
                                                        'count': math.floor(config['initialPosition'] * config['countsPerRevolution']) % config['rollover']}
             self.states[component['id']] = state
@@ -432,10 +448,22 @@ class DeviceComponents:
             fault = bool(cfg.get('faultInjected')) or (False if inputs.get('reset') else previous.get('fault', False))
             run = inputs.get('run', True) if 'run' in component.get('bindings', {}) or 'run' in component.get('links', {}) else True
             target = inputs['targetSpeed'] if inputs['enable'] and run and not fault else 0.0
+            if kind=='motor':
+                if not inputs['enable'] or fault:state.pop('startAtMs',None)
+                else:
+                    state.setdefault('startAtMs',self.runtime.time_ms)
+                    if self.runtime.time_ms-state['startAtMs']<cfg['startDelayMs']:target=0.0
             if abs(target) > cfg['maximumSpeed']:
                 raise ValueError('Requested motor speed exceeds the configured maximum')
             speed = _towards(previous['speed'], target, cfg['rampRate'] * delta)
             return {'speed': speed, 'running': abs(speed) > 1e-9, 'ready': not fault, 'fault': fault}
+        if kind=='cylinder':
+            conflict=bool(inputs['extend'] and inputs['retract'])
+            fault=bool(cfg['faultInjected']) or conflict
+            target=1.0 if inputs['extend'] else 0.0 if inputs['retract'] or cfg['springReturn'] else previous['position']
+            position=previous['position'] if fault else _towards(previous['position'],target,delta*1000/cfg['travelMs'])
+            return {'position':position,'extended':position>=1,'retracted':position<=0,
+                    'moving':not fault and position!=target,'fault':fault,'conflictingCommands':conflict}
         if kind == 'analog_output':
             target = max(cfg['minimum'], min(cfg['maximum'], inputs['command']))
             feedback = target if cfg['slewPerSecond'] == 0 else _towards(previous['feedback'], target, cfg['slewPerSecond'] * delta)
@@ -587,10 +615,26 @@ class DeviceComponents:
                 status = {'state': 'error', 'message': state['error'] + ' Correct the bindings/configuration or reset the simulation.'}
             elif forced:
                 status = {'state': 'forced', 'message': 'A feedback variable is forced. User forces take precedence over this generic device.'}
+            elif state['current'].get('fault'):
+                status={'state':'fault','message':'Conflicting cylinder solenoids are commanded.' if state['current'].get('conflictingCommands') else 'Injected or model fault prevents operation. Review the fault and model settings.'}
             elif self.runtime.status == 'running':
-                status = {'state': 'active', 'message': 'Generic model active at supported PLC scan boundaries.'}
+                command_ports=[port for port in ports if port['direction']=='input' and port['type']=='BOOL'
+                               and port['key'] in {'enable','run','extend','retract','command'} and (port['variableId'] or port['deviceLink'])]
+                if command_ports and not any(port['value'] for port in command_ports):
+                    status={'state':'waiting','message':'Waiting for the PLC output command. Check the operator START event and the command logic inputs.'}
+                elif component['kind'] in {'motor','vfd','servo','velocity_servo','cylinder'}:
+                    operating=bool(state['current'].get('running') or state['current'].get('moving'))
+                    status={'state':'running' if operating else 'waiting','message':'Physical model is responding to the PLC command.' if operating else 'PLC command received; waiting for the configured delay, ramp or end position.'}
+                else:status = {'state': 'active', 'message': 'Generic model active at supported PLC scan boundaries.'}
             else:
                 status = {'state': 'ready', 'message': 'Generic model ready. Explicit Run or Single scan is required; paused/stopped devices do not advance.'}
+            missing=[port['label'] for port in ports if port.get('required') and not (port['variableId'] or port['deviceLink'])]
+            feedback_missing=component['kind'] in {'motor','vfd','servo','velocity_servo','cylinder'} and not any(port['direction']=='output' and port['variableId'] for port in ports)
+            action=('Connect required PLC signals: '+', '.join(missing) if missing else
+                    'No PLC feedback tag is connected. Configure feedback if the PLC sequence requires it.' if feedback_missing else
+                    status['message'] if status['state'] in {'error','blocked','fault'} else '')
+            mode='manual' if component['kind']=='pushbutton' or component['kind'] in {'digital_input','analog_input'} and not component['config'].get('automatic') else 'automatic'
             result.append({**deepcopy(component), 'status': status, 'ports': ports, 'current': deepcopy(state['current']),
+                           'mode':mode,'actionRequired':action,
                            'updatedAtMs': state['updatedAtMs'], 'faultSinceMs': state.get('faultSinceMs'), 'model': 'generic', 'physicalConnection': False})
         return result

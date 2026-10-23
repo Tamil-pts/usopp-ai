@@ -31,7 +31,7 @@ def test_password_snippets_use_source_initialization_and_numeric_formatting():
     control={'id':'password','kind':'password','passwordLevelBinding':'Level','textGroup':'passwords',
              'properties':{'TextSource':'MultipleTexts','MaxLevel':'15','MaxChars':'8'}}
     page={'objects':[control]}
-    with pytest.raises(ValueError,match='initialization'):input_value(model,page,control,runtime,'qa1')
+    with pytest.raises(ValueError,match='waiting for the scheduled PLC login program'):input_value(model,page,control,runtime,'qa1')
     runtime.command('scan')
     assert input_value(model,page,control,runtime,'qa1') == {'loginLevel':1}
     assert input_value(model,page,control,runtime,'X2026') == {'loginLevel':11}

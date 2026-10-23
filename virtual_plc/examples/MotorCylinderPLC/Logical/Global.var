@@ -1,0 +1,12 @@
+VAR_GLOBAL
+    StartButton : BOOL := FALSE;
+    StopButton : BOOL := FALSE;
+    DoorClosed : BOOL := TRUE;
+    Motor1Cmd : BOOL := FALSE;
+    Motor1Running : BOOL := FALSE;
+    Cylinder1Extend : BOOL := FALSE;
+    Cylinder1Extended : BOOL := FALSE;
+    Cylinder1Retracted : BOOL := FALSE;
+    Step : DINT := 0;
+    CycleComplete : BOOL := FALSE;
+END_VAR

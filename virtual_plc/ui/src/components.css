@@ -4,3 +4,22 @@
 .vpc-exact-binding label { display:grid; gap:5px; font-size:12px; }
 .vpc-exact-binding input { width:100%; min-width:0; }
 .vpc-exact-binding small { grid-column:1/-1; opacity:.75; font-size:11px; }
+.component-action-required{color:#a56b00!important;background:#fff4d4!important;border:1px solid #d9a138!important;flex:0 0 auto;min-width:28px;min-height:28px;padding:4px!important;cursor:pointer;box-shadow:0 0 0 2px #e7b54120}
+.component-action-required .sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.mapping-review-list{padding:14px;border:1px solid #b78a27;border-radius:10px;margin:12px;background:var(--panel-bg,#152334)}
+.mapping-review-list>button{display:flex;align-items:center;gap:12px;text-align:left;width:100%;margin:6px 0;padding:10px}
+.mapping-review-list>button>span:last-child{font-size:12px;opacity:.8}
+.vpc-mapping-mode{display:block;padding:5px 12px;color:var(--muted,#8ca9bc);text-transform:capitalize}
+.component-library-dialog{width:min(1120px,96vw)!important;max-height:92vh;overflow:auto}
+.component-library-dialog>header{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.component-library-dialog h2{display:flex;align-items:center;gap:10px}
+.component-library-columns{display:grid;grid-template-columns:230px minmax(0,1fr);gap:20px;margin-top:18px}
+.component-library-columns>aside{display:flex;flex-direction:column;gap:8px;max-height:70vh;overflow:auto;border-right:1px solid var(--line);padding-right:14px}
+.component-library-columns>aside>button{display:flex;align-items:flex-start;flex-direction:column;text-align:left;gap:5px}
+.component-library-columns>aside small{font-size:11px;color:var(--muted)}
+.component-library-editor{display:flex;flex-direction:column;gap:12px}
+.component-library-editor select[multiple]{width:100%;min-height:110px}
+.library-terminal-table>div{display:grid;grid-template-columns:75px 1fr 1fr 75px 1fr 28px;gap:6px;align-items:end;margin-bottom:8px}
+.library-terminal-table label{min-width:0;text-transform:capitalize;font-size:11px}
+.library-terminal-table input,.library-terminal-table select{width:100%;min-width:0}
+@media(max-width:760px){.component-library-columns{grid-template-columns:1fr}.component-library-columns>aside{max-height:180px;border-right:0}.library-terminal-table>div{grid-template-columns:1fr 1fr}}
