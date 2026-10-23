@@ -4,12 +4,13 @@ GUIDES={
   'Open ByteMap to select a project and inspect packet layouts.',
   'Use DataInspect for PLC reads or a personal dashboard; MatchView compares revisions.',
   'Run configured requirements in LogicScan. Open saved activity to review evidence.']),
- 'validation':('ByteMap / MetaWorks','Validate packet structures and generate metadata from the selected project.',[
+ 'validation':('ByteMap / MetaWorks','Validate SpinConnect packet structures and generate metadata from the selected B&R project.',[
   'Select the machine/department, project and active configuration. Add reference metadata when needed.',
   'Run validation, then inspect each issue by Group Code, tag, source file and line.',
   'For metadata, review readable parameter names, datatypes, offsets and Sheet2 dropdown mappings before exporting.',
+  'For write ST, open Write ST, analyze the project, select groups and review HMI limits in PLC units. Generate the reviewed code, then copy or download its source and declarations.',
   'Correct the source or reviewed mapping, then rerun validation.']),
- 'plc':('DataInspect','Read packets, inspect manual captures and build live or report dashboards.',[
+ 'plc':('DataInspect','Read SpinConnect PLC packets, inspect captures and build monitoring dashboards. Select the YBS profile for YBS device frames.',[
   'Manage targets: choose Real PLC, Automation Studio simulation or the metadata-driven Data simulator.',
   'Load the correct metadata and check GC 10 before reading other groups.',
   'Select a Group Code and read data, or paste Manual PLC received data. Review capture time and source.',
@@ -28,11 +29,11 @@ GUIDES={
   'Use Chat for explanations, machine sequences, log decoding and source references.',
   'Use Rule configuration to define complete logic, alternatives and cross references.',
   'Use KnowHub to review rules, data models, unit rules, dropdown mappings and dashboard layouts.']),
- 'settings':('Settings','Configure your workspace and the shared Chopper connection.',[
-  'Local CPU model is the default. Activate an installed GGUF, or use the one-time CPU model setup.',
-  'A Ready indicator means the model is responding; Starting means loading is still in progress.',
-  'Keep Start with server enabled for automatic loading. Advanced settings hold model paths, CPU limits and external connections.',
-  'Choose local engineering tools if you want validation and log decoding without a model.']),
+ 'settings':('Settings / My profile','Manage your profile and workspace preferences.',[
+  'Open My profile to upload or remove your profile photo. Choose a PNG, JPEG or WebP up to 5 MB.',
+  'To change your password, enter the current password, new password and confirmation, then save.',
+  'Choose your theme, table layout and metadata columns. Changes belong to your account.',
+  'Admin can open WorkHub / Manage users to approve account requests and assign Admin or User access.']),
  'help':('Help','Find feature guides and the next action for your workflow.',[
   'Choose the relevant workspace guide.',
   'Ask Chopper about the current window, or open full Chat for logs and project analysis.'])

@@ -273,6 +273,13 @@ def assist(payload:dict):
 def _assist(payload:dict):
     task=payload.get('task','Validation analysis'); context=payload.get('context',{})
     context=context if isinstance(context,dict) else {}; question=payload.get('question','Explain the current validation result.')
+    from backend.core.log_diagnostics import reply_if_invalid_ybs
+    frame_reply=reply_if_invalid_ybs(context,question)
+    if frame_reply is not None:return frame_reply
+    from backend.core.report_analysis import reply_if_report
+    report_reply = reply_if_report(payload)
+    if report_reply is not None:
+        return report_reply
     application_help=bool(re.search(r'\b(?:WorkHub|ByteMap|MetaWorks|DataInspect|MatchView|LogicScan|KnowHub|ResultView|uSOPp)\b|how\s+(?:do\s+I\s+)?use\s+(?:this\s+)?app',str(question),re.I))
     from backend.core.window_help import guide as window_guide, answer as window_answer
     current_guide=window_guide(context)

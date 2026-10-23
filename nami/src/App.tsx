@@ -1,3 +1,4 @@
+import {frameProtocol,isYbsTarget,metadataMachine} from './utils/frameProfile';
 import {responsesForHistory, saveDecodedRun, type SavedInspectRun} from './utils/runHistory';
 import {userStorage} from '../../src/shared/userStorage';
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
@@ -11,6 +12,7 @@ import { PLCManagerModal } from './components/PLCManagerModal';
 import { MetadataUploaderModal } from './components/MetadataUploaderModal';
 import { GroupSelectorBar } from './components/GroupSelectorBar';
 import { GroupDataView } from './components/GroupDataView';
+import {ParameterEditModal} from './components/ParameterEditModal';
 import {CalculationDashboard} from './components/CalculationDashboard';
 import {migrateTarget,targetMode} from './utils/targetMode';
 import {useLiveCollection} from './hooks/useLiveCollection';
@@ -82,6 +84,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
   const [latestTestId, setLatestTestId] = useState(initialHistory?.testId || '');
   const [historyWarning, setHistoryWarning] = useState('');
   const [metadata, setMetadata] = useState<MetadataItem[]>(initialHistory?.metadata || []);
+  const [editingParameter,setEditingParameter]=useState<MetadataItem|null>(null);
   const [metadataSource, setMetadataSource] = useState<string>(initialHistory?.metadataSource || 'Factory Carding (xcarding) CSV');
   const [metadataLoading, setMetadataLoading] = useState<boolean>(!archived);
 
@@ -111,13 +114,13 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
   const selectedPLC = useMemo(() => plcs.find((p) => p.id === selectedPLCId) || plcs[0], [plcs, selectedPLCId]);
 
   const [currentMachineType, setCurrentMachineType] = useState<SpinningMachineType>(
-    selectedPLC.machineType || 'Carding'
+    metadataMachine(selectedPLC)
   );
 
   const [selectedGroupCode, setSelectedGroupCode] = useState<number>(initialHistory ? Number(Object.keys(responsesForHistory(initialHistory))[0] ?? initialHistory.metadata?.[0]?.groupCode ?? 20) : 20);
   const [groupResponses, setGroupResponses] = useState<Record<number, GroupResponseData>>(() => initialHistory ? responsesForHistory(initialHistory) : {});
   const responseContext = useMemo(() => ({}), [selectedPLC.id, selectedPLC.ip, selectedPLC.port,
-    selectedPLC.machineId, selectedPLC.isSimulated, selectedPLC.targetMode, selectedPLC.endianness, metadata]);
+    selectedPLC.machineId, selectedPLC.isSimulated, selectedPLC.targetMode, selectedPLC.endianness, selectedPLC.frameProtocol, metadata]);
   const responseContextRef = useRef(responseContext);
   responseContextRef.current = responseContext;
   const live = useLiveCollection(plcs, selectedPLC, metadata, !archived, items => {
@@ -213,7 +216,13 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
           }
         }
 
-        if (mType === 'Carding') {
+        if (mType === 'YBS') {
+          const response = await fetch('/nami/ybs_metadata.json');
+          if (!response.ok) throw new Error('YBS metadata could not be loaded.');
+          const items = validateMetadata(await response.json());
+          setMetadata(items); setMetadataSource('YBS workbook 121836 (sequential inferred offsets)');
+          if (items.length) setSelectedGroupCode(items[0].groupCode);
+        } else if (mType === 'Carding') {
           const res = await fetch('/nami/default_metadata.csv');
           const text = await res.text();
           const parsed = parseCSVMetadata(text);
@@ -247,9 +256,9 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
 
   // When selected PLC changes, switch machine type if configured on PLC
   useEffect(() => {
-    if (!archived && selectedPLC.machineType && selectedPLC.machineType !== currentMachineType) {
-      setCurrentMachineType(selectedPLC.machineType);
-      loadMetadataForMachine(selectedPLC.machineType);
+    if (!archived && metadataMachine(selectedPLC) !== currentMachineType) {
+      setCurrentMachineType(metadataMachine(selectedPLC));
+      loadMetadataForMachine(metadataMachine(selectedPLC));
     }
   }, [selectedPLC, currentMachineType, loadMetadataForMachine]);
 
@@ -282,6 +291,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
   // Query a single group from server
   useEffect(() => {
     if (archived) return;
+    setEditingParameter(null);
     setGroupResponses({});
     setLatestTestId('');
     setConnectionNotice(null);
@@ -313,7 +323,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
         }
 
         const metaForGroup = metadata.filter((m) => m.groupCode === groupCode);
-        const parsedFrame = parsePLCResponse(json.rawBytes || [], selectedPLC.machineId);
+        const parsedFrame = parsePLCResponse(json.rawBytes || [], selectedPLC.machineId, groupCode);
 
         let parsedValues: any[] = [];
         if (json.success && parsedFrame.success && parsedFrame.dataBytes.length > 0) {
@@ -330,7 +340,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
           resultCode: parsedFrame.resultCode,
           dataLength: parsedFrame.dataLength,
           rawBytes: json.rawBytes || [],
-          sentBytes: json.sentBytes || Array.from(buildReadGroupRequest(selectedPLC.machineId ?? 0, groupCode)),
+          sentBytes: json.sentBytes || Array.from(buildReadGroupRequest(selectedPLC.machineId ?? 0, groupCode, frameProtocol(selectedPLC))),
           rawHex: Array.from((json.rawBytes || []) as number[])
             .map((b) => b.toString(16).padStart(2, '0'))
             .join(' '),
@@ -339,7 +349,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
           completedAt: Date.now(),
           error: json.error || parsedFrame.error,
           expectedLength: getExpectedGroupPayloadLength(metaForGroup),
-          lengthMatch: parsedFrame.dataLength >= getExpectedGroupPayloadLength(metaForGroup),
+          lengthMatch: (parsedFrame.protocol==='ybs' ? parsedFrame.dataLength === getExpectedGroupPayloadLength(metaForGroup) : parsedFrame.dataLength >= getExpectedGroupPayloadLength(metaForGroup)),
           parsedValues,
           tcpConnected: json.tcpConnected,
           stage: json.stage,
@@ -466,7 +476,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
 
         // Automatically populate Group 10 in groupResponses
         if (Array.isArray(data.rawBytes) && data.rawBytes.length >= 5) {
-          const parsedFrame = parsePLCResponse(data.rawBytes, selectedPLC.machineId);
+          const parsedFrame = parsePLCResponse(data.rawBytes, selectedPLC.machineId, 10);
           const metaFor10 = metadata.filter((m) => m.groupCode === 10);
           let parsedValues: any[] = [];
           if (parsedFrame.success && parsedFrame.dataBytes.length > 0) {
@@ -496,7 +506,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
               timestamp: new Date().toLocaleTimeString(),
               completedAt: Date.now(),
               expectedLength: getExpectedGroupPayloadLength(metaFor10),
-              lengthMatch: parsedFrame.dataLength >= getExpectedGroupPayloadLength(metaFor10),
+              lengthMatch: (parsedFrame.protocol==='ybs' ? parsedFrame.dataLength === getExpectedGroupPayloadLength(metaFor10) : parsedFrame.dataLength >= getExpectedGroupPayloadLength(metaFor10)),
               parsedValues,
             },
           }));
@@ -606,7 +616,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
         try {
           const groupResult = json.results?.find((item: any) => item.groupCode === g.groupCode);
           const metaForGroup = metadata.filter((m) => m.groupCode === g.groupCode);
-          const parsedFrame = parsePLCResponse(groupResult?.rawBytes || [], selectedPLC.machineId);
+          const parsedFrame = parsePLCResponse(groupResult?.rawBytes || [], selectedPLC.machineId, groupCode);
 
           let parsedValues: any[] = [];
           if (groupResult?.success && parsedFrame.success && parsedFrame.dataBytes.length > 0) {
@@ -633,7 +643,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
             sequenceIndex: i,
             error: groupResult?.error || (!groupResult ? 'No result returned for this group.' : parsedFrame.error),
             expectedLength: getExpectedGroupPayloadLength(metaForGroup),
-            lengthMatch: parsedFrame.dataLength >= getExpectedGroupPayloadLength(metaForGroup),
+            lengthMatch: (parsedFrame.protocol==='ybs' ? parsedFrame.dataLength === getExpectedGroupPayloadLength(metaForGroup) : parsedFrame.dataLength >= getExpectedGroupPayloadLength(metaForGroup)),
             parsedValues,
             tcpConnected: groupResult?.tcpConnected,
             stage: groupResult?.stage || (!groupResult ? 'not_sent' : undefined),
@@ -783,6 +793,11 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
       />
       </fieldset>
       {(latestTestId || archived) && <div className="px-6 py-3 text-sm border-b border-slate-700"><b>{archived ? 'Saved test (read only)' : 'Latest test ID'}:</b> <span className="font-mono break-all">{latestTestId}</span>{archived && <p>Original PLC target, metadata and captured values. Open a new live test from uSOPp to send requests.</p>}</div>}
+      {archived && initialHistory?.operation==='write-parameter' && <div className="px-6 py-3 text-sm border-b border-slate-700">
+        <strong>{initialHistory.verified?'Settings write confirmed by readback':'Settings write not confirmed'}</strong>
+        {initialHistory.writeEvidence&&<p>Before: {initialHistory.writeEvidence.beforeValue} · Requested: {initialHistory.writeEvidence.requestedValue} · Observed: {initialHistory.observedValue??'Unavailable'} · Target: {initialHistory.writeEvidence.target.ip}:{initialHistory.writeEvidence.target.port}</p>}
+        <p>{initialHistory.error||'The saved raw response is the write acknowledgement. Start a live read to view current parameter data.'}</p>
+      </div>}
       {historyWarning && <p role="alert" className="px-6 py-3 text-amber-300">{historyWarning}</p>}
 
       {/* Connection Notice & Troubleshooting Banner */}
@@ -810,10 +825,10 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
                     <strong>Target {selectedPLC.ip}:{selectedPLC.port}:</strong> Ping checks IP reachability. A TCP connection confirms the configured port is reachable; a valid group response confirms PLC data communication.
                   </div>
                   <div className="text-slate-300">
-                    <strong>No PLC response:</strong> Check that the SpinConnect function is enabled, the configured Machine ID ({selectedPLC.machineId}) matches nw_machineID, and the PLC receive/send logic is running.
+                    <strong>No device response:</strong> {isYbsTarget(selectedPLC)?`Check the YBS device TCP service, network port and configured Machine ID (${selectedPLC.machineId}).`:`Check that SpinConnect is enabled, the configured Machine ID (${selectedPLC.machineId}) matches nw_machineID, and PLC receive/send logic is running.`}
                   </div>
                   <div className="text-slate-300">
-                    <strong>Session closure:</strong> GC 11 is sent after the test. If an older session is stuck, stop Live Poll and allow the PLC's configured idle timeout (about 300 seconds) to release it before retrying.
+                    <strong>Session closure:</strong> {isYbsTarget(selectedPLC)?'YBS sessions close locally. No SpinConnect close command is sent.':'GC 11 is sent after the test. If an older session is stuck, stop Live Poll and allow the configured idle timeout (about 300 seconds) to release it before retrying.'}
                   </div>
                 </details>
               )}
@@ -892,6 +907,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
               metadataItems={activeGroupMetadata}
               responseData={activeResponse}
               onPollGroup={pollSingleGroup}
+              onEditParameter={setEditingParameter}
               isPolling={isPollingSingle || isPollingAll || isTestingConnection}
               searchQuery={searchQuery}
               dataModelCheck={dataModelCheck}
@@ -903,6 +919,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
 
             {/* Bottom TCP Frame Inspector */}
             <RawPacketInspector
+              isYbs={isYbsTarget(selectedPLC)}
               responseData={activeResponse}
               groupCode={selectedGroupCode}
               machineId={selectedPLC.machineId}
@@ -935,6 +952,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
         onChecked={check => setDataModelSnapshot(check ? {check, metadata, machine: currentMachineType} : null)}
         onClose={() => setIsDataModelsOpen(false)}
       />}
+      {editingParameter && !archived && <ParameterEditModal item={editingParameter} plc={selectedPLC} metadata={metadata} metadataSource={metadataSource} onClose={()=>setEditingParameter(null)} onWritten={()=>{void pollSingleGroup(editingParameter.groupCode)}}/>}
       {isManualDataOpen && <ManualDataModal metadata={metadata} plc={selectedPLC} initialGroup={selectedGroupCode} onClose={()=>setIsManualDataOpen(false)} onDecoded={result=>{
         const captureContext=responseContext;
         setSelectedGroupCode(result.groupCode);
@@ -988,7 +1006,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
           setConnectionNotice(null);
           // Keep the selected machine and metadata aligned. The PLC connection state is separate.
           setPLCs((prev) =>
-            prev.map((p) => (p.id === selectedPLC.id ? { ...p, machineType: mType } : p))
+            prev.map((p) => (p.id === selectedPLC.id ? { ...p, machineType: mType, frameProtocol: items[0]?.protocol==='ybs'?'ybs' as const:'spinconnect' as const, ...(mType==='YBS'?{endianness:'big' as const,isSimulated:false,targetMode:'plc' as const}:{}) } : p))
           );
           userStorage.setItem(`spinning_metadata_${mType}`, JSON.stringify(items));
           userStorage.setItem(`spinning_metadata_source_${mType}`, sourceName);

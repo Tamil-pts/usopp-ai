@@ -1,5 +1,6 @@
 import * as XLSX from 'xlsx';
 import { MetadataItem, DropdownReferenceItem } from '../types';
+import {parseYbsMetadata,ybsMetadataTable} from './ybsProtocol';
 import { attachDropdownsToMetadata, STANDARD_DROPDOWN_REFERENCES } from '../data/machinePresets';
 import {buildDataModelRowChecks, buildDataModelRowReferences, checkedDataModels, groupDataModelReferences, dataModelResultLabel, metadataRowKey, type DataModelCheck, type DataModelReferenceData} from './dataModelChecks';
 
@@ -34,6 +35,7 @@ export function validateMetadata(items: MetadataItem[]): MetadataItem[] {
       errors.push(`row ${row}: invalid array size`);
     }
     if (seen.has(key)) errors.push(`row ${row}: duplicate GROUP_CODE/TAG_CODE (${key})`);
+    if(item.protocol==='ybs'&&(!Number.isFinite(item.divideFactor)||(item.divideFactor??0)<=0||!Number.isFinite(item.multiplyFactor))) errors.push(`row ${row}: invalid YBS division/multiplication factors`);
     seen.add(key);
   });
 
@@ -75,6 +77,9 @@ export function parseCSVMetadata(csvText: string): MetadataItem[] {
   }
 
   const header = parseCSVLine(lines[0]).map(h => h.toUpperCase().replace(/\s+/g, '_'));
+  if(header.includes('DIVISON_FACTOR')&&header.includes('MULTIPLICATION_FACTOR')&&!header.includes('TAG_CODE')){
+    return validateMetadata(parseYbsMetadata(lines.map(parseCSVLine)));
+  }
 
   // Find column indices
   const colIndex = {
@@ -564,6 +569,7 @@ export function exportVerificationExcel(
       'Min': item.min ?? '-',
       'Max': item.max ?? '-',
       'Live Value': live !== undefined ? live.formattedValue : 'Not Read',
+      ...(item.protocol==='ybs'?{'Protocol':'YBS','Wire Type':item.wireDataType,'Raw Value':live?.rawValue??'Not Read','Actual Value':live?.actualValue??'Not Read','Division Factor':item.divideFactor,'Multiplication Factor':item.multiplyFactor,'Source Sheet':item.sourceSheet,'Source Row':item.sourceRow,'Inferred Offset':item.layoutInferred?'YES':'NO'}:{}),
       'Raw Hex': live !== undefined ? live.rawHex : '-',
       'Data Quality Status': live !== undefined ? (live.isInRange ? 'PASS' : 'FAIL') : '-',
       'Data Quality Details': live?.qualityIssue || '',
@@ -620,6 +626,10 @@ export function exportMetadataTemplateExcel(
   machineType: string,
   sampleItems: MetadataItem[]
 ): Uint8Array {
+  if(sampleItems[0]?.protocol==='ybs'){
+    const book=XLSX.utils.book_new();XLSX.utils.book_append_sheet(book,XLSX.utils.json_to_sheet(ybsMetadataTable(sampleItems)),'YBS Metadata');
+    return new Uint8Array(XLSX.write(book,{bookType:'xlsx',type:'array'}));
+  }
   const rows = sampleItems.map((item) => ({
     'S NO.': item.sNo,
     'Screen name': item.screenName,
@@ -703,6 +713,7 @@ export function exportMetadataTemplateCSV(
   machineType: string,
   sampleItems: MetadataItem[]
 ): string {
+  if(sampleItems[0]?.protocol==='ybs')return XLSX.utils.sheet_to_csv(XLSX.utils.json_to_sheet(ybsMetadataTable(sampleItems)));
   const headers = [
     'S NO.',
     'Screen name',

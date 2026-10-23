@@ -27,15 +27,7 @@ export function ProjectIntelligence({project}:{project:ReturnType<typeof useProj
   {!!state.failedFiles?.length&&<details><summary>Failed files ({state.failedFilesCount})</summary>{state.failedFiles.map((file:any)=><p key={file.path}><code>{file.path}</code> · {file.error}</p>)}</details>}</div>}
  </details>;
 }
-export function ChopperModelStatus(){
- const [state,setState]=useState<any>(null);
- useEffect(()=>{let active=true;const poll=()=>request('/api/assist/model/status').then(data=>{if(active)setState(data)}).catch(()=>{});void poll();const timer=setInterval(()=>void poll(),6000);return()=>{active=false;clearInterval(timer)}},[]);
- return <div className="chopperModelStatus" role="status"><Bot size={16}/>{state?<><b>{state.modelName||'Engineering tools'}</b><span className={state.ready?'modelReady':''}>{state.ready?'Ready':state.running?'Loading':state.installed?'Installed · stopped':'Model setup required'}</span><span>{state.ramMB!=null?`${state.ramMB} MB RAM`:'RAM —'} · {state.contextLimit?.toLocaleString()} context</span>{state.responseSeconds!=null&&<span>Last response {state.responseSeconds}s</span>}{state.fallbackReason&&<small>{state.fallbackReason}</small>}</>:'Checking local model…'}</div>;
-}
-export function ContextUsage({usage,retrieval}:{usage?:any;retrieval?:any}){
- if(!usage&&!retrieval)return null;
- return <details className="chopperContextUsage"><summary>{usage?`Context ${Number(usage.usedTokens||0).toLocaleString()} / ${Number(usage.maxContext||0).toLocaleString()} tokens · ${Number(usage.remainingTokens||0).toLocaleString()} remaining`:'Source retrieval'}{retrieval&&` · ${retrieval.files?.length||0} sections · ${retrieval.passes?.length||0} passes`}</summary>
- {usage&&<><progress max={usage.maxContext} value={usage.usedTokens}/><p>{usage.measurement} · {usage.reservedAnswerTokens} tokens reserved for the answer · {usage.trimmedHistoryMessages||0} older messages removed from this request · {usage.omittedSections||0} sections omitted{usage.truncated?' · Evidence shortened; analysis incomplete':''}</p></>}
- {retrieval?.passes?.map((pass:any)=><p key={pass.pass}>Pass {pass.pass}: {pass.strategy}</p>)}{retrieval?.files?.map((file:any,i:number)=><div key={i}><code>[{file.sourceId}] {file.file}:{file.line}–{file.endLine}</code> · pass {file.pass}</div>)}{retrieval?.filesSent&&<small>{retrieval.filesSent.length} sections sent to the model after context management.</small>}
- </details>;
+export function ContextUsage({retrieval}:{usage?:any;retrieval?:any}){
+ if(!retrieval?.files?.length)return null;
+ return <details className="chopperContextUsage"><summary>Source references ({retrieval.files.length})</summary>{retrieval.files.map((file:any,index:number)=><p key={index}><code>[{file.sourceId}] {file.file}:{file.line}-{file.endLine}</code></p>)}</details>;
 }

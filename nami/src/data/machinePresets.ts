@@ -11,6 +11,7 @@ export const SPINNING_MACHINE_TYPES: SpinningMachineType[] = [
   'Blow Room',
   'Auto Winder',
   'RAP',
+  'YBS',
 ];
 
 export const MACHINE_TYPE_DESCRIPTIONS: Record<SpinningMachineType, string> = {
@@ -25,6 +26,7 @@ export const MACHINE_TYPE_DESCRIPTIONS: Record<SpinningMachineType, string> = {
   'Auto Winder': 'Automatic cone/package winder with electronic yarn clearers & autosequence splicer.',
   'RAP': 'Ring Auto Piecer / Doffer automated mobile robot traversing ring frame rails.',
   'Custom': 'Custom machine profile with user-defined tags and group codes.',
+  'YBS': 'YBS F1/F0 device. Big-endian values, division/multiplication factors and explicit status bits from the YBS workbook.',
 };
 
 /**
@@ -82,6 +84,7 @@ export function attachDropdownsToMetadata(
   dropdowns: DropdownReferenceItem[] = STANDARD_DROPDOWN_REFERENCES
 ): MetadataItem[] {
   return items.map((item) => {
+    if (item.protocol === 'ybs') return item;
     const matched = dropdowns.filter(
       (d) =>
         d.tagCode === item.tagCode ||
@@ -384,6 +387,7 @@ export function getPredefinedMachineMetadata(type: SpinningMachineType): Metadat
         createItem(21, 'History & RTC', 'Cumulative Run Hours', 'hrs', 150, 15, 'REAL', 0, 100000),
       ];
 
+    case 'YBS': return []; // Loaded from the separate YBS workbook asset.
     case 'Carding':
     default:
       // Carding fallback (if default_metadata.csv hasn't loaded yet)

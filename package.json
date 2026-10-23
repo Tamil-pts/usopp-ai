@@ -1,7 +1,7 @@
 {
   "name": "usopp-ai-v4",
   "private": true,
-  "version": "4.66.0",
+  "version": "4.74.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,9 +12,10 @@
     "status": "python3 scripts/ubuntu_demo.py status",
     "logs": "python3 scripts/ubuntu_demo.py logs",
     "prebuild": "node scripts/build_nami.mjs --install-only",
-    "build": "tsc -b && vite build && npm run build:nami",
+    "build": "tsc -b && vite build && npm run build:nami && npm run build:virtual-plc",
     "preview": "vite preview",
-    "build:nami": "node scripts/build_nami.mjs"
+    "build:nami": "node scripts/build_nami.mjs",
+    "build:virtual-plc": "tsc --noEmit --strict --jsx react-jsx --module ESNext --moduleResolution bundler --target ES2022 --lib ES2022,DOM --skipLibCheck --esModuleInterop virtual_plc/ui/src/main.tsx && vite build --config virtual_plc/vite.config.ts"
   },
   "allowScripts": {
     "esbuild@0.25.12": true

@@ -160,7 +160,7 @@ def _fit_context(messages,cfg,reserve,evidence=None):
     return usage,selected
 
 
-def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None,evidence=None,structured=False):
+def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None,evidence=None,structured=False,output_schema=None):
     cfg=configuration()
     if cfg['provider']=='local': return None
     timeout=model_response_timeout(cfg=cfg) if timeout is None else timeout
@@ -176,11 +176,16 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
     if cfg['provider']=='api' and _key(cfg): headers['Authorization']='Bearer '+_key(cfg)
     suffix='/api/chat' if cfg['provider']=='ollama' else '/chat/completions'
     body={'model':cfg['model'],'messages':messages,'stream':False}
+    if output_schema is not None:
+        body['response_format']={'type':'json_schema','json_schema':{'name':'report_query_plan','strict':True,'schema':output_schema}}
     if cfg['provider']=='ollama':
         # Preserve the system/evidence instructions when project retrieval adds
         # more context than a service's default window. Bound the answer length.
         body['options']={'num_ctx':max(8192,int(cfg.get('contextSize') or 4096)),
                          'num_predict':900,'temperature':0.1}
+        if output_schema is not None:
+            body.pop('response_format',None)
+            body['format']=output_schema
     if cfg['provider']=='embedded':
         body.update(max_tokens=int(max_tokens if max_tokens is not None else cfg.get('maxTokens') or 512),temperature=0.1,cache_prompt=False)
 

@@ -163,6 +163,51 @@ async def read_attachment(file: UploadFile = File(...)):
         content = await file.read(MAX_FILE + 1)
         if len(content) > MAX_FILE:
             raise HTTPException(413, 'Choose a file smaller than 20 MB.')
-        return await run_in_threadpool(preview, file.filename or 'Attachment', content)
+        return await run_in_threadpool(read_document, file.filename or 'Attachment', content)
     finally:
         await file.close()
+
+
+def read_document(name: str, content: bytes):
+    from backend.core.report_analysis import attach_report
+    try:
+        result = attach_report(name, content)
+    except HTTPException:
+        raise
+    except (ValueError, OSError, BadZipFile) as error:
+        raise HTTPException(422, f'The report could not be read: {error}')
+    except Exception:
+        import logging
+        logging.getLogger(__name__).exception('Could not read the attached report')
+        raise HTTPException(422, 'The report could not be read. Attach an unlocked, complete XLSX, XLS or CSV file.')
+    return result or preview(name, content)
+
+
+@router.get('/api/assist/report/{identifier}/source')
+def report_source(identifier: str):
+    from backend.core.report_analysis import load_report
+    from fastapi.responses import FileResponse
+    document, directory = load_report(identifier)
+    path = directory / ('source' + Path(document['name']).suffix.casefold())
+    if not path.is_file():
+        raise HTTPException(404, 'Attach the original report again to download it.')
+    return FileResponse(path, filename=document['name'])
+
+
+@router.post('/api/assist/reports/dashboard')
+def report_dashboard(payload: dict):
+    from backend.core.report_analysis import dashboard_request
+    return dashboard_request(payload)
+
+
+@router.post('/api/assist/reports/export/{format}')
+def export_report_dashboard(format: str, payload: dict):
+    from backend.core.report_analysis import dashboard_request
+    from backend.core.mill_report_exports import export_dashboard
+    from fastapi.responses import Response
+    if format not in {'pdf', 'csv', 'json'}:
+        raise HTTPException(400, 'Choose PDF, CSV or JSON.')
+    dashboard = dashboard_request(payload)
+    content, media_type = export_dashboard(dashboard, format)
+    return Response(content, media_type=media_type,
+                    headers={'Content-Disposition': f'attachment; filename="Chopper_Performance_Report.{format}"'})

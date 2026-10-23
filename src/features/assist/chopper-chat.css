@@ -119,3 +119,18 @@
 .chopperCitation { display:inline;padding:0 2px;border:0;background:transparent;color:var(--accent);font:inherit;font-size:.85em;cursor:pointer; }
 .chopperCitation:hover { text-decoration:underline; }
 .chopperCitation:focus-visible { outline:2px solid var(--accent);outline-offset:2px; }
+.chopperReportAnalysis { display:grid;gap:12px;margin:12px 0;min-width:0; }
+.chopperReportAnalysis > header { display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--accent); }
+.chopperReportAnalysis > header span { font-size:11px;color:var(--muted); }
+.chopperReportCards { display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px; }
+.chopperReportCard { display:grid;gap:6px;padding:13px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);min-width:0; }
+.chopperReportCard > span { font-size:11px;line-height:1.5;color:var(--muted); }
+.chopperReportCard > strong { color:var(--accent);font-size:22px;line-height:1.35;overflow-wrap:anywhere; }
+.chopperReportCard strong small { font-size:12px; }
+.chopperReportCard > small { color:var(--muted);font-size:10px;overflow-wrap:anywhere; }
+.chopperReportSources { padding:10px;border:1px solid var(--line);border-radius:7px;font-size:11px; }
+.chopperReportSources summary { cursor:pointer;color:var(--muted); }
+.chopperReportSources summary svg { display:inline;vertical-align:middle;margin-right:5px; }
+.chopperReportSources > div { display:grid;gap:6px;padding-top:12px;overflow-wrap:anywhere; }
+.chopperReportSources p { margin:0;max-height:110px;overflow:auto;line-height:1.6; }
+.chopperReportSources .btn { justify-self:start; }

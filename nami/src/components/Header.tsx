@@ -1,9 +1,11 @@
+import {frameProtocol,isYbsTarget,frameProtocolUpdates,frameProtocolLabel} from '../utils/frameProfile';
 import {targetMode,targetModeLabel} from '../utils/targetMode';
 import React, {useEffect, useState} from 'react';
 import {Activity, Server, Cpu, Settings, ArrowRight, ArrowLeft, RefreshCw, Play, Square, Clock, Sliders, X} from 'lucide-react';
 import {PLCConfig, GroupResponseData, SpinningMachineType} from '../types';
 import {readGroup150Clock} from '../utils/rtcReader';
 import {formatDecodedValue} from '../utils/valueDisplay';
+import {RequestFrameSelect} from './RequestFrameSelect';
 
 interface HeaderProps {
   selectedPLC: PLCConfig;
@@ -14,7 +16,7 @@ interface HeaderProps {
   onOpenManualFrameModal?: () => void;
   onOpenMetadataModal: () => void;
   onOpenDataModels?: () => void;
-  onConfigureConnection: (values: Pick<PLCConfig, 'port'|'endianness'|'timeoutMs'>) => void;
+  onConfigureConnection: (values: Partial<PLCConfig>) => void;
   onChangePLCIP: (ip: string) => void;
   onOpenSimulatorModal: () => void;
   onOpenRTCModal: () => void;
@@ -41,7 +43,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
   const [server, setServer] = useState<{serverTime: string; timezone: string; applicationPort: number} | null>(null);
   const [serverError, setServerError] = useState('');
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [draft, setDraft] = useState({port: plc.port, endianness: plc.endianness, timeoutMs: plc.timeoutMs});
+  const [draft, setDraft] = useState({port: plc.port, endianness: plc.endianness, timeoutMs: plc.timeoutMs,frameProtocol:frameProtocol(plc)});
   const [formError, setFormError] = useState('');
   const [ipDraft, setIpDraft] = useState(plc.ip);
   const [ipError, setIpError] = useState('');
@@ -62,8 +64,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
     return () => {cancelled = true; controller.abort(); clearInterval(timer);};
   }, []);
   useEffect(() => {
-    if (settingsOpen) {setDraft({port: plc.port, endianness: plc.endianness, timeoutMs: plc.timeoutMs}); setFormError('');}
-  }, [settingsOpen, plc.id, plc.port, plc.endianness, plc.timeoutMs]);
+    if (settingsOpen) {setDraft({port: plc.port, endianness: plc.endianness, timeoutMs: plc.timeoutMs,frameProtocol:frameProtocol(plc)}); setFormError('');}
+  }, [settingsOpen, plc.id, plc.port, plc.endianness, plc.timeoutMs,plc.frameProtocol]);
   useEffect(() => {
     if (!settingsOpen) return;
     const onKey = (event: KeyboardEvent) => {if (event.key === 'Escape') setSettingsOpen(false);};
@@ -78,8 +80,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
     }
   }
   const versionValue = props.versionResponse?.success
-    ? props.versionResponse.parsedValues.find((item) => /program.*version|plc.*version/i.test(item.parameter)) : undefined;
-  const version = versionValue ? versionValue.rawValue != null ? formatDecodedValue(versionValue.rawValue) : undefined : plc.programVersionStr;
+    ? props.versionResponse.parsedValues.find((item) => item.protocol==='ybs'?item.offset===0:/program.*version|plc.*version/i.test(item.parameter)) : undefined;
+  const version = versionValue ? versionValue.rawValue != null ? formatDecodedValue(versionValue.protocol==='ybs'?versionValue.actualValue:versionValue.rawValue) : undefined : plc.programVersionStr;
   const busy = props.isPollingAll || props.isPollingSingle || props.isTestingConnection;
   const connection = plc.status === 'connected' ? 'Last test: PLC responded'
     : plc.status === 'error' ? plc.tcpConnected ? 'Last test: TCP opened, no valid PLC response' : 'PLC not connected' : 'Not tested';
@@ -99,6 +101,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
         <dl className="di-mimic-facts">
           <div><dt>Server RTC</dt><dd>{serverError || (server ? server.serverTime.slice(0, 19).replace('T', ' ') : 'Loading…')} {server && !serverError ? `(${server.timezone})` : ''}</dd></div>
           <div><dt>Metadata</dt><dd title={props.metadataSource}>{props.metadataSource} <button className="di-text-button" disabled={busy} onClick={openMetadata}>Change file</button></dd></div>
+          <div><dt>Request frame</dt><dd>{frameProtocolLabel(plc)}</dd></div>
         </dl>
         <details className="di-more"><summary>Server details</summary>
           <dl className="di-mimic-facts">
@@ -115,7 +118,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
         <div className="di-link-arrow"><span>Request {sent.length ? `GC ${response?.groupCode}` : ''}</span><ArrowRight size={30}/></div>
         <div className="di-link-arrow"><ArrowLeft size={30}/><span>{response?.success ? `Response GC ${response.groupCode}` : response ? 'No valid response' : 'Awaiting test'}</span></div>
         <span className="di-link-detail">{response ? `${response.rawBytes.length} bytes · ${response.rttMs} ms` : 'One connection per test'}</span>
-        <span className="di-link-detail">{close ? close.sentBytes?.length ? 'GC 11 close request sent' : 'GC 11 could not be sent' : 'Finish with GC 11'}</span>
+        <span className="di-link-detail">{isYbsTarget(plc)?'YBS: close TCP session locally':close ? close.sentBytes?.length ? 'GC 11 close request sent' : 'GC 11 could not be sent' : 'Finish with GC 11'}</span>
       </section>
 
       <section className="di-mimic-card di-plc">
@@ -143,9 +146,9 @@ export const Header: React.FC<HeaderProps> = (props) => {
           <div><dt>Machine ID</dt><dd>{plc.machineId} <span className="di-id-options">{[0, 1].map((id) => <button key={id} disabled={busy} aria-pressed={plc.machineId === id} onClick={() => props.onToggleMachineId?.(id)}>{id}</button>)}</span></dd></div>
           <div><dt>Request received / responded</dt><dd>{response?.success ? `GC ${response.groupCode} · response confirms receipt (${response.timestamp})` : 'Not confirmed by a valid response'}</dd></div>
           <div><dt>Program version · GC 10</dt><dd>{version || 'Not available'}{props.versionResponse ? ` · read ${props.versionResponse.timestamp}` : ''}</dd></div>
-          <div><dt>PLC RTC · GC 150</dt><dd title={clockIssue}>{clock}{props.clockResponse?.success ? ` · read ${props.clockResponse.timestamp}` : ''}</dd></div>
+          <div><dt>{isYbsTarget(plc)?'YBS RTC: specification required':'PLC RTC \u00b7 GC 150'}</dt><dd title={clockIssue}>{clock}{props.clockResponse?.success ? ` · read ${props.clockResponse.timestamp}` : ''}</dd></div>
         </dl>
-        <div className="di-mimic-buttons"><button disabled={busy} onClick={props.onReadClock}><Clock size={15}/>Read PLC RTC</button><button disabled={busy} onClick={props.onOpenRTCModal}>RTC tester</button><button disabled={busy} onClick={props.onOpenPLCModal}>Manage targets</button>{targetMode(plc)==='data-simulator' && <button onClick={props.onOpenSimulatorModal}>Data simulator</button>}</div>
+        <div className="di-mimic-buttons"><button disabled={busy||isYbsTarget(plc)} title={isYbsTarget(plc)?'YBS clock layout requires its device specification':undefined} onClick={props.onReadClock}><Clock size={15}/>Read PLC RTC</button><button disabled={busy||isYbsTarget(plc)} onClick={props.onOpenRTCModal}>RTC tester</button><button disabled={busy} onClick={props.onOpenPLCModal}>Manage targets</button>{targetMode(plc)==='data-simulator' && <button onClick={props.onOpenSimulatorModal}>Data simulator</button>}</div>
         </details>
       </section>
     </div>
@@ -153,7 +156,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
       <button disabled={busy || ipDraft.trim() !== plc.ip} onClick={props.onTestConnection}><RefreshCw size={15}/>Test GC 10</button>
       <button className="di-primary" disabled={busy || ipDraft.trim() !== plc.ip} onClick={props.onPollAllGroups}><Play size={15}/>{props.isPollingAll ? 'Reading metadata groups…' : 'Test all metadata groups'}</button>
       <button disabled={!props.isLivePolling && (busy || ipDraft.trim() !== plc.ip)} onClick={props.onToggleLivePolling}>{props.isLivePolling ? <Square size={15}/> : <Play size={15}/>} {props.isLivePolling ? 'Stop Live' : 'Live Poll'}</button>
-      <details className="di-more"><summary>Test flow</summary><p>Single: open → selected GC → GC 11. Test All: open → GC 10 → metadata groups → GC 11. GC 11 requests closure; no reply frame is expected. A transport failure stops the sequence and sends GC 11.</p></details>
+      <details className="di-more"><summary>Test flow</summary><p>{isYbsTarget(plc)?'YBS: open TCP, send F1 read requests, validate the embedded GC, total length, checksum and F0, then close locally. Test All starts with GC 10. Invalid frames stop the sequence.':'Single: open → selected GC → GC 11. Test All: open → GC 10 → metadata groups → GC 11. GC 11 requests closure; no reply frame is expected. A transport failure stops the sequence and sends GC 11.'}</p></details>
     </div>
 
     {settingsOpen && <div className="di-settings-backdrop"><section className="di-settings" role="dialog" aria-modal="true" aria-labelledby="di-settings-title">
@@ -163,11 +166,12 @@ export const Header: React.FC<HeaderProps> = (props) => {
         event.preventDefault();
         if (!Number.isInteger(draft.port) || draft.port < 1 || draft.port > 65535) {setFormError('Enter a PLC TCP port between 1 and 65535.'); return;}
         if (!Number.isInteger(draft.timeoutMs) || draft.timeoutMs < 100 || draft.timeoutMs > 120000) {setFormError('Enter a timeout between 100 and 120000 ms.'); return;}
-        props.onConfigureConnection(draft); setSettingsOpen(false);
+        props.onConfigureConnection({...frameProtocolUpdates(plc,draft.frameProtocol),...draft}); setSettingsOpen(false);
       }}>
+        <RequestFrameSelect value={draft.frameProtocol} onChange={protocol=>setDraft({...draft,frameProtocol:protocol,endianness:protocol==='ybs'?'big':protocol!==draft.frameProtocol?'little':draft.endianness})}/>
         <label>PLC TCP request port<input autoFocus type="number" min={1} max={65535} required value={draft.port} onChange={(event) => setDraft({...draft, port: Number(event.target.value)})}/></label>
         <label>Response timeout (ms)<input type="number" min={100} max={120000} required value={draft.timeoutMs} onChange={(event) => setDraft({...draft, timeoutMs: Number(event.target.value)})}/></label>
-        <label>Byte order<select value={draft.endianness} onChange={(event) => setDraft({...draft, endianness: event.target.value as PLCConfig['endianness']})}><option value="little">Little-endian</option><option value="big">Big-endian</option></select></label>
+        <label>Byte order<select disabled={draft.frameProtocol==='ybs'} value={draft.endianness} onChange={(event) => setDraft({...draft, endianness: event.target.value as PLCConfig['endianness']})}><option value="little">Little-endian</option><option value="big">Big-endian</option></select></label>
         {formError && <p role="alert">{formError}</p>}
         <div className="di-mimic-buttons"><button type="button" onClick={() => setSettingsOpen(false)}>Cancel</button><button className="di-primary" type="submit" disabled={busy}>Save configuration</button></div>
       </form>

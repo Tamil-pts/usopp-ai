@@ -10,12 +10,13 @@ import {WorkbookViewer} from './WorkbookViewer';
 import {ProjectSummary} from './ProjectSummary';
 import {ProcessingStatus} from './ProcessingStatus';
 import {LoaderCircle,ShieldCheck,Sparkles} from 'lucide-react';
+import {WriteSTGenerator} from './WriteSTGenerator';
 import {ProcessingTimePopup} from '../../shared/ProcessingTimePopup';
 import './validation.css';
 import {ValidationSourceEditor,type SourceSelection} from './ValidationSourceEditor';
 import {DEPARTMENTS} from '../rules/library';
 
-const tabs=[['packets','Configured packets'],['offset','ByteMap'],['metadata','MetaWorks'],['dropdown','Dropdowns'],['generated','MetaWorks · Generated'],['uploaded','MetaWorks · Uploaded']] as const;
+const tabs=[['packets','Configured packets'],['offset','ByteMap'],['metadata','MetaWorks'],['dropdown','Dropdowns'],['write-st','Write ST'],['generated','MetaWorks · Generated'],['uploaded','MetaWorks · Uploaded']] as const;
 export function ValidationPage({workspace:w,metaCols,departments=DEPARTMENTS}:{workspace:ValidationWorkspace;metaCols:MetaCol[];departments?:string[]}) {
   const [tab,setTab]=useState<string>('packets');
   const [browser,setBrowser]=useState<'project'|'metadata'|null>(null);
@@ -36,7 +37,7 @@ export function ValidationPage({workspace:w,metaCols,departments=DEPARTMENTS}:{w
   const transferring=!!w.uploadProgress&&w.uploadProgress.uploaded<w.uploadProgress.total;
   return <>
     <ProcessingTimePopup active={!!w.busy} label={transferring?'Project upload':w.busy==='metadata'?'Metadata generation':w.busy==='validate'?'Project validation':'File preparation'} progress={transferring&&w.uploadProgress?100*w.uploadProgress.uploaded/w.uploadProgress.total:undefined} defaultEstimate={w.busy==='metadata'?55:w.busy==='validate'?75:25}/>
-    <div className="pageHead"><div><div className="eyebrow">ENGINEERING WORKSPACE</div><h1>ByteMap</h1><p>Validate configured packets, offsets and metadata. Review workbook edits before using them.</p></div>{w.result?.downloadExcelUrl&&<a className="btn" href={w.result.downloadExcelUrl}>Download validation report</a>}</div>
+    <div className="pageHead"><div><div className="eyebrow">ENGINEERING WORKSPACE</div><h1>ByteMap</h1><p>Validate SpinConnect packets, offsets and metadata against the selected B&R project. Review workbook edits before using them.</p></div>{w.result?.downloadExcelUrl&&<a className="btn" href={w.result.downloadExcelUrl}>Download validation report</a>}</div>
     {(w.result?.testId||w.generated?.testId)&&<p className="mono">Test ID: {w.generated?.testId||w.result?.testId}</p>}
     <div className="validationTopBar">
       <ProcessingStatus busy={w.busy} message={w.message} error={w.error||pathError} uploadProgress={w.uploadProgress}/>
@@ -58,6 +59,7 @@ export function ValidationPage({workspace:w,metaCols,departments=DEPARTMENTS}:{w
       </div>}/>
     {w.sourceChanged&&<div className="validationStale" role="status">Source files were edited. These results and datatype declarations describe the previous source. Run validation again.</div>}
     <div className="featureTabs" role="tablist">{tabs.map(([id,label])=><button role="tab" aria-selected={tab===id} className={'chip '+(tab===id?'active':'')} key={id} onClick={()=>setTab(id)}>{label}</button>)}</div>
+    <div hidden={tab!=='write-st'}><WriteSTGenerator workspace={w}/></div>
     {sourceSelection&&w.result?.sessionId&&<ValidationSourceEditor sessionId={w.result.sessionId} selection={sourceSelection} datatypes={w.result.datatypeIndex||[]} onClose={()=>setSourceSelection(null)} onSaved={w.markSourceChanged}/>}
     {['packets','offset','metadata','dropdown'].includes(tab)&&!w.result&&<div className="card emptyState"><h3>No validation results yet</h3><p>Select the project and run validation using the controls above.</p></div>}
     {tab==='packets'&&w.result&&<PacketGroupTable groups={w.result.groups||[]} issues={w.result.issues||[]} onOffsets={code=>{setGroup(code);setTab('offset')}} onSource={(path,line)=>setSourceSelection({path,line,mode:'source'})}/>}

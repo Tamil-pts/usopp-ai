@@ -13,12 +13,16 @@ ROOT_FILES = {
     'package.json', 'package-lock.json', 'vite.config.ts',
 }
 DIRECTORIES = (
-    'backend', 'python_engine', 'src', 'nami', 'knowledge/master',
+    'backend', 'python_engine', 'src', 'nami', 'virtual_plc', 'knowledge/virtual_plc', 'knowledge/master',
     'knowledge/data_models', 'knowledge/dashboard_layouts', 'knowledge/lapformer', 'knowledge/chopper', 'knowledge/help_index',
     'rules',
 )
 EXTRA_FILES = (
+    'REPORT_ANALYSIS.md', 'YBS_DATAINSPECT.md', 'SPINCONNECT_WRITE_ST.md', 'scripts/audit_ybs.py',
     'deploy/container/entrypoint.sh',
+    'distribution/usopp-container.sh',
+    'distribution/compose.yaml',
+    'distribution/PRIVATE_UBUNTU_BUILD.md',
     'scripts/build_nami.mjs',
     'scripts/package_container.py',
     'scripts/container_bootstrap.py',
@@ -35,6 +39,7 @@ EXCLUDED_SUFFIXES = {'.pyc', '.pyo', '.sqlite', '.sqlite3', '.gguf', '.safetenso
 
 def allowed_file(path: Path) -> bool:
     relative = path.relative_to(ROOT)
+    if relative.parts[:2] in {('virtual_plc','tests'),('virtual_plc','dist')}:return False
     if relative.parts[:3]==('knowledge','dashboard_layouts','users'):
         return False
     if any(part in EXCLUDED_PARTS for part in relative.parts):

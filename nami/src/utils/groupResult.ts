@@ -9,6 +9,7 @@ export function groupOutcome(result: GroupResponseData): 'passed' | 'failed' | '
 }
 
 export function closeDescription(close: GroupResponseData['closeResult']): string {
+  if(close?.warning&&!close.sentBytes?.length)return close.warning;
   if (close?.sentBytes?.length) return 'GC 11 close request sent; no reply frame is expected.';
   return close?.error || 'GC 11 could not be sent because no usable TCP connection remained.';
 }

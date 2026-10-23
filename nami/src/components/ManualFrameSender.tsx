@@ -1,3 +1,4 @@
+import {frameProtocol,isYbsTarget,frameProtocolUpdates} from '../utils/frameProfile';
 import {targetModeLabel} from '../utils/targetMode';
 import {userStorage} from '../../../src/shared/userStorage';
 import React, { useState, useEffect, useMemo } from 'react';
@@ -21,7 +22,9 @@ import {
   ArrowDownLeft,
   ArrowUpRight
 } from 'lucide-react';
+import {ybsChecksum} from '../utils/ybsProtocol';
 import { PLCConfig } from '../types';
+import {RequestFrameSelect} from './RequestFrameSelect';
 import { calculateXorChecksum, buildSpinConnect30ByteRequest, buildReadGroupRequest, formatHexDump } from '../utils/packetParser';
 
 interface ManualFrameSenderProps {
@@ -116,8 +119,8 @@ function createSpinConnect30ByteRows(machineId: number = 0, groupCode: number = 
 }
 
 // 9-byte Compact Read Group rows
-function createCompact9ByteRows(machineId: number = 0, groupCode: number = 10): FrameByteRow[] {
-  const bytes = Array.from(buildReadGroupRequest(machineId, groupCode));
+function createCompact9ByteRows(machineId: number = 0, groupCode: number = 10, protocol:'spinconnect'|'ybs'='spinconnect'): FrameByteRow[] {
+  const bytes = Array.from(buildReadGroupRequest(machineId, groupCode, protocol));
   const descs = [
     'STX',
     'Machine ID',
@@ -146,7 +149,7 @@ function createCompact9ByteRows(machineId: number = 0, groupCode: number = 10): 
     arrayNo: idx,
     dec: b,
     description: descs[idx] || `Byte ${idx}`,
-    remarks: remarks[idx] || '',
+    remarks: protocol==='ybs' ? ['F1','Machine ID','Read function 1','Total length high byte','Total length 9','GC high byte','GC low byte','XOR seed FF','F0'][idx] : remarks[idx] || '',
   }));
 }
 
@@ -154,10 +157,13 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
   activePLC,
   onUpdatePLC,
 }) => {
+  const protocol=frameProtocol(activePLC);
+  const [readGroup,setReadGroup]=useState(10);
   const [rows, setRows] = useState<FrameByteRow[]>(() =>
-    createSpinConnect30ByteRows(activePLC.machineId ?? 0, 10, 0)
+    createCompact9ByteRows(activePLC.machineId??0,10,protocol)
   );
 
+  useEffect(()=>{setRows(createCompact9ByteRows(activePLC.machineId??0,readGroup,protocol));setLastResponse(null);},[activePLC.id,protocol,activePLC.machineId,readGroup]);
   const [autoChecksum, setAutoChecksum] = useState<boolean>(true);
   const [rawTextMode, setRawTextMode] = useState<'table' | 'hexText' | 'decText'>('table');
   const [rawDecText, setRawDecText] = useState<string>('');
@@ -202,7 +208,7 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
   // Checksum calculation: XOR of all bytes from byte 0 up to (length - 2)
   const calculatedChecksum = useMemo(() => {
     if (currentBytes.length < 2) return 0;
-    return calculateXorChecksum(currentBytes, 0, currentBytes.length - 2);
+    return currentBytes[0]===241?ybsChecksum(currentBytes,currentBytes.length-2):calculateXorChecksum(currentBytes, 0, currentBytes.length - 2);
   }, [currentBytes]);
 
   // Keep checksum updated if autoChecksum is enabled
@@ -216,7 +222,7 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
           ...next[checksumIndex],
           dec: calculatedChecksum,
           description: next[checksumIndex].description || 'Check sum',
-          remarks: 'XOR of all bytes from STX to before ETX',
+          remarks: currentBytes[0]===241?'XOR seed FF over bytes before checksum':'XOR of all bytes from STX to before ETX',
         };
         return next;
       });
@@ -321,7 +327,7 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
   const handleForceRecalcChecksum = () => {
     if (rows.length < 2) return;
     const chkIdx = rows.length - 2;
-    const chk = calculateXorChecksum(currentBytes, 0, chkIdx);
+    const chk = currentBytes[0]===241?ybsChecksum(currentBytes,chkIdx):calculateXorChecksum(currentBytes, 0, chkIdx);
     setRows((prev) => {
       const next = [...prev];
       next[chkIdx] = { ...next[chkIdx], dec: chk };
@@ -335,7 +341,8 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
   };
 
   const handleLoadCompact9BytePreset = (gc: number = 10) => {
-    setRows(createCompact9ByteRows(activePLC.machineId ?? 0, gc));
+    setReadGroup(gc);
+    setRows(createCompact9ByteRows(activePLC.machineId ?? 0, gc,isYbsTarget(activePLC)?'ybs':'spinconnect'));
   };
 
   const handleRefreshRTCTimestamp = () => {
@@ -458,7 +465,7 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-white text-sm">Target PLC: {activePLC.name}</span>
+              <span className="font-bold text-white text-sm">Target device: {activePLC.name}</span>
               <span
                 className={`text-[10px] font-mono px-2 py-0.5 rounded ${
                   activePLC.isSimulated
@@ -517,10 +524,28 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
             className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md shadow-emerald-950/50 transition-all cursor-pointer disabled:opacity-50"
           >
             <Send className={`w-3.5 h-3.5 ${sending ? 'animate-pulse' : ''}`} />
-            <span>{sending ? 'Transmitting...' : 'Send Frame to PLC'}</span>
+            <span>{sending ? 'Transmitting...' : 'Send Frame to Device'}</span>
           </button>
         </div>
       </div>
+
+      <section className="bg-slate-900 border border-emerald-800 rounded-xl p-3 text-xs space-y-3" aria-label="Request frame builder">
+        <div className="flex gap-4 flex-wrap items-end">
+          <RequestFrameSelect className="text-emerald-300 [&_select]:block [&_select]:mt-1 [&_select]:bg-slate-800 [&_select]:border [&_select]:border-slate-600 [&_select]:rounded [&_select]:p-2" value={protocol} disabled={sending} onChange={value=>onUpdatePLC?.(frameProtocolUpdates(activePLC,value))}/>
+          <label className="text-slate-300">Machine ID
+            <input aria-label="Request machine ID" className="block mt-1 w-24 bg-slate-800 border border-slate-600 rounded p-2" type="number" min={0} max={255} step={1} value={activePLC.machineId} disabled={sending} onChange={event=>{const id=Number(event.target.value);if(Number.isInteger(id)&&id>=0&&id<=255)onUpdatePLC?.({machineId:id})}}/>
+          </label>
+          <label className="text-slate-300">Read group code
+            <input className="block mt-1 w-28 bg-slate-800 border border-slate-600 rounded p-2" type="number" min={0} max={65535} step={1} list="nami-request-groups" value={readGroup} disabled={sending} onChange={event=>{const group=Number(event.target.value);if(Number.isInteger(group)&&group>=0&&group<=65535)setReadGroup(group)}}/>
+            <datalist id="nami-request-groups">{[10,21,22,23,24,25,30,40,45,55,60,70,76,77,90,91,92,93,150].map(group=><option key={group} value={group}/>)}</datalist>
+          </label>
+          <button disabled={sending} className="border border-emerald-700 rounded px-3 py-2 text-emerald-300" onClick={()=>handleLoadCompact9BytePreset(readGroup)}>Generate read frame</button>
+          {protocol==='ybs'&&<button disabled={sending} className="border border-slate-600 rounded px-3 py-2" onClick={()=>{setReadGroup(70);handleLoadCompact9BytePreset(70)}}>YBS GC 70</button>}
+        </div>
+        <p className="text-slate-400">{protocol==='ybs'?'F1 / F0 · function 1 · total length 9 bytes · embedded group code · XOR seed FF':'03 / 02 · function 1 · payload length 2 bytes · SpinConnect XOR'}</p>
+        <p className="font-mono text-emerald-200 break-all" aria-label="Request decimal bytes">writeBuffer: [{currentBytes.join(' ')}] for groupCode {currentBytes.length>=7?currentBytes[5]*256+currentBytes[6]:'—'}, length {currentBytes.length}</p>
+        <p className="font-mono text-slate-400 break-all">HEX: {currentBytes.map(byte=>byte.toString(16).padStart(2,'0').toUpperCase()).join(' ')}</p>
+      </section>
 
       {/* Preset bar & template selection */}
       <div className="bg-slate-800/60 border border-slate-700/80 rounded-xl p-3">
@@ -532,18 +557,21 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
 
           <div className="flex items-center gap-1.5 flex-wrap text-xs">
             <button
+              disabled={isYbsTarget(activePLC)} title={isYbsTarget(activePLC)?'SpinConnect RTC template is unavailable for YBS':undefined}
               onClick={() => handleLoadSpinConnectPreset(10, 0)}
               className="px-2.5 py-1 rounded bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-700/60 text-indigo-200 font-medium transition-colors"
             >
               30-Byte Frame (GC 10 + RTC)
             </button>
             <button
+              disabled={isYbsTarget(activePLC)} title={isYbsTarget(activePLC)?'SpinConnect RTC template is unavailable for YBS':undefined}
               onClick={() => handleLoadSpinConnectPreset(80, 0)}
               className="px-2.5 py-1 rounded bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-700/60 text-indigo-200 font-medium transition-colors"
             >
               30-Byte Frame (GC 80 + RTC)
             </button>
             <button
+              disabled={isYbsTarget(activePLC)} title={isYbsTarget(activePLC)?'SpinConnect RTC template is unavailable for YBS':undefined}
               onClick={() => handleLoadSpinConnectPreset(20, 0)}
               className="px-2.5 py-1 rounded bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-700/60 text-indigo-200 font-medium transition-colors"
             >
@@ -556,10 +584,10 @@ export const ManualFrameSender: React.FC<ManualFrameSenderProps> = ({
               Compact 9-Byte (GC 10)
             </button>
             <button
-              onClick={() => handleLoadCompact9BytePreset(80)}
+              onClick={() => handleLoadCompact9BytePreset(isYbsTarget(activePLC)?30:80)}
               className="px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 border border-slate-600 text-slate-200 font-medium transition-colors"
             >
-              Compact 9-Byte (GC 80)
+              Compact 9-Byte (GC {isYbsTarget(activePLC)?30:80})
             </button>
           </div>
         </div>

@@ -177,6 +177,10 @@ def clear_temporary_workspaces()->dict:
             # Download routes still serve reports from their session directory.
             # Clear only staged source trees; retain report/session artifacts.
             if child.is_dir():
+                if child.name.startswith('chopper_report_'):
+                    shutil.rmtree(resolved)
+                    removed += 1
+                    continue
                 upload=child/'project_upload.json'
                 if upload.is_file() and not json.loads(upload.read_text(encoding='utf-8')).get('complete'): continue
                 with workspace_cleanup(child) as available:

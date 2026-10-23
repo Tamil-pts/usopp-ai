@@ -206,9 +206,9 @@ def upgrade_symbol_model(model, sources):
 
 def _entry(source, text):
     clean = _mask(text)
-    if Path(source).suffix.casefold() == '.c' and re.search(r'\bvoid\s+_CYCLIC\b', clean, re.I):
-        # A C translation unit can hold all three lifecycle sections plus
-        # helper functions; preserve the unit and schedule its cyclic entry.
+    if re.search(r'\b(?:PROGRAM\s+_?CYCLIC|void\s+_CYCLIC)\b', clean, re.I):
+        # A combined source can hold every lifecycle section. Keep its cyclic
+        # entry discoverable while the task adapter preserves the other phases.
         return 'cyclic'
     match = re.search(r'(?im)^\s*(?:PROGRAM|void\s+_?(?:INIT|CYCLIC|EXIT))\s*([A-Za-z_]\w*)?', clean)
     identity = ' '.join([Path(source).stem, match[0] if match else '']).casefold()
@@ -217,6 +217,23 @@ def _entry(source, text):
     if re.search(r'(?:_exit\b|exit$)', identity):
         return 'exit'
     return 'cyclic'
+
+
+def _entries(source,text):
+    names=re.findall(r'\b(?:PROGRAM\s+|void\s+)(_?(?:INIT|CYCLIC|EXIT))\b',_mask(text),re.I)
+    return list(dict.fromkeys(name.lstrip('_').lower() for name in names)) or [_entry(source,text)]
+
+
+def upgrade_lifecycle(model):
+    from .lifecycle import schedule_entries
+    phases={}
+    for program in model.get('programs',[]):
+        entries=_entries(program.get('source',''),program.get('code',''))
+        program['entryPoints']=entries
+        program['entry']='cyclic' if 'cyclic' in entries else entries[0]
+        phases[program['id']]=entries
+    for task in model.get('tasks',[]):schedule_entries(task,phases)
+    model['lifecycleAdapterVersion']=1
 
 
 def _configuration_path(source, selected):
@@ -311,8 +328,9 @@ def _tasks(sources, configuration, descriptors, programs, hardware, diagnostics)
                     for program_id in resolved:
                         program = by_id[program_id]
                         program.setdefault('tasks', []).append(task['id'])
-                        key = {'init': 'initializationPrograms', 'exit': 'exitPrograms'}.get(program['entry'], 'programs')
-                        task[key].append(program_id)
+                        for entry in _entries(program['source'],program.get('code','')):
+                            key = {'init': 'initializationPrograms', 'exit': 'exitPrograms'}.get(entry, 'programs')
+                            task[key].append(program_id)
             if task['assignments'] and cyclic and interval is None:
                 diagnostics.append({'severity': 'error', 'code': 'task-interval-unresolved', 'source': source,
                                     'line': task['line'], 'message': f'{class_name}: cycle interval is absent from selected hardware; execution requires an explicit correction.'})

@@ -8,6 +8,7 @@ import time
 from datetime import datetime, timezone
 from fastapi import APIRouter, Body, HTTPException, Request
 from backend.core import nami_transport as tcp
+from backend.core.nami_profiles import frame_protocol
 from backend.core.nami_simulator import DEFAULT_STATE, frame, payload
 from backend.core.run_history import current_user, begin_run, record_run, read_record, RECORDS
 from backend.core.runtime import _local_session
@@ -19,6 +20,10 @@ _state = copy.deepcopy(DEFAULT_STATE)
 _state_lock = threading.Lock()
 _user_states = {}
 
+def is_ybs(data):
+    try: return frame_protocol(data) == 'ybs'
+    except ValueError as exc: raise HTTPException(400, str(exc)) from exc
+
 def user_state():
     identity=(current_user.get() or {}).get('id', 'local')
     return _user_states.setdefault(identity, copy.deepcopy(DEFAULT_STATE))
@@ -27,12 +32,15 @@ def start_inspect(data,operation):
     metadata=data.get('metadata') or []
     if not isinstance(metadata,list) or len(metadata)>30000 or any(not isinstance(row,dict) for row in metadata):
         raise HTTPException(400,'Metadata must contain at most 30,000 parameter records.')
+    if any((row.get('protocol')=='ybs') != is_ybs(data) for row in metadata):
+        raise HTTPException(400,'Select the matching request frame and metadata: Server to YBS uses YBS metadata; Server to B&R uses SpinConnect metadata.')
     ip,port,machine_id,timeout=target(data)
     supplied=data.get('plc') if isinstance(data.get('plc'),dict) else {}
-    plc={key:supplied[key] for key in ('id','name','machineType','endianness','targetMode') if key in supplied}
+    plc={key:supplied[key] for key in ('id','name','machineType','endianness','targetMode','frameProtocol') if key in supplied}
+    plc['frameProtocol']='ybs' if is_ybs(data) else 'spinconnect'
     plc.update(ip=ip,port=port,machineId=machine_id,timeoutMs=timeout,isSimulated=bool(data.get('isSimulated')))
     plc.setdefault('id','archived-plc');plc.setdefault('name',ip or 'PLC simulator')
-    plc.setdefault('machineType','Custom');plc.setdefault('endianness',data.get('endianness','little'))
+    plc.setdefault('machineType',data.get('machineType') or 'Custom');plc.setdefault('endianness','big' if is_ybs(data) else data.get('endianness','little'))
     sid,_=_local_session()
     identity={'sessionId':sid,'projectName':str(plc['name'])[:200], 'machineDepartment':str(plc['machineType'])[:100],
               'plc':plc,'metadata':metadata,'metadataSource':str(data.get('metadataSource') or '')[:500],
@@ -120,6 +128,8 @@ def simulator_update(data: dict = Body(...)):
 
 @router.post('/plc/read-multiple-groups')
 def read_multiple(data: dict = Body(...)):
+    if is_ybs(data) and data.get('isSimulated'):
+        raise HTTPException(400, 'The data simulator uses SpinConnect frames. Use a YBS network target or offline received bytes.')
     groups = data.get('groupCodes')
     if not isinstance(groups, list) or not groups or len(groups) > 256:
         raise HTTPException(400, 'groupCodes must contain 1 to 256 group codes')
@@ -136,7 +146,7 @@ def read_multiple(data: dict = Body(...)):
                           closeResult=dict(success=True, groupCode=11, sentBytes=list(tcp.read_request(machine_id, 11)),
                                            rawBytes=[], isSimulated=True, plcClosed=True, normalClose=True))
         else:
-            result = tcp.sequence(ip, port, machine_id, groups, timeout)
+            result = tcp.sequence(ip, port, machine_id, groups, timeout, protocol='ybs' if is_ybs(data) else 'spinconnect')
             for item in result['results']:
                 item['isSimulated'] = False
             if result['closeResult']:
@@ -164,7 +174,14 @@ def test_connection(data: dict = Body(...)):
     version_warning = None
     version_offset = number(data, 'programVersionOffset', 0, 0, 65531)
     raw = result['rawBytes']
-    if result['success']:
+    if result['success'] and is_ybs(data):
+        from python_engine.ybs import parse_frame
+        parsed = parse_frame(raw, number(data, 'machineId', 0, 0, 255), 10)
+        if parsed['success'] and len(parsed['payload']) >= 4:
+            version = int.from_bytes(parsed['payload'][:4], 'big') / 1000
+        else:
+            result.update(success=False, error=parsed['error'] or 'Missing YBS program version.')
+    elif result['success']:
         checksum = 0
         for byte in raw[:-2]:
             checksum ^= byte
@@ -175,7 +192,7 @@ def test_connection(data: dict = Body(...)):
                  else f'PLC returned result code {raw[2]}' if raw[2] != 0 else '')
         if issue:
             result.update(success=False, error=issue)
-    if result['success']:
+    if result['success'] and not is_ybs(data):
         if int.from_bytes(bytes(raw[3:5]), 'big') >= version_offset + 4:
             start = 5 + version_offset
             version = struct.unpack('>f' if data.get('endianness') == 'big' else '<f', bytes(raw[start:start + 4]))[0]
@@ -240,6 +257,13 @@ def send_raw(data: dict = Body(...)):
         request = bytes(int(b) & 255 for b in raw)
     except (TypeError, ValueError, OverflowError):
         raise HTTPException(400, 'rawBytes must contain numbers')
+    if not is_ybs(data) and request[0]==241:
+        raise HTTPException(400, 'Select Server to YBS before sending an F1 request frame.')
+    if is_ybs(data):
+        from python_engine.ybs import parse_frame
+        if data.get('isSimulated'): raise HTTPException(400, 'YBS is not supported by the SpinConnect simulator.')
+        parsed = parse_frame(request)
+        if not parsed['success']: raise HTTPException(400, parsed['error'])
     ip, port, machine_id, timeout = target(data)
     group = (request[5] << 8 | request[6]) if len(request) >= 7 else 10
     identity=start_inspect(dict(data,groupCode=group),'send-raw')
@@ -257,6 +281,7 @@ def send_raw(data: dict = Body(...)):
 
 @router.post('/plc/send-rtc')
 def send_rtc(data: dict = Body(...)):
+    if is_ybs(data): raise HTTPException(400, 'YBS RTC writes require its device specification. SpinConnect RTC frames are not sent to YBS.')
     text = data.get('asciiPayload')
     if not isinstance(text, str) or not text or len(text) > 65535 or not text.isascii():
         raise HTTPException(400, 'asciiPayload must be nonempty ASCII text')

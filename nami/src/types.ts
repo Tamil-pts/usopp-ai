@@ -18,6 +18,10 @@ export interface DropdownReferenceItem {
 export type DropdownReferenceMap = Record<number, DropdownOption[]>;
 
 export interface MetadataItem {
+  protocol?:'spinconnect'|'ybs';
+  wireDataType?:string;divideFactor?:number;multiplyFactor?:number;
+  bitDefinitions?:{bit:number;label:string}[];
+  sourceRow?:number;sourceSheet?:string;layoutInferred?:boolean;
   sNo: number;
   screenName: string;
   machineVariants: string;
@@ -59,12 +63,14 @@ export type SpinningMachineType =
   | 'Blow Room'
   | 'Auto Winder'
   | 'RAP'
+  | 'YBS'
   | 'Custom';
 
 export interface PLCConfig {
   id: string;
   name: string;
   machineType?: SpinningMachineType;
+  frameProtocol?: 'spinconnect'|'ybs';
   ip: string;
   port: number;
   machineId: number;
@@ -89,6 +95,10 @@ export interface PLCConfig {
 }
 
 export interface ParsedParamValue {
+  wireDataType?:string;divideFactor?:number;multiplyFactor?:number;
+  sourceRow?:number;sourceSheet?:string;layoutInferred?:boolean;
+  actualValue?:number|null;
+  protocol?:'spinconnect'|'ybs';
   tagCode: number;
   parameter: string;
   screenName: string;

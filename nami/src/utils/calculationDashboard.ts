@@ -123,7 +123,7 @@ export function calculateCard(card:DashboardCard,metadata:MetadataItem[],respons
       if(!response.success||!response.lengthMatch||response.stage==='not_sent')throw new Error(`${alias}: GC ${item.groupCode} has no valid decoded response.`);
       const matches=response.parsedValues.filter(value=>value.tagCode===item.tagCode&&value.offset===item.offset&&value.dataType===item.dataType&&value.parameter===item.parameter);
       if(matches.length!==1||matches[0].qualityIssue)throw new Error(`${alias}: no unambiguous, valid decoded value is available.`);
-      const raw=matches[0].rawValue;const value=typeof raw==='boolean'?Number(raw):raw;
+      const raw=matches[0].protocol==='ybs'?matches[0].actualValue:matches[0].rawValue;const value=typeof raw==='boolean'?Number(raw):raw;
       if(typeof value!=='number'||!Number.isFinite(value))throw new Error(`${alias}: the input is not a finite numeric value.`);
       const time=Number.isFinite(response.completedAt)?response.completedAt!:null;
       if(!archived&&(time===null||now-time>card.maxAgeSeconds*1000||time-now>5000))throw new Error(`${alias}: input is stale or its capture time is unavailable. Read GC ${item.groupCode} again.`);

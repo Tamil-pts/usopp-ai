@@ -15,6 +15,8 @@
 !backend/**
 !python_engine/
 !python_engine/**
+!virtual_plc/
+!virtual_plc/**
 !scripts/
 !scripts/build_nami.mjs
 !scripts/package_container.py
@@ -34,6 +36,8 @@
 !knowledge/lapformer/**
 !knowledge/chopper/
 !knowledge/chopper/**
+!knowledge/virtual_plc/
+!knowledge/virtual_plc/**
 !knowledge/help_index/
 !knowledge/help_index/project_guide.json
 !knowledge/help_index/BR_PROJECT_HELP.md
@@ -70,3 +74,5 @@ rules/archive/**
 rules/learning/**
 rules/feedback/**
 knowledge/dashboard_layouts/users/**
+virtual_plc/tests/**
+virtual_plc/dist/**

@@ -225,6 +225,8 @@ class VirtualRuntime:
                 self.diagnostics.append(_diagnostic("TASK_EMPTY", "Unused task class has no program assignments: " + task.get("name", str(index)), severity="info", excluded=True))
                 continue
             task = deepcopy(task)
+            from .lifecycle import schedule_entries,unit_phases
+            schedule_entries(task,{identity:unit_phases(unit) for identity,unit in self.units.items()})
             task.setdefault("id", task.get("name", "task-" + str(index)))
             task.setdefault("name", task["id"])
             task.setdefault("priority", index)
@@ -1142,6 +1144,7 @@ class VirtualRuntime:
                 self._write(reference, not value if kind in {"CLOSED", "NEGATED", "NC"} else value, scope)
 
     def _program(self, identifier, entry="cyclic"):
+        from .lifecycle import section_phase
         unit = self.units[identifier]
         previous = self._context.copy()
         self._context.update(unitId=identifier, program=unit.get("name", identifier), source=unit["source"])
@@ -1150,9 +1153,7 @@ class VirtualRuntime:
                 name = section["name"].upper()
                 kind = section["kind"]
                 if kind in {"function", "function_block", "action"}: continue
-                if entry == "init" and name not in {"_INIT", "INIT"} and unit.get("entry") != "init": continue
-                if entry == "exit" and name not in {"_EXIT", "EXIT"} and unit.get("entry") != "exit": continue
-                if entry == "cyclic" and (name in {"_INIT", "INIT", "_EXIT", "EXIT"} or unit.get("entry") in {"init", "exit"}): continue
+                if section_phase(section,unit.get('entry','cyclic')) != entry:continue
                 try:
                     yield from self._execute_section(section["instructions"], unit["scope"])
                 except ReturnPLC:

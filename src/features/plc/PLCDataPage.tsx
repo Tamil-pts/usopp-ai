@@ -26,7 +26,7 @@ export function PLCDataPage({theme, setTheme,historyId='',onLive,onContext}:{the
       .then(async response => {
         const html = await response.text();
         if (!response.ok || !html.includes('/nami/assets/')) {
-          throw new Error('The PLC Data interface is unavailable. Rebuild the interface and restart uSOPp.ai.');
+          throw new Error('The PLC Data interface is unavailable. Rebuild the interface and restart usop.ai.');
         }
         setReady(true);
       })

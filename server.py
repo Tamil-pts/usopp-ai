@@ -72,7 +72,8 @@ def server_main() -> int:
     except Exception:
         pass
 
-    from backend.app import app
+    from virtual_plc.server import create_app
+    app = create_app()
 
     if os.getenv('USOPP_NO_BROWSER') != '1':
         threading.Timer(1.2, lambda: webbrowser.open(url)).start()

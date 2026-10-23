@@ -132,6 +132,8 @@ def public_model(model, runtime=None):
 def corrections(model, options):
     """Apply explicit virtual-only overrides, preserving original source evidence."""
     model = deepcopy(model)
+    from .project import upgrade_lifecycle
+    upgrade_lifecycle(model)
     if not isinstance(options, dict):
         raise ValueError('Manual corrections must be an object.')
     if 'cpuServices' in options:

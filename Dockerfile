@@ -7,6 +7,8 @@ RUN npm ci --no-audit --no-fund && npm --prefix nami ci --no-audit --no-fund
 COPY index.html tsconfig*.json vite.config.ts ./
 COPY src ./src
 COPY nami ./nami
+COPY virtual_plc/ui ./virtual_plc/ui
+COPY virtual_plc/vite.config.ts ./virtual_plc/vite.config.ts
 COPY scripts/build_nami.mjs ./scripts/build_nami.mjs
 RUN npm run build
 
@@ -30,18 +32,21 @@ COPY backend_requirements.txt ./
 RUN python -m venv /opt/venv && /opt/venv/bin/python -m pip install --no-cache-dir -r backend_requirements.txt
 COPY backend ./backend
 COPY python_engine ./python_engine
+COPY virtual_plc ./virtual_plc
 COPY scripts/package_container.py scripts/container_bootstrap.py scripts/container_maintenance.py ./scripts/
 COPY knowledge/master ./knowledge/master
 COPY knowledge/data_models ./knowledge/data_models
 COPY knowledge/dashboard_layouts ./knowledge/dashboard_layouts
 COPY knowledge/lapformer ./knowledge/lapformer
 COPY knowledge/chopper ./knowledge/chopper
+COPY knowledge/virtual_plc ./knowledge/virtual_plc
 COPY knowledge/help_index ./knowledge/help_index
 COPY rules ./rules
 COPY src/usopp_logo.png src/petrus_logo.png ./src/
 COPY local_ai/MODEL_LICENSE.txt local_ai/MODEL_CARD.md ./local_ai/
 COPY package.json ./
 COPY --from=frontend /build/dist ./dist
+COPY --from=frontend /build/virtual_plc/dist ./virtual_plc/dist
 RUN /opt/venv/bin/python scripts/package_container.py --output /compiled
 
 FROM python:3.12-slim-bookworm AS runtime
@@ -54,7 +59,8 @@ COPY --from=compiler /opt/venv /opt/venv
 COPY --from=compiler /compiled /opt/usopp
 COPY --from=llama_cpu /llama/build/bin/llama-server /opt/usopp/local_ai/runtime/llama-server
 COPY --from=llama_cpu /llama/LICENSE /opt/usopp/local_ai/runtime/LICENSE.txt
-COPY --chmod=755 deploy/container/entrypoint.sh /usr/local/bin/usopp-start
+COPY deploy/container/entrypoint.sh /usr/local/bin/usopp-start
+RUN chmod 755 /usr/local/bin/usopp-start
 ENV PATH="/opt/venv/bin:$PATH" PYTHONPATH="/opt/usopp:/opt/usopp/python_engine" PYTHONUTF8=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
     USOPP_DATA_ROOT=/data HOME=/data USOPP_MAX_USERS=6 USOPP_MAX_PARALLEL_TESTS=5
 WORKDIR /opt/usopp

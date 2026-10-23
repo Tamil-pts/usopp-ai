@@ -14,12 +14,14 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import { GroupResponseData } from '../types';
+import {YbsPacketInspector} from './YbsPacketInspector';
 import { formatHexDump, buildReadGroupRequest } from '../utils/packetParser';
 
 interface RawPacketInspectorProps {
   responseData?: GroupResponseData;
   groupCode: number;
   machineId?: number;
+  isYbs?: boolean;
   onSwitchMachineId?: (newId: number) => void;
   onTestGroup?: (gc: number) => void;
   onOpenManualFrameEditor?: () => void;
@@ -29,6 +31,7 @@ export const RawPacketInspector: React.FC<RawPacketInspectorProps> = ({
   responseData,
   groupCode,
   machineId = 0,
+  isYbs = false,
   onSwitchMachineId,
   onTestGroup,
   onOpenManualFrameEditor,
@@ -85,6 +88,7 @@ export const RawPacketInspector: React.FC<RawPacketInspectorProps> = ({
     setTimeout(() => setCopied(false), 1500);
   };
 
+  if(isYbs||respBytes[0]===241)return <YbsPacketInspector response={responseData} group={groupCode} machine={machineId}/>;
   if (!isExpanded) {
     return (
       <div className="bg-slate-900 border-t border-slate-800 px-4 py-2 font-mono text-xs flex items-center justify-between gap-3 shadow-md hover:bg-slate-800/80 transition-colors">

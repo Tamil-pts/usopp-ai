@@ -20,7 +20,7 @@ router = APIRouter(tags=['System'])
 
 @router.get('/api/health')
 def health():
-    return {'status':'ok','version':VERSION,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True},'applicationRoot':str(BASE),'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30','logFile':str(LOG_FILE)}
+    return {'status':'ok','version':VERSION,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True},'applicationRoot':str(BASE),'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30','logFile':str(LOG_FILE)}
 @router.post('/api/log')
 def frontend_log(payload:dict):
     event=str(payload.get('event','frontend_event'))[:100]

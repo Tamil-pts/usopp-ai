@@ -88,7 +88,7 @@ def start(host, port):
         if probe.connect_ex(('127.0.0.1', port)) == 0:
             raise RuntimeError(f'Port {port} is already in use. Choose another port with --port.')
     LOG.parent.mkdir(parents=True, exist_ok=True)
-    command = [str(PYTHON), '-m', 'uvicorn', 'backend.app:app',
+    command = [str(PYTHON), '-m', 'uvicorn', 'virtual_plc.server:create_app', '--factory',
                '--host', host, '--port', str(port), '--no-access-log']
     with LOG.open('a', encoding='utf-8') as log:
         process = subprocess.Popen(command, cwd=ROOT, stdin=subprocess.DEVNULL,

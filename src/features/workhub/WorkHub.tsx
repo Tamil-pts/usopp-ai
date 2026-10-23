@@ -3,12 +3,14 @@ import type {EngineeringFeature} from '../../shared/features';
 import {WorkHubActivity} from './WorkHubActivity';
 import './workhub.css';
 
-type WorkHubProps={active:boolean;onOpen:(feature:EngineeringFeature|'help')=>void};
+type WorkHubProps={active:boolean;onOpen:(feature:EngineeringFeature|'help'|'settings'|'virtual-plc')=>void};
 
 const tasks=[
-  {id:'validation',name:'ByteMap',label:'Map your PLC data',description:'Review packet structures, byte offsets and HMI mappings. Generate and inspect metadata workbooks.',detail:'Source → metadata',Icon:Layers},
-  {id:'plc',name:'DataInspect',label:'Inspect packet values',description:'Decode live or recorded PLC packets and compare values with the selected machine metadata.',detail:'Packets → values',Icon:Activity},
+  {id:'validation',name:'ByteMap',label:'Map your PLC data',description:'Validate SpinConnect packet structures, byte offsets and HMI mappings in your B&R project. Generate and inspect metadata workbooks.',detail:'Source → metadata',Icon:Layers},
+  {id:'plc',name:'DataInspect',label:'Inspect packet values',description:'Read and decode SpinConnect PLC packets, or select YBS device frames, using the matching metadata.',detail:'Packets → values',Icon:Activity},
   {id:'compare',name:'MatchView',label:'Understand what changed',description:'Compare Automation Studio revisions and trace changes in logic, configuration and HMI screens.',detail:'Revisions → differences',Icon:GitCompare},
+  {id:'virtual-plc',name:'Virtual PLC',label:'Operate your simulated machine',description:'Import a supported PLC project, connect virtual devices and operate controls with sensor feedback.',detail:'Controls and feedback',Icon:Cpu},
+  {id:'settings',name:'My profile and Settings',label:'Make the workspace yours',description:'Upload a profile photo, change your password and choose your theme and table preferences.',detail:'Profile and preferences',Icon:HelpCircle},
   {id:'rules',name:'LogicScan',label:'Review logic requirements',description:'Run your configured engineering rules and follow each finding back to its source evidence.',detail:'Requirements → evidence',Icon:ShieldCheck}
 ] as const;
 
@@ -45,7 +47,7 @@ export function WorkHub({active,onOpen}:WorkHubProps){
     <section className="workHubTools" aria-labelledby="workhub-tools">
       <div className="workHubSectionHeading"><div><span className="workHubEyebrow">PICK UP YOUR NEXT TASK</span><h2 id="workhub-tools">What would you like to work on?</h2></div><p>Purposeful tools. One connected workspace.</p></div>
       <div className="workHubToolLayout">
-        <div className="workHubTaskGrid">{tasks.map(({id,name,label,description,detail,Icon})=><button className="workHubTask" key={id} onClick={()=>onOpen(id)}>
+        <div className="workHubTaskGrid">{tasks.map(({id,name,label,description,detail,Icon})=><button className="workHubTask" key={id} id={id==='virtual-plc'?'virtual-plc-workhub':undefined} onClick={()=>onOpen(id)}>
           <div className="workHubTaskTop"><span className="workHubToolIcon"><Icon size={22}/></span><span className="workHubToolName">{name}</span><ArrowUpRight className="workHubTaskArrow" size={20}/></div>
           <h3>{label}</h3><p>{description}</p><span className="workHubTaskDetail">{detail}<ArrowRight size={16}/></span>
         </button>)}</div>

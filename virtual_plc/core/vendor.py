@@ -335,8 +335,17 @@ class VendorRuntime:
     def write(self, address, raw):
         region, offset = self.region(address, len(raw))
         if region['constant']: raise ValueError('Cannot write a constant or string literal through ADR')
-        current = bytearray(self.read(region['base'], region['size']))
-        current[offset:offset+len(raw)] = raw
+        whole = offset==0 and len(raw)==region['size']
+        # PLC programs often clear a large numeric array every short cycle.
+        # An already-zero array needs no encode/decode round trip or update.
+        if whole and region['reference'] is not None and region['spec'].get('kind')=='array' and not any(raw):
+            value=self.runtime._read(*self.region_reference(region))
+            if isinstance(value,list) and not any(value):return
+        if whole:
+            current=raw
+        else:
+            current = bytearray(self.read(region['base'], region['size']))
+            current[offset:offset+len(raw)] = raw
         if region.get('libraryOwned'):
             region['raw'] = bytes(current)
             return

@@ -2,7 +2,7 @@ import re
 import sqlite3
 import shutil
 from pathlib import Path
-from fastapi import APIRouter, Body, HTTPException, Request, Response
+from fastapi import APIRouter, Body, HTTPException, Request, Response, UploadFile, File
 from backend.core import accounts
 
 router = APIRouter(prefix='/api/auth', tags=['Accounts'])
@@ -26,11 +26,12 @@ def list_users(request:Request):
 def create_user(request:Request,data:dict=Body(...)):
     admin(request)
     try:
-        user=accounts.store.register(username_field(data),field(data,'password',8,128),field(data,'designation'),field(data,'company'))
+        user=accounts.store.register(username_field(data),field(data,'password',8,128),field(data,'designation'),field(data,'company'),data.get('role','user'))
     except sqlite3.IntegrityError:
         raise HTTPException(409,'This username already exists.')
     except accounts.AccountCapacityError as error:
         raise HTTPException(409,str(error))
+    except ValueError as error: raise HTTPException(400,str(error))
     return {'user':user}
 
 @router.post('/users/{user_id}')
@@ -39,10 +40,47 @@ def manage_user(user_id:int,request:Request,data:dict=Body(...)):
     if not isinstance(data.get('active'),bool): raise HTTPException(400,'Choose whether this account is enabled.')
     password=field(data,'password',8,128) if data.get('password') else None
     try:
-        user=accounts.store.manage_user(user_id,username_field(data),field(data,'designation'),field(data,'company'),data['active'],password)
+        user=accounts.store.manage_user(user_id,username_field(data),field(data,'designation'),field(data,'company'),data['active'],password,data.get('role'),request.state.user['id'])
     except sqlite3.IntegrityError: raise HTTPException(409,'This username already exists.')
     except ValueError as error: raise HTTPException(400,str(error))
     return {'user':user}
+
+
+@router.post('/profile-image')
+def upload_profile_image(request:Request,file:UploadFile=File(...)):
+    import io
+    import warnings
+    from PIL import Image, ImageOps, UnidentifiedImageError
+    user=request.state.user
+    if user.get('isDemo'):raise HTTPException(403,'Sign in with a personal account to add a profile photo.')
+    try:
+        raw=file.file.read(5*1024*1024+1)
+        if not raw or len(raw)>5*1024*1024:raise HTTPException(400,'Choose a PNG, JPEG or WebP image up to 5 MB.')
+        with warnings.catch_warnings():
+            warnings.simplefilter('error',Image.DecompressionBombWarning)
+            with Image.open(io.BytesIO(raw)) as source:
+                if source.format not in ('PNG','JPEG','WEBP') or source.width*source.height>16000000 or getattr(source,'n_frames',1)!=1:
+                    raise HTTPException(400,'Choose a still PNG, JPEG or WebP image up to 16 megapixels.')
+                picture=ImageOps.fit(ImageOps.exif_transpose(source).convert('RGB'),(256,256))
+                output=io.BytesIO();picture.save(output,format='JPEG',quality=88)
+        return {'user':accounts.store.set_profile_image(user['id'],output.getvalue())}
+    except (UnidentifiedImageError,OSError,ValueError,Image.DecompressionBombError,Image.DecompressionBombWarning):
+        raise HTTPException(400,'This photo could not be read. Choose a valid PNG, JPEG or WebP image.')
+    finally:file.file.close()
+
+
+@router.delete('/profile-image')
+def remove_profile_image(request:Request):
+    if request.state.user.get('isDemo'):raise HTTPException(403,'Use a personal account to manage your profile photo.')
+    return {'user':accounts.store.set_profile_image(request.state.user['id'],None)}
+
+
+@router.get('/profile-image/{user_id}')
+def get_profile_image(user_id:int,request:Request):
+    if request.state.user['id']!=user_id and request.state.user.get('role')!='admin':raise HTTPException(403,'This profile belongs to another user.')
+    image=accounts.store.profile_image(user_id)
+    if not image:raise HTTPException(404,'No profile photo.')
+    return Response(image,media_type='image/jpeg',headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})
 
 @router.delete('/users/{user_id}')
 def delete_user(user_id:int,request:Request):

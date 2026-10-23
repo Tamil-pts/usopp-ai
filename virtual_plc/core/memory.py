@@ -38,6 +38,7 @@ class PLCMemory:
         self.records: dict[str, dict] = {}
         self.identities: dict[str, str] = {}
         self.names: dict[str, list[str]] = {}
+        self._resolution_cache = {}
         self.element_count = 0
         self._allocating = False
         self.strict, self.diagnostics = strict, []
@@ -279,12 +280,22 @@ class PLCMemory:
                   "type": item.get("type", item.get("datatype")), "value": initial, "previous": deepcopy(initial),
                   "lastUpdate": 0, "forced": False, "quality": "unresolved" if spec.get("kind") == "unresolved" else "simulated",
                   "_forcedValue": None, "_spec": spec, "_initial": deepcopy(initial)}
+        self._resolution_cache.clear()
         self.records[identifier] = record
         self.identities[self.symbol_key(identifier)] = identifier
         self.names.setdefault(self.symbol_key(name), []).append(identifier)
         return record
 
     def resolve(self, name: str, scope: str | None = None):
+        key=(name,scope)
+        cached=self._resolution_cache.get(key)
+        if cached is not None:return cached
+        record=self._resolve_uncached(name,scope)
+        if len(self._resolution_cache)>=100000:self._resolution_cache.clear()
+        self._resolution_cache[key]=record
+        return record
+
+    def _resolve_uncached(self, name: str, scope: str | None = None):
         identity = self.identities.get(self.symbol_key(name))
         if identity is not None:
             return self.records[identity]

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RefreshCw, CheckCircle2, AlertTriangle, AlertCircle, Binary, Copy, Check, ListFilter } from 'lucide-react';
+import { RefreshCw, CheckCircle2, AlertTriangle, AlertCircle, Binary, Copy, Check, ListFilter, Pencil } from 'lucide-react';
 import { MetadataItem, GroupResponseData, ParsedParamValue } from '../types';
 import {formatDecodedValue} from '../utils/valueDisplay';
 import {metadataRowKey, groupDataModelReferences, type DataModelCheck, type DataModelReference, type DataModelReferenceData} from '../utils/dataModelChecks';
@@ -18,6 +18,7 @@ interface GroupDataViewProps {
   dataModelReferences: Map<string, DataModelReference[]>;
   referenceData: DataModelReferenceData;
   onOpenDataModels: () => void;
+  onEditParameter?: (item: MetadataItem) => void;
 }
 
 export const GroupDataView: React.FC<GroupDataViewProps> = ({
@@ -33,6 +34,7 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
   dataModelReferences,
   referenceData,
   onOpenDataModels,
+  onEditParameter,
 }) => {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [filterMode, setFilterMode] = useState<'all' | 'outOfRange' | 'warnings'>('all');
@@ -82,7 +84,8 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
   };
 
   // Special Alarm bit decoder for Group 30 (Fault History)
-  const isGroup30Alarms = groupCode === 30;
+  const isYbs = metadataItems[0]?.protocol==='ybs';
+  const isGroup30Alarms = groupCode === 30 && !isYbs;
 
   return (
     <div className="flex-1 flex flex-col min-w-0 bg-slate-950 p-4 sm:p-6 overflow-y-auto">
@@ -174,18 +177,18 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
       </div>
 
       {responseData && <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-5 text-xs space-y-2">
-        {responseData.success && !responseData.lengthMatch && <p className="text-amber-300 font-semibold">GC {groupCode} returned {responseData.dataLength} payload bytes; the metadata requires at least {responseData.expectedLength}. Check that this workbook matches the PLC program and its offsets.</p>}
+        {responseData.success && !responseData.lengthMatch && <p className="text-amber-300 font-semibold">GC {groupCode} returned {responseData.dataLength} payload bytes; the metadata requires {isYbs?'exactly':'at least'} {responseData.expectedLength}. Check that this workbook matches the device program and its offsets.</p>}
         {responseData.error && <p className="text-rose-300 font-semibold">{responseData.error}</p>}
         <p className="text-slate-300">{responseData.source === 'manual' ? 'Offline manual frame; no TCP request was sent.' : responseData.tcpConnected
           ? 'TCP connection opened for this test.' : responseData.stage === 'connect'
           ? 'TCP connection could not be opened.' : 'Request diagnostics'}</p>
         <details className="text-slate-400">
-          <summary className="cursor-pointer text-emerald-400">{responseData.source === 'manual' ? 'View manual frame details' : 'View request and GC 11 closure'}</summary>
+          <summary className="cursor-pointer text-emerald-400">{responseData.source === 'manual' ? 'View manual frame details' : isYbs?'View request and local TCP closure':'View request and GC 11 closure'}</summary>
           <div className="mt-2 space-y-1 font-mono break-all">
             <p>Stage: {responseData.stage || 'response'} · Log ID: {responseData.traceId || '—'}</p>
             <p>Sent ({responseData.sentBytes?.length || 0} bytes): {responseData.sentBytes?.map((byte) => byte.toString(16).padStart(2, '0')).join(' ') || 'No request confirmed sent'}</p>
             <p>Received: {responseData.rawBytes.length} bytes</p>
-            {responseData.source !== 'manual' && <p>GC 11: {responseData.closeResult?.sentBytes?.length ? 'Sent' : 'Not confirmed sent'} · PLC closed: {responseData.closeResult?.plcClosed ? 'Confirmed' : 'Not confirmed'}</p>}
+            {responseData.source !== 'manual' && !isYbs && <p>GC 11: {responseData.closeResult?.sentBytes?.length ? 'Sent' : 'Not confirmed sent'} · PLC closed: {responseData.closeResult?.plcClosed ? 'Confirmed' : 'Not confirmed'}</p>}
             {(responseData.closeResult?.warning || responseData.closeResult?.error) && <p className="text-amber-300">{responseData.closeResult.warning || responseData.closeResult.error}</p>}
           </div>
         </details>
@@ -233,6 +236,7 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
       )}
 
       {/* Parameter Table */}
+      {isYbs&&<p className="text-xs text-slate-400 mb-3">YBS: actual = raw / division factor × multiplication factor. Offsets follow worksheet order and require the matching device layout. Source rows and original wire types are retained; missing bytes are unavailable.</p>}
       <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
         <div className="px-4 py-3 border-b border-slate-800 flex items-center justify-between">
           <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
@@ -291,7 +295,11 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
                   <tr key={metadataRowKey(item)} className="di-parameter-row transition-colors">
                     <td className="py-2 px-3 font-mono text-slate-400">{item.tagCode}</td>
                     <td className="py-2 px-3">
-                      <div className="font-medium text-white">{item.parameter}</div>
+                      <div className="font-medium text-white flex items-center gap-2">{item.parameter}
+                        {item.isWritable && !readOnly && onEditParameter && <button type="button" disabled={isPolling}
+                          onClick={()=>onEditParameter(item)} title="Edit writable PLC parameter" aria-label={`Edit ${item.parameter}`}
+                          className="p-1 text-emerald-400 hover:text-emerald-200 disabled:opacity-50"><Pencil className="w-3.5 h-3.5"/></button>}
+                      </div>
                       <div className="text-[10px] text-slate-500">{item.screenName}</div>
                       {item.sheet2NeedsReload && <div className="text-[11px] text-amber-400">Re-upload the workbook to restore Sheet2 shown values.</div>}
                       {item.dropdownOptions && item.dropdownOptions.length > 0 && (
@@ -326,8 +334,9 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
                                 : 'text-emerald-300'
                             }`}
                           >
-                            {formatDecodedValue(parsed.rawValue)}
+                            {formatDecodedValue(parsed.protocol==='ybs'?parsed.actualValue:parsed.rawValue)}
                           </span>
+                          {parsed.protocol==='ybs'&&<span className="text-[10px] text-slate-400" title={`${item.sourceSheet}:${item.sourceRow}; worksheet order determines the offset`}>Raw {formatDecodedValue(parsed.rawValue)} / {item.divideFactor} × {item.multiplyFactor} · {item.wireDataType}</span>}
                           {parsed.dropdownText && (
                             <span className="px-2 py-0.5 rounded-full text-[11px] font-sans font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-700/80 shadow-xs">
                               {parsed.dropdownText}

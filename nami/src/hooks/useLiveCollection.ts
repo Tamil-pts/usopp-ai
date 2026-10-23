@@ -1,3 +1,4 @@
+import {metadataMachine} from '../utils/frameProfile';
 import {useCallback,useEffect,useRef,useState} from 'react';
 import type {GroupResponseData,MetadataItem,PLCConfig,SpinningMachineType} from '../types';
 import {userStorage} from '../../../src/shared/userStorage';
@@ -9,12 +10,13 @@ export type LiveSample={capturedAt:number;metadataHash:string;groups:Record<numb
 export type TargetContext={plc:PLCConfig;metadata:MetadataItem[];sample?:LiveSample|null};
 export type LiveOverview={accountId:number;revision:number;targets:{plc:PLCConfig;metadataRows:number;lastCapturedAt?:number;error?:string;collecting:boolean}[]};
 export type HistoryData={samples:LiveSample[];snapshots:Record<string,TargetContext>;totalSamples:number;returnedSamples:number;sampled:boolean};
-const sameTarget=(a:PLCConfig,b:PLCConfig)=>['id','ip','port','machineId','isSimulated','targetMode','endianness','machineType'].every(key=>a[key as keyof PLCConfig]===b[key as keyof PLCConfig]);
+const sameTarget=(a:PLCConfig,b:PLCConfig)=>['id','ip','port','machineId','isSimulated','targetMode','endianness','machineType','frameProtocol'].every(key=>a[key as keyof PLCConfig]===b[key as keyof PLCConfig]);
 const matches=(context:TargetContext|undefined,plc:PLCConfig,metadata:MetadataItem[])=>context&&sameTarget(context.plc,plc)&&metadataFingerprint(context.metadata)===metadataFingerprint(metadata);
 let factoryCarding:Promise<MetadataItem[]>|undefined;
 export async function targetMetadata(plc:PLCConfig):Promise<MetadataItem[]>{
- const machine:SpinningMachineType=plc.machineType||'Carding';const saved=userStorage.getItem(`spinning_metadata_${machine}`);
+ const machine:SpinningMachineType=metadataMachine(plc);const saved=userStorage.getItem(`spinning_metadata_${machine}`);
  if(saved)return restoreSavedSheet2(validateMetadata(JSON.parse(saved)));
+ if(machine==='YBS')return fetch('/nami/ybs_metadata.json').then(async response=>{if(!response.ok)throw new Error('YBS metadata could not be loaded.');return validateMetadata(await response.json())});
  if(machine!=='Carding')return getPredefinedMachineMetadata(machine);
  if(!factoryCarding)factoryCarding=fetch('/nami/default_metadata.csv').then(async response=>{if(!response.ok)throw new Error('Factory metadata could not be loaded.');return attachDropdownsToMetadata(parseCSVMetadata(await response.text()))}).catch(error=>{factoryCarding=undefined;throw error});
  return factoryCarding;

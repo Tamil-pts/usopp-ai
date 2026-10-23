@@ -18,8 +18,9 @@ def stage(destination: Path) -> None:
     destination.mkdir(parents=True, exist_ok=True)
     if any(destination.iterdir()):
         raise ValueError('Choose an empty runtime staging directory.')
-    for name in ('backend', 'python_engine'):
+    for name in ('backend', 'python_engine', 'virtual_plc'):
         for source in sorted((ROOT / name).rglob('*.py')):
+            if name=='virtual_plc' and 'tests' in source.relative_to(ROOT/name).parts:continue
             relative = source.relative_to(ROOT)
             target = (destination / relative).with_suffix('.pyc')
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -35,9 +36,14 @@ def stage(destination: Path) -> None:
         if not (ROOT / 'dist' / page).is_file():
             raise ValueError(f'Build the frontend first: dist/{page} is missing.')
     shutil.copytree(ROOT / 'dist', destination / 'dist')
+    if not (ROOT/'virtual_plc/dist/index.html').is_file():
+        raise ValueError('Build the Virtual PLC frontend before staging the runtime.')
+    for name in ('dist','examples'):
+        shutil.copytree(ROOT/'virtual_plc'/name,destination/'virtual_plc'/name)
+    shutil.copy2(ROOT/'virtual_plc/navigation.js',destination/'virtual_plc/navigation.js')
     shutil.copytree(ROOT / 'rules', destination / 'rules',
                     ignore=shutil.ignore_patterns('archive', 'learning', 'feedback', '__pycache__'))
-    for name in ('master', 'data_models', 'chopper', 'dashboard_layouts', 'lapformer'):
+    for name in ('master', 'data_models', 'chopper', 'dashboard_layouts', 'lapformer', 'virtual_plc'):
         shutil.copytree(ROOT / 'knowledge' / name, destination / 'knowledge' / name,
                         ignore=shutil.ignore_patterns('users') if name=='dashboard_layouts' else None)
     help_target = destination / 'knowledge' / 'help_index'
