@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM node:24-bookworm-slim AS frontend
+ARG SOURCE_COMMIT
+ENV USOPP_SOURCE_COMMIT=${SOURCE_COMMIT}
 WORKDIR /build
 COPY package*.json ./
 COPY nami/package*.json ./nami/
@@ -51,18 +53,20 @@ RUN /opt/venv/bin/python scripts/package_container.py --output /compiled
 
 FROM python:3.12-slim-bookworm AS runtime
 ARG APP_VERSION
-LABEL org.opencontainers.image.title="uSOPp.ai" org.opencontainers.image.version="${APP_VERSION}"
+ARG SOURCE_COMMIT
+LABEL org.opencontainers.image.title="uSOPp.ai" org.opencontainers.image.version="${APP_VERSION}" org.opencontainers.image.revision="${SOURCE_COMMIT}"
 RUN apt-get update && apt-get install -y --no-install-recommends libcairo2 fonts-dejavu-core libgomp1 libstdc++6 ca-certificates && rm -rf /var/lib/apt/lists/* \
     && groupadd --gid 10001 usopp && useradd --uid 10001 --gid usopp --home-dir /data --no-create-home usopp \
     && mkdir /data && chown usopp:usopp /data
 COPY --from=compiler /opt/venv /opt/venv
 COPY --from=compiler /compiled /opt/usopp
+RUN python -c "import json,sys; actual=json.load(open('/opt/usopp/package.json'))['version']; assert sys.argv[1] and sys.argv[1]==actual, 'Image version must match the compiled application'" "$APP_VERSION"
 COPY --from=llama_cpu /llama/build/bin/llama-server /opt/usopp/local_ai/runtime/llama-server
 COPY --from=llama_cpu /llama/LICENSE /opt/usopp/local_ai/runtime/LICENSE.txt
 COPY deploy/container/entrypoint.sh /usr/local/bin/usopp-start
 RUN chmod 755 /usr/local/bin/usopp-start
 ENV PATH="/opt/venv/bin:$PATH" PYTHONPATH="/opt/usopp:/opt/usopp/python_engine" PYTHONUTF8=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
-    USOPP_DATA_ROOT=/data HOME=/data USOPP_MAX_USERS=6 USOPP_MAX_PARALLEL_TESTS=5
+    USOPP_DATA_ROOT=/data HOME=/data USOPP_MAX_USERS=6 USOPP_MAX_PARALLEL_TESTS=5 USOPP_REQUIRE_FRONTEND_BUILD=1
 WORKDIR /opt/usopp
 USER 10001:10001
 EXPOSE 8200

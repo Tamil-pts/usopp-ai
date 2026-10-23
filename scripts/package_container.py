@@ -6,12 +6,17 @@ import json
 from pathlib import Path
 import py_compile
 import shutil
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_SUFFIXES = {'.py', '.pyw', '.ts', '.tsx', '.map'}
 
 
 def stage(destination: Path) -> None:
+    sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+    from backend.core.build_info import require_frontend_build
+    package=json.loads((ROOT/'package.json').read_text(encoding='utf-8'))
+    require_frontend_build(ROOT/'dist',package['version'])
     destination = destination.resolve()
     if destination == ROOT or ROOT.is_relative_to(destination):
         raise ValueError('Runtime staging must not be the application or its parent.')
@@ -57,7 +62,6 @@ def stage(destination: Path) -> None:
     for name in ('MODEL_LICENSE.txt', 'MODEL_CARD.md'):
         shutil.copy2(ROOT / 'local_ai' / name, destination / 'local_ai' / name)
     # Runtime needs only the version, not developer build commands/dependencies.
-    package = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))
     (destination / 'package.json').write_text(
         json.dumps({'name': package['name'], 'version': package['version']}), encoding='utf-8')
     raw = [p.relative_to(destination).as_posix() for p in destination.rglob('*')

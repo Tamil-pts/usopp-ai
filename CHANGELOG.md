@@ -3,6 +3,12 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.74.2 - 2026-10-23
+
+- Verify the main UI version and compiled asset checksum before packaging a container. Container health fails when the deployed interface and API do not match; image tags must match the compiled application version.
+- Show version mismatches as warnings, check health without browser caching, prevent caching of all three UI entry pages and provide a fresh reload URL while preserving existing parameters.
+- Add a GitHub Linux container build with HTTP checks for the UI assets, version agreement, authentication, API registration, runtime permissions and compiled-source audit before exporting the image and checksum.
+
 ## 4.74.1 - 2026-10-23
 
 - Move Generate ST from the ByteMap project toolbar into the Write ST generator panel. The action starts analysis, reports required HMI choices and creates the reviewed draft. Keep analysis across tab changes and scroll to generated output.

@@ -66,8 +66,9 @@ async def request_logger(request, call_next):
         response=await call_next(request)
         elapsed=(datetime.now()-started).total_seconds()
         log.info('HTTP %s %s -> %s (%.3fs)', request.method, request.url.path, response.status_code, elapsed)
-        if request.url.path.startswith('/assets/'):
+        if request.url.path.startswith('/assets/') or response.headers.get('content-type','').startswith('text/html') or request.url.path in ('/api/health','/build-info.json'):
             response.headers['Cache-Control']='no-store'
+        response.headers['X-USOPP-Version']=VERSION
         return response
     except Exception:
         log.exception('HTTP ERROR %s %s', request.method, request.url.path)

@@ -15,12 +15,18 @@ from backend.core.runtime import (
 )
 
 from backend.core.runtime import BASE, VERSION, _local_path, _local_roots, _local_entries, locate_root
+from backend.core.runtime import RESOURCE_ROOT
+from backend.core.build_info import frontend_build_info
 
 router = APIRouter(tags=['System'])
 
 @router.get('/api/health')
 def health():
-    return {'status':'ok','version':VERSION,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True},'applicationRoot':str(BASE),'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30','logFile':str(LOG_FILE)}
+    build=frontend_build_info(RESOURCE_ROOT/'dist',VERSION)
+    strict=os.getenv('USOPP_REQUIRE_FRONTEND_BUILD')=='1' or (RESOURCE_ROOT/'dist/build-info.json').is_file()
+    good=build['matches'] or not strict
+    data={'status':'ok' if good else 'version-mismatch','version':VERSION,'frontendBuild':build,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True},'applicationRoot':str(BASE),'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30','logFile':str(LOG_FILE)}
+    return JSONResponse(data,status_code=200 if good else 503,headers={'Cache-Control':'no-store'})
 @router.post('/api/log')
 def frontend_log(payload:dict):
     event=str(payload.get('event','frontend_event'))[:100]
