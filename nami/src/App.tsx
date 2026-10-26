@@ -299,7 +299,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
   }, [responseContext]);
 
   const pollSingleGroup = useCallback(
-    async (groupCode: number) => {
+    async (groupCode: number, automatic = false) => {
       if (archived) return;
       setIsPollingSingle(true);
       try {
@@ -307,7 +307,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            plc: selectedPLC, metadata, metadataSource,
+            plc: selectedPLC, metadata, metadataSource, workhubCapture: !automatic,
             ip: selectedPLC.ip,
             port: selectedPLC.port,
             machineId: selectedPLC.machineId,
@@ -720,10 +720,12 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
   useEffect(() => {
     if (!isLivePolling) return;
     let cancelled = false;
+    let firstRead = true;
 
     const runPollLoop = async () => {
       while (!cancelled) {
-        await pollSingleGroup(selectedGroupCode);
+        await pollSingleGroup(selectedGroupCode, !firstRead);
+        firstRead = false;
         if (cancelled) break;
         await new Promise<void>((resolve) => setTimeout(resolve, 2000));
       }

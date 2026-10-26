@@ -1,6 +1,7 @@
 from __future__ import annotations
 import os
 import threading
+import time
 from datetime import datetime
 from pathlib import Path
 from fastapi import FastAPI, Request
@@ -17,6 +18,7 @@ from backend.api import assist_training, assist_flow, project_intelligence
 from backend.api import live_data, data_simulator, dashboard_layouts
 from backend.api import spinconnect_write
 from backend.api import nami_edit
+from backend.api import workhub,workhub_intelligence,workhub_office,workhub_growth,workhub_dashboards,workhub_quality,workhub_branding,workhub_training
 from backend.core.mcp_tools import server as mcp_server, http_app as mcp_app
 from contextlib import asynccontextmanager
 
@@ -32,10 +34,21 @@ async def app_lifespan(app):
     from backend.core import data_simulator as virtual_plc
     virtual_plc.autostart()
     live_collection.start()
+    from backend.core import workhub_notifications
+    workhub_notifications.start()
+    from backend.core.workhub_intelligence import jobs as intelligence_jobs
+    from backend.core.workhub_quality.store import initialize as initialize_quality
+    await __import__('asyncio').to_thread(initialize_quality)
+    intelligence_jobs.start()
+    from backend.core.workhub_growth import collector as performance_collector
+    performance_collector.start()
     async with mcp_server.session_manager.run():
         try:yield
         finally:
             live_collection.shutdown()
+            workhub_notifications.shutdown()
+            intelligence_jobs.shutdown()
+            performance_collector.shutdown()
             virtual_plc.shutdown()
             from backend.core.local_model_runtime import shutdown
             shutdown()
@@ -44,6 +57,10 @@ app = FastAPI(title='usop.ai API', version=VERSION, debug=False,lifespan=app_lif
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    if (request.url.path.startswith('/api/workhub/') and any(part in request.url.path for part in ('/intelligence','/growth','/dashboards','/quality'))) or '/document-branding' in request.url.path or request.url.path.endswith('/engineering-quality'):
+        # Do not copy confidential document/meeting payloads into request logs.
+        log.warning('INTELLIGENCE_REQUEST_VALIDATION_ERROR method=%s path=%s',request.method,request.url.path)
+        return JSONResponse({'detail':'Check the required WorkHub request fields.'},status_code=400)
     if request.url.path.startswith('/api/auth/'):
         log.warning('ACCOUNT_REQUEST_VALIDATION_ERROR method=%s path=%s',request.method,request.url.path)
         return JSONResponse({'detail':'Account request could not be processed. Enter the required fields.'},status_code=400)
@@ -61,16 +78,21 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 
 @app.middleware('http')
 async def request_logger(request, call_next):
-    started=datetime.now()
+    started=time.perf_counter()
     try:
         response=await call_next(request)
-        elapsed=(datetime.now()-started).total_seconds()
+        elapsed=time.perf_counter()-started
+        from backend.core.workhub_intelligence.reliability import record_latency
+        route=getattr(request.scope.get('route'),'path','')
+        record_latency(route,elapsed*1000,response.status_code>=500)
         log.info('HTTP %s %s -> %s (%.3fs)', request.method, request.url.path, response.status_code, elapsed)
         if request.url.path.startswith('/assets/') or response.headers.get('content-type','').startswith('text/html') or request.url.path in ('/api/health','/build-info.json'):
             response.headers['Cache-Control']='no-store'
         response.headers['X-USOPP-Version']=VERSION
         return response
     except Exception:
+        from backend.core.workhub_intelligence.reliability import record_latency
+        record_latency(getattr(request.scope.get('route'),'path',''),(time.perf_counter()-started)*1000,True)
         log.exception('HTTP ERROR %s %s', request.method, request.url.path)
         raise
 
@@ -81,12 +103,13 @@ app.add_middleware(CORSMiddleware, allow_origins=DEV_ORIGINS, allow_credentials=
 async def account_session(request:Request,call_next):
     public={'/api/health','/api/auth/session','/api/auth/login','/api/auth/register','/api/auth/logout'}
     path=request.url.path
+    office_callback=path.startswith(('/api/workhub/intelligence/office/files/','/api/workhub/intelligence/office/callback/'))
     if path.startswith('/api/') and request.method!='OPTIONS':
-        if request.method not in ('GET','HEAD'):
+        if request.method not in ('GET','HEAD') and not office_callback:
             origin=request.headers.get('origin')
             if origin and origin not in DEV_ORIGINS and origin != f'{request.url.scheme}://{request.headers.get("host")}':
                 return JSONResponse({'detail':'Request origin does not match this application.'},status_code=403)
-        if path not in public:
+        if path not in public and not office_callback:
             from starlette.concurrency import run_in_threadpool
             token_value=request.cookies.get(accounts.COOKIE)
             if path.startswith('/api/mcp') and request.headers.get('authorization','').startswith('Bearer '):token_value=request.headers['authorization'][7:]
@@ -119,6 +142,14 @@ app.include_router(data_simulator.router)
 app.include_router(dashboard_layouts.router)
 app.include_router(spinconnect_write.router)
 app.include_router(nami_edit.router)
+app.include_router(workhub.router)
+app.include_router(workhub_intelligence.router)
+app.include_router(workhub_office.router)
+app.include_router(workhub_growth.router)
+app.include_router(workhub_dashboards.router)
+app.include_router(workhub_quality.router)
+app.include_router(workhub_branding.router)
+app.include_router(workhub_training.router)
 app.include_router(br_help.router)
 app.include_router(admin_settings.router)
 app.include_router(admin_knowledge.router)

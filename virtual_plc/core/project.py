@@ -31,7 +31,7 @@ MAX_FILES = 15000
 MAX_DIAGNOSTICS = 1000
 MAX_REFERENCES = 100000
 EXCLUDED = IGNORED_PROJECT_DIRS | {'cache', 'generated', 'generatedcode', 'debug', 'release', 'dbk', '.idea', '.vs', '.vscode'}
-RELEVANT = EXTENSIONS | {'.prg', '.pkg', '.vc', '.vcvk', '.vcr', '.vcs', '.fninfo'}
+RELEVANT = EXTENSIONS | {'.prg', '.pkg', '.vc', '.vcp', '.dob', '.dat', '.vcvk', '.vcr', '.vcs', '.fninfo'}
 LANGUAGES = {'.st': 'st', '.ld': 'ld', '.ab': 'ab', '.src': 'ab', '.c': 'c', '.h': 'c', '.fun': 'st'}
 
 
@@ -406,7 +406,7 @@ def analyze_project(root, progress=None, cancel=None, configuration=None):
                 continue
             raw = path.read_bytes()
             budget += len(raw)
-            text = decode_project_text(path, raw).replace('\x00', '')
+            text = raw.decode('latin-1') if path.suffix.casefold()=='.dat' else decode_project_text(path, raw).replace('\x00', '')
             manifest.append({'path': relative, 'kind': category(path), 'language': LANGUAGES.get(path.suffix.casefold()),
                              'size': len(raw), 'sha256': hashlib.sha256(raw).hexdigest(), 'status': 'read'})
             # Preserve nonselected paths in explorer; never mix physical targets.

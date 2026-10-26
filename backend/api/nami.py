@@ -44,7 +44,8 @@ def start_inspect(data,operation):
     sid,_=_local_session()
     identity={'sessionId':sid,'projectName':str(plc['name'])[:200], 'machineDepartment':str(plc['machineType'])[:100],
               'plc':plc,'metadata':metadata,'metadataSource':str(data.get('metadataSource') or '')[:500],
-              'operation':operation,'groupCodes':data.get('groupCodes') or [data.get('groupCode',10)]}
+              'operation':operation,'groupCodes':data.get('groupCodes') or [data.get('groupCode',10)],
+              'workhubCapture':data.get('workhubCapture') is not False}
     begin_run('datainspect',identity)
     return identity
 

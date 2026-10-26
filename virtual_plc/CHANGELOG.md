@@ -1,3 +1,38 @@
+## 0.11.0 - 2026-10-24
+
+- Add a live HMI layer/control workbench with source key functions, current permissions, covering overlays and PLC writer links.
+- Implement target-scoped configured current/requested page datapoints, source page indices, the 65535 request acknowledgement and previous-page history.
+- Read dynamic button text and bitmap indices. Resolve exact type-matched global declarations inherited by a source DSO program folder, with a diagnostic warning.
+- Execute control-dependent live alarm cursor navigation. Validate source key permissions, values and completion writes, and reject unsupported actions explicitly.
+- Upgrade locally available saved HMI definitions to adapter 7 while preserving source files, corrections and component configuration.
+- Import bounded source string-table data objects for DatObjInfo/DatObjRead. Preserve literal data bytes and documented string termination; report unsupported formats. VA_GetAlCurPos reads the visible source alarm cursor.
+
+## 0.10.4 - 2026-10-24
+
+- Use typed, server-resolved HMI selection choices. Boolean values display as the matching 0/1 caption; text offsets and current source limits are enforced.
+- HMI actions return consistent values, formatted text, permissions and layer state. Ignore older polls and previous-page button-release responses.
+- Execute scheduled login display/visibility updates after password entry and logout while preserving the prior running or paused state. Explain input locks and provide an explicit Operate HMI control when inspecting.
+
+## 0.10.3 - 2026-10-24
+
+- Persist early faults and source stops immediately, independently of the periodic configuration autosave. Keep the last failure reason available after reopen.
+- Display the stop reason below the PLC controls with source navigation and an execution-trace shortcut. Record SYSreset source location and reset mode.
+- Preserve worker failure details and clear stale worker errors when the operator resets or restarts execution.
+
+## 0.10.2 - 2026-10-24
+
+- Password Enter completes bounded source startup and scheduled password initialization before comparison. Retained credentials are checked after INIT; source defaults and text-group mappings remain authoritative.
+- Paused login changes execute source display/visibility updates and return to pause. Breakpoints, unsupported logic and faults remain visible; pending display updates are reported separately from password comparison.
+- Display configured level IDs and the exact login result tag. Verify level IDs through 11, retained passwords, wrong input, startup ordering and the HMI action API.
+
+## 0.10.1 - 2026-10-24
+
+- Device connection rows show linked devices, default references and raw/scaled values. Linked output consumers count as valid feedback connections.
+- Drives, velocity/position servos and motors support explicit PLC reference scaling; linked engineering values are not scaled twice.
+- Project 2 healthy-default restore adds source-fingerprinted Hank reciprocal guards and analog-reference mappings. Unavailable zero-weight feedback displays zero; target settings keep their previous value. This is an audited simulation convention; it does not establish correct machine calibration.
+- HMI numeric inputs show live source bounds and producer locations. Missing numeric limits stay unresolved; the server checks fresh bounds before writing. Login previews link to the parent project.
+- How to run shows runtime source faults and recovery steps.
+
 # Virtual PLC module changes
 
 ## 0.6.0 - 2026-10-18

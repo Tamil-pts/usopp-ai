@@ -1,8 +1,65 @@
-# Virtual PLC 0.9.0
+# Virtual PLC 0.11.0
 
 An additive engineering and simulation module for uSOPp.ai 2.0. The launcher mounts it into the existing backend, reusing account sessions, project upload, project identity, source indexing, Ladder geometry, HMI decoding and the Chopper model runtime. MatchView's explorer and code-view styling are updated separately at the user's request. Validation engines and imported PLC sources are unchanged by these updates.
 
 ## Latest update
+
+Version 0.11.0 adds the **Layers & controls** workbench: current layer status,
+covering hotspots, login permissions, source virtual key functions and PLC
+writer links. Button captions and pictures follow their configured dynamic
+indices. Page navigation publishes the configured source page number and
+handles PLC page requests using the VC4 65535 handshake. Alarm cursor keys and
+previous-page keys execute their source functions; unsupported functions are
+identified explicitly. Saved local HMI definitions upgrade to adapter 7 with
+a backup of the previous model.
+
+Quoted-string Simple.dob/.dat help tables are loaded as virtual data objects
+for the source DatObjInfo/DatObjRead program. Other data-object formats remain
+explicitly unresolved. VA_GetAlCurPos follows the visible source alarm cursor.
+
+Version 0.10.4 keeps Boolean ON/OFF selections aligned with their PLC 0/1
+indices and validates the current source choices, offsets and bounds before
+writing. HMI actions return fresh values, captions and layer states; stale polls
+and previous-page release responses cannot replace the displayed screen.
+Password entry and logout refresh the scheduled source login text and flags,
+including while running. Inspection mode provides an explicit **Operate HMI**
+button to return to screen interaction.
+
+Version 0.10.3 displays the PLC stop reason directly below the run controls.
+Source faults, breakpoints, source SYSreset stops and scan-worker errors are
+saved as soon as execution halts, including before the first periodic autosave.
+The last saved failure remains visible after reopening, with its source link,
+virtual time and execution-trace shortcut. Reset clears the displayed failure;
+retained settings follow the existing reset rules.
+
+Version 0.10.2 initializes empty HMI password snippets through the original PLC
+scheduler when Enter is pressed. Startup runs before comparison so a later INIT
+cannot reset an accepted login. Retained custom passwords and text-group role
+IDs remain authoritative. Paused login changes advance virtual time until the
+source display tasks execute, then return to pause. Breakpoints and faults stop
+this bounded operation and are reported. The keypad shows configured level IDs
+and the exact result tag; password values are not included in login responses.
+
+Version 0.10.1 shows linked drive/motor/encoder signals directly in configuration,
+including raw PLC references and scaled engineering values. PLC reference scale
+and offset apply to bound analog commands; device links and model references
+already use engineering units. The Project 2 jig maps delivery inverter and
+servo analog outputs with editable bench assumptions (0..32767 to 0..50 Hz and
+approximately +/-3000 RPM for the signed servo command). Actual drive calibration and shaft/encoder coupling must be entered
+from the machine configuration before using these values quantitatively.
+
+Open **Components > Restore healthy defaults** to merge newly reviewed Project 2
+corrections, clear injected faults and reset the virtual PLC. Retained process
+settings remain. Zero-weight Hank reciprocals retain target settings and display zero for
+unavailable feedback; the original PLC source is preserved and every correction is
+recorded. Custom source corrections are preserved. This is simulation behavior,
+not a change to the real PLC project.
+
+Numeric HMI keypads show their current bounds and bound-source producers. In a
+login-only preview, machine initialization is excluded. Use **Open full machine
+project** for process parameters, run its initialization and enter values within
+the actual source range. A pre-doff length maximum bound to the doff length stays
+enforced. Unresolved or stale poll values never grant permission to write.
 
 Version 0.9.0 schedules every INIT, CYCLIC and EXIT entry in combined source
 files at its original CPU assignment, and caches resolved variable identities.
@@ -197,7 +254,7 @@ The B&R help compliance list explicitly distinguishes `aBcD` and `ABcD`. For exa
 
 In **HMI simulation**, use **Inspect objects** to see transparent hotspots and the runtime layer list. Bit 0 hides each layer/control; bit 1 locks its input. Field locking also evaluates the configured login datapoint and level. Hidden hotspots are absent from hit testing. Visible hotspots keep their source action and intercept covered fields; Enter checks permissions again on the server.
 
-Click the password field for masked local entry. The configured password source determines the login level; there is no built-in universal password or automatic level elevation. Dynamic password strings, login text and `Login_*_V` values require the original PLC programs to execute. If Run is blocked or the PLC is stopped, the HMI reflects current virtual memory and does not invent the missing scan results. Unsupported text snippet formatting and unavailable dynamic credentials are reported explicitly. This emulates the virtual HMI behavior; it does not replace the application's account permissions.
+Click the password field for masked local entry. The configured password source determines the login level; there is no built-in universal password or automatic level elevation. Enter runs supported PLC startup and initializes missing dynamic password strings through their scheduled source tasks before comparison. Paused login changes also run source tasks to refresh login text and `Login_*_V` values, then pause again. Initialization is bounded by virtual time and elapsed time; breakpoints, faults and unsupported execution are preserved. Pending source display updates are reported. Unsupported text snippet formatting and unavailable dynamic credentials are reported explicitly. This emulates the virtual HMI behavior; it does not replace the application's account permissions.
 
 Remaining blockers include the project's source-backed `CUMULATION` block (Automation Basic `FUB` calls/time dependencies), `LCRLimScal` and unresolved multi-block Ladder networks. Viewing a library's source or help does not provide an executable implementation. **How to run / Review blockers** lists current file and line evidence. Original PLC files and the existing validation engines remain read only to this module.
 
@@ -214,7 +271,7 @@ Reference pages in `knowledge/br_help/AS12/Help-en/Data/`:
 The login popup follows the original virtual-key chain. `MMS_CONFIG.HotSpot_13` uses `LOGIN_LAYER`, whose SetDatapoint action writes `0` to `loginout.Login_Layer`. The `LOG_IN_OUT` layer reads that same variable through StatusDatapoint. Its declaration starts at `1`, so the popup starts hidden. The BACK button uses `CLOSE_LOGIN_LAYER`, which writes `1` to hide it again. These are persistent SetDatapoint actions: releasing either control does not reverse the write. The hotspot's separate `Login_11_V` status controls whether that hotspot is visible and can be used.
 
 - Open **Controller layout ? CPU services**, pause the simulation, configure the virtual RTC seed (UTC), Ethernet interfaces, battery states and explicit module serial numbers, then save. These values belong to this workspace; the host clock and network are untouched. RTC advances with virtual scans; reset/reopen restores the configured seed. Serial values are published only through exact SerialNumber I/O mappings.
-- To inspect login while the full machine is blocked, choose **HMI simulation ? USER_LOGIN ? Create password/login preview**, then **Run**. The separate, clearly labeled workspace executes the original assigned password and login visibility programs with their original task intervals. Project 2 initializes its role passwords on Cyclic#7 (1000 ms), so wait at least one second of virtual time. Other machine tasks remain excluded and the parent project retains all its blockers. Machine-specific popups such as AL_popup still need their original initialization/cyclic logic; a preview does not invent hidden states for them.
+- To inspect login while the full machine is blocked, choose **HMI simulation > USER_LOGIN > Create password/login preview**. Enter the source password; Enter initializes the scheduled source snippets, or choose **Initialize PLC password sources** first. The separate workspace executes the original assigned password and login visibility programs with their original task intervals. Project 2 initializes its role passwords on Cyclic#7 (1000 ms). Other machine tasks remain excluded and the parent project retains all its blockers. Machine-specific popups such as AL_popup still need their original initialization/cyclic logic; a preview does not invent hidden states for them.
 - **Inspect objects ? Runtime layers** shows each layer's status binding, current word and original switch key count. Select a row to inspect the keys and pages that write it. Runtime status 0 shows, 1 hides, 2 shows with input locked, and 3 hides with input locked. The source Login_Layer keys write 0 to open and 1 to close. Login flags and covering hotspots are evaluated from the same PLC memory.
 - B&R **Set Layer As Active** selects the layer for editing. It does not define a runtime trigger. A layer with no runtime StatusDatapoint is always visible. Editor VisibilityMode Hidden/Frozen does not replace runtime status. Layer BackColor is editor-only; the page and actual controls provide runtime backgrounds.
 - IEC.prg and .pkg descriptors are hidden in the source tree, while their task/file metadata remains available to the project adapter. Original files are unchanged.

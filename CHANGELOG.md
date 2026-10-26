@@ -3,6 +3,173 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.88.0 - 2026-10-26
+
+- Add optional account email IDs to administrator user management, account requests and personal profiles without changing authentication or notification authorization.
+- Add Settings organization branding, customer master and document template editors with PTPL / ES / PLC defaults, selectable header colors, version history, secure decoded logos and reusable project associations.
+- Use a shared, structured Jinja2 layout for FRD, MOM, correction notes, test reports, FAT, quality approval and closure PDFs. Include saved FRD flowcharts, recorded review identities, draft watermarks, page numbering and sample-only previews.
+- Freeze approved source/layout/profile/logo versions at approval; retain first PDF bytes, integrity hashes, embedded manifests and audit records. Template edits do not overwrite approved snapshots. Legacy revisions are explicitly audited on their first snapshot capture.
+- Preserve existing APIs, review rules, atomic numbering, project permissions and PLC engines. Extend the existing document worker image with Chromium; support the existing ReportLab renderer when Chromium is unavailable.
+- Python compilation, TypeScript and production builds completed. No automated tests were added or run for this change. See docs/WORKHUB_BRANDING_AND_TEMPLATES.md.
+
+## 4.87.0 - 2026-10-26
+
+- Extend the existing durable queue with isolated, bounded workers, cancellation, deadlines, memory/disk admission, restart recovery, safe retries and idempotent document/file/package output recovery.
+- Reuse project-scoped extraction, matching PDF pages, transcription, conversions, validated local-model outputs and exports. Track source revisions and draft edit versions without rewriting approved records.
+- Share private Qwen/Chopper inference admission across workers and API processes. Default to one worker; Redis, extra workers and a separate model container are optional profiles.
+- Queue PDF/DOCX exports in the existing project tools and show progress, permitted retries/cancellation and completed downloads. Preserve legacy APIs and document access/review/numbering rules.
+- Add indexed project queries, keyset job pagination and administrator-only operational health. Close the initialization database connection deterministically.
+- Build/type checks and 44 WorkHub regression checks pass. Preserve all 79 protected PLC/Virtual PLC engine source hashes and existing core project/document records. See docs/WORKHUB_BACKEND_RELIABILITY.md and docs/WORKHUB_PERFORMANCE_BENCHMARK.md for measured results and deployment scope.
+
+## 4.86.0 - 2026-10-26
+
+- Add one editable Engineering project overview dashboard template with ten live-data widgets and desktop/tablet/mobile layouts; initialize a private starter for new dashboard users without replacing saved dashboards.
+- Organize each project into Overview, Meetings & Requirements, Engineering Documents, and Quality & Closure. Preserve existing WorkHub views, tasks, Gantt/sprints, roadmap, meeting/document editors and review APIs as contextual project tools.
+- Embed structured FRD editing, approved-revision comparison, requirement-aware Chopper proposals, persistent clarifications and editable React Flow diagrams inside the same controlled FRD workspace.
+- Bind applied assistant proposals to the exact source revision/content hash and current draft version. Keep actual test results, acceptance, confirmation and approvals human-controlled.
+- Reuse the existing private Chopper model configuration and local background document processing; keep source selection/context limits explicit and confidential data internal.
+- See docs/WORKHUB_UNIFIED_WORKSPACE.md for usage, existing-service requirements and verification limits.
+
+## 4.85.0 - 2026-10-25
+
+- Add Quality & Closure inside the existing project page: FRD, Correction Notes, Test Report, FAT, Quality Approval and Project Closure.
+- Reuse Project Intelligence identities, source files, background jobs, authenticated accounts and project roles. Add atomic PTPL-ES-PLC document numbering, versioned company templates and configurable project-type procedures in Admin Settings.
+- Autosave drafts, require human confirmation and assigned review, preserve approved content, and record controlled revisions, actual executions, customer acceptance evidence, dispositions and download activity.
+- Bind tests, FAT and closure to approved requirements and reviewed project baselines. Add a project-release gate for undispositioned mandatory quality conditions without changing validation calculations.
+- Generate indexed internal/customer PDF snapshots and administrator ISO audit packs. Customer releases require explicit revision/attachment authorization; historical package bytes and revision identities are preserved.
+- Add source-linked, read-only Chopper quality guidance through existing private local background processing, with original revision links and explicit offline guidance when no local model is configured.
+- See docs/WORKHUB_QUALITY_CLOSURE.md for procedures, permissions, source reuse, bounds and implementation check status.
+
+## 4.84.0 - 2026-10-25
+
+- Add My Dashboard inside WorkHub Overview with a drag-and-drop widget library, two-dimensional resizing, collision handling, contextual settings and separate desktop/tablet/mobile layouts.
+- Support 25 indicator, chart, table, planning and content widgets with Apache ECharts and React Grid Layout; add dashboard/widget filters, undo/redo, duplication, appearance settings and private named-account sharing.
+- Add authenticated semantic source registry, server-side aggregation and histogram binning over authorized existing WorkHub records. Preserve missing values and distinguish run activity from capability assessments.
+- Connect header Chopper and full Chat to validated dashboard drafts, live previews and explicit apply/save. Retain private local model routing without generated-code or arbitrary-SQL execution.
+- Persist configurations and versioned ownership/sharing metadata additively in the existing WorkHub database. Retain project workflows, existing review calculations, company records and validation engines.
+- See docs/WORKHUB_DASHBOARD_BUILDER.md for source scope, limits, routes and implementation check status.
+
+## 4.83.2 - 2026-10-25
+
+- Refine the existing WorkHub frontend as Engineering Performance & Growth and Engineering Knowledge Hub while retaining navigation and Contribution Passport.
+- Show compact, recorded contribution/delivery/activity counts; explain all five capabilities and link them to reviewed work. Remove capability bars that could be mistaken for performance scores.
+- Use neutral "Not enough information" assessment states and compact empty states. Keep activity volumes separate from assessment and show development opportunities only from recorded feedback/corrections.
+- Simplify library filters, contribution drafts, review queues and source-linked library answers. Display placeholder draft titles as Untitled contribution and use that title when a new draft has no meaningful answer yet.
+- Preserve the existing APIs, calculation and review rules, permissions, automatic collection and stored records; add no required data-entry fields.
+
+## 4.83.1 ? WorkHub evidence collection and workflow verification
+
+- Include existing attributed engineering archives in their authors' own Performance & Capability profiles, with original scores and source downloads. Historical project labels do not create or guess WorkHub assignments.
+- Use native iteration ordering for latest validation results; preserve private archive access and require explicit reviewed evidence for project/task attribution.
+- Add paginated native activity and issue histories; keep unsubmitted evidence revisions private to authors.
+- Report API and compiled UI versions explicitly in health, with capability flags for both WorkHub features.
+- Add isolated API regression coverage and browser workflow checks using disposable accounts and storage.
+
+## 4.83.0 - 2026-10-24
+
+- Add WorkHub Performance & Capability with engineer profiles, scoped manager team views, project/task progress, native validation/comparison evidence, review history, capability evidence counts and transparent trends. Iteration volume and bug discovery have no negative weighting.
+- Add manual engineering evidence with independent named verification for documentation, research, circuits and general work; preserve approved baselines and immutable revisions.
+- Add Contribution Passport: a category-specific guided submission flow, editable structured articles, draft/submitted/approved/rejected/published states, authorized publication, full-text internal search, published engineer passports and source-cited knowledge assistance.
+- Reuse existing accounts, project assignments, notifications, central SQLite and persistent storage. Optional drafting/explanations reuse the configured local Project Intelligence model; the core workflow works without AI. Existing validation engines remain unchanged.
+- Add Linux Compose settings and methodology/permissions/deployment guide in docs/PERFORMANCE_CONTRIBUTION_PASSPORT.md.
+
+## 4.82.0 - 2026-10-24
+
+- Add a project-level Project Intelligence tab with discussions, source-linked MOM/FRD revisions, named reviews, clarifications, editable React Flow diagrams, existing WorkHub timelines/roadmaps and local document workspaces.
+- Preserve original uploads, corrected transcript history and approved document baselines. Apply approved plan proposals through existing WorkHub task functions only after explicit manager confirmation.
+- Add durable project job leases, offline Faster-Whisper/local LLM integration, PDF.js viewing, PDF/OCR/conversion tools and self-hosted ONLYOFFICE signed editing callbacks.
+- Provide a Compose overlay for existing WorkHub data, CPU meeting/document/PDF workers, Redis, local llama.cpp and optional Office editing. Target-server/model/Office activation remains required; see docs/PROJECT_INTELLIGENCE.md for availability and limits.
+
+## 4.81.0 - 2026-10-24
+
+- Redesign HMI simulation with a live layer strip and a Layers & controls inspector. Show runtime visibility, status words, covering controls, login locks, virtual key actions and exact PLC writer locations.
+- Publish source page indices through each visualization's configured PageCurrentDatapoint. Handle PLC PageChangeDatapoint requests with the VC4 65535 handshake during scans, password startup and manual navigation.
+- Resolve button TextIndexDatapoint and BitmapIndexDatapoint so source ON/OFF captions and pictures follow PLC memory. Report exact type-matched inherited global aliases when the DSO program folder has no local declaration.
+- Support local control-dependent alarm cursor keys and previous-page navigation. Report unsupported or unconfigured key functions explicitly and check key permissions before applying writes. Virtual PLC module is 0.11.0; HMI adapter is 7.
+- Load bounded quoted-string Simple.dob/.dat resources into virtual DataObj memory, including the project alarm help tables. Connect the visible alarm cursor to VA_GetAlCurPos so source help programs read the selected alarm.
+
+## 4.80.3 - 2026-10-24
+
+- Map Boolean HMI selections to 0/1 consistently. Resolve choice captions, text offsets, current bounds and PLC types on the server; reject unavailable indices before writing.
+- Return fresh page values, formatted text and layer status after each HMI action. Discard stale polls and responses from previously displayed pages so button release cannot replace the next screen's state.
+- Refresh source login text and visibility after password entry and logout, including during continuous simulation. Make HMI inspection mode explicit and show the source lock reason when a locked input is selected.
+- Virtual PLC module is 0.10.4.
+
+## 4.80.2 - 2026-10-24
+
+- Save virtual PLC faults, source stops and scan-worker errors immediately, including failures before the first periodic autosave. Preserve the last stop reason when reopening a workspace.
+- Show the current or last saved PLC failure below the run controls with its message, source line, virtual time and execution-trace shortcut. Record source SYSreset requests at their calling instruction.
+- Clear stale scan-worker errors after reset or restart. Virtual PLC module is 0.10.3.
+
+## 4.80.1 - 2026-10-24
+
+- Initialize source password snippets with the original scheduled virtual PLC tasks before checking HMI input. Execute PLC startup before accepting retained credentials so INIT cannot reset a newly accepted login to zero.
+- Refresh source login labels and permissions after paused HMI input, then pause again. Preserve retained passwords, source text-group level IDs, breakpoints and fault diagnostics; no password or role is hardcoded.
+- Show configured password level IDs, their result tag and login confirmation. Add focused scheduler, source-level and authenticated API regression checks. Virtual PLC module is 0.10.2.
+
+## 4.80.0 - 2026-10-24
+
+- Show actual device links, optional references, raw PLC values and engineering values in drive, servo, motor and encoder configuration. Device outputs consumed by another component no longer produce a missing PLC feedback warning.
+- Add explicit PLC reference gain/offset for VFD, servo and motor models. The fingerprinted Project 2 jig connects delivery and servo analog commands with editable, documented bench scaling.
+- Display live HMI numeric bounds and their initialization sources. Enforce current server-side bounds under the scan lock, report unresolved bindings explicitly, and link login-only previews back to their full machine project.
+- Extend reviewed Project 2 simulation corrections with zero-weight Hank reciprocal guards. Explicit healthy-default restore merges newly reviewed corrections, retains process settings and individual source edits, and clears injected device faults. Original PLC source files are preserved.
+- Explain runtime faults in How to run and align UI/API at 4.80.0 (Virtual PLC 0.10.1).
+
+## 4.79.0 - 2026-10-23
+
+- Make Work type selectable from existing values or editable as a custom type, with saved custom values offered on future projects.
+- Add Waterfall, Agile, Sprint and Custom project planning templates, editable Development/Quality/Release phase periods, and a draggable Gantt preview during creation.
+- Save Gantt moves and end resizing for phases, tasks, projects and sprints with ownership checks, optimistic versions and date-change history. Keep date entry and keyboard alternatives.
+- Separate development progress from full project delivery. Overall completion includes Development, Quality and Release; only Released / Closed projects reach 100% and use the completed-project view.
+- Add sprint goals, planned/active/closed states, backlog assignment, sprint ownership and completion from saved sprint tasks. Generated template tasks belong to their corresponding delivery phase.
+- Preserve existing projects using additive phase/sprint tables and default development classification for earlier tasks. Align UI/API at 4.79.0.
+
+## 4.78.0 - 2026-10-23
+
+- Replace Approved completion with Project completion based on completed development steps, using the same percentages in portfolio, summary, Gantt bars and reports. Quality/release approval remains separate.
+
+- Move Workspace administration and Manage users into Settings > Admin settings, visible only to Admin. Remove Engineering activity analytics and its dashboard heading from WorkHub, retaining Recent work and Team activity.
+
+- Replace the fixed project workflow diagram and task board with project-specific workflow steps on a Gantt timeline. Add and edit step names, owners, dates, milestones and dependencies, with day/week/month scales and a current-day marker.
+- Show My current work as a timeline of assigned projects and steps. Open active projects on Workflow & timeline; show only Summary, Updates & evidence, Issues and Approval history for Development completed and Released projects.
+- Remove the Original project and revisions screen and base-upload callout. Keep existing attachments, recorded deliverables and submitted revision downloads under evidence and history.
+- Let completed development steps satisfy task dependencies and project release without requiring a separate approval cycle for every step. Separately pending step reviews and open project/step issues still block project release. Project review and release remain explicit decisions by their named reviewers.
+- Preserve existing projects and records through an additive milestone field migration. Align UI/API at 4.78.0.
+
+## 4.77.1 - 2026-10-23
+
+- Move Engineering activity and Recent work into the main WorkHub / Project Delivery navigation. Keep saved result opening, report downloads, filters and project reuse in Recent work.
+- Remove the separate Engineering tools and saved run activity dashboard. Keep engineering tools accessible through the sidebar, and link the activity preview directly to Recent work.
+- Keep demo run history accessible without exposing shared company projects. Align UI/API at 4.77.1.
+
+## 4.77.0 - 2026-10-23
+
+- Remove the top Engineering tools shortcut from WorkHub. Show a delivery workflow diagram with a separate Development completed stage, optional quality submission, named release approval and requested-change return paths.
+- Replace Team activity with To do, In progress and Done cards, assignees, source tool/iteration details, filters and permitted development moves that open workflow confirmation.
+- Capture new personal ByteMap, metadata generation, DataInspect, MatchView and LogicScan runs automatically into WorkHub projects and numbered iteration updates. Associate stable native/source identities, preserve recorded errors and keep decoded/report updates on their original history ID.
+- Share recorded run JSON, available reports and streamed archived source snapshots through project evidence. Preserve previous private/demo history, keep saved engineering runs when capture is unavailable, and retry marked pending captures while the server runs.
+- Return new development iterations to Development without approving them; keep checks by the assigned current reviewer in their review stage. Retain earlier decisions and submitted engineering evidence links in history. Align UI/API at 4.77.0.
+
+## 4.76.1 - 2026-10-23
+
+- Move notification connections into Settings and remove the WorkHub Connections tab. Keep automatic Microsoft email, Teams workflows and application registration under optional sections for future company approval.
+- Add Teams group chat sharing with a shared default link, optional personal link and editable work/notification messages. Copy and open the existing chat for the user to paste and send; a chat link never triggers automatic delivery or approval.
+- Support office/LAN WorkHub addresses for shared review links independently of Microsoft app setup. Preserve existing connection credentials and project data during the preference migration; select manual chat sharing by default.
+- Align the main UI and API application version at 4.76.1.
+
+## 4.76.0 - 2026-10-23
+
+- Add shared WorkHub project portfolios, named assignments, tasks/subtasks, dependencies, planned dates, original due dates and a timeline for PLC, electrical, documentation and general work.
+- Add development, quality check, release approval and release stages. Record explicit decisions, comments, reassignment and exact submitted revisions; requested corrections create issues.
+- Store original projects and immutable revisions outside the temporary engineering upload cache. Use bounded resumable uploads, SHA-256 content reuse and streaming ZIP64 downloads; default limits are 4 GiB per file and 100 GiB total storage.
+- Add daily notes, evidence attachments, source-based screenshot/document text drafts, optional Chopper wording, explicitly shared engineering results and optional reviewed/corrected time entries. Users confirm extracted wording before saving.
+- Add a notification inbox, named-user mentions, due reminders, portfolio exports and delivery status. Add optional delegated Microsoft mailbox connections and per-user Teams workflow destinations; external delivery requires configured connections and consent.
+- Keep existing engineering tools, private run history and Admin user management available. Align the main UI and API application version at 4.76.0.
+
+## 4.75.1 - 2026-10-23
+
+- Export generated metadata with the project worksheet and Sheet2 only. Omit the legacy generated Alarm Sources trace sheet from edited/exported workbook copies and update the generated-workbook guidance.
+
 ## 4.75.0 - 2026-10-23
 
 - Keep the PLC running and preserve task memory when Simulation jig is enabled. Restoring defaults is an explicit reset. Feed supported motors, cylinders, drives and sensors from real PLC commands at completed scan boundaries.

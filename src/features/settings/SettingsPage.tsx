@@ -9,9 +9,13 @@ import {logEvent} from '../../shared/logging';
 import type {BoolMetadataMode} from '../validation/api';
 import {useAccount} from '../account/AuthProvider';
 import {AccountSettings} from '../account/AccountSettings';
+import {UserManagement} from '../account/UserManagement';
+import {WorkHubConnections} from '../workhub/WorkHubConnections';
 import {AssistModelSettings} from './AssistModelSettings';
 import {MachineDepartmentSettings} from './MachineDepartmentSettings';
 import {AdminKnowledgeTransfer} from './AdminKnowledgeTransfer';
+import {DocumentBrandingSettings} from './DocumentBrandingSettings';
+import {EngineeringQualitySettings} from './EngineeringQualitySettings';
 import type {MachinePrefix} from '../validation/projectDetails';
 
 
@@ -19,6 +23,7 @@ import type {MachinePrefix} from '../validation/projectDetails';
 export function SettingsPage({theme,setTheme,accent,setAccent,metaCols,setMetaCols,onClearResults,localMetadataPath,setLocalMetadataPath,localMetadataName,setLocalMetadataName,departments,machinePrefixes,onMachineConfigChange,boolMetadataMode,setBoolMetadataMode}:{theme:any,setTheme:any,accent:string,setAccent:any,metaCols:MetaCol[],setMetaCols:(v:MetaCol[])=>void,onClearResults:()=>void,localMetadataPath:string,setLocalMetadataPath:(s:string)=>void,localMetadataName:string;setLocalMetadataName:(s:string)=>void;departments:string[];machinePrefixes:MachinePrefix[];onMachineConfigChange:(value:{departments:string[];prefixes:MachinePrefix[]})=>Promise<void>;boolMetadataMode:BoolMetadataMode;setBoolMetadataMode:(v:BoolMetadataMode)=>void}){
  const {user}=useAccount();
  const [metadataBrowserOpen,setMetadataBrowserOpen]=useState(false);
+ const [manageUsers,setManageUsers]=useState(false);
  const section=(k:string)=>['sl','plcTagCode','logicComment','gc','lt','lo','size','dropdown','hmiMin','hmiMax','valueSource','inputType'].includes(k)?'plc':'metadata';
  const move=(i:number,dir:number)=>{const indices=metaCols.map((_,n)=>n).filter(n=>section(metaCols[n].key)===section(metaCols[i].key));const at=indices.indexOf(i);const j=indices[at+dir];if(j===undefined)return;const a=[...metaCols];[a[i],a[j]]=[a[j],a[i]];setMetaCols(a)};
  const reset=()=>setMetaCols(DEFAULT_META_COLS);
@@ -26,6 +31,10 @@ export function SettingsPage({theme,setTheme,accent,setAccent,metaCols,setMetaCo
  const clearCache=async()=>{try{const response=await fetch('/api/cache/clear',{method:'POST'});const data=await response.json();if(!response.ok)throw new Error(data.detail||'Cache clear failed');onClearResults();userStorage.removeItem('usopp_compare_base_path_v4.31');userStorage.removeItem('usopp_compare_new_path_v4.31');alert(`${data.message} Removed ${data.removed||0} temporary workspace item(s).`)}catch(error:any){alert(error.message||'Cache clear failed')}};
  return <><div className="pageHead"><div><h1>Settings</h1><p>Manage your profile, appearance and workspace preferences. Open Help for step-by-step feature guides.</p></div></div><div className="settingsGrid"><AccountSettings/>
  <div className="card setting"><h3>Appearance</h3><p>Engineering workspace theme.</p><div className="seg"><button className={'chip '+(theme==='light'?'active':'')} onClick={()=>setTheme('light')}>Light</button><button className={'chip '+(theme==='dark'?'active':'')} onClick={()=>setTheme('dark')}>Dark</button></div></div>
+ {user.role==='admin'&&<section className="card setting wide" id="admin-user-settings" aria-labelledby="admin-settings-heading"><h3 id="admin-settings-heading">Users &amp; Roles</h3><h4>Workspace administration</h4><p>Manage user access to the engineering workspace.</p><button className="btn" aria-expanded={manageUsers} aria-controls="settings-user-management" onClick={()=>setManageUsers(value=>!value)}>{manageUsers?'Close user management':'Manage users'}</button>{manageUsers&&<div id="settings-user-management"><UserManagement/></div>}</section>}
+ {user.role==='admin'&&<DocumentBrandingSettings/>}
+ {user.role==='admin'&&<EngineeringQualitySettings/>}
+ <WorkHubConnections/>
  <AssistModelSettings/>
  {user.role==='admin'&&<MachineDepartmentSettings departments={departments} prefixes={machinePrefixes} onSave={onMachineConfigChange}/>}
  <div className="card setting wide"><h3>PLC BOOL metadata representation</h3><p>This setting controls metadata generation and validation together. It does not change the PLC declaration.</p><div className="boolModeOptions"><button className={'boolModeOption '+(boolMetadataMode==='BOOL'?'active':'')} onClick={()=>setBoolMetadataMode('BOOL')}><strong>PLC BOOL = BOOL</strong><span>Default. Generated metadata stays BOOL. Validation requires BOOL. No conversion rows are required in Sheet2.</span></button><button className={'boolModeOption '+(boolMetadataMode==='USINT'?'active':'')} onClick={()=>setBoolMetadataMode('USINT')}><strong>PLC BOOL = USINT</strong><span>Generated metadata uses USINT. Validation requires USINT and Sheet2 mappings 0 = ON and 1 = OFF.</span></button></div><div className="boolModeCurrent">Active contract: <b>{boolMetadataMode==='BOOL'?'PLC BOOL → metadata BOOL':'PLC BOOL → metadata USINT · Sheet2 0 = ON · 1 = OFF'}</b></div></div>

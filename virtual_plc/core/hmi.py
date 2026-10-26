@@ -20,8 +20,9 @@ def binding(value):
 
 def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
     pages, groups, cache, assets, alarms, snippets = [], {}, {}, {}, [], {}
-    aliases = {}
+    aliases = {};inherited_aliases={}
     by_name = {}
+    program_scopes={str(v.get('scope','')).replace('\\','/').rsplit('/',1)[-1].casefold() for v in variables or [] if v.get('scope')!='@global'}
     for variable in variables or []:
         by_name.setdefault(variable.get('name', ''), []).append(variable)
     for path, content in sources.items():
@@ -42,17 +43,32 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
                 else:
                     variable_path = (*variable_path, name)
             if kind == 'datapoint':
+                inherited_note=None
                 name = node.get('Name', '')
                 variable = '.'.join((*variable_path, name))
                 candidates = [v for v in by_name.get(variable.split('.')[0], [])
                               if (str(v.get('scope', '')).replace('\\', '/').rsplit('/', 1)[-1].casefold() == str(program).casefold() if program
                                    else str(v.get('scope', '')).casefold() in {'', 'global', '@global'})]
+                # A program can reference an inherited global without a local
+                # declaration. Resolve only an exact declared global of the
+                # source DSO type, and report this stale program-folder alias.
+                if not candidates and program and str(program).casefold() in program_scopes:
+                    datatype=next((p.get('Value') for p in node if p.get('Name')=='PLCType'),None)
+                    inherited=[v for v in by_name.get(variable,[]) if v.get('scope')=='@global' and str(v.get('type','')).casefold()==str(datatype).casefold()]
+                    if len(inherited)==1:
+                        candidates=inherited
+                        diagnostics.append({'severity':'warning','code':'hmi-dso-inherited-global','source':path,
+                            'message':f'{datasource}.{program}.{variable} has no local declaration; connected to exact declared global {inherited[0]["id"]} ({datatype}). Review the source DSO program-folder alias.'})
+                        inherited_note=diagnostics[-1]['message']
                 if len(candidates) == 1:
                     suffix = variable.partition('.')[2]
                     resolved = candidates[0]['id'] + ('.' + suffix if suffix else '')
                     alias = '.'.join((datasource, *names, name))
                     aliases[alias] = resolved
                     if datasource.casefold() == 'local': aliases['.'.join((*names, name))] = resolved
+                    if inherited_note:
+                        inherited_aliases[alias]=inherited_note
+                        if datasource.casefold()=='local':inherited_aliases['.'.join((*names,name))]=inherited_note
             for child in node:
                 if child.tag.rsplit('}', 1)[-1].lower() not in {'property'}: visit(child, names, program, variable_path)
         visit(doc)
@@ -74,6 +90,19 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
         for path in (folder / 'TextGroups' / name, Path('Logical/VCShared/TextGroups') / name):
             if path.as_posix() in sources: return path.as_posix()
         return None
+    targets = {}
+    for source in sorted({*sources, *(str(Path(p).parent.parent / 'Package.vcp').replace('\\', '/') for p in sources if p.lower().endswith('.page'))}):
+        if not source.lower().endswith('.vcp'): continue
+        try:
+            text = sources.get(source)
+            path = (Path(root) / source).resolve()
+            if not path.is_relative_to(Path(root).resolve()): continue
+            doc = ET.fromstring(text if text is not None else path.read_bytes())
+            props = {n.get('Name'): n.get('Value', '') for n in doc if n.tag.rsplit('}', 1)[-1].lower() == 'property'}
+            targets[Path(source).parent.as_posix()] = {'source': source, 'properties': props,
+                'currentPageBinding': resolve_binding(props.get('PageCurrentDatapoint')),
+                'changePageBinding': resolve_binding(props.get('PageChangeDatapoint'))}
+        except (OSError, ET.ParseError): continue
     local_keys = {}
     def layer_keys(source, layer_id):
         """VC4 local keys belong to the active owning layer, never another page.
@@ -132,7 +161,7 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
                 items = [{'index': int(n.get('Index')), 'binding': f'{image}[{int(n.get("Index"))+offset}]' if image else None,
                           'text': captions.get(n.get('Index'), {}).get('en') or next(iter(captions.get(n.get('Index'), {}).values()), 'Alarm ' + n.get('Index', '?'))}
                          for n in doc.iter() if n.tag.rsplit('}', 1)[-1].lower() == 'alarm' and n.get('Index', '').isdigit()]
-                alarms.append({'name': doc.get('Name', Path(source).stem), 'source': source, 'binding': image, 'items': items,
+                alarms.append({'name': doc.get('Name', Path(source).stem), 'index': int(props['Index']) if str(props.get('Index','')).isdigit() else None, 'source': source, 'binding': image, 'items': items,
                                'limitation': 'Live AlarmImage states only; vendor history, latching and acknowledgement are not emulated.'})
             except (ValueError, ET.ParseError) as error:
                 diagnostics.append({'severity': 'warning', 'code': 'hmi-alarm-unresolved', 'source': source, 'message': str(error)})
@@ -163,7 +192,7 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
         layers = []
         for layer in sorted(layout.get('layers', []), key=lambda item: item.get('order', 0)):
             layer_props = layer.get('properties', {})
-            layer_state = {'id': layer['id'], 'name': layer['name'], 'properties': layer_props,
+            layer_state = {'id': layer['id'], 'name': layer['name'], 'properties': layer_props, 'order': layer.get('order', 0),
                            'statusBinding': resolve_binding(layer_props.get('StatusDatapoint')),
                            'statusConfigured': 'Variable[' in layer_props.get('StatusDatapoint', '')}
             layers.append(layer_state)
@@ -179,6 +208,11 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
                     virtual_key = layer_keys(source, layer['id']).get(key_match[1].casefold(), virtual_key)
                 key_source = virtual_key.get('source') or control.get('virtual_key_source', '')
                 if key_source:
+                    key_path=Path(key_source)
+                    if key_path.is_absolute():
+                        key_source=key_path.resolve().relative_to(Path(root).resolve()).as_posix() if key_path.resolve().is_relative_to(Path(root).resolve()) else ''
+                    else:key_source=key_path.as_posix()
+                if key_source:
                     props['Resolved VirtualKey source'] = key_source
                 for index, operation in enumerate(virtual_key.get('actions', []), 1):
                     for name, value in operation.items(): props[f'VirtualKey action {index} / {name}'] = value
@@ -188,6 +222,7 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
                 else:
                     completion_action = None
                 for operation in key_actions:
+                    before = len(actions)
                     operation_binding = resolve_binding(operation.get('ValueDatapoint'))
                     class_id = str(operation.get('ClassId', '')).upper()
                     if class_id in {'0X00000161', '0X0000016A', '0X0000016B'} and operation_binding:
@@ -195,8 +230,25 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
                                         'variable': operation_binding, 'value': operation.get('SetValue', operation.get('Value', '1')),
                                         'resetValue': operation.get('ResetValue', '0'), 'classId': class_id})
                     page = re.search(r'Page\[([^\]]+)\]', operation.get('Page', ''), re.I)
-                    if operation.get('Type') == 'Change' and page:
-                        actions.append({'kind': 'navigate', 'page': page[1]})
+                    if class_id == '0X00000160' and page:
+                        actions.append({'kind': 'navigate', 'page': page[1], 'classId': class_id})
+                    elif class_id == '0X00000160' and operation.get('Target') == 'Back':
+                        actions.append({'kind': 'back', 'classId': class_id})
+                    elif class_id == '0X0000016E':
+                        actions.append({'kind': 'control', 'control': operation.get('Control'),
+                                        'command': operation.get('Action'), 'classId': class_id})
+                    if len(actions) == before:
+                        actions.append({'kind': 'unsupported', 'classId': class_id,
+                                        'reason': 'This source key function is not simulated.'})
+                    actions[-1]['properties'] = operation
+                    actions[-1]['function'] = {'0X00000160':'Change page','0X00000161':'Set datapoint',
+                        '0X00000164':'Help','0X00000165':'Unicode character','0X00000166':'Input control',
+                        '0X00000167':'Move cursor','0X00000168':'Up/down datapoint','0X00000169':'Focus dependent',
+                        '0X0000016A':'Toggle datapoint','0X0000016B':'Momentary datapoint','0X0000016C':'Change language',
+                        '0X0000016E':'Control dependent','0X0000016F':'Clipboard'}.get(class_id,'Source key function '+class_id)
+                    actions[-1]['lockingBinding'] = resolve_binding(operation.get('LockingDatapoint'))
+                    completion_binding=resolve_binding(operation.get('CompletionDatapoint'))
+                    if completion_binding:actions[-1]['completion']={'variable':completion_binding,'value':operation.get('CompletionValue','0')}
                 action = actions[0] if actions else None
                 kind = control['class'].casefold()
                 kind = {'0x00001005': 'bitmap', '0x00001009': 'alarm', '0x0000100d': 'line',
@@ -213,12 +265,13 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
                        'texts': texts, 'binding': own_binding, 'action': action, 'actions': actions, 'completion': completion_action,
                        'keySource': key_source,
                        'textBinding': resolve_binding(props.get('TextDatapoint')),
-                       'textIndexBinding': resolve_binding(props.get('IndexDatapoint')),
+                       'textIndexBinding': resolve_binding(props.get('TextIndexDatapoint') or props.get('IndexDatapoint')),
                        'textGroup': group_path(props.get('TextGroup'), source),
+                       'bindingNotices':sorted({inherited_aliases[binding(raw)] for raw in props.values() if binding(raw) in inherited_aliases}),
                        'lockingBinding': resolve_binding(props.get('LockingDatapoint')),
                        'passwordLevelBinding': resolve_binding(props.get('LevelDatapoint')),
                        'bitmaps': control.get('bitmaps', {}),
-                       'bitmapIndexBinding': resolve_binding(props.get('IndexDatapoint') or props.get('BitmapIndex')),
+                       'bitmapIndexBinding': resolve_binding(props.get('BitmapIndexDatapoint') or props.get('IndexDatapoint')),
                        'minBinding': resolve_binding(props.get('MinDatapoint')), 'maxBinding': resolve_binding(props.get('MaxDatapoint')),
                        'input': props.get('Input', '').casefold() == 'true',
                        # VisibilityMode and EditingMode are editor settings, not runtime permission bits.
@@ -229,7 +282,8 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
                 if not supported:
                     obj['limitation'] = 'Proprietary HMI control: displayed as a labeled placeholder.'
                 if kind in {'button', 'hotspot'} and action is None:
-                    obj['limitation'] = 'No supported command or navigation action was resolved; interaction is disabled.'
+                    obj['limitation'] = ('This active source hotspot covers input without issuing a command. Inspect its status tag and PLC writers.'
+                                         if kind=='hotspot' else 'No source command or navigation action is configured. Inspect the virtual key.')
                 unresolved = [key for key, value in props.items()
                               if key.endswith('Datapoint') and 'Variable[' in str(value)
                               and resolve_binding(value) is None]
@@ -241,11 +295,23 @@ def read_hmi(root, sources, diagnostics, cancel=None, variables=None):
                 obj['statusBinding'] = resolve_binding(props.get('StatusDatapoint'))
                 obj['statusConfigured'] = 'Variable[' in props.get('StatusDatapoint', '')
                 objects.append(obj)
-        pages.append({'id': source, 'name': layout['name'], 'source': source,
+        target = Path(source).parent.parent.as_posix()
+        pages.append({'id': source, 'name': layout['name'], 'source': source, 'target': target,
+                      'runtimeBindings': targets.get(target, {}),
                       'width': layout['width'], 'height': layout['height'], 'objects': objects, 'layers': layers,
                       'properties': layout.get('properties', {}), 'palette': layout.get('palette', {}),
                       'warnings': layout.get('warnings', [])})
         diagnostics.extend({'severity': 'warning', 'code': 'hmi-resource-unresolved', 'source': source,
                             'message': message} for message in layout.get('warnings', []))
-    return {'pages': pages, 'textGroups': groups, 'textSnippets': snippets,
-            'bitmapAssets': assets, 'alarmGroups': alarms, 'adapterVersion': 5}
+    from .hmi_keys import target_control
+    for page in pages:
+        for control in page['objects']:
+            for action in control.get('actions',[]):
+                if action['kind']!='control':continue
+                try:target_control(page,action)
+                except ValueError as error:
+                    action['kind']='unsupported';action['reason']=str(error)
+    from .hmi_data import read_data_objects
+    data_objects=read_data_objects(root,sources,diagnostics)
+    return {'pages': pages, 'targets': targets, 'textGroups': groups, 'textSnippets': snippets,
+            'bitmapAssets': assets, 'alarmGroups': alarms, 'dataObjects':data_objects, 'adapterVersion': 7}

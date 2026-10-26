@@ -9,7 +9,7 @@ import engineeringHero from './assets/engineering-factory-hero-v1.png';
 import {PasswordInput} from './PasswordInput';
 import '../../styles.css';
 import './account.css';
-export type AccountUser={id:number;username:string;designation:string;company:string;role:'admin'|'user';avatarUrl?:string|null;approved?:boolean;isDemo?:boolean;sessionExpiresAt?:number};
+export type AccountUser={id:number;username:string;designation:string;company:string;role:'admin'|'user';email?:string;avatarUrl?:string|null;approved?:boolean;isDemo?:boolean;sessionExpiresAt?:number};
 const LANDING_FEATURES=[
   {name:'ByteMap',headline:'Every SpinConnect byte. Mapped and verified.',description:'Map PLC packet structures, byte offsets, parameters and HMI data into clear, traceable insights for faster validation and troubleshooting.'},
   {name:'DataInspect',headline:'Decode data. Detect issues.',description:'Inspect live and recorded SpinConnect packets, verify decoded values and identify communication or mapping issues. YBS device frames are also supported.'},
@@ -44,7 +44,7 @@ export function AuthProvider({children}:{children:ReactNode}){
   const accountGeneration=useRef(0);
   const setUser=async(value:AccountUser|null)=>{const generation=++accountGeneration.current;if(value)await hydrateUserStorage(value);else activateUserStorage(null);if(generation===accountGeneration.current)setUserState(value)};
   const [serviceReady,setServiceReady]=useState(false);
-  const [form,setForm]=useState({username:'',password:'',confirm:'',designation:'',company:''});
+  const [form,setForm]=useState({username:'',password:'',confirm:'',designation:'',company:'',email:''});
   const usernameInput=useRef<HTMLInputElement>(null);
   const expireSession=(notice:string)=>{void setUser(null);setRegister(false);setError(notice);setForm(value=>({...value,password:'',confirm:''}))};
   useEffect(()=>{
@@ -71,7 +71,7 @@ export function AuthProvider({children}:{children:ReactNode}){
     setBusy(true);
     try{
       const result=await accountRequest(register?'register':'login',form);
-      setForm({username:'',password:'',confirm:'',designation:'',company:''});
+      setForm({username:'',password:'',confirm:'',designation:'',company:'',email:''});
       if(register){setNotice(result.message||'Your account request was sent to Admin for approval.');setRegister(false);return;}
       setNotice('');await setUser(result.user);
     }
@@ -90,7 +90,7 @@ export function AuthProvider({children}:{children:ReactNode}){
   };
   const exploreDemo=()=>{
     setRegister(false);setNotice('');if(serviceReady)setError('');
-    setForm({username:'demo',password:'demo',confirm:'',designation:'',company:''});
+    setForm({username:'demo',password:'demo',confirm:'',designation:'',company:'',email:''});
     usernameInput.current?.focus({preventScroll:true});
   };
   if(loading)return <div className="accountScreen"><div className="accountOpening" role="status"><img src={usoppLogo} alt="usop.ai" width={68}/><p>Opening your engineering workspace…</p></div></div>;
@@ -115,7 +115,7 @@ export function AuthProvider({children}:{children:ReactNode}){
       <PasswordInput key={register?'new-password':'current-password'} label="Password" required minLength={register?8:1} maxLength={128} autoComplete={register?'new-password':'current-password'} value={form.password} onChange={e=>setForm({...form,password:e.target.value})}/>
       {register&&<><p className="accountPasswordHint">Use at least 8 characters.</p><PasswordInput label="Confirm password" required maxLength={128} autoComplete="new-password" value={form.confirm} onChange={e=>setForm({...form,confirm:e.target.value})}/>
         <div className="accountProfileFields"><label>Designation<input className="textInput" required maxLength={120} autoComplete="organization-title" value={form.designation} onChange={e=>setForm({...form,designation:e.target.value})}/></label>
-        <label>Company name<input className="textInput" required maxLength={120} autoComplete="organization" value={form.company} onChange={e=>setForm({...form,company:e.target.value})}/></label></div></>}
+        <label>Email ID (optional)<input className="textInput" type="email" maxLength={254} value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></label><label>Company name<input className="textInput" required maxLength={120} autoComplete="organization" value={form.company} onChange={e=>setForm({...form,company:e.target.value})}/></label></div></>}
       {error&&serviceReady&&<p role="alert" className="accountError">{error}</p>}
       {!register&&form.username.toLowerCase()==='demo'&&<p className="accountDemoNotice" role="status">Demo credentials are filled in. Click Sign in to begin your 30-minute session.</p>}
       <button className="btn primary accountSubmit" disabled={busy||!serviceReady}>{busy?'Please wait…':register?'Send account request':'Sign in'}{!busy&&<ArrowRight size={18}/>}</button>

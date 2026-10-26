@@ -1203,6 +1203,7 @@ class VirtualRuntime:
     def request_reset(self,mode):
         if mode not in (1,2,17,18,32,64):raise RuntimeErrorPLC('Unsupported SYSreset mode')
         self._requested_reset=mode
+        self._requested_reset_origin=next((dict(row) for row in reversed(self.trace) if row.get('kind')=='instruction'),dict(self._context))
 
     def tick(self, single_instruction=False):
         if not self.run_allowed:
@@ -1241,6 +1242,8 @@ class VirtualRuntime:
             if single_instruction: self.status = "paused"
             if self._requested_reset is not None:
                 mode,self._requested_reset=self._requested_reset,None
+                origin=getattr(self,'_requested_reset_origin',{})
+                self._event('source-control',f'PLC source requested SYSreset mode {mode}',origin,resetMode=mode)
                 if mode in (17,18):self.command('cold-reset' if mode==18 else 'reset')
                 elif mode in (32,64):self.command('stop')
                 else:
@@ -1286,6 +1289,7 @@ class VirtualRuntime:
             self.status, self.time_ms, self.scan_count = "stopped", 0, 0
             self.cpu.reset()
             self._initialized = False
+            self._requested_reset=None
             self._pending = self._pending_instruction = None
             self._skip_breakpoint = False
             for task in self.tasks:

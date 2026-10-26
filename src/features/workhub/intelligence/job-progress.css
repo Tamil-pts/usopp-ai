@@ -1,0 +1,3 @@
+.wh-job{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.85rem 0;border-top:1px solid var(--border,#d8e4ec)}
+.wh-job-body{min-width:0;flex:1}.wh-job-heading{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.wh-job-body small{display:block;color:var(--muted,#6d8498);margin-top:.3rem}.wh-job-body p{margin:.4rem 0;overflow-wrap:anywhere}.wh-job progress{display:block;width:min(100%,24rem);height:.4rem;margin:.6rem 0;accent-color:var(--teal,#13a497)}
+@media(max-width:640px){.wh-job{align-items:flex-start;flex-direction:column}.wh-job>.actions{align-self:flex-end}}

@@ -190,6 +190,12 @@ class ServiceRuntime:
         if name=='VA_STARTTOUCHCAL':item['calibrationStatus']=1;return 0
         if name=='VA_GETCALSTATUS':return item.get('calibrationStatus',0)
         if name=='VA_GETALCURPOS':
+            from .hmi_keys import selected_alarm
+            selected=selected_alarm(self.runtime.project,self.runtime,item['name'])
+            if selected is not None:
+                group,number=selected.get('groupIndex'),selected['index']
+                if type(group) is not int or not 0<=group<=255 or not 0<=number<=255:return 245
+                self.vendor.write(values[2],bytes([group]));self.vendor.write(values[3],bytes([number]));return 0
             if not self.alarm_history:return 245
             alarm=self.alarm_history[-1]
             self.vendor.write(values[2],bytes([alarm['group']&255]));self.vendor.write(values[3],bytes([alarm['number']&255]));return 0
@@ -523,6 +529,16 @@ class ServiceRuntime:
                 block['status'] = 20613 if len(name)>10 else 20600
                 return block
             ident = next((i for i,v in self.objects.items() if v['name']==name),None)
+            if kind=='DatObjInfo' and ident is None:
+                sources=[o for o in self.runtime.project.get('hmi',{}).get('dataObjects',[]) if o.get('name')==name]
+                if len(sources)==1:
+                    try:
+                        import base64
+                        raw=base64.b64decode(sources[0]['base64'],validate=True)
+                        if not 0<len(raw)<=min(MAX_BYTES,4*1024*1024):raise ValueError('Source data-object limit exceeded.')
+                        ident=self.ident();address=self.vendor.allocate(('object',ident),len(raw),raw)
+                        self.objects[ident]={'name':name,'address':address,'length':len(raw),'memType':1,'option':0,'date':self.date(),'source':sources[0]['source']}
+                    except (ValueError,KeyError):ident=None
             if kind=='DatObjInfo':
                 if ident is None:
                     block['status'] = 20609

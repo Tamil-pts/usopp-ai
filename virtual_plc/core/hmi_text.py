@@ -60,7 +60,7 @@ def display_text(model,control,runtime):
     if mode=='MultipleTexts':
         path=control.get('textGroup');groups=model.get('hmi',{}).get('textGroups',{})
         raw=runtime.get_value(control['textIndexBinding']) if control.get('textIndexBinding') else 0
-        index=int(raw)+int(props.get('TextIndexOffset') or 0)
+        index=int(raw)+int(props.get('TextIndexOffset') or (props.get('TextIndex') if control.get('kind')=='button' else 0) or 0)
         entries=groups.get(path,{}).get(str(index),{})
         text=entries.get('en',next(iter(entries.values()),'')) if isinstance(entries,dict) else str(entries)
         return expand_text(text,model.get('hmi',{}).get('textSnippets',{}).get(path,{}),runtime)

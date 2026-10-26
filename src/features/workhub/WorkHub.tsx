@@ -1,77 +1,9 @@
-import {Activity,ArrowRight,ArrowUpRight,BookOpen,Bot,Cpu,FileCode2,GitCompare,HelpCircle,Layers,ShieldCheck} from 'lucide-react';
-import type {EngineeringFeature} from '../../shared/features';
-import {WorkHubActivity} from './WorkHubActivity';
+import type {ReactNode} from 'react';
+import {WorkHubProjects} from './WorkHubProjects';
 import './workhub.css';
 
-type WorkHubProps={active:boolean;onOpen:(feature:EngineeringFeature|'help'|'settings'|'virtual-plc')=>void};
+type WorkHubProps={active:boolean;renderRecentWork:(active:boolean)=>ReactNode};
 
-const tasks=[
-  {id:'validation',name:'ByteMap',label:'Map your PLC data',description:'Validate SpinConnect packet structures, byte offsets and HMI mappings in your B&R project. Generate and inspect metadata workbooks.',detail:'Source → metadata',Icon:Layers},
-  {id:'plc',name:'DataInspect',label:'Inspect packet values',description:'Read and decode SpinConnect PLC packets, or select YBS device frames, using the matching metadata.',detail:'Packets → values',Icon:Activity},
-  {id:'compare',name:'MatchView',label:'Understand what changed',description:'Compare Automation Studio revisions and trace changes in logic, configuration and HMI screens.',detail:'Revisions → differences',Icon:GitCompare},
-  {id:'virtual-plc',name:'Virtual PLC',label:'Operate your simulated machine',description:'Import a supported PLC project, connect virtual devices and operate controls with sensor feedback.',detail:'Controls and feedback',Icon:Cpu},
-  {id:'settings',name:'My profile and Settings',label:'Make the workspace yours',description:'Upload a profile photo, change your password and choose your theme and table preferences.',detail:'Profile and preferences',Icon:HelpCircle},
-  {id:'rules',name:'LogicScan',label:'Review logic requirements',description:'Run your configured engineering rules and follow each finding back to its source evidence.',detail:'Requirements → evidence',Icon:ShieldCheck}
-] as const;
-
-export function WorkHub({active,onOpen}:WorkHubProps){
-  return <div className="workHubDashboard">
-    <header className="workHubHeading">
-      <div><span className="workHubEyebrow">YOUR ENGINEERING WORKSPACE</span><h1>WorkHub</h1></div>
-      <button className="workHubHelp" onClick={()=>onOpen('help')}><HelpCircle size={17}/><span>Workspace guide</span><ArrowUpRight size={15}/></button>
-    </header>
-
-    <section className="workHubHero" aria-labelledby="workhub-welcome">
-      <div className="workHubHeroContent">
-        <span className="workHubHeroEyebrow"><span/>FROM SOURCE TO INSIGHT</span>
-        <h2 id="workhub-welcome">Engineering.<br/><em>Connected.</em></h2>
-        <p>Map PLC data, inspect communication and understand your logic. Bring the evidence together for your next engineering decision.</p>
-        <div className="workHubHeroActions">
-          <button className="workHubPrimary" onClick={()=>onOpen('validation')}>Start with ByteMap<ArrowRight size={18}/></button>
-          <button className="workHubSecondary" onClick={()=>onOpen('chatbot')}><Bot size={18}/>Ask Chopper<ArrowUpRight size={16}/></button>
-        </div>
-      </div>
-      <div className="workHubIllustration" aria-hidden="true">
-        <div className="workHubDiagramGrid"/>
-        <svg className="workHubConnectors" viewBox="0 0 500 300" preserveAspectRatio="none"><path d="M125 67 H185 Q205 67 205 87 V115 Q205 135 225 135 H250 M375 67 H315 Q295 67 295 87 V115 Q295 135 275 135 H250 M125 230 H185 Q205 230 205 210 V180 Q205 160 225 160 H250 M375 230 H315 Q295 230 295 210 V180 Q295 160 275 160 H250"/></svg>
-        <div className="workHubDiagramNode workHubDiagramSource"><FileCode2 size={20}/><div><b>PLC source</b><span>Logic & configuration</span></div></div>
-        <div className="workHubDiagramNode workHubDiagramMetadata"><Layers size={20}/><div><b>Metadata</b><span>Mapping & structure</span></div></div>
-        <div className="workHubDiagramCore"><Cpu size={30}/><span>Engineering<br/>context</span></div>
-        <div className="workHubDiagramNode workHubDiagramPackets"><Activity size={20}/><div><b>Communication</b><span>Packets & values</span></div></div>
-        <div className="workHubDiagramNode workHubDiagramRules"><BookOpen size={20}/><div><b>Requirements</b><span>Rules & evidence</span></div></div>
-      </div>
-    </section>
-
-    <WorkHubActivity active={active}/>
-
-    <section className="workHubTools" aria-labelledby="workhub-tools">
-      <div className="workHubSectionHeading"><div><span className="workHubEyebrow">PICK UP YOUR NEXT TASK</span><h2 id="workhub-tools">What would you like to work on?</h2></div><p>Purposeful tools. One connected workspace.</p></div>
-      <div className="workHubToolLayout">
-        <div className="workHubTaskGrid">{tasks.map(({id,name,label,description,detail,Icon})=><button className="workHubTask" key={id} id={id==='virtual-plc'?'virtual-plc-workhub':undefined} onClick={()=>onOpen(id)}>
-          <div className="workHubTaskTop"><span className="workHubToolIcon"><Icon size={22}/></span><span className="workHubToolName">{name}</span><ArrowUpRight className="workHubTaskArrow" size={20}/></div>
-          <h3>{label}</h3><p>{description}</p><span className="workHubTaskDetail">{detail}<ArrowRight size={16}/></span>
-        </button>)}</div>
-        <aside className="workHubChopper" aria-labelledby="workhub-chopper">
-          <div className="workHubChopperIdentity"><span><Bot size={25}/></span><div><b>Chopper</b><small>AI Assistant</small></div><span className="workHubChopperMark">SOURCE AWARE</span></div>
-          <h3 id="workhub-chopper">Understand<br/> how it works.</h3>
-          <p>Ask about machine functions, trace a subroutine or explain a finding using the selected project’s evidence.</p>
-          <ul><li><FileCode2 size={16}/>Machine & subroutine explanations</li><li><GitCompare size={16}/>Changes & troubleshooting</li><li><BookOpen size={16}/>Rules & engineering knowledge</li></ul>
-          <button onClick={()=>onOpen('chatbot')}>Open Chopper<ArrowRight size={18}/></button>
-          <small className="workHubChopperHint">Attach a project or log to give your question context.</small>
-        </aside>
-      </div>
-    </section>
-
-    <section className="workHubGuide" aria-labelledby="workhub-guide">
-      <div className="workHubSectionHeading"><div><span className="workHubEyebrow">A SHORT GUIDE TO YOUR WORKFLOW</span><h2 id="workhub-guide">From the right source to a useful result.</h2></div></div>
-      <ol>{[
-        {title:'Select the project',text:'Choose your source and confirm its machine, active PLC configuration and HMI target.',action:'Open ByteMap',page:'validation' as const},
-        {title:'Choose your references',text:'Load the matching metadata or select the engineering rules needed for this review.',action:'Open LogicScan',page:'rules' as const},
-        {title:'Run scoped checks',text:'Use ByteMap for source checks, DataInspect for packets, or MatchView for revision changes.',action:'Open DataInspect',page:'plc' as const},
-        {title:'Review and share',text:'Follow findings to the source evidence, inspect expected and actual values, then export the report.',action:'Ask Chopper',page:'chatbot' as const}
-      ].map((step,index)=><li key={step.title}><span className="workHubGuideNumber">{String(index+1).padStart(2,'0')}</span><h3>{step.title}</h3><p>{step.text}</p><button onClick={()=>onOpen(step.page)}>{step.action}<ArrowUpRight size={15}/></button></li>)}</ol>
-    </section>
-
-    <div className="workHubClosing"><span>LESS GUESSWORK. MORE ENGINEERING.</span><p>Connected tools. Traceable results. Confident decisions.</p></div>
-  </div>;
+export function WorkHub({active,renderRecentWork}:WorkHubProps){
+  return <WorkHubProjects active={active} renderRecentWork={renderRecentWork}/>;
 }

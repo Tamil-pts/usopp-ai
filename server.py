@@ -82,6 +82,10 @@ def server_main() -> int:
 
 
 if __name__ == "__main__":
+    if len(sys.argv)>1 and sys.argv[1]=='--workhub-job':
+        from backend.core.workhub_intelligence.job_runner import run
+        run(*sys.argv[2:4])
+        raise SystemExit(0)
     if len(sys.argv) > 1 and sys.argv[1] == ENGINE_FLAG:
         raise SystemExit(run_embedded_engine())
     raise SystemExit(server_main())

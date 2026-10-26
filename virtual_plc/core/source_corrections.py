@@ -7,6 +7,21 @@ import hashlib
 from copy import deepcopy
 
 
+def merge_reviewed(model, existing, reviewed):
+    """Add newly reviewed defaults on explicit jig restore; retain custom edits."""
+    result=deepcopy(existing or {'schemaVersion':1,'corrections':[]})
+    known={(row.get('source'),row.get('original')) for row in result.get('corrections',[])}
+    sources={row['source']:row.get('originalCode',row.get('code','')) for row in model.get('programs',[])}
+    defaults={(row.get('source'),row.get('original')) for row in reviewed.get('corrections',[])}
+    custom_sources={source for source,original in known if (source,original) not in defaults}
+    for row in reviewed.get('corrections',[]):
+        token=(row.get('source'),row.get('original'))
+        if token in known or token[0] in custom_sources:continue
+        if hashlib.sha256(sources.get(token[0],'').encode()).hexdigest()!=row.get('codeSha256'):continue
+        result.setdefault('corrections',[]).append(deepcopy(row));known.add(token)
+    return result
+
+
 def apply_corrections(model,document):
     if not isinstance(document,dict) or document.get('schemaVersion')!=1:raise ValueError('Unsupported source correction schema')
     corrections=document.get('corrections',[])

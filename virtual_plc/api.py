@@ -232,40 +232,60 @@ def component_fault(identity: str, component_id: str, payload: dict, request: Re
 
 @router.post('/projects/{identity}/interface-values')
 def interface_values(identity: str, payload: dict, request: Request):
-    from virtual_plc.core.service import value_preview
-    workspace = opened(request, identity)
-    names = payload.get('names')
-    if not isinstance(names, list) or len(names) > 1024 or any(not isinstance(n, str) or len(n) > 400 for n in names):
-        raise HTTPException(400, 'Request at most 1024 bounded PLC interface addresses.')
-    values, errors, controls, texts, layers, passwords = {}, {}, {}, {}, {}, {}
+    from .core.hmi_state import page_state
+    workspace=opened(request,identity)
+    names=payload.get('names')
+    if not isinstance(names,list) or len(names)>1024 or any(not isinstance(n,str) or len(n)>400 for n in names):
+        raise HTTPException(400,'Request at most 1024 bounded PLC interface addresses.')
     with workspace.lock:
-        if not workspace.runtime:
-            raise HTTPException(409, 'Complete project analysis first.')
-        for name in set(names):
-            try:
-                value, complete = value_preview(workspace.runtime.get_value(name))
-                if not complete: raise ValueError('Select a specific scalar array or structure member.')
-                values[name] = value
-            except (ValueError, TypeError, KeyError, IndexError) as error:
-                errors[name] = str(error)[:300]
-        if payload.get('pageId'):
-            from virtual_plc.core.hmi_runtime import control_state
-            page = next((p for p in workspace.model.get('hmi', {}).get('pages', []) if p['id'] == payload['pageId']), None)
-            if page:
-                controls = {item['id']: control_state(item, workspace.runtime) for item in page.get('objects', [])}
-                layers = {item['id']: control_state({'layerState': item}, workspace.runtime) for item in page.get('layers', [])}
-                from virtual_plc.core.hmi_text import display_text
-                for item in page.get('objects',[]):
-                    if item.get('kind') == 'password' and controls[item['id']]['visible']:
-                        from virtual_plc.core.hmi_runtime import password_source_status
-                        passwords[item['id']] = password_source_status(workspace.model, item, workspace.runtime)
-                    if item.get('kind') not in {'text','listbox','datetime'} or not controls[item['id']]['visible']:continue
-                    try:
-                        rendered=display_text(workspace.model,item,workspace.runtime)
-                        if rendered is not None:texts[item['id']]=rendered
-                    except (ValueError,TypeError,KeyError,IndexError) as error:
-                        errors[item['id']]=str(error)[:300]
-    return {'values': values, 'errors': errors, 'controls': controls, 'texts': texts, 'layers': layers, 'passwordSources': passwords}
+        if not workspace.runtime:raise HTTPException(409,'Complete project analysis first.')
+        page=next((p for p in workspace.model.get('hmi',{}).get('pages',[]) if p['id']==payload.get('pageId')),None)
+        return page_state(workspace.model,page,workspace.runtime,names)
+
+
+@router.post('/projects/{identity}/hmi-password/prepare')
+def prepare_hmi_password(identity:str,payload:dict,request:Request):
+    from .core.hmi_runtime import require_input
+    workspace=opened(request,identity)
+    try:
+        with workspace.lock:
+            if not workspace.runtime:raise ValueError('Complete project analysis first.')
+            page=next((p for p in workspace.model.get('hmi',{}).get('pages',[]) if p['id']==payload.get('pageId')),None)
+            control=next((c for c in (page or {}).get('objects',[]) if c['id']==payload.get('objectId') and c.get('kind')=='password'),None)
+            if not control:raise ValueError('Choose an analyzed HMI password control.')
+            require_input(page,control,workspace.runtime)
+            status=service.prepare_hmi_password(workspace,page,control)
+            service._persist(workspace)
+            from .core.hmi_state import page_state
+            return {**page_state(workspace.model,page,workspace.runtime),'timeMs':workspace.runtime.time_ms,'status':workspace.runtime.status}
+    except (ValueError,TypeError,KeyError,IndexError) as error:fail(error)
+
+
+@router.post('/projects/{identity}/hmi-page')
+def hmi_page(identity:str,payload:dict,request:Request):
+    from .core.hmi_navigation import activate_page
+    from .core.hmi_state import page_state
+    workspace=opened(request,identity)
+    try:
+        with workspace.lock:
+            if not workspace.runtime:raise ValueError('Complete project analysis first.')
+            page=next((p for p in workspace.model.get('hmi',{}).get('pages',[]) if p['id']==payload.get('pageId')),None)
+            if not page:raise ValueError('Choose an analyzed HMI page.')
+            activate_page(workspace.model,workspace.runtime,page)
+            return page_state(workspace.model,page,workspace.runtime)
+    except (ValueError,TypeError,KeyError,IndexError,OverflowError) as error:fail(error)
+
+
+@router.post('/projects/{identity}/hmi-inspect')
+def hmi_inspect(identity:str,payload:dict,request:Request):
+    from .core.hmi_keys import diagnostics
+    workspace=opened(request,identity)
+    with workspace.lock:
+        if not workspace.runtime:raise HTTPException(409,'Complete project analysis first.')
+        page=next((p for p in workspace.model.get('hmi',{}).get('pages',[]) if p['id']==payload.get('pageId')),None)
+        if not page:raise HTTPException(400,'Choose an analyzed HMI page.')
+        control=next((c for c in page.get('objects',[]) if c['id']==payload.get('objectId')),None)
+        return diagnostics(workspace.model,workspace.runtime,page,control)
 
 
 @router.post('/projects/{identity}/hmi-action')
@@ -282,22 +302,54 @@ def hmi_action(identity: str, payload: dict, request: Request):
             control = next((o for o in (page or {}).get('objects', []) if o['id'] == payload.get('objectId')), None)
             if not control: raise ValueError('Choose an analyzed HMI control.')
             phase, result = payload.get('phase'), {}
+            changed=set()
             if phase == 'release':
                 # Releasing an already pressed button must work after its layer hides.
                 for action in workspace.hmi_pressed.pop(control['id'], []):
                     write_value(runtime, action['variable'], action.get('resetValue', '0'))
+            elif phase=='select-alarm':
+                from .core.hmi_keys import active_alarms
+                require_input(page,control,runtime)
+                if control.get('kind')!='alarm' or payload.get('value') not in {a['id'] for a in active_alarms(workspace.model,runtime,page)}:
+                    raise ValueError('Choose a currently active alarm in this HMI target.')
+                if not hasattr(runtime,'_hmi_alarm_cursors'):runtime._hmi_alarm_cursors={}
+                runtime._hmi_alarm_cursors[control['id']]=payload['value']
             elif phase == 'input':
                 if len(json.dumps(payload.get('value'))) > 16384: raise ValueError('HMI input is too large.')
+                if control.get('kind')=='password':
+                    from .core.hmi_runtime import password_needs_initialization
+                    require_input(page,control,runtime)
+                    value=payload.get('value')
+                    if not isinstance(value,str) or len(value)>min(4096,int(control.get('properties',{}).get('MaxChars') or 4096)):raise ValueError('Password input exceeds the configured character limit.')
+                    if not value:raise ValueError('Enter the HMI password.')
+                    if (not runtime._initialized and runtime.run_allowed) or password_needs_initialization(workspace.model,control,runtime,value):
+                        service.prepare_hmi_password(workspace,page,control,password=value)
                 result = input_value(workspace.model, page, control, runtime, payload.get('value'))
+                if control.get('kind')=='password':
+                    from .core.hmi_runtime import password_source_status
+                    try:service.prepare_hmi_password(workspace,page,control,refresh=True)
+                    except ValueError as error:result['loginRefreshWarning']=str(error)
+                    result['loginLevel']=runtime.get_value(control['passwordLevelBinding'])
+                    result['values']={control['passwordLevelBinding']:result['loginLevel']}
+                    result['passwordSources']={control['id']:password_source_status(workspace.model,control,runtime)}
+                    service._persist(workspace)
             elif phase == 'press':
                 require_input(page, control, runtime)
                 if control.get('kind') not in {'button', 'hotspot'}: raise ValueError('This control is not a button.')
-                actions = control.get('actions', [])
-                if not actions: raise ValueError('No supported source key action was resolved.')
+                from .core.hmi_keys import validate_actions,move_alarm
+                from .core.hmi_navigation import activate_page,back_page
+                actions = validate_actions(page,control,runtime)
                 if control['id'] in workspace.hmi_pressed: raise ValueError('Release this button before pressing again.')
                 for action in actions:
                     if action['kind'] == 'navigate':
-                        result['navigation'] = navigation_page(workspace.model.get('hmi',{}).get('pages',[]),page,action['page'])['id']
+                        target=navigation_page(workspace.model.get('hmi',{}).get('pages',[]),page,action['page'])
+                        result['navigation'] = activate_page(workspace.model,runtime,target)
+                        continue
+                    if action['kind']=='back':
+                        result['navigation']=back_page(workspace.model,runtime,page)
+                        continue
+                    if action['kind']=='control':
+                        move_alarm(workspace.model,runtime,page,action)
                         continue
                     value = action.get('value', '1')
                     if action['kind'] == 'toggle':
@@ -306,11 +358,20 @@ def hmi_action(identity: str, payload: dict, request: Request):
                         expected = runtime.memory.coerce(value, spec)
                         if runtime.get_value(action['variable']) == expected: value = action.get('resetValue', '0')
                     write_value(runtime, action['variable'], value)
+                    changed.add(action['variable'])
+                    if action.get('completion'):
+                        write_value(runtime,action['completion']['variable'],action['completion']['value'])
                     if action['kind'] == 'momentary':
                         workspace.hmi_pressed.setdefault(control['id'], []).append(action)
             else: raise ValueError('Choose press, release or input.')
-            result['controls']={item['id']:control_state(item,runtime) for item in page.get('objects',[])}
-            result['layers']={item['id']:control_state({'layerState':item},runtime) for item in page.get('layers',[])}
+            if changed:
+                password=next((c for c in page.get('objects',[]) if c.get('kind')=='password' and c.get('passwordLevelBinding') in changed),None)
+                if password:
+                    try:service.prepare_hmi_password(workspace,page,password,refresh=True)
+                    except ValueError as error:result['loginRefreshWarning']=str(error)
+                    service._persist(workspace)
+            from .core.hmi_state import page_state
+            result.update(page_state(workspace.model,page,runtime))
             return result
     except (ValueError, KeyError, TypeError, IndexError, OverflowError) as error:
         fail(error)

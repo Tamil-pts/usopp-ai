@@ -25,6 +25,7 @@ node_modules_setup_backup*/
 .usopp-container/
 .usopp_workspaces/
 .usopp_exports/
+.usopp_workhub/
 usopp_paths.bat
 admin-password.txt
 logs/

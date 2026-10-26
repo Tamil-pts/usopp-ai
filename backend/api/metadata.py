@@ -134,6 +134,12 @@ def save_copy(payload):
                         try: value=float(value) if any(c in value.lower() for c in '.e') else int(value)
                         except ValueError: pass
                     cell.value=value
+        # Omit the generated trace sheet when exporting an older workbook copy.
+        if 'Alarm Sources' in wb.sheetnames and len(wb.worksheets)>1:
+            alarm_sheet=wb['Alarm Sources']
+            alarm_headers={cell.value for cell in alarm_sheet[1]}
+            if {'ALARM_GROUP','ALARM_IMAGE','CAPTION','PACKING_SOURCE'}<=alarm_headers:
+                wb.remove(alarm_sheet)
         apply_duplicate_highlights(wb)
         issues=normalize_metadata_workbook(wb)
         if issues: raise HTTPException(400,{'message':'MIN/MAX and scale/offset factors must be numeric or null for SpinConnect.', 'cells':issues[:100]})

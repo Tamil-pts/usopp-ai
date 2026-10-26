@@ -24,6 +24,7 @@ export function RunGuide({project,busy,recheck,example,programTest,openSource,ta
   useEffect(()=>{setTestProgram(list(project?.model?.programs).find(p=>/loginout.*cyclic/i.test(p.id))?.id||'');},[project?.id]);
   const [loading,setLoading]=useState(false);
   const ready=project?.status==='ready',allowed=project?.runtime?.compatibility?.runAllowed===true;
+  const faulted=project?.runtime?.status==='faulted',faults=list(project?.runtime?.diagnostics).filter(row=>row.code==='RUNTIME_FAULT').slice(-3);
   useEffect(()=>setPage(0),[code,query,project?.id]);
   useEffect(()=>{
     setReport(null);
@@ -38,7 +39,8 @@ export function RunGuide({project,busy,recheck,example,programTest,openSource,ta
   const groups=Object.entries(report?.byCode||{}).sort((a,b)=>Number(b[1])-Number(a[1]));
   return <div className="run-guide">
     <div className="dialog-eyebrow"><BookOpen size={17}/> RUN YOUR VIRTUAL PLC</div>
-    <h2>{allowed?'Ready for a virtual scan':project?'Why is Run disabled?':'Start your first simulation'}</h2>
+    <h2>{faulted?'Virtual scan stopped at a source fault':allowed?'Ready for a virtual scan':project?'Why is Run disabled?':'Start your first simulation'}</h2>
+    {faulted&&<section className="notice error"><div><strong>Review the runtime fault before restarting</strong>{faults.map((row,index)=><p key={index}>{row.message} {row.source&&<button className="link" onClick={()=>{openSource(row.source,row.line);close();}}>{row.source}:{row.line}</button>}</p>)}<p>Correct the source inputs, then reset the virtual PLC. Reset preserves retained process settings. Components &gt; Restore healthy defaults also applies reviewed jig corrections and clears injected device faults; its assumptions remain recorded with the workspace.</p></div></section>}
     <p>{allowed?'The active dependencies are supported. Set virtual input values, execute one scan and inspect the results before continuous running.':project&&!ready?'Wait for project analysis to finish before checking execution readiness.':project?'Your project has been loaded for inspection. The current interpreter cannot execute all of its active dependencies, so Run and Single scan stay disabled.':'Import a PLC project or open the separate training example below.'}</p>
     {ready&&!allowed&&<div className="notice warning"><ShieldAlert size={18}/><div><strong>This machine project cannot run completely in this interpreter yet.</strong><p>These are conversion-support findings, not proof that the real PLC program is faulty. A complete project run currently needs the remaining library/Ladder implementations, or B&amp;R Automation Studio simulation.</p></div></div>}
     {ready&&<section className="notice"><strong>Test one source program in a separate workspace</strong><p>Other machine tasks will be excluded and listed. The selected program and its called dependencies must still be supported.</p><select aria-label="Program to test" value={testProgram} onChange={e=>setTestProgram(e.target.value)}><option value="">Choose a cyclic program</option>{list(project?.model?.programs).filter(p=>p.kind==='program'&&p.entry==='cyclic').map(p=><option key={p.id} value={p.id}>{p.source} ({p.compatibility?.status||'review required'})</option>)}</select><button disabled={busy||!testProgram} onClick={()=>void programTest(testProgram)}>Create program test</button></section>}

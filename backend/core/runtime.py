@@ -39,8 +39,11 @@ def _seed_resource_tree(name:str):
             destination.parent.mkdir(parents=True,exist_ok=True)
             shutil.copy2(item,destination)
 
-for _resource_name in ('knowledge','rules'):
-    _seed_resource_tree(_resource_name)
+# The API/supervisor seeds defaults before issuing a worker lease. Rewalking the
+# complete knowledge tree for every short-lived job is unnecessary and expensive.
+if os.getenv('USOPP_PI_CHILD')!='1':
+    for _resource_name in ('knowledge','rules'):
+        _seed_resource_tree(_resource_name)
 LOG_DIR=BASE/'logs'; LOG_DIR.mkdir(exist_ok=True)
 LOG_FILE=LOG_DIR/f'usopp_backend_{datetime.now():%Y%m%d}.log'
 _log_handlers=[logging.FileHandler(LOG_FILE, encoding='utf-8')]

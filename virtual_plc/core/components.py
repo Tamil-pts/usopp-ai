@@ -148,6 +148,11 @@ CATALOG.append({'kind':'cylinder','label':'Pneumatic cylinder',
                     _field('initialPosition','Initial stroke fraction',0,0,1),
                     _field('springReturn','Retract when extend is off (0/1)',1,0,1),
                     _field('faultInjected','Stuck cylinder fault (0/1)',0,0,1)]})
+for _definition in CATALOG:
+    if _definition['kind'] in {'vfd','motor','velocity_servo','servo'}:
+        _unit='Hz/raw unit' if _definition['kind']=='vfd' else 'position/raw unit' if _definition['kind']=='servo' else 'RPM/raw unit'
+        _definition['configFields'].extend([_field('referenceScale','PLC reference scale',1,-1e6,1e6,_unit),
+                                           _field('referenceOffset','PLC reference offset',0,-1e9,1e9)])
 _CATALOG = {entry['kind']: entry for entry in CATALOG}
 
 
@@ -412,6 +417,10 @@ class DeviceComponents:
             link = component.get('links', {}).get(port['key'])
             fallback = {'targetSpeed': component['config'].get('nominalSpeed', 0), 'targetFrequency': component['config'].get('referenceFrequency', 0), 'target': component['config'].get('targetPosition', 0)}.get(port['key'], False if port['type'] == 'BOOL' else 0.0)
             result[port['key']] = self.states[link['component']]['current'].get(link['port'], fallback) if link else self._read_binding(variable) if variable else fallback
+            # PLC analog counts require explicit engineering scaling. Device
+            # links and unbound model references already use engineering units.
+            if variable and not link and port['key'] in {'targetSpeed','targetFrequency','target'} and component['kind'] in {'vfd','motor','velocity_servo','servo'}:
+                result[port['key']]=result[port['key']]*component['config']['referenceScale']+component['config']['referenceOffset']
             if port['type'] == 'numeric' and (type(result[port['key']]) not in {int, float} or not math.isfinite(result[port['key']])):
                 raise ValueError('Command contains a non-finite numeric value: ' + port['label'])
         return result
@@ -593,9 +602,12 @@ class DeviceComponents:
 
     def snapshot(self):
         result = []
+        consumers={(link['component'],link['port']) for component in self.components for link in component.get('links',{}).values()}
         for component in self.components:
             state = self.states[component['id']]
             ports, forced = [], False
+            try:effective=self._inputs(component)
+            except (ValueError,TypeError,KeyError,IndexError):effective={}
             for port in _CATALOG[component['kind']]['ports']:
                 variable = component['bindings'].get(port['key'])
                 record = self.bindings[variable][0] if variable else None
@@ -604,7 +616,11 @@ class DeviceComponents:
                 link = component.get('links', {}).get(port['key'])
                 linked = self.states.get(link['component'], {}).get('current', {}).get(link['port']) if link else None
                 ports.append({**port, 'variableId': variable, 'deviceLink': link,
-                              'value': self._read_binding(variable) if record else linked if link else state['current'].get(port['key']), 'forced': is_forced})
+                              'value': self._read_binding(variable) if record else linked if link else state['current'].get(port['key']), 'forced': is_forced,
+                              'effectiveValue':effective.get(port['key'],state['current'].get(port['key'])),
+                              'unit':'Hz' if port['key'] in {'frequency','targetFrequency'} else ('units/s' if component['kind']=='servo' else 'RPM') if port['key'] in {'speed','targetSpeed'} else 'rev' if component['kind']=='encoder' and port['key']=='position' else '',
+                              'sourceKind':'plc' if variable else 'device' if link else 'model' if port['direction']=='input' and not port.get('required') else 'unconnected',
+                              'feedsDevice':(component['id'],port['key']) in consumers})
             if not component['enabled']:
                 status = {'state': 'disabled', 'message': 'Disabled. No simulated feedback is written.'}
             elif not self.active:
@@ -629,7 +645,7 @@ class DeviceComponents:
             else:
                 status = {'state': 'ready', 'message': 'Generic model ready. Explicit Run or Single scan is required; paused/stopped devices do not advance.'}
             missing=[port['label'] for port in ports if port.get('required') and not (port['variableId'] or port['deviceLink'])]
-            feedback_missing=component['kind'] in {'motor','vfd','servo','velocity_servo','cylinder'} and not any(port['direction']=='output' and port['variableId'] for port in ports)
+            feedback_missing=component['kind'] in {'motor','vfd','servo','velocity_servo','cylinder'} and not any(port['direction']=='output' and (port['variableId'] or port['feedsDevice']) for port in ports)
             action=('Connect required PLC signals: '+', '.join(missing) if missing else
                     'No PLC feedback tag is connected. Configure feedback if the PLC sequence requires it.' if feedback_missing else
                     status['message'] if status['state'] in {'error','blocked','fault'} else '')

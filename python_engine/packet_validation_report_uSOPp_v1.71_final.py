@@ -5556,23 +5556,12 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
         cell.font = Font(bold=True, color="FFFFFF")
         cell.fill = PatternFill(fill_type="solid", fgColor="17365D")
 
-    # Keep the five-column Sheet2 contract unchanged. Captions which cannot be
-    # safely assigned to transmitted bits remain reviewable in this trace sheet.
-    alarm_sources = wb.create_sheet("Alarm Sources")
-    alarm_fields = ["group", "alarmImage", "alarmIndex", "caption", "sourceFile",
-                    "packingFile", "packingLine", "buffer", "byte", "bit", "tagCode", "status", "detail"]
-    alarm_sources.append(["ALARM_GROUP", "ALARM_IMAGE", "ALARM_INDEX", "CAPTION", "ALARM_SOURCE",
-                          "PACKING_SOURCE", "PACKING_LINE", "WRITE_BUFFER", "BUFFER_BYTE", "BIT", "TAG_CODE", "STATUS", "DETAIL"])
-    for record in alarm_source_records:
-        alarm_sources.append([record.get(field) for field in alarm_fields])
-    alarm_sources.freeze_panes = "A2"
-
     # Freeze/filter generated metadata tables.
     ws.freeze_panes = "A2"
     # AutoFilter intentionally disabled (do not enable — causes highlighted column headers)
     sheet2.freeze_panes = "A2"
 
-    for sheet in (ws, sheet2, alarm_sources):
+    for sheet in (ws, sheet2):
         for cell in sheet[1]:
             cell.font = Font(bold=True, italic=True, color="000000")
             cell.fill = PatternFill(fill_type=None)

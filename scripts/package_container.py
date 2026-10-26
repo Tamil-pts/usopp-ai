@@ -40,6 +40,8 @@ def stage(destination: Path) -> None:
     for page in ('index.html', 'nami/index.html'):
         if not (ROOT / 'dist' / page).is_file():
             raise ValueError(f'Build the frontend first: dist/{page} is missing.')
+    shutil.copytree(ROOT / 'backend/core/workhub_quality/templates',
+                    destination / 'backend/core/workhub_quality/templates')
     shutil.copytree(ROOT / 'dist', destination / 'dist')
     if not (ROOT/'virtual_plc/dist/index.html').is_file():
         raise ValueError('Build the Virtual PLC frontend before staging the runtime.')

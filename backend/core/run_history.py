@@ -46,6 +46,20 @@ def archive_database(record, result):
     except Exception:
         log.exception('RUN_HISTORY_DATABASE_ERROR run=%s; file archive retained', record['id'])
 
+def sync_workhub(record,data,root=None,new=False):
+    # Existing private archives are not published merely by exporting a report.
+    if new and data.get('workhubCapture') is False:return
+    if not new and not record.get('workhubAutoCapture'):return
+    if record.get('kind') not in {'validation','metadata','datainspect','compare','rules'}:return
+    if not record.get('user') or record['user'].get('isDemo'):return
+    record['workhubAutoCapture']=True
+    try:
+        from .workhub_runs import synchronize
+        link=synchronize(record,data,root);record.update(link,workhubSyncPending=False);data.update(link,workhubSyncPending=False)
+    except Exception:
+        record['workhubSyncPending']=True;data['workhubSyncPending']=True
+        log.exception('WORKHUB_RUN_CAPTURE_ERROR run=%s; original engineering archive retained',record['id'])
+
 def begin_run(kind, data, root=None):
     from backend.core.identifiers import identify_result
     from backend.core.access import claim_resource
@@ -61,6 +75,7 @@ def begin_run(kind, data, root=None):
               'projectPath':str(root or ''),'snapshotPath':'','metadataPath':'','snapshotError':''}
     record['serverId']=SERVER_ID
     data.update(runOwner=record['user'],createdAt=record['createdAt'])
+    sync_workhub(record,data,root,new=True)
     write_json(folder/'result.json', data)
     write_json(folder/'record.json', record)
     archive_database(record, data)
@@ -143,6 +158,7 @@ def _record_run(kind, data, root=None, metadata_path=None):
             if source.name not in saved: saved.append(source.name)
     record['artifacts']=saved
     data['historyDownloads']=[{'name':name,'url':f'/api/history/{run_id}/download/{name}'} for name in saved]
+    sync_workhub(record,data,root,new=not bool(old))
     write_json(folder/'result.json',data)
     session_file=session_folder/SESSION_RESULTS[kind]
     if session_file.is_file(): write_json(session_file,data)
@@ -165,6 +181,7 @@ def add_run_artifact(run_id, source):
         record['artifacts']=list(dict.fromkeys([*record.get('artifacts',[]),name]))
         result=json.loads((folder/'result.json').read_text(encoding='utf-8'))
         result['historyDownloads']=[{'name':item,'url':f'/api/history/{run_id}/download/{item}'} for item in record['artifacts']]
+        sync_workhub(record,result)
         write_json(folder/'result.json',result)
         write_json(folder/'record.json',record)
         archive_database(record, result)

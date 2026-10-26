@@ -1,0 +1,132 @@
+# Overlay: docker compose --env-file deployment.env --env-file deploy/intelligence/local.env \
+#   -f distribution/compose.yaml -f deploy/intelligence/compose.yaml --profile office up -d
+x-pi-environment: &pi-environment
+  USOPP_DATA_ROOT: /data
+  USOPP_PI_WORKER_MODE: external
+  USOPP_PI_LLM_URL: ${USOPP_PI_LLM_URL:-}
+  USOPP_PI_LLM_MODEL: local
+  USOPP_PI_LLM_MAX_TOKENS: "6144"
+  USOPP_PI_LLM_TIMEOUT: "600"
+  USOPP_PI_REDIS_URL: ${USOPP_PI_REDIS_URL:-}
+  USOPP_PI_WORKER_CONCURRENCY: ${USOPP_PI_WORKER_CONCURRENCY:-1}
+  USOPP_PI_AI_CONCURRENCY: ${USOPP_PI_AI_CONCURRENCY:-1}
+  USOPP_PI_JOB_MAX_MEMORY_MB: ${USOPP_PI_JOB_MAX_MEMORY_MB:-2048}
+  USOPP_PI_MEMORY_RESERVE_MB: ${USOPP_PI_MEMORY_RESERVE_MB:-256}
+  USOPP_PI_DISK_RESERVE_MB: ${USOPP_PI_DISK_RESERVE_MB:-512}
+  USOPP_PI_JOB_TIMEOUT: ${USOPP_PI_JOB_TIMEOUT:-1800}
+  USOPP_PI_SPEECH_TIMEOUT: ${USOPP_PI_SPEECH_TIMEOUT:-3600}
+  USOPP_PI_MAX_PENDING: ${USOPP_PI_MAX_PENDING:-100}
+  USOPP_PI_MAX_PROJECT_PENDING: ${USOPP_PI_MAX_PROJECT_PENDING:-20}
+  USOPP_PI_PUBLIC_ORIGIN: ${USOPP_PI_PUBLIC_ORIGIN:?Set the existing WorkHub HTTPS origin}
+  USOPP_PI_APP_INTERNAL_URL: http://app:8200
+  USOPP_PI_OFFICE_PUBLIC_URL: ${USOPP_PI_OFFICE_PUBLIC_URL:-}
+  USOPP_PI_OFFICE_INTERNAL_URL: http://project-office
+  USOPP_PI_OFFICE_JWT_SECRET: ${USOPP_PI_OFFICE_JWT_SECRET:-}
+  USOPP_PI_WHISPER_MODEL: /models/whisper
+  USOPP_PI_WHISPER_DEVICE: cpu
+  USOPP_PI_WHISPER_COMPUTE: int8
+  USOPP_PI_WHISPER_THREADS: ${USOPP_PI_WHISPER_THREADS:-2}
+  USOPP_PI_OCR_LANGUAGES: eng+tam
+  HF_HUB_OFFLINE: "1"
+  TRANSFORMERS_OFFLINE: "1"
+
+x-pi-worker: &pi-worker
+  image: ${USOPP_PI_WORKER_IMAGE:-usopp-intelligence-worker:local}
+  build:
+    context: ..
+    dockerfile: deploy/intelligence/Dockerfile
+    args:
+      USOPP_IMAGE: ${USOPP_IMAGE:?Use the existing application image}
+  environment: *pi-environment
+  volumes:
+    - data:/data
+    - ${USOPP_PI_MODEL_DIRECTORY:?Set the offline model directory}:/models:ro
+  read_only: true
+  tmpfs:
+    - /tmp:rw,nosuid,nodev,size=4g,uid=10001,gid=10001,mode=1770
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  init: true
+  restart: unless-stopped
+  stop_grace_period: 20s
+  mem_limit: ${USOPP_PI_WORKER_MEMORY:-3g}
+  cpus: ${USOPP_PI_WORKER_CPUS:-2}
+  pids_limit: 128
+  healthcheck:
+    test: [CMD, python, -m, backend.core.workhub_intelligence.worker, --healthcheck]
+    interval: 30s
+    timeout: 5s
+    start_period: 45s
+
+services:
+  app:
+    # Same existing application, extended with local export/OCR dependencies.
+    image: ${USOPP_PI_WORKER_IMAGE:-usopp-intelligence-worker:local}
+    build:
+      context: ..
+      dockerfile: deploy/intelligence/Dockerfile
+      args:
+        USOPP_IMAGE: ${USOPP_IMAGE:?Use the existing application image}
+    entrypoint: [usopp-start]
+    environment: *pi-environment
+  project-redis:
+    profiles: [queue-wakeup]
+    image: ${USOPP_PI_REDIS_IMAGE:-redis:7.4-bookworm}
+    environment:
+      REDIS_PASSWORD: ${USOPP_PI_REDIS_PASSWORD:-}
+    command: [sh, -ec, 'test -n "$$REDIS_PASSWORD"; exec redis-server --appendonly yes --requirepass "$$REDIS_PASSWORD"']
+    volumes:
+      - project-redis:/data
+    restart: unless-stopped
+    # No host port. SQLite is the durable job ledger; Redis only wakes workers.
+  project-llm:
+    profiles: [local-inference]
+    image: ${USOPP_IMAGE:?Use the existing application image}
+    entrypoint: [/opt/usopp/local_ai/runtime/llama-server]
+    command: [-m, /models/engineering.gguf, --host, 0.0.0.0, --port, "8080", -c, "32768", -t, "${USOPP_PI_LLM_THREADS:-4}", --parallel, "1"]
+    volumes:
+      - ${USOPP_PI_MODEL_DIRECTORY:?Set the offline model directory}:/models:ro
+    read_only: true
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=256m"]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    mem_limit: ${USOPP_PI_LLM_MEMORY:-8g}
+    cpus: ${USOPP_PI_LLM_CPUS:-4}
+    pids_limit: 128
+    healthcheck:
+      disable: true
+  project-meeting-worker:
+    <<: *pi-worker
+    profiles: [extra-workers]
+    command: [--kinds, "meeting,transcribe,frd,flowchart,plan,document_answer,clarifications"]
+  project-document-worker:
+    <<: *pi-worker
+    # One worker accepts every existing kind, including FAT and ISO generation.
+    command: []
+  project-pdf-worker:
+    <<: *pi-worker
+    profiles: [extra-workers]
+    command: [--kinds, "pdf"]
+  project-office:
+    profiles: [office]
+    image: ${USOPP_PI_OFFICE_IMAGE:?Set a reviewed ONLYOFFICE Docs image tag or digest}
+    environment:
+      JWT_ENABLED: "true"
+      JWT_SECRET: ${USOPP_PI_OFFICE_JWT_SECRET:?Set the shared ONLYOFFICE JWT secret}
+      JWT_HEADER: Authorization
+      # ONLYOFFICE must fetch signed documents from the internal app service.
+      ALLOW_PRIVATE_IP_ADDRESS: "true"
+      ALLOW_META_IP_ADDRESS: "false"
+    ports:
+      - "127.0.0.1:${USOPP_PI_OFFICE_PORT:-8202}:80"
+    volumes:
+      - project-office-data:/var/www/onlyoffice/Data
+      - project-office-library:/var/lib/onlyoffice
+      - project-office-logs:/var/log/onlyoffice
+    restart: unless-stopped
+volumes:
+  project-redis:
+  project-office-data:
+  project-office-library:
+  project-office-logs:

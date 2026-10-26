@@ -19,7 +19,7 @@ MAX_SOURCE = 8 * 1024 * 1024
 SOURCE_EXTENSIONS = {'.st', '.ab', '.src', '.ld', '.c', '.h', '.var', '.typ', '.fun',
                      '.page', '.txtgrp', '.algrp', '.alcfg', '.xml', '.sw', '.hw', '.hwl', '.iom',
                      '.apj', '.prg', '.pkg', '.set', '.dso', '.per', '.gdm', '.layer', '.pages',
-                     '.vc', '.vcvk', '.vcr', '.vcs', '.fninfo', '.cfg', '.osl'}
+                     '.vc', '.vcp', '.dob', '.dat', '.vcvk', '.vcr', '.vcs', '.fninfo', '.cfg', '.osl'}
 
 
 def validate_configuration(data):
@@ -86,7 +86,7 @@ def read_source(root, name):
     from python_engine.compare import decode_project_text
     path = safe_source(root, name)
     raw = path.read_bytes()
-    return decode_project_text(path, raw), hashlib.sha256(raw).hexdigest()
+    return (raw.decode('latin-1') if path.suffix.casefold()=='.dat' else decode_project_text(path, raw)), hashlib.sha256(raw).hexdigest()
 
 
 def atomic_json(path, value, maximum=MAX_DOCUMENT):

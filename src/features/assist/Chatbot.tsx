@@ -10,6 +10,7 @@ import './chopper-chat.css';
 import {useAccount} from '../account/AuthProvider';
 import {stageBrowserProject} from '../validation/api';
 import {requestChopper} from './chopperRequest';
+import {openDashboardBuilder,isWorkHubDashboardRequest} from '../workhub/dashboards/bridge';
 import {CHAT_PROMPTS} from './chatPrompts';
 import {ChopperFunctionFlow,flowConversationText,type ChopperFlowData} from './ChopperFunctionFlow';
 import {ChopperReply} from './ChopperReply';
@@ -100,6 +101,7 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
   if(/^(?:guide me|how (?:do i|to) use (?:this |the )?app|step by step guide)/i.test(text)){setQuestion('');choose('coach');return;}
   let files=attachments;
   setQuestion('');setCopyNotice('');setMessages(current=>[...current,{role:'user',text:looksLikeLog(text)?`Decode pasted PLC log (${text.length.toLocaleString()} characters).`:text}]);
+  if(!user.isDemo&&isWorkHubDashboardRequest(text)){reply('I opened My Dashboard in WorkHub. Review the draft, apply it to the editor and save when ready.');openDashboardBuilder(text);return;}
   if(text.length>20*1024*1024){reply('Paste a log smaller than 20 MB.');return;}
   if(looksLikeLog(text)) {
    files=[...attachments.filter(a=>a.id!=='pasted-log'),{id:'pasted-log',name:'Pasted log',kind:'log',text}];setAttachments(files);pendingDecode.current=true;

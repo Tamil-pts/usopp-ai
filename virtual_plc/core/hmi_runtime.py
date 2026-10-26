@@ -23,7 +23,7 @@ def navigation_page(pages,current,name):
 
 
 def control_state(control, runtime):
-    visible, reasons, words = True, [], {}
+    visible, reasons, visibility_reasons, words = True, [], [], {}
     for key, item in (('layer', control.get('layerState', {})), ('control', control)):
         if not item.get('statusConfigured') and not item.get('statusBinding'): continue
         try:
@@ -33,6 +33,7 @@ def control_state(control, runtime):
             word = int(raw) & 0xffff
             words[key] = word
             visible = visible and not bool(word & 1)
+            if word & 1: visibility_reasons.append(key.capitalize() + ' status bit 0 hides this item.')
             if word & 2: reasons.append(key.capitalize() + ' status bit 1 locks input.')
         except (ValueError, KeyError, TypeError, IndexError):
             reasons.append(key.capitalize() + ' status binding is unresolved.')
@@ -51,13 +52,11 @@ def control_state(control, runtime):
             if locked: reasons.append(f'Input locked by {props.get("Locking")}; current value {level}, required level {threshold:g}.')
         except (ValueError, KeyError, TypeError, IndexError):
             reasons.append('Login/locking binding or mode is unresolved.')
-    return {'visible': visible, 'locked': bool(reasons), 'reason': ' '.join(reasons), 'statusWords': words}
+    return {'visible': visible, 'locked': bool(reasons), 'reason': ' '.join(reasons),
+            'visibilityReason': ' '.join(visibility_reasons) or 'Shown by the current source status.', 'statusWords': words}
 
 
-def require_input(page, control, runtime):
-    state = control_state(control, runtime)
-    if not state['visible']: raise ValueError('This HMI control or layer is currently hidden.')
-    if state['locked']: raise ValueError(state['reason'])
+def covering_control(page, control, runtime):
     # Recheck overlays when confirming a keypad opened earlier. A newly visible
     # login hotspot must also block a stale input dialog.
     objects = page.get('objects', [])
@@ -70,10 +69,18 @@ def require_input(page, control, runtime):
         opaque_shape=(cover.get('kind')=='shape' and str(props.get('FillStyle','')).lower()!='transparent'
                       and props.get('BackColor') not in (None,'','None','Transparent'))
         if (cover.get('kind') == 'hotspot' or opaque_shape) and overlaps(control, cover) and control_state(cover, runtime)['visible']:
-            raise ValueError('Input is covered by the active ' + cover.get('name', 'HMI overlay') + '. Use the source-configured control.')
+            return cover
     # Layer BackColor belongs to the editor display, not the runtime surface.
     # See VC4 layer/ref-layer_backcolor.html. Only actual visible controls can
     # cover an input; do not invent a full-screen input barrier for a layer.
+
+
+def require_input(page, control, runtime):
+    state = control_state(control, runtime)
+    if not state['visible']: raise ValueError('This HMI control or layer is currently hidden. '+state['visibilityReason'])
+    if state['locked']: raise ValueError(state['reason'])
+    cover=covering_control(page,control,runtime)
+    if cover:raise ValueError('Input is covered by '+cover.get('layer','')+' / '+cover.get('name','HMI overlay')+'. Inspect its status and source key in Layers & controls.')
 
 
 def writable(runtime, name):
@@ -160,9 +167,11 @@ def password_source_status(model, control, runtime):
             cache[binding] = found
         for location in cache[binding]:
             for task in runtime.tasks:
-                if location['unitId'] not in task.get('programs', []): continue
+                phases=[phase for phase,key in (('cyclic','programs'),('init','initializationPrograms')) if location['unitId'] in task.get(key,[])]
+                if not phases:continue
                 item = {k: v for k, v in location.items() if k != 'unitId'}
-                item.update(task=task['name'], intervalMs=task.get('intervalMs'), executionCount=task['executionCount'])
+                item.update(task=task['name'],taskId=task['id'],phases=phases,intervalMs=task.get('intervalMs'),
+                            nextDueMs=task.get('nextDueMs'),executionCount=task['executionCount'])
                 if item not in producers: producers.append(item)
     waiting = [p['level'] for p in problems if p['state'] == 'waiting']
     unresolved = [p['level'] for p in problems if p['state'] == 'unresolved']
@@ -170,7 +179,15 @@ def password_source_status(model, control, runtime):
     message += (f'{len(unresolved)} level(s) have unresolved snippet formatting or bindings. ' if unresolved else '')
     if not message: message = 'Configured password sources are initialized.' if entries else 'No nonempty password source is configured.'
     return {'readyLevels': sum(bool(v) for v in entries.values()), 'waitingLevels': waiting,
-            'unresolvedLevels': unresolved, 'message': message.strip(), 'producers': producers[:24], 'timeMs': runtime.time_ms}
+            'unresolvedLevels': unresolved,'configuredLevels':sorted(set(entries)|{p['level'] for p in problems}),
+            'levelBinding':control.get('passwordLevelBinding'),'message': message.strip(), 'producers': producers[:24], 'timeMs': runtime.time_ms}
+
+
+def password_needs_initialization(model,control,runtime,password):
+    """A ready source may authenticate without waiting for unrelated empty sources."""
+    entries,problems,_=_password_entries(model,control,runtime)
+    return any(p['state']=='waiting' for p in problems) and not any(expected and password and
+        hmac.compare_digest(str(password).encode('utf-8'),expected.encode('utf-8')) for expected in entries.values())
 
 
 def _password_level(model, control, runtime, password):
@@ -208,13 +225,11 @@ def input_value(model, page, control, runtime, value):
         return {'loginLevel': level}
     if kind == 'numeric':
         if type(value) not in {float, int} or not math.isfinite(value): raise ValueError('Enter a finite numeric value.')
-        for label, operator in (('Min', lambda v, bound: v < bound), ('Max', lambda v, bound: v > bound)):
-            configured = props.get(label + 'Datapoint') not in {None, '', 'None'}
-            binding = control.get(label.lower() + 'Binding')
-            raw = runtime.get_value(binding or '') if configured else props.get(label + 'Value')
-            if raw in {None, '', 'None'}: continue
-            bound = float(raw)
-            if not math.isfinite(bound) or operator(value, bound): raise ValueError('Value is outside the configured HMI input limits.')
+        from .hmi_limits import require_numeric
+        require_numeric(control,runtime,value)
+    if kind=='dropdown':
+        from .hmi_selection import selection_value
+        value=selection_value(model,control,runtime,value)
     if kind == 'string' and (not isinstance(value, str) or len(value) > int(props.get('MaxChars') or 4096)):
         raise ValueError('Input exceeds the configured character limit.')
     completion = control.get('completion') or {}

@@ -25,7 +25,7 @@ def health():
     build=frontend_build_info(RESOURCE_ROOT/'dist',VERSION)
     strict=os.getenv('USOPP_REQUIRE_FRONTEND_BUILD')=='1' or (RESOURCE_ROOT/'dist/build-info.json').is_file()
     good=build['matches'] or not strict
-    data={'status':'ok' if good else 'version-mismatch','version':VERSION,'frontendBuild':build,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True},'applicationRoot':str(BASE),'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30','logFile':str(LOG_FILE)}
+    data={'status':'ok' if good else 'version-mismatch','version':VERSION,'apiVersion':VERSION,'uiVersion':build['version'],'frontendBuild':build,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True,'workhubPerformanceCapability':True,'contributionPassport':True,'workhubDashboardBuilder':True,'engineeringQualityClosure':True,'workhubUnifiedProjectWorkspace':True,'workhubDefaultDashboardTemplate':True,'workhubReliableBackgroundJobs':True,'workhubRevisionProcessingCache':True},'applicationRoot':str(BASE),'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30','logFile':str(LOG_FILE)}
     return JSONResponse(data,status_code=200 if good else 503,headers={'Cache-Control':'no-store'})
 @router.post('/api/log')
 def frontend_log(payload:dict):

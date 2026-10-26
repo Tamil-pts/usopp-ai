@@ -35,6 +35,13 @@ def require_admin(request: Request):
         raise HTTPException(403, 'Only an administrator can change shared machine / department settings.')
 
 
+@router.get('/workhub-health')
+def workhub_health(request:Request):
+    require_admin(request)
+    from backend.core.workhub_intelligence.reliability import health
+    return health()
+
+
 @router.get('/machine-departments')
 def get_machine_departments():
     return read_config()

@@ -4,6 +4,8 @@ import {PasswordInput} from './PasswordInput';
 import {UserAvatar} from './UserAvatar';
 export function AccountSettings(){
   const {user,refreshUser}=useAccount();
+  const [email,setEmail]=useState(user.email||'');
+  const saveEmail=async(event:FormEvent)=>{event.preventDefault();setBusy(true);setError('');setMessage('');try{await accountRequest('profile-email',{email});await refreshUser();setMessage('Email ID saved.');}catch(reason){setError((reason as Error).message);}finally{setBusy(false);}};
   const photoInput=useRef<HTMLInputElement>(null);
   const [current,setCurrent]=useState(''),[replacement,setReplacement]=useState(''),[confirm,setConfirm]=useState(''),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState('');
   const photo=async(event:ChangeEvent<HTMLInputElement>)=>{
@@ -31,7 +33,7 @@ export function AccountSettings(){
     <div className="actions"><button className="btn" type="button" disabled={busy} onClick={()=>photoInput.current?.click()}>Upload profile photo</button><input ref={photoInput} type="file" accept="image/png,image/jpeg,image/webp" hidden disabled={busy} onChange={event=>void photo(event)}/>{user.avatarUrl&&<button className="btn" type="button" disabled={busy} onClick={()=>void removePhoto()}>Remove photo</button>}</div>
     <p className="muted">PNG, JPEG or WebP, up to 5 MB. Your photo appears beside your account name.</p>
     {error&&<p role="alert" className="accountError">{error}</p>}{message&&<p role="status">{message}</p>}
-    <form onSubmit={submit} className="accountForm"><h4>Change password</h4>
+    <form onSubmit={saveEmail} className="accountForm"><label>Email ID (optional)<input className="textInput" type="email" maxLength={254} value={email} onChange={e=>setEmail(e.target.value)}/></label><button className="btn" disabled={busy}>Save email ID</button><small>Contact information. Sending notifications still uses your existing connection preferences.</small></form><form onSubmit={submit} className="accountForm"><h4>Change password</h4>
       <PasswordInput label="Current password" autoComplete="current-password" required value={current} onChange={e=>setCurrent(e.target.value)}/>
       <PasswordInput label="New password" autoComplete="new-password" required minLength={8} maxLength={128} value={replacement} onChange={e=>setReplacement(e.target.value)}/>
       <PasswordInput label="Confirm new password" autoComplete="new-password" required value={confirm} onChange={e=>setConfirm(e.target.value)}/>

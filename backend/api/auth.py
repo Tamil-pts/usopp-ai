@@ -26,7 +26,7 @@ def list_users(request:Request):
 def create_user(request:Request,data:dict=Body(...)):
     admin(request)
     try:
-        user=accounts.store.register(username_field(data),field(data,'password',8,128),field(data,'designation'),field(data,'company'),data.get('role','user'))
+        user=accounts.store.register(username_field(data),field(data,'password',8,128),field(data,'designation'),field(data,'company'),data.get('role','user'),data.get('email',''))
     except sqlite3.IntegrityError:
         raise HTTPException(409,'This username already exists.')
     except accounts.AccountCapacityError as error:
@@ -40,11 +40,16 @@ def manage_user(user_id:int,request:Request,data:dict=Body(...)):
     if not isinstance(data.get('active'),bool): raise HTTPException(400,'Choose whether this account is enabled.')
     password=field(data,'password',8,128) if data.get('password') else None
     try:
-        user=accounts.store.manage_user(user_id,username_field(data),field(data,'designation'),field(data,'company'),data['active'],password,data.get('role'),request.state.user['id'])
+        user=accounts.store.manage_user(user_id,username_field(data),field(data,'designation'),field(data,'company'),data['active'],password,data.get('role'),request.state.user['id'],data.get('email'))
     except sqlite3.IntegrityError: raise HTTPException(409,'This username already exists.')
     except ValueError as error: raise HTTPException(400,str(error))
     return {'user':user}
 
+
+@router.post('/profile-email')
+def update_email(request:Request,data:dict=Body(...)):
+    try:return {'user':accounts.store.set_email(request.state.user['id'],data.get('email',''))}
+    except ValueError as error:raise HTTPException(400,str(error)) from None
 
 @router.post('/profile-image')
 def upload_profile_image(request:Request,file:UploadFile=File(...)):
@@ -150,11 +155,12 @@ def register(request:Request,response:Response,data:dict=Body(...)):
         raise HTTPException(400,'Username can contain letters, numbers, dots, underscores and hyphens.')
     password=field(data,'password',8,128)
     try:
-        user=accounts.store.request_account(username,password,field(data,'designation'),field(data,'company'))
+        user=accounts.store.request_account(username,password,field(data,'designation'),field(data,'company'),data.get('email',''))
     except sqlite3.IntegrityError:
         raise HTTPException(409,'This username already exists. Choose another or sign in.')
     except accounts.AccountCapacityError as error:
         raise HTTPException(409,str(error))
+    except ValueError as error:raise HTTPException(400,str(error)) from None
     response.headers['Cache-Control']='no-store'
     return {'pending':True,'message':'Your account request was sent to the administrator. You can sign in after Admin enables your account.'}
 

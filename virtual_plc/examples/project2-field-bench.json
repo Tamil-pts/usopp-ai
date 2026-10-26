@@ -9,7 +9,9 @@
     "Logical/main/mainCyclic.ab": "1aa73ad12c4fd89d60d4e5748b1be7a3a4cb977f3fb9f18668ece575a9d6a9cc",
     "Logical/fault/faultCyclic.ld": "99244a404b9ba8f41a0791940c47994e8e7969f3d4de7adc2e227ce6d26bf1d4",
     "Logical/encoder/encoderCyclic.ab": "6bcec02b63db514f9ea7c623f10ee09258e2e2aae26c9c048c6b80a14975fbfd",
-    "Logical/len_del/len_delCyclic.ab": "514c126a6b0698fc034ab3cc98ca26073905c940e7b744cb68c3cf7dc905e207"
+    "Logical/len_del/len_delCyclic.ab": "514c126a6b0698fc034ab3cc98ca26073905c940e7b744cb68c3cf7dc905e207",
+    "Logical/AL/SliverWeight/Main.st": "568a629e61fea405e093259abc4d307d13054aa7292e2e66ee5258fce44e800b",
+    "Logical/AL/ALscan/Main.st": "ad4b78b44312cd6ef37ca6cf544f0099530e189b6b7f38955b29752f72021aa8"
   },
   "contacts": {
     "DI_EMERGENCY_OFF_LHS": 1,
@@ -44,7 +46,10 @@
   "assumptions": [
     "Virtual commissioning defaults, not measured physical machine states. All contacts remain editable.",
     "MACHINE_OFF buttons are released at 1 and pressed at 0 in this configuration.",
-    "Unspecified contacts keep their configured value. Mechanical timing, gearing and pulse resolution are editable jig assumptions."
+    "Unspecified contacts keep their configured value. Mechanical timing, gearing and pulse resolution are editable jig assumptions.",
+    "The reviewed simulation source guards preserve target settings and display zero for unavailable zero-weight Hank feedback. Nonzero conversions and process settings remain source-driven; this convention is not physical machine validation.",
+    "Selected IoMap.iom:69 maps ANALOG_VOLT_INVERTER to the delivery inverter analog output. Bind this PLC command instead of a fixed frequency. The generic bench assumes 0..32767 counts means 0..50 Hz; edit the reference scale to match the actual drive voltage/frequency calibration.",
+    "Selected IoMap.iom:79 maps AO_TO_SERVO to the servo analog output. ALscan/Main.st:480 writes voltage times 3276.7 counts. The generic bench assumes signed -32768..32767 counts spans approximately -3000..3000 RPM; edit the reference scale and motor/encoder coupling to match the actual servo configuration."
   ],
   "deviceOverrides": [
     {
@@ -163,9 +168,33 @@
         "value": 0
       },
       "reason": "Fan pressure ramps toward REQUIRED_SUCTION_PRESSURE. Raw scaling in mainCyclic.ab:1927 is pressure = ADC * 5000 / 32767, so jig ADC = requested pressure * 6.5534. Response rate is editable."
+    },
+    {
+      "name": "ED_DO_INVERTER_START",
+      "kind": "vfd",
+      "bindings": {
+        "targetFrequency": "@global:ANALOG_VOLT_INVERTER"
+      },
+      "config": {
+        "referenceScale": 0.0015259254737998596,
+        "referenceOffset": 0
+      },
+      "reason": "Selected IoMap.iom:69 maps ANALOG_VOLT_INVERTER to the delivery inverter analog output. Bind this PLC command instead of a fixed frequency. The generic bench assumes 0..32767 counts means 0..50 Hz; edit the reference scale to match the actual drive voltage/frequency calibration."
+    },
+    {
+      "name": "DO_ENABLE_TO_SERVO_DRIVE",
+      "kind": "velocity_servo",
+      "bindings": {
+        "targetSpeed": "@global:AO_TO_SERVO"
+      },
+      "config": {
+        "referenceScale": 0.091552734375,
+        "referenceOffset": 0
+      },
+      "reason": "Selected IoMap.iom:79 maps AO_TO_SERVO to the servo analog output. ALscan/Main.st:480 writes voltage times 3276.7 counts. The generic bench assumes signed -32768..32767 counts spans approximately -3000..3000 RPM; edit the reference scale and motor/encoder coupling to match the actual servo configuration."
     }
   ],
-  "version": 5,
+  "version": 4,
   "sourceCorrections": "project2-source-corrections.json",
   "statusSignals": {
     "machineReady": "@global:M1200",

@@ -1,5 +1,6 @@
 """Optional Chopper model transport. Local engineering tools are independent."""
 import base64
+from contextlib import ExitStack
 import ctypes
 import json
 import os
@@ -205,9 +206,14 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
         try:
             # A short connect limit and a separate answer limit: a loaded CPU
             # model can take longer to read evidence than to generate the reply.
-            with requests.post(cfg['baseUrl']+suffix,json=body,headers=headers,timeout=(min(5,response_budget),response_budget),allow_redirects=False) as response:
-                if response.status_code!=200: raise ValueError(f'Model endpoint returned HTTP {response.status_code}. Check its base URL, model and credential.')
-                data=response.json()
+            from backend.core.workhub_intelligence.resources import inference_slot
+            from backend.core.workhub_intelligence.local_ai import ServiceUnavailable
+            with ExitStack() as slots:
+                try:slots.enter_context(inference_slot(request_timeout=response_budget))
+                except ServiceUnavailable as error:raise ModelBusyError(str(error)) from None
+                with requests.post(cfg['baseUrl']+suffix,json=body,headers=headers,timeout=(min(5,response_budget),response_budget),allow_redirects=False) as response:
+                    if response.status_code!=200: raise ValueError(f'Model endpoint returned HTTP {response.status_code}. Check its base URL, model and credential.')
+                    data=response.json()
         except requests.exceptions.Timeout:
             log.warning('CHOPPER_MODEL_TIMEOUT provider=%s response_elapsed_s=%.1f limit_s=%s',cfg['provider'],time.monotonic()-started,timeout)
             raise

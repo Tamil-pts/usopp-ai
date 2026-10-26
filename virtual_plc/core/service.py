@@ -283,7 +283,7 @@ class VirtualPLCService:
                 merge(model,cached)
                 self.store.save_model(workspace.owner,workspace.identity,model)
             return
-        if (model.get('hmi', {}).get('adapterVersion', 0) >= 5 and model.get('symbolCaseSensitive') is True and model.get('hardware', {}).get('adapterVersion', 0) >= 2 and not task_upgrade and not declaration_upgrade):
+        if (model.get('hmi', {}).get('adapterVersion', 0) >= 7 and model.get('symbolCaseSensitive') is True and model.get('hardware', {}).get('adapterVersion', 0) >= 2 and not task_upgrade and not declaration_upgrade):
             return
         root = Path(workspace.document.get('projectRoot') or '')
         def require_refresh():
@@ -331,8 +331,12 @@ class VirtualPLCService:
                 if variable: channel.update(variableId=variable['id'], type=variable['type'])
             model['hardware'] = hardware
             original['hardware'] = hardware
-        if model.get('hmi', {}).get('adapterVersion', 0) < 5:
-            sources = {name: text for name, text in cached.items() if Path(name).suffix.lower() in {'.page', '.layer', '.vcvk', '.algrp', '.txtgrp', '.dso'}}
+        if model.get('hmi', {}).get('adapterVersion', 0) < 7:
+            from shutil import copyfile
+            snapshot=self.store.folder(workspace.owner,workspace.identity)/'model.json'
+            backup=snapshot.with_name('model.before-hmi7.json')
+            if snapshot.is_file() and not backup.exists():copyfile(snapshot,backup)
+            sources = {name: text for name, text in cached.items() if Path(name).suffix.lower() in {'.page', '.layer', '.vcvk', '.algrp', '.txtgrp', '.dso', '.vcp', '.dob', '.dat'}}
             diagnostics = []
             model['hmi'] = read_hmi(root, sources, diagnostics, variables=model.get('variables', []))
             model['hmi']['upgradeNotices'] = diagnostics[:100]
@@ -546,15 +550,13 @@ class VirtualPLCService:
                 base=self.store.model(workspace.owner,workspace.identity)
                 profile=bench_profile(workspace.runtime)
                 options=deepcopy(workspace.document.get('manualCorrections',{}))
-                if reset_defaults and profile and profile.get('sourceCorrections') and 'sourceCorrections' not in options:
+                if reset_defaults and profile and profile.get('sourceCorrections'):
                     directory=Path(__file__).resolve().parents[1]/'examples'
                     path=(directory/profile['sourceCorrections']).resolve()
                     if not path.is_relative_to(directory.resolve()):raise ValueError('Invalid jig correction resource.')
                     document=json.loads(path.read_text(encoding='utf-8'))
-                    import hashlib
-                    sources={p['source']:p.get('code','') for p in base.get('programs',[])}
-                    if all(hashlib.sha256(sources.get(c['source'],'').encode()).hexdigest()==c['codeSha256'] for c in document['corrections']):
-                        options['sourceCorrections']=document
+                    from .source_corrections import merge_reviewed
+                    options['sourceCorrections']=merge_reviewed(base,options.get('sourceCorrections'),document)
                 if reset_defaults:
                     model=corrections(base,options)
                     runtime=VirtualRuntime(model)
@@ -776,6 +778,32 @@ class VirtualPLCService:
             self.store.write(workspace.owner, workspace.identity, workspace.document)
             return self.component_state(workspace)
 
+    def prepare_hmi_password(self,workspace,page,control,refresh=False,password=None):
+        from .hmi_auth import prepare_password_sources
+        with workspace.lock:
+            if workspace.device_error:raise ValueError('Repair invalid device connections before initializing PLC login sources.')
+            def advance():
+                runtime=workspace.runtime
+                scenario=workspace.document.get('settings',{}).get('activeScenario')
+                sequence=next((row for row in workspace.document.get('scenarios',[]) if row.get('id')==scenario),None)
+                if sequence:
+                    events=sequence.get('events',[])
+                    while workspace.scenario_cursor<len(events) and events[workspace.scenario_cursor]['timeMs']<=runtime.time_ms:
+                        self._scenario_event(workspace,events[workspace.scenario_cursor]);workspace.scenario_cursor+=1
+                devices=self._devices(workspace)
+                if workspace.device_error:raise ValueError('Repair invalid device connections before initializing PLC login sources.')
+                if devices:devices.prepare()
+                from .hmi_navigation import sync_pages
+                sync_pages(workspace.model,runtime)
+                runtime.tick()
+                sync_pages(workspace.model,runtime)
+                if devices:devices.after_scan()
+            try:return prepare_password_sources(workspace.runtime,workspace.model,control,advance,refresh,password)
+            finally:
+                if workspace.runtime.status=='faulted':
+                    self._record_execution_stop(workspace)
+                    self._persist(workspace)
+
     def command(self, workspace, action, speed=None):
         if speed is not None and float(speed) not in {.25, .5, 1, 2, 5}:
             raise ValueError('Choose simulation speed 0.25, 0.5, 1, 2 or 5.')
@@ -794,9 +822,17 @@ class VirtualPLCService:
                     raise ValueError('Repair or remove invalid device connections: ' + workspace.device_error)
                 if workspace.runtime.status != 'faulted' and devices:
                     devices.prepare()
+            from .hmi_navigation import sync_pages
+            sync_pages(workspace.model,workspace.runtime)
             workspace.runtime.command(action, speed=speed, return_snapshot=False)
+            sync_pages(workspace.model,workspace.runtime)
+            if action in {'run','scan','step','reset','cold-reset'}:
+                workspace.progress.pop('runtimeError',None)
+                workspace.document.pop('lastExecutionStop',None)
             if action in {'scan', 'step'} and devices:
                 devices.after_scan()
+            if workspace.runtime.status=='faulted':self._record_execution_stop(workspace)
+            elif action in {'pause','stop'}:workspace.document.pop('lastExecutionStop',None)
             if speed is not None:
                 workspace.document['settings']['speed'] = float(speed)
             if action in {'reset', 'cold-reset'}:
@@ -929,6 +965,25 @@ class VirtualPLCService:
                 original['config'].update(value=event.get('value'),automatic=0)
                 devices.pending_signals.add(component['id'])
 
+    def _record_execution_stop(self,workspace,error=None):
+        """Keep early run failures independently of the periodic autosave."""
+        runtime=workspace.runtime
+        faults=[row for row in runtime.diagnostics if row.get('code')=='RUNTIME_FAULT']
+        event=next((row for row in reversed(runtime.trace) if row.get('kind') in {'error','breakpoint','source-control'}),{})
+        if not event:event=next((row for row in reversed(runtime.trace) if row.get('kind')=='control'),{})
+        if runtime.status=='faulted' and faults:
+            row=faults[-1];kind='runtime-fault';message=row['message']
+        elif error is not None:
+            row=event;kind='worker-error';message=str(error)[:1000]
+        elif event.get('kind')=='breakpoint':
+            row=event;kind='breakpoint';message='Paused at a source breakpoint.'
+        else:
+            row=event;kind='source-stop';message=event.get('message') if event.get('kind')=='source-control' else 'PLC source requested '+str(event.get('message') or runtime.status)+'.'
+        workspace.document['lastExecutionStop']={'kind':kind,'status':runtime.status,'message':message,
+            'source':row.get('source',''),'line':row.get('line',0),'task':row.get('task') or event.get('task'),
+            'program':row.get('program') or event.get('program'),'timeMs':runtime.time_ms,'recordedAt':time.time()}
+        return workspace.document['lastExecutionStop']
+
     def _run(self):
         next_tick = {}
         while not self.stop_event.wait(.002):
@@ -961,7 +1016,10 @@ class VirtualPLCService:
                             devices = self._devices(workspace)
                             if devices:
                                 devices.prepare()
+                            from .hmi_navigation import sync_pages
+                            sync_pages(workspace.model,runtime)
                             runtime.tick()
+                            sync_pages(workspace.model,runtime)
                             if devices:
                                 devices.after_scan()
                             if runtime.scan_count-batch_start>=32 or time.monotonic()-tick_started>=.008:
@@ -973,16 +1031,23 @@ class VirtualPLCService:
                         duration = max(.001, finished-tick_started)
                         next_tick[key] = finished + max(.002, duration*(1-share)/share, (after-before)/1000/max(.25,min(5,speed)))
                         runtime.performance = {'lastScanWallMs': round(duration*1000, 2), 'backgroundLoad': workspace.document['settings'].get('backgroundLoad', 'balanced'), 'cpuShare': share, 'scansPerBatch':runtime.scan_count-batch_start, 'scanBatchBudgetMs':8}
-                        if workspace.document['settings'].get('autosave', True) and finished - workspace.saved_at >= 30:
+                        if runtime.status!='running':
+                            self._record_execution_stop(workspace)
+                            self._persist(workspace)
+                        elif workspace.document['settings'].get('autosave', True) and finished - workspace.saved_at >= 30:
                             self._persist(workspace)
                     except Exception as error:
                         from backend.core.runtime import log
                         log.exception('VIRTUAL_PLC_SCAN_ERROR workspace=%s', workspace.identity)
                         try:
-                            runtime.command('pause', return_snapshot=False)
+                            if runtime.status=='running':runtime.command('pause', return_snapshot=False)
                         except Exception:
                             pass
                         workspace.progress['runtimeError'] = str(error)[:1000]
+                        runtime._event('worker-error',str(error)[:1000])
+                        self._record_execution_stop(workspace,error)
+                        try:self._persist(workspace)
+                        except Exception:log.exception('VIRTUAL_PLC_STOP_SAVE_ERROR workspace=%s',workspace.identity)
 
     def close(self):
         self.stop_event.set()

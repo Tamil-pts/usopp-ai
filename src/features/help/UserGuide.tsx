@@ -1,14 +1,48 @@
-import {useState} from 'react';
+import {lazy,Suspense,useState} from 'react';
 import {useAccount} from '../account/AuthProvider';
 import type {EngineeringFeature} from '../../shared/features';
+const FRDSample=lazy(()=>import('./FRDSample').then(m=>({default:m.FRDSample})));
 
 export type HelpDestination=EngineeringFeature|'home'|'settings'|'virtual-plc';
 type Guide={id:string;title:string;purpose:string;prepare:string;steps:string[];result:string;check:string;page:HelpDestination;admin?:boolean};
 const guides:Guide[]=[
+ {id:'workhub-projects',title:'WorkHub - Automatic projects and iterations',purpose:'Record engineering work in shared projects with minimal data entry.',prepare:'Sign in with a personal account. Upload or select the project or metadata normally in the engineering tool.',steps:[
+  'Run ByteMap, DataInspect, MatchView or LogicScan. WorkHub creates or finds the source project automatically and puts new work in Development.',
+  'Open the project > Updates & evidence. Every new saved run is numbered Iteration 1, Iteration 2 and so on, with the tool, tester, test ID, recorded status and result evidence.',
+  'Open an iteration to download its recorded result, available reports or uploaded project snapshot. Decoding the same DataInspect test or exporting another report stays in that iteration.',
+  'Use Team activity for To do, In progress and Done cards. Filter by user, project or task and open a card to review its evidence.',
+  'Active projects open on Workflow & timeline. Drag bars to move dates and drag either end to resize, or use the pencil to enter dates. Add your own steps, assignees, milestones and preceding steps. My work shows your assigned work on the same Gantt timeline.',
+  'For work without an engineering run, create a project manually or add a short note and attachments under Updates & evidence. Completed projects show Summary, Updates & evidence, Issues and Approval history.'
+ ],result:'A shared project and numbered development evidence, without re-entering each test as a daily update.',check:'Automatic capture applies to new personal-account runs. Older private history and demo results are not automatically published. Repeating a run does not approve its project.',page:'home'},
+ {id:'workhub-planning',title:'WorkHub - Project templates and sprints',purpose:'Plan development, quality and release when creating a project.',prepare:'Choose the project owner and reviewers. Work type accepts an existing choice or your own text.',steps:[
+  'Choose New project, name the work and select or type its Work type. Work type remains editable after development is finished.',
+  'Choose Waterfall for sequential development, quality and release; Agile for repeated delivery sprints; Sprint for one focused sprint; or Custom for your own plan.',
+  'Set the start date and, for Agile or Sprint, the sprint length and initial count. Drag the phase and sprint bars to set their periods before creating. Only the selected row changes.',
+  'In Backlog & sprints, assign development tasks to a sprint or the backlog. Add sprint goals and owners, then start a sprint before starting its work.',
+  'Complete sprint work, or move unfinished work to the backlog, before closing a sprint. Closing a sprint does not release the project.',
+  'Overall completion includes development, quality and release. Development completed stays active; only Released / Closed reaches 100% and uses the completed project view.'
+ ],result:'A project timeline with separate phase periods and editable work steps. Agile and Sprint also include a backlog and sprint board.',check:'Dragging dates changes planning only. Quality and release still require the assigned users to record their decisions.',page:'home'},
+ {id:'workhub-approval',title:'WorkHub - Development, quality and release',purpose:'Finish development and optionally continue to quality check and release.',prepare:'Wait for active engineering runs to finish. Review their findings and deliverable evidence.',steps:[
+  'The development assignee chooses Mark development completed. Work can remain at Development completed until review is required.',
+  'Choose Send for quality check when needed. Select the quality reviewer and release approver by name and review the submitted deliverable or engineering iteration.',
+  'The quality reviewer opens Approvals, reviews the evidence and chooses Quality passed or Request changes with a reason.',
+  'The release approver chooses Approve release or Request changes. The release owner then chooses Mark released / Close.',
+  'Requested changes return work to Development. Resolve the issue, record the next iteration and submit again. New development work returns completed projects to Development; checks by the assigned current reviewer stay at their review stage. Older decisions remain in history.',
+  'Team activity keeps projects In progress until release is closed. Completed tasks can appear under Done while project review continues. Moving a card opens its permitted workflow confirmation; review actions belong to the named reviewer.'
+ ],result:'Create and assign, Development, Development completed, Quality check, Release approval, Ready for release, Released / Closed.',check:'Engine results are evidence, not automatic approval. Existing decisions, tester names, iterations and submitted evidence stay recorded in project history.',page:'home'},
+ {id:'workhub-notifications',title:'WorkHub - Notifications and Teams group sharing',purpose:'Receive in-app updates and share a prepared message in your existing Teams group.',prepare:'Use an existing Teams group that your colleagues can access. No Microsoft app registration is needed for manual chat sharing.',steps:[
+  'Open Settings > Notifications and Teams sharing. Admin can save a Shared group chat link for everyone; optionally save your own group link.',
+  'In the Teams group, open a message menu and choose Copy link. Paste that chat or message link into Settings and choose Group chat link as the method. Save notification settings.',
+  'On a project, task or notification, choose Share in Teams. Review or edit the prepared message.',
+  'Choose Copy & open Teams, then paste the message into the group and select Send. You can also copy the message separately.',
+  'Use the review link to open WorkHub and record the quality or release decision. Chat sharing does not change task status.',
+  'For colleagues on other computers, Admin can save the office WorkHub address in Settings. A localhost link points to the computer where the link is opened.',
+  'Automatic email, Teams workflow and Microsoft application setup are optional collapsed settings for later, when company authorization is available.'
+ ],result:'In-app notifications and user-controlled sharing to an existing Teams group.',check:'A chat link opens Teams; it does not send automatically. The sender pastes and sends the message. Approval history stays in WorkHub.',page:'settings'},
  {id:'start',title:'Start in WorkHub',purpose:'Choose a tool and return to your saved work.',prepare:'Sign in with an enabled account. New account requests need Admin approval.',steps:[
-  'Open WorkHub. Each feature card explains its purpose; choose the tool for your task.',
+  'Open WorkHub for Portfolio, My work, Team activity, Recent work, Approvals and Reports. Choose engineering tools from the sidebar.',
   'Use ByteMap for SpinConnect source packets, DataInspect for SpinConnect readings, MatchView for revision changes, LogicScan for requirements, Chopper for questions, or Virtual PLC for simulation.',
-  'Open a recent project or use test history to find a saved result. Filter by activity, date, status or test ID.',
+  'Open WorkHub > Recent work to find a saved result. Filter by activity, status, project or test ID; Admin can also filter by user.',
   'Open a result to review its saved evidence, or reuse the project for a new run. Download the report you need.'
  ],result:'Your chosen workspace opens. Saved results show their owner, time and test ID.',check:'A stored result describes its saved run. Start a new run when you need current project or machine information.',page:'home'},
  {id:'bytemap',title:'ByteMap · SpinConnect packet validation',purpose:'Check SpinConnect packet layouts, offsets, variables and metadata against your B&R project.',prepare:'Have the complete Automation Studio project folder or .apj path. Add the matching metadata workbook if you want metadata comparisons.',steps:[
@@ -118,13 +152,13 @@ const guides:Guide[]=[
   'Use Sign out when you finish, especially on a shared computer.'
  ],result:'Your saved profile photo and workspace preferences are available when you sign in again.',check:'Only Admin can enable accounts or change account roles. Password and role changes can require signing in again.',page:'settings'},
  {id:'admin',title:'Admin · Manage user access',purpose:'Approve requests and assign Admin or User access.',prepare:'Sign in with an Admin account.',steps:[
-  'Open WorkHub → Manage users. Review pending account requests.',
+  'Open Settings → Admin settings → Workspace administration → Manage users. Review pending account requests.',
   'Enable an approved request, or choose Create user to create an account directly.',
   'Enter username, initial password, designation and company. Choose Role → User or Admin, then save.',
   'Choose Manage beside an account to change its details, role or enabled access. Leave Reset password blank to keep the current password.',
   'Save the account and tell the affected user to sign in again when their role or password changes.',
   'Disable access when the user no longer needs to sign in. Disabled accounts retain their test history.'
- ],result:'Enabled users can open every workspace feature. User management is available only to Admin.',check:'The primary Admin account remains enabled. You cannot remove your own Admin access.',page:'home',admin:true}
+ ],result:'Enabled users can open every workspace feature. User management is available only to Admin.',check:'The primary Admin account remains enabled. You cannot remove your own Admin access.',page:'settings',admin:true}
 ];
 
 export function UserGuide({onOpen}:{onOpen:(page:HelpDestination)=>void}){
@@ -132,7 +166,8 @@ export function UserGuide({onOpen}:{onOpen:(page:HelpDestination)=>void}){
  const visible=guides.filter(guide=>(!guide.admin||user.role==='admin')&&JSON.stringify(guide).toLowerCase().includes(search.trim().toLowerCase()));
  return <div className="userGuide"><div className="pageHead"><div><h1>Help · Step-by-step guides</h1><p>Choose a feature to learn what you need, how to use it, and how to review its results.</p></div></div>
   <input className="textInput" aria-label="Search help" placeholder="Search SpinConnect, metadata, reports, simulation or profile" value={search} onChange={event=>setSearch(event.target.value)}/>
-  <nav className="helpContents" aria-label="Help topics">{visible.map(guide=><a key={guide.id} href={'#help-'+guide.id}>{guide.title}</a>)}</nav>
+  <nav className="helpContents" aria-label="Help topics"><a href="#help-frd-sample">Engineering Documentation → FRD Sample</a>{visible.map(guide=><a key={guide.id} href={'#help-'+guide.id}>{guide.title}</a>)}</nav>
+  <Suspense fallback={<section className="card">Opening the engineering documentation sample…</section>}><FRDSample/></Suspense>
   <div className="helpGrid">{visible.map(guide=><section id={'help-'+guide.id} className="card helpCard" key={guide.id}><h2>{guide.title}</h2><p>{guide.purpose}</p><p className="helpPrepare"><b>Before you begin: </b>{guide.prepare}</p><h3>Steps</h3><ol>{guide.steps.map((step,index)=><li key={index}>{step}</li>)}</ol><p><b>What you will see: </b>{guide.result}</p><p className="helpAdvice"><b>Check if needed: </b>{guide.check}</p><button className="btn" onClick={()=>onOpen(guide.page)}>Open {guide.page==='home'?'WorkHub':guide.page==='settings'?'Settings':guide.page==='virtual-plc'?'Virtual PLC':guide.page==='validation'?'ByteMap':guide.page==='plc'?'DataInspect':guide.page==='compare'?'MatchView':guide.page==='rules'?'LogicScan':'Chopper'}</button></section>)}</div>
   {!visible.length&&<p role="status">No guide matches this search. Try a feature name or task.</p>}
  </div>;

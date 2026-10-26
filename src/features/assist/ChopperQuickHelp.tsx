@@ -6,6 +6,7 @@ import {ChopperReply} from './ChopperReply';
 import {FEATURES} from '../../shared/features';
 import {useProjectIntelligence,ContextUsage} from './ProjectIntelligence';
 import './chopper-quick-help.css';
+import {openDashboardBuilder,isWorkHubDashboardRequest} from '../workhub/dashboards/bridge';
 
 type WindowContext={page:string;label:string;projectName?:string;projectPath?:string;details?:Record<string,unknown>;findings?:any[];counts?:Record<string,number>};
 type Message={role:'user'|'assistant';text:string;scope:string;source?:string;evidence?:any[];contextUsage?:any;retrieval?:any};
@@ -24,6 +25,9 @@ export function ChopperQuickHelp({context,onOpenChat}:{context:WindowContext;onO
   const history=messages.slice(-6).map(message=>({role:message.role,content:`[${message.scope}] ${message.text.slice(0,1600)}`}));
   setMessages(current=>[...current.slice(-29),{role:'user',text,scope}]);
   try{
+   if(!guideOnly&&isWorkHubDashboardRequest(text)){
+    openDashboardBuilder(text);setMessages(current=>[...current,{role:'assistant',scope,text:'I opened My Dashboard in WorkHub. Review the proposed widget and layout settings there, apply them to the editor, then save when ready.',source:'dashboard-builder'}]);close();return;
+   }
    const status=await requestChopper({task:guideOnly?'Window assistant':'Chopper conversation',guideOnly,question:text.slice(0,4000),history,context:{offlineOnly:true,intelligenceProjectId:intelligence.state?.projectId,applicationFeatures:FEATURES,currentWindow:{page:context.page,details:context.details,findings:context.findings},projectName:context.projectName,counts:context.counts}},abort.signal,value=>setProgress(value.stage||'Preparing answer…'));
    if(abort.signal.aborted)return;const data=status.result;
    setMessages(current=>[...current,{role:'assistant',scope,text:data.answer||'Open full Chat for a detailed project analysis.',source:data.source,evidence:[...(data.evidence||[]),...(data.helpEvidence||[])],contextUsage:data.contextUsage,retrieval:data.retrieval}]);

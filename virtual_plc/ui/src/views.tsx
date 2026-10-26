@@ -16,6 +16,7 @@ export type ViewProps = {
   watch: string[]; setWatch: (ids: string[]) => void;
   references: (item: Item) => void;
   onRuntimeChanged?: (response?:Item) => void;
+  openWorkspace?: (id:string) => void;
   openHmiPreview?: (pageId:string) => Promise<void>;
 };
 export const Empty = ({title, children}: {title: string; children?: React.ReactNode}) => <div className="empty"><div className="empty-icon"><Cpu size={24}/></div><strong>{title}</strong><p>{children}</p></div>;

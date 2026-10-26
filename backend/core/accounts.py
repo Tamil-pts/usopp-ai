@@ -6,6 +6,7 @@ import sqlite3
 import threading
 import time
 import os
+import re
 from contextlib import contextmanager, closing
 from backend.core.runtime import BASE
 
@@ -30,8 +31,16 @@ def password_matches(password, encoded):
     actual = hashlib.pbkdf2_hmac('sha256', password.encode(), bytes.fromhex(salt), int(count)).hex()
     return hmac.compare_digest(actual, digest)
 
+def email_address(value):
+    if value is None: return ''
+    if not isinstance(value,str): raise ValueError('Enter a valid email address.')
+    value=value.strip()
+    if value and (len(value)>254 or not re.fullmatch(r"[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,63}",value)):
+        raise ValueError('Enter a valid email address.')
+    return value
+
 def public_user(row):
-    return {key:row[key] for key in ('id','username','designation','company','role')} | {'active':bool(row['active']), 'approved':bool(row['approved']), 'createdAt':row['created_at'], 'isDemo':bool(row['is_demo']),
+    return {key:row[key] for key in ('id','username','designation','company','role','email')} | {'active':bool(row['active']), 'approved':bool(row['approved']), 'createdAt':row['created_at'], 'isDemo':bool(row['is_demo']),
         'avatarUrl':f'/api/auth/profile-image/{row["id"]}?v={row["profile_image_version"]}' if row['profile_image'] else None}
 
 def session_seconds(user):
@@ -77,6 +86,8 @@ class AccountStore:
                 if 'active' not in {column[1] for column in connection.execute('PRAGMA table_info(users)')}:
                     connection.execute('ALTER TABLE users ADD COLUMN active INTEGER NOT NULL DEFAULT 1')
                 columns = {column[1] for column in connection.execute('PRAGMA table_info(users)')}
+                if 'email' not in columns:
+                    connection.execute("ALTER TABLE users ADD COLUMN email TEXT NOT NULL DEFAULT ''")
                 if 'is_demo' not in columns:
                     connection.execute('ALTER TABLE users ADD COLUMN is_demo INTEGER NOT NULL DEFAULT 0')
                 if 'approved' not in columns:
@@ -100,7 +111,8 @@ class AccountStore:
                 connection.commit()
             self._ready = True
 
-    def register(self, username, password, designation, company, role='user'):
+    def register(self, username, password, designation, company, role='user', email=''):
+        email=email_address(email)
         if role not in ('admin','user'): raise ValueError('Choose Admin or User.')
         encoded = password_hash(password)
         with self.db() as db:
@@ -110,9 +122,11 @@ class AccountStore:
             self._check_capacity(db)
             result = db.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at) VALUES (?,?,?,?,?,?,?)',
                 (username,username.casefold(),encoded,designation,company,role,time.time()))
+            db.execute('UPDATE users SET email=? WHERE id=?',(email,result.lastrowid))
             return public_user(db.execute('SELECT * FROM users WHERE id=?',(result.lastrowid,)).fetchone())
 
-    def request_account(self, username, password, designation, company):
+    def request_account(self, username, password, designation, company, email=''):
+        email=email_address(email)
         encoded = password_hash(password)
         with self.db() as db:
             db.execute('BEGIN IMMEDIATE')
@@ -120,6 +134,7 @@ class AccountStore:
                 raise sqlite3.IntegrityError('Username already exists')
             result = db.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at,active,approved) VALUES (?,?,?,?,?,?,?,?,?)',
                 (username,username.casefold(),encoded,designation,company,'user',time.time(),0,0))
+            db.execute('UPDATE users SET email=? WHERE id=?',(email,result.lastrowid))
             return public_user(db.execute('SELECT * FROM users WHERE id=?',(result.lastrowid,)).fetchone())
 
     def login(self, username, password, client):
@@ -180,7 +195,7 @@ class AccountStore:
         if db.execute('SELECT COUNT(*) FROM users WHERE active=1 AND is_demo=0').fetchone()[0] >= MAX_ACTIVE_USERS:
             raise AccountCapacityError(f'The {MAX_ACTIVE_USERS}-account limit is reached, including Admin. Disable an unused account or increase USOPP_MAX_USERS on the server.')
 
-    def manage_user(self, user_id, username, designation, company, active, password=None, role=None, actor_id=None):
+    def manage_user(self, user_id, username, designation, company, active, password=None, role=None, actor_id=None, email=None):
         with self.db() as db:
             db.execute('BEGIN IMMEDIATE')
             row=db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone()
@@ -199,10 +214,19 @@ class AccountStore:
                 self._check_capacity(db)
             db.execute('UPDATE users SET username=?,username_key=?,designation=?,company=?,role=?,active=?,approved=CASE WHEN ?=1 THEN 1 ELSE approved END WHERE id=?',
                        (username,username.casefold(),designation,company,role,int(active),int(active),user_id))
+            if email is not None: db.execute('UPDATE users SET email=? WHERE id=?',(email_address(email),user_id))
             if password:
                 db.execute('UPDATE users SET password_hash=? WHERE id=?',(password_hash(password),user_id))
             if password or not active or row['username']!=username or row['role']!=role:
                 db.execute('DELETE FROM sessions WHERE user_id=?',(user_id,))
+            return public_user(db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone())
+
+    def set_email(self, user_id, email):
+        email=email_address(email)
+        with self.db() as db:
+            row=db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone()
+            if not row or row['is_demo']: raise ValueError('Use a personal account to set an email address.')
+            db.execute('UPDATE users SET email=? WHERE id=?',(email,user_id))
             return public_user(db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone())
 
     def set_profile_image(self, user_id, image):
