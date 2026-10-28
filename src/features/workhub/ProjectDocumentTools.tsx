@@ -1,28 +1,35 @@
 import {useEffect,useRef,useState} from 'react';
 import {ArrowRight,FileText,LoaderCircle,X} from 'lucide-react';
-import type {HubRow} from './projectApi';
+import {hub,uploadFiles,type HubRow} from './projectApi';
 
-const tools=[
-  {stage:'frd',section:'meetings',title:'FRD',description:'Functional requirements, linked flowchart and source references.'},
-  {stage:'test',section:'documents',title:'Test Report',description:'Prepare and review engineering test documentation.'},
-  {stage:'corrections',section:'documents',title:'Correction Notes',description:'Record requested corrections and their resolution.'},
-  {stage:'fat',section:'quality',title:'FAT',description:'Factory acceptance procedure and recorded test results.'},
-  {stage:'quality',section:'quality',title:'Quality Approval',description:'Review delivery quality using the existing approval process.'},
-  {stage:'closure',section:'quality',title:'Project Closure',description:'Prepare the controlled project closure record.'},
-];
-
-export function ProjectDocumentTools({projects,initialProject,onOpen,onReports,onClose}:{projects:HubRow[];initialProject?:string;onOpen:(project:string,section:string,stage:string)=>Promise<void>;onReports:()=>void;onClose:()=>void}){
-  const [project,setProject]=useState(initialProject||projects.find(p=>p.stage!=='released')?.id||projects[0]?.id||''),[busy,setBusy]=useState(''),[error,setError]=useState('');
-  const ref=useRef<HTMLDivElement>(null),closeRef=useRef(onClose);closeRef.current=onClose;
-  useEffect(()=>{const previous=document.activeElement as HTMLElement;ref.current?.focus();const key=(e:KeyboardEvent)=>{if(e.key==='Escape')closeRef.current();if(e.key==='Tab'){const nodes=ref.current?.querySelectorAll<HTMLElement>('button:not(:disabled),select');if(!nodes?.length)return;const first=nodes[0],last=nodes[nodes.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}};window.addEventListener('keydown',key);return()=>{window.removeEventListener('keydown',key);previous?.focus();};},[]);
-  const open=async(section:string,stage:string)=>{setBusy(stage);setError('');try{await onOpen(project,section,stage);onClose();}catch(e){setError((e as Error).message);}finally{setBusy('');}};
-  return <div className="wh-backdrop"><div className="wh-dialog wide" role="dialog" aria-modal="true" aria-label="Create FRD / Reports" tabIndex={-1} ref={ref}>
-    <header><h2><FileText size={20}/>Create FRD / Reports</h2><button className="btn" aria-label="Close document tools" onClick={onClose}><X size={18}/></button></header>
-    <div className="wh-form"><p>Choose a project, then open its document workspace. Use <b>Generate draft</b> there to prepare the document from the available project sources.</p>
-      <label>Project for documents<select className="textInput" value={project} disabled={!!busy||!projects.length} onChange={e=>setProject(e.target.value)}>{!projects.length&&<option value="">Create a project first</option>}{projects.map(p=><option key={p.id} value={p.id}>{p.title}{p.stage==='released'?' (closed)':''}</option>)}</select></label>
-      {error&&<p className="wh-error" role="alert">{error}</p>}
-      <div className="wh-form-grid">{tools.map(t=><button className="btn wh-document-tool" key={t.stage} disabled={!project||!!busy} onClick={()=>void open(t.section,t.stage)}><span><strong>{t.title}</strong><small>{t.description}</small></span>{busy===t.stage?<LoaderCircle size={17} className="spin"/>:<ArrowRight size={17}/>}</button>)}</div>
-      <footer><button className="btn" disabled={!!busy} onClick={onReports}>Portfolio reports</button><button className="btn" onClick={onClose}>Close</button></footer>
-    </div>
-  </div></div>;
+const types=[['mom','Minutes of Meeting','meetings'],['frd','Functional Requirements (FRD)','meetings'],['flowchart','Functional Flowchart','meetings'],['corrections','Correction Notes','documents'],['test','Validation Test Report','documents'],['fat','Factory Acceptance Test (FAT)','quality'],['quality','Quality Review','quality'],['closure','Project Closure Report','quality']];
+export function ProjectDocumentTools({projects,initialProject,onOpen,onReports,onClose}:{projects:HubRow[];initialProject?:string;onOpen:(project:string,section:string,stage:string,independent?:boolean)=>Promise<void>;onReports:()=>void;onClose:()=>void}){
+ const [project,setProject]=useState(initialProject||''),[type,setType]=useState('frd'),[action,setAction]=useState('new'),[method,setMethod]=useState('blank'),[library,setLibrary]=useState<HubRow[]>([]),[source,setSource]=useState(''),[search,setSearch]=useState(''),[files,setFiles]=useState<File[]>([]),[busy,setBusy]=useState(false),[error,setError]=useState(''),[progress,setProgress]=useState(''),[independent,setIndependent]=useState(!initialProject);
+ const ref=useRef<HTMLDivElement>(null),requestId=useRef(crypto.randomUUID());
+ const [brief,setBrief]=useState('');
+ const stage=type==='flowchart'?'frd':type;
+ useEffect(()=>{ref.current?.focus();const key=(e:KeyboardEvent)=>{if(e.key==='Escape'&&!busy)onClose();};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[busy,onClose]);
+ useEffect(()=>{if(action!=='library')return;const controller=new AbortController();const timer=setTimeout(()=>{void hub('/documents?'+new URLSearchParams({kind:stage,status:'approved',search,page_size:'50'}),undefined,undefined,controller.signal).then(v=>setLibrary(v.items)).catch(e=>{if(e.name!=='AbortError')setError(e.message);});},250);return()=>{controller.abort();clearTimeout(timer);};},[action,stage,search]);
+ const open=async()=>{setBusy(true);setError('');try{
+   const payload={stage,request_id:requestId.current,from_project:method==='project',library_revision_id:action==='library'?source:undefined};
+   let result=independent?await hub('/document-spaces',{...payload,title:types.find(t=>t[0]===type)![1],linked_project_id:project||undefined}):null;
+   const scope=result?.scope_id||project,fileIds:string[]=[];
+   if(action==='upload')await uploadFiles(scope,files,v=>setProgress(v.phase+': '+v.name),r=>fileIds.push(r.id),new AbortController().signal);
+   if(!result||fileIds.length)result={...result,...await hub('/projects/'+scope+'/quality/drafts',{...payload,file_ids:fileIds})};
+   if(action==='new'&&method==='chopper'&&stage!=='mom')await hub('/projects/'+scope+'/quality/generate',{stage,...(stage==='frd'?{brief}:{}),...(type==='flowchart'?{flowchart:true}:{})});
+   const target=result.document_id?'native:'+result.document_id:stage+':'+(type==='flowchart'?'flowchart':action==='new'&&method==='guided'?'guided':'document');
+   await onOpen(scope,types.find(t=>t[0]===type)![2],target,independent);onClose();
+ }catch(e){setError((e as Error).message);}finally{setBusy(false);setProgress('');}};
+ return <div className="wh-backdrop"><div className="wh-dialog wide" role="dialog" aria-modal="true" aria-label="Create Document" tabIndex={-1} ref={ref}><header><h2><FileText size={20}/>Create Document</h2><button className="btn" disabled={busy} aria-label="Close document tools" onClick={onClose}><X size={18}/></button></header><div className="wh-form">
+ <label className="qc-check"><input type="checkbox" checked={independent} onChange={e=>setIndependent(e.target.checked)}/>Independent document</label>
+ {!initialProject?<details><summary>Link a project (optional)</summary><label>Project for documents<select aria-label="Project for documents" className="textInput" value={project} disabled={busy} onChange={e=>setProject(e.target.value)}><option value="">No project link</option>{projects.filter(p=>p.stage!=='released').map(p=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label></details>:<p>{projects.find(p=>p.id===initialProject)?.title||'Current project'}</p>}
+ <label>Document Type<select aria-label="Document Type" className="textInput" value={type} disabled={busy} onChange={e=>{setType(e.target.value);setSource('');setMethod('blank');setError('');}}>{types.map(([id,title])=><option key={id} value={id}>{title}</option>)}</select></label>
+ <div className="actions" aria-label="Document source">{[['new','Create New'],['library','Use Library'],['upload','Upload File']].map(([id,label])=><button className={'btn '+(action===id?'primary':'')} key={id} disabled={busy} aria-pressed={action===id} onClick={()=>setAction(id)}>{label}</button>)}</div>
+ {action==='new'&&<fieldset disabled={busy}><legend>How would you like to prepare it?</legend>{[['blank','Start with Blank Template'],['guided','Guide Me with Questions'],['chopper','Prepare with Chopper'],['project','Use Existing Project Information']].filter(([id])=>type!=='mom'||id==='blank').map(([id,label])=><label className="qc-check" key={id}><input type="radio" name="document-method" checked={method===id} onChange={()=>setMethod(id)}/>{label}</label>)}<p className="wh-muted">{method==='chopper'?'Prepare a source-linked editable draft in the background. Unknown conditions remain open questions.':'Project information is reused automatically. Save and review the draft before submission.'}</p>{type==='mom'&&<p className="wh-muted">Use the meeting workspace for transcript-guided or Chopper-assisted MOM preparation. Manual MOM entry needs no recording.</p>}</fieldset>}
+ {action==='new'&&method==='chopper'&&stage==='frd'&&<label>Describe the requirement<textarea aria-label="Describe the requirement" className="textInput" rows={3} maxLength={12000} value={brief} disabled={busy} onChange={e=>setBrief(e.target.value)} placeholder="Describe the machine behavior, required change and how you will verify it. Existing project records are reused."/><small>Chopper uses this brief and available source documents. Leave unknown conditions open for clarification.</small></label>}
+ {action==='library'&&<><label>Search approved library revisions<input className="textInput" value={search} onChange={e=>setSearch(e.target.value)} maxLength={180}/></label><label>Approved source revision<select aria-label="Approved source revision" className="textInput" value={source} onChange={e=>setSource(e.target.value)}><option value="">Choose an accessible approved revision</option>{library.map(d=><option key={d.id} value={d.current_revision}>{d.document_number} · {d.title} · {d.revision_label||'R'+d.revision} · {d.project}</option>)}</select></label><small>Text is copied into a draft for this project. Source identity is retained; test outcomes and approvals require new attachments and review.</small></>}
+ {action==='upload'&&<><label>Existing document files<input className="textInput" type="file" multiple disabled={busy} onChange={e=>setFiles(Array.from(e.target.files||[]))}/></label><small>Original files are retained and linked to the editable draft. Review the imported information before internal acceptance.</small></>}
+ {error&&<p className="wh-error" role="alert">{error}</p>}{progress&&<p role="status">{progress}</p>}
+ <footer><button className="btn" disabled={busy} onClick={()=>window.dispatchEvent(new Event('workhub-help-frd'))}>Preview Sample</button><button className="btn primary" disabled={busy||!independent&&!project||action==='library'&&!source||action==='upload'&&!files.length||action==='new'&&method==='chopper'&&independent&&stage==='frd'&&!brief.trim()} onClick={()=>void open()}>{busy?<LoaderCircle className="spin" size={15}/>:<ArrowRight size={15}/>} {action==='new'&&method==='chopper'?'Create with Chopper':'Open Template'}</button></footer><button className="btn" disabled={busy} onClick={onReports}>Portfolio reports</button>
+ </div></div></div>;
 }

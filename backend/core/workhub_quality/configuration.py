@@ -10,6 +10,7 @@ from . import store
 from .store import hub,timestamp,text
 
 DEFAULT={
+ 'project_prefix':'',
  'company':'PTPL','department':'ES','team':'PLC','separator':'-',
  'pattern':'{COMPANY}{SEP}{DEPARTMENT}{SEP}{TEAM}{SEP}{DOCTYPE}{SEP}{YEAR}{SEP}{SEQ}',
  'sequence_scope':'doctype_year','sequence_start':1,'sequence_width':3,'revision_pattern':'R{REV}','revision_width':2,'timezone':'UTC',
@@ -52,12 +53,18 @@ def _profile(value):
     for key in ('independent_review','allow_waivers','require_customer_acceptance','require_test_evidence'):
         if type(value.get(key,True)) is not bool:raise HTTPException(400,'Use true or false procedure options.')
         result[key]=value.get(key,True)
+    from backend.core.workhub_workflow import validate_steps,validate_rules
+    result['workflow_steps']=validate_steps(value.get('workflow_steps',[]))
+    result['validation_rules']=validate_rules(value.get('validation_rules',[]))
     return result
 
 def validate(value):
     store.bounded(value,1024*1024)
     if not isinstance(value,dict):raise HTTPException(400,'Provide company document settings.')
     clean=deepcopy(DEFAULT)
+    prefix=text(value.get('project_prefix',''),60)
+    if prefix and not re.fullmatch(r'[A-Za-z0-9_. -]+',prefix):raise HTTPException(400,'Use letters, digits and simple separators for the project prefix.')
+    clean['project_prefix']=prefix
     for field in ('company','department','team'):
         val=text(value.get(field,clean[field]),24,True)
         if not re.fullmatch(r'[A-Za-z0-9_]{1,24}',val):raise HTTPException(400,'Use letters, digits or underscores for company numbering codes.')
@@ -92,7 +99,7 @@ def validate(value):
     clean['default_profile']=_profile(value.get('default_profile',clean['default_profile']))
     profiles=value.get('project_profiles',{})
     if not isinstance(profiles,dict) or len(profiles)>100:raise HTTPException(400,'Configure up to 100 project-type procedures.')
-    clean['project_profiles']={text(k,80,True):_profile(v) for k,v in profiles.items()}
+    clean['project_profiles']={text(k,50,True):_profile(v) for k,v in profiles.items()}
     templates=value.get('templates',clean['templates'])
     if not isinstance(templates,dict):raise HTTPException(400,'Provide document templates by stage.')
     for stage in store.STAGES:
@@ -128,7 +135,7 @@ def allocate(db,stage,setting):
         r=db.execute('SELECT last_value FROM qc_sequences WHERE scope=?',(scope,)).fetchone();n=r[0]+1 if r else config['sequence_start']
         db.execute('INSERT INTO qc_sequences VALUES(?,?) ON CONFLICT(scope) DO UPDATE SET last_value=excluded.last_value',(scope,n))
         value=config['pattern'].format(COMPANY=config['company'],DEPARTMENT=config['department'],TEAM=config['team'],DOCTYPE=code,YEAR=year,SEQ=str(n).zfill(config['sequence_width']),SEP=config['separator'])
-        if not db.execute('SELECT 1 FROM qc_documents WHERE number=?',(value,)).fetchone():return value
+        if not db.execute('SELECT 1 FROM qc_documents WHERE number=?',(value,)).fetchone() and not db.execute('SELECT 1 FROM wh_document_numbers WHERE number=?',(value,)).fetchone():return value
     raise HTTPException(409,'The number pattern repeatedly collides with issued numbers. Include year/type or change the sequence rule.')
 
 def revision_label(config,number):return config['revision_pattern'].format(REV=str(number).zfill(config['revision_width']))

@@ -2,6 +2,7 @@
 from contextlib import ExitStack
 from datetime import datetime, timezone
 import json
+import hashlib
 from pathlib import Path
 import tempfile
 import unittest
@@ -239,7 +240,13 @@ class WorkHubGrowthTests(unittest.TestCase):
         self.assertEqual([value['revision_id']],[r['id'] for r in detail['revisions']])
 
     def test_health_reports_matching_current_interface_and_api(self):
-        health=self.request('GET','/api/health')
+        from backend.api import system
+        # Exercise the health contract using an isolated checksummed UI fixture.
+        # Publication integrity is verified separately against the real build.
+        root=self.root/'health-fixture';assets=root/'dist/assets';assets.mkdir(parents=True)
+        entry=b'/* Isolated health contract fixture */';(assets/'fixture.js').write_bytes(entry)
+        (root/'dist/build-info.json').write_text(json.dumps({'version':system.VERSION,'entryFile':'assets/fixture.js','entrySha256':hashlib.sha256(entry).hexdigest()}))
+        with patch.object(system,'RESOURCE_ROOT',root):health=self.request('GET','/api/health')
         self.assertEqual('ok',health['status'])
         self.assertEqual(health['version'],health['frontendBuild']['version'])
         self.assertTrue(health['frontendBuild']['matches'])

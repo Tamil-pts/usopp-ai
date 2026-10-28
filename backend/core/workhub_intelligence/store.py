@@ -62,7 +62,10 @@ def initialize():
 def project(db,key,user,write=False,manage=False):
     hub.actor(user)
     value=hub.contribute(db,key,user) if write else hub.item(db,key)
-    if value['type']!='project':raise HTTPException(400,'Choose a WorkHub project.')
+    if value.get('is_document_space'):
+        from backend.core.workhub_document_spaces import authorize
+        authorize(db,value,user,write)
+    elif value['type']!='project':raise HTTPException(400,'Choose a WorkHub project.')
     if manage:hub.manage(value,user,db)
     return value
 
@@ -76,7 +79,10 @@ def meeting(db,key,project_id):
 def document(db,key,project_id):
     row=db.execute('SELECT * FROM pi_documents WHERE id=? AND project_id=?',(key,project_id)).fetchone()
     if not row:raise HTTPException(404,'This document is not in the selected project.')
-    return dict(row)
+    result=dict(row)
+    numbered=db.execute('SELECT number FROM wh_document_numbers WHERE document_id=?',(key,)).fetchone()
+    if numbered:result['number']=numbered[0]
+    return result
 
 
 def revision(db,key,document_id):
@@ -124,10 +130,18 @@ def create_document(db,user,project_id,kind,title,content,file_id=None,meeting_i
     if generated_by:
         previous=db.execute('SELECT id FROM pi_revisions WHERE document_id=? AND generated_by=?',(doc['id'],generated_by)).fetchone()
         if previous:return doc,revision(db,previous['id'],doc['id'])
+    from backend.core.workhub_studio import bindings as studio_bindings,store as studio_store
+    parent_revision=doc.get('current_revision')
+    parent_content=revision(db,parent_revision,doc['id'])['content'] if parent_revision else None
+    if parent_content and parent_content.get('studio') and not content.get('studio'):content={**content,'studio':parent_content['studio']}
+    if content.get('studio'):
+        content=studio_bindings.synchronize(content);studio_store.validate_media(db,project_id,content)
+    if parent_revision:studio_store.guard(db,user,parent_revision,parent_content,content)
     number=db.execute('SELECT COALESCE(MAX(number),0)+1 FROM pi_revisions WHERE document_id=?',(doc['id'],)).fetchone()[0]
     key=identity();now=timestamp()
     db.execute('INSERT INTO pi_revisions(id,document_id,number,content,file_id,created_by,created_at,generated_by,base_approved) VALUES(?,?,?,?,?,?,?,?,?)',
                (key,doc['id'],number,_bounded(content),file_id,user['id'],now,generated_by,doc.get('approved_revision')))
+    studio_store.inherit(db,parent_revision,key)
     db.execute('UPDATE pi_documents SET current_revision=?,updated_at=? WHERE id=?',(key,now,doc['id']))
     item=hub.item(db,project_id);hub.event(db,item,user,'intelligence_revision_created',{'document_id':doc['id'],'revision_id':key,'number':number,'kind':kind,'title':doc['title']})
     doc.update(current_revision=key)
@@ -266,6 +280,8 @@ def review(user,key,doc_id,payload):
         if action=='submit':
             project(db,key,user,write=True)
             if doc['current_revision']!=rev['id'] or rev['status'] not in {'draft','changes_requested'}:raise HTTPException(409,'Submit the latest editable revision.')
+            from backend.core.workhub_studio.quality import assert_ready
+            assert_ready(db,item,doc,rev)
             reviewer=hub.user_id(payload.get('reviewer_id',item['quality_id']))
             db.execute("UPDATE pi_revisions SET status='review',reviewer_id=? WHERE id=?",(reviewer,rev['id']))
             hub.notify(db,item,user['id'],[reviewer],'Document review: '+doc['title'],f'Review revision {rev["number"]} in Project Intelligence.')
@@ -276,6 +292,8 @@ def review(user,key,doc_id,payload):
             if action=='approve':
                 if rev['base_approved']!=doc['approved_revision']:raise HTTPException(409,'The approved baseline changed. Refresh and prepare a new revision.')
                 validate_content(doc['kind'],rev['content'])
+                from backend.core.workhub_studio.quality import assert_ready
+                assert_ready(db,item,doc,rev)
                 if doc['kind']=='frd' and not rev['content'].get('requirements'):raise HTTPException(400,'Add requirements before approving the FRD.')
                 if doc['kind']=='plan' and not rev['content'].get('tasks'):raise HTTPException(400,'Add activities before approving the plan.')
                 db.execute('UPDATE pi_documents SET approved_revision=?,updated_at=? WHERE id=?',(rev['id'],timestamp(),doc_id))
@@ -284,6 +302,8 @@ def review(user,key,doc_id,payload):
             if action=='approve':
                 from backend.core.workhub_quality.pdf_templates import freeze
                 freeze(db,item,doc,revision(db,rev['id'],doc_id),user,controlled=False)
+                from backend.core.workhub_studio.exporting import freeze as freeze_studio
+                freeze_studio(db,item,doc,revision(db,rev['id'],doc_id),user)
             hub.notify(db,item,user['id'],[rev['created_by']],('Document approved: ' if action=='approve' else 'Document changes requested: ')+doc['title'],comment or 'The assigned reviewer approved this recorded revision.')
         else:raise HTTPException(400,'Choose submit, approve or request changes.')
         hub.event(db,item,user,'intelligence_document_'+action,{'document_id':doc_id,'revision_id':rev['id'],'comment':comment})

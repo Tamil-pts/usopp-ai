@@ -72,7 +72,7 @@ def _claims(values,source_map,label='item'):
     for value in values:
         if not isinstance(value,dict):raise ModelOutputError('The local model omitted structured source references for '+label+'.')
         refs=value.get('source_ids',[])
-        if not isinstance(refs,list) or not refs or any(ref not in source_map for ref in refs):raise ModelOutputError('The local model supplied a missing or unknown source reference for '+label+'. Review the transcript or retry.')
+        if not isinstance(refs,list) or not refs or any(not isinstance(ref,str) or ref not in source_map for ref in refs):raise ModelOutputError('The local model supplied a missing or unknown source reference for '+label+'. Review the transcript or retry.')
         supplied=' '.join(str(source_map[ref]['text']) for ref in refs)
         proposed=' '.join(str(value.get(k) or '') for k in ('text','description','trigger','expected_behavior','acceptance_criteria'))
         invented=unsupported_values(supplied,proposed)
@@ -92,6 +92,21 @@ def unsupported_values(source,proposal):
     numbers=lambda s:set(re.findall(r'(?<![\w-])\d+(?:\.\d+)?',s))
     tags=lambda s:set(re.findall(r'\b[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]+\b',s))
     return sorted((numbers(proposal)-numbers(source))|(tags(proposal)-tags(source)))
+
+
+def source_model(instruction,payload,check=lambda:None):
+    """Use short, unambiguous prompt references; retain exact stored source IDs."""
+    sources=payload['sources'];aliases={'SRC'+str(i+1).zfill(3):s['id'] for i,s in enumerate(sources)}
+    prompt={**payload,'sources':[{'id':alias,'text':source['text']} for alias,source in zip(aliases,sources)]}
+    result=llm_json(instruction,prompt,check)
+    def restore(value):
+        if isinstance(value,dict):
+            for key,item in value.items():
+                if key=='source_ids' and isinstance(item,list):value[key]=[aliases.get(ref,ref) if isinstance(ref,str) else ref for ref in item]
+                else:restore(item)
+        elif isinstance(value,list):
+            for item in value:restore(item)
+    restore(result);return result
 
 
 def _save_transcript(db,user,meeting,value,expected):
@@ -187,10 +202,25 @@ def approved_sources(project_id,payload,include_frd=False):
             # An approved MOM/FRD is itself reviewed evidence. Carry its source
             # links while preserving the exact approved revision identity.
             if row['kind'] in {'mom','frd'}:
-                sections=[r for r in content.get('requirements',[]) if r.get('change')!='removed_proposed'] if row['kind']=='frd' else content.get('decisions',[])+content.get('discussion_summary',[])+content.get('engineering_requirements',[])+content.get('actions',[])
+                if row['kind']=='mom':
+                    # A meeting decision often names a signal that a later item
+                    # calls "the alarm". Keep the approved MOM revision as one
+                    # coherent source, retaining its exact upstream references.
+                    # Repeated summary/decision/requirement text is sent once.
+                    statements=[];seen=set();upstream=[]
+                    for field in ('engineering_requirements','decisions','discussion_summary','actions'):
+                        for section in content.get(field,[]):
+                            upstream.extend(section.get('source_ids',[]));value={k:v for k,v in section.items() if k!='source_ids'}
+                            signature=json.dumps(value,ensure_ascii=False,sort_keys=True)
+                            if signature not in seen:seen.add(signature);statements.append(value)
+                    if statements:values.append({'id':rev['id']+':mom','document_id':row['id'],'revision_id':rev['id'],
+                        'text':json.dumps({'approved_meeting_statements':statements},ensure_ascii=False),'filename':row['title'],
+                        'upstream_sources':list(dict.fromkeys(upstream)),'transcript_version':content.get('transcript_version')})
+                    continue
+                sections=[r for r in content.get('requirements',[]) if r.get('change')!='removed_proposed']
                 for index,section in enumerate(sections):
                     values.append({'id':rev['id']+':item'+str(index+1),'document_id':row['id'],'revision_id':rev['id'],
-                                   'text':json.dumps(section,ensure_ascii=False),'filename':row['title'],'upstream_sources':section.get('source_ids',[])})
+                                   'text':json.dumps({k:v for k,v in section.items() if k!='source_ids'},ensure_ascii=False),'filename':row['title'],'upstream_sources':section.get('source_ids',[])})
             else:
                 for source in content.get('sources',[]):values.append({**source,'id':rev['id']+':'+source['id'],'document_id':row['id'],'revision_id':rev['id']})
     for answer in confirmed_answers(project_id):values.append({**answer,'text':answer['question']+'\nConfirmed answer: '+answer['answer']})
@@ -211,13 +241,30 @@ def requirement_job(job,user):
     all_sources=[];chunks=list(_chunks(sources));seen=set();clarifications=[]
     for index,chunk in enumerate(chunks):
         job.progress(10+int(70*index/max(1,len(chunks))),'Comparing requirements with the approved FRD')
-        result=llm_json('Extract requirements from reviewed evidence and compare with existing approved requirements. Schema: '
+        instruction=('Extract requirements from reviewed evidence and compare with existing approved requirements. Schema: '
             '{"requirements":[{"existing_id":null,"change":"new|modified|confirmed|removed_proposed|unresolved","title":"...","description":"...",'
             '"trigger":null,"expected_behavior":null,"subsystem":null,"acceptance_criteria":null,"source_ids":["..."]}],"clarifications":[{"question":"...","options":[],"source_ids":["..."]}]}. '
             'Use an existing_id only for an existing requirement. A requirement not mentioned in this meeting stays unchanged. Propose removal only if the supplied evidence explicitly requests its removal. '
-            'Unknown criteria and conditions stay null. Preserve every technical value and tag.',{'project':project_name,'sources':chunk,'approved_requirements':previous},job.check)
+            'Unknown criteria and conditions stay null. Preserve every technical value and tag. '
+            'Merge repeated statements into one requirement with all supporting source IDs. Keep titles short and each description and criterion to one concise sentence; do not repeat the same engineering behavior as multiple requirements. '
+            'Every technical tag and number must occur literally in at least one of the cited source texts; cite all sources needed for the requirement.')
+        prompt={'project':project_name,'sources':chunk,'approved_requirements':previous}
+        if not previous:
+            instruction=('Extract explicit functional requirements from the sources. Return JSON only: '
+              '{"requirements":[{"change":"new","title":"short title","description":"one concise sentence","trigger":null,"expected_behavior":null,"acceptance_criteria":null,"source_ids":["SRC001"]}],"clarifications":[]}. '
+              'Keep each requirement under 45 words. Merge repeated statements; do not duplicate requirements. '
+              'Do not invent technical values, tags, test criteria or conditions. Unknown fields are null. '
+              'Every tag/number must occur literally in a cited source; cite all necessary sources. Do not copy source metadata into the output.')
+        result=source_model(instruction,prompt,job.check)
         mapping={s['id']:s for s in chunk};all_sources.extend(chunk)
-        for item in _claims(result.get('requirements',[]),mapping,'requirement'):
+        from .local_ai import ModelOutputError
+        try:proposals=_claims(result.get('requirements',[]),mapping,'requirement')
+        except ModelOutputError as error:
+            # One bounded correction, still validated against the same sources.
+            # Neither the first proposal nor an invalid correction is saved.
+            result=source_model(instruction,{**prompt,'validation_error':str(error),'correction':'Correct the cited references or omit the unsupported claim. Never invent a missing value.'},job.check)
+            proposals=_claims(result.get('requirements',[]),mapping,'requirement')
+        for item in proposals:
             change=item.get('change');old=item.get('existing_id')
             if change not in {'new','modified','confirmed','removed_proposed','unresolved'}:raise ValueError('The local model returned an unknown requirement change class.')
             if old and old not in requirements:raise ValueError('The local model referenced an unknown approved requirement.')
@@ -368,6 +415,9 @@ def answer_job(job,user):
 
 
 def process(job,user):
+    if job.row['kind']=='studio_build':
+        from backend.core.workhub_studio.builder import process as studio_build
+        return studio_build(job,user)
     if job.row['kind'] in {'export','q_export'}:
         from .exports import process as export_process
         return export_process(job,user)

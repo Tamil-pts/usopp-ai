@@ -1,0 +1,39 @@
+/* Keep the workspace fluid when the browser's available CSS width changes. */
+.workspaceApp .content:has(.wh-projects){padding:clamp(12px,1.5vw,24px)}
+.workspaceApp .wh-projects{width:100%;max-width:none;margin:0;padding:0 0 24px;box-sizing:border-box}
+.wh-projects>*,.wh-projects .card,.wh-projects .wh-section-heading>div,.wh-projects .wh-project-title>div{min-width:0;max-width:100%;box-sizing:border-box}
+.wh-projects>.wh-heading{flex-wrap:wrap;gap:16px;align-items:center}
+.wh-projects>.wh-heading .actions{flex-wrap:wrap;align-items:center}
+.wh-projects>.wh-heading .btn{background:var(--panel);border-color:var(--line2);color:var(--text)}
+.wh-projects>.wh-heading .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.wh-projects .wh-navigation,.wh-projects .wh-secondary-navigation,.wh-projects .wh-project-tabs{max-width:100%;flex-wrap:wrap;box-sizing:border-box}
+.wh-projects .wh-navigation button{flex:1 1 auto;justify-content:center}
+.workspaceApp .wh-projects>.wh-navigation{background:var(--panel);border-color:var(--line)}
+.wh-projects .wh-section-heading,.wh-projects .pf-title,.wh-projects .wh-project-title{flex-wrap:wrap}
+.wh-projects .wh-search{max-width:100%;min-width:0}
+.wh-projects .wh-search input{width:100%;min-width:0}
+.wh-projects :is(.tableWrap,.pf-dashboard,.db-builder,.pi-workspace,.qc-workspace){width:100%;min-width:0;max-width:100%}
+.wh-projects .tableWrap{overflow-x:auto}
+.wh-projects :is(h1,h2,h3,p,small,b){overflow-wrap:anywhere}
+.wh-projects .db-heading{flex-wrap:wrap;gap:12px}
+.wh-projects .db-workspace.editing{grid-template-columns:minmax(140px,180px) minmax(0,1fr)}
+.wh-projects .db-workspace.inspecting{grid-template-columns:minmax(130px,160px) minmax(0,1fr) minmax(200px,260px)}
+.wh-delete-confirm{display:grid;gap:14px;width:min(520px,calc(100vw - 32px))}
+.wh-delete-confirm label{display:grid;gap:6px}
+@media(max-width:1100px){
+ .wh-projects .db-workspace.inspecting{grid-template-columns:150px minmax(0,1fr)}
+ .wh-projects .db-inspector{grid-column:1/-1;position:static;max-height:none;border-left:0;border-top:1px solid var(--db-border)}
+}
+@media(max-width:700px){
+ .wh-projects>.wh-heading{align-items:flex-start}
+ .wh-projects>.wh-heading>.actions{width:100%}
+ .wh-projects .db-workspace.editing,.wh-projects .db-workspace.inspecting{grid-template-columns:minmax(0,1fr)}
+ .wh-projects .db-library{position:static;max-height:220px;border-right:0;border-bottom:1px solid var(--db-border)}
+ .wh-projects .db-global-filters>*{max-width:100%}
+ .wh-projects .db-global-filters select{width:100%;max-width:100%}
+ .wh-projects .wh-navigation{width:100%}
+ .wh-projects .wh-section-heading>.actions{flex-shrink:1}
+}
+
+.wh-timeline-setup{min-width:0}.wh-timeline-setup>.wh-gantt{max-width:100%;overflow:auto}
+.wh-simple-create:has(.wh-timeline-setup[open]){width:min(1050px,calc(100vw - 32px));max-width:1050px!important}

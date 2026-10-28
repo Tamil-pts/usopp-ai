@@ -4,6 +4,7 @@ Run directly; no production records or external AI endpoints are touched. The HT
 fixture checks integration and schemas, not real model or speech accuracy.
 """
 from copy import deepcopy
+from contextlib import ExitStack
 import hashlib
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 import io
@@ -35,7 +36,7 @@ class ModelFixture(BaseHTTPRequestHandler):
                 'actions':[{'text':'Confirm the reset condition.','responsible':'Invented engineer','target_date':'2099-01-01','source_ids':refs[-1:]}],
                 'clarifications':[{'question':'Confirm reset conditions before approval.','source_ids':refs[-1:]}],
                 'english_segments':[{'source_id':s['id'],'text':s['text']} for s in sources]}
-        elif 'Extract requirements' in instruction or 'Extract FRD' in instruction:
+        elif 'Extract' in instruction:
             requirements=[]
             for signal,title,description in [('TRAIN_MOTOR_TRIP','Motor trip detection','The PLC shall latch TRAIN_TRIP_ALARM when TRAIN_MOTOR_TRIP is active.'),('TRAIN_RESET_REQUEST','Controlled reset','The PLC shall clear TRAIN_TRIP_ALARM only when TRAIN_RESET_REQUEST is active and TRAIN_MOTOR_TRIP is clear.')]:
                 matching=[s['id'] for s in sources if signal in s['text'] and all(t in s['text'] for t in ['TRAIN_TRIP_ALARM','TRAIN_MOTOR_TRIP'])]
@@ -46,8 +47,8 @@ class ModelFixture(BaseHTTPRequestHandler):
             ids=[r['id'] for r in selected];source=next((s for s in sources if 'TRAIN_MOTOR_TRIP' in s['text']),sources[0])
             flow={'nodes':[{'id':'start','position':{'x':0,'y':0},'data':{'label':'Monitor TRAIN_MOTOR_TRIP','kind':'start','requirement_ids':ids[:1],'source_ids':[source['id']],'plc_references':['TRAIN_MOTOR_TRIP']}},
                 {'id':'check','position':{'x':300,'y':0},'data':{'label':'Trip detected?','kind':'decision','requirement_ids':ids[:1],'source_ids':[source['id']]}}],
-                'edges':[{'id':'e1','source':'start','target':'check','label':''},{'id':'e2','source':'check','target':'start','label':'No'}]}
-            result={'answer':'Review reset permissives before approval. Controlled local HTTP fixture output.','source_ids':[source['id']],'requirement_updates':[],
+                'edges':[{'id':'e1','source':'start','target':'check','label':None},{'id':'e2','source':'check','target':'start','label':'No'}]}
+            result={'answer':{'nodes':flow['nodes'],'edges':flow['edges']},'source_ids':[source['id']],'requirement_updates':[],
                 'clarification_questions':[],'clarifications':[],'flowchart':flow}
         raw=json.dumps({'choices':[{'message':{'content':json.dumps(result)}}]}).encode()
         self.send_response(200);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(raw)));self.end_headers();self.wfile.write(raw)
@@ -59,9 +60,19 @@ class FRDWorkflow(unittest.TestCase):
     def setUpClass(cls):
         from backend.app import app
         from backend.core import accounts
+        from backend.core import assist_model
         from backend.core.workhub_quality import store,training,documents,service,packages,branding
         from backend.core.workhub_intelligence import jobs,operations,processing,local_ai
         from fastapi.testclient import TestClient
+        # Imports can already be cached by unittest discovery. Always replace
+        # the stores explicitly; environment variables alone are insufficient.
+        cls.isolation=ExitStack()
+        cls.addClassCleanup(cls.isolation.close)
+        cls.isolation.enter_context(patch.object(accounts,'store',accounts.AccountStore(SANDBOX/'accounts.sqlite3')))
+        cls.isolation.enter_context(patch.object(store.hub,'root',SANDBOX/'.usopp_workhub'))
+        cls.isolation.enter_context(patch.object(store.hub,'ready',False))
+        cls.isolation.enter_context(patch.object(assist_model,'CONFIG',SANDBOX/'.usopp_assist_model.json'))
+        assert store.hub.root.resolve().is_relative_to(SANDBOX.resolve())
         cls.store=store;cls.hub=store.hub;cls.training=training;cls.documents=documents;cls.service=service;cls.packages=packages;cls.branding=branding
         cls.jobs=jobs;cls.operations=operations;cls.processing=processing;cls.local_ai=local_ai
         store.initialize();cls.users=[];cls.clients=[]
@@ -76,7 +87,7 @@ class FRDWorkflow(unittest.TestCase):
         cls.author,cls.reviewer,cls.outsider=cls.users;cls.client,cls.review_client,cls.other_client=cls.clients
         cls.server=ThreadingHTTPServer(('127.0.0.1',0),ModelFixture)
         cls.thread=threading.Thread(target=cls.server.serve_forever,daemon=True);cls.thread.start()
-        os.environ.update(USOPP_PI_LLM_URL='http://127.0.0.1:'+str(cls.server.server_port),USOPP_PI_LLM_MODEL='controlled-test-fixture')
+        cls.isolation.enter_context(patch.dict(os.environ,{'USOPP_PI_LLM_URL':'http://127.0.0.1:'+str(cls.server.server_port),'USOPP_PI_LLM_MODEL':'controlled-test-fixture'}))
         cls.evidence=[]
 
     @classmethod
@@ -229,6 +240,48 @@ class FRDWorkflow(unittest.TestCase):
         self.ok(self.other_client.post(self.pi+'/jobs',json={'kind':'extract','payload':{'file_ids':[file['id']]}}),403)
         self.ok(self.other_client.get(self.qc))
         self.note('Existing permissions','Project membership required to write; company visibility unchanged; foreign project file rejected','Outsider writes 403; cross-project reference 404; existing signed-in project read policy preserved')
+
+    def test_07_pdf_logos_unicode_sandbox_and_page_layout(self):
+        from PIL import Image
+        from backend.core.workhub_quality import pdf_templates
+        from fastapi import HTTPException
+        import fitz
+        organization=self.branding.save(self.author,'organization',{'data':{**self.branding.ORG,'name':'Fictional PDF Test Company','header_color':'#114455'},'make_default':True})
+        org_id=organization['id'];image=io.BytesIO();Image.new('RGB',(120,40),'teal').save(image,format='PNG')
+        logo=self.branding.upload(self.author,'organization',org_id,image.getvalue(),'fictional-logo.png')
+        self.branding.save(self.author,'organization',{'version':organization['version'],'data':{**organization['data'],'logo_id':logo['id']}},org_id)
+        with self.assertRaises(HTTPException):self.branding.upload(self.author,'organization',org_id,b'<svg onload="alert(1)"></svg>','bad.svg')
+        raw=self.training.pdf(self.author);(OUT/'training-branding-unicode-frd.pdf').write_bytes(raw)
+        pdf=fitz.open(stream=raw,filetype='pdf');texts=[p.get_text() for p in pdf]
+        for i,page in enumerate(pdf):
+            self.assertIn('Page '+str(i+1)+' of '+str(len(pdf)),texts[i]);self.assertIn('PTPL-ES-PLC-FRD-SAMPLE-001',texts[i])
+            self.assertTrue(page.get_images(),'Configured logo absent on page '+str(i+1))
+            self.assertIn('Fictional PDF Test Company',texts[i])
+        self.assertIn('DRAFT - NOT APPROVED',' '.join(texts));self.assertIn('Revision history',' '.join(texts))
+        customer=self.branding.save(self.author,'customer',{'data':{'name':'Fictional PDF Customer','address':'Fictional training address'}})
+        image=io.BytesIO();Image.new('RGB',(100,40),'orange').save(image,format='PNG')
+        logo=self.branding.upload(self.author,'customer',customer['id'],image.getvalue(),'fictional-customer.png')
+        self.branding.save(self.author,'customer',{'version':customer['version'],'data':{**customer['data'],'logo_id':logo['id']}},customer['id'])
+        overview=self.service.overview(self.author,self.pid)
+        self.service.context(self.author,self.pid,{'version':overview['context_version'],'customer_id':customer['id'],'machine':'Fictional PDF test machine'})
+        controlled=self.documents.draft(self.author,self.pid,'frd',self.training.example()['frd'])
+        both,_,_=self.packages.export_document(self.author,self.pid,'frd',format='pdf')
+        both_pdf=fitz.open(stream=both,filetype='pdf')
+        self.assertTrue(all(len(p.get_images())>=2 for p in both_pdf));self.assertIn('Fictional PDF Customer',both_pdf[0].get_text())
+        (OUT/'company-customer-logo-frd.pdf').write_bytes(both)
+        pdf[0].get_pixmap(matrix=fitz.Matrix(1.2,1.2)).save(OUT/'pdf-first-page.png')
+        graph=next((i for i,t in enumerate(texts) if 'Monitor training trip' in t),None);self.assertIsNotNone(graph)
+        pdf[graph].get_pixmap(matrix=fitz.Matrix(1.2,1.2)).save(OUT/'pdf-flowchart-page.png')
+        with self.hub.db() as db:value=pdf_templates.preview(db,self.branding.LAYOUT)
+        value['metadata'].append(['Unicode text','Motor trip வந்தால் HMI alarm காட்ட வேண்டும்.'])
+        markup=pdf_templates.html(value);self.assertIn('வந்தால்',markup)
+        raw,engine=pdf_templates.render(value);self.assertEqual(engine,'chromium')
+        unicode_pdf=fitz.open(stream=raw,filetype='pdf');text=' '.join(p.get_text() for p in unicode_pdf)
+        self.assertTrue(any('\u0b80'<=c<='\u0bff' for c in text));self.assertNotIn('\ufffd',text)
+        (OUT/'unicode-layout-preview.pdf').write_bytes(raw)
+        value['metadata'].append(['Unsafe title','<script>alert(1)</script>'])
+        self.assertIn('&lt;script&gt;',pdf_templates.html(value))
+        self.note('Shared PDF renderer','Logos, configured color, Unicode, repeated footer and real status; unsafe asset rejected','Chromium PDF has logo and exact page numbering on '+str(len(pdf))+' pages; Tamil glyph extraction verified; SVG/script input rejected or escaped; draft only')
 
 
 if __name__=='__main__':

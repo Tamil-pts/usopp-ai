@@ -333,7 +333,7 @@ class Study:
                 names=declarations(source_text(p));self.known.update(names)
                 if p.parent.name.casefold()!='logical':self.known.update(p.parent.name.casefold()+'.'+name for name in names)
         tracked=sorted(set([self.r,self.w,*self.support,*self.hmi_files,*[p for p in self.files if p.name.casefold()=='lastuser.set' or p.suffix.casefold() in ('.var','.typ')]]),key=str)
-        digest=hashlib.sha256()
+        digest=hashlib.sha256(b'usopp-write-st:read-basis-v1')
         for p in tracked:digest.update(p.relative_to(self.root).as_posix().encode());digest.update(p.read_bytes())
         self.fingerprint=digest.hexdigest();self.groups=self._groups()
 
@@ -418,13 +418,17 @@ class Study:
         return result
 
     def public(self):
+        from python_engine.spinconnect_read_basis import catalog
+        read_groups=catalog(self)
         return {'projectName':self.details.get('projectFiles',[self.root.name])[0] if self.details.get('projectFiles') else self.root.name,
             'activeConfiguration':self.details.get('activeConfiguration'),'hmiTarget':self.target,'hmiTargets':self.targets,
             'readSource':self.r.relative_to(self.root).as_posix(),'writeSource':self.w.relative_to(self.root).as_posix(),
             'readSources':[p.relative_to(self.root).as_posix() for p in self.read_candidates],
             'writeSources':[p.relative_to(self.root).as_posix() for p in self.write_candidates],
-            'fingerprint':self.fingerprint,'groups':self.groups,
-            'notes':['Function 1 reads current PLC settings; function 2 submits the selected group values for writing.',
+            'fingerprint':self.fingerprint,'layoutBasis':'mms_nw_r','groups':read_groups,
+            'writerOnlyGroups':[g['code'] for g in self.groups if g['code'] not in {r['code'] for r in read_groups}],
+            'notes':['Group codes, field order and external payload sizes come from mms_nw_r.',
+                     'Function 1 reads current PLC settings; function 2 submits the selected group values for writing.',
                      'Response payload starts at byte 5. Write values start at byte 7 after the group code. Review any read/write layout differences.',
                      'Existing machine interlocks, readonly fields, assignments and per-parameter result codes are retained.',
                      'Only the selected HMI target supplies limits. Literal limits use the datasource/unit-group scaling.']}
@@ -441,6 +445,35 @@ def bound(expression,known):
 
 
 def generate(study,selected,overrides=None,reviewed=False):
+    from python_engine.spinconnect_read_basis import catalog
+    if not isinstance(selected,list) or not selected or len(selected)>100 or any(type(code) is not int for code in selected):
+        raise ValueError('Select at least one group code from mms_nw_r.')
+    read_catalog=catalog(study)
+    groups=[g for g in read_catalog if g['code'] in selected]
+    if len(groups)!=len(set(selected)):
+        raise ValueError('A selected group does not exist in mms_nw_r.')
+    blocking=[f'GC {g["code"]}: {issue}' for g in groups for issue in g['issues']]
+    if blocking:
+        raise ValueError('Resolve source layout findings before generating: '+' '.join(blocking))
+    if overrides is not None and (not isinstance(overrides,dict) or len(overrides)>3000):
+        raise ValueError('Invalid field review settings.')
+    policies={}
+    known={f['id'] for g in read_catalog for f in g['fields']}
+    if any(key not in known for key in (overrides or {})):
+        raise ValueError('The field review belongs to another read layout. Analyze and review the current fields again.')
+    for group in groups:
+        for field in group['fields']:
+            if field['id'] not in (overrides or {}):continue
+            config=overrides[field['id']]
+            if not isinstance(config,dict):raise ValueError('Invalid field options.')
+            for legacy_id in field['legacyIds']:
+                if legacy_id in policies and policies[legacy_id]!=config:
+                    raise ValueError('Repeated read fields must use the same reviewed setting limits.')
+                policies[legacy_id]=config
+    return _generate_existing(study,selected,policies,reviewed,_read_groups=groups)
+
+
+def _generate_existing(study,selected,overrides=None,reviewed=False,*,_read_groups=None):
     if not reviewed:raise ValueError('Review the field map, HMI limits, source checks and payload variants before generating.')
     if not study.target:raise ValueError('Select one HMI target before generating write code.')
     if not isinstance(selected,list) or not selected or len(selected)>100 or any(type(code) is not int for code in selected):raise ValueError('Select at least one group code.')
@@ -451,6 +484,26 @@ def generate(study,selected,overrides=None,reviewed=False):
     overrides=overrides or {}
     if not isinstance(overrides,dict) or len(overrides)>3000:raise ValueError('Invalid field review settings.')
     additions=['scw_allow : BOOL;','scw_field_ok : BOOL;','scw_pos : UINT;','scw_bool : USINT;'];write_bodies={};review=[]
+    read_groups={g['code']:g for g in (_read_groups or [])}
+    if _read_groups is not None:
+        capacity=array_capacity(study.vars.get('nw_rcv_buffer',{}))
+        if capacity is None:raise ValueError('The writer receive-buffer declaration is unresolved.')
+        additions.extend([f'scw_request_buffer : ARRAY[0..{capacity-1}] OF USINT;','scw_request_length : UINT;'])
+        # Read-side local calculations travel with their declared variables.
+        read_locals={}
+        for path in study.files:
+            if path.parent==study.r.parent and path.suffix.casefold()=='.var':read_locals.update(declarations(source_text(path)))
+        source_groups={b.code:b for case in study.rcases if case.function==1 for b in case.branches}
+        for code in sorted(selected):
+            branch=source_groups[code];body=_mask(study.rt[branch.body_start:branch.end],strings=True)
+            for name,symbol in read_locals.items():
+                match=re.search(r'\b'+re.escape(name)+r'\b',body,re.I)
+                if not match or name.startswith('nw_'):continue
+                existing=study.vars.get(name)
+                if existing and existing['declaration']!=symbol['declaration']:
+                    raise ValueError(f'Read local {name} conflicts with the writer declaration. Review the local-variable mapping.')
+                declaration=f'{match.group()} : {symbol["declaration"]};'
+                if not existing and declaration not in additions:additions.append(declaration)
     for group in groups:
         field_checks={};code=group['code']
         for field in group['fields']:
@@ -516,14 +569,24 @@ def generate(study,selected,overrides=None,reviewed=False):
                     '    ELSIF scw_allow THEN',textwrap.indent(body,'        '),'    ELSE','        nw_snd_buffer[2] := 16;',
                     '    END_IF;','END_IF;'])
         write_bodies[code]='\n'.join(pre)
+        if _read_groups is not None:
+            from python_engine.spinconnect_read_basis import write_adapter
+            write_bodies[code]=write_adapter(read_groups[code],write_bodies[code],capacity)
     replacements=[]
     for case in (study.wread,study.wwrite):
         branches=[]
-        for b in case.branches:
+        source_branches=case.branches
+        if case.function==1 and _read_groups is not None:
+            source_branches=[b for b in case.branches if b.code in (10,11) and b.code not in selected]
+            source_branches += [b for c in study.rcases if c.function==1 for b in c.branches if b.code in selected]
+        for b in source_branches:
             if b.code not in selected and not (case.function==1 and b.code in (10,11)):continue
-            body=write_bodies[b.code] if case.function==2 else textwrap.dedent(study.wt[b.body_start:b.end]).strip()
+            source=study.rt if case.function==1 and _read_groups is not None and b.code in selected else study.wt
+            body=write_bodies[b.code] if case.function==2 else textwrap.dedent(source[b.body_start:b.end]).strip()
             if case.function==1:
                 if b.code in selected:
+                    if _read_groups is not None:
+                        body=f'nxt_adr := memset(ADR(nw_snd_buffer[5]), 0, {max(read_groups[b.code]["payloadVariants"])});\n'+body
                     body=re.sub(r'nw_snd_buffer\[([34])\]\s*:=\s*[^;]+;',lambda m:'nw_snd_buffer['+m.group(1)+'] := 0;',body,flags=re.I)
                     body=re.sub(r'nw_snd_buffer_length\s*:=\s*[^;]+;',
                         'nw_snd_buffer[3] := UINT_TO_USINT(SHR(nw_i - 5, 8));\n'
@@ -541,7 +604,8 @@ def generate(study,selected,overrides=None,reviewed=False):
     cyclic=re.sub(r'nw_rcv_buffer_length\s*>\s*0', 'nw_rcv_buffer_length >= 9',cyclic,count=1,flags=re.I)
     cyclic=re.sub(r'\(nw_rcv_buffer\[2\]\s*>=\s*16#01\)\s+AND\s+\(nw_rcv_buffer\[2\]\s*<=\s*16#04\)',
                   '(nw_rcv_buffer[2] = 1) OR (nw_rcv_buffer[2] = 2)',cyclic,flags=re.I)
-    header=f'(* usop.ai SpinConnect write draft\n * HMI target: {study.target}\n * Groups: {", ".join(map(str,sorted(selected)))}\n * Source SHA256: {study.fingerprint}\n * Review alongside the original declarations and compile in Automation Studio.\n *)\n'
+    basis='mms_nw_r' if _read_groups is not None else 'existing writer'
+    header=f'(* usop.ai SpinConnect write draft\n * Packet layout source: {basis}\n * HMI target: {study.target}\n * Groups: {", ".join(map(str,sorted(selected)))}\n * Source SHA256: {study.fingerprint}\n * Review alongside the original declarations and compile in Automation Studio.\n *)\n'
     files=[{'name':study.w.name,'text':header+cyclic}]
     added=False
     for declaration in additions:
@@ -557,16 +621,28 @@ def generate(study,selected,overrides=None,reviewed=False):
         'hmiTarget':study.target,'activeConfiguration':study.details.get('activeConfiguration'),'sourceFingerprint':study.fingerprint,
         'groups':sorted(selected),'layouts':[{k:g[k] for k in ('code','readPayloadVariants','payloadVariants','wireLayouts','machineConditions','warnings')} for g in groups],
         'wireFields':[{'groupCode':g['code'],**f} for g in groups for f in g['fields']],'fields':review}
-    from python_engine.spinconnect_edit_map import build_edit_map
-    summary['dataInspect']=build_edit_map(study,groups,review)
+    if _read_groups is not None:
+        from python_engine.spinconnect_read_basis import edit_map
+        summary['layoutBasis']='mms_nw_r'
+        summary['layouts']=[{k:g[k] for k in ('code','readPayloadVariants','payloadVariants','legacyPayloadVariants','wireLayouts','machineConditions','warnings')} for g in _read_groups]
+        summary['settingPolicies']=summary['fields']
+        summary['wireFields']=[{'groupCode':g['code'],**f} for g in _read_groups for f in g['fields']]
+        policies={f['id']:f for f in review}
+        summary['fields']=[{**f,**{key:next((policies[id][key] for id in f['legacyIds'] if id in policies),None) for key in ('selectedHmi','appliedMin','appliedMax','limitOrigin')}} for f in summary['wireFields'] if f['writable']]
+        summary['dataInspect']=edit_map(_read_groups,review)
+        summary['frameAdapters']=[{'code':g['code'],'variants':[a for a in g['adapters'] if not a['issues']]} for g in _read_groups]
+    else:
+        from python_engine.spinconnect_edit_map import build_edit_map
+        summary['dataInspect']=build_edit_map(study,groups,review)
     files.append({'name':'write_mapping.json','text':json.dumps(summary,indent=2,ensure_ascii=False)})
     files.append({'name':'READ_ME.txt','text':
-        'SpinConnect write ST draft\n\n1. Back up the selected Automation Studio project.\n'
+        'SpinConnect write ST draft\nPacket layout source: '+basis+'\n\n1. Back up the selected Automation Studio project.\n'
         '2. Review write_mapping.json: group order, raw PLC units, HMI target and limits.\n'
         '3. Replace the corresponding mms_nw_w source and declaration files with the reviewed files. Keep the original program/task name and its global/retained dependencies.\n'
         '4. Compile in Automation Studio for the selected CPU configuration.\n'
-        '5. Read current settings from the WRITE port using function 1 and the selected group code. Compare read/write payload variants in write_mapping.json.\n'
-        '6. Build function 2 using the WRITE field order and active conditional variant. Include its readonly positions. The read reply can contain extra fields; do not copy it blindly.\n'
+        '5. Read current settings from the WRITE port using function 1 and the selected group code. Compare read/write payload variants in write_mapping.json.\n'+
+        ('6. Build function 2 from the mms_nw_r-derived field map and active variant. Include read-only context slots. The generated adapter feeds the existing setting policies their original field layout.\n' if _read_groups is not None else
+         '6. Build function 2 using the WRITE field order and active conditional variant. Include its readonly positions. The read reply can contain extra fields; do not copy it blindly.\n')+
         '7. Check the response and read back to confirm the resulting values.\n\n'
         'The existing TCP state machine, machine-state checks, completion actions and source value checks are retained. '
         'Additional HMI checks reject the request before the original write branch. Source checks retain the original per-parameter commit behavior; a source failure can follow earlier accepted parameters. '
@@ -575,5 +651,5 @@ def generate(study,selected,overrides=None,reviewed=False):
     stream=io.BytesIO()
     with zipfile.ZipFile(stream,'w',compression=zipfile.ZIP_DEFLATED) as archive:
         for item in files:archive.writestr(item['name'],item['text'].encode('utf-8'))
-    return {'files':files,'groups':sorted(selected),'fingerprint':study.fingerprint,'reviewedFields':len(review),
+    return {'files':files,'groups':sorted(selected),'fingerprint':study.fingerprint,'reviewedFields':len(summary['fields']),
             'bundleName':'SpinConnect_Write_ST.zip','bundleBase64':base64.b64encode(stream.getvalue()).decode('ascii')}

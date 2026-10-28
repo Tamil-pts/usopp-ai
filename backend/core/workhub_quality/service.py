@@ -31,6 +31,7 @@ def overview(user,pid):
           'register':register,'report':report,'users':hub.users(),
           'clarifications':[{**dict(r),'options':json.loads(r['options']),'source_refs':json.loads(r['source_refs'])} for r in db.execute('SELECT * FROM pi_clarifications WHERE project_id=? ORDER BY updated_at DESC LIMIT 500',(pid,))],
           'files':[dict(r) for r in db.execute('SELECT * FROM files WHERE project_id=? ORDER BY created_at DESC',(pid,))],
+          'quality_tasks':[dict(r) for r in db.execute("SELECT id,title,owner_id,stage,version FROM items WHERE project_id=? AND type='task' AND work_phase='quality' ORDER BY created_at",(pid,))],
           'reference_documents':[dict(r) for r in db.execute('SELECT id,title,kind,current_revision,approved_revision FROM pi_documents WHERE project_id=? AND NOT EXISTS(SELECT 1 FROM qc_documents q WHERE q.document_id=pi_documents.id)',(pid,))],
           'jobs':intelligence_jobs.list_jobs(user,pid,50,kinds='quality')['jobs'],
           'packages':[dict(r) for r in db.execute('SELECT id,audience,number,baseline,sha256,created_by,created_at,final FROM qc_packages WHERE project_id=? ORDER BY created_at DESC',(pid,))],
@@ -42,7 +43,8 @@ def get_document(user,pid,key,rid=None):
     with hub.db() as db:
         store.project(db,pid,user);doc=store.control(db,pid,key);native=store.native(db,doc)
         rev=store.revision(db,doc['id'],rid or native['current_revision'])
-        return {'document':doc,'revision':store.detail(db,doc,rev),
+        from .authoring import readiness
+        return {'document':doc,'revision':store.detail(db,doc,rev),'readiness':readiness(db,store.project(db,pid,user),doc,rev),
           'approved_revision':store.detail(db,doc,store.revision(db,doc['id'],native['approved_revision'])) if native['approved_revision'] else None,
           'revisions':[dict(r) for r in db.execute('SELECT id,number,label,status,reason,owner_id,confirmed_by,confirmed_at,reviewer_id,approver_id,approved_by,approved_at,released_by,released_at,customer_safe,created_at FROM qc_revisions WHERE control_id=? ORDER BY number DESC',(doc['id'],))]}
 
@@ -64,8 +66,17 @@ def rebaseline_policy(user,pid,payload):
         p=store.project(db,pid,user,True);hub.manage(p,user);state=store.ensure_project(db,p,user)
         if p['stage']=='released':raise HTTPException(409,'Reopen this project before adopting a new procedure.')
         reason=text(payload.get('reason',''),2000,True);setting=configuration.current(db)
+        policy=configuration.profile(setting['configuration'],p['kind'])
+        if p['type']=='project' and policy.get('workflow_steps'):
+            from backend.core.workhub_workflow import schema
+            schema(db)
+            linked={r[0] for r in db.execute('SELECT step_id FROM wh_workflow_steps WHERE project_id=?',(pid,))}
+            if p['stage'] not in {'todo','development','blocked'} and any(s['id'] not in linked for s in policy['workflow_steps']):raise HTTPException(409,'Return the project to development before adopting a procedure with new work steps.')
         db.execute('UPDATE qc_projects SET policy=?,policy_version=?,project_type=?,version=version+1,updated_at=? WHERE project_id=?',
-          (store.bounded(configuration.profile(setting['configuration'],p['kind'])),setting['version'],p['kind'],timestamp(),pid))
+          (store.bounded(policy),setting['version'],p['kind'],timestamp(),pid))
+        if p['type']=='project':
+            from backend.core.workhub_workflow import create_steps
+            create_steps(db,p,user)
         store.audit(db,user,pid,'procedure_rebaselined',{'previous_version':state['policy_version'],'version':setting['version'],'reason':reason})
     return {'saved':True}
 
@@ -87,6 +98,8 @@ def new_revision(user,pid,key,payload):
 
 def _confirm(db,user,p,doc,rev):
     store.editable(db,doc,rev,user,rev['version']);content=pi.revision(db,rev['id'],doc['document_id'])['content']
+    from backend.core.workhub_studio.quality import assert_ready
+    assert_ready(db,p,doc,{**rev,'content':content},doc)
     if doc['stage']=='frd':
         if any(r.get('change') in {'removed_proposed','unresolved'} for r in content.get('requirements',[])):raise HTTPException(400,'Resolve unclear requirement proposals and explicitly review proposed removals before confirming the FRD.')
         if not content.get('requirements'):raise HTTPException(400,'Extract or enter the actual requirements before confirming this FRD.')
@@ -98,6 +111,10 @@ def _confirm(db,user,p,doc,rev):
         if content.get('changes') or db.execute('SELECT 1 FROM issues WHERE project_id=? LIMIT 1',(p['id'],)).fetchone():raise HTTPException(409,'Recorded corrections or issues exist. Summarize them rather than marking Correction Notes Not Applicable.')
         if any(checks.recorded_corrections(dict(r)) for r in db.execute('SELECT summary FROM engineering_runs WHERE project_id=?',(p['id'],))):raise HTTPException(409,'Recorded comparisons or findings contain corrections. Review and summarize them before approval.')
     if doc['stage'] in {'test','fat'}:
+        for source in content.get('sources',[]):
+            if source.get('type')=='frd_revision' and source.get('sha256'):
+                original=db.execute('SELECT content_hash FROM qc_revisions WHERE id=?',(source.get('revision_id'),)).fetchone()
+                if not original or original[0]!=source['sha256']:raise HTTPException(409,'The source FRD content changed. Prepare and review an updated test draft.')
         frd=db.execute("SELECT p.approved_revision,p.id FROM qc_documents q JOIN pi_documents p ON p.id=q.document_id WHERE q.project_id=? AND q.stage='frd'",(p['id'],)).fetchone()
         approved=frd['approved_revision'] if frd else None
         if approved and approved!=rev['frd_revision_id']:raise HTTPException(409,'The FRD baseline changed. Prepare tests from its current approved revision.')
@@ -116,6 +133,9 @@ def _confirm(db,user,p,doc,rev):
 
 def action(user,pid,key,payload):
     store.initialize();queue_packages=False;bridge_quality=False
+    if payload.get('action')=='approve' and payload.get('work_feedback') is not None:
+        from backend.core.workhub_praxis.outcomes import clean_feedback
+        clean_feedback(payload['work_feedback'])
     if type(payload.get('version')) is not int:raise HTTPException(400,'Include the current revision version.')
     with hub.db(True) as db:
         p=store.project(db,pid,user,True);doc=store.control(db,pid,key);rev=store.revision(db,doc['id'],payload.get('revision_id'));native=store.native(db,doc)
@@ -125,6 +145,8 @@ def action(user,pid,key,payload):
         if action=='confirm':_confirm(db,user,p,doc,rev)
         elif action=='submit':
             store.editable(db,doc,rev,user,payload['version'])
+            from backend.core.workhub_studio.quality import assert_ready
+            assert_ready(db,p,doc,{**rev,'content':pi.revision(db,rev['id'],doc['document_id'])['content']},doc)
             if not rev['confirmed_at'] or rev['confirmed_hash']!=rev['content_hash']:raise HTTPException(409,'Review & Confirm this saved draft before submission.')
             reviewer=p['release_id'] if doc['stage']=='closure' else p['quality_id'];hub.user_id(reviewer)
             if policy['independent_review'] and reviewer==rev['owner_id']:raise HTTPException(403,'The procedure requires a reviewer other than the document author. Use the existing project assignment controls.')
@@ -139,11 +161,39 @@ def action(user,pid,key,payload):
             if action=='approve':
                 if policy['independent_review'] and rev['owner_id']==user['id']:raise HTTPException(403,'Independent review is required.')
                 if not rev['confirmed_at'] or rev['confirmed_hash']!=rev['content_hash']:raise HTTPException(409,'The document has no current human confirmation.')
+                from backend.core.workhub_studio.quality import assert_ready
+                assert_ready(db,p,doc,{**rev,'content':pi.revision(db,rev['id'],doc['document_id'])['content']},doc)
                 if doc['stage'] in {'quality','closure'}:
+                    if doc['stage']=='quality':
+                        from backend.core.workhub_workflow import guard
+                        guard(db,p,user,'quality_pass')
                     value=checks.report(db,p,doc['stage']=='closure');blockers=[b for b in value['blockers'] if b['code']!='approval:closure']
                     if blockers or rev['baseline']!=checks.baseline(db,p,doc['stage']=='closure'):raise HTTPException(409,'Quality conditions changed after preparation. Review a fresh draft.')
                     required=['documents','requirements','tests','fat','issues','approvals']
                     if not isinstance(payload.get('checklist'),dict) or not all(payload['checklist'].get(k) is True for k in required):raise HTTPException(400,'Confirm the six applicable review checks before approval.')
+                    if doc['stage']=='quality' and p['stage']=='quality':
+                        from backend.core.workhub import DONE_DEVELOPMENT
+                        tasks=[dict(r) for r in db.execute("SELECT * FROM items WHERE project_id=? AND type='task' AND work_phase='quality' ORDER BY created_at",(pid,)) if r['stage'] not in DONE_DEVELOPMENT]
+                        if tasks:
+                            if payload.get('complete_review_tasks') is not True:raise HTTPException(409,'Complete the planned quality tasks, or explicitly confirm completion of your own review tasks with this approval.')
+                            if any(t['owner_id']!=user['id'] for t in tasks):raise HTTPException(409,'Another engineer has unfinished quality work. They must complete it before this approval.')
+                            versions=payload.get('quality_task_versions')
+                            if not isinstance(versions,dict) or any(versions.get(t['id'])!=t['version'] for t in tasks):raise HTTPException(409,'The planned review tasks changed. Refresh before confirming completion.')
+                            before=rev['baseline'];completed=[]
+                            for task in tasks:
+                                row=hub.item(db,task['id'])
+                                if row['stage']=='todo':
+                                    hub.transition(user,row['id'],{'version':row['version'],'action':'start','comment':'Started as part of the explicitly confirmed quality review.'},transaction=db)
+                                    row=hub.item(db,row['id'])
+                                if row['stage']!='development':raise HTTPException(409,'Resolve the review task status before completing it with this approval.')
+                                hub.transition(user,row['id'],{'version':row['version'],'action':'complete_development','comment':'Completed by the assigned reviewer with quality approval.'},transaction=db)
+                                completed.append(row['id'])
+                            # Only the explicitly confirmed task state changes here.
+                            # Engineering text, results and the reviewed hash stay intact.
+                            basis=checks.baseline(db,p)
+                            db.execute('UPDATE qc_revisions SET baseline=? WHERE id=?',(basis,rev['id']))
+                            rev['baseline']=basis
+                            store.audit(db,user,pid,'review_tasks_completed_with_approval',{'task_ids':completed,'previous_baseline':before,'baseline':basis},doc['id'],rev['id'])
                 if native['approved_revision'] and native['approved_revision']!=rev['id']:
                     db.execute("UPDATE qc_revisions SET status='superseded' WHERE id=? AND status IN ('approved','released')",(native['approved_revision'],))
                     store.audit(db,user,pid,'revision_superseded',{'successor':rev['id']},doc['id'],native['approved_revision'])
@@ -152,6 +202,8 @@ def action(user,pid,key,payload):
                 db.execute("UPDATE pi_revisions SET status='approved',reviewed_by=?,reviewed_at=?,review_comment=? WHERE id=?",(user['id'],now,comment,rev['id']))
                 from .pdf_templates import freeze
                 freeze(db,p,doc,store.revision(db,doc['id'],rev['id']),user)
+                from backend.core.workhub_studio.exporting import freeze as freeze_studio
+                freeze_studio(db,p,doc,store.revision(db,doc['id'],rev['id']),user,doc)
                 hub.event(db,p,user,'intelligence_document_approve',{'document_id':doc['document_id'],'revision_id':rev['id'],'kind':doc['stage'],'comment':comment})
                 queue_packages=doc['stage'] in {'quality','closure'};bridge_quality=doc['stage']=='quality' and p['stage']=='quality'
             else:
@@ -181,8 +233,12 @@ def action(user,pid,key,payload):
             store.audit(db,user,pid,action,{'reason':comment},doc['id'],rev['id'])
         else:raise HTTPException(400,'Choose a supported controlled document action.')
     notices=[]
+    if action=='confirm' and doc['stage']=='frd':
+        from .authoring import prepare_related
+        related=prepare_related(user,pid)
+        notices.append(related['notice'])
     if bridge_quality:
-        try:hub.transition(user,pid,{'action':'quality_pass','version':p['version'],'comment':'Quality & Closure approved: '+doc['number']})
+        try:hub.transition(user,pid,{'action':'quality_pass','version':p['version'],'comment':'Quality & Closure approved: '+doc['number'],'work_feedback':payload.get('work_feedback')})
         except HTTPException as exc:notices.append('Document quality approval is recorded. Existing project workflow still requires: '+str(exc.detail))
     if queue_packages:
         from backend.core.workhub_intelligence import jobs

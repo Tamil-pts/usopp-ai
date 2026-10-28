@@ -248,6 +248,13 @@ def readable_lines(value,depth=0):
 
 def export_document(doc,revision,format,user=None):
     content=revision['content']
+    if content.get('studio') and format in {'pdf','docx'}:
+        from backend.core.workhub_studio.exporting import export as studio_export
+        if user is None:
+            from backend.core.run_history import current_user
+            user=current_user.get()
+        if not user:raise HTTPException(403,'Sign in to export this document revision.')
+        raw,mime,_=studio_export(user,doc['project_id'],doc['id'],revision['id'],format);return raw,mime
     if format=='pdf':
         from backend.core.workhub_quality.pdf_templates import export
         if user is None:
@@ -343,23 +350,39 @@ def diagram_svg(content):
     positions={n['id']:n for n in nodes};sizes={}
     for node in nodes:
         body=str(node.get('data',{}).get('label',''))
-        links=', '.join(str(i) for i in node.get('data',{}).get('requirement_ids',[]))
+        data=node.get('data',{});links=', '.join(str(i) for i in data.get('requirement_ids',[]))
+        if data.get('plc_references'):links+='\nI/O: '+', '.join(str(v) for v in data['plc_references'])
         lines=[]
         for line in (body+('\n'+links if links else '')).splitlines() or ['']:
             lines.extend(textwrap.wrap(line,width=30,replace_whitespace=False,drop_whitespace=False) or [''])
         sizes[node['id']]=(lines,max(75,len(lines)*17+30))
-    low_x=min([n['position']['x'] for n in nodes]+[0])-40;low_y=min([n['position']['y'] for n in nodes]+[0])-40
+    low_x=min([n['position']['x'] for n in nodes]+[0])-40;low_y=min([n['position']['y'] for n in nodes]+[0])-110
     width=max([n['position']['x']+250 for n in nodes]+[500])-low_x+40
-    height=max([n['position']['y']+sizes[n['id']][1] for n in nodes]+[300])-low_y+85
+    height=max([n['position']['y']+sizes[n['id']][1] for n in nodes]+[300])-low_y+125
     result=[f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{low_x} {low_y} {width} {height}" width="{width}" height="{height}"><rect x="{low_x}" y="{low_y}" width="{width}" height="{height}" fill="white"/><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#126575"/></marker></defs>']
+    return_lane=0
     for edge in edges:
         a=positions.get(edge['source']);b=positions.get(edge['target'])
         if not a or not b:continue
-        x=a['position']['x']+240;y=a['position']['y']+sizes[a['id']][1]/2
-        tx=b['position']['x'];ty=b['position']['y']+sizes[b['id']][1]/2;middle=(x+tx)/2
-        result.append(f'<path d="M{x} {y} C{middle} {y} {middle} {ty} {tx} {ty}" stroke="#126575" stroke-width="2" fill="none" marker-end="url(#arrow)"/>')
-        for i,line in enumerate(textwrap.wrap(str(edge.get('label','')),width=35)):
-            result.append(f'<text x="{middle+5}" y="{(y+ty)/2+i*15}" font-size="12" fill="#17344b">{escape(line)}</text>')
+        ax=a['position']['x'];ay=a['position']['y'];bx=b['position']['x'];by=b['position']['y'];ah=sizes[a['id']][1];bh=sizes[b['id']][1]
+        if a['id']==b['id']:
+            x=ax+240;y=ay+ah/2;bend=ay+ah+65
+            path=f'M{x} {y} H{ax+285} V{bend} H{ax+120} V{ay+ah}'
+            lx=ax+140;ly=bend+17
+        elif bx<ax-20:
+            bend=min(ay,by)-45-return_lane*22;return_lane=(return_lane+1)%3
+            path=f'M{ax+120} {ay-12 if a.get("data",{}).get("kind")=="decision" else ay} V{bend} H{bx+120} V{by-12 if b.get("data",{}).get("kind")=="decision" else by}'
+            lx=(ax+bx)/2+120;ly=bend-7
+        elif abs(bx-ax)<40 and by>ay:
+            x=ax+120;y=ay+ah;tx=bx+120;ty=by-12 if b.get('data',{}).get('kind')=='decision' else by
+            path=f'M{x} {y} L{tx} {ty}';lx=x+8;ly=(y+ty)/2
+        else:
+            x=ax+(255 if a.get('data',{}).get('kind')=='decision' else 240);y=ay+ah/2
+            tx=bx-(15 if b.get('data',{}).get('kind')=='decision' else 0);ty=by+bh/2;middle=(x+tx)/2
+            path=f'M{x} {y} C{middle} {y} {middle} {ty} {tx} {ty}';lx=middle;ly=(y+ty)/2-8
+        result.append(f'<path d="{path}" stroke="#126575" stroke-width="2" fill="none" marker-end="url(#arrow)"/>')
+        for i,line in enumerate(textwrap.wrap(str(edge.get('label') or ''),width=35)):
+            result.append(f'<text x="{lx}" y="{ly+i*15}" text-anchor="middle" font-size="12" fill="#17344b">{escape(line)}</text>')
     for node in nodes:
         x=node['position']['x'];y=node['position']['y'];data=node.get('data',{});kind=data.get('kind','process');lines,h=sizes[node['id']]
         if kind=='decision':result.append(f'<path d="M{x+120} {y-12} L{x+255} {y+h/2} L{x+120} {y+h+12} L{x-15} {y+h/2} Z" fill="#fff6d8" stroke="#b08623"/>')

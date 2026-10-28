@@ -46,7 +46,7 @@ def _source(db,pid,kind,payload):
 
 def process(job,user):
     pid=job.row['project_id'];payload=job.row['payload'];kind=job.row['kind'];format=payload.get('format','pdf')
-    if format not in {'pdf','docx','json','svg'} or kind=='q_export' and format=='docx':raise ValueError('Choose a supported document export format.')
+    if format not in {'pdf','docx','json','svg'}:raise ValueError('Choose a supported document export format.')
     with hub.db() as db:doc,rev,signature=source(db,pid,kind,payload,user)
     cache_key=reliability.digest({'processor':'export-v2','source':signature,'format':format})
     def render():

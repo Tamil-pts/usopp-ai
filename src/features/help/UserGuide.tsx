@@ -8,12 +8,12 @@ type Guide={id:string;title:string;purpose:string;prepare:string;steps:string[];
 const guides:Guide[]=[
  {id:'workhub-projects',title:'WorkHub - Automatic projects and iterations',purpose:'Record engineering work in shared projects with minimal data entry.',prepare:'Sign in with a personal account. Upload or select the project or metadata normally in the engineering tool.',steps:[
   'Run ByteMap, DataInspect, MatchView or LogicScan. WorkHub creates or finds the source project automatically and puts new work in Development.',
-  'Open the project > Updates & evidence. Every new saved run is numbered Iteration 1, Iteration 2 and so on, with the tool, tester, test ID, recorded status and result evidence.',
+  'Open the project > Updates & attachments. Every new saved run is numbered Iteration 1, Iteration 2 and so on, with the tool, tester, test ID, recorded status and result attachments.',
   'Open an iteration to download its recorded result, available reports or uploaded project snapshot. Decoding the same DataInspect test or exporting another report stays in that iteration.',
-  'Use Team activity for To do, In progress and Done cards. Filter by user, project or task and open a card to review its evidence.',
+  'Use Team activity for To do, In progress and Done cards. Filter by user, project or task and open a card to review its attachments.',
   'Active projects open on Workflow & timeline. Drag bars to move dates and drag either end to resize, or use the pencil to enter dates. Add your own steps, assignees, milestones and preceding steps. My work shows your assigned work on the same Gantt timeline.',
-  'For work without an engineering run, create a project manually or add a short note and attachments under Updates & evidence. Completed projects show Summary, Updates & evidence, Issues and Approval history.'
- ],result:'A shared project and numbered development evidence, without re-entering each test as a daily update.',check:'Automatic capture applies to new personal-account runs. Older private history and demo results are not automatically published. Repeating a run does not approve its project.',page:'home'},
+  'For work without an engineering run, create a project manually or add a short note and attachments under Updates & attachments. Completed projects show Summary, Updates & attachments, Issues and Approval history.'
+ ],result:'A shared project and numbered development attachments, without re-entering each test as a daily update.',check:'Automatic capture applies to new personal-account runs. Older private history and demo results are not automatically published. Repeating a run does not approve its project.',page:'home'},
  {id:'workhub-planning',title:'WorkHub - Project templates and sprints',purpose:'Plan development, quality and release when creating a project.',prepare:'Choose the project owner and reviewers. Work type accepts an existing choice or your own text.',steps:[
   'Choose New project, name the work and select or type its Work type. Work type remains editable after development is finished.',
   'Choose Waterfall for sequential development, quality and release; Agile for repeated delivery sprints; Sprint for one focused sprint; or Custom for your own plan.',
@@ -22,14 +22,14 @@ const guides:Guide[]=[
   'Complete sprint work, or move unfinished work to the backlog, before closing a sprint. Closing a sprint does not release the project.',
   'Overall completion includes development, quality and release. Development completed stays active; only Released / Closed reaches 100% and uses the completed project view.'
  ],result:'A project timeline with separate phase periods and editable work steps. Agile and Sprint also include a backlog and sprint board.',check:'Dragging dates changes planning only. Quality and release still require the assigned users to record their decisions.',page:'home'},
- {id:'workhub-approval',title:'WorkHub - Development, quality and release',purpose:'Finish development and optionally continue to quality check and release.',prepare:'Wait for active engineering runs to finish. Review their findings and deliverable evidence.',steps:[
+ {id:'workhub-approval',title:'WorkHub - Development, quality and release',purpose:'Finish development and optionally continue to quality check and release.',prepare:'Wait for active engineering runs to finish. Review their findings and deliverable attachments.',steps:[
   'The development assignee chooses Mark development completed. Work can remain at Development completed until review is required.',
   'Choose Send for quality check when needed. Select the quality reviewer and release approver by name and review the submitted deliverable or engineering iteration.',
-  'The quality reviewer opens Approvals, reviews the evidence and chooses Quality passed or Request changes with a reason.',
+  'The quality reviewer opens Approvals, reviews the attachments and chooses Quality passed or Request changes with a reason.',
   'The release approver chooses Approve release or Request changes. The release owner then chooses Mark released / Close.',
   'Requested changes return work to Development. Resolve the issue, record the next iteration and submit again. New development work returns completed projects to Development; checks by the assigned current reviewer stay at their review stage. Older decisions remain in history.',
   'Team activity keeps projects In progress until release is closed. Completed tasks can appear under Done while project review continues. Moving a card opens its permitted workflow confirmation; review actions belong to the named reviewer.'
- ],result:'Create and assign, Development, Development completed, Quality check, Release approval, Ready for release, Released / Closed.',check:'Engine results are evidence, not automatic approval. Existing decisions, tester names, iterations and submitted evidence stay recorded in project history.',page:'home'},
+ ],result:'Create and assign, Development, Development completed, Quality check, Release approval, Ready for release, Released / Closed.',check:'Engine results are attachments, not automatic approval. Existing decisions, tester names, iterations and submitted attachments stay recorded in project history.',page:'home'},
  {id:'workhub-notifications',title:'WorkHub - Notifications and Teams group sharing',purpose:'Receive in-app updates and share a prepared message in your existing Teams group.',prepare:'Use an existing Teams group that your colleagues can access. No Microsoft app registration is needed for manual chat sharing.',steps:[
   'Open Settings > Notifications and Teams sharing. Admin can save a Shared group chat link for everyone; optionally save your own group link.',
   'In the Teams group, open a message menu and choose Copy link. Paste that chat or message link into Settings and choose Group chat link as the method. Save notification settings.',
@@ -43,7 +43,7 @@ const guides:Guide[]=[
   'Open WorkHub for Portfolio, My work, Team activity, Recent work, Approvals and Reports. Choose engineering tools from the sidebar.',
   'Use ByteMap for SpinConnect source packets, DataInspect for SpinConnect readings, MatchView for revision changes, LogicScan for requirements, Chopper for questions, or Virtual PLC for simulation.',
   'Open WorkHub > Recent work to find a saved result. Filter by activity, status, project or test ID; Admin can also filter by user.',
-  'Open a result to review its saved evidence, or reuse the project for a new run. Download the report you need.'
+  'Open a result to review its saved attachments, or reuse the project for a new run. Download the report you need.'
  ],result:'Your chosen workspace opens. Saved results show their owner, time and test ID.',check:'A stored result describes its saved run. Start a new run when you need current project or machine information.',page:'home'},
  {id:'bytemap',title:'ByteMap · SpinConnect packet validation',purpose:'Check SpinConnect packet layouts, offsets, variables and metadata against your B&R project.',prepare:'Have the complete Automation Studio project folder or .apj path. Add the matching metadata workbook if you want metadata comparisons.',steps:[
   'Open ByteMap and choose Machine / department.',
@@ -53,10 +53,10 @@ const guides:Guide[]=[
   'Open Configured packets and ByteMap. Filter by Group Code, PLC tag or finding status.',
   'Expand a finding to compare Expected and Actual, then open its source file and line. Review missing variables, datatypes, offsets, copy sizes and HMI bindings.',
   'After an approved source or mapping change, run validation again. Export the report with project and engineer details.'
- ],result:'A result with passing checks, warnings and failures, plus source locations and downloadable evidence.',check:'If a variable or HMI mapping is unresolved, confirm the selected target and workbook before editing the source.',page:'validation'},
+ ],result:'A result with passing checks, warnings and failures, plus source locations and downloadable attachments.',check:'If a variable or HMI mapping is unresolved, confirm the selected target and workbook before editing the source.',page:'validation'},
  {id:'write-st',title:'ByteMap · Generate SpinConnect write ST',purpose:'Prepare a complete write program using project group cases and the selected HMI limits.',prepare:'Select the complete B&R project containing mms_nw_r and mms_nw_w. Confirm the active CPU configuration.',steps:[
   'In ByteMap, open the Write ST tab. Click Generate ST in the generator panel to analyze the selected project.',
-  'Confirm the read routine, write routine and HMI target. If you change one, analyze again.',
+  'Confirm mms_nw_r as the group and packet-layout source, mms_nw_w as the transport and setting-policy template, and one HMI target. If you change one, analyze again.',
   'Select the required groups, such as 130 for machine settings or 140 for process settings when those groups exist in your project.',
   'Inspect each selected group. Review writable and readonly fields, byte positions, machine conditions and layout findings.',
   'Review the HMI control, displayed limits and PLC-unit scaling. Required choices lists any parameters with multiple HMI controls; click one to select its input control. Add tighter PLC-unit limits if needed.',
@@ -64,7 +64,7 @@ const guides:Guide[]=[
   'Review the cyclic code, variable declarations and write mapping. Use Copy, Download file or Download complete ZIP.',
   'Integrate the reviewed files into the matching mms_nw_w program and compile in Automation Studio for the selected CPU.',
   'Read current settings with function 1 on the write port. Construct function 2 from the generated write field map and active variant. Check the response and read the values back.'
- ],result:'Copyable ST, matching declaration files, a complete field map and integration instructions.',check:'Read and write layouts can differ. Resolve blocked datatype/copy-size findings before generating. Re-analyze after changing project or HMI files.',page:'validation'},
+ ],result:'Copyable ST, matching declaration files, an mms_nw_r field map and integration instructions.',check:'The external field order follows mms_nw_r. Existing setting policies retain their checks through a generated adapter. Resolve blocked datatype/copy-size findings before generating. Re-analyze after changing project or HMI files.',page:'validation'},
  {id:'metadata',title:'MetaWorks · Prepare a SpinConnect workbook',purpose:'Create and review metadata that ByteMap and DataInspect can use.',prepare:'Select the complete B&R project and the correct machine / department in ByteMap.',steps:[
   'Click Generate metadata in ByteMap.',
   'Open MetaWorks and review parameter names, Group Codes, tag identities, datatypes, byte offsets, units and limits.',
@@ -92,7 +92,7 @@ const guides:Guide[]=[
   'Enter the new value in raw PLC units. For example, a PLC factor of 10 means 35.0 displayed units is 350 raw units. Check the displayed source limits and dropdown values.',
   'Confirm the displayed target and click Send to PLC and verify. DataInspect reads again, preserves the full group, sends the changed value, then reads it back.',
   'Wait for the verified result and test ID. If settings changed, the preview expired, or the PLC rejected the request, read current settings again and review the reported reason before another attempt.'
- ],result:'A successful write requires a valid PLC acknowledgement and matching readback. The evidence is retained in test history.',check:'The PLC keeps its machine-state and source value checks. Raw display scaling is not applied by this editor. Scalar numeric/Boolean settings are supported; YBS needs a verified settings write protocol.',page:'plc'},
+ ],result:'A successful write requires a valid PLC acknowledgement and matching readback. The attachments are retained in test history.',check:'The PLC keeps its machine-state and source value checks. Raw display scaling is not applied by this editor. Scalar numeric/Boolean settings are supported; YBS needs a verified settings write protocol.',page:'plc'},
  {id:'offline',title:'DataInspect · Offline captures and YBS',purpose:'Inspect captured bytes without contacting a controller, or select the YBS device profile.',prepare:'Have a complete response frame and its matching metadata. Use Chopper for a full collected log file.',steps:[
   'For a SpinConnect capture, load its workbook and open Manual received data.',
   'Choose the Group Code, Machine ID and byte order. Paste one complete decimal-byte response and click Decode and map.',
@@ -107,8 +107,8 @@ const guides:Guide[]=[
   'Run comparison. Use Project View, Logic and Screen View to inspect the changes.',
   'Select a file or object. Compare added, removed and changed values on both sides.',
   'For HMI changes, open the screen and select a control to inspect its properties. For ladder changes, select a network and use zoom or Fit width.',
-  'Filter to the relevant changes, review the source evidence, then export the selected report sections.'
- ],result:'A comparison with separate baseline and revised evidence and downloadable reports.',check:'Confirm project order and target selection before deciding whether a change is intended.',page:'compare'},
+  'Filter to the relevant changes, review the source information, then export the selected report sections.'
+ ],result:'A comparison with separate baseline and revised attachments and downloadable reports.',check:'Confirm project order and target selection before deciding whether a change is intended.',page:'compare'},
  {id:'logicscan',title:'LogicScan · Check engineering requirements',purpose:'Run the selected project against reviewed rules and feature pipelines.',prepare:'Have the project, machine / department and the requirements you intend to check.',steps:[
   'Open LogicScan, select the project and choose Machine / department.',
   'Choose a feature pipeline and review its enabled requirements.',
@@ -133,7 +133,7 @@ const guides:Guide[]=[
   'For several questions, list them separately or name each measure. Review the returned fields, source reports and date range.',
   'Open Split or Dashboard view. Apply the date, machine and shift filters you need.',
   'Review the charts, rankings and findings. Open worksheet references when you need the source rows.',
-  'Download PDF, machine CSV or evidence JSON for the selected view.'
+  'Download PDF, machine CSV or attachments JSON for the selected view.'
  ],result:'Calculated results and a dashboard based on the uploaded records and your selected question.',check:'Report uploads describe their recorded period. Check missing values and source coverage before comparing totals across different reports.',page:'chatbot'},
  {id:'virtual',title:'Virtual PLC · Run a simulated project',purpose:'Operate a supported PLC project with virtual controls and device feedback.',prepare:'Have the project and select the intended configuration.',steps:[
   'Open Virtual PLC from WorkHub or the navigation bar and import the project.',

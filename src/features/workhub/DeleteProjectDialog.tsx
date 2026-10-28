@@ -1,0 +1,11 @@
+import {useEffect,useRef,useState} from 'react';
+import {Trash2,X} from 'lucide-react';
+import {hub,type HubRow} from './projectApi';
+
+export function DeleteProjectDialog({project,close,deleted}:{project:HubRow;close:()=>void;deleted:()=>Promise<void>}){
+ const [title,setTitle]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState('');
+ const input=useRef<HTMLInputElement>(null);
+ useEffect(()=>{const previous=document.activeElement as HTMLElement|null;input.current?.focus();return()=>previous?.focus();},[]);
+ const remove=async()=>{setBusy(true);setError('');try{await hub('/projects/'+project.id,{title,version:project.version},'DELETE');await deleted();close();}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
+ return <div className="wh-backdrop" onKeyDown={e=>{if(e.key==='Escape'&&!busy)close();if(e.key==='Tab'){const nodes=e.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled)');const first=nodes[0],last=nodes[nodes.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}}}><section className="wh-dialog wh-delete-confirm" role="dialog" aria-modal="true" aria-label="Delete project"><header><h2>Delete project</h2><button className="btn" onClick={close} disabled={busy} aria-label="Cancel project deletion"><X size={18}/></button></header><p>Remove <strong>{project.title}</strong>, its tasks and project reports from WorkHub. A recovery archive and original files are retained. Independent documents and library contributions are kept.</p><form onSubmit={e=>{e.preventDefault();void remove();}}><label>Type the project name to confirm<input ref={input} className="textInput" value={title} onChange={e=>setTitle(e.target.value)} autoComplete="off" disabled={busy}/></label>{error&&<p role="alert" className="wh-error">{error}</p>}<footer className="actions"><button type="button" className="btn" disabled={busy} onClick={close}>Cancel</button><button className="btn danger" disabled={busy||title!==project.title}><Trash2 size={15}/>{busy?'Deleting…':'Delete project'}</button></footer></form></section></div>;
+}

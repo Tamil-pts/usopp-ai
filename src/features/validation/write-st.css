@@ -2,3 +2,4 @@
 @media(max-width:900px){.writeSTSelectors{grid-template-columns:1fr}.writeSTSteps{grid-template-columns:1fr 1fr}.writeST{padding:16px}.writeSTCode{min-height:340px}}
 
 .writeSTActions{flex:0 0 auto!important;min-width:0!important}.writeSTMapping .tableWrap{max-height:560px;overflow:auto}.writeSTRequired{padding:14px;border:1px solid var(--warn);border-radius:9px;background:var(--bg);font-size:13px}.writeSTRequired p{color:var(--muted)}.writeSTRequired .btn{margin:0 8px 6px 0}.writeSTOutput{scroll-margin-top:90px}#write-st-title{scroll-margin-top:100px}
+.writeSTGroups{max-height:340px;overflow:auto;padding:2px}

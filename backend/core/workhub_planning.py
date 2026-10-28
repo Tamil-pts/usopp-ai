@@ -99,6 +99,8 @@ def initialize_plan(store,db,project,user,payload):
     if not isinstance(sprint_plan,list) or len(sprint_plan)>24:raise HTTPException(400,'Create at most 24 initial sprints.')
     if sprint_plan and selected not in {'agile','sprint'}:raise HTTPException(400,'Choose Agile or Sprint planning to create sprints.')
     previous=None;dev_end=[]
+    generate_tasks=payload.get('generate_plan_tasks',True)
+    if type(generate_tasks) is not bool:raise HTTPException(400,'Choose whether to create planning template tasks.')
     for index,entry in enumerate(sprint_plan):
         if not isinstance(entry,dict):raise HTTPException(400,'Choose valid sprint dates.')
         start,finish=bounds(entry,True)
@@ -106,7 +108,7 @@ def initialize_plan(store,db,project,user,payload):
         sprint_id=identity();name=text(entry.get('title','Sprint '+str(index+1)),120,True)
         db.execute('INSERT INTO sprints(id,project_id,title,goal,owner_id,start_date,due_date,status,created_at) VALUES(?,?,?,?,?,?,?,\'planned\',?)',
                    (sprint_id,project['id'],name,text(entry.get('goal',''),2000),project['owner_id'],start,finish,timestamp()))
-        if selected in {'agile','sprint'}:
+        if selected in {'agile','sprint'} and generate_tasks:
             first=date.fromisoformat(start);last=date.fromisoformat(finish);days=(last-first).days
             planning_end=first;build_start=min(first+timedelta(days=1),last);build_end=max(build_start,last-timedelta(days=1))
             steps=[('Planning',first,planning_end),('Implementation',build_start,build_end),('Sprint review',last,last)]
@@ -114,9 +116,9 @@ def initialize_plan(store,db,project,user,payload):
             for title,a,b in steps:
                 previous=insert_step(store,db,project,user,name+' / '+title,'development',a.isoformat(),b.isoformat(),[previous] if previous else [],sprint_id)
             dev_end.append(previous)
-    if selected=='waterfall' and 'development' in records:
+    if selected=='waterfall' and 'development' in records and generate_tasks:
         row=records['development'];dev_end=[insert_step(store,db,project,user,'Development','development',row['start_date'],row['due_date'])]
-    if selected!='custom':
+    if selected!='custom' and generate_tasks:
         quality=records.get('quality',{});release=records.get('release',{})
         quality_id=insert_step(store,db,project,user,'Quality checks','quality',quality.get('start_date',''),quality.get('due_date',''),dev_end)
         insert_step(store,db,project,user,'Release and handover','release',release.get('start_date',''),release.get('due_date',''),[quality_id])
@@ -136,7 +138,6 @@ def schedule(store,user,project_id,payload):
     with store.db(True) as db:
         project=store.item(db,project_id)
         if project['type']!='project':raise HTTPException(400,'Choose a project.')
-        if project['stage']=='released':raise HTTPException(409,'Reopen this project before changing its schedule.')
         entries=payload.get('items',[])
         if not isinstance(entries,list) or not 1<=len(entries)<=100:raise HTTPException(400,'Choose 1 to 100 schedule rows.')
         touched=set()
@@ -155,31 +156,40 @@ def schedule(store,user,project_id,payload):
                 if current:db.execute('UPDATE project_phases SET title=?,start_date=?,due_date=?,version=version+1 WHERE id=?',(title,start,finish,current['id']))
                 else:db.execute('INSERT INTO project_phases(id,project_id,phase,title,start_date,due_date,baseline_due) VALUES(?,?,?,?,?,?,?)',(identity(),project_id,code,title,start,finish,finish))
                 changes.update(phase=code,title=title)
+                changes.update(previous_start_date=current['start_date'] if current else '',previous_due_date=current['due_date'] if current else '')
             elif kind=='sprint':
                 row=db.execute('SELECT * FROM sprints WHERE id=? AND project_id=?',(key,project_id)).fetchone()
                 if not row:raise HTTPException(404,'Sprint not found.')
                 if row['owner_id']!=user['id']:store.manage(project,user,db)
-                if entry.get('version')!=row['version'] or row['status']=='closed':raise HTTPException(409,'Refresh or reopen this sprint before changing its dates.')
+                if entry.get('version')!=row['version']:raise HTTPException(409,'Refresh this sprint before changing its planned dates.')
                 if (date.fromisoformat(finish)-date.fromisoformat(start)).days>90:raise HTTPException(400,'A sprint can span at most 91 calendar days.')
                 db.execute('UPDATE sprints SET start_date=?,due_date=?,version=version+1 WHERE id=?',(start,finish,key))
+                changes.update(previous_start_date=row['start_date'],previous_due_date=row['due_date'])
             elif kind in {'project','task'}:
                 row=store.item(db,key)
                 if row['project_id']!=project_id or row['type']!=kind:raise HTTPException(400,'Choose work in this project.')
                 store.manage(row,user,db)
-                if row['stage'] not in {'todo','development','blocked'}:raise HTTPException(409,'Completed or submitted work dates are locked. Edit the phase schedule instead.')
-                if kind=='task':
-                    allowed={'todo','development','blocked'}|({'quality'} if row['work_phase']=='quality' else {'release_approval','ready_release'} if row['work_phase']=='release' else set())
-                    future=row['stage']=='todo' and row['work_phase'] in {'quality','release'}
-                    if project['stage'] not in allowed and not future:raise HTTPException(409,'Continue the corresponding project phase before changing this work schedule.')
                 if entry.get('version')!=row['version']:raise HTTPException(409,'This work changed. Refresh the plan before moving it.')
                 if row.get('milestone') and start!=finish:raise HTTPException(400,'A milestone uses one date.')
-                if row.get('sprint_id'):
-                    sprint=db.execute('SELECT * FROM sprints WHERE id=? AND project_id=?',(row['sprint_id'],project_id)).fetchone()
-                    if sprint and sprint['status']=='closed':raise HTTPException(409,'Reopen the sprint before changing its work.')
+                if kind=='project' and project['stage']=='released':
+                    db.execute('INSERT OR IGNORE INTO wh_closed_schedule VALUES(?,?)',(project_id,row['due_date']))
                 db.execute('UPDATE items SET start_date=?,due_date=?,version=version+1,updated_at=? WHERE id=?',(start,finish,timestamp(),key))
+                changes.update(previous_start_date=row['start_date'],previous_due_date=row['due_date'])
             else:raise HTTPException(400,'Choose a project, phase, sprint or task row.')
-            store.event(db,project,user,'schedule_updated',{**changes,'row_type':kind,'row_id':key})
+            store.event(db,project,user,'schedule_updated',{**changes,'row_type':kind,'row_id':key,'baseline_preserved':True,'actual_dates_preserved':True})
         db.execute('UPDATE items SET updated_at=? WHERE id=?',(timestamp(),project_id))
+    return store.detail(project_id)
+
+
+def change_method(store,user,project_id,payload):
+    store.actor(user)
+    with store.db(True) as db:
+        project=store.item(db,project_id);store.manage(project,user,db)
+        if project['type']!='project':raise HTTPException(400,'Choose a project.')
+        if payload.get('version')!=project['version']:raise HTTPException(409,'Refresh the project before changing the planning method.')
+        selected=method(payload.get('methodology'))
+        db.execute('UPDATE items SET methodology=?,version=version+1,updated_at=? WHERE id=?',(selected,timestamp(),project_id))
+        store.event(db,project,user,'planning_method_updated',{'before':project['methodology'],'after':selected,'existing_work_preserved':True})
     return store.detail(project_id)
 
 def save_sprint(store,user,project_id,payload,sprint_id=None):

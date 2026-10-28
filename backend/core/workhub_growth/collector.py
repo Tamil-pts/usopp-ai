@@ -6,7 +6,7 @@ import threading
 from . import store
 from .store import hub,timestamp,encode
 
-TOOLS={'validation':'ByteMap','metadata':'ByteMap metadata','datainspect':'DataInspect','rules':'LogicScan','compare':'MatchView'}
+TOOLS={'validation':'ByteMap','metadata':'ByteMap metadata','datainspect':'DataInspect','rules':'LogicScan','compare':'MatchView','data-model':'Data validation'}
 SCORE_FIELDS=('score','validationScore','overallScore','complianceScore')
 EVENTS={'created','start','complete_development','submit_quality','quality_pass','approve_release','release','request_changes',
         'reopen','block','resume','issue_created','issue_resolved','issue_open','time_approved','daily_update',

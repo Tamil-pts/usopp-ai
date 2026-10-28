@@ -109,6 +109,8 @@ class WorkHub:
                 item_columns={row[1] for row in db.execute('PRAGMA table_info(items)')}
                 for name,definition in (('methodology',"TEXT NOT NULL DEFAULT 'custom'"),('work_phase',"TEXT NOT NULL DEFAULT 'development'"),('sprint_id',"TEXT NOT NULL DEFAULT ''")):
                     if name not in item_columns:db.execute('ALTER TABLE items ADD COLUMN '+name+' '+definition)
+                from .workhub_workspace import migrate as workspace_metadata
+                workspace_metadata(db)
                 columns={row[1] for row in db.execute('PRAGMA table_info(preferences)')}
                 for name,definition in (('teams_chat_url',"TEXT NOT NULL DEFAULT ''"),('teams_mode',"TEXT NOT NULL DEFAULT 'chat'")):
                     if name not in columns:db.execute('ALTER TABLE preferences ADD COLUMN '+name+' '+definition)
@@ -137,7 +139,11 @@ class WorkHub:
     def item(self,db,key):
         if not isinstance(key,str) or not re.fullmatch('[0-9a-f]{32}',key):raise HTTPException(404,'Project or task not found.')
         row=db.execute('SELECT * FROM items WHERE id=?',(key,)).fetchone()
-        if not row:raise HTTPException(404,'Project or task not found.')
+        if not row:
+            from .workhub_document_spaces import find
+            scope=find(db,key)
+            if scope:return scope
+            raise HTTPException(404,'Project or task not found.')
         return dict(row)
     def manage(self,item,user,db=None):
         self.actor(user)
@@ -148,8 +154,11 @@ class WorkHub:
             raise HTTPException(403,'Only the project creator, assigned owner or Admin can change its plan.')
     def contribute(self,db,key,user):
         self.actor(user);project=self.item(db,key)
+        if project.get('is_document_space'):
+            from .workhub_document_spaces import authorize
+            return authorize(db,project,user,True)
         if project['type']!='project':raise HTTPException(400,'Choose a project.')
-        if user['role']!='admin' and not db.execute('SELECT 1 FROM items WHERE project_id=? AND ? IN (created_by,owner_id,quality_id,approver_id,release_id) LIMIT 1',(key,user['id'])).fetchone():
+        if user['role']!='admin' and not db.execute('SELECT 1 FROM items WHERE project_id=? AND (? IN (created_by,owner_id,quality_id,approver_id,release_id) OR EXISTS(SELECT 1 FROM json_each(supporting_ids) WHERE value=?)) LIMIT 1',(key,user['id'],user['id'])).fetchone():
             raise HTTPException(403,'Ask the project owner to assign you before uploading project files.')
         return project
     def event(self,db,item,user,event,detail):
@@ -221,18 +230,25 @@ class WorkHub:
             db.execute('UPDATE items SET milestone=?,work_phase=?,sprint_id=? WHERE id=?',(int(milestone),work_phase,sprint_id,key))
             item=self.item(db,key);self.event(db,item,user,'created',{'title':title,'owner':owner})
             if not parent:initialize_plan(self,db,item,user,payload)
-            self.notify(db,item,user['id'],[owner],'Work assigned: '+title,'You are assigned development. Open the task to start or add an update.')
+            if not parent and payload.get('assignment_mode')=='later':
+                self.notify(db,item,user['id'],[user['id']],'Project needs an engineer: '+title,'The project is registered and awaits assignment.')
+            else:self.notify(db,item,user['id'],[owner],'Work assigned: '+title,'You are assigned development. Open the task to start or add an update.')
             return self.public(self.item(db,key))
     def overview(self):
         with self.db() as db:
             items=[self.public(row) for row in db.execute('SELECT * FROM items ORDER BY created_at DESC')]
+            tasks_by_project={}
+            for row in items:
+                if row['type']=='task':tasks_by_project.setdefault(row['project_id'],[]).append(row)
+            updates={row[0]:row[1] for row in db.execute('SELECT project_id,MAX(created_at) FROM updates GROUP BY project_id')}
+            latest_runs={row['project_id']:dict(row) for row in db.execute('SELECT e.* FROM engineering_runs e JOIN (SELECT project_id,MAX(iteration) AS iteration FROM engineering_runs GROUP BY project_id) latest ON latest.project_id=e.project_id AND latest.iteration=e.iteration')}
             for project in items:
                 if project['type']!='project':continue
-                tasks=[row for row in items if row['project_id']==project['id'] and row['type']=='task']
+                tasks=tasks_by_project.get(project['id'],[])
                 project.update(self.completion(project,tasks))
-                project['latest_update']=db.execute('SELECT MAX(created_at) FROM updates WHERE project_id=?',(project['id'],)).fetchone()[0]
+                project['latest_update']=updates.get(project['id'])
             for item in items:
-                latest=db.execute('SELECT * FROM engineering_runs WHERE project_id=? ORDER BY iteration DESC LIMIT 1',(item['project_id'],)).fetchone()
+                latest=latest_runs.get(item['project_id'])
                 item['iteration_count']=latest['iteration'] if latest else 0
                 item['latest_iteration']={**dict(latest),'summary':json.loads(latest['summary'])} if latest else None
             kinds=list(dict.fromkeys([*KINDS,*[row[0] for row in db.execute("SELECT DISTINCT kind FROM items WHERE kind!='' ORDER BY kind COLLATE NOCASE")]]))
@@ -332,13 +348,16 @@ class WorkHub:
                     reassign_phase_steps(self,db,item,user,field,changed[field])
                     self.notify(db,item,user['id'],[changed[field]],'Work reassigned: '+item['title'],('The current workflow stage is assigned to you.' if field==NEXT_OWNER[item['stage']] else 'You have been assigned '+{'owner_id':'development','quality_id':'quality review','approver_id':'release approval','release_id':'release'}[field]+'.'))
             return self.public(self.item(db,key))
-    def transition(self,user,key,payload):
+    def transition(self,user,key,payload,transaction=None):
         from .workhub_quality.store import initialize as initialize_quality
         from .workhub_quality.checks import guard_closure,issue_dispositioned
         initialize_quality()
         self.actor(user)
-        with self.db(True) as db:
+        with (nullcontext(transaction) if transaction is not None else self.db(True)) as db:
             item=self.item(db,key);action=payload.get('action');comment=text(payload.get('comment',''))
+            project=self.item(db,item['project_id'])
+            if project.get('exception_status') in {'on_hold','cancelled'}:raise HTTPException(409,'Resume the project condition before advancing its workflow.')
+            if project.get('assignment_state')=='unassigned':raise HTTPException(409,'Assign a responsible engineer before starting project work.')
             if payload.get('version')!=item['version']:raise HTTPException(409,'This work changed. Refresh before acting.')
             stage=item['stage'];responsible=item[NEXT_OWNER[stage]]
             if user['id']!=responsible:raise HTTPException(403,'This action belongs to the user assigned to the current stage.')
@@ -349,6 +368,14 @@ class WorkHub:
                          'block':({'development'},'blocked'),'resume':({'blocked'},'development'),'reopen':({'released'},'development')}
             if action not in transitions or stage not in transitions[action][0]:raise HTTPException(409,'This action is unavailable at the current stage.')
             target=transitions[action][1]
+            if item['type']=='project' and action=='reopen':db.execute('DELETE FROM wh_closed_schedule WHERE project_id=?',(key,))
+            if item['type']=='project':
+                from .workhub_workflow import guard
+                guard(db,item,user,action)
+                if action=='quality_pass' and db.execute("SELECT 1 FROM qc_documents WHERE project_id=? AND stage='frd'",(key,)).fetchone():
+                    from .workhub_quality.checks import report
+                    findings=report(db,item)['blockers']
+                    if findings:raise HTTPException(409,'Review the Validation Report and FAT before quality approval: '+'; '.join(r['title'] for r in findings[:6]))
             if item['type']=='task' and target=='development' and item.get('work_phase') in {'quality','release'}:
                 parent=self.item(db,item['project_id'])
                 expected='quality' if item['work_phase']=='quality' else 'ready_release'
@@ -400,7 +427,9 @@ class WorkHub:
                     db.execute("UPDATE items SET stage='development',started_at=COALESCE(started_at,?),completed_at=NULL,review_revision=NULL,review_run_id=NULL,updated_at=?,version=version+1 WHERE id=?",(now,now,project['id']))
                     self.event(db,project,user,'step_development_resumed',{'from':project['stage'],'to':'development','step_id':key,'step_title':item['title']})
                     self.notify(db,project,user['id'],[project['owner_id'],project['created_by']],'Development: '+project['title'],'Work resumed on '+item['title']+'. Previous review decisions remain in the history.')
-            self.event(db,item,user,action,{'from':stage,'to':target,'comment':comment,'revision_id':revision,'run_id':review_run,
+            from .workhub_praxis.outcomes import record as record_work_feedback
+            feedback_id=record_work_feedback(db,user,item,action,payload.get('work_feedback')) if payload.get('work_feedback') is not None else None
+            self.event(db,item,user,action,{'from':stage,'to':target,'comment':comment,'revision_id':revision,'run_id':review_run,'owner_id':item['owner_id'],'due_date':item.get('due_date'),'baseline_due':item.get('baseline_due'),'work_feedback_id':feedback_id,
                        'checked_run_id':checked_run[0] if checked_run else None,
                        'reviewers':{field:item[field] for field in ('quality_id','approver_id','release_id')}})
             if action=='request_changes':
@@ -411,7 +440,7 @@ class WorkHub:
     def add_update(self,user,key,payload):
         self.actor(user)
         with self.db(True) as db:
-            item=self.item(db,key);body=text(payload.get('body',''),8000,True)
+            item=self.item(db,key);self.contribute(db,item['project_id'],user);body=text(payload.get('body',''),8000,True)
             files=payload.get('file_ids',[])
             if not isinstance(files,list) or len(files)>100:raise HTTPException(400,'Attach at most 100 evidence files to one update.')
             for file_id in files:
@@ -423,14 +452,17 @@ class WorkHub:
             run_ids=payload.get('run_ids',[])
             if not isinstance(run_ids,list) or len(run_ids)>20:raise HTTPException(400,'Link at most 20 engineering results.')
             from backend.core import run_history
-            valid_runs=[]
+            valid_runs=[];selected_runs=[]
             for run_id in run_ids:
                 try:record=run_history.read_record(str(run_id))
                 except (OSError,ValueError):raise HTTPException(400,'Saved result not found.') from None
                 if user['role']!='admin' and (record.get('user') or {}).get('id')!=user['id']:raise HTTPException(403,'You can share only your own saved results.')
                 valid_runs.append({'id':record['id'],'kind':record['kind'],'testId':record.get('testId',''),'projectName':record.get('projectName','')})
+                selected_runs.append(record)
             key_update=identity();now=timestamp()
             db.execute('INSERT INTO updates VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',(key_update,item['project_id'],key,user['id'],body,work_date,minutes,encode(files),encode(valid_runs),now,item['quality_id'],'submitted' if minutes else 'none',''))
+            from .workhub_runs import link_saved
+            for record in selected_runs:link_saved(db,user,item['project_id'],record,key_update)
             db.execute('UPDATE items SET updated_at=? WHERE id IN (?,?)',(now,key,item['project_id']))
             self.event(db,item,user,'daily_update',{'update_id':key_update,'minutes':minutes,'work_date':work_date})
             recipients=[item['created_by']]

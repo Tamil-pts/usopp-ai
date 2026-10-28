@@ -11,6 +11,8 @@ from starlette.concurrency import run_in_threadpool
 from backend.core.workhub import store,identity,timestamp,text,encode
 from backend.core import workhub_files as files
 from backend.core import workhub_notifications as extensions
+from backend.core import workhub_portfolio as portfolio
+from backend.core import workhub_workspace as workspace
 
 def personal_account(request:Request):
     if request.state.user.get('isDemo'):raise HTTPException(403,'Sign in with a personal account to open shared company projects.')
@@ -18,13 +20,110 @@ router=APIRouter(prefix='/api/workhub',tags=['WorkHub projects'],dependencies=[D
 def actor(request):return request.state.user
 
 @router.get('/overview')
-def overview(request:Request):return {**store.overview(),'storage':files.storage_usage()}
+def overview(request:Request):
+    from backend.core.workhub_intelligence import store as intelligence
+    intelligence.initialize()
+    value=store.overview()
+    with store.db() as db:
+        # Count current submitted reports once. Independent private documents
+        # have their own register and must not leak through company KPI counts.
+        value['summary']['pending_reviews']=db.execute("SELECT count(*) FROM pi_documents d JOIN pi_revisions r ON r.id=d.current_revision JOIN items p ON p.id=d.project_id AND p.type='project' WHERE r.status='review'").fetchone()[0]
+    return {**value,'storage':files.storage_usage()}
+
+def portfolio_filters(role:str='',department:str='',team:str='',manager:int|None=None,status:str='',
+                      from_date:str=Query('',alias='from'),to_date:str=Query('',alias='to'),project_id:str=''):
+    return dict(role=role,department=department,team=team,manager=manager,status=status,
+                from_date=from_date,to_date=to_date,project_id=project_id)
+
+@router.get('/portfolio')
+def portfolio_dashboard(request:Request,page:int=Query(1,ge=1),page_size:int=Query(15,ge=1,le=50),filters:dict=Depends(portfolio_filters)):
+    return portfolio.dashboard(actor(request),page=page,page_size=page_size,**filters)
+
+@router.get('/portfolio/approvals')
+def portfolio_approvals(request:Request,page:int=Query(1,ge=1),page_size:int=Query(20,ge=1,le=50),documents_only:bool=False,filters:dict=Depends(portfolio_filters)):
+    return portfolio.approval_queue(actor(request),page=page,page_size=page_size,documents_only=documents_only,**filters)
+
+@router.get('/portfolio/rules')
+def portfolio_rules(request:Request,project_id:str=''):
+    return portfolio.get_rules(actor(request),project_id)
+
+@router.put('/portfolio/rules')
+def update_portfolio_rules(request:Request,payload:dict):
+    return portfolio.save_rules(actor(request),payload)
 
 @router.post('/projects')
-def create(request:Request,payload:dict):return store.create(actor(request),payload)
+def create(request:Request,payload:dict):return workspace.create(actor(request),payload)
+
+@router.get('/project-numbering')
+def project_numbering(request:Request):return workspace.numbering_preview()
+
+@router.get('/workflow/catalog')
+def workflow_catalog(request:Request):
+    from backend.core.workhub_workflow import catalog
+    return catalog(actor(request))
+
+@router.get('/projects/{project}/tracking')
+def project_tracking(project:str,request:Request,event_page:int=Query(1,ge=1,le=1000000)):
+    from backend.core.workhub_workflow import tracking
+    return tracking(actor(request),project,event_page)
+
+@router.post('/projects/{project}/workflow')
+def apply_workflow(project:str,request:Request,payload:dict):
+    from backend.core.workhub_workflow import apply
+    return apply(actor(request),project,payload)
 
 @router.get('/projects/{project}')
-def project_detail(project:str,request:Request):return store.detail(project)
+def project_detail(project:str,request:Request):return workspace.details(actor(request),project)
+
+@router.delete('/projects/{project}')
+def delete_project(project:str,request:Request,payload:dict):
+    from backend.core.workhub_deletion import delete
+    return delete(actor(request),project,payload)
+
+@router.get('/documents')
+def common_documents(request:Request,search:str='',kind:str='',status:str='',project_id:str='',page:int=Query(1,ge=1),page_size:int=Query(20,ge=1,le=50),library_only:bool=False):
+    return workspace.document_register(actor(request),search,kind,status,project_id,page,page_size,library_only)
+
+@router.post('/document-spaces')
+def create_independent_document(request:Request,payload:dict):
+    from backend.core.workhub_document_spaces import create
+    return create(actor(request),payload)
+
+@router.get('/documents/{document_id}/library-preview')
+def preview_library_document(document_id:str,request:Request):
+    from backend.core.workhub_quality import store as quality,pdf_templates
+    from backend.core.workhub_document_spaces import authorize
+    quality.initialize();user=actor(request)
+    with store.db() as db:
+        d=db.execute('SELECT * FROM pi_documents WHERE id=?',(document_id,)).fetchone()
+        if not d or not d['approved_revision']:raise HTTPException(404,'Approved library document not found.')
+        p=store.item(db,d['project_id'])
+        if not p.get('is_document_space'):raise HTTPException(404,'Independent library document not found.')
+        authorize(db,p,user,allow_library=True)
+        if not p['library']:raise HTTPException(403,'This document has not been shared in the library.')
+        control=db.execute('SELECT * FROM qc_documents WHERE document_id=?',(document_id,)).fetchone()
+        doc=dict(control) if control else dict(d);rev={'id':d['approved_revision']}
+    raw=pdf_templates.export(user,p['id'],doc,rev,controlled=bool(control),library_read=True)
+    return Response(raw,media_type='application/pdf',headers={'Cache-Control':'private, no-store','Content-Disposition':'inline'})
+
+@router.get('/document-spaces/{space}')
+def independent_document(space:str,request:Request):
+    from backend.core.workhub_document_spaces import details
+    return details(actor(request),space)
+
+@router.put('/document-spaces/{space}')
+def update_independent_document(space:str,request:Request,payload:dict):
+    from backend.core.workhub_document_spaces import update
+    return update(actor(request),space,payload)
+
+@router.get('/project-options')
+def project_options(request:Request):
+    from backend.core.workhub_quality import store as quality,branding
+    quality.initialize()
+    with store.db() as db:return branding.choices(db)
+
+@router.post('/projects/{project}/condition')
+def project_condition(project:str,request:Request,payload:dict):return workspace.exception(actor(request),project,payload)
 
 @router.post('/projects/{project}/tasks')
 def create_task(project:str,request:Request,payload:dict):return store.create(actor(request),payload,project)
@@ -33,6 +132,11 @@ def create_task(project:str,request:Request,payload:dict):return store.create(ac
 def schedule(project:str,request:Request,payload:dict):
     from backend.core.workhub_planning import schedule as save_schedule
     return save_schedule(store,actor(request),project,payload)
+
+@router.put('/projects/{project}/planning-method')
+def planning_method(project:str,request:Request,payload:dict):
+    from backend.core.workhub_planning import change_method
+    return change_method(store,actor(request),project,payload)
 
 @router.post('/projects/{project}/sprints')
 def create_sprint(project:str,request:Request,payload:dict):
@@ -45,11 +149,11 @@ def update_sprint(project:str,sprint:str,request:Request,payload:dict):
     return save_sprint(store,actor(request),project,payload,sprint)
 
 @router.put('/items/{item}')
-def edit_item(item:str,request:Request,payload:dict):return store.edit(actor(request),item,payload)
+def edit_item(item:str,request:Request,payload:dict):return workspace.edit(actor(request),item,payload)
 
 @router.post('/items/{item}/transition')
 def transition(item:str,request:Request,payload:dict):
-    user=actor(request);result=store.transition(user,item,payload)
+    user=actor(request);workspace.guard_transition(user,item);result=store.transition(user,item,payload)
     if result['type']=='project' and result['stage']=='released':
         from backend.core.workhub_intelligence import jobs
         jobs.enqueue(user,item,'q_package',{'closure_version':result['version']})

@@ -120,7 +120,7 @@ def source_header(db,p,state):
     from .branding import record,organization
     customer=record(db,'customer',context['customer_id'])['data'] if context.get('customer_id') else {}
     org=organization(db,context)
-    return {'project_id':p['id'],'project_name':p['title'],'project_type':p['kind'],
+    return {'project_id':p['id'],'project_name':p['title'],'project_number':p.get('project_number') or None,'project_type':p['kind'],
       'customer':customer.get('name') or p.get('customer') or context.get('customer') or None,'customer_details':customer,
       'organization':{'id':org['id'],'version':org['version'],'name':org['data']['name']},
       'machine':p.get('machine') or context.get('machine') or None,
@@ -130,6 +130,7 @@ def source_header(db,p,state):
       'created_at':p['created_at'],'due_date':p['due_date'],'stage':p['stage'],'completed_at':p.get('completed_at')}
 def team(db,p):
     roles={}
+    for uid in json.loads(p.get('supporting_ids','[]')):roles.setdefault(uid,set()).add('Supporting engineer')
     for r in db.execute('SELECT owner_id,quality_id,approver_id,release_id FROM items WHERE project_id=?',(p['id'],)):
         for field,label in [('owner_id','Development'),('quality_id','Quality reviewer'),('approver_id','Release approver'),('release_id','Release owner')]:
             if r[field] is not None:roles.setdefault(r[field],set()).add(label)

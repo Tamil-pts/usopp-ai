@@ -985,8 +985,11 @@ def parse_type_expr(expr: str) -> TypeInfo:
 def parse_var_sections(text: str) -> Dict[str, TypeInfo]:
     symbols: Dict[str, TypeInfo] = {}
     in_var = False
-    for raw_line in text.splitlines():
-        line = strip_comments(raw_line).strip()
+    # Declaration comments can end on a later line. Mask them over the whole
+    # file so a valid declaration before an opening comment is still parsed,
+    # and declaration-shaped text inside the comment is never treated as code.
+    for raw_line in packet_code_lines(text):
+        line = raw_line.strip()
         upper = line.upper()
         if upper.startswith("VAR"):
             in_var = True
@@ -1025,10 +1028,10 @@ def parse_as27_cpu_symbols(text: str) -> Dict[str, TypeInfo]:
 
 def parse_typedefs(text: str) -> Dict[str, TypeInfo]:
     types: Dict[str, TypeInfo] = {}
-    lines = text.splitlines()
+    lines = packet_code_lines(text)
     i = 0
     while i < len(lines):
-        line = strip_comments(lines[i]).strip()
+        line = lines[i].strip()
         struct_match = re.match(r"([A-Za-z_][A-Za-z0-9_]*)\s*:\s*STRUCT$", line, re.IGNORECASE)
         alias_match = re.match(r"([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+);$", line)
         if struct_match:
@@ -1036,7 +1039,7 @@ def parse_typedefs(text: str) -> Dict[str, TypeInfo]:
             fields: Dict[str, TypeInfo] = {}
             i += 1
             while i < len(lines):
-                inner = strip_comments(lines[i]).strip()
+                inner = lines[i].strip()
                 if inner.upper() == "END_STRUCT;":
                     break
                 field_match = re.match(r"([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.+?)(?:\s*:=.+)?;$", inner)
@@ -1056,6 +1059,7 @@ def parse_typedefs(text: str) -> Dict[str, TypeInfo]:
 
 def parse_fun_blocks(text: str) -> Dict[str, TypeInfo]:
     blocks: Dict[str, TypeInfo] = {}
+    text = "\n".join(packet_code_lines(text))
     chunks = re.split(r"(?=FUNCTION_BLOCK\s+)", text, flags=re.IGNORECASE)
     for chunk in chunks:
         header = re.match(r"FUNCTION_BLOCK\s+([A-Za-z_][A-Za-z0-9_]*)", chunk.strip(), re.IGNORECASE)

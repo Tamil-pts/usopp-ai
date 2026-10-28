@@ -50,7 +50,7 @@ def sync_workhub(record,data,root=None,new=False):
     # Existing private archives are not published merely by exporting a report.
     if new and data.get('workhubCapture') is False:return
     if not new and not record.get('workhubAutoCapture'):return
-    if record.get('kind') not in {'validation','metadata','datainspect','compare','rules'}:return
+    if record.get('kind') not in {'validation','metadata','datainspect','compare','rules','data-model'}:return
     if not record.get('user') or record['user'].get('isDemo'):return
     record['workhubAutoCapture']=True
     try:
@@ -74,6 +74,8 @@ def begin_run(kind, data, root=None):
               'sessionId':data.get('sessionId'),'status':'running','summary':{},
               'projectPath':str(root or ''),'snapshotPath':'','metadataPath':'','snapshotError':''}
     record['serverId']=SERVER_ID
+    from .workhub_tool_context import capture
+    capture(data,record)
     data.update(runOwner=record['user'],createdAt=record['createdAt'])
     sync_workhub(record,data,root,new=True)
     write_json(folder/'result.json', data)
@@ -107,6 +109,9 @@ def _record_run(kind, data, root=None, metadata_path=None):
     folder=RECORDS/run_id
     claim_resource(folder)
     old=json.loads((folder/'record.json').read_text(encoding='utf-8')) if (folder/'record.json').is_file() else {}
+    if not old:
+        from .workhub_tool_context import capture
+        capture(data)
     record={**old,'id':run_id,'kind':kind,'projectName':data.get('projectName') or (Path(root).name if root else 'DataInspect'),
             'testId':data['testId'],'machineDepartment':data['machineDepartment'],
             'createdAt':old.get('createdAt') or datetime.now(timezone.utc).isoformat(),'user':old.get('user') or current_user.get(),
@@ -114,6 +119,9 @@ def _record_run(kind, data, root=None, metadata_path=None):
             'sessionId':data.get('sessionId'),'summary':data.get('summary') or data.get('counts') or {},
             'projectPath':str(root or old.get('projectPath') or ''),'snapshotPath':old.get('snapshotPath',''),
             'metadataPath':old.get('metadataPath',''),'snapshotError':old.get('snapshotError',''), 'error':data.get('error','')}
+    for field in ('workhubCapture','workhubProjectId','workhubProjectNumber','workhubProjectTitle'):
+        if field in old:data[field]=old[field]
+        elif not old and field in data:record[field]=data[field]
     data.update(runOwner=record['user'],createdAt=record['createdAt'],completedAt=record['completedAt'])
     try:
         if root and not record['snapshotPath']:

@@ -80,6 +80,8 @@ def snapshot(db, pid, kind, payload):
         value['documents'] = rows
         value['answers'] = [dict(r) for r in db.execute("SELECT id,answer,status,file_id FROM pi_clarifications WHERE project_id=? AND status='confirmed' ORDER BY id", (pid,))]
         if kind == 'q_generate':
+            p=hub.item(db,pid)
+            value['project_brief']={key:p.get(key) for key in ('title','description','kind')}
             generated = bool(db.execute("SELECT 1 FROM sqlite_master WHERE name='qc_generated_files'").fetchone())
             sql = 'SELECT id,sha256,size FROM files f WHERE project_id=?'
             if generated: sql += ' AND NOT EXISTS(SELECT 1 FROM qc_generated_files g WHERE g.file_id=f.id)'

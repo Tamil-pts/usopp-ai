@@ -29,6 +29,10 @@ def collect(job,user):
         runs=[dict(r) for r in db.execute('SELECT * FROM engineering_runs WHERE project_id=? ORDER BY iteration',(pid,))]
         current={stage:store.native(db,d)['current_revision'] for stage,d in controls.items()}
         frd=controls.get('frd');frd_id=store.native(db,frd)['approved_revision'] if frd else None
+    if payload.get('stage')=='frd':
+        brief=store.text(payload.get('brief',''),12000)
+        if brief:sources.append({'id':'author-brief:'+job.row['id'],'type':'author_brief','label':'Author requirement brief','text':brief})
+        if p.get('description'):sources.append({'id':'project-brief:'+pid,'type':'project_brief','label':'Saved project brief','text':p['description']})
     file_selection=payload.get('file_ids')
     supported={'.pdf','.docx','.xlsx','.xls','.txt','.csv','.png','.jpg','.jpeg','.tif','.tiff','.webp'}
     eligible=[r for r in files if (file_selection is None and Path(r['name']).suffix.lower() in supported or file_selection is not None and r['id'] in file_selection)]
@@ -73,17 +77,17 @@ def generate(job,user):
         if not data['header'].get(field):content['missing'].append('Project '+field+' has not been recorded.')
     job.progress(45,'Preparing a source-linked draft for engineering review')
     if stage=='frd':
+        if not content['sources'] and not data['requirements']:raise ValueError('Describe the requirement or upload a source document before asking Chopper to create the FRD.')
         content['purpose']=p.get('description') or '';content['scope']=data['header'].get('scope') or '';content['acceptance_summary']=''
         content['requirements']=[{**r,'change':'unchanged'} for r in data['requirements']];known={s['id'] for s in content['sources']};next_id=max([int(r['id'].split('-')[-1]) for r in content['requirements'] if re.fullmatch('FR-\\d+',r.get('id',''))]+[0])+1
         candidates=[]
         if __import__('backend.core.workhub_intelligence.local_ai',fromlist=['configured']).configured() and content['sources']:
-            from backend.core.workhub_intelligence.local_ai import llm_json
-            from backend.core.workhub_intelligence.processing import _chunks,_claims
+            from backend.core.workhub_intelligence.processing import _chunks,_claims,source_model
             from backend.core.workhub_intelligence.local_ai import source_budget
             for chunk in _chunks(list(content['sources']),source_budget()):
                 for source in chunk:
                     if source['id'] not in known:content['sources'].append(source);known.add(source['id'])
-                result=llm_json('Extract FRD change proposals. Return {"requirements":[{"id":null,"change":"new|modified|confirmed|removed_proposed|unresolved","title":"...","description":"...","trigger":null,"expected_behavior":null,"acceptance_criteria":null,"source_ids":["known id"]}]}. Use an existing FR id only when this evidence concerns that exact approved requirement; use null for additions. Preserve approved requirements absent from this source chunk. A removal must be explicitly supported by a source and remains proposed, never deleted. Contradictory or incomplete changes remain unresolved. Never invent technical values, criteria or test results.',{'project':data['header'],'approved_requirements':data['requirements'],'sources':chunk},job.check)
+                result=source_model('Extract FRD change proposals from the author brief and supplied documents. Return {"requirements":[{"id":null,"change":"new|modified|confirmed|removed_proposed|unresolved","title":"...","description":"...","trigger":null,"expected_behavior":null,"acceptance_criteria":null,"source_ids":["SRC001"]}]}. Use an existing FR id only when this source concerns that exact approved requirement; use null for additions. Preserve approved requirements absent from this source chunk. A removal must be explicitly supported by a source and remains proposed, never deleted. Contradictory or incomplete changes remain unresolved. Rephrase the supplied behavior clearly and reuse its stated verification criteria. Never invent technical values, conditions, criteria or test results.',{'project':data['header'],'approved_requirements':data['requirements'],'sources':chunk},job.check)
                 candidates.extend(_claims(result.get('requirements',[]),{s['id']:s for s in chunk},'requirement'))
         else:
             # Offline fallback quotes source statements; it does not manufacture acceptance criteria.
@@ -112,8 +116,8 @@ def generate(job,user):
             if not refs or any(r not in known for r in refs):raise ValueError('A requirement proposal omitted its source.')
             content['requirements'].append({'id':'FR-'+str(next_id).zfill(3),'title':str(candidate.get('title') or description)[:240],'description':description,
               **{k:candidate.get(k) or '' for k in ('trigger','expected_behavior','acceptance_criteria')},'source_ids':refs,'mandatory':True,'change':'new'});next_id+=1
-        if not content['requirements']:content['missing'].append('No explicit requirements were extracted. Select an existing requirements document or record the missing verified requirement statements.')
-        content['summary']='Requirements prepared from existing customer specifications, project documents and meeting records. Every proposal requires human confirmation.'
+        if not content['requirements']:raise ValueError('No requirements could be prepared from the supplied information. Describe the required behavior and verification, or select a requirements document.')
+        content['summary']='Requirements prepared from the supplied brief and saved source documents. Review the draft before submission.'
         if job.row['payload'].get('flowchart') and content['requirements']:
             nodes=[{'id':'start','position':{'x':30,'y':0},'type':'default','data':{'label':'Requirements review','kind':'start'}}];edges=[];last='start'
             for i,r in enumerate(content['requirements'][:80]):

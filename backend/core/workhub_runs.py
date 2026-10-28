@@ -6,7 +6,7 @@ from pathlib import Path
 import re
 from .workhub import store,identity,timestamp,encode,NEXT_OWNER
 
-TOOLS={'validation':'ByteMap','metadata':'ByteMap metadata','datainspect':'DataInspect','compare':'MatchView','rules':'LogicScan'}
+TOOLS={'validation':'ByteMap','metadata':'ByteMap metadata','datainspect':'DataInspect','compare':'MatchView','rules':'LogicScan','data-model':'Data validation'}
 
 def normalized(value):return ''.join(char for char in str(value).casefold() if char.isalnum())[:200]
 
@@ -43,7 +43,8 @@ def source_identity(record,data,root=None):
 
 def run_body(record,iteration,source):
     label=TOOLS[record['kind']];status=str(record.get('status') or 'running')
-    lines=[f'Iteration {iteration} - {label}',f'Test ID: {record.get("testId","")}',f'Recorded run: {status}. This is engineering evidence; workflow approval is separate.']
+    lines=[f'Iteration {iteration} - {label}',f'Test ID: {record.get("testId","")}',f'Recorded run: {status}. This is a saved test result; workflow approval is separate.']
+    if record.get('workhubProjectNumber'):lines.append('Project number: '+record['workhubProjectNumber'])
     if source:lines.append('Source: '+source)
     summary=record.get('summary') or {}
     numbers=[str(key)+': '+str(value) for key,value in summary.items() if isinstance(value,(int,float)) and not isinstance(value,bool)]
@@ -64,29 +65,11 @@ def synchronize(record,data,root=None):
         if existing:
             project=store.item(db,existing['project_id']);iteration=existing['iteration'];update_id=existing['update_id']
         else:
-            matches={row[0] for row in db.execute('SELECT project_id FROM engineering_sources WHERE owner_id=? AND source_key=?',(user['id'],source_key))}
-            if not matches:
-                matches={row[0] for row in db.execute('SELECT DISTINCT s.project_id FROM engineering_sources s JOIN items i ON i.id=s.project_id WHERE s.source_key=? AND (i.created_by=? OR i.owner_id=? OR EXISTS(SELECT 1 FROM items t WHERE t.project_id=i.id AND t.owner_id=?))',(source_key,user['id'],user['id'],user['id']))}
-            native_id=Path(source).stem.casefold() if source_key.startswith('native:') else ''
-            if not matches and len(normalized(native_id))>=6 and re.search(r'[a-z].*\d',native_id) and not native_id.startswith(('project','application','main','controller')):
-                matches={row[0] for row in db.execute('SELECT project_id FROM engineering_sources WHERE source_key=?',(source_key,))}
-            if not matches and aliases:
-                for alias in aliases:
-                    candidates={row[0] for row in db.execute('SELECT project_id FROM engineering_sources WHERE owner_id=? AND source_key=?',(user['id'],'alias:'+alias))}
-                    if source_key.startswith('native:'):
-                        candidates={key for key in candidates if not db.execute("SELECT 1 FROM engineering_sources WHERE project_id=? AND source_key LIKE 'native:%' LIMIT 1",(key,)).fetchone()}
-                    matches.update(candidates)
-            if not matches:
-                candidates=[dict(row) for row in db.execute("SELECT * FROM items WHERE type='project' AND (created_by=? OR owner_id=?)",(user['id'],user['id']))]
-                candidates=[row for row in candidates if normalized(row['title']) in aliases and not db.execute('SELECT 1 FROM engineering_sources WHERE project_id=? LIMIT 1',(row['id'],)).fetchone()]
-                if len(candidates)==1:matches.add(candidates[0]['id'])
-            if len(matches)==1:project=store.item(db,next(iter(matches)))
-            else:
-                key=identity()
-                db.execute('''INSERT INTO items(id,project_id,type,title,kind,description,created_by,owner_id,quality_id,approver_id,release_id,stage,started_at,created_at,updated_at)
-                  VALUES(?,?,'project',?,?,?,?,?,?,?,?,'development',?,?,?)''',
-                  (key,key,title,kind,'Created automatically from saved engineering work. Reviewers and release ownership can be reassigned when needed.',user['id'],user['id'],user['id'],user['id'],user['id'],created,created,now))
-                project=store.item(db,key);store.event(db,project,user,'project_created_from_engineering',{'source':source,'tool':TOOLS[record['kind']]})
+            explicit=record.get('workhubProjectId') or data.get('workhubProjectId')
+            matches={explicit} if explicit else {r[0] for r in db.execute('SELECT project_id FROM engineering_sources WHERE owner_id=? AND source_key=?',(user['id'],source_key))}
+            if len(matches)!=1:return {}
+            project=store.contribute(db,next(iter(matches)),user)
+            if project['type']!='project' or project.get('assignment_state')=='unassigned' or project.get('exception_status') in {'on_hold','cancelled'} or project['stage']=='released':return {}
             for value in [source_key,*('alias:'+alias for alias in aliases if alias)]:
                 db.execute('INSERT OR IGNORE INTO engineering_sources VALUES(?,?,?)',(user['id'],value,project['id']))
             iteration=db.execute('SELECT COALESCE(MAX(iteration),0)+1 FROM engineering_runs WHERE project_id=?',(project['id'],)).fetchone()[0]
@@ -108,6 +91,18 @@ def synchronize(record,data,root=None):
                    (record.get('status','running'),encode(record.get('summary') or {}),record.get('completedAt'),run_id))
         db.execute('UPDATE items SET updated_at=? WHERE id=?',(now,project['id']))
         return {'workhubProjectId':project['id'],'workhubIteration':iteration,'workhubUpdateId':update_id}
+
+def link_saved(db,user,project_id,record,update_id):
+    """A user explicitly shares a saved result through an assigned work update."""
+    if record.get('kind') not in TOOLS:return
+    p=store.contribute(db,project_id,user)
+    if p.get('is_document_space') or p.get('assignment_state')=='unassigned':return
+    old=db.execute('SELECT project_id FROM engineering_runs WHERE run_id=?',(record['id'],)).fetchone()
+    if old:return
+    source_key,title,source,aliases,kind=source_identity(record,{})
+    iteration=db.execute('SELECT COALESCE(MAX(iteration),0)+1 FROM engineering_runs WHERE project_id=?',(project_id,)).fetchone()[0]
+    db.execute('INSERT INTO engineering_runs VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',(record['id'],project_id,update_id,iteration,record['kind'],record.get('testId',''),user['id'],record.get('status','completed'),encode(record.get('summary') or {}),source,record.get('createdAt') or timestamp(),record.get('completedAt')))
+    db.execute('INSERT OR IGNORE INTO engineering_sources VALUES(?,?,?)',(user['id'],source_key,project_id))
 
 def reconcile_pending():
     """Only retry new runs explicitly opted into automatic capture, never old history."""

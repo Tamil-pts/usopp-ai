@@ -7,6 +7,9 @@ from .store import hub,pi
 
 def baseline(db,p,include_quality=False):
     state=store.policy_row(db,p)
+    if p['stage']=='released':
+        original=db.execute('SELECT due_date FROM wh_closed_schedule WHERE project_id=?',(p['id'],)).fetchone()
+        if original:p={**p,'due_date':original[0]}
     docs=[]
     for d in db.execute('SELECT * FROM qc_documents WHERE project_id=? ORDER BY stage',(p['id'],)):
         if d['stage']=='closure' or d['stage']=='quality' and not include_quality:continue
@@ -125,6 +128,12 @@ def report(db,p,closure=False):
         if native_outcome(r) in {'fail','not_run'}:add('validation:'+r['run_id'],'Current native validation requires disposition: '+r['kind']+' / '+r['status'],r,r['status']!='running')
     issues=[dict(r) for r in db.execute("SELECT * FROM issues WHERE project_id=? AND status='open'",(p['id'],))]
     for r in issues:add('issue:'+r['id'],'Unresolved issue: '+r['title'],r)
+    from backend.core.workhub_workflow import evaluate
+    for rule in evaluate(db,p,'release' if closure else 'quality_pass'):
+        # The existing approval blockers handle these documents without making
+        # a document's own approval a prerequisite to reviewing that document.
+        if rule['passed'] or rule['severity']!='block' or rule['condition']=='document_approved' and rule['parameter'] in {'quality','closure'}:continue
+        add('workflow:'+rule['id'],rule['name']+': '+rule['detail'],rule,False)
     quality=docs.get('quality');current_basis=baseline(db,p)
     quality_valid=bool(quality and quality['current'] and quality['approved']['baseline']==current_basis and not blockers)
     if closure:

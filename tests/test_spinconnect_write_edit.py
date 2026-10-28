@@ -20,7 +20,9 @@ from backend.api import nami_edit as api
 from backend.core import accounts, nami_transport as tcp, nami_edit as edit
 from backend.core import runtime as runtime_paths, run_history, persistent_store
 from backend.core.nami_simulator import frame
-from python_engine.spinconnect_write import Study, generate, cases, number
+# Keep regression coverage for the original setting-policy guard and transport.
+# The public read-derived generator is covered separately.
+from python_engine.spinconnect_write import Study, _generate_existing as generate, cases, number
 from virtual_plc.core.compiler import compile_source, walk_ir
 from virtual_plc.core.runtime import VirtualRuntime
 from virtual_plc.tests.test_runtime import project, variable

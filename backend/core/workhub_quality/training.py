@@ -9,12 +9,13 @@ from fastapi import HTTPException
 from . import store,branding,pdf_templates,documents
 from .store import hub,identity,timestamp
 
-TITLE='Sample Project — Ring Frame Motor Trip Alarm Modification'
+TITLE='Sample Project — Ring Frame PLC Upgrade'
 NOTICE='FICTIONAL TRAINING EXAMPLE. No real customer project, physical test result, signature or approval is represented.'
 READY=set()
 
 
 def example():
+    from .training_reference import extend
     statements=[
         ('Engineer A (fictional)','The training PLC shall detect TRAIN_MOTOR_TRIP and latch TRAIN_TRIP_ALARM.','The training PLC shall detect TRAIN_MOTOR_TRIP and latch TRAIN_TRIP_ALARM.'),
         ('Engineer B (fictional)','Motor trip வந்தால் HMI alarm காட்ட வேண்டும்.','The HMI shall display the motor-trip alarm while it is active.'),
@@ -43,7 +44,7 @@ def example():
       (['FR-003'],'Reset interlock','Request reset while the trip remains active.','The alarm remains latched.'),
       (['FR-003'],'Permitted reset','Clear the trip and use the reviewed reset conditions.','The alarm clears only when those conditions are met.'),
       (['FR-004'],'History','Activate and clear a training alarm when history is in scope.','The history system records the events.')])]
-    return {'schema_version':1,'title':TITLE,'notice':NOTICE,'sample_version':'1','project':{'title':TITLE,'number':'SAMPLE-RF-001','customer':'Imaginary Textile Training Ltd. (fictional)','machine':'Ring Frame training system','department':'ES','team':'PLC','scope':'Illustrative trip alarm, HMI indication, controlled reset and optional history. Existing machine safety is outside this training example.'},
+    return extend({'schema_version':1,'title':TITLE,'notice':NOTICE,'sample_version':'1','project':{'title':TITLE,'number':'DEMO-PRJ-001','customer':'Demo Textile Mills','machine':'Ring Frame','department':'ES','team':'PLC','scope':'Illustrative trip alarm, HMI indication, controlled reset and optional history. Existing machine safety is outside this training example.'},
       'transcript':{'segments':segments,'notice':'Manually authored training transcript and interpretation; no speech-recognition accuracy is implied.'},
       'mom':{'meeting_subject':'Fictional motor-trip alarm discussion','meeting_date':None,'participants':['Engineer A (fictional)','Engineer B (fictional)'],
         'discussion_summary':[{'text':'Review trip detection, HMI indication, reset interlocks and optional event history.','source_ids':['S1','S2','S3','S4']}],
@@ -53,7 +54,7 @@ def example():
       'frd':{'purpose':'Illustrate a traceable motor-trip alarm modification using fictional training signals.','scope':'Training PLC alarm and HMI feedback only. Confirm actual safety and reset behavior separately.',
         'acceptance_summary':'Execute the linked FAT cases only after the open conditions are reviewed. All sample cases remain Not Tested.',
         'requirements':reqs,'sources':sources,'flowchart':flow,'sections':[{'heading':'Operating sequence','text':'See the editable linked flowchart.'},{'heading':'PLC / HMI behavior','text':'See FR-001 through FR-004.'},{'heading':'Open clarifications','text':statements[4][1]}]},
-      'fat':{'cases':cases},'history':[{'revision':'R00','status':'Fictional draft','reason':'Built-in training material; not an engineering approval.'}]}
+      'fat':{'cases':cases},'history':[{'revision':'R00','status':'Fictional draft','reason':'Built-in training material; not an engineering approval.'}]})
 
 
 def initialize():
@@ -67,7 +68,10 @@ def initialize():
         CREATE TABLE IF NOT EXISTS wh_training_history(id TEXT PRIMARY KEY,workspace_id TEXT NOT NULL,version INTEGER NOT NULL,
           data TEXT NOT NULL,actor_id INTEGER NOT NULL,created_at TEXT NOT NULL,UNIQUE(workspace_id,version));
         CREATE TABLE IF NOT EXISTS wh_training_proposals(id TEXT PRIMARY KEY,workspace_id TEXT NOT NULL,base_version INTEGER NOT NULL,
-          data TEXT NOT NULL,created_at TEXT NOT NULL);''')
+          data TEXT NOT NULL,created_at TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS wh_training_assets(id TEXT PRIMARY KEY,workspace_id TEXT NOT NULL,owner_id INTEGER NOT NULL,
+          name TEXT NOT NULL,mime TEXT NOT NULL,sha256 TEXT NOT NULL,content BLOB NOT NULL,created_at TEXT NOT NULL);
+        CREATE INDEX IF NOT EXISTS wh_training_asset_owner ON wh_training_assets(owner_id,workspace_id);''')
     READY.add(key)
 
 
@@ -76,7 +80,45 @@ def owned(db,user,key):
     row=db.execute('SELECT * FROM wh_training_workspaces WHERE id=? AND owner_id=?',(key,user['id'])).fetchone()
     if not row:raise HTTPException(404,'This private practice copy was not found.')
     history=[{'version':r['version'],'status':json.loads(r['data']).get('practice_status','draft'),'actor_id':r['actor_id'],'created_at':r['created_at']} for r in db.execute('SELECT version,data,actor_id,created_at FROM wh_training_history WHERE workspace_id=? ORDER BY version DESC LIMIT 100',(key,))]
-    return {**dict(row),'data':json.loads(row['data']),'revision_history':history}
+    assets=[dict(r) for r in db.execute('SELECT id,name,mime,sha256,created_at FROM wh_training_assets WHERE workspace_id=? AND owner_id=? ORDER BY created_at DESC LIMIT 100',(key,user['id']))]
+    return {**dict(row),'data':json.loads(row['data']),'revision_history':history,'assets':assets}
+
+
+def upload(user,key,name,raw):
+    import hashlib
+    from pathlib import PurePath
+    initialize()
+    if not raw or len(raw)>10*1024*1024:raise HTTPException(413,'Practice files must contain data and be at most 10 MB.')
+    name=PurePath(name.replace('\\','/')).name;ext=PurePath(name).suffix.lower()
+    mimes={'.pdf':'application/pdf','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.txt':'text/plain','.docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}
+    if ext not in mimes:raise HTTPException(400,'Use PDF, PNG, JPEG, TXT or DOCX practice evidence.')
+    if ext=='.pdf' and not raw.startswith(b'%PDF') or ext=='.png' and not raw.startswith(b'\x89PNG\r\n\x1a\n') or ext in {'.jpg','.jpeg'} and not raw.startswith(b'\xff\xd8'):
+        raise HTTPException(400,'The file content does not match its format.')
+    if ext=='.txt':
+        try:raw.decode('utf-8')
+        except UnicodeDecodeError:raise HTTPException(400,'Use UTF-8 practice text.') from None
+    if ext=='.docx':
+        import io,zipfile
+        try:
+            with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+                if 'word/document.xml' not in archive.namelist() or sum(v.file_size for v in archive.infolist())>50*1024*1024:raise ValueError()
+        except (ValueError,zipfile.BadZipFile):raise HTTPException(400,'Use a valid bounded DOCX file.') from None
+    with hub.db(True) as db:
+        owned(db,user,key)
+        total=db.execute('SELECT COALESCE(SUM(length(content)),0) FROM wh_training_assets WHERE owner_id=?',(user['id'],)).fetchone()[0]
+        if total+len(raw)>100*1024*1024:raise HTTPException(413,'Private practice storage is limited to 100 MB per account.')
+        digest=hashlib.sha256(raw).hexdigest();existing=db.execute('SELECT id FROM wh_training_assets WHERE workspace_id=? AND sha256=?',(key,digest)).fetchone()
+        if not existing:db.execute('INSERT INTO wh_training_assets VALUES(?,?,?,?,?,?,?,?)',(identity(),key,user['id'],store.text(name,240,True),mimes[ext],digest,raw,timestamp()))
+        return owned(db,user,key)
+
+
+def asset(user,key,asset_id):
+    initialize()
+    with hub.db() as db:
+        owned(db,user,key)
+        row=db.execute('SELECT * FROM wh_training_assets WHERE id=? AND workspace_id=? AND owner_id=?',(asset_id,key,user['id'])).fetchone()
+        if not row:raise HTTPException(404,'Practice attachment not found.')
+        return dict(row)
 
 
 def list_copies(user):
@@ -105,10 +147,31 @@ def save(user,key,payload):
         row=owned(db,user,key)
         if type(payload.get('version')) is not int or payload['version']!=row['version']:raise HTTPException(409,'This practice copy changed. Reload before saving.')
         value=deepcopy(row['data'])
-        for field in ['frd','mom','transcript']:
+        for field in ['frd','mom','transcript','meeting','assignment','documents','supporting_document']:
             if field in payload:
                 if not isinstance(payload[field],dict):raise HTTPException(400,'Use structured training content.')
                 value[field]=payload[field]
+        if 'project' in payload:
+            if not isinstance(payload['project'],dict):raise HTTPException(400,'Use structured practice project information.')
+            for field in ['title','customer','machine','scope','department','team']:
+                if field in payload['project']:value['project'][field]=store.text(payload['project'][field],4000)
+        for kind,content in value.get('documents',{}).items():
+            if kind not in {'corrections','test','fat','quality','closure'} or not isinstance(content,dict):raise HTTPException(400,'Choose a supported practice document.')
+            if content.get('practice_status','draft') not in {'draft','training_review','returned','practice_approved'}:raise HTTPException(400,'Use a practice-only review status.')
+            for case in content.get('cases',[]):
+                execution=case.get('execution')
+                if execution and (execution.get('outcome') not in {'not_run','pass','fail','blocked'} or execution.get('outcome') in {'pass','fail'} and not str(execution.get('actual','')).strip()):raise HTTPException(400,'Enter an observation before recording a practice test result.')
+                if execution:
+                    ids=execution.get('file_ids',[])
+                    if not isinstance(ids,list) or any(not db.execute('SELECT 1 FROM wh_training_assets WHERE id=? AND workspace_id=? AND owner_id=?',(i,key,user['id'])).fetchone() for i in ids):raise HTTPException(400,'Choose evidence attached to this private practice copy.')
+                    if execution.get('outcome')=='pass' and not ids:raise HTTPException(400,'Attach practice evidence before recording a fictional pass.')
+            if content.get('practice_status')=='practice_approved':
+                if kind in {'test','fat'} and (not content.get('cases') or any(not all(c.get(k) for k in ('objective','procedure','expected_result','acceptance_criteria')) for c in content['cases'])):raise HTTPException(400,'Complete the practice test procedure and expected results before approval.')
+                if kind in {'quality','closure'}:
+                    tested=all(value['documents'][k].get('cases') and all((c.get('execution') or {}).get('outcome')=='pass' for c in value['documents'][k]['cases']) for k in ('test','fat'))
+                    reviewed=value['frd'].get('practice_status')=='practice_approved' and all(value['documents'][k].get('practice_status')=='practice_approved' for k in ('corrections','test','fat'))
+                    if not tested or not reviewed:raise HTTPException(409,'Practice readiness requires reviewed FRD/corrections/tests/FAT and recorded practice test evidence.')
+                    if kind=='closure' and value['documents']['quality'].get('practice_status')!='practice_approved':raise HTTPException(409,'Complete the private quality review before practice closure.')
         store.bounded(value,2*1024*1024);store.pi.validate_content('frd',value['frd'])
         known_sources={s['id'] for s in value['frd'].get('sources',[])}
         for r in value['frd']['requirements']:
@@ -141,6 +204,11 @@ def assist(user,key,payload):
       {'action':action,'question':store.text(payload.get('question',''),3000),'sources':sources})
     refs=result.get('source_ids',[])
     if not isinstance(refs,list) or not refs or any(r not in known for r in refs):raise HTTPException(422,'Chopper did not return valid training source references.')
+    answer=result.get('answer')
+    if not isinstance(answer,(str,type(None))):
+        if action=='flowchart' and isinstance(result.get('flowchart'),dict):answer='Review the source-linked flowchart. Chopper did not supply a separate text explanation.'
+        else:raise HTTPException(422,'Chopper must return a text explanation. No changes were applied.')
+    result['answer']=store.text(answer or 'Review this private practice proposal before applying.',12000)
     for update in result.get('requirement_updates',[]):
         if not isinstance(update,dict) or update.get('id') not in known:raise HTTPException(422,'A proposed update is outside this training FRD.')
         source=' '.join(s['text'] for s in sources if s['id'] in refs)
@@ -173,16 +241,21 @@ def apply(user,key,payload):
     return save(user,key,{'version':row['version'],'frd':content})
 
 
-def pdf(user,key=None):
+def pdf(user,key=None,kind='frd'):
     initialize();store.personal(user);row=get(user,key) if key else None;data=row['data'] if row else example()
     with hub.db() as db:
-        layout=branding.template(db,'frd',{})['data'];value=pdf_templates.preview(db,layout)
+        if kind not in {'frd','mom','corrections','test','fat','quality','closure','flowchart'}:raise HTTPException(400,'Choose a training document type.')
+        layout=branding.template(db,'frd' if kind=='flowchart' else kind,{})['data'];value=pdf_templates.preview(db,layout)
     value.update(title='Functional Requirements Document — Training',project_name=data['project']['title'],project_number=data['project']['number'],
         number='PRACTICE-FRD-'+key[:8].upper() if key else 'PTPL-ES-PLC-FRD-SAMPLE-001',revision='R'+str(row['version'] if row else 0).zfill(2),approved=False)
     value['customer']={'name':data['project']['customer'],'address':'Fictional training customer only','logo_data':''}
     value['metadata']=[['Project',data['project']['title']],['Project number',data['project']['number']],['Customer',data['project']['customer']],['Machine / System',data['project']['machine']],
         ['Status',NOTICE],['Prepared by',user['username']+' (practice)' if row else 'Fictional training authors'],['Reviewed by','Not approved'],['Approved by','Not approved']]
-    value['sections']=pdf_templates.blocks({**data['frd'],'cases':data['fat']['cases']})
+    if kind not in {'frd','flowchart'}:
+        value['title']=('Minutes of Meeting' if kind=='mom' else store.STAGES[kind])+' — Training'
+        value['number']=('PRACTICE-' if row else 'DEMO-')+kind.upper()+'-001'
+    content=data['frd'] if kind=='frd' else {'flowchart':data['frd'].get('flowchart')} if kind=='flowchart' else data['mom'] if kind=='mom' else data.get('documents',example()['documents'])[kind]
+    value['sections']=pdf_templates.blocks(content)
     history=[['Practice '+str(r['version']),r['status'],r['created_at']] for r in reversed(row['revision_history'])] if row else [[r['revision'],r['status'],r['reason']] for r in data['history']]
     value['sections']+=[{'key':'details','title':'Revision history','text':'Training history only; no production approvals.','columns':['Revision','Status','Recorded'],
         'rows':history,'svg':''}]

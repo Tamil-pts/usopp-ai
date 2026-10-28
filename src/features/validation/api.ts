@@ -1,4 +1,5 @@
 import type {ProjectInput} from '../../shared/projectInput';
+import {toolProjectHeaders} from '../../shared/toolProject';
 import {projectSourceFiles} from '../../shared/projectInput';
 
 export type BoolMetadataMode='BOOL'|'USINT';
@@ -84,7 +85,7 @@ export async function validateProject(input: ValidationRequest) {
   );
   if (projectPath) {
     const response = await fetch('/api/local/validate', {
-      method:'POST', headers:{'Content-Type':'application/json'},
+      method:'POST', headers:{'Content-Type':'application/json',...toolProjectHeaders('bytemap')},
       body:JSON.stringify({project_path:projectPath,project_name:input.projectName,metadata_path:metadataPath,machine_department:input.machineDepartment||'All',bool_metadata_mode:input.boolMetadataMode})
     });
     return responseData(response, 'Validation');
@@ -98,7 +99,7 @@ export async function generateProjectMetadata(input: MetadataRequest) {
   );
   if (projectPath) {
     const response = await fetch('/api/local/generate-metadata', {
-      method:'POST', headers:{'Content-Type':'application/json'},
+      method:'POST', headers:{'Content-Type':'application/json',...toolProjectHeaders('bytemap')},
       body:JSON.stringify({project_path:projectPath,project_name:input.projectName,machine_department:input.machineDepartment||'All',bool_metadata_mode:input.boolMetadataMode})
     });
     return responseData(response, 'Metadata generation');

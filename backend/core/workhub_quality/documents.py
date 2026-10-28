@@ -60,7 +60,7 @@ def clean_content(db,pid,stage,content):
               'change':r.get('change') if r.get('change') in {'new','modified','confirmed','removed_proposed','unresolved','unchanged'} else 'new'})
     for r in _list(content.get('changes',[])):
         if not isinstance(r,dict):raise HTTPException(400,'Provide structured correction notes.')
-        result['changes'].append({'id':text(r.get('id',''),80,True),'summary':text(r.get('summary',''),8000,True),'source_ids':refs(r),'requirement_ids':requirement_ids(r)})
+        result['changes'].append({'id':text(r.get('id',''),80,True),'summary':text(r.get('summary',''),8000,True),**{k:text(r.get(k) or '',8000) for k in ('existing_behavior','expected_behavior','plc_references','impact','before_evidence','after_evidence','verification')},'source_ids':refs(r),'requirement_ids':requirement_ids(r)})
     seen=set()
     for r in _list(content.get('cases',[])):
         if not isinstance(r,dict):raise HTTPException(400,'Provide structured test cases.')
@@ -70,9 +70,14 @@ def clean_content(db,pid,stage,content):
         if native and not db.execute('SELECT 1 FROM engineering_runs WHERE project_id=? AND run_id=?',(pid,native)).fetchone():raise HTTPException(400,'A native result must belong to this project.')
         result['cases'].append({'id':key,**{k:text(r.get(k) or '',8000) for k in ('objective','procedure','expected_result','acceptance_criteria')},
           'requirement_ids':requirement_ids(r),'source_ids':refs(r),'mandatory':bool(r.get('mandatory',True)),'native_run_id':native})
-    for r in _list(content.get('sections',[]),40):
+    from .field_attachments import section_id,normalize
+    section_ids=set()
+    for i,r in enumerate(_list(content.get('sections',[]),40)):
         if not isinstance(r,dict):raise HTTPException(400,'Provide a heading and text for each template section.')
-        result['sections'].append({'heading':text(r.get('heading',''),180,True),'text':text(r.get('text',''),12000)})
+        key=section_id(r.get('id'),i)
+        if key in section_ids:raise HTTPException(400,'Document sections need unique identifiers.')
+        section_ids.add(key)
+        result['sections'].append({'id':key,'heading':text(r.get('heading',''),180,True),'text':text(r.get('text',''),12000)})
     for r in _list(content.get('missing',[]),500):result['missing'].append(text(str(r),1000,True))
     if content.get('flowchart'):
         flow=deepcopy(content['flowchart']);pi.validate_content('flowchart',flow);result['flowchart']=flow
@@ -83,6 +88,11 @@ def clean_content(db,pid,stage,content):
                 if not isinstance(links,list) or any(v not in ids for v in links):raise HTTPException(400,'Flowchart nodes must reference requirements retained in this FRD revision.')
             flow['requirements_hash']=requirements_hash(result['requirements'])
             flow['needs_review']=flow.get('reviewed_requirements_hash')!=flow['requirements_hash']
+    result=normalize(db,pid,content,result)
+    if content.get('studio'):
+        from backend.core.workhub_studio.bindings import synchronize
+        from backend.core.workhub_studio.store import validate_media
+        result=synchronize({**result,'studio':content['studio']});validate_media(db,pid,result)
     return result
 
 def create_control(db,p,user,stage,existing=None,initial_content=None,generated_by=None):
@@ -159,14 +169,18 @@ def draft(user,pid,stage,content,reason='',generated_by=None,expected_current=AN
         return {'control_id':doc['id'],'revision_id':rev['id']}
 
 def _save(db,user,p,doc,rev,content,version):
-    store.editable(db,doc,rev,user,version);h=store.digest(content)
+    store.editable(db,doc,rev,user,version)
+    from backend.core.workhub_studio.store import guard
+    guard(db,user,rev['id'],pi.revision(db,rev['id'],doc['document_id'])['content'],content)
+    h=store.digest(content)
     if h==rev['content_hash']:return {'control_id':doc['id'],'revision_id':rev['id'],'version':rev['version'],'content_hash':h}
     db.execute('UPDATE pi_revisions SET content=? WHERE id=?',(store.bounded(content),rev['id']))
     db.execute('UPDATE qc_revisions SET version=version+1,content_hash=?,confirmed_by=NULL,confirmed_at=NULL,confirmed_hash=NULL WHERE id=?',(h,rev['id']))
     db.execute('UPDATE pi_documents SET updated_at=? WHERE id=?',(timestamp(),doc['document_id']))
     db.execute('INSERT INTO qc_draft_history VALUES(?,?,?,?,?,?,?)',(identity(),rev['id'],rev['version']+1,store.bounded(content),h,user['id'],timestamp()))
     store.audit(db,user,p['id'],'draft_modified',{'before_hash':rev['content_hash'],'after_hash':h,'version':rev['version']+1},doc['id'],rev['id'])
-    return {'control_id':doc['id'],'revision_id':rev['id'],'version':rev['version']+1,'content_hash':h}
+    from .authoring import readiness
+    return {'control_id':doc['id'],'revision_id':rev['id'],'version':rev['version']+1,'content_hash':h,'readiness':readiness(db,p,doc,store.revision(db,doc['id'],rev['id']))}
 
 def save(user,pid,key,payload):
     store.initialize()

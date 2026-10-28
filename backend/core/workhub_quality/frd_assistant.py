@@ -50,17 +50,30 @@ def process(job,user):
     source_map={s['id']:s for s in sources};selected_ids={v['id'] for v in selected};job.progress(25,'Reading selected FRD requirements and confirmed project decisions')
     updates=[];questions=[];flow=None;mode='Recorded requirement checks'
     if configured():
-        result=llm_json('Help review an FRD. Action: '+payload['action']+'. Return {"answer":"...","source_ids":["known id"],'
+        instruction=('Help review an FRD. Action: '+payload['action']+'. Return {"answer":"...","source_ids":["known id"],'
             '"requirement_updates":[{"id":"existing FR id","title":"...","description":"...","trigger":"...","expected_behavior":"...","subsystem":"...","acceptance_criteria":"...","source_ids":["known id"]}],'
             '"clarification_questions":[{"question":"...","options":["...","Not decided"],"requirement_ids":["existing id"],"source_ids":["known id"]}],'
             '"flowchart":{"nodes":[{"id":"n1","data":{"label":"...","kind":"start|process|decision|end|alarm|interlock|io","plc_references":[],"requirement_ids":["existing id"],"source_ids":["known id"]}}],"edges":[{"id":"e1","source":"n1","target":"n2","label":"Yes"}]}}. '
             'Only populate flowchart for the flowchart action. Update an existing diagram conservatively when supplied; retain unrelated steps. '
             'Every proposal must cite sources. Do not invent numeric values, reset conditions, interlocks, safety behavior or acceptance tolerances. '
             'Unknown behavior stays a clarification. Never create results, signatures or approvals. Do not repeat confirmed clarification questions. '
-            'Only modify selected existing requirements. Changes remain draft proposals requiring a human Apply action.',
-            {'question':payload['question'],'project':header,'selected_requirements':selected,'approved_requirements':[v for v in approved if v['id'] in selected_ids],
+            'Only modify selected existing requirements. Changes remain draft proposals requiring a human Apply action.')
+        if payload['action']=='flowchart' and not content.get('flowchart'):
+            instruction=('Propose a concise functional diagram from the selected FRD requirements. Return JSON only: '
+              '{"answer":"short review note","source_ids":["SRC001"],"requirement_updates":[],"clarification_questions":[],"flowchart":{"nodes":[{"id":"n1","data":{"label":"short source-backed label","kind":"process","requirement_ids":["FR-001"],"source_ids":["SRC001"],"plc_references":[]}}],"edges":[{"id":"e1","source":"n1","target":"n2","label":"Yes"}]}}. '
+              'Choose one node kind from: start, process, decision, end, alarm, interlock, io. '
+              'Use at most six nodes for this initial proposal. Cite all supporting source IDs. Reference only known requirement IDs. '
+              'Never invent tags, numeric values, safety conditions, reset interlocks, results or approvals. Unknown behavior remains a review note. Diagram changes require human review.')
+        from backend.core.workhub_intelligence.processing import source_model
+        result=source_model(instruction,{'question':payload['question'],'project':header,'selected_requirements':selected,'approved_requirements':[v for v in approved if v['id'] in selected_ids],
                 'existing_flowchart':content.get('flowchart'),'confirmed_decisions':answers,'sources':sources},job.check)
-        answer=store.text(result.get('answer',''),12000,True);mode='Private local Chopper'
+        answer_value=result.get('answer')
+        if not isinstance(answer_value,(str,type(None))):
+            if payload['action']=='flowchart' and isinstance(result.get('flowchart'),dict):answer_value='Review the source-linked flowchart. Chopper did not supply a separate text explanation.'
+            else:
+                from backend.core.workhub_intelligence.local_ai import ModelOutputError
+                raise ModelOutputError('Chopper must return a text explanation, with structured proposals in their separate fields.')
+        answer=store.text(answer_value or 'Review this source-linked proposal before applying.',12000,True);mode='Private local Chopper'
         def refs(value):
             ids=value.get('source_ids',[])
             if not isinstance(ids,list) or not ids or any(not isinstance(s,str) or s not in source_map for s in ids):raise ValueError('A Chopper proposal omitted a valid source. Retry or edit the controlled draft manually.')
@@ -91,7 +104,7 @@ def process(job,user):
                 from backend.core.workhub_intelligence.processing import unsupported_values
                 if unsupported_values(' '.join(source_map[s]['text'] for s in source_ids),str(data.get('label',''))+' '+' '.join(tags)):raise ValueError('A diagram proposal introduced an unsupported technical value or PLC tag.')
                 nodes.append({'id':store.text(n.get('id',''),80,True),'data':{'label':store.text(data.get('label',''),2000,True),'kind':data['kind'],'requirement_ids':ids,'source_ids':source_ids,'plc_references':tags}})
-            edges=[{'id':store.text(e.get('id',''),80,True),'source':store.text(e.get('source',''),80,True),'target':store.text(e.get('target',''),80,True),'label':store.text(e.get('label',''),500)} for e in documents._list(f.get('edges',[]),1500)]
+            edges=[{'id':store.text(e.get('id',''),80,True),'source':store.text(e.get('source',''),80,True),'target':store.text(e.get('target',''),80,True),'label':store.text(e.get('label') or '',500)} for e in documents._list(f.get('edges',[]),1500)]
             if not nodes:raise ValueError('A flowchart proposal needs nodes.')
             flow={'nodes':layout_graph(nodes,edges),'edges':edges,'sources':sources,'notice':'Engineering proposal linked to this FRD. Human review is required; this is not validated PLC logic.'}
             pi.validate_content('flowchart',flow)

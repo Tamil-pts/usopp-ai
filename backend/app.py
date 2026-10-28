@@ -18,7 +18,7 @@ from backend.api import assist_training, assist_flow, project_intelligence
 from backend.api import live_data, data_simulator, dashboard_layouts
 from backend.api import spinconnect_write
 from backend.api import nami_edit
-from backend.api import workhub,workhub_intelligence,workhub_office,workhub_growth,workhub_dashboards,workhub_quality,workhub_branding,workhub_training
+from backend.api import workhub,workhub_intelligence,workhub_office,workhub_growth,workhub_dashboards,workhub_quality,workhub_branding,workhub_training,workhub_people,workhub_praxis,workhub_studio
 from backend.core.mcp_tools import server as mcp_server, http_app as mcp_app
 from contextlib import asynccontextmanager
 
@@ -118,15 +118,23 @@ async def account_session(request:Request,call_next):
                 return JSONResponse({'detail':'Sign in to usop.ai to continue.'},status_code=401)
             request.state.user=user
     token=current_user.set(getattr(request.state,'user',None))
+    from backend.core.workhub_tool_context import selection,validate as validate_test_project
+    project_token=selection.set(None)
     try:
         if getattr(request.state,'user',None):
             from backend.core.access import authorize_request
             from fastapi import HTTPException
-            try: await authorize_request(request)
+            try:
+                await authorize_request(request)
+                selected=request.headers.get('x-workhub-project')
+                if selected is not None and request.method=='POST':
+                    context=await run_in_threadpool(validate_test_project,request.state.user,selected)
+                    selection.set(context)
             except HTTPException as error:
                 return JSONResponse({'detail':error.detail},status_code=error.status_code)
         return await call_next(request)
     finally:
+        selection.reset(project_token)
         current_user.reset(token)
 
 for feature_router in (system.router, validation.router, metadata.router, knowledge.router, compare_export_jobs.router, comparison.router, rules.router, assist.router, validation_source.router, nami.router, auth.router, report_exports.router, history.router,data_models.router):
@@ -141,6 +149,9 @@ app.include_router(live_data.router)
 app.include_router(data_simulator.router)
 app.include_router(dashboard_layouts.router)
 app.include_router(spinconnect_write.router)
+app.include_router(workhub_people.router)
+app.include_router(workhub_praxis.router)
+app.include_router(workhub_studio.router)
 app.include_router(nami_edit.router)
 app.include_router(workhub.router)
 app.include_router(workhub_intelligence.router)

@@ -249,6 +249,9 @@ def export_document(user,pid,key,rid=None,format='pdf',record_download=True):
         if not flow:raise HTTPException(404,'This FRD revision has no saved flowchart.')
         from backend.core.workhub_intelligence.documents import diagram_svg
         return diagram_svg(flow).encode(),'image/svg+xml',doc['number']+'-'+rev['label']+'.svg'
+    if format=='docx' or format=='pdf' and value['documents'][0]['revision']['content'].get('studio'):
+        from backend.core.workhub_studio.exporting import export as studio_export
+        return studio_export(user,pid,doc['document_id'],rev['id'],format)
     if format!='pdf':raise HTTPException(400,'Choose controlled PDF or JSON.')
     from .pdf_templates import export
     return export(user,pid,doc,rev),'application/pdf',doc['number']+'-'+rev['label']+'.pdf'
@@ -320,6 +323,10 @@ def iso(job,user):
 
 def file_access(db,user,row):
     """Called by existing file routes too, so direct URLs cannot bypass pack permissions/audit."""
+    p=hub.item(db,row['project_id'])
+    if p.get('is_document_space'):
+        from backend.core.workhub_document_spaces import authorize
+        authorize(db,p,user)
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='qc_packages'").fetchone():return
     if row['name'].startswith('QC-ISO-'):configuration.admin(user)
     pack=db.execute('SELECT * FROM qc_packages WHERE file_id=?',(row['id'],)).fetchone()

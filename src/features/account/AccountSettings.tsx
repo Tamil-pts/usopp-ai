@@ -2,6 +2,7 @@ import {useRef,useState,type FormEvent,type ChangeEvent} from 'react';
 import {accountRequest,useAccount} from './AuthProvider';
 import {PasswordInput} from './PasswordInput';
 import {UserAvatar} from './UserAvatar';
+import {TeamDetails} from '../workhub/people/PeopleManagement';
 export function AccountSettings(){
   const {user,refreshUser}=useAccount();
   const [email,setEmail]=useState(user.email||'');
@@ -30,7 +31,7 @@ export function AccountSettings(){
   if(user.isDemo)return <div className="card setting"><h3>My account</h3><p><b>{user.username}</b> · Demo user</p><p>This demo session signs out automatically after 30 minutes. Your uploads and results belong to this demo session. Create a personal account for a continuing workspace.</p></div>;
   return <div className="card setting"><h3>My profile</h3>
     <div className="profilePhoto"><UserAvatar user={user} size={88}/><div><b>{user.username}</b><p>{user.role==='admin'?'Admin':'User'} · {user.designation}<br/>{user.company}</p></div></div>
-    <div className="actions"><button className="btn" type="button" disabled={busy} onClick={()=>photoInput.current?.click()}>Upload profile photo</button><input ref={photoInput} type="file" accept="image/png,image/jpeg,image/webp" hidden disabled={busy} onChange={event=>void photo(event)}/>{user.avatarUrl&&<button className="btn" type="button" disabled={busy} onClick={()=>void removePhoto()}>Remove photo</button>}</div>
+    <TeamDetails userId={user.id}/><div className="actions"><button className="btn" type="button" disabled={busy} onClick={()=>photoInput.current?.click()}>Upload profile photo</button><input ref={photoInput} type="file" accept="image/png,image/jpeg,image/webp" hidden disabled={busy} onChange={event=>void photo(event)}/>{user.avatarUrl&&<button className="btn" type="button" disabled={busy} onClick={()=>void removePhoto()}>Remove photo</button>}</div>
     <p className="muted">PNG, JPEG or WebP, up to 5 MB. Your photo appears beside your account name.</p>
     {error&&<p role="alert" className="accountError">{error}</p>}{message&&<p role="status">{message}</p>}
     <form onSubmit={saveEmail} className="accountForm"><label>Email ID (optional)<input className="textInput" type="email" maxLength={254} value={email} onChange={e=>setEmail(e.target.value)}/></label><button className="btn" disabled={busy}>Save email ID</button><small>Contact information. Sending notifications still uses your existing connection preferences.</small></form><form onSubmit={submit} className="accountForm"><h4>Change password</h4>

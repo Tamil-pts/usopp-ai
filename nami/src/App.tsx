@@ -1,3 +1,5 @@
+import {ToolProjectSelector} from '../../src/shared/ToolProjectSelector';
+import {toolProjectHeaders} from '../../src/shared/toolProject';
 import {frameProtocol,isYbsTarget,metadataMachine} from './utils/frameProfile';
 import {responsesForHistory, saveDecodedRun, type SavedInspectRun} from './utils/runHistory';
 import {userStorage} from '../../src/shared/userStorage';
@@ -305,7 +307,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
       try {
         const res = await fetch('/api/nami/plc/read-group', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json',...toolProjectHeaders('datainspect') },
           body: JSON.stringify({
             plc: selectedPLC, metadata, metadataSource, workhubCapture: !automatic,
             ip: selectedPLC.ip,
@@ -421,7 +423,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
     try {
       const res = await fetch('/api/nami/plc/test-connection', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',...toolProjectHeaders('datainspect') },
         body: JSON.stringify({
           plc: selectedPLC, metadata, metadataSource,
           ip: selectedPLC.ip,
@@ -585,7 +587,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
       ])).filter((groupCode) => groupCode !== 11);
       const res = await fetch('/api/nami/plc/read-multiple-groups', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',...toolProjectHeaders('datainspect') },
         body: JSON.stringify({
           plc: selectedPLC, metadata, metadataSource,
           ip: selectedPLC.ip,
@@ -748,6 +750,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
       {/* Top Header */}
       <fieldset disabled={archived} className="m-0 min-w-0 border-0 p-0">
+      {!archived&&<ToolProjectSelector tool="datainspect"/>}
       <Header
         selectedPLC={selectedPLC}
         allPLCs={plcs}
@@ -962,7 +965,7 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
         setConnectionNotice(null);
         void (async () => {
           try {
-            const response = await fetch('/api/nami/history/manual', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({plc: selectedPLC, metadata, metadataSource, groupResponses: {[result.groupCode]: result}})});
+            const response = await fetch('/api/nami/history/manual', {method: 'POST', headers: {'Content-Type': 'application/json',...toolProjectHeaders('datainspect')}, body: JSON.stringify({plc: selectedPLC, metadata, metadataSource, groupResponses: {[result.groupCode]: result}})});
             if (!response.ok) throw new Error('Manual decoded data could not be saved in history.');
             const identity = await response.json();
             const row = {...result, testId: identity.testId, historyId: identity.historyId};

@@ -3,6 +3,106 @@
 Current application version is defined in `package.json`; the backend reads that value.
 Engine and rule schema versions are independent of the application release.
 
+## 4.97.0 - 2026-10-28
+
+- Calculate separate work-based Performance and Competency indices from project/task delivery, quality approval, linked validation scores, correction response, issue resolution and brief approval/completion feedback. Preserve legacy assessments without requiring a new assessment workflow.
+- Add line, area, pie, donut, radar, gauge, heatmap, table and trend insight displays. Default project recording to checked, skip unselected projects and give the project link band a separate background.
+- Open engineering documents and MOM in Document Studio: editable paginated pages, cursor insertion, drag and resize, page and element properties, native requirement/test tables, checklists, images, diagrams and charts.
+- Add visual header/footer layouts, first and odd/even variations, section-specific paper settings, dynamic fields, page numbers, watermarks and reusable templates without replacing document content.
+- Add guided and Chopper proposals with retained original sources, revision comparison, anchored review comments, connected document impact checks, approved reusable content and field attachments.
+- Enforce content, layout, template and approved-revision protection through all existing save and review routes. Preserve original approvals and approved PDFs. Export Studio layouts to PDF and editable DOCX.
+- Retain Competency Hub, customized dashboards, project assignments and all existing testing-tool behavior.
+
+## 4.96.0 - 2026-10-27
+
+- Rename the existing Praxis module to Competency Hub: My Competency, Team Capability, Competency Matrix and Reports & Insights. Keep all assessment records, review permissions and integrations.
+- Add personal insight cards, chart choices, notes and ordering, expandable assessment details, contribution matrices and detailed report previews. Preserve separate approved competency and performance measurements; unavailable scores remain Not Assessed.
+- Include customized insight values and clearly labelled personal notes in PDF and Excel reports.
+- Allow users to update their own department, professional role, teams and daily work hours. Keep reporting relationships, account roles and team administrator grants under Admin control. Move organization management into User management.
+- Show assigned or available resources from active project and task responsibilities, independently of capacity estimates.
+- Simplify Settings around Workflow Configuration for assignment, development, quality check, closure and release. Remove its separate testing-rule and organization panels.
+- Add explicit project number and assignment selection to ByteMap, metadata generation, MatchView, DataInspect and data-model validation. Capture attribution at run start, retain original test results and update recorded work activity without fabricating assessment scores.
+
+## 4.95.0 - 2026-10-27
+
+- Add Praxis with separate approved performance and competency indices, configurable department and role models, five proficiency levels, assessment periods, immutable revisions and independent review.
+- Add interactive competency matrices, radar and comparison charts, approved trends, team heatmaps, skill coverage, expertise and development priorities. Preserve existing work records and TechShare contributions.
+- Export five scoped Praxis report types as PDF and filterable Excel, using the same approved calculations, targets, methodology, work references and reviewer details as the dashboard.
+- Add Projects > Task Management for resource availability, capacity, cross-project workload, blocked dependencies and assignment. Incomplete estimates and overdue plans remain visible as planning gaps.
+- Add Team Details to profiles and user administration, with departments, professional roles, reporting managers, multi-team membership, team administrators and capacity settings. Preserve existing sign-in roles and confidential assessment scope.
+- Use the four WorkHub menus Overview, Projects, Praxis and TechShare. Existing project, dashboard, contribution and document routes and data remain available.
+
+## 4.94.1 - 2026-10-27
+
+- Derive Write ST group codes, field order and external packet byte layouts from mms_nw_r. Keep mms_nw_w transport, existing setting assignments, machine interlocks, per-parameter limit checks and result codes through an internal frame adapter.
+- Show read groups without setting-write policies and block incompatible copy widths or cursor layouts. Export the read-derived DataInspect mapping with the generated source and declarations.
+- Preserve the original received-value write syntax, including typed temporaries, byte and field counters, limit checks and error code 16.
+- Parse multiline comments across declaration files so declared tags such as HK1_RYC_SPL are not incorrectly reported as unresolved.
+
+## 4.94.0 - 2026-10-27
+
+- Add Customer / Client name and automatic or custom project numbering to project creation; expose a separate project prefix in company Settings.
+- Expose Waterfall, Agile, Sprint and Custom timeline setup, initial sprint planning and an editable preview. Keep named workflow tasks separate from planning template tasks.
+- Add direct Validation Report and FAT viewing/editing before quality approval, with the current revisions opened before the review decision. Enforce report readiness on FRD project quality transitions.
+- Allow a reviewer to explicitly complete their own planned review tasks with the quality decision in one transaction; reject stale task versions and preserve the reviewed engineering content hash.
+- Add revision-owned field attachment links to FRD requirements, report procedures, expected results, sections and actual-result fields. Carry FRD field attachments into related report drafts and show attachment references in internal PDFs. Specification attachment changes invalidate old test executions.
+- Allow authorized date changes through quality, release and completed stages. Preserve baseline dates, actual completion, historical approval snapshots and frozen PDF bytes; retain the closure schedule context until controlled reopening.
+
+## 4.93.0 - 2026-10-27
+
+- Make WorkHub fill the available page width; reflow navigation, controls, dashboards and document pages as the viewport changes. Restore readable header button colors.
+- Remove the top-level Team tab and large portfolio filter panel. Keep Projects > Team Activity and Knowledge > Team Overview.
+- Add Admin project deletion with exact-name confirmation, revision checks, active-processing guards, a durable recovery archive and retained original file bytes. Preserve independent documents, knowledge, numbering and audit history.
+- Expose the existing testing rule library, pipeline selections and Chopper rule editor in Settings, using the selected testing project and shared saved rules.
+- Add an explicitly labelled six-project sample setup using Admin and Tamil, real document services and demonstration workflow decisions. Keep pending quality and closure approvals visible.
+
+## 4.92.0 - 2026-10-27
+
+- Add named project workflow templates and custom validation rules to Settings, reusing versioned engineering procedures and their project snapshots.
+- Create real assigned project tasks from configured steps, with dates, milestones, phase schedules and dependencies; retain existing work during explicit procedure adoption.
+- Enforce configurable checks on project transitions and quality readiness. Evaluate current approved documents, project details, unresolved issues, phase tasks, milestones, source/target-specific saved run outcomes and specification-matched test executions.
+- Add contextual project tracking with the existing editable timeline, delivery phase completion, explained checks, current responsibility and paginated activity history.
+- Show workflow versions, task and milestone counts, planned progress and current responsibility in the existing filtered portfolio.
+- Preserve independent documents, testing tools, custom dashboards, performance calculations, review permissions, numbering and audit history.
+
+## 4.91.1 - 2026-10-27
+
+- Give Chopper one requirement brief for automatic FRD creation; reuse the saved project brief, retain source references and open the prepared draft in the existing editor.
+- Run the requested Chopper action when a blank template already exists; report missing source information instead of saving an empty generated document, and preserve edited drafts.
+- Include project brief changes in generation cache checks and use short source references in the local model prompt.
+- Clear obsolete Continue Work links when their project is removed or access is revoked, and display actual zero counts on empty KPI cards while retaining missing numerical assessments.
+- Recheck custom dashboard persistence, Chopper proposals, responsive layouts and sharing, plus the real local-model FRD, report preparation, independent review and PDF workflow in isolated storage.
+- Remove the eight old projects selected by the user while retaining independent documents, knowledge, saved dashboards, original files, numbering history, audit records and a recovery archive.
+
+## 4.91.0 - 2026-10-27
+
+- Restore the editable custom dashboard as the default Overview, with separate project portfolio, recent uSOPp.ai activity, approvals and reporting views.
+- Simplify new projects to a name and optional brief; open an FRD directly, reuse project information and keep additional planning controls available when needed.
+- Add independent document workspaces with optional project links, private author/reviewer permissions, approved library previews and reuse through existing revision, numbering, PDF and approval services.
+- Prepare editable validation, FAT and closure drafts from saved FRD requirements, preserve source hashes and invalidate review when source content changes; leave actual test results unrecorded.
+- Add a five-section MOM editor with preview, attachments, recording/transcript access and shared PDF sections. Allocate MOM numbers using the configured company numbering rules.
+- Reorganize project views into Portfolio, My Work, Team Activity and Documents; include completed work on the timeline, four Kanban columns and performance/knowledge access under Knowledge.
+- Reduce repeated fields and headings, collapse optional controls and replace visible evidence terminology with work updates, attachments and test results.
+- Keep testing tools independent: create no automatic WorkHub project for an unassigned run; allow saved results to be linked explicitly to assigned work.
+- Correct acceptance-test isolation under combined unittest discovery. Remove the eight accidental test projects with user authorization; retain backups, original file contents, approved PDF bytes, numbering history and audit records.
+
+## 4.90.0 - 2026-10-26
+
+- Reorganize WorkHub into Overview, Projects, Team and Knowledge, retaining contextual approvals, reports and the existing four-section project workspace.
+- Add assignment-scoped portfolio dashboards with recorded project health, weighted milestones, delivery comparisons, deadlines, workload, review queues and document summaries.
+- Add permission-checked, versioned dashboard health rules and milestone weights in the existing WorkHub database, with bounded responses and indexed queries.
+- Preserve the customizable dashboard builder in a collapsed area and retain its click-to-edit controls.
+
+## 4.89.0 - 2026-10-26
+
+- Fix the saved dashboard crash caused by applying chart transformations to raw record widgets, and isolate widget rendering failures.
+- Add a visible Create FRD / Reports project shortcut and Help FRD Sample access while retaining the four-section project workspace.
+- Separate transcript import/transcription from MOM preparation; require confirmation of the saved transcript, retain original/English versions and timestamp/source history, and support SRT/TXT imports.
+- Fix controlled FRD assistant job references, validate source-linked proposals, handle optional model explanation/edge fields, and preserve exact reviewed MOM source revisions in FRD derivation.
+- Track flowchart review against requirement changes; extend engineering node/I/O support and improve PDF graph routing, repeated document/project metadata and revision history.
+- Add a fictional, read-only Ring Frame FRD sample and owner-only practice copies with history, guarded Chopper proposals and draft PDF preview; practice does not consume production project/document numbers or approvals.
+- Verify all three production builds, Python compilation, 32 automated tests, 15 Chromium checks and private local-model MOM/FRD/flowchart generation. Real audio/Tamil speech acceptance remains unverified without the offline speech model and recordings. See docs/WORKHUB_FRD_ACCEPTANCE.md.
+
 ## 4.88.0 - 2026-10-26
 
 - Add optional account email IDs to administrator user management, account requests and personal profiles without changing authentication or notification authorization.

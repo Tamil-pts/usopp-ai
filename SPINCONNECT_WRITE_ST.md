@@ -1,5 +1,30 @@
 # SpinConnect write ST in ByteMap
 
+## Packet direction and source of the generated code
+
+`mms_nw_r` serializes PLC values for the server. ByteMap validates those outgoing
+groups and their byte layouts. Write ST now discovers group codes and external
+field order from this same routine.
+
+The settings service in `mms_nw_w` supports function 1 to read current settings
+and function 2 to receive settings from the server. The generated function 1
+response and function 2 request use the selected `mms_nw_r` payload layout.
+The response has a five-byte prefix; the write request adds the two-byte group
+code before its values. Both frames also include the existing two-byte trailer.
+
+Existing `mms_nw_w` code supplies the transport and setting policies. Where its
+internal field order differs, a generated frame adapter supplies those policies
+their original order. The original write blocks retain `memcpy` into typed
+temporary variables, `nw_i` byte advances, `nw_j` field increments, limits,
+assignments, password-level updates, and per-parameter error code 16. For
+example, the Motor pulley UINT block and its 0..310 limit remain intact.
+
+Read-only context fields retain their outgoing packet slots. A read group with
+no setting-write policy is visible with a finding; the generator does not
+invent an assignment or an interlock for it. Conflicting byte widths, read
+copies that exceed their cursor span, and unsupported layouts block generation.
+Existing source files are never rewritten by analysis or draft generation.
+
 ## Use the feature
 
 1. Select or upload the complete Automation Studio project in ByteMap.
@@ -65,9 +90,9 @@ selected conditional layout before writing.
 
 ## How limits and source behavior are retained
 
-- Group identities and original write mappings come from the function 1 and
-  function 2 `CASE nw_group_code` branches. An existing compatible write routine
-  is required; a read-only measurement is not automatically made writable.
+- Group identities and external packet fields come from the `mms_nw_r`
+  `CASE nw_group_code` branches. Original setting policies come from
+  `mms_nw_w`; a compatible writer template is required.
 - The selected target's `.page` input controls are linked to exact `.dso`
   datapoints and `.vcug` unit definitions. Controls with `Input=False` are
   excluded. Different HMI targets are never merged.
@@ -89,7 +114,18 @@ selected conditional layout before writing.
 - A source fingerprint prevents generation from a stale analysis. Analyze
   again after changing PLC, declaration, HMI or unit files.
 
-## Reference-project study
+## Reference-project findings
+
+With the read-derived layout, Project 5 GC 130 uses a 115-byte external payload;
+the adapter handles its original 110/115-byte setting-policy variants. GC 140
+uses 211 bytes. Project 2 GC 130 uses 112 bytes.
+
+Project 1 GC 140 copies four bytes for `mms_HMI_ActSliverWght_ALOFF` but advances
+the read cursor by one. Project 2 GC 140 sends `ED_Break_Draft` in four bytes
+while its existing setting handler consumes one byte. These groups now require
+a source correction and review before a draft can be generated.
+
+### Original writer layouts retained inside the adapter
 
 The supplied **project 2** and **project 5** were inspected independently.
 

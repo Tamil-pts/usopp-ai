@@ -23,6 +23,9 @@ def main():
         import importlib
         from fastapi.staticfiles import StaticFiles
         module=importlib.import_module('backend.app');module.DIST=Path(sys.argv[sys.argv.index('--dist')+1]).resolve()
+        import backend.api.system as system
+        build_info=system.frontend_build_info
+        system.frontend_build_info=lambda _dist,version:build_info(module.DIST,version)
         for route in app.routes:
             if getattr(route,'name','')=='assets':route.app=StaticFiles(directory=module.DIST/'assets')
     from backend.core import accounts
@@ -54,12 +57,13 @@ def main():
     events=[];checks=[]
     try:
         with sync_playwright() as pw:
-            browser=pw.chromium.launch(headless=True);page=browser.new_page(viewport={'width':1440,'height':1000});page.set_default_timeout(10000)
+            browser=pw.chromium.launch(headless=True,args=['--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream']);page=browser.new_page(viewport={'width':1440,'height':1000},permissions=['microphone']);page.set_default_timeout(15000)
             page.on('pageerror',lambda error:events.append({'message':str(error),'stack':error.stack}))
             try:
                 page.goto(f'http://127.0.0.1:{port}/',wait_until='networkidle')
                 page.get_by_label('Username',exact=True).fill(user['username']);page.get_by_label('Password',exact=True).fill('Browser-fixture-2026!')
-                page.locator('form').get_by_role('button',name='Sign in',exact=True).click();page.wait_for_timeout(1800)
+                page.locator('form').get_by_role('button',name='Sign in',exact=True).click()
+                page.get_by_role('heading',name='Projects. People. Progress.',exact=True).wait_for(timeout=30000)
                 body=page.locator('body').inner_text();checks.append({'step':'Admin sign in and WorkHub render','passed':'Project portfolio' in body or 'My Dashboard' in body,'body':body[:1500]})
                 page.screenshot(path=str(OUT/'admin-browser.png'),full_page=True)
                 if not events:
@@ -70,6 +74,17 @@ def main():
                         dialog.get_by_role('button',name=title,exact=False).filter(has=page.locator('strong',has_text=title)).click()
                         page.locator('.qc-document-heading h3').filter(has_text=title).wait_for(state='visible')
                         checks.append({'step':'Document shortcut opens '+title,'passed':page.locator('.qc-document-heading h3').inner_text()==title})
+                        if title=='FRD':
+                            capture=page.get_by_role('region',name='New project meeting')
+                            capture.get_by_role('button',name='Physical meeting',exact=True).click()
+                            checks.append({'step':'Recording requires explicit participant consent','passed':capture.get_by_role('button',name='Start recording',exact=True).is_disabled()})
+                            capture.get_by_role('checkbox').check();capture.get_by_role('button',name='Start recording',exact=True).click()
+                            capture.get_by_text('Microphone recording',exact=True).wait_for();page.wait_for_timeout(1200)
+                            capture.get_by_role('button',name='Pause',exact=True).click();capture.get_by_text('Recording paused',exact=True).wait_for()
+                            capture.get_by_role('button',name='Resume',exact=True).click();capture.get_by_role('button',name='Stop recording',exact=True).click()
+                            capture.get_by_role('button',name='Save recording',exact=True).click()
+                            page.get_by_role('button',name='Transcribe / import meeting',exact=True).wait_for(state='visible')
+                            checks.append({'step':'Browser microphone capture, pause, resume and save','passed':True,'limitation':'Chromium simulated microphone, not real acoustic or recognition accuracy'})
                         page.get_by_role('button',name='All projects',exact=True).click()
                     page.get_by_role('button',name='Help · FRD Sample',exact=True).click()
                     sample=page.locator('#help-frd-sample')

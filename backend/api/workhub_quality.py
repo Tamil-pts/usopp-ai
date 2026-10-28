@@ -20,6 +20,18 @@ def save_settings(request:Request,payload:dict):return configuration.save(actor(
 
 @router.get(PREFIX)
 def overview(pid:str,request:Request):return service.overview(actor(request),pid)
+@router.post(PREFIX+'/drafts')
+def manual_draft(pid:str,request:Request,payload:dict):
+    from backend.core.workhub_quality.authoring import create
+    return create(actor(request),pid,payload)
+@router.post(PREFIX+'/prepare-from-frd')
+def prepare_from_frd(pid:str,request:Request):
+    from backend.core.workhub_quality.authoring import prepare_related
+    return prepare_related(actor(request),pid)
+@router.get(PREFIX+'/trace/{requirement_id}')
+def engineering_trace(pid:str,requirement_id:str,request:Request):
+    from backend.core.workhub_quality.authoring import trace
+    return trace(actor(request),pid,requirement_id)
 @router.put(PREFIX+'/context')
 def context(pid:str,request:Request,payload:dict):return service.context(actor(request),pid,payload)
 @router.post(PREFIX+'/procedure')
@@ -28,11 +40,13 @@ def procedure(pid:str,request:Request,payload:dict):return service.rebaseline_po
 def generate(pid:str,request:Request,payload:dict):
     user=actor(request);store.initialize();stage=payload.get('stage')
     if stage not in store.STAGES:raise HTTPException(400,'Choose a quality document stage.')
+    if 'brief' in payload:payload={**payload,'brief':store.text(payload['brief'],12000)}
     with store.hub.db() as db:
         store.project(db,pid,user,True)
         d=db.execute('SELECT * FROM qc_documents WHERE project_id=? AND stage=?',(pid,stage)).fetchone()
         if d:
             r=store.revision(db,d['id'],store.native(db,dict(d))['current_revision'])
+            if r['status'] in {'draft','correction_required'} and (r['version']>1 or r['confirmed_at']):raise HTTPException(409,'This draft already contains saved edits. Keep editing it, use the FRD assistant for proposed changes, or create a new revision before preparing another draft.')
             if r['status'] not in {'draft','correction_required'} and not str(payload.get('reason','')).strip():raise HTTPException(400,'Record the reason for a new controlled revision.')
     return jobs.enqueue(user,pid,'q_generate',payload)
 @router.post(PREFIX+'/explain')

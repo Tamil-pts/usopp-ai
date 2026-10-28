@@ -1,3 +1,4 @@
+import {toolProjectHeaders} from '../../shared/toolProject';
 import {userStorage} from '../../shared/userStorage';
 import {useEffect,useState} from 'react';
 import {logEvent} from '../../shared/logging';
@@ -63,7 +64,7 @@ export function useCompareProjects(notify: Notify) {
     try {
       if (localReady) {
         const response = await fetch('/api/local/compare/start', {
-          method:'POST', headers:{'Content-Type':'application/json'},
+          method:'POST', headers:{'Content-Type':'application/json',...toolProjectHeaders('matchview')},
           body:JSON.stringify({base_path:compareBasePath,new_path:compareNewPath,base_hmi:baseHmi,new_hmi:newHmi})
         });
         const started = await response.json();
@@ -96,7 +97,7 @@ export function useCompareProjects(notify: Notify) {
         form.append('base_name',baseName);
         form.append('new_name',newName);
         form.append('base_hmi',baseHmi);form.append('new_hmi',newHmi);
-        const response = await fetch('/api/compare',{method:'POST',body:form});
+        const response = await fetch('/api/compare',{method:'POST',headers:toolProjectHeaders('matchview'),body:form});
         const result = await response.json();
         if (!response.ok) throw new Error(result.detail || 'Compare failed');
         setCompareResult(result);

@@ -1,3 +1,4 @@
+import {toolProjectHeaders} from '../../../src/shared/toolProject';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import type {MetadataItem} from '../types';
 import {dataModelDepartmentLabel, dataModelMachineKey, dataModelResultLabel, evaluateDataModel,
@@ -82,7 +83,7 @@ export function DataModelModal({metadata, machine, selection, check, onSelection
     onChecked(null);
     try {
       const value: DataModelResult = await read(await fetch('/api/nami/data-models/' + model.id + '/validate', {
-        method: 'POST', headers: {'Content-Type': 'application/json'},
+        method: 'POST', headers: {'Content-Type': 'application/json',...toolProjectHeaders('datainspect')},
         body: JSON.stringify({metadata}), signal: request.signal,
       }));
       if (!request.signal.aborted) onChecked({model, result: value, validatedAt: new Date().toISOString()});
