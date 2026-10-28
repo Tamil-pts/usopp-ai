@@ -3,7 +3,7 @@ from contextlib import contextmanager
 import hashlib
 import json
 import os
-from pathlib import Path
+from pathlib import Path,PurePosixPath
 import re
 import sqlite3
 import threading
@@ -126,13 +126,88 @@ class Index:
         with connection(self.path) as db:
             state=metadata(db,'state') or {'phase':'not_indexed','ready':False}
             counts={row['kind']:row['n'] for row in db.execute('SELECT kind,count(*) n FROM symbols GROUP BY kind')}
+            details=metadata(db,'identity') or {}
+            active=details.get('activeConfiguration')
+            tasks=[dict(row) for row in db.execute('SELECT name,source,file,line,enabled,configuration FROM tasks ORDER BY configuration,name,line LIMIT 500')]
+            for task in tasks:
+                task['activeConfiguration']=bool(active and task.get('configuration','').casefold()==str(active).casefold())
+            file_categories={row['category']:row['n'] for row in db.execute("SELECT category,count(*) n FROM files WHERE status='indexed' GROUP BY category ORDER BY category")}
+            relationship_counts={row['kind']:row['n'] for row in db.execute('SELECT kind,count(*) n FROM edges GROUP BY kind ORDER BY kind')}
+            call_count=relationship_counts.get('calls',0)
+            resolved_calls=db.execute("SELECT count(*) FROM edges e WHERE e.kind='calls' AND EXISTS(SELECT 1 FROM symbols s WHERE s.name=e.b AND s.kind IN ('function','function_block','program'))").fetchone()[0]
+            hmi_count=relationship_counts.get('hmi-binding',0)
+            unresolved_hmi=db.execute("SELECT count(*) FROM edges e WHERE e.kind='hmi-binding' AND NOT EXISTS(SELECT 1 FROM symbols s WHERE s.name=e.b)").fetchone()[0]
+            hmi_examples=[dict(row) for row in db.execute("SELECT a,b,file,line,detail FROM edges WHERE kind='hmi-binding' ORDER BY file,line LIMIT 8")]
+            io_examples=[dict(row) for row in db.execute("SELECT a,b,file,line,detail FROM edges WHERE kind='io-binding' ORDER BY file,line LIMIT 8")]
             state={**state,'projectId':self.key,'projectName':self.root.name,'programs':counts.get('program',0),
                    'variables':counts.get('variable',0),'functions':counts.get('function',0),'functionBlocks':counts.get('function_block',0),
                    'dependencies':db.execute('SELECT count(*) FROM edges').fetchone()[0],
                    'dataTypes':counts.get('data_type',0),'blockInstances':db.execute("SELECT count(*) FROM edges e WHERE kind='instance-of' AND EXISTS(SELECT 1 FROM symbols s WHERE s.name=e.b AND s.kind='function_block')").fetchone()[0],
                    'sections':db.execute('SELECT count(*) FROM sections').fetchone()[0],
+                   'projectDetails':{key:details.get(key) for key in ('automationStudioVersion','activeConfiguration','configurationStatus','configurationMessage','plcType','screenFolder','screenFolders','screenType','screenHardwareFile','configuredHmiObjects','logicScopeMessage')},
+                   'fileCategories':file_categories,'relationshipCounts':relationship_counts,
+                   'taskHierarchy':tasks,'callResolution':{'found':call_count,'matchedToLocalDeclaration':resolved_calls,'notMatched':max(0,call_count-resolved_calls)},
+                   'hmiResolution':{'bindings':hmi_count,'notMatchedToVariableDeclaration':unresolved_hmi},
+                   'hmiMappings':hmi_examples,'ioMappings':io_examples,
                    'failedFiles':[dict(row) for row in db.execute("SELECT path,error FROM files WHERE status='failed' ORDER BY path LIMIT 30")]}
         return state
+
+    def search_symbols(self,query,limit=50):
+        """Search declarations in the owner's project index without opening source files."""
+        query=str(query or '').strip().casefold()[:100]
+        if not query:return []
+        limit=max(1,min(int(limit),100))
+        with connection(self.path) as db:
+            rows=db.execute("""
+                SELECT s.name,s.display,s.kind,s.datatype,s.file,s.line,s.scope,
+                       SUM(CASE WHEN r.kind IN ('read','use','condition') THEN 1 ELSE 0 END) AS reads,
+                       SUM(CASE WHEN r.kind='write' THEN 1 ELSE 0 END) AS writes,
+                       SUM(CASE WHEN r.kind='call' THEN 1 ELSE 0 END) AS calls
+                FROM symbols s LEFT JOIN refs r ON r.name=s.name AND (
+                    s.scope LIKE '@global/%' OR r.scope=s.scope OR
+                    r.scope LIKE s.scope || '/%' OR s.scope LIKE r.scope || '/%'
+                )
+                WHERE instr(s.name,?)>0 OR instr(lower(s.display),?)>0
+                GROUP BY s.name,s.display,s.kind,s.datatype,s.file,s.line,s.scope
+                ORDER BY CASE WHEN s.name=? THEN 0 WHEN s.name LIKE ? THEN 1 ELSE 2 END,
+                         s.name,s.file,s.line LIMIT ?
+            """,(query,query,query,query+'%',limit)).fetchall()
+        return [dict(row) for row in rows]
+
+    def source_excerpt(self,relative_path,line=1,context=2):
+        """Read a bounded excerpt from one indexed project file, with index freshness."""
+        value=str(relative_path or '').replace('\\','/').strip('/')
+        parts=PurePosixPath(value).parts
+        if any(part in {'.','..'} for part in parts):
+            raise PermissionError('The requested source path is outside the project boundary.')
+        if not value or not parts:
+            raise ValueError('A project-relative source path is required.')
+        normalized='/'.join(parts)
+        with connection(self.path) as db:
+            record=db.execute("SELECT size,sha FROM files WHERE path=? AND status='indexed'",(normalized,)).fetchone()
+        if not record:
+            raise PermissionError('The requested file is not part of the indexed project.')
+        candidate=self.root.joinpath(*parts)
+        resolved=candidate.resolve()
+        if candidate.is_symlink() or not resolved.is_relative_to(self.root):
+            raise PermissionError('The requested source path is outside the project boundary.')
+        if resolved.stat().st_size>MAX_FILE:
+            raise ValueError('The requested source file exceeds the inspection size limit.')
+        raw=resolved.read_bytes()
+        suffix=resolved.suffix.casefold()
+        content=decode_project_text(resolved,raw) if suffix in {'.src','.ld'} else _text(raw)
+        lines=content.replace('\x00','').splitlines()
+        if not lines:
+            raise ValueError('The requested source file is empty.')
+        selected=max(1,min(int(line),len(lines)))
+        radius=max(0,min(int(context),4))
+        first=max(1,selected-radius);last=min(len(lines),selected+radius)
+        excerpt='\n'.join(f'{number}: {lines[number-1]}' for number in range(first,last+1))
+        current_sha=hashlib.sha256(raw).hexdigest()
+        fresh=current_sha==record['sha']
+        return {'file':normalized,'line':selected,'startLine':first,'endLine':last,'excerpt':excerpt,
+                'freshness':'matches indexed source' if fresh else 'source changed since indexing; refresh the project index',
+                'indexedSha':record['sha'],'currentSha':current_sha}
 
     def discover(self,cancel,state,publish):
         candidates=[];state.update(totalFiles=0,excludedFiles=0,excludedFolders=0,eligibleFiles=0,phase='discovering',percentage=None)

@@ -1,0 +1,88 @@
+{
+  "categories": [
+    {
+      "id": "machine",
+      "label": "Understand Machine",
+      "icon": "workflow",
+      "tests": [
+        { "id": "MF-01", "question": "Explain the complete doffing sequence.", "expected": "Step-by-step sequence with PLC source references." },
+        { "id": "MF-02", "question": "How does the main motor start and stop?", "expected": "Motor control logic, permissives and feedback." },
+        { "id": "MF-03", "question": "Explain the complete machine startup sequence.", "expected": "Startup conditions, operating states and interlocks." },
+        { "id": "MF-04", "question": "How does the sliver cutter operate?", "expected": "Cutter sequence, sensors, outputs and timers." },
+        { "id": "MF-05", "question": "Generate a flowchart for the can changer operation.", "expected": "Source-supported machine function flowchart." }
+      ]
+    },
+    {
+      "id": "troubleshoot",
+      "label": "Troubleshoot",
+      "icon": "stethoscope",
+      "tests": [
+        { "id": "TR-01", "question": "Why is the servo communication alarm coming?", "expected": "Alarm conditions, possible causes and diagnostic checks." },
+        { "id": "TR-02", "question": "Why is DO_CAN_CHANGER not turning ON?", "expected": "Backward logic trace and blocking conditions." },
+        { "id": "TR-03", "question": "Why does the machine stop during production?", "expected": "Stop conditions, related alarms and possible causes." },
+        { "id": "TR-04", "question": "Which interlock prevents the main motor from starting?", "expected": "Interlock analysis and relevant PLC variables." },
+        { "id": "TR-05", "question": "Why is the doffing sequence not completing?", "expected": "Sequence investigation, feedback and timeout checks." }
+      ]
+    },
+    {
+      "id": "runtime",
+      "label": "Runtime & Memory",
+      "icon": "cpu",
+      "tests": [
+        { "id": "RT-01", "question": "Check possible memory violation causes in this project.", "expected": "Array, pointer, buffer and memory-risk findings." },
+        { "id": "RT-02", "question": "Why is the PLC watchdog timing out?", "expected": "Task execution risks and required runtime diagnostics." },
+        { "id": "RT-03", "question": "Check whether TCP packet reception can overflow the buffer.", "expected": "Buffer capacity, received length and bounds analysis." },
+        { "id": "RT-04", "question": "Why is the PLC restarting unexpectedly?", "expected": "Exception, watchdog and restart-diagnostic investigation." },
+        { "id": "RT-05", "question": "Identify potential task execution conflicts.", "expected": "Shared-variable and multi-task dependency analysis." }
+      ]
+    },
+    {
+      "id": "review",
+      "label": "Review & Optimize",
+      "icon": "code",
+      "tests": [
+        { "id": "CR-01", "question": "Review the PLC program for possible bugs.", "expected": "Source-linked issues, severity and recommendations." },
+        { "id": "CR-02", "question": "Find unused variables and unreachable code.", "expected": "Unused-symbol and control-flow analysis." },
+        { "id": "CR-03", "question": "Optimize the main motor logic without changing its behavior.", "expected": "Suggested improvements and regression tests." },
+        { "id": "CR-04", "question": "Compare the doffing logic between two project versions.", "expected": "Functional differences and change impact." },
+        { "id": "CR-05", "question": "Identify possible race conditions between cyclic tasks.", "expected": "Multiple-writer and execution-order analysis." }
+      ]
+    },
+    {
+      "id": "communication",
+      "label": "Communication",
+      "icon": "network",
+      "tests": [
+        { "id": "CM-01", "question": "Analyze CAN communication failure.", "expected": "CAN configuration, status and error-condition analysis." },
+        { "id": "CM-02", "question": "Decode the Spin Connect GC20 packet.", "expected": "Parameter values, offsets, datatypes and validation." },
+        { "id": "CM-03", "question": "Trace an HMI parameter to its PLC variable.", "expected": "HMI binding, PLC symbol and logic references." },
+        { "id": "CM-04", "question": "Why is the TCP socket connection timing out?", "expected": "Socket logic, timeout settings and possible causes." },
+        { "id": "CM-05", "question": "Check metadata byte-offset and datatype mismatches.", "expected": "Packet structure and metadata consistency findings." }
+      ]
+    },
+    {
+      "id": "testing",
+      "label": "Test & Document",
+      "icon": "checklist",
+      "tests": [
+        { "id": "TS-01", "question": "Generate FAT test cases for doffing.", "expected": "Normal, abnormal, timeout and recovery test cases." },
+        { "id": "TS-02", "question": "Prepare a servo communication troubleshooting report.", "expected": "Source-linked findings and diagnostic recommendations." },
+        { "id": "TS-03", "question": "Create a complete doffing function flowchart.", "expected": "Flowchart with decisions, actions and source evidence." },
+        { "id": "TS-04", "question": "Generate a machine I/O and interlock list.", "expected": "Mapped signals, conditions and source references." },
+        { "id": "TS-05", "question": "Generate regression tests for the modified PLC logic.", "expected": "Test scenarios covering affected machine functions." }
+      ]
+    }
+  ],
+  "wordingVariationTests": [
+    { "id": "NL-01", "question": "Explain doffing.", "expected": "Doffing function explanation." },
+    { "id": "NL-02", "question": "How can changer working?", "expected": "Can changer function explanation." },
+    { "id": "NL-03", "question": "Doffing sequence sollunga.", "expected": "Doffing function explanation." },
+    { "id": "NL-04", "question": "Full can change process explain.", "expected": "Doffing function explanation." },
+    { "id": "NL-05", "question": "Can changer not moving, why?", "expected": "Doffing fault investigation." },
+    { "id": "NL-06", "question": "Doffing output not ON.", "expected": "Output troubleshooting." },
+    { "id": "NL-07", "question": "Draw doffing logic flow.", "expected": "Flowchart generation." },
+    { "id": "NL-08", "question": "Why machine not doff automatically?", "expected": "Automatic doffing interlock analysis." },
+    { "id": "NL-09", "question": "Which program controls can changing?", "expected": "Source program discovery." },
+    { "id": "NL-10", "question": "What happens after sliver cutting?", "expected": "Sequence continuation analysis." }
+  ]
+}
