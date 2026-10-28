@@ -104,12 +104,25 @@
 @media(prefers-reduced-motion:reduce) { .chopperInterface .chopperMessages { scroll-behavior:auto; } }
 
 /* Chopper reference landing page: keep the first question workflow compact and zoom-safe. */
-.workspaceApp .chopperInterface .chopperWorkspace.chopperWelcomeWorkspace { grid-template-columns:minmax(0,1fr);min-height:0;max-width:1040px;margin:0 auto;background:var(--panel); }
-.chopperInterface .chopperWelcomeWorkspace>.chopperSidebar { display:none; }
+.workspaceApp .chopperInterface .chopperWorkspace.chopperWelcomeWorkspace { grid-template-columns:236px minmax(0,1fr);min-height:0;width:100%;max-width:none;margin:0;background:var(--panel); }
+.chopperInterface .chopperWelcomeWorkspace>.chopperSidebar { display:flex;align-self:stretch;min-width:0;max-height:calc(100vh - 100px);overflow-y:auto; }
+.chopperInterface .chopperSidebar .chopperInvestigationNav { display:grid;grid-template-columns:minmax(0,1fr);gap:3px; }
+.chopperInterface .chopperSidebar .chopperInvestigationNav>button { display:flex;align-items:center;gap:9px;width:100%;text-align:left; }
+.chopperInterface .chopperSidebar .chopperInvestigationNav>button.active { color:#fff;background:#124d60;border-radius:6px; }
+.chopperInterface .chopperSidebar .chopperInvestigationNav>button.active svg { color:#86e9c9; }
+.chopperInterface .chopperSidebar .chopperFaq { display:block; }
+.chopperInterface .chopperSidebar .chopperFaq>summary { list-style:none; }
+.chopperInterface .chopperSidebar .chopperFaq>summary::-webkit-details-marker { display:none; }
+.chopperInterface .chopperSidebar .chopperFaq>summary::after { content:'+';float:right;color:#a8c9d5; }
+.chopperInterface .chopperSidebar .chopperFaq[open]>summary::after { content:'−'; }
+.chopperFaqList { display:grid;gap:4px;margin-top:7px; }
+.chopperFaqList>details { padding:7px 5px;border-top:1px solid #2b5b6a; }
+.chopperFaqList summary { color:#daeaf0;font-size:11px;line-height:1.5;cursor:pointer; }
+.chopperFaqList p { margin:5px 0 2px;color:#a8c9d5;font-size:10px;line-height:1.55; }
 .chopperInterface .chopperWelcomeWorkspace .chopperWorkArea,.chopperInterface .chopperWelcomeWorkspace .chopperChat { min-width:0;width:100%; }
 .chopperInterface .chopperWelcomeWorkspace .chopperChat>header,.chopperInterface .chopperWelcomeWorkspace .workbenchIndexDetails { display:none; }
 .chopperInterface .chopperWelcomeWorkspace .chopperMessages.isWelcome { flex:initial;min-height:0;max-height:none;overflow:visible;justify-content:flex-start;padding:16px 24px 8px; }
-.chopperReferenceWelcome { width:100%;max-width:900px;margin:0 auto; }
+.chopperReferenceWelcome { width:100%;max-width:min(100%,1600px);margin:0 auto; }
 .chopperReferenceTop { display:flex;align-items:center;justify-content:space-between;gap:14px;padding:2px 0 16px;border-bottom:1px solid var(--line); }
 .chopperReferenceBrand { display:flex;align-items:center;gap:11px;min-width:0; }
 .chopperReferenceAvatar { width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--accent);color:#fff;flex:none; }
@@ -134,21 +147,29 @@
 .chopperInvestigationGrid button svg { color:var(--muted);flex:none; }
 .chopperInvestigationGrid button.active { border-color:var(--accent);background:var(--accentbg);color:var(--accent); }
 .chopperInvestigationGrid button.active svg { color:var(--accent); }
-.chopperWorkbenchQuestions { margin-top:18px; }
-.chopperWorkbenchSectionHeading { display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 8px;color:var(--text);font-size:12px;font-weight:600; }
-.chopperWorkbenchSectionHeading>span { display:flex;align-items:center;gap:7px;min-width:0; }
-.chopperWorkbenchSectionHeading svg { color:var(--accent); }
-.chopperWorkbenchSectionHeading small { color:var(--muted);font-weight:400;white-space:nowrap; }
-.chopperWorkbenchQuestion { display:grid;grid-template-columns:58px minmax(0,1fr) 16px;align-items:center;gap:9px;width:100%;margin:0 0 7px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);text-align:left;font:inherit;font-size:12px;line-height:1.5;cursor:pointer; }
-.chopperWorkbenchQuestion:hover,.chopperWordingTests button:hover { border-color:var(--accent);background:var(--accentbg); }
-.chopperWorkbenchQuestion>svg { color:var(--muted); }
-.chopperWorkbenchTestId { color:var(--muted);font:10px/1.4 'IBM Plex Mono',Consolas,monospace; }
-.chopperWordingTests { margin-top:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel); }
-.chopperWordingTests summary { display:flex;justify-content:space-between;gap:10px;padding:9px 12px;color:var(--muted);font-size:11px;cursor:pointer; }
-.chopperWordingTests summary span { color:var(--faint); }
-.chopperWordingTests>div { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:0 8px 8px; }
-.chopperWordingTests button { display:flex;align-items:start;gap:8px;min-width:0;padding:7px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--text);text-align:left;font:inherit;font-size:11px;cursor:pointer; }
-.chopperWordingTests button span { color:var(--muted);font:9px/1.5 'IBM Plex Mono',Consolas,monospace;white-space:nowrap; }
+.chopperWorkbenchTools { display:flex;align-items:center;gap:10px;margin:14px 0 2px; }
+.chopperWorkbenchTools>span { color:var(--muted);font:10px/1.4 'IBM Plex Mono',Consolas,monospace;letter-spacing:.08em;white-space:nowrap; }
+.chopperWorkbenchTools button { display:flex;align-items:center;gap:10px;min-width:0;padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);text-align:left;font:inherit;cursor:pointer; }
+.chopperWorkbenchTools button:hover { border-color:var(--accent);background:var(--accentbg); }
+.chopperWorkbenchTools button>svg:first-child { color:var(--accent);flex:none; }
+.chopperWorkbenchTools button>svg:last-child { color:var(--muted);flex:none;margin-left:10px; }
+.chopperWorkbenchTools button span { display:grid;gap:2px; }
+.chopperWorkbenchTools button b { font-size:11px;font-weight:600; }
+.chopperWorkbenchTools button small { color:var(--muted);font-size:10px; }
+.chopperFaqPrompts>summary { display:flex;align-items:flex-start;gap:6px; }
+.chopperFaqPrompts>summary svg { flex:none;color:#86e9c9; }
+.chopperFaqPrompts>summary span { margin-left:auto;color:#a8c9d5;font:9px/1.5 'IBM Plex Mono',Consolas,monospace; }
+.chopperFaqPromptList { display:grid;gap:3px;margin-top:6px; }
+.chopperFaqPromptList button { display:grid;grid-template-columns:34px minmax(0,1fr) 12px;align-items:start;gap:5px;width:100%;min-width:0;padding:6px 4px;border:0;border-radius:5px;background:transparent;color:#daeaf0;text-align:left;font:inherit;font-size:10px;line-height:1.45;cursor:pointer; }
+.chopperFaqPromptList button:hover,.chopperFaqWording button:hover { color:#fff;background:#124d60; }
+.chopperFaqPromptList button>span:first-child,.chopperFaqWording button>span:first-child { color:#95bfcc;font:9px/1.5 'IBM Plex Mono',Consolas,monospace; }
+.chopperFaqPromptList button>span:nth-child(2) { min-width:0;overflow-wrap:anywhere; }
+.chopperFaqPromptList button>svg { color:#a8c9d5; }
+.chopperFaqWording { margin:6px 4px 0;padding-top:6px;border-top:1px solid #2b5b6a; }
+.chopperFaqWording>summary { display:flex;justify-content:space-between;gap:8px; }
+.chopperFaqWording>summary span { margin-left:auto;color:#a8c9d5;font-size:9px;white-space:nowrap; }
+.chopperFaqWording>div { display:grid;gap:3px;margin-top:6px; }
+.chopperFaqWording button { display:grid;grid-template-columns:32px minmax(0,1fr);gap:5px;width:100%;padding:5px;border:0;border-radius:5px;background:transparent;color:#daeaf0;text-align:left;font:inherit;font-size:10px;line-height:1.4;cursor:pointer; }
 .chopperWorkbenchHint { margin:10px 0 4px;color:var(--muted);font-size:10px;line-height:1.5; }
 .chopperWorkbenchHint b { color:var(--text);font-weight:500; }
 .chopperInterface .chopperWelcomeWorkspace .chopperComposer { border-top:0;padding-top:10px; }
@@ -156,19 +177,22 @@
 .chopperInterface .chopperWelcomeWorkspace .chatAttachButton { display:flex;align-items:center;gap:6px; }
 .chopperInterface .chopperWelcomeWorkspace .chopperComposer small { grid-column:1/-1; }
 @media(max-width:760px) {
+ .workspaceApp .chopperInterface .chopperWorkspace.chopperWelcomeWorkspace { grid-template-columns:minmax(0,1fr); }
+ .chopperInterface .chopperWelcomeWorkspace>.chopperSidebar { max-height:none;border-right:0;border-bottom:1px solid #26566a; }
+ .chopperInterface .chopperSidebar .chopperInvestigationNav { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .chopperInterface .chopperSidebar .chopperInvestigationNav>span { grid-column:1/-1; }
  .chopperInterface .chopperWelcomeWorkspace .chopperMessages.isWelcome { padding:14px 16px 6px; }
  .chopperReferenceControls { align-items:stretch;gap:10px; }
  .chopperReferenceControls>label { flex:1; }
  .chopperInvestigationGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
- .chopperWordingTests>div { grid-template-columns:minmax(0,1fr); }
 }
 @media(max-width:430px) {
+ .chopperInterface .chopperSidebar .chopperInvestigationNav { grid-template-columns:minmax(0,1fr); }
  .chopperReferenceTop { align-items:flex-start; }
  .chopperProjectStatus { max-width:130px;white-space:normal;line-height:1.35; }
  .chopperReferenceControls { flex-direction:column;align-items:stretch; }
  .chopperModeControl { display:flex;align-items:center;justify-content:space-between;text-align:left; }
  .chopperInvestigationGrid { grid-template-columns:minmax(0,1fr); }
- .chopperWorkbenchQuestion { grid-template-columns:48px minmax(0,1fr) 14px;gap:6px;padding:9px; }
 }
 
 .chopperReply { display:grid;gap:12px;min-width:0;line-height:1.65; }

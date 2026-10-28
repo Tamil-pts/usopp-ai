@@ -1,4 +1,4 @@
-# 1. Windows installation — uSOPp.ai 4.66.0
++# 1. Windows installation — uSOPp.ai 4.66.0
 
 Run commands in **Windows PowerShell**, one numbered step at a time. Stop if a command reports an error.
 
