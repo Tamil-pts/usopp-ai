@@ -29,8 +29,6 @@ def create_user(request:Request,data:dict=Body(...)):
         user=accounts.store.register(username_field(data),field(data,'password',8,128),field(data,'designation'),field(data,'company'),data.get('role','user'),data.get('email',''))
     except sqlite3.IntegrityError:
         raise HTTPException(409,'This username already exists.')
-    except accounts.AccountCapacityError as error:
-        raise HTTPException(409,str(error))
     except ValueError as error: raise HTTPException(400,str(error))
     return {'user':user}
 
@@ -158,8 +156,6 @@ def register(request:Request,response:Response,data:dict=Body(...)):
         user=accounts.store.request_account(username,password,field(data,'designation'),field(data,'company'),data.get('email',''))
     except sqlite3.IntegrityError:
         raise HTTPException(409,'This username already exists. Choose another or sign in.')
-    except accounts.AccountCapacityError as error:
-        raise HTTPException(409,str(error))
     except ValueError as error:raise HTTPException(400,str(error)) from None
     response.headers['Cache-Control']='no-store'
     return {'pending':True,'message':'Your account request was sent to the administrator. You can sign in after Admin enables your account.'}

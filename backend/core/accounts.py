@@ -14,13 +14,6 @@ COOKIE = 'usopp_session'
 SESSION_SECONDS = 12 * 60 * 60
 DEMO_SESSION_SECONDS = 30 * 60
 ITERATIONS = 600000
-# Keep USOPP_MAX_USERS as the total account limit for existing deployments.
-# Six enabled accounts allow five regular users plus the seeded Admin.
-MAX_ACTIVE_USERS = max(1, int(os.getenv('USOPP_MAX_USERS', '6')))
-
-class AccountCapacityError(ValueError):
-    pass
-
 def password_hash(password):
     salt = secrets.token_bytes(16)
     digest = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, ITERATIONS)
@@ -103,8 +96,8 @@ class AccountStore:
                         raise ValueError('The initial Admin password must contain 8 to 128 characters.')
                     connection.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at) VALUES (?,?,?,?,?,?,?)',
                         ('Admin','admin',password_hash(initial_password),'Administrator','usop.ai','admin',time.time()))
-                # Preserve existing accounts; reserve a separate demonstration
-                # account without using any regular-user capacity.
+                # Preserve existing accounts; keep the demonstration login
+                # separate from real account listings and workspaces.
                 if not connection.execute("SELECT 1 FROM users WHERE username_key='demo'").fetchone():
                     connection.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at,is_demo) VALUES (?,?,?,?,?,?,?,1)',
                         ('demo','demo',password_hash('demo'),'Demo user','usop.ai','user',time.time()))
@@ -119,7 +112,6 @@ class AccountStore:
             db.execute('BEGIN IMMEDIATE')
             if db.execute('SELECT 1 FROM users WHERE username_key=?', (username.casefold(),)).fetchone():
                 raise sqlite3.IntegrityError('Username already exists')
-            self._check_capacity(db)
             result = db.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at) VALUES (?,?,?,?,?,?,?)',
                 (username,username.casefold(),encoded,designation,company,role,time.time()))
             db.execute('UPDATE users SET email=? WHERE id=?',(email,result.lastrowid))
@@ -188,12 +180,8 @@ class AccountStore:
     def capacity(self):
         with self.db() as db:
             count = db.execute('SELECT COUNT(*) FROM users WHERE active=1 AND is_demo=0').fetchone()[0]
-        return {'maxActiveUsers': MAX_ACTIVE_USERS, 'activeUsers': count,
-                'availableSlots': max(0, MAX_ACTIVE_USERS-count), 'includesAdmin': True}
-
-    def _check_capacity(self, db):
-        if db.execute('SELECT COUNT(*) FROM users WHERE active=1 AND is_demo=0').fetchone()[0] >= MAX_ACTIVE_USERS:
-            raise AccountCapacityError(f'The {MAX_ACTIVE_USERS}-account limit is reached, including Admin. Disable an unused account or increase USOPP_MAX_USERS on the server.')
+        return {'maxActiveUsers': None, 'activeUsers': count,
+                'availableSlots': None, 'includesAdmin': True, 'unlimited': True}
 
     def manage_user(self, user_id, username, designation, company, active, password=None, role=None, actor_id=None, email=None):
         with self.db() as db:
@@ -210,8 +198,6 @@ class AccountStore:
             if row['role']=='admin' and row['active'] and (not active or role!='admin'):
                 others=db.execute("SELECT COUNT(*) FROM users WHERE role='admin' AND active=1 AND is_demo=0 AND id!=?",(user_id,)).fetchone()[0]
                 if not others: raise ValueError('Keep at least one enabled administrator.')
-            if active and not row['active']:
-                self._check_capacity(db)
             db.execute('UPDATE users SET username=?,username_key=?,designation=?,company=?,role=?,active=?,approved=CASE WHEN ?=1 THEN 1 ELSE approved END WHERE id=?',
                        (username,username.casefold(),designation,company,role,int(active),int(active),user_id))
             if email is not None: db.execute('UPDATE users SET email=? WHERE id=?',(email_address(email),user_id))

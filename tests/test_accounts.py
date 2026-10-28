@@ -80,48 +80,44 @@ class AccountTests(unittest.TestCase):
         self.assertEqual(response.status_code,400)
         self.assertNotIn('secret-must-not-be-returned',response.text)
 
-    def test_simultaneous_registration_cannot_exceed_capacity(self):
+    def test_simultaneous_registration_is_not_limited_to_six_accounts(self):
         barrier=threading.Barrier(6)
         def create(index):
             barrier.wait(timeout=5)
-            try:
-                self.store.register(f'concurrent{index}','Test.pass.2026','Engineer','Test')
-                return 'created'
-            except accounts.AccountCapacityError:
-                return 'full'
-        with patch.object(accounts,'MAX_ACTIVE_USERS',6),ThreadPoolExecutor(max_workers=6) as pool:
+            self.store.register(f'concurrent{index}','Test.pass.2026','Engineer','Test')
+            return 'created'
+        with patch.object(accounts,'password_hash',return_value='test-hash'),ThreadPoolExecutor(max_workers=6) as pool:
             results=list(pool.map(create,range(6)))
-            self.assertEqual(results.count('created'),5)
-            self.assertEqual(results.count('full'),1)
-            self.assertEqual(self.store.capacity(),{'maxActiveUsers':6,'activeUsers':6,'availableSlots':0,'includesAdmin':True})
+            self.assertEqual(results.count('created'),6)
+            self.assertEqual(self.store.capacity(),{'maxActiveUsers':None,'activeUsers':7,'availableSlots':None,'includesAdmin':True,'unlimited':True})
             users=self.store.list_users()
-            self.assertEqual(sum(user['role']=='user' for user in users),5)
+            self.assertEqual(sum(user['role']=='user' for user in users),6)
             self.assertEqual(sum(user['role']=='admin' for user in users),1)
 
-    def test_admin_creation_uses_five_regular_user_slots_and_keeps_session(self):
-        with patch.object(accounts,'MAX_ACTIVE_USERS',6):
+    def test_admin_can_create_more_than_six_accounts_and_keeps_session(self):
+        with patch.object(accounts,'password_hash',return_value='test-hash'):
             self.client.post('/api/auth/login',json={'username':'Admin','password':'usopp.2026'})
-            for index in range(5):
+            for index in range(200):
                 response=self.client.post('/api/auth/users',json={'username':f'created{index}',
                     'password':'Test.pass.2026','designation':'Engineer','company':'Test'})
                 self.assertEqual(response.status_code,200,response.text)
                 self.assertEqual(response.json()['user']['role'],'user')
-                self.assertEqual(self.client.get('/api/auth/session').json()['user']['role'],'admin')
-            extra=self.client.post('/api/auth/users',json={'username':'one_too_many',
-                'password':'Test.pass.2026','designation':'Engineer','company':'Test'})
-            self.assertEqual(extra.status_code,409,extra.text)
+                if index in (0,199):
+                    self.assertEqual(self.client.get('/api/auth/session').json()['user']['role'],'admin')
+            capacity=self.client.get('/api/auth/users').json()['capacity']
+            self.assertEqual(capacity['activeUsers'],201)
+            self.assertTrue(capacity['unlimited'])
 
-    def test_disabled_account_history_identity_and_reenable_capacity(self):
-        with patch.object(accounts,'MAX_ACTIVE_USERS',2):
-            user=self.store.register('engineer','Test.pass.2026','Engineer','Test')
-            self.store.manage_user(user['id'],'engineer','Engineer','Test',False)
-            self.assertEqual(self.store.capacity()['availableSlots'],1)
-            self.store.register('replacement','Test.pass.2026','Engineer','Test')
-            with self.assertRaises(accounts.AccountCapacityError):
-                self.store.manage_user(user['id'],'engineer','Engineer','Test',True)
-            with self.store.db() as db:
-                row=db.execute('SELECT * FROM users WHERE id=?',(user['id'],)).fetchone()
-                self.assertFalse(row['active'])
-                self.assertTrue(accounts.password_matches('Test.pass.2026',row['password_hash']))
+    def test_disabled_account_history_identity_and_reenable_without_slot_limit(self):
+        user=self.store.register('engineer','Test.pass.2026','Engineer','Test')
+        self.store.manage_user(user['id'],'engineer','Engineer','Test',False)
+        self.store.register('replacement','Test.pass.2026','Engineer','Test')
+        reenabled=self.store.manage_user(user['id'],'engineer','Engineer','Test',True)
+        self.assertTrue(reenabled['active'])
+        self.assertEqual(self.store.capacity()['activeUsers'],3)
+        with self.store.db() as db:
+            row=db.execute('SELECT * FROM users WHERE id=?',(user['id'],)).fetchone()
+            self.assertTrue(row['active'])
+            self.assertTrue(accounts.password_matches('Test.pass.2026',row['password_hash']))
 
 if __name__=='__main__': unittest.main()

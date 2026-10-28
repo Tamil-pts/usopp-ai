@@ -6,12 +6,11 @@ Keep all three account flows available in every uSOPp release:
 - Every signed-in user, including Admin, can change their own password through **Settings > My account**, by supplying the current password.
 - Admin can create and manage regular accounts through **WorkHub > User management**. Creating a user must keep the Admin's current session.
 
-From 4.65.2, the default capacity is five enabled regular users plus Admin
-(six accounts total). `USOPP_MAX_USERS` counts all enabled accounts including
-Admin; its default is `6`. Disabled accounts retain history.
-Apply the same transactional capacity check to registration, Admin creation
-and re-enabling. Preserve installations that already exceed the new default.
-See [MULTI_USER.md](MULTI_USER.md) for concurrent jobs and per-test history.
+There is no fixed account-count limit. Support 200 or more accounts while
+keeping account count separate from concurrent project-engine jobs. Disabled
+accounts retain history. Keep registration, Admin creation and re-enabling
+transactional without a capacity gate. See [MULTI_USER.md](MULTI_USER.md) for
+concurrent jobs and per-test history.
 
 Admin sees every user's history; regular users see their own results. Keep
 ownership checks on result, download, workspace, source and project-reuse

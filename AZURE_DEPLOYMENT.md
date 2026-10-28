@@ -191,9 +191,9 @@ in your organization's password manager. The script stores a password hash;
 existing accounts/passwords are preserved if the data directory was already
 initialized. The service refuses to start with the known local-demo Admin password.
 
-`/etc/usopp/usopp.env` keeps six enabled accounts (five users plus Admin) and
-five engine slots. Edit it later with `sudo nano /etc/usopp/usopp.env`; restart
-the service after changing settings. AI is optional: a local model or an API
+`/etc/usopp/usopp.env` keeps the engine-job limit at five; the account count has
+no fixed cap. Edit it later with `sudo nano /etc/usopp/usopp.env`; restart the
+service after changing settings. AI is optional: a local model or an API
 endpoint requires separate configuration and resources.
 
 ## 9. Install the service and start

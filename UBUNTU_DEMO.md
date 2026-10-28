@@ -567,9 +567,10 @@ npm run status
 
 ## 14. Multiple users and test history (4.65.2)
 
-The updated application defaults to five enabled regular users plus Admin
-(six accounts total). If the startup environment has `USOPP_MAX_USERS=5`,
-change it to `USOPP_MAX_USERS=6` before restarting.
+The updated application has no fixed account-count limit and supports 200 or
+more accounts. `USOPP_MAX_USERS` is no longer used. Account count is separate
+from the default five concurrent project-engine jobs.
+
 WorkHub now retains DataInspect, ByteMap and LogicScan results with a separate
 test ID, owner and timestamp. Admin sees every user's tests; regular users see
 their own. Existing accounts and stored results are retained.

@@ -2,15 +2,14 @@
 
 ## 1. Account capacity
 
-The default is **five enabled regular users plus Admin: six accounts total**.
-Admin can check usage in **WorkHub → User management**. Self-registration and
-Admin account creation use the same limit. Disabling an account frees a slot
-and preserves its historical results. Re-enabling it requires an available slot.
-Existing usernames, password hashes, roles and results are preserved. If an
-existing installation already has more than six enabled accounts, they remain
-enabled; further creation or re-enabling is blocked until capacity is available.
+There is no fixed account-count limit. The system supports at least 200 accounts;
+Admin can create accounts directly or enable self-registration requests in
+**WorkHub > User management**. Enabling or re-enabling accounts does not depend
+on how many other accounts exist. Admin can review the current enabled-account
+count there. Disabling an account preserves its historical results. Existing
+usernames, password hashes, roles and results are preserved.
 
-Users can change their own password through **Settings → My account**.
+Users can change their own password through **Settings > My account**.
 Shared model connection settings and account administration stay Admin-only.
 
 Use separate computers or browser profiles for independent simultaneous logins.
@@ -85,7 +84,6 @@ cd "$HOME/usopp-demo/usopp_ai_2.0"
 source .venv-ubuntu/bin/activate
 npm stop
 npm run server:install
-export USOPP_MAX_USERS=6
 export USOPP_MAX_PARALLEL_TESTS=5
 npm start -- --port 8201
 npm run status
@@ -94,14 +92,14 @@ npm run status
 Open `http://<server-IP>:8201`. The UI and API badges should match the updated
 `package.json` version (currently **4.65.5**). For 4.65.3 and later, also copy the bundled
 data model references as described in [UBUNTU_DEMO.md](UBUNTU_DEMO.md).
-Restart the backend after updating source or changing either capacity setting.
+Restart the backend after updating its source or configuration.
 
-`USOPP_MAX_USERS` counts all enabled accounts, including Admin. Its default
-is `6`; replace an older explicit setting of `5` with `6`. To increase account
-capacity later, set a larger positive integer before starting. Keep
-`USOPP_MAX_PARALLEL_TESTS` independent; raising it increases CPU/memory demand.
-Store these exports in the server's startup script or service environment so
-they persist after reboot. Default values require no environment variables.
+`USOPP_MAX_USERS` is no longer used; older environment values can be removed.
+Account count is independent from `USOPP_MAX_PARALLEL_TESTS`, which defaults to
+five concurrent project-engine jobs. Six or more users may sign in at once;
+additional engine jobs wait for an available slot. Raising the job limit
+increases CPU and memory demand. Store the parallel-job setting in the server's
+startup script or service environment if you need a different value.
 
 The data root defaults to the source application folder on Ubuntu. EXE launches
 default to `%LOCALAPPDATA%\uSOPp.ai`. `USOPP_DATA_ROOT` can select a persistent
@@ -162,11 +160,11 @@ loopback PLC, so they establish correctness rather than production throughput.
 On 2026-10-10, all **156 regression checks** passed, including the 16
 concurrency/browser checks and **85 retained runs** from five regular users
 plus Admin across a backend restart. The browser checks also verified the
-regular-user capacity display. Python compilation, both TypeScript checks and
+admin account-count display. Python compilation, both TypeScript checks and
 both production builds passed.
 Deployment and load testing of **4.65.2** on the Ubuntu server
 remain pending; copying source does not update an already running process.
 
 ## Git packages and container deployments
 
-Use GIT_DISTRIBUTION.md for private GitHub downloads and distribution/README.md for installation. The container uses six enabled accounts, five engine slots and one backend worker. A persistent named volume retains accounts, user ownership, unique test IDs, reports and Admin history across image upgrades. Native Windows and container installations use separate stores.
+Use GIT_DISTRIBUTION.md for private GitHub downloads and distribution/README.md for installation. The container has no fixed account-count cap, defaults to five concurrent project-engine jobs and runs one backend worker. A persistent named volume retains accounts, user ownership, unique test IDs, reports and Admin history across image upgrades. Native Windows and container installations use separate stores.

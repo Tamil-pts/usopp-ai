@@ -66,7 +66,7 @@ COPY --from=llama_cpu /llama/LICENSE /opt/usopp/local_ai/runtime/LICENSE.txt
 COPY deploy/container/entrypoint.sh /usr/local/bin/usopp-start
 RUN chmod 755 /usr/local/bin/usopp-start
 ENV PATH="/opt/venv/bin:$PATH" PYTHONPATH="/opt/usopp:/opt/usopp/python_engine" PYTHONUTF8=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
-    USOPP_DATA_ROOT=/data HOME=/data USOPP_MAX_USERS=6 USOPP_MAX_PARALLEL_TESTS=5 USOPP_REQUIRE_FRONTEND_BUILD=1
+    USOPP_DATA_ROOT=/data HOME=/data USOPP_MAX_PARALLEL_TESTS=5 USOPP_REQUIRE_FRONTEND_BUILD=1
 WORKDIR /opt/usopp
 USER 10001:10001
 EXPOSE 8200

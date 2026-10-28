@@ -83,7 +83,7 @@ class MultiUserHTTPTests(unittest.TestCase):
         cls.url = f'http://127.0.0.1:{port}'
         cls.env = {**os.environ, 'USOPP_DATA_ROOT': str(cls.data),
                'USOPP_MAX_PARALLEL_TESTS': '5', 'PYTHONUTF8': '1'}
-        cls.env.pop('USOPP_MAX_USERS', None)  # Verify the default: five users plus Admin.
+        cls.env.pop('USOPP_MAX_USERS', None)  # Account count has no fixed cap.
         cls.command = [sys.executable, '-m', 'uvicorn', 'backend.app:app',
                        '--host', '127.0.0.1', '--port', str(port)]
         try:
@@ -359,10 +359,11 @@ class MultiUserHTTPTests(unittest.TestCase):
             self.assertFalse(any(row.get('legacy') for row in rows),rows)
         capacity=self.ok(self.clients[0].get('/api/auth/users'))['capacity']
         self.assertEqual(capacity['activeUsers'],ACCOUNT_COUNT)
-        self.assertEqual(capacity['maxActiveUsers'],ACCOUNT_COUNT)
+        self.assertIsNone(capacity['maxActiveUsers'])
+        self.assertTrue(capacity['unlimited'])
         extra=self.clients[0].post('/api/auth/users',json={'username':'extra_enabled',
             'password':PASSWORD,'designation':'Test','company':'Test'})
-        self.assertEqual(extra.status_code,409)
+        self.assertEqual(extra.status_code,200,extra.text)
         responses=self.concurrent(lambda i,c:c.post('/api/auth/register',json={'username':f'extra{i}',
             'password':PASSWORD,'designation':'Test','company':'Test'}))
         self.assertEqual([r.status_code for r in responses],[202]*ACCOUNT_COUNT)
