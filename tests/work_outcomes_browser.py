@@ -66,7 +66,7 @@ def main():
                     check(tab+' opens without formal assessment',page.get_by_role('heading',name='Competency Hub',exact=True).is_visible())
                 page.get_by_text('Expand detailed report',exact=True).click();check('Detailed report includes project and task inputs','Calculation inputs' in page.locator('.ch-report-preview').inner_text())
                 for kind in ('PDF','Excel'):
-                    response=page.request.get(page.get_by_role('link',name='Export '+kind,exact=True).get_attribute('href'),timeout=60000)
+                    response=page.request.get(base+page.get_by_role('link',name='Export '+kind,exact=True).get_attribute('href'),timeout=60000)
                     check('Work-based '+kind+' export',response.status==200 and response.body().startswith(b'%PDF' if kind=='PDF' else b'PK'))
                 for width in (1000,768,390):
                     page.set_viewport_size({'width':width,'height':1000});page.wait_for_timeout(500);check('Work insights fit '+str(width),page.evaluate('document.documentElement.scrollWidth<=innerWidth+2'))
