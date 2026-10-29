@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useRef,useState,type PointerEvent,type KeyboardEvent} from 'react';
 import {Expand,Minimize2,MoveDiagonal2} from 'lucide-react';
 import {qualityDescription,useMetadataQuality,type QualityState,type QualityFocus} from './MetadataQuality';
+import {MetadataRenameDialog,type MetadataRename} from './MetadataRenameDialog';
 
 type Sheet={name:string;headers:string[];rows:Record<string,any>[]};
 type DataModelParameter={name?:string;tagName?:string;canonicalName?:string;aliases?:string[];tdEngineKey?:string;mongoKey?:string;dataType?:string;groupCodes?:unknown[];groupCode?:unknown;groupCodeSource?:string;kind?:string;sheet?:string;source?:string;ignoreNameSeparators?:boolean;required?:boolean};
@@ -32,6 +33,11 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
   const [busy,setBusy]=useState(false);
   const [message,setMessage]=useState('');
   const [download,setDownload]=useState('');
+  const [offerMasterMapping,setOfferMasterMapping]=useState(true);
+  const [rename,setRename]=useState<MetadataRename|null>(null);
+  const renameOpen=useRef(false);
+  const sourceWorkbook=useRef('');
+  const cellBeforeEdit=useRef<{sheet:number;row:number;column:string;value:string}|null>(null);
   const [groupFilter,setGroupFilter]=useState('');
   const [duplicateFilter,setDuplicateFilter]=useState<'all'|'duplicate'|'unique'>('all');
   const [offsetFilter,setOffsetFilter]=useState('all');
@@ -56,11 +62,12 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
   useEffect(()=>{
     let cancelled=false;
     setSheets([]);setActive(0);setDirty(false);setEdit(false);setDownload('');setWorkbook('');setGroupFilter('');setDuplicateFilter('all');
+    sourceWorkbook.current='';cellBeforeEdit.current=null;renameOpen.current=false;setRename(null);
     if(!path&&!sessionId){setMessage('Select a metadata workbook or generate one from the project.');return}
     setBusy(true);setMessage('Loading workbook…');
     fetch('/api/metadata/view/sheets',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path,sessionId,source})})
       .then(async r=>{const j=await r.json();if(!r.ok)throw new Error(j.detail||'Cannot open workbook');return j})
-      .then(j=>{if(!cancelled){setSheets(j.sheets);setWorkbook(j.workbookPath);setMessage('Edits are saved to a new workbook copy.')}})
+      .then(j=>{if(!cancelled){setSheets(j.sheets);setWorkbook(j.workbookPath);sourceWorkbook.current=j.workbookPath;setMessage('Edits are saved to a new workbook copy.')}})
       .catch(e=>{if(!cancelled)setMessage(e.message)})
       .finally(()=>{if(!cancelled)setBusy(false)});
     return()=>{cancelled=true};
@@ -96,7 +103,23 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
   const update=(row:number,key:string,value:string)=>{
     setSheets(ss=>ss.map((s,i)=>i===active?{...s,rows:s.rows.map((r,n)=>n===row?{...r,[key]:value}:r)}:s));setDirty(true);
   };
+  const beginCellEdit=(row:number,column:string,value:string)=>{
+    cellBeforeEdit.current={sheet:active,row,column,value};
+  };
+  const finishCellEdit=(row:number,column:string,value:string)=>{
+    const before=cellBeforeEdit.current;cellBeforeEdit.current=null;
+    if(!offerMasterMapping||renameOpen.current||!before||before.sheet!==active||before.row!==row||before.column!==column||before.value===value||!value.trim()||!parameterHeaders.has(normalizedHeader(column))||normalizedHeader(sheets[active].name)==='sheet2')return;
+    renameOpen.current=true;
+    setRename({sheet:active,row,column,oldName:before.value,newName:value,payload:{workbookPath:sourceWorkbook.current,source,referenceSessionId:qualityReference,sheetName:sheets[active].name,rowNumber:row+2,row:{...sheets[active].rows[row],[column]:value}}});
+  };
+  const closeRename=()=>{renameOpen.current=false;setRename(null)};
+  const acceptRename=(name:string)=>{
+    if(!rename)return;
+    setSheets(previous=>previous.map((sheet,index)=>index===rename.sheet?{...sheet,rows:sheet.rows.map((row,index)=>index===rename.row?{...row,[rename.column]:name}:row)}:sheet));
+    setDirty(true);setMessage('Master parameter mapping saved. Save a workbook copy to keep this edit; future metadata generation will use the approved name.');closeRename();
+  };
   const save=async(exportFile=false)=>{
+    if(renameOpen.current)return;
     setBusy(true);
     try{
       const r=await fetch('/api/metadata/view/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({workbookPath:workbook,projectName,sheets,source,referenceSessionId:qualityReference})});
@@ -201,8 +224,9 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
 
   return <section id={`metadata-workbook-${source}`} className="card workbookViewer">
     <div className="panelHead"><div><h2>{source==='generated'?'MetaWorks · Generated':'MetaWorks · Uploaded / selected'}</h2><p>{sheet?.rows.length||0} rows · {sheets.length} worksheets{dirty?' · Unsaved edits':''}</p></div>
-      <div className="actions"><button className="btn" disabled={busy||!sheet} onClick={()=>setEdit(!edit)}>{edit?'Finish editing':'Edit'}</button><button className="btn" disabled={busy||!dirty} onClick={()=>save()}>Save copy</button><button className="btn primary" disabled={busy||!sheet} onClick={()=>save(true)}>Export XLSX</button>{download&&<a className="btn" href={download}>Download saved copy</a>}{onUse&&workbook&&<button className="btn" disabled={dirty||busy} onClick={()=>onUse(workbook,workbook.split(/[\\/]/).pop()||'Metadata')}>Use for validation</button>}</div></div>
+      <div className="actions"><button className="btn" disabled={busy||!sheet} onClick={()=>{if(!renameOpen.current)setEdit(!edit)}}>{edit?'Finish editing':'Edit'}</button><button className="btn" disabled={busy||!dirty} onClick={()=>save()}>Save copy</button><button className="btn primary" disabled={busy||!sheet} onClick={()=>save(true)}>Export XLSX</button>{download&&<a className="btn" href={download}>Download saved copy</a>}{onUse&&workbook&&<button className="btn" disabled={dirty||busy} onClick={()=>onUse(workbook,workbook.split(/[\\/]/).pop()||'Metadata')}>Use for validation</button>}</div></div>
     <p role="status">{message}</p>
+    {edit&&<label className="metadataMasterOffer"><input type="checkbox" checked={offerMasterMapping} onChange={event=>setOfferMasterMapping(event.target.checked)}/> Offer to save parameter renames to master</label>}
     <div className="featureTabs">{sheets.map((s,i)=><button className={'chip '+(active===i?'active':'')} key={s.name} onClick={()=>setActive(i)}>{s.name}</button>)}</div>
     <div className="metadataCoverageToggle"><label><input type="checkbox" checked={coverageOpen} onChange={e=>setCoverageOpen(e.target.checked)}/> Compare with Data Model</label><div className="metadataCoverageActions"><button className="btn" disabled={!sheet} onClick={()=>{setCoverageOpen(true);setCoverageExpanded(true);setCoverageSize({})}}><Expand size={14}/>Expand all</button><button className="btn" disabled={!coverageOpen} onClick={()=>{setCoverageOpen(false);setCoverageExpanded(false)}}><Minimize2 size={14}/>Collapse</button><span>{machineDepartment||'Machine / department not set'}</span></div></div>
     {coverageOpen&&<section ref={coveragePanel} className={`metadataCoverage${coverageExpanded?' isExpanded':''}`} style={{width:coverageSize.width||'100%',height:coverageExpanded?'auto':coverageSize.height||'min(720px,85vh)'}} aria-label="Data Model coverage">
@@ -232,6 +256,7 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
     </div>
     {quality.error&&<p className="failText" role="alert">{quality.error}</p>}
     {quality.report&&<p className="metadataQualityNote" role="status">{quality.loading?'Checking current workbook…':quality.report.stages.find(stage=>stage.id===qualityNotice)?.detail} Offset findings highlight existing cells in OFFSET_FROM_THE_START_OF_THE_GROUP_IN_BYTES; hover a highlighted cell for expected and actual values.</p>}
-    <div className="tableWrap workbookScroll"><table className="table"><thead><tr>{sheet?.headers.map(h=><th key={h}>{h}</th>)}</tr></thead><tbody>{visibleRows.map(({row,index})=>{const duplicate=duplicateInfo.rows.has(index);const offsetQuality=offsetByRow.get(`${sheet?.name}:${index+2}`);const finding=offsetQuality&&offsetQuality.status!=='PASS';return <tr key={index} className={`${duplicate?'metadataDuplicateRow ':''}${finding?'metadataOffsetIssueRow':''}`} title={[duplicate?`Duplicate Parameter inside Group Code ${row[duplicateInfo.groupHeader]}`:'',qualityDescription(offsetQuality)].filter(Boolean).join(' ')}>{(sheet?.headers||[]).map((h,column)=><td key={h} className={finding&&offsetHeaders.has(normalizedHeader(h))?`metadataOffset${offsetQuality.status==='FAIL'?'Fail':'Review'}Cell`:undefined} title={offsetHeaders.has(normalizedHeader(h))?qualityDescription(offsetQuality):undefined}>{duplicate&&column===0&&<span className="metadataDuplicateBadge">Duplicate in GC {String(row[duplicateInfo.groupHeader]??'')}</span>}{edit?<input aria-label={`${h}, row ${index+2}`} className="metadataEditInput" value={row[h]??''} onChange={e=>update(index,h,e.target.value)}/>:String(row[h]??'')}</td>)}</tr>})}{!visibleRows.length&&<tr><td colSpan={sheet?.headers.length||1}>No rows match these filters.</td></tr>}</tbody></table></div>
+    <div className="tableWrap workbookScroll"><table className="table"><thead><tr>{sheet?.headers.map(h=><th key={h}>{h}</th>)}</tr></thead><tbody>{visibleRows.map(({row,index})=>{const duplicate=duplicateInfo.rows.has(index);const offsetQuality=offsetByRow.get(`${sheet?.name}:${index+2}`);const finding=offsetQuality&&offsetQuality.status!=='PASS';return <tr key={index} className={`${duplicate?'metadataDuplicateRow ':''}${finding?'metadataOffsetIssueRow':''}`} title={[duplicate?`Duplicate Parameter inside Group Code ${row[duplicateInfo.groupHeader]}`:'',qualityDescription(offsetQuality)].filter(Boolean).join(' ')}>{(sheet?.headers||[]).map((h,column)=><td key={h} className={finding&&offsetHeaders.has(normalizedHeader(h))?`metadataOffset${offsetQuality.status==='FAIL'?'Fail':'Review'}Cell`:undefined} title={offsetHeaders.has(normalizedHeader(h))?qualityDescription(offsetQuality):undefined}>{duplicate&&column===0&&<span className="metadataDuplicateBadge">Duplicate in GC {String(row[duplicateInfo.groupHeader]??'')}</span>}{edit?<input aria-label={`${h}, row ${index+2}`} className="metadataEditInput" value={row[h]??''} onFocus={e=>beginCellEdit(index,h,e.target.value)} onBlur={e=>finishCellEdit(index,h,e.target.value)} onChange={e=>update(index,h,e.target.value)}/>:String(row[h]??'')}</td>)}</tr>})}{!visibleRows.length&&<tr><td colSpan={sheet?.headers.length||1}>No rows match these filters.</td></tr>}</tbody></table></div>
+    {rename&&<MetadataRenameDialog rename={rename} onClose={closeRename} onSaved={acceptRename}/>}
   </section>;
 }

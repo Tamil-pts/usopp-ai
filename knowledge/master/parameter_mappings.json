@@ -16716,6 +16716,41 @@
       "is_visible": "YES",
       "is_writable": "NO",
       "status": "configured"
+    },
+    {
+      "plc_parameter": "No of Doff",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[28]",
+      "machine_department": "Carding",
+      "metadata_parameter": "No of Doffs",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Average Delivery",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[91]",
+      "machine_department": "Carding",
+      "metadata_parameter": "Delivery Speed",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Blow Room Line Selection",
+      "plc_tag": "HMI_BR_LINE_SEL",
+      "machine_department": "Carding",
+      "metadata_parameter": "Line Selection",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Five Mtr CV%",
+      "plc_tag": "FIVE_MTR_CV",
+      "machine_department": "Carding",
+      "metadata_parameter": "5m CV",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "D%",
+      "plc_tag": "DEL_A_PER",
+      "machine_department": "Carding",
+      "metadata_parameter": "Del A %",
+      "status": "configured"
     }
   ],
   "entry_schema": {

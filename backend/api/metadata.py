@@ -4,7 +4,7 @@ import io
 import json
 import re
 from pathlib import Path
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 from fastapi.encoders import jsonable_encoder
 from backend.core.runtime import WORK, EXPORTS, _local_metadata_path, _local_session, safe_name
@@ -180,6 +180,54 @@ def view_sheets(payload:dict):
     path=resolve_workbook(payload)
     try: return jsonable_encoder({'file':path.name,'workbookPath':str(path),'sheets':read_sheets(path)})
     except Exception as exc: raise HTTPException(400,f'Cannot read metadata workbook: {exc}') from exc
+
+
+def parameter_mapping_context(payload):
+    from backend.core.access import require_session
+    from backend.core.metadata_parameter_mapping import resolve_parameter
+    sid=payload.get('referenceSessionId') or (payload.get('sessionId') if payload.get('source')=='generated' else '')
+    if not sid:
+        raise HTTPException(400,'Validate the uploaded workbook with its PLC project first to fill the PLC tag and comment. Your workbook edit is kept.')
+    folder=require_session(sid)
+    path=resolve_workbook(payload)
+    return resolve_parameter(payload,path,read_sheets(path),folder)
+
+
+@router.post('/api/metadata/view/parameter-mapping')
+def preview_parameter_mapping(payload:dict,request:Request):
+    from backend.api.knowledge import _read_master, _master_lock
+    from backend.core.metadata_parameter_mapping import mapping_matches, source_revision
+    mapping=parameter_mapping_context(payload)
+    with _master_lock:
+        document,revision=_read_master()
+    existing=[row for row in document.get('mappings',[]) if mapping_matches(row,mapping)]
+    user=getattr(request.state,'user',{}) or {}
+    return {'mapping':mapping,'revision':revision,'sourceRevision':source_revision(mapping),'existingNames':[row.get('metadata_parameter') for row in existing],
+            'canSave':bool(user.get('id') and not user.get('isDemo'))}
+
+
+@router.post('/api/knowledge/master/metadata-rename')
+def save_parameter_mapping(payload:dict,request:Request):
+    # Match existing master-mapping permissions: signed-in personal accounts.
+    user=getattr(request.state,'user',{}) or {}
+    if not user.get('id') or user.get('isDemo'):
+        raise HTTPException(403,'A personal account is required to change shared master mappings.')
+    new_name=payload.get('metadataParameter')
+    if not isinstance(new_name,str) or not new_name.strip() or len(new_name)>300 or any(ord(char)<32 for char in new_name):
+        raise HTTPException(400,'Enter a parameter name of 1 to 300 characters on one line.')
+    mapping=parameter_mapping_context(payload)
+    from backend.core.metadata_parameter_mapping import source_revision
+    if payload.get('sourceRevision')!=source_revision(mapping):
+        raise HTTPException(409,'The PLC mapping details changed. Reload the mapping details and review them before saving.')
+    from backend.api.knowledge import _read_master, _write_master, _master_lock
+    from backend.core.metadata_parameter_mapping import upsert_rename
+    with _master_lock:
+        document,revision=_read_master()
+        if payload.get('revision')!=revision:
+            raise HTTPException(409,'Master mappings changed elsewhere. Reload the mapping details before saving.')
+        upsert_rename(document,mapping,new_name.strip())
+        saved=_write_master(document,revision)
+    return {'status':'saved','metadataParameter':new_name.strip(),'revision':saved['revision']}
 
 def save_copy(payload):
     from openpyxl import Workbook,load_workbook

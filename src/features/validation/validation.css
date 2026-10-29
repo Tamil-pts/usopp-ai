@@ -168,3 +168,15 @@
 @media(max-width:700px){.findingComparison{grid-template-columns:minmax(0,1fr)}}
 
 .viRow>.chopperRecommendation{grid-column:1/-1;width:100%;box-sizing:border-box}
+.metadataMasterOffer{display:flex;align-items:center;gap:8px;margin:12px 0;color:var(--muted)}
+.metadataRenameDialog{box-sizing:border-box;width:min(660px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--panel);color:var(--text);box-shadow:0 20px 80px #0004}
+.metadataRenameDialog::backdrop{background:#09243280}
+.metadataRenameDialog h2{margin:0 0 12px;font-size:1.3rem}
+.metadataRenameDialog p{line-height:1.6;overflow-wrap:anywhere}
+.metadataRenameFields{display:grid;gap:14px}
+.metadataRenameFields label{display:grid;gap:6px;min-width:0}
+.metadataRenameFields input{box-sizing:border-box;width:100%;min-width:0}
+.metadataRenameFields input[readonly]{color:var(--muted)}
+.metadataRenameChange{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)}
+.metadataRenameDialog .actions{justify-content:flex-end;flex-wrap:wrap;gap:8px}
+.metadataRenameDialog .actions .btn{white-space:normal}
