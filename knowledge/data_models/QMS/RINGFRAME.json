@@ -3,97 +3,6 @@
   "keysList": {
     "qms_RINGFRAME_shift_live": [
       {
-        "tagName": "Time Stamp Actual",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts_act",
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "subtenant",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
         "groupCode": "40",
@@ -101,10 +10,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -114,10 +20,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -127,10 +30,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -140,10 +40,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -153,10 +50,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -166,10 +60,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -179,10 +70,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Start Time",
@@ -192,10 +80,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Count",
@@ -205,10 +90,7 @@
         "mongoKey": "count_ne",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Lot name",
@@ -218,10 +100,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "countmix",
@@ -231,10 +110,7 @@
         "mongoKey": "countmix",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Twist Per Inch",
@@ -244,10 +120,7 @@
         "mongoKey": "set_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "HEAD STOCK LHS TPI",
@@ -257,24 +130,7 @@
         "mongoKey": "head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX HEAD STOCK LHS TPI",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "head_stock_lhs_tpi",
-        "mongoKey": "max_head_stock_lhs_tpi",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN HEAD STOCK LHS TPI",
@@ -284,11 +140,8 @@
         "mongoKey": "min_head_stock_lhs_tpi",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV HEAD STOCK LHS TPI",
@@ -298,10 +151,7 @@
         "mongoKey": "cv_head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG HEAD STOCK LHS TPI",
@@ -311,10 +161,7 @@
         "mongoKey": "avg_head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "HEAD STOCK RHS TPI",
@@ -324,24 +171,7 @@
         "mongoKey": "head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX HEAD STOCK RHS TPI",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "head_stock_rhs_tpi",
-        "mongoKey": "max_head_stock_rhs_tpi",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN HEAD STOCK RHS TPI",
@@ -351,11 +181,8 @@
         "mongoKey": "min_head_stock_rhs_tpi",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV HEAD STOCK RHS TPI",
@@ -365,10 +192,7 @@
         "mongoKey": "cv_head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG HEAD STOCK RHS TPI",
@@ -378,10 +202,7 @@
         "mongoKey": "avg_head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "TAIL STOCK LHS TPI",
@@ -391,24 +212,7 @@
         "mongoKey": "tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX TAIL STOCK LHS TPI",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "tail_stock_lhs_tpi",
-        "mongoKey": "max_tail_stock_lhs_tpi",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN TAIL STOCK LHS TPI",
@@ -418,11 +222,8 @@
         "mongoKey": "min_tail_stock_lhs_tpi",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV TAIL STOCK LHS TPI",
@@ -432,10 +233,7 @@
         "mongoKey": "cv_tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG TAIL STOCK LHS TPI",
@@ -445,10 +243,7 @@
         "mongoKey": "avg_tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "TAIL STOCK RHS TPI",
@@ -458,24 +253,7 @@
         "mongoKey": "tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX TAIL STOCK RHS TPI",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "tail_stock_rhs_tpi",
-        "mongoKey": "max_tail_stock_rhs_tpi",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN TAIL STOCK RHS TPI",
@@ -485,11 +263,8 @@
         "mongoKey": "min_tail_stock_rhs_tpi",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV TAIL STOCK RHS TPI",
@@ -499,10 +274,7 @@
         "mongoKey": "cv_tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG TAIL STOCK RHS TPI",
@@ -512,10 +284,7 @@
         "mongoKey": "avg_tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Compact Suction Pressure",
@@ -525,24 +294,7 @@
         "mongoKey": "compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX Compact Suction Pressure",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "compact_suction_pressure",
-        "mongoKey": "max_compact_suction_pressure",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN Compact Suction Pressure",
@@ -552,11 +304,8 @@
         "mongoKey": "min_compact_suction_pressure",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV Compact Suction Pressure",
@@ -566,10 +315,7 @@
         "mongoKey": "cv_compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG Compact Suction Pressure",
@@ -579,10 +325,7 @@
         "mongoKey": "avg_compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Draft TFles LHS",
@@ -592,10 +335,7 @@
         "mongoKey": "draft_tfles_lhs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Draft TFles RHS",
@@ -605,168 +345,10 @@
         "mongoKey": "draft_tfles_rhs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Compact Suction Pressure Minimum Level",
-        "dataType": "FLOAT",
-        "groupCode": "130",
-        "tdEngineKey": "compact_pressure_min_level",
-        "mongoKey": "compact_pressure_min_level",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Compact Suction Pressure Maximum Level",
-        "dataType": "FLOAT",
-        "groupCode": "130",
-        "tdEngineKey": "compact_pressure_max_level",
-        "mongoKey": "compact_pressure_max_level",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "TPI",
-        "dataType": "REAL",
-        "groupCode": "140",
-        "formula": null,
-        "tdEngineKey": "TPI",
-        "mongoKey": "Set_TPI",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_RINGFRAME_shift_live",
-          "row": 20
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Compact suction pressure mximum Level",
-        "dataType": "Float",
-        "groupCode": "130",
-        "formula": null,
-        "tdEngineKey": "compact_pressure_max_level",
-        "mongoKey": "compact_pressure_max_level",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_RINGFRAME_shift_live",
-          "row": 49
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "qms_RINGFRAME_shift": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "50",
-        "tdEngineKey": "ts_act",
-        "mongoKey": "ts",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "subtenant",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -775,10 +357,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -788,10 +367,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -801,10 +377,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -814,10 +387,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -827,10 +397,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -840,10 +407,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -853,10 +417,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Start Time",
@@ -866,10 +427,7 @@
         "mongoKey": "shift_start_time",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Count",
@@ -879,10 +437,7 @@
         "mongoKey": "count_ne",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Lot name",
@@ -892,10 +447,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "countmix",
@@ -905,10 +457,7 @@
         "mongoKey": "countmix",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Twist Per Inch",
@@ -918,10 +467,7 @@
         "mongoKey": "set_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "HEAD STOCK LHS TPI",
@@ -931,24 +477,7 @@
         "mongoKey": "head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX HEAD STOCK LHS TPI",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "head_stock_lhs_tpi",
-        "mongoKey": "max_head_stock_lhs_tpi",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN HEAD STOCK LHS TPI",
@@ -958,11 +487,8 @@
         "mongoKey": "min_head_stock_lhs_tpi",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV HEAD STOCK LHS TPI",
@@ -972,10 +498,7 @@
         "mongoKey": "cv_head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG HEAD STOCK LHS TPI",
@@ -985,10 +508,7 @@
         "mongoKey": "avg_head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "HEAD STOCK RHS TPI",
@@ -998,24 +518,7 @@
         "mongoKey": "head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX HEAD STOCK RHS TPI",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "head_stock_rhs_tpi",
-        "mongoKey": "max_head_stock_rhs_tpi",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN HEAD STOCK RHS TPI",
@@ -1025,11 +528,8 @@
         "mongoKey": "min_head_stock_rhs_tpi",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV HEAD STOCK RHS TPI",
@@ -1039,10 +539,7 @@
         "mongoKey": "cv_head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG HEAD STOCK RHS TPI",
@@ -1052,10 +549,7 @@
         "mongoKey": "avg_head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "TAIL STOCK LHS TPI",
@@ -1065,24 +559,7 @@
         "mongoKey": "tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX TAIL STOCK LHS TPI",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "tail_stock_lhs_tpi",
-        "mongoKey": "max_tail_stock_lhs_tpi",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN TAIL STOCK LHS TPI",
@@ -1092,11 +569,8 @@
         "mongoKey": "min_tail_stock_lhs_tpi",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV TAIL STOCK LHS TPI",
@@ -1106,10 +580,7 @@
         "mongoKey": "cv_tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG TAIL STOCK LHS TPI",
@@ -1119,10 +590,7 @@
         "mongoKey": "avg_tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "TAIL STOCK RHS TPI",
@@ -1132,24 +600,7 @@
         "mongoKey": "tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX TAIL STOCK RHS TPI",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "tail_stock_rhs_tpi",
-        "mongoKey": "max_tail_stock_rhs_tpi",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN TAIL STOCK RHS TPI",
@@ -1159,11 +610,8 @@
         "mongoKey": "min_tail_stock_rhs_tpi",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV TAIL STOCK RHS TPI",
@@ -1173,10 +621,7 @@
         "mongoKey": "cv_tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "AVG TAIL STOCK RHS TPI",
@@ -1186,10 +631,7 @@
         "mongoKey": "avg_tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Compact Suction Pressure",
@@ -1199,24 +641,7 @@
         "mongoKey": "compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "MAX Compact Suction Pressure",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "compact_suction_pressure",
-        "mongoKey": "max_compact_suction_pressure",
-        "formula": "qms_RINGFRAME_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "MIN Compact Suction Pressure",
@@ -1226,11 +651,8 @@
         "mongoKey": "min_compact_suction_pressure",
         "formula": "qms_RINGFRAME_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV Compact Suction Pressure",
@@ -1240,130 +662,10 @@
         "mongoKey": "cv_compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Compact Suction Pressure Minimum Level",
-        "dataType": "FLOAT",
-        "groupCode": "130",
-        "tdEngineKey": "compact_pressure_min_level",
-        "mongoKey": "compact_pressure_min_level",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Compact Suction Pressure Maximum Level",
-        "dataType": "FLOAT",
-        "groupCode": "130",
-        "tdEngineKey": "compact_pressure_max_level",
-        "mongoKey": "compact_pressure_max_level",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "qms_RINGFRAME_minutes_time_series": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts_act",
-        "mongoKey": "ts",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "subtenant",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "10",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -1372,10 +674,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -1385,10 +684,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -1398,10 +694,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -1411,10 +704,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -1424,10 +714,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -1437,10 +724,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -1450,10 +734,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Start Time",
@@ -1463,10 +744,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Count",
@@ -1476,10 +754,7 @@
         "mongoKey": "count_ne",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Lot name",
@@ -1489,10 +764,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Twist Per Inch",
@@ -1502,10 +774,7 @@
         "mongoKey": "set_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "HEAD STOCK LHS TPI",
@@ -1515,10 +784,7 @@
         "mongoKey": "head_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "HEAD STOCK RHS TPI",
@@ -1528,10 +794,7 @@
         "mongoKey": "head_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "TAIL STOCK LHS TPI",
@@ -1541,10 +804,7 @@
         "mongoKey": "tail_stock_lhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "TAIL STOCK RHS TPI",
@@ -1554,10 +814,7 @@
         "mongoKey": "tail_stock_rhs_tpi",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Compact Suction Pressure",
@@ -1567,938 +824,8 @@
         "mongoKey": "compact_suction_pressure",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
-    ]
-  },
-  "queryDetails": {
-    "pms_RINGFRAME_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "pms_RINGFRAME_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "pms_RINGFRAME_shift_live": [
-      "asset_id"
-    ],
-    "pms_RINGFRAME_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "pms_RINGFRAME_doff": [
-      "asset_id",
-      "doff_date",
-      "doff_hour"
-    ],
-    "pms_RINGFRAME_speed_pattern": [
-      "asset_id",
-      "doff_date",
-      "doff_hour"
-    ],
-    "qms_RINGFRAME_shift_live": [
-      "asset_id"
-    ],
-    "qms_RINGFRAME_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "qms_RINGFRAME_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "pms_RINGFRAME_events": [
-      "shift_date",
-      "shift_id",
-      "asset_id",
-      "status_endtime"
-    ],
-    "pms_RINGFRAME_stoppages": [
-      "shift_date",
-      "shift_id",
-      "asset_id",
-      "idle_starttime"
-    ],
-    "target_settings": [
-      "count",
-      "type",
-      "control_code",
-      "is_active"
-    ],
-    "cms_RINGFRAME_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "cms_RINGFRAME_shift_live": [
-      "asset_id"
-    ],
-    "cms_RINGFRAME_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "cms_RINGFRAME_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "pms_RINGFRAME_raw_data_history": [
-      "asset_id",
-      "group_code",
-      "source_time"
-    ]
-  },
-  "targets": {
-    "RINGFRAME_PMS": [
-      {
-        "code": "MU",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "PE",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "DOFFT",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "PL",
-        "target": 0.0,
-        "inputType": "Percentage",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "SE",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      }
-    ],
-    "RINGFRAME_CMS": [
-      {
-        "code": "DRHTS_TEMP_CMS",
-        "target": 65.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 2.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "FRHTS_TEMP_CMS",
-        "target": 50.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 2.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MM_TEMP_CMS",
-        "target": 50.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 2.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "RRM_TEMP_CMS",
-        "target": 50.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 2.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MM_VIBRATION_CMS",
-        "target": 1.5,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MFFTS_VIBRATION_CMS",
-        "target": 1.5,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MFBTS_VIBRATION_CMS",
-        "target": 1.5,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "RM_VIBRATION_CMS",
-        "target": 1.5,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MM_POWER_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MM_CURRENT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MM_TOQURE_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MM_INV_HEAT_SINK_TEMP_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MM_SPEED_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "TSDM_POWER_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "TSDM_CURRENT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "TSDM_TORQUE_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "TSDM_INV_HEAT_SINK_TEMP_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "TSDM_SPEED_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SM_POWER_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SM_CURRENT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SM_TORQUE_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SM_INV_HEAT_SINK_TEMP_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SM_SPEED_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "HSDM_POWER_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "HSDM_CURRENT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "HSDM_TORQUE_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "HSDM_INV_HEAT_SINK_TEMP_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "HSDM_SPEED_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      }
-    ],
-    "PMS": [
-      {
-        "code": "GPSS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "is_autocalc_edit": false,
-        "direction": "Higher",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "UKG",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "PKG",
-        "target": 0.0,
-        "inputType": "",
-        "isEditable": true,
-        "is_autocalc_edit": false,
-        "direction": "Higher",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      },
-      {
-        "code": "CF",
-        "target": 1.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "DCC",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      },
-      {
-        "code": "STDW",
-        "target": 0.0,
-        "inputType": "Percentage",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "PEL",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "STDWKG",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      }
-    ],
-    "QMS": [
-      {
-        "code": "TPI",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Tolerance",
-        "tolerance": 0.0,
-        "threshold": null,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "DR",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Tolerance",
-        "tolerance": 0.0,
-        "threshold": null,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      }
-    ]
-  },
-  "indexDetails": {
-    "pms_RINGFRAME_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "pms_RINGFRAME_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_RINGFRAME_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_RINGFRAME_hours": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "end_time"
-    ],
-    "pms_RINGFRAME_doff": [
-      "doff_date",
-      "doff_hour",
-      "asset_id",
-      "platform_shift_id"
-    ],
-    "pms_RINGFRAME_speed_pattern": [
-      "doff_date",
-      "doff_hour",
-      "asset_id",
-      "platform_shift_id"
-    ],
-    "qms_RINGFRAME_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "qms_RINGFRAME_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "qms_RINGFRAME_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "pms_RINGFRAME_events": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_RINGFRAME_stoppages": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "target_settings_transaction_entries": [
-      "shift_date",
-      "platform_shift_id",
-      "count",
-      "type",
-      "control_code"
-    ],
-    "cms_RINGFRAME_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "cms_RINGFRAME_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_RINGFRAME_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_RINGFRAME_hours": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "end_time"
-    ],
-    "alert": [
-      "message.timestamp",
-      "entityData.control_code",
-      "entityData.shift_id",
-      "alertCategory"
     ]
   }
 }

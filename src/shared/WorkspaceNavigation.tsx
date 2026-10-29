@@ -20,8 +20,8 @@ export function WorkspaceNavigation({page,onSelect}:{page:WorkspacePage;onSelect
     <div className="brand"><img src={usoppLogo} alt="usop.ai"/></div>
     <nav className="nav railMainNav" aria-label="Main navigation">
       {WORKSPACE_NAVIGATION.filter(item=>!['settings','help','plc'].includes(item.id)).map(item=>item.id==='validation'?
-        <div key="spinconnect" className="spinConnectNav" role="group" aria-label="SpinConnect Assist Center" data-active={page==='validation'||page==='plc'?true:undefined}>
-          <div className="spinConnectNavLabel" aria-hidden="true"><span>SpinConnect</span><span>Assist Center</span></div>
+        <div key="spinconnect" className="spinConnectNav" role="group" aria-label="Spin connect" data-active={page==='validation'||page==='plc'?true:undefined}>
+          <div className="spinConnectNavLabel" aria-hidden="true"><span>Spin connect</span><span>🤖</span></div>
           <div className="spinConnectNavTools">{WORKSPACE_NAVIGATION.filter(tool=>tool.id==='validation'||tool.id==='plc').map(button)}</div>
         </div>:button(item))}
     </nav>

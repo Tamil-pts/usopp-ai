@@ -3,97 +3,6 @@
   "keysList": {
     "pms_DRAWFRAMEFINISHER_minutes_time_series": [
       {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
         "groupCode": "40",
@@ -101,10 +10,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift date",
@@ -114,10 +20,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -127,10 +30,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -140,10 +40,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Date",
@@ -153,10 +50,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -166,10 +60,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -179,10 +70,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -192,10 +80,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Run Time Hour",
@@ -205,10 +90,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -218,10 +100,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minute",
@@ -231,10 +110,7 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Idle Time Hour",
@@ -244,10 +120,7 @@
         "mongoKey": "idle_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle Time Minutes",
@@ -257,10 +130,7 @@
         "mongoKey": "idle_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle Time Minute",
@@ -270,10 +140,7 @@
         "mongoKey": "idle_time_minute",
         "formula": "MATH(idle_hour * 60 + idle_minute)",
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Power Fail Time Hour",
@@ -283,16 +150,7 @@
         "mongoKey": "power_fail_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Power Fail Time Hour",
-          "Powerfail_Time_Hour"
-        ],
-        "canonicalName": "Power Fail Time Hour",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Minutes",
@@ -302,10 +160,7 @@
         "mongoKey": "power_fail_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Minute",
@@ -315,10 +170,7 @@
         "mongoKey": "power_fail_time_minute",
         "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "DOFF Time Hour",
@@ -328,10 +180,7 @@
         "mongoKey": "doff_time_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "DOFF Time Minutes",
@@ -341,10 +190,7 @@
         "mongoKey": "doff_time_minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "DOFF Time Minute",
@@ -354,10 +200,7 @@
         "mongoKey": "doff_time_minute",
         "formula": "MATH(doff_time_hour * 60 + doff_time_minutes)",
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Delivery Speed",
@@ -367,10 +210,7 @@
         "mongoKey": "avg_delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hanks",
@@ -380,16 +220,7 @@
         "mongoKey": "hanks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hanks",
-          "Delivery Hanks"
-        ],
-        "canonicalName": "Hanks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doffs",
@@ -399,16 +230,7 @@
         "mongoKey": "no_of_doffs",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Number Of doff",
-          "Doffs"
-        ],
-        "canonicalName": "Number Of doff",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Kgs",
@@ -418,17 +240,7 @@
         "mongoKey": "production_kgs",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Kgs",
-          "Production Kgs",
-          "Production in kg"
-        ],
-        "canonicalName": "Kgs",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Avg Doff Time",
@@ -438,10 +250,7 @@
         "mongoKey": "avg_doff_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Can Filling Time",
@@ -451,16 +260,7 @@
         "mongoKey": "can_filling_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Can Filling Time",
-          "PMS_CAN_FILLING_TIME"
-        ],
-        "canonicalName": "Can Filling Time",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Can Waiting Time",
@@ -470,16 +270,7 @@
         "mongoKey": "can_waiting_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Can Waiting Time",
-          "PMS_CAN_WAITING_TIME"
-        ],
-        "canonicalName": "Can Waiting Time",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -490,16 +281,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hank",
-          "Process Hank"
-        ],
-        "canonicalName": "Hank",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "precision": "COL0049473730612fe61"
       },
       {
         "tagName": "Lot Name",
@@ -509,10 +291,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "A",
@@ -522,10 +301,7 @@
         "mongoKey": "a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U",
@@ -535,16 +311,7 @@
         "mongoKey": "u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV 1m",
@@ -554,16 +321,7 @@
         "mongoKey": "cv_1m",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV 1m",
-          "1m CV"
-        ],
-        "canonicalName": "CV 1m",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Current Length",
@@ -573,10 +331,7 @@
         "mongoKey": "current_length",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Delivery Speed",
@@ -586,10 +341,7 @@
         "mongoKey": "delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "DOFF Length",
@@ -599,10 +351,7 @@
         "mongoKey": "set_doff_length",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Production Efficiency",
@@ -612,10 +361,7 @@
         "mongoKey": "production_eff",
         "formula": "MATH((run_time_minute / (run_time_minute + idle_time_minute + doff_time_minute) )* 100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Utilization",
@@ -626,10 +372,7 @@
         "formula": "MATH((run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + doff_time_minute + power_fail_time_minute) * 100)",
         "type": "instant",
         "isRequired": true,
-        "isAutoCalc": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isAutoCalc": true
       },
       {
         "tagName": "Machine Utilization Formula 1 - KM",
@@ -639,10 +382,7 @@
         "mongoKey": "machine_uti_formula_1",
         "formula": "MATH((run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute) * 100)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Machine Efficiency",
@@ -652,49 +392,7 @@
         "mongoKey": "machine_eff",
         "formula": "MATH((run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute+power_fail_time_minute))*100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Ukg",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "UKG",
-        "mongoKey": "tgt_ukg",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "PE",
-        "mongoKey": "tgt_production_eff",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Machine Utilization",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "MU",
-        "mongoKey": "tgt_machine_uti",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Speed",
@@ -704,23 +402,7 @@
         "mongoKey": "machine_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Standard Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "SE",
-        "mongoKey": "tgt_standard_eff",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Target Production KG Formula 1",
@@ -730,131 +412,10 @@
         "mongoKey": "pkg_formula_1",
         "formula": "MATH((((machine_speed * 1.0936 * total_shift_time) / (840 * 2.2046 * hank_ne)) * (tgt_standard_eff / 100)) * 1)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Kgs",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "PKG",
-        "mongoKey": "tgt_production_kgs",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "isAutoCalc": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Efficiency Loss",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "PL",
-        "mongoKey": "tgt_production_eff_loss",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       }
     ],
     "pms_DRAWFRAMEFINISHER_shift": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "50",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "50",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -863,10 +424,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -876,10 +434,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -889,10 +444,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -902,10 +454,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -915,10 +464,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -928,10 +474,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -941,10 +484,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -954,10 +494,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Run Time Hour",
@@ -967,10 +504,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -980,10 +514,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minute",
@@ -993,10 +524,7 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Idle Time Hour",
@@ -1006,10 +534,7 @@
         "mongoKey": "idle_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle Time Minutes",
@@ -1019,10 +544,7 @@
         "mongoKey": "idle_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle Time Minute",
@@ -1032,10 +554,7 @@
         "mongoKey": "idle_time_minute",
         "formula": "MATH(idle_hour * 60 + idle_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Power Fail Time Hour",
@@ -1045,10 +564,7 @@
         "mongoKey": "power_fail_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Minutes",
@@ -1058,10 +574,7 @@
         "mongoKey": "power_fail_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Minute",
@@ -1071,10 +584,7 @@
         "mongoKey": "power_fail_time_minute",
         "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "DOFF Time Hour",
@@ -1084,10 +594,7 @@
         "mongoKey": "doff_time_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "DOFF Time Minutes",
@@ -1097,10 +604,7 @@
         "mongoKey": "doff_time_minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Time Minute",
@@ -1110,10 +614,7 @@
         "mongoKey": "doff_time_minute",
         "formula": "MATH(doff_time_hour* 60 + doff_time_minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Delivery Speed",
@@ -1123,10 +624,7 @@
         "mongoKey": "avg_delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hanks",
@@ -1136,10 +634,7 @@
         "mongoKey": "hanks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doffs",
@@ -1149,10 +644,7 @@
         "mongoKey": "no_of_doffs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Kgs",
@@ -1162,10 +654,7 @@
         "mongoKey": "production_kgs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed roller stops",
@@ -1175,10 +664,7 @@
         "mongoKey": "feed_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed sensor stops",
@@ -1188,10 +674,7 @@
         "mongoKey": "feed_sensor_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Scanning roller stops",
@@ -1201,10 +684,7 @@
         "mongoKey": "scanning_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Drafting/Calender Roller stops",
@@ -1214,10 +694,7 @@
         "mongoKey": "drafting_calender_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Web Guide Stops",
@@ -1227,10 +704,7 @@
         "mongoKey": "web_guide_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Coiler Stops",
@@ -1240,10 +714,7 @@
         "mongoKey": "coiler_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Infeed Limit Stops",
@@ -1253,10 +724,7 @@
         "mongoKey": "infeed_limit_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Sliver Monitor Stops",
@@ -1266,10 +734,7 @@
         "mongoKey": "sliver_monitor_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U Stops",
@@ -1279,10 +744,7 @@
         "mongoKey": "u_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV Stops",
@@ -1292,10 +754,7 @@
         "mongoKey": "cv_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -1305,10 +764,7 @@
         "mongoKey": "thick_places_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Spectrogram Stops",
@@ -1318,10 +774,7 @@
         "mongoKey": "spectrogram_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Servo Drive Stops",
@@ -1331,10 +784,7 @@
         "mongoKey": "servo_drive_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total kWh",
@@ -1344,10 +794,7 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "UKG",
@@ -1357,10 +804,7 @@
         "mongoKey": "ukg",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Breaks",
@@ -1370,10 +814,7 @@
         "mongoKey": "total_breaks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Breaks in Min",
@@ -1383,10 +824,7 @@
         "mongoKey": "total_breaks_in_min",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Feed Breaks",
@@ -1396,10 +834,7 @@
         "mongoKey": "total_feed_breaks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Delivery Breaks",
@@ -1409,10 +844,7 @@
         "mongoKey": "total_delivery_breaks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Quality Breaks",
@@ -1422,10 +854,7 @@
         "mongoKey": "total_quality_breaks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Avg Doff Time",
@@ -1435,10 +864,7 @@
         "mongoKey": "avg_doff_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Can Filling Time",
@@ -1448,10 +874,7 @@
         "mongoKey": "can_filling_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Can Waiting Time",
@@ -1461,10 +884,7 @@
         "mongoKey": "can_waiting_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed Stoppage Time Hour",
@@ -1474,10 +894,7 @@
         "mongoKey": "feed_stoppage_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Feed Stoppage Time Minutes",
@@ -1487,10 +904,7 @@
         "mongoKey": "feed_stoppage_minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Feed Stoppage Time Minute",
@@ -1500,10 +914,7 @@
         "mongoKey": "feed_stoppage_minute",
         "formula": "MATH(feed_stoppage_hour * 60 + feed_stoppage_minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Delivery Stoppage Time Hour",
@@ -1513,10 +924,7 @@
         "mongoKey": "delivery_stoppage_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Delivery Stoppage Time Minutes",
@@ -1526,10 +934,7 @@
         "mongoKey": "delivery_stoppage_minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Delivery Stoppage Time Minute",
@@ -1539,10 +944,7 @@
         "mongoKey": "delivery_stoppage_minute",
         "formula": "MATH(delivery_stoppage_hour * 60 + delivery_stoppage_minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Other Stoppage Time Hour",
@@ -1552,10 +954,7 @@
         "mongoKey": "other_stoppage_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Other Stoppage Time Minutes",
@@ -1565,10 +964,7 @@
         "mongoKey": "other_stoppage_minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Other Stoppage Time Minute",
@@ -1578,10 +974,7 @@
         "mongoKey": "other_stoppage_minute",
         "formula": "MATH(other_stoppage_hour * 60 + other_stoppage_minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -1592,16 +985,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hank",
-          "Process Hank"
-        ],
-        "canonicalName": "Hank",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "precision": "COL0049473730612fe61"
       },
       {
         "tagName": "Lot Name",
@@ -1611,10 +995,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "A",
@@ -1624,10 +1005,7 @@
         "mongoKey": "a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U",
@@ -1637,16 +1015,7 @@
         "mongoKey": "u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV 1m",
@@ -1656,16 +1025,7 @@
         "mongoKey": "cv_1m",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV 1m",
-          "1m CV"
-        ],
-        "canonicalName": "CV 1m",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff length",
@@ -1675,10 +1035,7 @@
         "mongoKey": "set_doff_length",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Production Efficiency",
@@ -1688,10 +1045,7 @@
         "mongoKey": "production_eff",
         "formula": "MATH((run_time_minute / (run_time_minute + idle_time_minute + doff_time_minute) )* 100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Utilization",
@@ -1702,10 +1056,7 @@
         "formula": "MATH((run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + doff_time_minute + power_fail_time_minute) * 100)",
         "type": "instant",
         "isRequired": true,
-        "isAutoCalc": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isAutoCalc": true
       },
       {
         "tagName": "Machine Utilization Formula 1 - KM",
@@ -1715,10 +1066,7 @@
         "mongoKey": "machine_uti_formula_1",
         "formula": "MATH((run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute) * 100)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Machine Efficiency",
@@ -1728,62 +1076,7 @@
         "mongoKey": "machine_eff",
         "formula": "MATH((run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute+power_fail_time_minute))*100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Ukg",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "UKG",
-        "mongoKey": "tgt_ukg",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "PE",
-        "mongoKey": "tgt_production_eff",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Machine Utilization",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "MU",
-        "mongoKey": "tgt_machine_uti",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Machine Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "MU",
-        "mongoKey": "tgt_machine_uti",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Speed",
@@ -1793,23 +1086,7 @@
         "mongoKey": "machine_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Standard Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "SE",
-        "mongoKey": "tgt_standard_eff",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Target Production KG Formula 1",
@@ -1819,50 +1096,7 @@
         "mongoKey": "pkg_formula_1",
         "formula": "MATH((((machine_speed * 1.0936 * total_shift_time) / (840 * 2.2046 * hank_ne)) * (tgt_standard_eff / 100)) * 1)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production KGs",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "PKG",
-        "mongoKey": "tgt_production_kgs",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "isAutoCalc": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Production Efficiency Loss %",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": null,
-        "mongoKey": "production_eff_loss",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Efficiency Loss",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "PL",
-        "mongoKey": "tgt_production_eff_loss",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Length",
@@ -1872,24 +1106,8 @@
         "mongoKey": "avg_canlength",
         "formula": "pms_DRAWFRAMEFINISHER_doff",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Standard Waste Percent",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "STDW",
-        "mongoKey": "standard_waste_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Average Can Length",
@@ -1899,10 +1117,7 @@
         "mongoKey": "avg_canlength",
         "formula": null,
         "type": "average",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Calculated Waste KG",
@@ -1912,10 +1127,7 @@
         "mongoKey": "calc_waste_kg",
         "formula": "MATH((production_kgs * standard_waste_target) / 100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Break",
@@ -1925,10 +1137,7 @@
         "mongoKey": "total_break",
         "formula": "MATH(feed_roller_stops + feed_sensor_stops + drafting_calender_roller_stops + web_guide_stops)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Breaks Per Hour",
@@ -1938,389 +1147,10 @@
         "mongoKey": "breaks_per_hour",
         "formula": "MATH((total_break/run_time_minute) * 60)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "run_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 18
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Idle Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "idle_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 20
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Power Fail Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "power_fail_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 22
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Doff Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "doff_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 24
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Scanning roller stops",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": "scanning_roller_stops",
-        "tdEngineKey": "scanning_roller_stops",
-        "mongoKey": "scanning_roller_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 31
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Spectogram Stops",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "spectogram_stops",
-        "mongoKey": "spectogram_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 41
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "UKG",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": "=total_kwh/production_kgs",
-        "tdEngineKey": " ",
-        "mongoKey": "ukg",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 44
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Feed Stoppage Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "feed_stoppage_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 54
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Delivery Stoppage Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "delivery_stoppage_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 56
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Other Stoppage Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "other_stoppage_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 58
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Avg Can length",
-        "dataType": "FLOAT",
-        "groupCode": "500",
-        "formula": null,
-        "tdEngineKey": "doff_length",
-        "mongoKey": "avg_canlength",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 74
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Calculated Waste",
-        "dataType": "float",
-        "groupCode": null,
-        "formula": "production_kgs * standard waste % in setting / 100",
-        "tdEngineKey": null,
-        "mongoKey": "calc_waste_kg",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 75
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Total Break",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": "feed_roller_stoppage + feed_sensor_stoppage + drafting_calender_roller_stops + web_guide_stoppage",
-        "tdEngineKey": null,
-        "mongoKey": "total_break",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 76
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Total Feed Breaks",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": "feed_roller_stoppage + feed_sensor_stoppage",
-        "tdEngineKey": null,
-        "mongoKey": "total_feed_break",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 78
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Total Delivery Breaks",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": "drafting_calender_roller_stops + web_guide_stoppage",
-        "tdEngineKey": null,
-        "mongoKey": "total_delivery_break",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_shift",
-          "row": 79
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "pms_DRAWFRAMEFINISHER_shift_live": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -2329,10 +1159,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -2342,10 +1169,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -2355,10 +1179,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -2368,10 +1189,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -2381,10 +1199,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -2394,10 +1209,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -2407,10 +1219,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -2420,10 +1229,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Run Time Hour",
@@ -2433,10 +1239,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -2446,10 +1249,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minute",
@@ -2459,10 +1259,7 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Idle Time Hour",
@@ -2472,10 +1269,7 @@
         "mongoKey": "idle_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle Time Minutes",
@@ -2485,10 +1279,7 @@
         "mongoKey": "idle_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle time Minute",
@@ -2498,10 +1289,7 @@
         "mongoKey": "idle_time_minute",
         "formula": "MATH(idle_hour * 60 + idle_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Power Fail Time Hour",
@@ -2511,16 +1299,7 @@
         "mongoKey": "power_fail_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Power Fail Time Hour",
-          "Powerfail_Time_Hour"
-        ],
-        "canonicalName": "Power Fail Time Hour",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Minutes",
@@ -2530,10 +1309,7 @@
         "mongoKey": "power_fail_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Minute",
@@ -2543,10 +1319,7 @@
         "mongoKey": "power_fail_time_minute",
         "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "DOFF Time Hour",
@@ -2556,10 +1329,7 @@
         "mongoKey": "doff_time_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "DOFF Time Minutes",
@@ -2569,10 +1339,7 @@
         "mongoKey": "doff_time_minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Time Minute",
@@ -2582,10 +1349,7 @@
         "mongoKey": "doff_time_minute",
         "formula": "MATH(doff_time_hour* 60 + doff_time_minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Delivery Speed",
@@ -2595,10 +1359,7 @@
         "mongoKey": "avg_delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hanks",
@@ -2608,16 +1369,7 @@
         "mongoKey": "hanks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hanks",
-          "Delivery Hanks"
-        ],
-        "canonicalName": "Hanks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doffs",
@@ -2627,16 +1379,7 @@
         "mongoKey": "no_of_doffs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Number Of doff",
-          "Doffs"
-        ],
-        "canonicalName": "Number Of doff",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Kgs",
@@ -2646,17 +1389,7 @@
         "mongoKey": "production_kgs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Kgs",
-          "Production Kgs",
-          "Production in kg"
-        ],
-        "canonicalName": "Kgs",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed Roller Stops",
@@ -2666,16 +1399,7 @@
         "mongoKey": "feed_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Feed roller stops",
-          "Feed Roller Stoppage"
-        ],
-        "canonicalName": "Feed roller stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed Sensor Stops",
@@ -2685,16 +1409,7 @@
         "mongoKey": "feed_sensor_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Feed sensor stops",
-          "Feed Sensor Stoppage"
-        ],
-        "canonicalName": "Feed sensor stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Scanning Roller Stops",
@@ -2704,16 +1419,7 @@
         "mongoKey": "scanning_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Scanning roller stops",
-          "Current_Shift_Scanning_roller_stops"
-        ],
-        "canonicalName": "Scanning roller stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Drafting/Calender Roller Stops",
@@ -2723,10 +1429,7 @@
         "mongoKey": "drafting_calender_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Web Guide stops",
@@ -2736,16 +1439,7 @@
         "mongoKey": "web_guide_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Web Guide stops",
-          "Web guide Stoppage"
-        ],
-        "canonicalName": "Web Guide stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Coiler Stops",
@@ -2755,16 +1449,7 @@
         "mongoKey": "coiler_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Coiler stops",
-          "Coiler Stoppage"
-        ],
-        "canonicalName": "Coiler stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Infeed Limit stops",
@@ -2774,10 +1459,7 @@
         "mongoKey": "infeed_limit_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Sliver Monitor Stops",
@@ -2787,16 +1469,7 @@
         "mongoKey": "sliver_monitor_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Sliver Monitor stops",
-          "Current_Shift_Sliver_Monitor_stops"
-        ],
-        "canonicalName": "Sliver Monitor stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U Stops",
@@ -2806,10 +1479,7 @@
         "mongoKey": "u_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV Stops",
@@ -2819,10 +1489,7 @@
         "mongoKey": "cv_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -2832,10 +1499,7 @@
         "mongoKey": "thick_places_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Spectrogram Stops",
@@ -2845,10 +1509,7 @@
         "mongoKey": "spectrogram_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Servo Drive Stops",
@@ -2858,16 +1519,7 @@
         "mongoKey": "servo_drive_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Servo Drive stops",
-          "Current_Shift_Servo_Drive_stops"
-        ],
-        "canonicalName": "Servo Drive stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total kWh",
@@ -2877,10 +1529,7 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "UKG",
@@ -2890,10 +1539,7 @@
         "mongoKey": "ukg",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Breaks",
@@ -2903,16 +1549,7 @@
         "mongoKey": "total_breaks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Breaks",
-          "PMS_TOTAL_BREAKS"
-        ],
-        "canonicalName": "Total Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Breaks in Min",
@@ -2922,16 +1559,7 @@
         "mongoKey": "total_breaks_in_min",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Breaks in Min",
-          "PMS_TOTAL_BREAKS_IN_MINS"
-        ],
-        "canonicalName": "Total Breaks in Min",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Feed Breaks",
@@ -2941,16 +1569,7 @@
         "mongoKey": "total_feed_breaks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Feed Breaks",
-          "PMS_TOTAL_FEED_BREAKS"
-        ],
-        "canonicalName": "Total Feed Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Delivery Breaks",
@@ -2960,16 +1579,7 @@
         "mongoKey": "total_delivery_breaks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Delivery Breaks",
-          "PMS_TOTAL_DEL_BREAKS"
-        ],
-        "canonicalName": "Total Delivery Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Quality Breaks",
@@ -2979,16 +1589,7 @@
         "mongoKey": "total_quality_breaks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Quality Breaks",
-          "PMS_TOTAL_QUALITY_BREAKS"
-        ],
-        "canonicalName": "Total Quality Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Avg Doff Time",
@@ -2998,10 +1599,7 @@
         "mongoKey": "avg_doff_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Can Filling Time",
@@ -3011,16 +1609,7 @@
         "mongoKey": "can_filling_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Can Filling Time",
-          "PMS_CAN_FILLING_TIME"
-        ],
-        "canonicalName": "Can Filling Time",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Can Waiting Time",
@@ -3030,16 +1619,7 @@
         "mongoKey": "can_waiting_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Can Waiting Time",
-          "PMS_CAN_WAITING_TIME"
-        ],
-        "canonicalName": "Can Waiting Time",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed Stoppage Time Hour",
@@ -3049,10 +1629,7 @@
         "mongoKey": "feed_stoppage_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Feed Stoppage Time Minutes",
@@ -3062,10 +1639,7 @@
         "mongoKey": "feed_stoppage_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Feed Stoppage Time Minute",
@@ -3075,10 +1649,7 @@
         "mongoKey": "feed_stoppage_minute",
         "formula": "MATH(feed_stoppage_hour * 60 + feed_stoppage_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Delivery Stoppage Time Hour",
@@ -3088,10 +1659,7 @@
         "mongoKey": "delivery_stoppage_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Delivery Stoppage Time Minutes",
@@ -3101,10 +1669,7 @@
         "mongoKey": "delivery_stoppage_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Delivery Stoppage Time Minute",
@@ -3114,10 +1679,7 @@
         "mongoKey": "delivery_stoppage_minute",
         "formula": "MATH(delivery_stoppage_hour * 60 + delivery_stoppage_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Other Stoppage Time Hour",
@@ -3127,10 +1689,7 @@
         "mongoKey": "other_stoppage_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Other Stoppage Time Minutes",
@@ -3140,10 +1699,7 @@
         "mongoKey": "other_stoppage_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Other Stoppage Time Minute",
@@ -3153,10 +1709,7 @@
         "mongoKey": "other_stoppage_minute",
         "formula": "MATH(other_stoppage_hour * 60 + other_stoppage_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -3167,16 +1720,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hank",
-          "Process Hank"
-        ],
-        "canonicalName": "Hank",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "precision": "COL0049473730612fe61"
       },
       {
         "tagName": "Lot Name",
@@ -3186,10 +1730,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "A",
@@ -3199,10 +1740,7 @@
         "mongoKey": "a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U",
@@ -3212,16 +1750,7 @@
         "mongoKey": "u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV 1m",
@@ -3231,16 +1760,7 @@
         "mongoKey": "cv_1m",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV 1m",
-          "1m CV"
-        ],
-        "canonicalName": "CV 1m",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Auto Leveller",
@@ -3250,10 +1770,7 @@
         "mongoKey": "auto_leveller",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Current Length",
@@ -3263,10 +1780,7 @@
         "mongoKey": "current_length",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Delivery Speed",
@@ -3276,10 +1790,7 @@
         "mongoKey": "delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff length",
@@ -3289,10 +1800,7 @@
         "mongoKey": "set_doff_length",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Production Efficiency",
@@ -3302,10 +1810,7 @@
         "mongoKey": "production_eff",
         "formula": "MATH((run_time_minute / (run_time_minute + idle_time_minute + doff_time_minute) )* 100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Utilization",
@@ -3316,10 +1821,7 @@
         "formula": "MATH((run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + doff_time_minute + power_fail_time_minute) * 100)",
         "type": "instant",
         "isRequired": true,
-        "isAutoCalc": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isAutoCalc": true
       },
       {
         "tagName": "Machine Utilization Formula 1 - KM",
@@ -3329,10 +1831,7 @@
         "mongoKey": "machine_uti_formula_1",
         "formula": "MATH((run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute) * 100)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Machine Efficiency",
@@ -3342,49 +1841,7 @@
         "mongoKey": "machine_eff",
         "formula": "MATH((run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute+power_fail_time_minute))*100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Ukg",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "UKG",
-        "mongoKey": "tgt_ukg",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "PE",
-        "mongoKey": "tgt_production_eff",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Machine Utilization",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "MU",
-        "mongoKey": "tgt_machine_uti",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Speed",
@@ -3394,23 +1851,7 @@
         "mongoKey": "machine_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Standard Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "SE",
-        "mongoKey": "tgt_standard_eff",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Target Production KG Formula 1",
@@ -3420,37 +1861,7 @@
         "mongoKey": "pkg_formula_1",
         "formula": "MATH((((machine_speed * 1.0936 * total_shift_time) / (840 * 2.2046 * hank_ne)) * (tgt_standard_eff / 100)) * 1)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Kgs",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "PKG",
-        "mongoKey": "tgt_production_kgs",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "isAutoCalc": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Production Efficiency Loss %",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": null,
-        "mongoKey": "production_eff_loss",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Total Break",
@@ -3460,10 +1871,7 @@
         "mongoKey": "total_break",
         "formula": "MATH(feed_roller_stoppage + feed_sensor_stoppage + drafting_calender_roller_stops + web_guide_stops)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Breaks Per Hour",
@@ -3473,350 +1881,10 @@
         "mongoKey": "breaks_per_hour",
         "formula": "MATH((total_break/run_time_minute) * 60)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "run_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 18
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Idle Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "idle_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 20
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Power Fail Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "power_fail_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 22
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Power Fail Time Minute",
-          "Powerfail_Time_Minute"
-        ],
-        "canonicalName": "Power Fail Time Minute",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Doff Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "doff_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 24
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "UKG",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": "=total_kwh/production_kgs",
-        "tdEngineKey": null,
-        "mongoKey": "ukg",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 43
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Feed Stoppage Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "feed_stoppage_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 53
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Delivery Stoppage Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "delivery_stoppage_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 55
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Other Stoppage Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "other_stoppage_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 57
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "-",
-        "dataType": null,
-        "groupCode": null,
-        "formula": "production_efficiency_formula",
-        "tdEngineKey": null,
-        "mongoKey": "production_eff",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 67
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Total Break",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": "feed_roller_stoppage + feed_sensor_stoppage + drafting_calender_roller_stops + web_guide_stoppage",
-        "tdEngineKey": null,
-        "mongoKey": "total_break",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 76
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Total Feed Breaks",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": "feed_roller_stoppage + feed_sensor_stoppage",
-        "tdEngineKey": null,
-        "mongoKey": "total_feed_break",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 78
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Feed Breaks",
-          "PMS_TOTAL_FEED_BREAKS"
-        ],
-        "canonicalName": "Total Feed Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Total Delivery Breaks",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": "drafting_calender_roller_stops + web_guide_stoppage",
-        "tdEngineKey": null,
-        "mongoKey": "total_delivery_break",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHE_shift_live",
-          "row": 79
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Delivery Breaks",
-          "PMS_TOTAL_DEL_BREAKS"
-        ],
-        "canonicalName": "Total Delivery Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "pms_DRAWFRAMEFINISHER_hours": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -3825,10 +1893,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -3838,10 +1903,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -3851,10 +1913,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -3864,10 +1923,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -3877,10 +1933,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -3890,10 +1943,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -3903,10 +1953,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -3916,10 +1963,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Run Time Hour",
@@ -3929,10 +1973,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -3942,10 +1983,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minute",
@@ -3955,10 +1993,7 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Run Time Minute",
@@ -3968,10 +2003,7 @@
         "mongoKey": "run_time_minute_direct",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle Time Hour",
@@ -3981,10 +2013,7 @@
         "mongoKey": "idle_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle Time Minutes",
@@ -3994,10 +2023,7 @@
         "mongoKey": "idle_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Idle Time Minute",
@@ -4007,10 +2033,7 @@
         "mongoKey": "idle_time_minute",
         "formula": "MATH(idle_hour * 60 + idle_minute)",
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Idle Time Minute",
@@ -4020,10 +2043,7 @@
         "mongoKey": "idle_time_minute_direct",
         "formula": "MATH(idle_hour * 60 + idle_minute)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Hour",
@@ -4033,16 +2053,7 @@
         "mongoKey": "power_fail_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Power Fail Time Hour",
-          "Powerfail_Time_Hour"
-        ],
-        "canonicalName": "Power Fail Time Hour",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Minutes",
@@ -4052,10 +2063,7 @@
         "mongoKey": "power_fail_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Power Fail Time Minute",
@@ -4065,10 +2073,7 @@
         "mongoKey": "power_fail_time_minute",
         "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Power Fail Time Minute",
@@ -4078,10 +2083,7 @@
         "mongoKey": "power_fail_time_minute_direct",
         "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "DOFF Time Hour",
@@ -4091,10 +2093,7 @@
         "mongoKey": "doff_time_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "DOFF Time Minutes",
@@ -4104,10 +2103,7 @@
         "mongoKey": "doff_time_minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Time Minute",
@@ -4117,10 +2113,7 @@
         "mongoKey": "doff_time_minute",
         "formula": "MATH(doff_time_hour* 60 + doff_time_minutes)",
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff Time Minute",
@@ -4130,10 +2123,7 @@
         "mongoKey": "doff_time_minute_direct",
         "formula": "MATH(doff_time_hour* 60 + doff_time_minutes)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Delivery Speed",
@@ -4143,10 +2133,7 @@
         "mongoKey": "avg_delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hanks",
@@ -4156,16 +2143,7 @@
         "mongoKey": "hanks",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hanks",
-          "Delivery Hanks"
-        ],
-        "canonicalName": "Hanks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doffs",
@@ -4175,16 +2153,7 @@
         "mongoKey": "no_of_doffs",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Number Of doff",
-          "Doffs"
-        ],
-        "canonicalName": "Number Of doff",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Kgs",
@@ -4194,17 +2163,7 @@
         "mongoKey": "production_kgs",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Kgs",
-          "Production Kgs",
-          "Production in kg"
-        ],
-        "canonicalName": "Kgs",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Avg Doff Time",
@@ -4214,10 +2173,7 @@
         "mongoKey": "avg_doff_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Can Filling Time",
@@ -4227,16 +2183,7 @@
         "mongoKey": "can_filling_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Can Filling Time",
-          "PMS_CAN_FILLING_TIME"
-        ],
-        "canonicalName": "Can Filling Time",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Can Waiting Time",
@@ -4246,16 +2193,7 @@
         "mongoKey": "can_waiting_time",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Can Waiting Time",
-          "PMS_CAN_WAITING_TIME"
-        ],
-        "canonicalName": "Can Waiting Time",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -4266,16 +2204,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hank",
-          "Process Hank"
-        ],
-        "canonicalName": "Hank",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "precision": "COL0049473730612fe61"
       },
       {
         "tagName": "Lot Name",
@@ -4285,10 +2214,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "A",
@@ -4298,10 +2224,7 @@
         "mongoKey": "a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U",
@@ -4311,16 +2234,7 @@
         "mongoKey": "u_percent",
         "formula": null,
         "type": "average",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV 1m",
@@ -4330,16 +2244,7 @@
         "mongoKey": "cv_1m",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV 1m",
-          "1m CV"
-        ],
-        "canonicalName": "CV 1m",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Current Length",
@@ -4349,10 +2254,7 @@
         "mongoKey": "current_length",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Delivery Speed",
@@ -4362,10 +2264,7 @@
         "mongoKey": "delivery_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff length",
@@ -4375,10 +2274,7 @@
         "mongoKey": "set_doff_length",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Production Efficiency",
@@ -4388,10 +2284,7 @@
         "mongoKey": "production_eff",
         "formula": "MATH((run_time_minute_direct / (run_time_minute_direct + idle_time_minute_direct + doff_time_minute_direct) )* 100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Utilization",
@@ -4402,10 +2295,7 @@
         "formula": "MATH((run_time_minute_direct + doff_time_minute_direct) / (run_time_minute_direct + idle_time_minute_direct + doff_time_minute_direct + power_fail_time_minute_direct) * 100)",
         "type": "instant",
         "isRequired": true,
-        "isAutoCalc": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isAutoCalc": true
       },
       {
         "tagName": "Machine Utilization Formula 1 - KM",
@@ -4415,10 +2305,7 @@
         "mongoKey": "machine_uti_formula_1",
         "formula": "MATH((run_time_minute_direct) / (run_time_minute_direct + idle_time_minute_direct + power_fail_time_minute_direct) * 100)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Machine Efficiency",
@@ -4428,49 +2315,7 @@
         "mongoKey": "machine_eff",
         "formula": "MATH((run_time_minute_direct/(run_time_minute_direct+idle_time_minute_direct+doff_time_minute_direct+power_fail_time_minute_direct))*100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Ukg",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "UKG",
-        "mongoKey": "tgt_ukg",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "PE",
-        "mongoKey": "tgt_production_eff",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Machine Utilization",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "MU",
-        "mongoKey": "tgt_machine_uti",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Speed",
@@ -4480,23 +2325,7 @@
         "mongoKey": "machine_speed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Standard Efficiency",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "SE",
-        "mongoKey": "tgt_standard_eff",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Target Production KG Formula 1",
@@ -4506,37 +2335,7 @@
         "mongoKey": "pkg_formula_1",
         "formula": "MATH((((machine_speed * 1.0936 * total_shift_time) / (840 * 2.2046 * hank_ne)) * (tgt_standard_eff / 100)) * 1)",
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Kgs",
-        "dataType": "FLOAT",
-        "groupCode": "target",
-        "tdEngineKey": "PKG",
-        "mongoKey": "tgt_production_kgs",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "isAutoCalc": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Target Production Efficiency Loss",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_pms",
-        "tdEngineKey": "PL",
-        "mongoKey": "tgt_production_eff_loss",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Ukg",
@@ -4546,10 +2345,7 @@
         "mongoKey": "ukg",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Number of Thick place",
@@ -4559,10 +2355,7 @@
         "mongoKey": "thick_place",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Feed Breaks",
@@ -4572,16 +2365,7 @@
         "mongoKey": "total_feed_breaks",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Feed Breaks",
-          "PMS_TOTAL_FEED_BREAKS"
-        ],
-        "canonicalName": "Total Feed Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Delivery Breaks",
@@ -4591,16 +2375,7 @@
         "mongoKey": "total_delivery_breaks",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Delivery Breaks",
-          "PMS_TOTAL_DEL_BREAKS"
-        ],
-        "canonicalName": "Total Delivery Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Quality Breaks",
@@ -4610,16 +2385,7 @@
         "mongoKey": "total_quality_breaks",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Quality Breaks",
-          "PMS_TOTAL_QUALITY_BREAKS"
-        ],
-        "canonicalName": "Total Quality Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed roller stops",
@@ -4629,16 +2395,7 @@
         "mongoKey": "feed_roller_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Feed roller stops",
-          "Feed Roller Stoppage"
-        ],
-        "canonicalName": "Feed roller stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed sensor stops",
@@ -4648,16 +2405,7 @@
         "mongoKey": "feed_sensor_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Feed sensor stops",
-          "Feed Sensor Stoppage"
-        ],
-        "canonicalName": "Feed sensor stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Scanning roller stops",
@@ -4667,16 +2415,7 @@
         "mongoKey": "scanning_roller_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Scanning roller stops",
-          "Current_Shift_Scanning_roller_stops"
-        ],
-        "canonicalName": "Scanning roller stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Drafting/Calender Roller stops",
@@ -4686,10 +2425,7 @@
         "mongoKey": "drafting_calender_roller_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Web Guide Stops",
@@ -4699,16 +2435,7 @@
         "mongoKey": "web_guide_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Web Guide stops",
-          "Web guide Stoppage"
-        ],
-        "canonicalName": "Web Guide stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Coiler Stops",
@@ -4718,16 +2445,7 @@
         "mongoKey": "coiler_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Coiler stops",
-          "Coiler Stoppage"
-        ],
-        "canonicalName": "Coiler stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Infeed Limit Stops",
@@ -4737,10 +2455,7 @@
         "mongoKey": "infeed_limit_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Sliver Monitor Stops",
@@ -4750,16 +2465,7 @@
         "mongoKey": "sliver_monitor_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Sliver Monitor stops",
-          "Current_Shift_Sliver_Monitor_stops"
-        ],
-        "canonicalName": "Sliver Monitor stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Total Breaks",
@@ -4769,16 +2475,7 @@
         "mongoKey": "total_breaks",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Total Breaks",
-          "PMS_TOTAL_BREAKS"
-        ],
-        "canonicalName": "Total Breaks",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U Stops",
@@ -4788,10 +2485,7 @@
         "mongoKey": "u_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV Stops",
@@ -4801,10 +2495,7 @@
         "mongoKey": "cv_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -4814,10 +2505,7 @@
         "mongoKey": "thick_places_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Spectogram Stops",
@@ -4827,10 +2515,7 @@
         "mongoKey": "spectogram_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Servo Drive Stops",
@@ -4840,129 +2525,10 @@
         "mongoKey": "servo_drive_stops",
         "formula": null,
         "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Servo Drive stops",
-          "Current_Shift_Servo_Drive_stops"
-        ],
-        "canonicalName": "Servo Drive stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Cumulative Thick place",
-        "dataType": "FLOAT",
-        "groupCode": null,
-        "formula": "Number_of_thickplace in doff1 + Number_of_thickplace in doff 2 + ... upto No of doffs",
-        "tdEngineKey": "number_of_thickplace",
-        "mongoKey": "thick_place",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_hours",
-          "row": 50
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "pms_DRAWFRAMEFINISHER_doff": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "500",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "500",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "500",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "500",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "500",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "500",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "500",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Doff Date",
         "dataType": "FLOAT",
@@ -4971,10 +2537,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Month",
@@ -4984,10 +2547,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Year",
@@ -4997,10 +2557,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff date",
@@ -5010,10 +2567,7 @@
         "mongoKey": "doff_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff Hour",
@@ -5023,10 +2577,7 @@
         "mongoKey": "hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Minute",
@@ -5036,10 +2587,7 @@
         "mongoKey": "minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Hour",
@@ -5049,10 +2597,7 @@
         "mongoKey": "doff_hour",
         "formula": "CONCAT(hour, ':', minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff End Date",
@@ -5062,10 +2607,7 @@
         "mongoKey": "doff_end_date",
         "formula": "CONCAT(year, '-', month, '-' ,date, ' ' ,hour, ':', minute, ':00')",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Number",
@@ -5075,10 +2617,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift date",
@@ -5088,10 +2627,7 @@
         "mongoKey": "shift_date",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Machine Status",
@@ -5101,10 +2637,7 @@
         "mongoKey": "machine_status",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Hank",
@@ -5115,10 +2648,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL0049473730612fe61",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "precision": "COL0049473730612fe61"
       },
       {
         "tagName": "Average Delivery",
@@ -5128,10 +2658,7 @@
         "mongoKey": "average_delivery",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff Production",
@@ -5141,10 +2668,7 @@
         "mongoKey": "production_kgs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "DOFF Length",
@@ -5154,10 +2678,7 @@
         "mongoKey": "doff_length",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff Run Time Hour",
@@ -5167,10 +2688,7 @@
         "mongoKey": "doff_run_time_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Run Time Minutes",
@@ -5180,10 +2698,7 @@
         "mongoKey": "doff_time_minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Run Time Seconds",
@@ -5193,10 +2708,7 @@
         "mongoKey": "doff_time_seconds",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Doff Run Time Minute",
@@ -5206,10 +2718,7 @@
         "mongoKey": "doff_run_time_minute",
         "formula": "MATH((doff_run_time_hour * 60) + doff_time_minutes + (gte(doff_time_seconds, 30) * 1))",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "DOFF Length",
@@ -5219,10 +2728,7 @@
         "mongoKey": "set_doff_length",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Units Consumed",
@@ -5232,10 +2738,7 @@
         "mongoKey": "units_consumed",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Number of Thick place",
@@ -5245,10 +2748,7 @@
         "mongoKey": "number_of_thickplace",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Lot Name",
@@ -5258,10 +2758,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Doff UKG",
@@ -5271,10 +2768,7 @@
         "mongoKey": "ukg",
         "formula": "MATH(production_kgs/total_kwh)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Production in Hank",
@@ -5284,1200 +2778,8 @@
         "mongoKey": "production_in_hank",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Average Delivery (m/Min)",
-        "dataType": null,
-        "groupCode": "500",
-        "formula": null,
-        "tdEngineKey": "average_delivery",
-        "mongoKey": "average_delivery",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_doff",
-          "row": 18
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "DOFF Run Time Minute",
-        "dataType": null,
-        "groupCode": "500",
-        "formula": null,
-        "tdEngineKey": "doff_run_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_doff",
-          "row": 22
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Set DOFF Length",
-        "dataType": "FLOAT",
-        "groupCode": "140",
-        "formula": null,
-        "tdEngineKey": "doff_length",
-        "mongoKey": "set_doff_length",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_doff",
-          "row": 24
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Number of Thick Places",
-        "dataType": "Real",
-        "groupCode": "500",
-        "formula": null,
-        "tdEngineKey": "no_of_thickplace",
-        "mongoKey": "number_of_thickplace",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_doff",
-          "row": 28
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Production_in_Hank",
-        "dataType": null,
-        "groupCode": "500",
-        "formula": null,
-        "tdEngineKey": "doff_hank",
-        "mongoKey": "production_in_hank",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_doff",
-          "row": 29
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max Flyer RPM",
-        "dataType": "REAL",
-        "groupCode": "190",
-        "formula": null,
-        "tdEngineKey": "Max_Flyer_RPM",
-        "mongoKey": "max_flyer_rpm",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_doff",
-          "row": 32
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Doff Production",
-        "dataType": "Real",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "Doff Production",
-        "mongoKey": "production_in_kg",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_doff",
-          "row": 34
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
-    ],
-    "pms_DRAWFRAMEFINISHER_raw_data": [
-      {
-        "tagName": "Below listed Group Code all data's to be captured and inserted in raw data collection against to the Group Code Array of array, only one latest record to be maintained",
-        "dataType": null,
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
-          "row": 2
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Overall Machine Utilization",
-        "dataType": "REAL",
-        "groupCode": "530",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "overall_machine_utilization",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
-          "row": 35
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Production Efficiency",
-        "dataType": "REAL",
-        "groupCode": "540",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "production_efficiency",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
-          "row": 36
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Production Kg",
-        "dataType": "REAL",
-        "groupCode": "550",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "production_kg",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
-          "row": 37
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Ukg",
-        "dataType": "REAL",
-        "groupCode": "560",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "ukg",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
-          "row": 38
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "GPSS",
-        "dataType": "REAL",
-        "groupCode": "570",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "gpss",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_raw_data",
-          "row": 39
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      }
-    ],
-    "pms_DRAWFRAMEFINISHER_events": [
-      {
-        "tagName": "Requirements has been provided this collection will be handled by Data Bridge Team",
-        "dataType": null,
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_events",
-          "row": 2
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Overall Machine Utilization",
-        "dataType": "REAL",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "overall_machine_utilization",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_events",
-          "row": 37
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Production Efficiency",
-        "dataType": "REAL",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "production_efficiency",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_events",
-          "row": 38
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Production Kg",
-        "dataType": "REAL",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "production_kg",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_events",
-          "row": 39
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "GPSS",
-        "dataType": "REAL",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": "gpss",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_events",
-          "row": 41
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      }
-    ],
-    "pms_DRAWFRAMEFINISHER_faults": [
-      {
-        "tagName": "Yet to provide the requirements",
-        "dataType": null,
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "pms_DRAWFRAMEFINISHER_faults",
-          "row": 2
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      }
-    ]
-  },
-  "queryDetails": {
-    "pms_DRAWFRAMEFINISHER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_shift_live": [
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_doff": [
-      "asset_id",
-      "doff_date",
-      "doff_hour"
-    ],
-    "qms_DRAWFRAMEFINISHER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEFINISHER_shift_live": [
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEFINISHER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEFINISHER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_events": [
-      "shift_date",
-      "shift_id",
-      "asset_id",
-      "status_endtime"
-    ],
-    "pms_DRAWFRAMEFINISHER_stoppages": [
-      "shift_date",
-      "shift_id",
-      "asset_id",
-      "idle_starttime"
-    ],
-    "cms_DRAWFRAMEFINISHER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEFINISHER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEFINISHER_shift_live": [
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEFINISHER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_raw_data_history": [
-      "asset_id",
-      "group_code",
-      "source_time"
-    ]
-  },
-  "targets": {
-    "DRAWFRAMEFINISHER_PMS": [
-      {
-        "code": "MU",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "PE",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "DOFFT",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "PL",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "SE",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      }
-    ],
-    "DRAWFRAMEFINISHER_QMS": [
-      {
-        "code": "A%",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Between+_",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "TP",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Between+_",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      }
-    ],
-    "PMS": [
-      {
-        "code": "PKG",
-        "target": 0.0,
-        "inputType": "",
-        "isEditable": true,
-        "is_autocalc_edit": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      },
-      {
-        "code": "UKG",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "STDW",
-        "target": 0.0,
-        "inputType": "Percentage",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      }
-    ],
-    "QMS": [
-      {
-        "code": "U%",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Control Limit Lower",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "A%",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Between+_",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "CV%",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Control Limit Lower",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "SP",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Control Limit Lower",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      },
-      {
-        "code": "TP",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Between+_",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      }
-    ],
-    "DRAWFRAMEFINISHER_CMS": [
-      {
-        "code": "DZT_CMS",
-        "target": 65.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DZV_CMS",
-        "target": 1.5,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      }
-    ]
-  },
-  "alertModel": {
-    "QMS": [
-      {
-        "byte_key": "current_fault_4_byte",
-        "key": "Sliver monitor Fault",
-        "group_code": "30",
-        "deviation_key": "sliver_monitor_fault_dev_%",
-        "d_group_code": "20"
-      },
-      {
-        "byte_key": "current_fault_6_byte",
-        "key": "INFEED LEVELLING RANGE +25% EXCEEDED",
-        "group_code": "30",
-        "deviation_key": "infeed_limit_stops",
-        "d_group_code": "40"
-      },
-      {
-        "byte_key": "current_fault_6_byte",
-        "key": "INFEED LEVELLING RANGE -25% EXCEEDED",
-        "group_code": "30",
-        "deviation_key": "infeed_limit_stops",
-        "d_group_code": "40"
-      }
-    ]
-  },
-  "indexDetails": {
-    "pms_DRAWFRAMEFINISHER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "pms_DRAWFRAMEFINISHER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_hours": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "end_time"
-    ],
-    "pms_DRAWFRAMEFINISHER_doff": [
-      "doff_date",
-      "doff_hour",
-      "asset_id",
-      "shift_date",
-      "platform_shift_id"
-    ],
-    "qms_DRAWFRAMEFINISHER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEFINISHER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEFINISHER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "pms_DRAWFRAMEFINISHER_events": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEFINISHER_stoppages": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEFINISHER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "cms_DRAWFRAMEFINISHER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEFINISHER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEFINISHER_hours": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "end_time"
     ]
   }
 }

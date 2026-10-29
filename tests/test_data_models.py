@@ -113,9 +113,22 @@ class DataModelTests(unittest.TestCase):
             self.assertIn('TYPE_DIFFERS',strict['rows'][1]['reasonCodes'])
 
     def test_finisher_corrected_reference_retains_workbook_evidence(self):
-        catalog=Path(__file__).resolve().parents[1]/'knowledge/data_models/catalog.json'
-        models=json.loads(catalog.read_text(encoding='utf-8'))['models']
-        model=next(value for value in models if value['machine']=='DRAWFRAMEFINISHER' and value['service']=='CMS')
+        # Exercise legacy workbook correction with its own reference fixture;
+        # the installed production catalog may now be a user-curated shortlist.
+        from scripts.build_data_model_knowledge import build
+        with TemporaryDirectory() as directory:
+            root=Path(directory);source=root/'source'/'CMS';source.mkdir(parents=True)
+            raw={'controleCode':'DRAWFRAMEFINISHER','keysList':{'cms_DRAWFRAMEFINISHER_shift':[
+                {'tagName':'Production in kg','dataType':'TIMESTAMP','groupCode':'40'},
+                {'tagName':'Production in kg','dataType':'FLOAT','groupCode':'50'}]}}
+            (source/'DRAWFRAMEFINISHER.json').write_text(json.dumps(raw),encoding='utf-8')
+            book=Workbook();sheet=book.active;sheet.title='shift'
+            sheet.append(['Name(Only Reference)','Data Type','Group Code'])
+            for number in [54,98,121]:
+                for column,value in enumerate(['Production in kg','FLOAT',40],1):sheet.cell(number,column,value)
+            book.save(source/'CMS_DrawFrameFinisher_Key_Definitions.xlsx');book.close()
+            models,_=build(root/'source',root/'output')
+            model=next(value for value in models if value['machine']=='DRAWFRAMEFINISHER' and value['service']=='CMS')
         rows=validate_model(model,self.metadata('Production in kg'))['rows']
         current=next(row for row in rows if row['name']=='Production in kg' and row['groupCodes']==[40])
         self.assertEqual(current['status'],'PASS')

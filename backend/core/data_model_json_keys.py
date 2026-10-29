@@ -118,6 +118,13 @@ def get_source(model_id: str) -> dict:
     }
 
 
+def get_sources() -> list[dict]:
+    """Read every installed source with its service/department scope intact."""
+    with _lock:
+        return [get_source(f"{item['service']}:{item['department']}")
+                for item in _manifest()['fixedModels']]
+
+
 def _identity(record: dict) -> tuple:
     group = record.get('groupCode')
     if group is None:

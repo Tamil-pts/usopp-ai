@@ -3,97 +3,6 @@
   "keysList": {
     "qms_DRAWFRAMEFINISHER_shift_live": [
       {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
         "groupCode": "40",
@@ -101,10 +10,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -114,10 +20,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -127,10 +30,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -140,10 +40,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -153,10 +50,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -166,10 +60,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -179,10 +70,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -192,10 +80,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -205,16 +90,7 @@
         "mongoKey": "count",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hank",
-          "Process Hank"
-        ],
-        "canonicalName": "Hank",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Lot name",
@@ -224,10 +100,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "U",
@@ -237,42 +110,7 @@
         "mongoKey": "u%",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max U",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "max_u%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Min U",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "min_u%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "A%",
@@ -282,36 +120,7 @@
         "mongoKey": "a%",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max A",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "max_a%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Min A",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "min_a%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "CV%(1m)",
@@ -321,42 +130,7 @@
         "mongoKey": "cv%",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(1m)",
-          "CV 1m"
-        ],
-        "canonicalName": "CV%(1m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max CV",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "max_cv%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Min CV",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "min_cv%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Spectogram",
@@ -366,36 +140,7 @@
         "mongoKey": "spectogram_peak",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max Spectogram Peak",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "max_spectogram_peak",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Min Spectogram Peak",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "min_spectogram_peak",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Thick place",
@@ -405,17 +150,7 @@
         "mongoKey": "thick_place",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Thick place",
-          "Thickplaces",
-          "Thick places"
-        ],
-        "canonicalName": "Thick place",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Feed roller stops",
@@ -425,16 +160,7 @@
         "mongoKey": "feed_roller_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Feed roller stops",
-          "Feed Roller Stoppage"
-        ],
-        "canonicalName": "Feed roller stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Feed sensor stops",
@@ -444,16 +170,7 @@
         "mongoKey": "feed_sensor_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Feed sensor stops",
-          "Feed Sensor Stoppage"
-        ],
-        "canonicalName": "Feed sensor stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Scanning roller stops",
@@ -463,16 +180,7 @@
         "mongoKey": "scanning_roller_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Scanning roller stops",
-          "Current_Shift_Scanning_roller_stops"
-        ],
-        "canonicalName": "Scanning roller stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Drafting/Calender Roller stops",
@@ -482,10 +190,7 @@
         "mongoKey": "drafting/calender_roller_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Web Guide stops",
@@ -495,16 +200,7 @@
         "mongoKey": "web_guide_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Web Guide stops",
-          "Web guide Stoppage"
-        ],
-        "canonicalName": "Web Guide stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Coiler stops",
@@ -514,16 +210,7 @@
         "mongoKey": "coiler_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Coiler stops",
-          "Coiler Stoppage"
-        ],
-        "canonicalName": "Coiler stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Infeed Limit stops",
@@ -533,10 +220,7 @@
         "mongoKey": "infeed_limit_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Sliver Monitor stops",
@@ -546,16 +230,7 @@
         "mongoKey": "sliver_monitor_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Sliver Monitor stops",
-          "Current_Shift_Sliver_Monitor_stops"
-        ],
-        "canonicalName": "Sliver Monitor stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "U Stops",
@@ -565,10 +240,7 @@
         "mongoKey": "u_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "CV Stops",
@@ -578,10 +250,7 @@
         "mongoKey": "cv_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -591,10 +260,7 @@
         "mongoKey": "thick_places_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -604,10 +270,7 @@
         "mongoKey": "thick_places_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Servo Drive stops",
@@ -617,664 +280,10 @@
         "mongoKey": "servo_drive_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Servo Drive stops",
-          "Current_Shift_Servo_Drive_stops"
-        ],
-        "canonicalName": "Servo Drive stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": " ",
-        "mongoKey": "ts_act",
-        "isRequired": true,
-        "isHost": true,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 3
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Timestamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": " ",
-        "mongoKey": "ts",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 4
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": " ",
-        "mongoKey": "tenant_id",
-        "isRequired": true,
-        "isHost": true,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 5
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": " ",
-        "mongoKey": "business_id",
-        "isRequired": true,
-        "isHost": true,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 6
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": " ",
-        "mongoKey": "asset_id",
-        "isRequired": true,
-        "isHost": true,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 7
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": " ",
-        "mongoKey": "unit_id",
-        "isRequired": true,
-        "isHost": true,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 8
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": null,
-        "formula": null,
-        "tdEngineKey": " ",
-        "mongoKey": "shed_id",
-        "isRequired": true,
-        "isHost": true,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 9
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CV%(5cm)",
-        "dataType": "FLOAT",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "cv%(5cm)",
-        "mongoKey": "cv_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 24
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5cm)",
-          "CV 5cm%"
-        ],
-        "canonicalName": "CV%(5cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Spectogram",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "spectogram_stops",
-        "mongoKey": "spectrogram_peak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 27
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Cumulative Thick place",
-        "dataType": "FLOAT",
-        "groupCode": null,
-        "formula": "no_of_thickplace in doff1 + no_of_thickplace in doff 2 + ... upto No of doffs",
-        "tdEngineKey": null,
-        "mongoKey": "thick_place",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 30
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Hour",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "run_time_hour",
-        "mongoKey": "run_time_minute",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 43
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "run_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 44
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Thick Place Per Hour",
-        "dataType": "float",
-        "groupCode": "formula",
-        "formula": "(thick_place / run_time_minute)* 60",
-        "tdEngineKey": null,
-        "mongoKey": "thickplace_hr",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 45
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Number Of doff",
-        "dataType": "float",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "doffs",
-        "mongoKey": "no_of_doffs",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 46
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Number Of doff",
-          "Doffs"
-        ],
-        "canonicalName": "Number Of doff",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Thick place_AvgCan",
-        "dataType": "FLOAT",
-        "groupCode": null,
-        "formula": "(thick_place )/ no_of_doffs",
-        "tdEngineKey": null,
-        "mongoKey": "thick_place_AvgCan",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 47
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Can Rejection",
-        "dataType": "float",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "thick_places_can_rejection_count",
-        "mongoKey": "can_rejection_count",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 48
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Can Rejection",
-          "Thick place can rejection"
-        ],
-        "canonicalName": "Can Rejection",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Feed Weight  g/m",
-        "dataType": "float",
-        "groupCode": "140",
-        "formula": null,
-        "tdEngineKey": "feed_sliver_weight",
-        "mongoKey": "feed_weight_gm",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 49
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Sliver Trip count Dev",
-        "dataType": "float",
-        "groupCode": "20",
-        "formula": null,
-        "tdEngineKey": "sliver_monitor_fault_dev_%",
-        "mongoKey": "sliver_trip_count_dev_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 50
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CVM%",
-        "dataType": "real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "cvm%",
-        "mongoKey": "cvm_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 51
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CVM%",
-          "CVM %"
-        ],
-        "canonicalName": "CVM%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CV%(2Cm)",
-        "dataType": "real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "cv%(2cm)",
-        "mongoKey": "cv_2cm_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 52
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(2cm)",
-          "CV% (2cm)"
-        ],
-        "canonicalName": "CV%(2cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CV%(10Cm)",
-        "dataType": "real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "cv%(10cm)",
-        "mongoKey": "cv_10cm_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 54
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(10cm)",
-          "CV 10cm"
-        ],
-        "canonicalName": "CV%(10cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CV%(25Cm)",
-        "dataType": "real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "cv%(25cm)",
-        "mongoKey": "cv_25cm_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 55
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(25cm)",
-          "CV 25cm"
-        ],
-        "canonicalName": "CV%(25cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CV%(50Cm)",
-        "dataType": "real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "cv%(50cm)",
-        "mongoKey": "cv_50cm_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 56
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(50cm)",
-          "CV 50cm"
-        ],
-        "canonicalName": "CV%(50cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CV%(3m)",
-        "dataType": "real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "cv%(3m)",
-        "mongoKey": "cv_3m_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 58
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(3m)",
-          "CV 3m"
-        ],
-        "canonicalName": "CV%(3m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CV%(5m)",
-        "dataType": "real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "cv%(5m)",
-        "mongoKey": "cv_5m_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 59
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5m)",
-          "CV 5m"
-        ],
-        "canonicalName": "CV%(5m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Cumulative Thick place",
-        "dataType": null,
-        "groupCode": null,
-        "formula": "no_of_thickplace in doff1 + no_of_thickplace in doff 2 + ... upto No of doffs",
-        "tdEngineKey": null,
-        "mongoKey": "thick_place",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHE_shift_live",
-          "row": 60
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       }
     ],
     "qms_DRAWFRAMEFINISHER_shift": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -1283,10 +292,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -1296,10 +302,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -1309,10 +312,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -1322,10 +322,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -1335,10 +332,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -1348,10 +342,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -1361,10 +352,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -1374,10 +362,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -1387,16 +372,7 @@
         "mongoKey": "count",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Hank",
-          "Process Hank"
-        ],
-        "canonicalName": "Hank",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Lot name",
@@ -1406,10 +382,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "U",
@@ -1419,42 +392,7 @@
         "mongoKey": "u%",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max U",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "max_u%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Min U",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "min_u%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "A%",
@@ -1464,36 +402,7 @@
         "mongoKey": "a%",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max A",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "max_a%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Min A",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "min_a%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "CV%(1m)",
@@ -1503,42 +412,7 @@
         "mongoKey": "cv%",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(1m)",
-          "CV 1m"
-        ],
-        "canonicalName": "CV%(1m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max CV",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "max_cv%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Min CV",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "min_cv%",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Spectogram",
@@ -1548,36 +422,7 @@
         "mongoKey": "spectogram_peak",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max Spectogram Peak",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "max_spectogram_peak",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Min Spectogram Peak",
-        "dataType": "FLOAT",
-        "groupCode": "logic",
-        "tdEngineKey": null,
-        "mongoKey": "min_spectogram_peak",
-        "formula": null,
-        "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Thick place",
@@ -1587,17 +432,7 @@
         "mongoKey": "thick_place",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Thick place",
-          "Thickplaces",
-          "Thick places"
-        ],
-        "canonicalName": "Thick place",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Feed roller stops",
@@ -1607,16 +442,7 @@
         "mongoKey": "feed_roller_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Feed roller stops",
-          "Feed Roller Stoppage"
-        ],
-        "canonicalName": "Feed roller stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Feed sensor stops",
@@ -1626,16 +452,7 @@
         "mongoKey": "feed_sensor_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Feed sensor stops",
-          "Feed Sensor Stoppage"
-        ],
-        "canonicalName": "Feed sensor stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Scanning roller stops",
@@ -1645,16 +462,7 @@
         "mongoKey": "scanning_roller_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Scanning roller stops",
-          "Current_Shift_Scanning_roller_stops"
-        ],
-        "canonicalName": "Scanning roller stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Drafting/Calender Roller stops",
@@ -1664,10 +472,7 @@
         "mongoKey": "drafting/calender_roller_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Web Guide stops",
@@ -1677,16 +482,7 @@
         "mongoKey": "web_guide_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Web Guide stops",
-          "Web guide Stoppage"
-        ],
-        "canonicalName": "Web Guide stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Coiler stops",
@@ -1696,16 +492,7 @@
         "mongoKey": "coiler_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Coiler stops",
-          "Coiler Stoppage"
-        ],
-        "canonicalName": "Coiler stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Infeed Limit stops",
@@ -1715,10 +502,7 @@
         "mongoKey": "infeed_limit_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Sliver Monitor stops",
@@ -1728,16 +512,7 @@
         "mongoKey": "sliver_monitor_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Sliver Monitor stops",
-          "Current_Shift_Sliver_Monitor_stops"
-        ],
-        "canonicalName": "Sliver Monitor stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "U Stops",
@@ -1747,10 +522,7 @@
         "mongoKey": "u_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "CV Stops",
@@ -1760,10 +532,7 @@
         "mongoKey": "cv_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -1773,10 +542,7 @@
         "mongoKey": "thick_places_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -1786,10 +552,7 @@
         "mongoKey": "thick_places_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       },
       {
         "tagName": "Servo Drive stops",
@@ -1799,416 +562,8 @@
         "mongoKey": "servo_drive_stops",
         "formula": null,
         "type": "instant",
-        "IsRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "Servo Drive stops",
-          "Current_Shift_Servo_Drive_stops"
-        ],
-        "canonicalName": "Servo Drive stops",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Number",
-        "dataType": "REAL",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "shift_number",
-        "mongoKey": "shift_id",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 9
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Date",
-        "dataType": "REAL",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "shift_date",
-        "mongoKey": "shift_date(DD:MM:YYYY)",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 10
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Month",
-        "dataType": "REAL",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "shift_month",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 11
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Year",
-        "dataType": "REAL",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "shift_year",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 12
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Hour",
-        "dataType": "REAL",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "shift_hour",
-        "mongoKey": "shift_hour(HH:MM)",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 13
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Minute",
-        "dataType": "REAL",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "shift_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 14
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Spectogram",
-        "dataType": "Real",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "spectogram_stops",
-        "mongoKey": "spectrogram_peak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 26
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Feed roller stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "feed_roller_stops",
-        "mongoKey": "feed_roller_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 30
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Feed sensor stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "feed_sensor_stops",
-        "mongoKey": "feed_sensor_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 31
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Scanning roller stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "scanning_roller_stops",
-        "mongoKey": "scanning_roller_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 32
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Drafting/Calender Roller stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "drafting/calender_roller_stops",
-        "mongoKey": "drafting_calender_roller_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 33
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Web Guide stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "web_guide_stops",
-        "mongoKey": "web_guide_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 34
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Coiler stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "coiler_stops",
-        "mongoKey": "coiler_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 35
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Infeed Limit stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "infeed_limit_stops",
-        "mongoKey": "infeed_limit_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 36
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Sliver Monitor stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "sliver_monitor_stops",
-        "mongoKey": "sliver_monitor_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 37
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "U Stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "u_stops",
-        "mongoKey": "u_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 38
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "CV Stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "cv_stops",
-        "mongoKey": "cv_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 39
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Thick Places Stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "thick_places_stops",
-        "mongoKey": "thick_place_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 40
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Servo Drive stops",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "servo_drive_stops",
-        "mongoKey": "servo_drive_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEFINISHER_shift",
-          "row": 41
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "IsRequired": true
       }
-    ],
-    "qms_DRAWFRAME_minutes_time_seri": [
-      {
-        "tagName": "U%",
-        "dataType": "Real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": null,
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAME_minutes_time_seri",
-          "row": 18
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      }
-    ]
-  },
-  "queryDetails": {
-    "qms_DRAWFRAMEFINISHER_shift_live": [
-      "ts_act",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEFINISHER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
     ]
   }
 }

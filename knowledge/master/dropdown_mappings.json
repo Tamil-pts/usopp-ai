@@ -82,6 +82,42 @@
         {
           "PLCVAL": "0",
           "SHOWNVAL": "MACHINE OFF"
+        },
+        {
+          "PLCVAL": "10",
+          "SHOWNVAL": "MACHINE ON"
+        },
+        {
+          "PLCVAL": "1",
+          "SHOWNVAL": "MACHINE OFF"
+        },
+        {
+          "PLCVAL": "2",
+          "SHOWNVAL": "MACHINE ON"
+        },
+        {
+          "PLCVAL": "3",
+          "SHOWNVAL": "MACHINE ON"
+        },
+        {
+          "PLCVAL": "4",
+          "SHOWNVAL": "MACHINE OFF"
+        },
+        {
+          "PLCVAL": "5",
+          "SHOWNVAL": "MACHINE OFF"
+        },
+        {
+          "PLCVAL": "9",
+          "SHOWNVAL": "MACHINE ON"
+        },
+        {
+          "PLCVAL": "6",
+          "SHOWNVAL": "MACHINE OFF"
+        },
+        {
+          "PLCVAL": "7",
+          "SHOWNVAL": "MACHINE OFF"
         }
       ]
     },

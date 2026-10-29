@@ -1,360 +1,223 @@
 {
   "schemaVersion": 1,
-  "selection": "Database JSON plus all named workbook requirements; original definitions and conflicts retained.",
+  "selectionMode": "curated-csv",
+  "selection": "Authoritative shortlisted CSV only. No workbook-derived requirements.",
+  "sourceCsv": "Data_model_29102026.csv",
+  "sourceCsvSha256": "ed085d128744e63f71d7c4175490cedf9691efeead80ce30b5392cb00cef5712",
   "sources": [
     {
-      "source": "CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/CMS/01 CMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "6cd78349fa57f17cf27ecdc43a029e557a6f1cc16c04e344f2766ab879d5b900"
+      "source": "Data_model_29102026.csv",
+      "archive": "reference_sources/Data_model_29102026.csv",
+      "sha256": "ed085d128744e63f71d7c4175490cedf9691efeead80ce30b5392cb00cef5712"
     },
     {
-      "source": "CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/CMS/01 CMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "7afbe4fdd5a3ebd831072d10ca829fb24b17c39c8b833339dc054fdf4746ca06"
+      "source": "CSV/CARDING.json",
+      "archive": "reference_sources/CSV/CARDING.json",
+      "sha256": "7de1ed89070906d2e042a35db7e1873891daaeda901786a66b04a510ec7fff18"
     },
     {
-      "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "159134c61ae95e7bac32584ac22c20a17e14b6d7494aa05bd84d387bf83c1c92"
+      "source": "CSV/COMBER.json",
+      "archive": "reference_sources/CSV/COMBER.json",
+      "sha256": "62eab3b2182f8722a1a83549c19fdbe61c6152749f66af55b39c7d5a58e78c43"
     },
     {
-      "source": "CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/CMS/04 CMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "eabaafda264713d7a414ebcec56f0dcdd12709c1423b108897073c4ea231946b"
+      "source": "CSV/DRAWFRAMEBREAKER.json",
+      "archive": "reference_sources/CSV/DRAWFRAMEBREAKER.json",
+      "sha256": "e1dd78098db64e9a317dc93e97dbc264a61309ad76122432010f2213d6658336"
     },
     {
-      "source": "CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/CMS/05 CMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "176c4de0485713c87c8304ca7a3cb8822ea891bba5064fac1c3dc09969d2481a"
+      "source": "CSV/DRAWFRAMEFINISHER.json",
+      "archive": "reference_sources/CSV/DRAWFRAMEFINISHER.json",
+      "sha256": "324e5b8a646b7326b71724539ccbd779f72874816746f327a0fb03d22e99e57c"
     },
     {
-      "source": "CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/CMS/05 CMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "0c9d451366e5ac448fb69e90a44af6140f79dfc79d0b884faa39459e612b0714"
+      "source": "CSV/LAPFORMER.json",
+      "archive": "reference_sources/CSV/LAPFORMER.json",
+      "sha256": "6104bbf6342d02e8fb56ac01fbe93b5dee2d2b90d84148600d2233baa6497198"
     },
     {
-      "source": "CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/CMS/06 CMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "4f98867961df1b5b9a8323f99f9903ef9958df65ce9e5807898448f73f29837f"
+      "source": "CSV/RINGFRAME.json",
+      "archive": "reference_sources/CSV/RINGFRAME.json",
+      "sha256": "0e0f6e7143c6f7081e02628dc2321ad25f95ea6668953a63dab513c6f9efabb0"
     },
     {
-      "source": "CMS/CMS parameters Fields.xlsx",
-      "archive": "reference_sources/CMS/CMS parameters Fields.xlsx",
-      "sha256": "46e93b1bbac8bbc7cc8b6c4f2f67eea440af99afaa6dc1e5fa62fc0667af572d"
+      "source": "CSV/SPEEDFRAME.json",
+      "archive": "reference_sources/CSV/SPEEDFRAME.json",
+      "sha256": "6e17dcb602bf088b46f6374c3b599c8abd93a4cfa09a937832a0442f4424f511"
     },
     {
-      "source": "PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/PMS/01 PMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "05f624cdb6935b265ee6c504ee8dfc38cf6cc3b700d2293c27e9569534c57887"
+      "source": "CSV/BLOWROOM.json",
+      "archive": "reference_sources/CSV/BLOWROOM.json",
+      "sha256": "7cb3095c557b69d3f36be1bb3147252359619cf142bd601dfdedd8063cc22d7b"
     },
     {
-      "source": "PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/PMS/02 PMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "b225ca17559e1f696b8846729df8e6212154c28881ec6886a94c4b806bc7a5e4"
-    },
-    {
-      "source": "PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/PMS/03 PMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "8cf81b1e37677c6897cedf0159883a071a2533bebf41adf07383b0e811b8fa71"
-    },
-    {
-      "source": "PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/PMS/04 PMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "565cc5639a8ce7d149347a8183ab0d03afc782324b2282b6f055f0efc2de5f3d"
-    },
-    {
-      "source": "PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/PMS/05 PMS_LapFormer_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "c6f443c396e7220e729e692a3120579dc2a25267a20ed9a9a337836c407da26c"
-    },
-    {
-      "source": "PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/PMS/06 PMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "94bf34a8a2d05a88681aaa3750777abc2caed1affbca7d64a4e2ce838a2da4be"
-    },
-    {
-      "source": "PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/PMS/07 PMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "7cc47674a420e9065a07351c215fb4484248513ff1a929a0e9cdc57b0bb40c7b"
-    },
-    {
-      "source": "PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/PMS/08 PMS_BlowRoom_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "cb46c8900ef4b4f5e68911298c6ecdc21f6c600e91da10199d7ff08dfadaa580"
-    },
-    {
-      "source": "PMS/Final Freezed Keys in Mongo DB - RingFrame.xlsx",
-      "archive": "reference_sources/PMS/Final Freezed Keys in Mongo DB - RingFrame.xlsx",
-      "sha256": "2e980ee437c2d25f860e70273acac474598941d7714b87e337c8fa8307d4ad39"
-    },
-    {
-      "source": "PMS/JSON Key V5/BLOWROOM.json",
-      "archive": "reference_sources/PMS/JSON Key V5/BLOWROOM.json",
-      "sha256": "d2cffc1feda57411e948472a424eae4a6812c3696ee3ce02b3516d49e27bd159"
-    },
-    {
-      "source": "PMS/JSON Key V5/CARDING.json",
-      "archive": "reference_sources/PMS/JSON Key V5/CARDING.json",
-      "sha256": "3da06499205dc446b0abd9430a5ad3811dacbf7981e5ee9ef1abd20a044464c3"
-    },
-    {
-      "source": "PMS/JSON Key V5/COMBER.json",
-      "archive": "reference_sources/PMS/JSON Key V5/COMBER.json",
-      "sha256": "fd239a4b6da094dd6484060784684b1c7acd4c0522ba01b0ed93c111e4a1e6c1"
-    },
-    {
-      "source": "PMS/JSON Key V5/DRAWFRAMEBREAKER.json",
-      "archive": "reference_sources/PMS/JSON Key V5/DRAWFRAMEBREAKER.json",
-      "sha256": "1a669e62cb76ed381cf9fb5b5e4a1a3732ca817f235980382d41dfb10a69a403"
-    },
-    {
-      "source": "PMS/JSON Key V5/DRAWFRAMEFINISHER.json",
-      "archive": "reference_sources/PMS/JSON Key V5/DRAWFRAMEFINISHER.json",
-      "sha256": "092a8a301038d7fc6576bc1c56837c7c59333e45703c914b24fe63b8561edf1f"
-    },
-    {
-      "source": "PMS/JSON Key V5/LAPFORMER.json",
-      "archive": "reference_sources/PMS/JSON Key V5/LAPFORMER.json",
-      "sha256": "3ce2ca7ea97561303f639dad554c55ee80202f9ab06dc9ba7a5cd588c3839665"
-    },
-    {
-      "source": "PMS/JSON Key V5/RINGFRAME.json",
-      "archive": "reference_sources/PMS/JSON Key V5/RINGFRAME.json",
-      "sha256": "42924f3320d892a776a7d54603b80ee1bd8c925e8bb23ac5993e07ce2d603125"
-    },
-    {
-      "source": "PMS/JSON Key V5/RINGFRAME_YBS.json",
-      "archive": "reference_sources/PMS/JSON Key V5/RINGFRAME_YBS.json",
-      "sha256": "236bbd448a6ac4886469b20361f5d50aec4357a8118c401da5434314a35c7a5a"
-    },
-    {
-      "source": "PMS/JSON Key V5/SPEEDFRAME.json",
-      "archive": "reference_sources/PMS/JSON Key V5/SPEEDFRAME.json",
-      "sha256": "b1acd0d2e21b9d796cbd67271ec9d96ea93dd0d07a0449ea1036d3c1e1454e0d"
-    },
-    {
-      "source": "QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/QMS/01 QMS_RingFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "fef804eee1498ec6cf2c75f1228994b0ceefd57a427550256fbbf80f15f5171b"
-    },
-    {
-      "source": "QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/QMS/02 QMS_SpeedFrame_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "1549ba4cb47a8b549fd373eae010663e6a5b0c8ba22275d88e37fc4ee38c6deb"
-    },
-    {
-      "source": "QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/QMS/03 QMS_DrawFrameFinisher_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "1991bbcabee6605d7aaa5559cc1b271074e6821d102041bb4d30d610d5bb341a"
-    },
-    {
-      "source": "QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/QMS/04 QMS_Comber_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "f977ff38c61c52cbc3803001156cdfe62f3c2c32c4f23e9265ba9856fc5f1641"
-    },
-    {
-      "source": "QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/QMS/05 QMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "d34cc8a91dcd7e37149418197014f34536d862a2c51c0740efdbc6f790adad0d"
-    },
-    {
-      "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "2cbde97d454cbb3af309e3882e7786ee0b684ccb368c9495d0e0d220c8d409d0"
-    },
-    {
-      "source": "QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
-      "archive": "reference_sources/QMS/07 QMS_Carding_Key_Definitions_and_Source_Mapping.xlsx",
-      "sha256": "dcb225cc9f4488e0f9066c2a1539dfbf2a2c5d19b4355b96dd58c004d649df6c"
-    },
-    {
-      "source": "QMS/JSON Keys V1/CARDING.json",
-      "archive": "reference_sources/QMS/JSON Keys V1/CARDING.json",
-      "sha256": "8baccf470adfd922970bc595229dd7fcc8aae371d1147ba51520b459a475325f"
-    },
-    {
-      "source": "QMS/JSON Keys V1/DRAWFRAMEBREAKER.json",
-      "archive": "reference_sources/QMS/JSON Keys V1/DRAWFRAMEBREAKER.json",
-      "sha256": "db772cf6aac9be4b66339dd7858697a6575d3e3d474ee4b1d0252bd9cebadef1"
-    },
-    {
-      "source": "QMS/JSON Keys V1/DRAWFRAMEFINISHER.json",
-      "archive": "reference_sources/QMS/JSON Keys V1/DRAWFRAMEFINISHER.json",
-      "sha256": "db772cf6aac9be4b66339dd7858697a6575d3e3d474ee4b1d0252bd9cebadef1"
-    },
-    {
-      "source": "QMS/JSON Keys V1/SPEEDFRAME.json",
-      "archive": "reference_sources/QMS/JSON Keys V1/SPEEDFRAME.json",
-      "sha256": "c71186ec51ba269616d5f5df270fb02759ff7025db1eaf6130cf35009e0d2ca7"
+      "source": "CSV/RINGFRAME_YBS.json",
+      "archive": "reference_sources/CSV/RINGFRAME_YBS.json",
+      "sha256": "64c2a9f8723e460670a512bbce5749645ce7d5ca67812bfd378531e6f37c20c0"
     }
   ],
-  "sourceIssues": [
-    {
-      "source": "QMS/JSON Keys V1/DRAWFRAMEBREAKER.json",
-      "error": "Filename department DRAWFRAMEBREAKER differs from controleCode DRAWFRAMEFINISHER; excluded from fixed requirements."
-    }
-  ],
+  "sourceIssues": [],
   "fixedModels": [
     {
       "service": "CMS",
       "department": "CARDING",
       "file": "CMS/CARDING.json",
-      "originalSource": "PMS/JSON Key V5/CARDING.json",
-      "parameters": 732
+      "originalSource": "CSV/CARDING.json",
+      "parameters": 100
     },
     {
       "service": "CMS",
       "department": "COMBER",
       "file": "CMS/COMBER.json",
-      "originalSource": "PMS/JSON Key V5/COMBER.json",
-      "parameters": 269
+      "originalSource": "CSV/COMBER.json",
+      "parameters": 86
     },
     {
       "service": "CMS",
       "department": "DRAWFRAMEBREAKER",
       "file": "CMS/DRAWFRAMEBREAKER.json",
-      "originalSource": "PMS/JSON Key V5/DRAWFRAMEBREAKER.json",
-      "parameters": 463
+      "originalSource": "CSV/DRAWFRAMEBREAKER.json",
+      "parameters": 84
     },
     {
       "service": "CMS",
       "department": "DRAWFRAMEFINISHER",
       "file": "CMS/DRAWFRAMEFINISHER.json",
-      "originalSource": "PMS/JSON Key V5/DRAWFRAMEFINISHER.json",
-      "parameters": 463
+      "originalSource": "CSV/DRAWFRAMEFINISHER.json",
+      "parameters": 84
     },
     {
       "service": "CMS",
       "department": "LAPFORMER",
       "file": "CMS/LAPFORMER.json",
-      "originalSource": "PMS/JSON Key V5/LAPFORMER.json",
-      "parameters": 256
+      "originalSource": "CSV/LAPFORMER.json",
+      "parameters": 89
     },
     {
       "service": "CMS",
       "department": "RINGFRAME",
       "file": "CMS/RINGFRAME.json",
-      "originalSource": "PMS/JSON Key V5/RINGFRAME.json",
-      "parameters": 1076
+      "originalSource": "CSV/RINGFRAME.json",
+      "parameters": 182
     },
     {
       "service": "CMS",
       "department": "SPEEDFRAME",
       "file": "CMS/SPEEDFRAME.json",
-      "originalSource": "PMS/JSON Key V5/SPEEDFRAME.json",
-      "parameters": 603
+      "originalSource": "CSV/SPEEDFRAME.json",
+      "parameters": 89
     },
     {
       "service": "PMS",
       "department": "BLOWROOM",
       "file": "PMS/BLOWROOM.json",
-      "originalSource": "PMS/JSON Key V5/BLOWROOM.json",
-      "parameters": 121
+      "originalSource": "CSV/BLOWROOM.json",
+      "parameters": 44
     },
     {
       "service": "PMS",
       "department": "CARDING",
       "file": "PMS/CARDING.json",
-      "originalSource": "PMS/JSON Key V5/CARDING.json",
-      "parameters": 299
+      "originalSource": "CSV/CARDING.json",
+      "parameters": 226
     },
     {
       "service": "PMS",
       "department": "COMBER",
       "file": "PMS/COMBER.json",
-      "originalSource": "PMS/JSON Key V5/COMBER.json",
-      "parameters": 307
+      "originalSource": "CSV/COMBER.json",
+      "parameters": 222
     },
     {
       "service": "PMS",
       "department": "DRAWFRAMEBREAKER",
       "file": "PMS/DRAWFRAMEBREAKER.json",
-      "originalSource": "PMS/JSON Key V5/DRAWFRAMEBREAKER.json",
-      "parameters": 365
+      "originalSource": "CSV/DRAWFRAMEBREAKER.json",
+      "parameters": 262
     },
     {
       "service": "PMS",
       "department": "DRAWFRAMEFINISHER",
       "file": "PMS/DRAWFRAMEFINISHER.json",
-      "originalSource": "PMS/JSON Key V5/DRAWFRAMEFINISHER.json",
-      "parameters": 385
+      "originalSource": "CSV/DRAWFRAMEFINISHER.json",
+      "parameters": 276
     },
     {
       "service": "PMS",
       "department": "LAPFORMER",
       "file": "PMS/LAPFORMER.json",
-      "originalSource": "PMS/JSON Key V5/LAPFORMER.json",
-      "parameters": 284
+      "originalSource": "CSV/LAPFORMER.json",
+      "parameters": 200
     },
     {
       "service": "PMS",
       "department": "RINGFRAME",
       "file": "PMS/RINGFRAME.json",
-      "originalSource": "PMS/JSON Key V5/RINGFRAME.json",
-      "parameters": 416
+      "originalSource": "CSV/RINGFRAME.json",
+      "parameters": 303
     },
     {
       "service": "PMS",
       "department": "RINGFRAME_YBS",
       "file": "PMS/RINGFRAME_YBS.json",
-      "originalSource": "PMS/JSON Key V5/RINGFRAME_YBS.json",
-      "parameters": 429
+      "originalSource": "CSV/RINGFRAME_YBS.json",
+      "parameters": 382
     },
     {
       "service": "PMS",
       "department": "SPEEDFRAME",
       "file": "PMS/SPEEDFRAME.json",
-      "originalSource": "PMS/JSON Key V5/SPEEDFRAME.json",
-      "parameters": 443
+      "originalSource": "CSV/SPEEDFRAME.json",
+      "parameters": 334
     },
     {
       "service": "QMS",
       "department": "CARDING",
       "file": "QMS/CARDING.json",
-      "originalSource": "QMS/JSON Keys V1/CARDING.json",
-      "parameters": 127
+      "originalSource": "CSV/CARDING.json",
+      "parameters": 47
     },
     {
       "service": "QMS",
       "department": "COMBER",
       "file": "QMS/COMBER.json",
-      "originalSource": "PMS/JSON Key V5/COMBER.json",
-      "parameters": 171
+      "originalSource": "CSV/COMBER.json",
+      "parameters": 116
     },
     {
       "service": "QMS",
       "department": "DRAWFRAMEBREAKER",
       "file": "QMS/DRAWFRAMEBREAKER.json",
-      "originalSource": "PMS/JSON Key V5/DRAWFRAMEBREAKER.json",
-      "parameters": 182
+      "originalSource": "CSV/DRAWFRAMEBREAKER.json",
+      "parameters": 134
     },
     {
       "service": "QMS",
       "department": "DRAWFRAMEFINISHER",
       "file": "QMS/DRAWFRAMEFINISHER.json",
-      "originalSource": "QMS/JSON Keys V1/DRAWFRAMEFINISHER.json",
-      "parameters": 132
+      "originalSource": "CSV/DRAWFRAMEFINISHER.json",
+      "parameters": 56
     },
     {
       "service": "QMS",
       "department": "LAPFORMER",
       "file": "QMS/LAPFORMER.json",
-      "originalSource": "PMS/JSON Key V5/LAPFORMER.json",
-      "parameters": 107
+      "originalSource": "CSV/LAPFORMER.json",
+      "parameters": 62
     },
     {
       "service": "QMS",
       "department": "RINGFRAME",
       "file": "QMS/RINGFRAME.json",
-      "originalSource": "PMS/JSON Key V5/RINGFRAME.json",
-      "parameters": 118
+      "originalSource": "CSV/RINGFRAME.json",
+      "parameters": 81
     },
     {
       "service": "QMS",
       "department": "SPEEDFRAME",
       "file": "QMS/SPEEDFRAME.json",
-      "originalSource": "QMS/JSON Keys V1/SPEEDFRAME.json",
-      "parameters": 116
+      "originalSource": "CSV/SPEEDFRAME.json",
+      "parameters": 50
     }
   ]
 }

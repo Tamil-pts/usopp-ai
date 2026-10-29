@@ -57,6 +57,15 @@ def list_json_key_sources(request:Request):
     except (FileNotFoundError,ValueError) as error:raise HTTPException(503,str(error))
 
 
+@router.get('/api/knowledge/data-model-json-keys/all')
+def get_all_json_key_sources(request:Request):
+    user=getattr(request.state,'user',None)
+    if not user:raise HTTPException(401,'Sign in to view shared data-model JSON Keys.')
+    from backend.core.data_model_json_keys import get_sources
+    try:return {'canEdit':user.get('role')=='admin','sources':get_sources()}
+    except (FileNotFoundError,ValueError) as error:raise HTTPException(503,str(error))
+
+
 @router.get('/api/knowledge/data-model-json-keys/{model_id:path}')
 def get_json_key_source(model_id:str,request:Request):
     if not getattr(request.state,'user',None):raise HTTPException(401,'Sign in to view shared data-model JSON Keys.')

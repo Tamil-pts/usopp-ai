@@ -1,0 +1,4787 @@
+{
+  "controleCode": "SPEEDFRAME",
+  "keysList": {
+    "cms_SPEEDFRAME_minutes_time_series": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Lot Description",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_description",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "voltage_avg",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "voltage_avg",
+        "mongoKey": "voltage_avg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "current_avg",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "current_avg",
+        "mongoKey": "current_avg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "power_factor",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "power_factor",
+        "mongoKey": "power_factor",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "frequency",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "frequency",
+        "mongoKey": "frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total_active_power",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_active_power",
+        "mongoKey": "total_active_power",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total_kva",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kva",
+        "mongoKey": "total_kva",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total Kvar",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvar",
+        "mongoKey": "total_kvar",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "totak kwh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total kvah",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvah",
+        "mongoKey": "total_kvah",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total kvarh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvarh",
+        "mongoKey": "total_kvarh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "cms_SPEEDFRAME_shift_live": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Lot Description",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_description",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "voltage_avg",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "voltage_avg",
+        "mongoKey": "voltage_avg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "current_avg",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "current_avg",
+        "mongoKey": "current_avg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "power_factor",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "power_factor",
+        "mongoKey": "power_factor",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "frequency",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "frequency",
+        "mongoKey": "frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total_active_power",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_active_power",
+        "mongoKey": "total_active_power",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total_kva",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kva",
+        "mongoKey": "total_kva",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total Kvar",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvar",
+        "mongoKey": "total_kvar",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "totak kwh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total kvah",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvah",
+        "mongoKey": "total_kvah",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total kvarh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvarh",
+        "mongoKey": "total_kvarh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Set Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "set_twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bobbin_content",
+        "mongoKey": "bobbin_content",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Spindles",
+        "dataType": "FLOAT",
+        "groupCode": "320",
+        "tdEngineKey": "no_of_spindles",
+        "mongoKey": "no_of_spindles",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "cms_SPEEDFRAME_hours": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Lot Description",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_description",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "voltage_avg",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "voltage_avg",
+        "mongoKey": "voltage_avg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "current_avg",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "current_avg",
+        "mongoKey": "current_avg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "power_factor",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "power_factor",
+        "mongoKey": "power_factor",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "frequency",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "frequency",
+        "mongoKey": "frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "total_active_power",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_active_power",
+        "mongoKey": "total_active_power",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "total_kva",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kva",
+        "mongoKey": "total_kva",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "total Kvar",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvar",
+        "mongoKey": "total_kvar",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "totak kwh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true,
+        "aggType": "sum"
+      },
+      {
+        "tagName": "total kvah",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvah",
+        "mongoKey": "total_kvah",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "total kvarh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvarh",
+        "mongoKey": "total_kvarh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "Set Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "set_twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bobbin_content",
+        "mongoKey": "bobbin_content",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Spindles",
+        "dataType": "FLOAT",
+        "groupCode": "320",
+        "tdEngineKey": "no_of_spindles",
+        "mongoKey": "no_of_spindles",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "cms_SPEEDFRAME_shift": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Lot Description",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "tdEngineKey": "lot_description",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "voltage_avg",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "voltage_avg",
+        "mongoKey": "voltage_avg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "current_avg",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "current_avg",
+        "mongoKey": "current_avg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "power_factor",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "power_factor",
+        "mongoKey": "power_factor",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "frequency",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "frequency",
+        "mongoKey": "frequency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total_active_power",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_active_power",
+        "mongoKey": "total_active_power",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total_kva",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kva",
+        "mongoKey": "total_kva",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total Kvar",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvar",
+        "mongoKey": "total_kvar",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "totak kwh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total kvah",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvah",
+        "mongoKey": "total_kvah",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "total kvarh",
+        "dataType": "FLOAT",
+        "groupCode": "410",
+        "tdEngineKey": "total_kvarh",
+        "mongoKey": "total_kvarh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Set Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "set_twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "bobbin_content",
+        "mongoKey": "bobbin_content",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Spindles",
+        "dataType": "FLOAT",
+        "groupCode": "320",
+        "tdEngineKey": "no_of_spindles",
+        "mongoKey": "no_of_spindles",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "pms_SPEEDFRAME_minutes_time_series": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "run_time_minute",
+        "formula": "MATH(run_hour * 60 + run_minute)",
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Idle Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "idle_time_hour",
+        "mongoKey": "idle_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "idle_time_minute",
+        "mongoKey": "idle_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "idle_time_minute",
+        "formula": "MATH(idle_hour * 60 + idle_minute)",
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Power Fail Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "power_fail_time_hour",
+        "mongoKey": "power_fail_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "power_fail_time_minute",
+        "mongoKey": "power_fail_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "power_fail_time_minute",
+        "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "DOFF Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "doff_time_hour",
+        "mongoKey": "doff_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "DOFF Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "doff_time_minute",
+        "mongoKey": "doff_time_minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_time_minute",
+        "formula": "MATH(doff_time_hour * 60 + doff_time_minutes)",
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot Description",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "sliver_count",
+        "mongoKey": "sliver_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "Rovo Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop",
+        "mongoKey": "rovo_stop_100sph",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Rovo Stop Time HOUR",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop_time_hour",
+        "mongoKey": "rovo_stop_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Rovo Stop Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop_time_minute",
+        "mongoKey": "rovo_stop_time_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Rovo stop time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "roving_stop_minute",
+        "formula": "MATH(rovo_stop_time_hour * 60 + rovo_stop_time_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop",
+        "mongoKey": "creel_stop_100sph",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop_time_hour",
+        "mongoKey": "creel_stop_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Creel stop time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop_time_minute",
+        "mongoKey": "creel_stop_time_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Creel stop time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "creel_stop_minute",
+        "formula": "MATH(creel_stop_time_hour * 60 + creel_stop_time_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bobbin_content",
+        "mongoKey": "bobbin_content",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content in kg/mac",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bobbin_content_in_kg/mac",
+        "mongoKey": "production_kgs",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "BTS Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bts_hour",
+        "mongoKey": "bts_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "BTS Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bts_minute",
+        "mongoKey": "bts_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "BTS Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "bts_minute",
+        "formula": "MATH(bts_hour * 60 + bts_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average TPI",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "average_tpi",
+        "mongoKey": "average_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Flyer Speed",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "average_flyer_speed",
+        "mongoKey": "average_flyer_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total kWh",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Air Consumption",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "air_consumption",
+        "mongoKey": "air_consumption",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "UKG",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "ukg",
+        "mongoKey": "ukg",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Spindles",
+        "dataType": "FLOAT",
+        "groupCode": "320",
+        "tdEngineKey": "no_of_spindles",
+        "mongoKey": "no_of_spindles",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Doffs",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "no_of_doffs",
+        "mongoKey": "no_of_doffs",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Production kgs",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "production_kgs",
+        "formula": "MATH(bobbin_content * no_of_spindles)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Ukg",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "ukg",
+        "formula": "MATH(total_kwh / production_kgs)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Production Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "production_eff",
+        "formula": "MATH(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute)*100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Machine Utilization",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_uti",
+        "formula": "MATH((run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + doff_time_minute + power_fail_time_minute) * 100)",
+        "type": "instant",
+        "isRequired": true,
+        "isAutoCalc": true
+      },
+      {
+        "tagName": "Machine Utilization Formula 1 - KM",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_uti_formula_1",
+        "formula": "MATH((run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute) * 100)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Average Doff Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "avg_doff_min",
+        "formula": "MATH(doff_time_minute / no_of_doffs)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Machine Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_eff",
+        "formula": "MATH(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute+power_fail_time_minute)*100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Speed",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "average_speed",
+        "mongoKey": "set_average_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Target Production KG Formula 1",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "pkg_formula_1",
+        "formula": "MATH(((((set_average_speed/twist) * 1.0936 * total_shift_time) / (840 * 2.2046 * roving_count)) * (tgt_standard_eff / 100)) * no_of_spindles)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Converted Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "conv_bobbin_content",
+        "formula": "MATH(conv_factor_40s * bobbin_content)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Converted Ukg",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "conv_ukg",
+        "formula": "MATH(conv_factor_40s * ukg)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Delivery Speed",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "delivery_speed",
+        "mongoKey": "current_delivery_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "length",
+        "mongoKey": "current_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Roving Breaks",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_breaks",
+        "mongoKey": "roving_breaks",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Sliver Breaks",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "sliver_breaks",
+        "mongoKey": "sliver_breaks",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      }
+    ],
+    "pms_SPEEDFRAME_shift": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "run_time_minute",
+        "formula": "MATH(run_hour * 60 + run_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Idle Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "idle_time_hour",
+        "mongoKey": "idle_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "idle_time_minute",
+        "mongoKey": "idle_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "idle_time_minute",
+        "formula": "MATH(idle_hour * 60 + idle_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Power Fail Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "power_fail_time_hour",
+        "mongoKey": "power_fail_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "power_fail_time_minute",
+        "mongoKey": "power_fail_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "power_fail_time_minute",
+        "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "DOFF Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "doff_time_hour",
+        "mongoKey": "doff_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "DOFF Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "doff_time_minute",
+        "mongoKey": "doff_time_minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_time_minute",
+        "formula": "MATH(doff_time_hour * 60 + doff_time_minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot Description",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "50",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Doffs",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "no_of_doffs",
+        "mongoKey": "no_of_doffs",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver Count",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "sliver_count",
+        "mongoKey": "sliver_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "Rovo Stop",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "rovo_stop",
+        "mongoKey": "roving_stop_100sph",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Rovo stop time HOUR",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "rovo_stop_time_hour",
+        "mongoKey": "rovo_stop_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Rovo stop time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "rovo_stop_time_minute",
+        "mongoKey": "rovo_stop_time_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Rovo stop time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "roving_stop_minute",
+        "formula": "MATH(rovo_stop_time_hour * 60 + rovo_stop_time_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop",
+        "mongoKey": "creel_stop_100sph",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop time HOUR",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "creel_stop_time_hour",
+        "mongoKey": "creel_stop_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Creel Stop Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "creel_stop_time_minute",
+        "mongoKey": "creel_stop_time_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Creel Stop Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "creel_stop_minute",
+        "formula": "MATH(creel_stop_time_hour * 60 + creel_stop_time_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "bobbin_content",
+        "mongoKey": "bobbin_content",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content in kg/mac",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "bobbin_content_in_kg/mac",
+        "mongoKey": "production_kgs",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hanks",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "shift_hanks",
+        "mongoKey": "hanks",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "BTS Hour",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "bts_hour",
+        "mongoKey": "bts_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "BTS Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "bts_minute",
+        "mongoKey": "bts_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "BTS Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "bts_minute",
+        "formula": "MATH(bts_hour * 60 + bts_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average TPI",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "average_tpi",
+        "mongoKey": "average_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Flyer Speed",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "average_flyer_speed",
+        "mongoKey": "average_flyer_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Delivery",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "average_delivery",
+        "mongoKey": "average_delivery",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total kWh",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Air Consumption",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "air_consumption",
+        "mongoKey": "air_consumption",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "UKG",
+        "dataType": "FLOAT",
+        "groupCode": "50",
+        "tdEngineKey": "ukg",
+        "mongoKey": "ukg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Exchanger Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "exchanger_efficiency",
+        "mongoKey": "exchanger_efficiency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Flyer Speed Change",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "flyer_speed_change",
+        "mongoKey": "speed_up_or_down",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Spindles",
+        "dataType": "FLOAT",
+        "groupCode": "320",
+        "tdEngineKey": "no_of_spindles",
+        "mongoKey": "no_of_spindles",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Production kgs",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "production_kgs",
+        "formula": "MATH(bobbin_content * no_of_spindles)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Ukg",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "ukg",
+        "formula": "MATH(total_kwh / production_kgs)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Production Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "production_eff",
+        "formula": "MATH(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute)*100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Machine Utilization",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_uti",
+        "formula": "MATH((run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + doff_time_minute + power_fail_time_minute) * 100)",
+        "type": "instant",
+        "isRequired": true,
+        "isAutoCalc": true
+      },
+      {
+        "tagName": "Machine Utilization Formula 1 - KM",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_uti_formula_1",
+        "formula": "MATH((run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute) * 100)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Average Doff Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "avg_doff_min",
+        "formula": "MATH(doff_time_minute / no_of_doffs)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Machine Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_eff",
+        "formula": "MATH(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute+power_fail_time_minute)*100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Speed",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "average_speed",
+        "mongoKey": "set_average_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Target Production KG Formula 1",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "pkg_formula_1",
+        "formula": "MATH(((((set_average_speed/twist) * 1.0936 * total_shift_time) / (840 * 2.2046 * roving_count)) * (tgt_standard_eff / 100)) * no_of_spindles)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Converted Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "conv_bobbin_content",
+        "formula": "MATH(conv_factor_40s * bobbin_content)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Converted Ukg",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "conv_ukg",
+        "formula": "MATH(conv_factor_40s * ukg)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Calculated Waste KG",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "calc_waste_kg",
+        "formula": "MATH((production_kgs * standard_waste_target) / 100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Roving Breaks",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_breaks",
+        "mongoKey": "roving_breaks",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Sliver Breaks",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "sliver_breaks",
+        "mongoKey": "sliver_breaks",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total Break",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "total_break",
+        "formula": "MATH(roving_breaks + sliver_breaks)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Breaks Per Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "breaks_per_hour",
+        "formula": "MATH((total_break/run_time_minute) * 60)",
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "pms_SPEEDFRAME_shift_live": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "run_time_minute",
+        "formula": "MATH(run_hour * 60 + run_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Idle Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "idle_time_hour",
+        "mongoKey": "idle_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "idle_time_minute",
+        "mongoKey": "idle_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "idle_time_minute",
+        "formula": "MATH(idle_hour * 60 + idle_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Power Fail Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "power_fail_time_hour",
+        "mongoKey": "power_fail_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "power_fail_time_minute",
+        "mongoKey": "power_fail_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "power_fail_time_minute",
+        "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "DOFF Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "doff_time_hour",
+        "mongoKey": "doff_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "DOFF Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "doff_time_minute",
+        "mongoKey": "doff_time_minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_time_minute",
+        "formula": "MATH(doff_time_hour * 60 + doff_time_minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot Description",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Doffs",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "no_of_doffs",
+        "mongoKey": "no_of_doffs",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "sliver_count",
+        "mongoKey": "sliver_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "Rovo Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop",
+        "mongoKey": "roving_stop_100sph",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Rovo stop Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop_time_hour",
+        "mongoKey": "rovo_stop_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Rovo Stop Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop_time_minute",
+        "mongoKey": "rovo_stop_time_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Rovo stop time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "roving_stop_minute",
+        "formula": "MATH(rovo_stop_time_hour * 60 + rovo_stop_time_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop",
+        "mongoKey": "creel_stop_100sph",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop time hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop_time_hour",
+        "mongoKey": "creel_stop_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Creel Stop Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop_time_minute",
+        "mongoKey": "creel_stop_time_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Creel Stop Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "creel_stop_minute",
+        "formula": "MATH(creel_stop_time_hour * 60 + creel_stop_time_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bobbin_content",
+        "mongoKey": "bobbin_content",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content in kg/mac",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bobbin_content_in_kg/mac",
+        "mongoKey": "production_kgs",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hanks",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "Shift_hanks",
+        "mongoKey": "hanks",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "BTS Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bts_hour",
+        "mongoKey": "bts_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "BTS Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bts_minute",
+        "mongoKey": "bts_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "BTS Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "bts_minute",
+        "formula": "MATH(bts_hour * 60 + bts_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average TPI",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "average_tpi",
+        "mongoKey": "average_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Flyer Speed",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "average_flyer_speed",
+        "mongoKey": "average_flyer_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Delivery",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "average_delivery",
+        "mongoKey": "average_delivery",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total kWh",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Air Consumption",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "air_consumption",
+        "mongoKey": "air_consumption",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "UKG",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "ukg",
+        "mongoKey": "ukg",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Exchanger Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "exchanger_efficiency",
+        "mongoKey": "exchanger_efficiency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Flyer Speed",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "flyer_speed",
+        "mongoKey": "current_flyer_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "length",
+        "mongoKey": "current_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff Length",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "doff_length",
+        "mongoKey": "set_doff_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Delivery Speed",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "delivery_speed",
+        "mongoKey": "current_delivery_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Flyer Speed Change",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "flyer_speed_change",
+        "mongoKey": "speed_up_or_down",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Spindles",
+        "dataType": "FLOAT",
+        "groupCode": "320",
+        "tdEngineKey": "no_of_spindles",
+        "mongoKey": "no_of_spindles",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Production kgs",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "production_kgs",
+        "formula": "MATH(bobbin_content * no_of_spindles)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Ukg",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "ukg",
+        "formula": "MATH(total_kwh / production_kgs)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Production Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "production_eff",
+        "formula": "MATH(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute)*100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Machine Utilization",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_uti",
+        "formula": "MATH((run_time_minute + doff_time_minute) / (run_time_minute + idle_time_minute + doff_time_minute + power_fail_time_minute) * 100)",
+        "type": "instant",
+        "isRequired": true,
+        "isAutoCalc": true
+      },
+      {
+        "tagName": "Machine Utilization Formula 1 - KM",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_uti_formula_1",
+        "formula": "MATH((run_time_minute) / (run_time_minute + idle_time_minute + power_fail_time_minute) * 100)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Average Doff Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "avg_doff_min",
+        "formula": "MATH(doff_time_minute / no_of_doffs)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Machine Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_eff",
+        "formula": "MATH(run_time_minute/(run_time_minute+idle_time_minute+doff_time_minute+power_fail_time_minute)*100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Speed",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "average_speed",
+        "mongoKey": "set_average_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Target Production KG Formula 1",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "pkg_formula_1",
+        "formula": "MATH(((((set_average_speed/twist) * 1.0936 * total_shift_time) / (840 * 2.2046 * roving_count)) * (tgt_standard_eff / 100)) * no_of_spindles)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Converted Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "conv_bobbin_content",
+        "formula": "MATH(conv_factor_40s * bobbin_content)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Converted Ukg",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "conv_ukg",
+        "formula": "MATH(conv_factor_40s * ukg)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Upcoming Doff Time",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "remaining_time_for_doff",
+        "mongoKey": "remaining_time_for_doff",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Roving Breaks",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_breaks",
+        "mongoKey": "roving_breaks",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Sliver Breaks",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "sliver_breaks",
+        "mongoKey": "sliver_breaks",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total Break",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "total_break",
+        "formula": "MATH(roving_breaks + sliver_breaks)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Breaks Per Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "breaks_per_hour",
+        "formula": "MATH((total_break/run_time_minute) * 60)",
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "pms_SPEEDFRAME_hours": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "run_time_minute",
+        "formula": "MATH(run_hour * 60 + run_minute)",
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Run Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "run_time_minute_direct",
+        "formula": "MATH(run_hour * 60 + run_minute)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "idle_time_hour",
+        "mongoKey": "idle_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "idle_time_minute",
+        "mongoKey": "idle_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Idle Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "idle_time_minute",
+        "formula": "MATH(idle_hour * 60 + idle_minute)",
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Idle Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "idle_time_minute_direct",
+        "formula": "MATH(idle_hour * 60 + idle_minute)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "power_fail_time_hour",
+        "mongoKey": "power_fail_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "power_fail_time_minute",
+        "mongoKey": "power_fail_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Power Fail Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "power_fail_time_minute",
+        "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Power Fail Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "power_fail_time_minute_direct",
+        "formula": "MATH(power_fail_hour * 60 + power_fail_minute)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "DOFF Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "doff_time_hour",
+        "mongoKey": "doff_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "DOFF Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "doff_time_minute",
+        "mongoKey": "doff_time_minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_time_minute",
+        "formula": "MATH(doff_time_hour * 60 + doff_time_minutes)",
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_time_minute_direct",
+        "formula": "MATH(doff_time_hour * 60 + doff_time_minutes)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Lot Description",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "40",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "sliver_count",
+        "mongoKey": "sliver_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "Rovo Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop",
+        "mongoKey": "roving_stop_100sph",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Rovo stop time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop_time_hour",
+        "mongoKey": "rovo_stop_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Rovo Stop Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop_time_minute",
+        "mongoKey": "rovo_stop_time_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Rovo Stop Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "roving_stop_minute",
+        "formula": "MATH(rovo_stop_time_hour * 60 + rovo_stop_time_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop",
+        "mongoKey": "creel_stop_100sph",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop_time_hour",
+        "mongoKey": "creel_stop_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Creel Stop Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop_time_minute",
+        "mongoKey": "creel_stop_time_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Creel stop time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "creel_stop_minute",
+        "formula": "MATH(creel_stop_time_hour * 60 + creel_stop_time_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bobbin_content",
+        "mongoKey": "bobbin_content",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Bobbin Content in kg/mac",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bobbin_content_in_kg/mac",
+        "mongoKey": "production_kgs",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "BTS Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bts_hour",
+        "mongoKey": "bts_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "BTS Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "bts_minute",
+        "mongoKey": "bts_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "BTS Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "bts_minute",
+        "formula": "MATH(bts_hour * 60 + bts_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average TPI",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "average_tpi",
+        "mongoKey": "average_tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Flyer Speed",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "average_flyer_speed",
+        "mongoKey": "average_flyer_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Doffs",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "no_of_doffs",
+        "mongoKey": "no_of_doffs",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total kWh",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "total_kwh",
+        "mongoKey": "total_kwh",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "Air Consumption",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "air_consumption",
+        "mongoKey": "air_consumption",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "UKG",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "ukg",
+        "mongoKey": "ukg",
+        "formula": null,
+        "type": "aggregate",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Spindles",
+        "dataType": "FLOAT",
+        "groupCode": "320",
+        "tdEngineKey": "no_of_spindles",
+        "mongoKey": "no_of_spindles",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Ukg",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "ukg",
+        "formula": "MATH(total_kwh / production_kgs)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Production Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "production_eff",
+        "formula": "MATH(run_time_minute_direct/(run_time_minute_direct+idle_time_minute_direct+doff_time_minute_direct)*100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Machine Utilization",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_uti",
+        "formula": "MATH((run_time_minute_direct + doff_time_minute_direct) / (run_time_minute_direct + idle_time_minute_direct + doff_time_minute_direct + power_fail_time_minute_direct) * 100)",
+        "type": "instant",
+        "isRequired": true,
+        "isAutoCalc": true
+      },
+      {
+        "tagName": "Machine Utilization Formula 1 - KM",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_uti_formula_1",
+        "formula": "MATH((run_time_minute_direct) / (run_time_minute_direct + idle_time_minute_direct + power_fail_time_minute_direct) * 100)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Average Doff Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "avg_doff_min",
+        "formula": "MATH(doff_time_minute / no_of_doffs)",
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "average"
+      },
+      {
+        "tagName": "Machine Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "machine_eff",
+        "formula": "MATH(run_time_minute_direct/(run_time_minute_direct+idle_time_minute_direct+doff_time_minute_direct+power_fail_time_minute_direct)*100)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Speed",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "average_speed",
+        "mongoKey": "set_average_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Target Production KG Formula 1",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "pkg_formula_1",
+        "formula": "MATH(((((set_average_speed/twist) * 1.0936 * total_shift_time) / (840 * 2.2046 * roving_count)) * (tgt_standard_eff / 100)) * no_of_spindles)",
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Converted Bobbin Content",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "conv_bobbin_content",
+        "formula": "MATH(conv_factor_40s * bobbin_content)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Converted Ukg",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "conv_ukg",
+        "formula": "MATH(conv_factor_40s * ukg)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Delivery",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "average_delivery",
+        "mongoKey": "average_delivery",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Number of Roving Breaks",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "roving_breaks",
+        "mongoKey": "roving_breaks",
+        "formula": "pms_SPEEDFRAME_minutes_time_series",
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "sum",
+        "isHours": true
+      },
+      {
+        "tagName": "Number of Sliver Breaks",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": "sliver_breaks",
+        "mongoKey": "sliver_breaks",
+        "formula": "pms_SPEEDFRAME_minutes_time_series",
+        "type": "instant",
+        "isRequired": true,
+        "aggType": "sum",
+        "isHours": true
+      }
+    ],
+    "pms_SPEEDFRAME_doff": [
+      {
+        "tagName": "Shift date",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "doff_st_date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "doff_st_month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "doff_st_year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_start_date",
+        "formula": "CONCAT(doff_st_year, '-', doff_st_month, '-', doff_st_date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "start_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "start_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_start_hour",
+        "formula": "CONCAT(start_hour, ':', start_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff End Date",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff End Month",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff End Year",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff End Hours",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_hour",
+        "mongoKey": "hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff End Minute",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_minute",
+        "mongoKey": "minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff End Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_hour",
+        "formula": "CONCAT(hour, ':', minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff End Date",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_end_date",
+        "formula": "CONCAT(year, '-', month, '-' ,date, ' ' ,hour, ':', minute, ':00')",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Run Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "run_time_hour",
+        "mongoKey": "run_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "run_time_minute",
+        "mongoKey": "run_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run time seconds",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "run_time_seconds",
+        "mongoKey": "run_seconds",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Run Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_run_time_minute",
+        "formula": "MATH((run_hour * 60) + run_minute + (gte(run_seconds, 30) * 1))",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_time_hour",
+        "mongoKey": "doff_time_seconds",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_time_minute",
+        "mongoKey": "doff_time_minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_time_minute",
+        "formula": "MATH(doff_time_seconds * 60 + doff_time_minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot Name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "130",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Sliver Count",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "sliver_count",
+        "mongoKey": "sliver_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "roving_count",
+        "mongoKey": "roving_count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true,
+        "precision": "COL0047097920087b9f2"
+      },
+      {
+        "tagName": "Doff Length",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_length",
+        "mongoKey": "doff_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Layers",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "layers",
+        "mongoKey": "layers",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "COP Content",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "170",
+        "tdEngineKey": "cop_content",
+        "mongoKey": "cop_content",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff Reaon",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "170",
+        "tdEngineKey": "doff_reason",
+        "mongoKey": "doff_reason",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Delivery",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "average_delivery",
+        "mongoKey": "average_delivery",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Speed",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "average_speed",
+        "mongoKey": "average_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff Diameter",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_diameter",
+        "mongoKey": "doff_diameter",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "BTS Time Hour",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "bts_time_hour",
+        "mongoKey": "bts_time_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "BTS Time Minutes",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "bts_time_minute",
+        "mongoKey": "bts_time_minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "BTS Time Minute",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "bts_time_minute",
+        "formula": "MATH(bts_time_hour * 60 + bts_time_minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Units Consumed",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "units_consumed",
+        "mongoKey": "units_consumed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Max Flyer RPM",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "max_flyer_rpm",
+        "mongoKey": "max_flyer_rpm",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Exchanger Start Hour",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "exchanger_start_hour",
+        "mongoKey": "exchanger_start_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Exchanger Start Minute",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "exchanger_start_minute",
+        "mongoKey": "exchanger_start_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Exchanger Start Hours",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "exchanger_start_hour",
+        "formula": "MATH(exchanger_start_hour * 60 + exchanger_start_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Exchanger End Hour",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "exchanger_end_hour",
+        "mongoKey": "exchanger_end_hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Exchanger End Minute",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "exchanger_end_minute",
+        "mongoKey": "exchanger_end_minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Exchanger End Hours",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "exchanger_end_hour",
+        "formula": "MATH(exchanger_end_hour * 60 + exchanger_end_minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Exchanger Efficiency",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "exchanger_efficiency",
+        "mongoKey": "exchanger_efficiency",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Flyer Speed Change",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "flyer_speed_change",
+        "mongoKey": "speed_up_or_down",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "No of Spindles",
+        "dataType": "FLOAT",
+        "groupCode": "320",
+        "tdEngineKey": "no_of_spindles",
+        "mongoKey": "no_of_spindles",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff Number",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "pms_SPEEDFRAME_speed_pattern": [
+      {
+        "tagName": "Doff End Date",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff End Month",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff End Year",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff Date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff End Hours",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_hour",
+        "mongoKey": "hour",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff End Minute",
+        "dataType": "FLOAT",
+        "groupCode": "170",
+        "tdEngineKey": "doff_end_minute",
+        "mongoKey": "minute",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Doff End Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_hour",
+        "formula": "CONCAT(hour, ':', minute)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Doff End Date",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "doff_end_date",
+        "formula": "CONCAT(year, '-', month, '-' ,date, ' ' ,hour, ':', minute, ':00')",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 1",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_1",
+        "mongoKey": "01_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 1",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_1",
+        "mongoKey": "01_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 2",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_2",
+        "mongoKey": "02_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 2",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_2",
+        "mongoKey": "02_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 3",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_3",
+        "mongoKey": "03_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 3",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_3",
+        "mongoKey": "03_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 4",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_4",
+        "mongoKey": "04_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 4",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_4",
+        "mongoKey": "04_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 5",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_5",
+        "mongoKey": "05_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 5",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_5",
+        "mongoKey": "05_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 6",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_6",
+        "mongoKey": "06_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 6",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_6",
+        "mongoKey": "06_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 7",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_7",
+        "mongoKey": "07_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 7",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_7",
+        "mongoKey": "07_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 8",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_8",
+        "mongoKey": "08_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 8",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_8",
+        "mongoKey": "08_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 9",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_9",
+        "mongoKey": "09_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 9",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_9",
+        "mongoKey": "09_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Speed 10",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "speed_10",
+        "mongoKey": "10_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Length 10",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "length_10",
+        "mongoKey": "10_length",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Average Speed",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "average_speed",
+        "mongoKey": "average_speed",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "OHTC Park length in meters",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "ohtc_park_length_in_meters",
+        "mongoKey": "ohtc_park_length_in_meters",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "OHTC Start length in meters",
+        "dataType": "FLOAT",
+        "groupCode": "140",
+        "tdEngineKey": "ohtc_start_length_in_meters",
+        "mongoKey": "ohtc_start_length_in_meters",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "qms_SPEEDFRAME_shift_live": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving count",
+        "mongoKey": "count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "130",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "TPI",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "tpi",
+        "mongoKey": "tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Required Draft",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "required draft",
+        "mongoKey": "required draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "main_draft",
+        "mongoKey": "main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Breaking Draft",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "breaking_draft",
+        "mongoKey": "breaking_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "break_draft",
+        "mongoKey": "break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Count of Sliver",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "count_of_sliver",
+        "mongoKey": "count_of_sliver",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Count of Roving",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "count_of_roving",
+        "mongoKey": "count_of_roving",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "total_draft",
+        "mongoKey": "total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Set Creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": null,
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "creal_draft",
+        "mongoKey": "creal_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Rovo Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop",
+        "mongoKey": "roving_break_ebsh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop",
+        "mongoKey": "Sliver_break_ebsh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Head Stock hank",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "head_stock_hank",
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tail Stack Hank",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "tail_stock_hank",
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      }
+    ],
+    "qms_SPEEDFRAME_shift": [
+      {
+        "tagName": "Shift Number",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_number",
+        "mongoKey": "shift_id",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Date",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_date",
+        "mongoKey": "date",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Month",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_month",
+        "mongoKey": "month",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Year",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_year",
+        "mongoKey": "year",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift date",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_date",
+        "formula": "CONCAT(year, '-', month, '-', date)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_hour",
+        "mongoKey": "hours",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Minute",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "shift_minute",
+        "mongoKey": "minutes",
+        "formula": null,
+        "type": "instant",
+        "isRequired": false
+      },
+      {
+        "tagName": "Shift Hour",
+        "dataType": "FLOAT",
+        "groupCode": "formula",
+        "tdEngineKey": null,
+        "mongoKey": "shift_hour",
+        "formula": "CONCAT(hours, ':', minutes)",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Roving Count",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "roving count",
+        "mongoKey": "count",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Lot name",
+        "dataType": "VARCHAR(100)",
+        "groupCode": "130",
+        "tdEngineKey": "lot_name",
+        "mongoKey": "lot_number",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Twist",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "twist",
+        "mongoKey": "twist",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "TPI",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "tpi",
+        "mongoKey": "tpi",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Required Draft",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "required draft",
+        "mongoKey": "required draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Main Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "main_draft",
+        "mongoKey": "main_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Breaking Draft",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "breaking_draft",
+        "mongoKey": "breaking_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Break Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "break_draft",
+        "mongoKey": "break_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Count of Sliver",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "count_of_sliver",
+        "mongoKey": "count_of_sliver",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Count of Roving",
+        "dataType": "FLOAT",
+        "groupCode": "130",
+        "tdEngineKey": "count_of_roving",
+        "mongoKey": "count_of_roving",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Total Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "total_draft",
+        "mongoKey": "total_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Set Creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": null,
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Draft",
+        "dataType": "FLOAT",
+        "groupCode": "20",
+        "tdEngineKey": "creal_draft",
+        "mongoKey": "creal_draft",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Rovo Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "rovo_stop",
+        "mongoKey": "roving_break_ebsh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Creel Stop",
+        "dataType": "FLOAT",
+        "groupCode": "40",
+        "tdEngineKey": "creel_stop",
+        "mongoKey": "Sliver_break_ebsh",
+        "formula": null,
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Head Stock hank",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "head_stock_hank",
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      },
+      {
+        "tagName": "Tail Stack Hank",
+        "dataType": "FLOAT",
+        "groupCode": null,
+        "tdEngineKey": null,
+        "mongoKey": "tail_stock_hank",
+        "formula": "Tag NA",
+        "type": "instant",
+        "isRequired": true
+      }
+    ]
+  }
+}

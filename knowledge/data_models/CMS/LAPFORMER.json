@@ -3,97 +3,6 @@
   "keysList": {
     "cms_LAPFORMER_minutes_time_series": [
       {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "null",
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
         "groupCode": "40",
@@ -101,10 +10,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -114,10 +20,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -127,10 +30,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -140,23 +40,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift date",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "shift_date",
-        "formula": "CONCAT(year, '-', month, '-', date)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -166,10 +50,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -179,23 +60,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Hour",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "shift_hour",
-        "formula": "CONCAT(hours, ':', minutes)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Hour",
@@ -205,10 +70,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -218,23 +80,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "run_time_minute",
-        "formula": "MATH(run_hour * 60 + run_minute)",
-        "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Target Weight",
@@ -244,10 +90,7 @@
         "mongoKey": "target_weight",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Lot Name",
@@ -257,10 +100,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "voltage_avg",
@@ -270,10 +110,7 @@
         "mongoKey": "voltage_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "current_avg",
@@ -283,10 +120,7 @@
         "mongoKey": "current_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "power_factor",
@@ -296,10 +130,7 @@
         "mongoKey": "power_factor",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "frequency",
@@ -309,10 +140,7 @@
         "mongoKey": "frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_active_power",
@@ -322,10 +150,7 @@
         "mongoKey": "total_active_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kva",
@@ -335,10 +160,7 @@
         "mongoKey": "total_kva",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvar",
@@ -348,10 +170,7 @@
         "mongoKey": "total_kvar",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kwh",
@@ -361,10 +180,7 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvah",
@@ -374,10 +190,7 @@
         "mongoKey": "total_kvah",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvarh",
@@ -387,378 +200,11 @@
         "mongoKey": "total_kvarh",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_drive_bearing_temperature",
-        "mongoKey": "main_drive_bearing_Temp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_drive_bearing_temperature",
-        "mongoKey": "mdbt_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MDBT_CMS",
-        "mongoKey": "main_drive_bearing_Temp_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "lap_roller_gearbox_vibration",
-        "mongoKey": "lap_roller_gearbox_vibration",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "lap_roller_gearbox_vibration",
-        "mongoKey": "lrgv_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "LRGV_CMS",
-        "mongoKey": "lrgv_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_power",
-        "mongoKey": "main_motor_power",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_power",
-        "mongoKey": "mmp_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMP_CMS",
-        "mongoKey": "mmp_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_current",
-        "mongoKey": "main_motor_current",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_current",
-        "mongoKey": "mmc_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMC_CMS",
-        "mongoKey": "mmc_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_torque",
-        "mongoKey": "main_motor_torque",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_torque",
-        "mongoKey": "mmt_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMT_CMS",
-        "mongoKey": "mmt_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
-        "mongoKey": "main_motor_ihs_temp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
-        "mongoKey": "mmit_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMIT_CMS",
-        "mongoKey": "mmit_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_speed",
-        "mongoKey": "main_motor_speed",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_speed",
-        "mongoKey": "mms_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMS_CMS",
-        "mongoKey": "mms_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "cms_LAPFORMER_hours": [
       {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "null",
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
         "groupCode": "40",
@@ -766,10 +212,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -779,10 +222,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -792,10 +232,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -805,23 +242,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift date",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "shift_date",
-        "formula": "CONCAT(year, '-', month, '-', date)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -831,10 +252,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -844,23 +262,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Hour",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "shift_hour",
-        "formula": "CONCAT(hours, ':', minutes)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Hour",
@@ -870,10 +272,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -883,23 +282,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "run_time_minute",
-        "formula": "MATH(run_hour * 60 + run_minute)",
-        "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Target Weight",
@@ -909,11 +292,8 @@
         "mongoKey": "target_weight",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "Lot Name",
@@ -923,11 +303,8 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "voltage_avg",
@@ -937,11 +314,8 @@
         "mongoKey": "voltage_avg",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "current_avg",
@@ -951,11 +325,8 @@
         "mongoKey": "current_avg",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "power_factor",
@@ -965,11 +336,8 @@
         "mongoKey": "power_factor",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "frequency",
@@ -979,11 +347,8 @@
         "mongoKey": "frequency",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "total_active_power",
@@ -993,11 +358,8 @@
         "mongoKey": "total_active_power",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "total_kva",
@@ -1007,11 +369,8 @@
         "mongoKey": "total_kva",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "total_kvar",
@@ -1021,11 +380,8 @@
         "mongoKey": "total_kvar",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "total_kwh",
@@ -1035,11 +391,8 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "total_kvah",
@@ -1049,11 +402,8 @@
         "mongoKey": "total_kvah",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "total_kvarh",
@@ -1063,550 +413,8 @@
         "mongoKey": "total_kvarh",
         "formula": null,
         "type": "instant",
-        "aggType": "Instant",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_drive_bearing_temperature",
-        "mongoKey": "main_drive_bearing_Temp",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_drive_bearing_temperature",
-        "mongoKey": "mdbt_cms",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MDBT_CMS",
-        "mongoKey": "main_drive_bearing_Temp_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "lap_roller_gearbox_vibration",
-        "mongoKey": "lap_roller_gearbox_vibration",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "lap_roller_gearbox_vibration",
-        "mongoKey": "lrgv_cms",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "LRGV_CMS",
-        "mongoKey": "lrgv_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_power",
-        "mongoKey": "main_motor_power",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_power",
-        "mongoKey": "mmp_cms",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMP_CMS",
-        "mongoKey": "mmp_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_current",
-        "mongoKey": "main_motor_current",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_current",
-        "mongoKey": "mmc_cms",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMC_CMS",
-        "mongoKey": "mmc_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_torque",
-        "mongoKey": "main_motor_torque",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_torque",
-        "mongoKey": "mmt_cms",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMT_CMS",
-        "mongoKey": "mmt_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
-        "mongoKey": "main_motor_ihs_temp",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
-        "mongoKey": "mmit_cms",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMIT_CMS",
-        "mongoKey": "mmit_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_speed",
-        "mongoKey": "main_motor_speed",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_speed",
-        "mongoKey": "mms_cms",
-        "formula": null,
-        "type": "instant",
-        "aggType": "Instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMS_CMS",
-        "mongoKey": "mms_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "voltage_avg_max",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "tdEngineKey": "voltage_avg",
-        "mongoKey": "voltage_avg_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "current_avg_max",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "tdEngineKey": "current_avg",
-        "mongoKey": "current_avg_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "power_factor_max",
-        "dataType": "FLOAT",
-        "groupCode": "140",
-        "tdEngineKey": "power_factor",
-        "mongoKey": "power_factor_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "frequency_max",
-        "dataType": "FLOAT",
-        "groupCode": "410",
-        "tdEngineKey": "frequency",
-        "mongoKey": "frequency_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "total_active_power_max",
-        "dataType": "FLOAT",
-        "groupCode": "410",
-        "tdEngineKey": "total_active_power",
-        "mongoKey": "total_active_power_miax",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "total_kva_max",
-        "dataType": "FLOAT",
-        "groupCode": "410",
-        "tdEngineKey": "total_kva",
-        "mongoKey": "total_kva_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "total_kvar_max",
-        "dataType": "FLOAT",
-        "groupCode": "410",
-        "tdEngineKey": "total_kvar",
-        "mongoKey": "total_kvar_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "total_kwh_max",
-        "dataType": "FLOAT",
-        "groupCode": "410",
-        "tdEngineKey": "total_kwh",
-        "mongoKey": "total_kwh_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "total_kvah_max",
-        "dataType": "FLOAT",
-        "groupCode": "410",
-        "tdEngineKey": "total_kvah",
-        "mongoKey": "total_kvah_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "total_kvarh_max",
-        "dataType": "FLOAT",
-        "groupCode": "410",
-        "tdEngineKey": "total_kvarh",
-        "mongoKey": "total_kvarh__min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature_max",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main drive bearing Temperature",
-        "mongoKey": "main_drive_bearing_Tempmax_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration_max",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Lap Roller Gearbox Vibration",
-        "mongoKey": "lap_roller_gearbox_vibration_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power_max",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Power",
-        "mongoKey": "main_motor_power_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current_max",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Current",
-        "mongoKey": "main_motor_current_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque_max",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Torque",
-        "mongoKey": "main_motor_torque_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature_max",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Inverter Heat Sink Temperature",
-        "mongoKey": "main_motor_ihs_temp_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed_max",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Speed",
-        "mongoKey": "main_motor_speed_max",
-        "formula": null,
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "voltage_avg_min",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "tdEngineKey": "voltage_avg",
-        "mongoKey": "voltage_avg_min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "miimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "Instant"
       },
       {
         "tagName": "current_avg_min",
@@ -1616,11 +424,8 @@
         "mongoKey": "current_avg_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       },
       {
         "tagName": "power_factor_min",
@@ -1630,11 +435,8 @@
         "mongoKey": "power_factor_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       },
       {
         "tagName": "frequency_min",
@@ -1644,11 +446,8 @@
         "mongoKey": "frequency_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       },
       {
         "tagName": "total_active_power_min",
@@ -1658,11 +457,8 @@
         "mongoKey": "total_active_power_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       },
       {
         "tagName": "total_kva_min",
@@ -1672,11 +468,8 @@
         "mongoKey": "total_kva_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       },
       {
         "tagName": "total_kvar_min",
@@ -1686,11 +479,8 @@
         "mongoKey": "total_kvar_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       },
       {
         "tagName": "total_kwh_min",
@@ -1700,11 +490,8 @@
         "mongoKey": "total_kwh_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       },
       {
         "tagName": "total_kvah_min",
@@ -1714,11 +501,8 @@
         "mongoKey": "total_kvah_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       },
       {
         "tagName": "total_kvarh_min",
@@ -1728,216 +512,11 @@
         "mongoKey": "total_kvarh_min",
         "formula": null,
         "type": "instant",
-        "aggType": "miimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature_min",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main drive bearing Temperature",
-        "mongoKey": "main_drive_bearing_Temp_min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "miimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration_min",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Lap Roller Gearbox Vibration",
-        "mongoKey": "lap_roller_gearbox_vibration_min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "miimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power_min",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Power",
-        "mongoKey": "main_motor_power_min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "miimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current_min",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Current",
-        "mongoKey": "main_motor_current_min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "miimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque_min",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Torque",
-        "mongoKey": "main_motor_torque_min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "miimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature_min",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Inverter Heat Sink Temperature",
-        "mongoKey": "main_motor_ihs_temp_min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "miimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed_min",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "Main Motor Speed",
-        "mongoKey": "main_motor_speed_min",
-        "formula": null,
-        "type": "instant",
-        "aggType": "miimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Delivery Speed",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "delivery_speed",
-        "mongoKey": "delivery_speed",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "miimum"
       }
     ],
     "cms_LAPFORMER_shift_live": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "null",
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -1946,10 +525,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -1959,10 +535,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -1972,10 +545,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -1985,23 +555,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift date",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "shift_date",
-        "formula": "CONCAT(year, '-', month, '-', date)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -2011,10 +565,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -2024,23 +575,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Hour",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "shift_hour",
-        "formula": "CONCAT(hours, ':', minutes)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Hour",
@@ -2050,10 +585,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -2063,23 +595,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "run_time_minute",
-        "formula": "MATH(run_hour * 60 + run_minute)",
-        "type": "aggregate",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Target Weight",
@@ -2089,10 +605,7 @@
         "mongoKey": "target_weight",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Lot Name",
@@ -2102,10 +615,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "voltage_avg",
@@ -2115,10 +625,7 @@
         "mongoKey": "voltage_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "current_avg",
@@ -2128,10 +635,7 @@
         "mongoKey": "current_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "power_factor",
@@ -2141,10 +645,7 @@
         "mongoKey": "power_factor",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "frequency",
@@ -2154,10 +655,7 @@
         "mongoKey": "frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_active_power",
@@ -2167,10 +665,7 @@
         "mongoKey": "total_active_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kva",
@@ -2180,10 +675,7 @@
         "mongoKey": "total_kva",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvar",
@@ -2193,10 +685,7 @@
         "mongoKey": "total_kvar",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kwh",
@@ -2206,10 +695,7 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvah",
@@ -2219,10 +705,7 @@
         "mongoKey": "total_kvah",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvarh",
@@ -2232,409 +715,10 @@
         "mongoKey": "total_kvarh",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_drive_bearing_temperature",
-        "mongoKey": "main_drive_bearing_Temp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_drive_bearing_temperature",
-        "mongoKey": "mdbt_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MDBT_CMS",
-        "mongoKey": "mdbt_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "lap_roller_gearbox_vibration",
-        "mongoKey": "lap_roller_gearbox_vibration",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "lap_roller_gearbox_vibration",
-        "mongoKey": "lrgv_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "LRGV_CMS",
-        "mongoKey": "lrgv_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_power",
-        "mongoKey": "main_motor_power",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_power",
-        "mongoKey": "mmp_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMP_CMS",
-        "mongoKey": "mmp_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_current",
-        "mongoKey": "main_motor_current",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_current",
-        "mongoKey": "mmc_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMC_CMS",
-        "mongoKey": "mmc_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_torque",
-        "mongoKey": "main_motor_torque",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_torque",
-        "mongoKey": "mmt_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMT_CMS",
-        "mongoKey": "mmt_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
-        "mongoKey": "main_motor_ihs_temp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
-        "mongoKey": "mmit_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMIT_CMS",
-        "mongoKey": "mmit_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_speed",
-        "mongoKey": "main_motor_speed",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_speed",
-        "mongoKey": "mms_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMS_CMS",
-        "mongoKey": "mms_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Delivery Speed",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "delivery_speed",
-        "mongoKey": "delivery_speed",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "delivery_speed",
-        "dataType": "float",
-        "groupCode": "600",
-        "formula": null,
-        "tdEngineKey": "delivery_speed",
-        "mongoKey": "delivery_speed",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift_live",
-          "row": 38
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "cms_LAPFORMER_shift": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "50",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "50",
-        "tdEngineKey": "null",
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -2643,10 +727,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -2656,10 +737,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -2669,10 +747,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -2682,23 +757,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift date",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "shift_date",
-        "formula": "CONCAT(year, '-', month, '-', date)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -2708,10 +767,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -2721,23 +777,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Hour",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "shift_hour",
-        "formula": "CONCAT(hours, ':', minutes)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Hour",
@@ -2747,10 +787,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -2760,23 +797,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": null,
-        "mongoKey": "run_time_minute",
-        "formula": "MATH(run_hour * 60 + run_minute)",
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Target Weight",
@@ -2786,10 +807,7 @@
         "mongoKey": "target_weight",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Lot Name",
@@ -2799,10 +817,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "voltage_avg",
@@ -2812,10 +827,7 @@
         "mongoKey": "voltage_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "current_avg",
@@ -2825,10 +837,7 @@
         "mongoKey": "current_avg",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "power_factor",
@@ -2838,10 +847,7 @@
         "mongoKey": "power_factor",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "frequency",
@@ -2851,10 +857,7 @@
         "mongoKey": "frequency",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_active_power",
@@ -2864,10 +867,7 @@
         "mongoKey": "total_active_power",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kva",
@@ -2877,10 +877,7 @@
         "mongoKey": "total_kva",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvar",
@@ -2890,10 +887,7 @@
         "mongoKey": "total_kvar",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kwh",
@@ -2903,10 +897,7 @@
         "mongoKey": "total_kwh",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvah",
@@ -2916,10 +907,7 @@
         "mongoKey": "total_kvah",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "total_kvarh",
@@ -2929,1014 +917,8 @@
         "mongoKey": "total_kvarh",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_drive_bearing_temperature",
-        "mongoKey": "main_drive_bearing_Temp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_drive_bearing_temperature",
-        "mongoKey": "mdbt_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MDBT_CMS",
-        "mongoKey": "mdbt_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "lap_roller_gearbox_vibration",
-        "mongoKey": "lap_roller_gearbox_vibration",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "lap_roller_gearbox_vibration",
-        "mongoKey": "lrgv_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "LRGV_CMS",
-        "mongoKey": "lrgv_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_power",
-        "mongoKey": "main_motor_power",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_power",
-        "mongoKey": "mmp_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMP_CMS",
-        "mongoKey": "mmp_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_current",
-        "mongoKey": "main_motor_current",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_current",
-        "mongoKey": "mmc_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMC_CMS",
-        "mongoKey": "mmc_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_torque",
-        "mongoKey": "main_motor_torque",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_torque",
-        "mongoKey": "mmt_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMT_CMS",
-        "mongoKey": "mmt_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
-        "mongoKey": "main_motor_ihs_temp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_inverter_heat_sink_temperature",
-        "mongoKey": "mmit_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMIT_CMS",
-        "mongoKey": "mmit_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_speed",
-        "mongoKey": "main_motor_speed",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed CMS",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "main_motor_speed",
-        "mongoKey": "mms_cms",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed Target",
-        "dataType": "FLOAT",
-        "groupCode": "targetall_cms",
-        "tdEngineKey": "MMS_CMS",
-        "mongoKey": "mms_target",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Delivery Speed",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "tdEngineKey": "delivery_speed",
-        "mongoKey": "delivery_speed",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "run_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 19
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "voltage_avg_max",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "voltage_avg",
-        "mongoKey": "voltage_avg_max",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 39
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "current_avg_max",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "current_avg",
-        "mongoKey": "current_avg_max",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 40
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "voltage_avg_min",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "voltage_avg",
-        "mongoKey": "voltage_avg_min",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 56
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "current_avg_min",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "current_avg",
-        "mongoKey": "current_avg_min",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 57
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main drive bearing Temperature_Totalpeak",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "formula": null,
-        "tdEngineKey": "Main drive bearing Temperature",
-        "mongoKey": "main_drive_bearing_Temp_totalpeak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 73
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lap Roller Gearbox Vibration_Totalpeak",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "formula": null,
-        "tdEngineKey": "Lap Roller Gearbox Vibration",
-        "mongoKey": "lap_roller_gearbox_vibration_totalpeak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 74
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Power_Totalpeak",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "formula": null,
-        "tdEngineKey": "Main Motor Power",
-        "mongoKey": "main_motor_power_totalpeak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 75
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Current_Totalpeak",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "formula": null,
-        "tdEngineKey": "Main Motor Current",
-        "mongoKey": "main_motor_current_totalpeak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 76
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Torque_Totalpeak",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "formula": null,
-        "tdEngineKey": "Main Motor Torque",
-        "mongoKey": "main_motor_torque_totalpeak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 77
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Inverter Heat Sink Temperature_Totalpeak",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "formula": null,
-        "tdEngineKey": "Main Motor Inverter Heat Sink Temperature",
-        "mongoKey": "main_motor_ihs_temp_totalpeak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 78
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Main Motor Speed_Totalpeak",
-        "dataType": "FLOAT",
-        "groupCode": "600",
-        "formula": null,
-        "tdEngineKey": "Main Motor Speed",
-        "mongoKey": "main_motor_speed_totalpeak",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_shift",
-          "row": 79
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
-    ],
-    "cms_LAPFORMER_minutes_time_seri": [
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "run_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_minutes_time_seri",
-          "row": 18
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Lot Name",
-        "dataType": "NCHAR",
-        "groupCode": "130",
-        "formula": null,
-        "tdEngineKey": "Lot_Name",
-        "mongoKey": "lot_number",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "CMS/03 CMS_Lapformer_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "cms_LAPFORMER_minutes_time_seri",
-          "row": 20
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      }
-    ]
-  },
-  "queryDetails": {
-    "pms_LAPFORMER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "pms_LAPFORMER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "pms_LAPFORMER_shift_live": [
-      "asset_id"
-    ],
-    "pms_LAPFORMER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "pms_LAPFORMER_doff": [
-      "asset_id",
-      "doff_date",
-      "doff_hour"
-    ],
-    "qms_LAPFORMER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "qms_LAPFORMER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "qms_LAPFORMER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "qms_LAPFORMER_shift_live": [
-      "asset_id"
-    ],
-    "pms_LAPFORMER_events": [
-      "shift_date",
-      "shift_id",
-      "asset_id",
-      "status_endtime"
-    ],
-    "pms_LAPFORMER_stoppages": [
-      "shift_date",
-      "shift_id",
-      "asset_id",
-      "idle_starttime"
-    ],
-    "cms_LAPFORMER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "cms_LAPFORMER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "cms_LAPFORMER_shift_live": [
-      "asset_id"
-    ],
-    "cms_LAPFORMER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "pms_LAPFORMER_raw_data_history": [
-      "asset_id",
-      "group_code",
-      "source_time"
-    ]
-  },
-  "targets": {
-    "LAPFORMER_PMS": [
-      {
-        "code": "MU",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "PE",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "DOFFT",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "PL",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      }
-    ],
-    "PMS": [
-      {
-        "code": "PKG",
-        "target": 0.0,
-        "inputType": "",
-        "isEditable": true,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      },
-      {
-        "code": "UKG",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "STDW",
-        "target": 0.0,
-        "inputType": "Percentage",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      }
-    ],
-    "QMS": [
-      {
-        "code": "LW",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": 0.0,
-        "threshold": null,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "BLCV",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "NLWS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      }
-    ],
-    "LAPFORMER_CMS": [
-      {
-        "code": "MDBT_CMS",
-        "target": 65.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "LRGV_CMS",
-        "target": 1.5,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      }
-    ]
-  },
-  "indexDetails": {
-    "pms_LAPFORMER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "pms_LAPFORMER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_LAPFORMER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_LAPFORMER_hours": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "end_time"
-    ],
-    "pms_LAPFORMER_doff": [
-      "doff_date",
-      "doff_hour",
-      "asset_id",
-      "shift_date",
-      "platform_shift_id"
-    ],
-    "qms_LAPFORMER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "qms_LAPFORMER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "qms_LAPFORMER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "pms_LAPFORMER_events": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_LAPFORMER_stoppages": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_LAPFORMER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "cms_LAPFORMER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_LAPFORMER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_LAPFORMER_hours": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "end_time"
     ]
   }
 }

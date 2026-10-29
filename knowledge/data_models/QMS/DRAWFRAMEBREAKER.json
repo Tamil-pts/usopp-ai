@@ -3,97 +3,6 @@
   "keysList": {
     "qms_DRAWFRAMEBREAKER_shift_live": [
       {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
         "groupCode": "40",
@@ -101,10 +10,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -114,10 +20,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -127,10 +30,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -140,10 +40,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -153,10 +50,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -166,10 +60,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -179,10 +70,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -192,10 +80,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -206,10 +91,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL00512036710220f68",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "precision": "COL00512036710220f68"
       },
       {
         "tagName": "Lot name",
@@ -219,10 +101,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U",
@@ -232,25 +111,8 @@
         "mongoKey": "u_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max U",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "u_percent",
-        "mongoKey": "max_u_percent",
-        "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Min U",
@@ -260,11 +122,8 @@
         "mongoKey": "min_u_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV Percent 1m",
@@ -274,25 +133,8 @@
         "mongoKey": "cv_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max CV",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "cv_percent",
-        "mongoKey": "max_cv_percent",
-        "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Min CV",
@@ -302,11 +144,8 @@
         "mongoKey": "min_cv_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "Spectrogram",
@@ -316,10 +155,7 @@
         "mongoKey": "spectrogram_peak",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Spectogram",
@@ -329,11 +165,8 @@
         "mongoKey": "min_spectrogram_peak",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "Spectogram",
@@ -343,11 +176,8 @@
         "mongoKey": "max_spectrogram_peak",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "maximum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "maximum"
       },
       {
         "tagName": "Doffs",
@@ -357,10 +187,7 @@
         "mongoKey": "no_of_doffs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick place",
@@ -370,11 +197,8 @@
         "mongoKey": "thick_place",
         "formula": "pms_DRAWFRAMEBREAKER_doff",
         "type": "instant",
-        "aggType": "sum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "sum"
       },
       {
         "tagName": "Thick Place Average Per Can",
@@ -384,11 +208,8 @@
         "mongoKey": "thick_place_avgcan",
         "formula": "pms_DRAWFRAMEBREAKER_doff",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Feed Roller Stops",
@@ -398,10 +219,7 @@
         "mongoKey": "feed_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed Sensor Stops",
@@ -411,10 +229,7 @@
         "mongoKey": "feed_sensor_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Spectrogram Stops",
@@ -424,10 +239,7 @@
         "mongoKey": "spectrogram_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Drafting/Cylinder Roller stops",
@@ -437,10 +249,7 @@
         "mongoKey": "drafting_cylinder_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Web Guide Stops",
@@ -450,10 +259,7 @@
         "mongoKey": "web_guide_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Coiler Stops",
@@ -463,10 +269,7 @@
         "mongoKey": "coiler_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Sliver Monitor Stops",
@@ -476,10 +279,7 @@
         "mongoKey": "sliver_monitor_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U Stops",
@@ -489,10 +289,7 @@
         "mongoKey": "u_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV Stops",
@@ -502,10 +299,7 @@
         "mongoKey": "cv_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -515,10 +309,7 @@
         "mongoKey": "thick_place_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Servo Drive Stops",
@@ -528,10 +319,7 @@
         "mongoKey": "servo_drive_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Run Time Hour",
@@ -541,10 +329,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -554,10 +339,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minute",
@@ -567,10 +349,7 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CVM%",
@@ -580,16 +359,7 @@
         "mongoKey": "cvm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CVM%",
-          "CVM %"
-        ],
-        "canonicalName": "CVM%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(2Cm)",
@@ -599,16 +369,7 @@
         "mongoKey": "cv_2cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(2cm)",
-          "CV% (2cm)"
-        ],
-        "canonicalName": "CV%(2cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(5Cm)",
@@ -618,16 +379,7 @@
         "mongoKey": "cv_5cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5cm)",
-          "CV 5cm%"
-        ],
-        "canonicalName": "CV%(5cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(10Cm)",
@@ -637,16 +389,7 @@
         "mongoKey": "cv_10cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(10cm)",
-          "CV 10cm"
-        ],
-        "canonicalName": "CV%(10cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(25Cm)",
@@ -656,16 +399,7 @@
         "mongoKey": "cv_25cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(25cm)",
-          "CV 25cm"
-        ],
-        "canonicalName": "CV%(25cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(50Cm)",
@@ -675,16 +409,7 @@
         "mongoKey": "cv_50cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(50cm)",
-          "CV 50cm"
-        ],
-        "canonicalName": "CV%(50cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(1m)",
@@ -694,16 +419,7 @@
         "mongoKey": "cv_1m_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(1m)",
-          "CV 1m"
-        ],
-        "canonicalName": "CV%(1m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(3m)",
@@ -713,16 +429,7 @@
         "mongoKey": "cv_3m_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(3m)",
-          "CV 3m"
-        ],
-        "canonicalName": "CV%(3m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(5m)",
@@ -732,16 +439,7 @@
         "mongoKey": "cv_5m_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5m)",
-          "CV 5m"
-        ],
-        "canonicalName": "CV%(5m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick Place Per Hour",
@@ -751,10 +449,7 @@
         "mongoKey": "thickplace_hr",
         "formula": "MATH((thick_place / run_time_minute) * 100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "A%",
@@ -764,39 +459,8 @@
         "mongoKey": "a_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Minimum A%",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "a_percent",
-        "mongoKey": "min_a_percent",
-        "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
-        "type": "instant",
-        "aggType": "minimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Maximum A%",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "a_percent",
-        "mongoKey": "max_a_percent",
-        "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Feed weight g/m",
@@ -806,10 +470,7 @@
         "mongoKey": "feed_weight_gm",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Sliver Trip Count Dev",
@@ -819,180 +480,10 @@
         "mongoKey": "sliver_trip_count_dev_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Feed Roller Stoppage",
-        "dataType": "Integer",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "feed_roller_stoppage",
-        "mongoKey": "feed_roller_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
-          "row": 29
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Draft /Cylinder Roller Stoppage",
-        "dataType": "Integer",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "draft_/cylinder_roller_stoppage",
-        "mongoKey": "drafting_cylinder_roller_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
-          "row": 32
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "run_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
-          "row": 50
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Number Of doff",
-        "dataType": "float",
-        "groupCode": "40",
-        "formula": null,
-        "tdEngineKey": "doffs",
-        "mongoKey": "no_of_doffs",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift_live",
-          "row": 52
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "qms_DRAWFRAMEBREAKER_hours": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -1001,10 +492,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -1014,10 +502,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -1027,10 +512,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -1040,10 +522,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -1053,10 +532,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -1066,10 +542,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -1079,10 +552,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -1092,10 +562,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -1106,10 +573,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL00512036710220f68",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "precision": "COL00512036710220f68"
       },
       {
         "tagName": "Lot name",
@@ -1119,10 +583,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U",
@@ -1132,17 +593,8 @@
         "mongoKey": "u_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV Percent 1m",
@@ -1152,11 +604,8 @@
         "mongoKey": "cv_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Doffs",
@@ -1166,11 +615,8 @@
         "mongoKey": "no_of_doffs",
         "formula": null,
         "type": "instant",
-        "aggType": "sum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "sum"
       },
       {
         "tagName": "Thick place",
@@ -1180,11 +626,8 @@
         "mongoKey": "thick_place",
         "formula": "pms_DRAWFRAMEBREAKER_doff",
         "type": "instant",
-        "aggType": "sum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "sum"
       },
       {
         "tagName": "Thick Place Average Per Can",
@@ -1194,11 +637,8 @@
         "mongoKey": "thick_place_avgcan",
         "formula": "pms_DRAWFRAMEBREAKER_doff",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CVM%",
@@ -1208,17 +648,8 @@
         "mongoKey": "cvm_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CVM%",
-          "CVM %"
-        ],
-        "canonicalName": "CVM%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV%(2Cm)",
@@ -1228,17 +659,8 @@
         "mongoKey": "cv_2cm_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(2cm)",
-          "CV% (2cm)"
-        ],
-        "canonicalName": "CV%(2cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV%(5Cm)",
@@ -1248,17 +670,8 @@
         "mongoKey": "cv_5cm_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5cm)",
-          "CV 5cm%"
-        ],
-        "canonicalName": "CV%(5cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV%(10Cm)",
@@ -1268,17 +681,8 @@
         "mongoKey": "cv_10cm_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(10cm)",
-          "CV 10cm"
-        ],
-        "canonicalName": "CV%(10cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV%(25Cm)",
@@ -1288,17 +692,8 @@
         "mongoKey": "cv_25cm_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(25cm)",
-          "CV 25cm"
-        ],
-        "canonicalName": "CV%(25cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV%(50Cm)",
@@ -1308,17 +703,8 @@
         "mongoKey": "cv_50cm_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(50cm)",
-          "CV 50cm"
-        ],
-        "canonicalName": "CV%(50cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV%(1m)",
@@ -1328,17 +714,8 @@
         "mongoKey": "cv_1m_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(1m)",
-          "CV 1m"
-        ],
-        "canonicalName": "CV%(1m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV%(3m)",
@@ -1348,17 +725,8 @@
         "mongoKey": "cv_3m_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(3m)",
-          "CV 3m"
-        ],
-        "canonicalName": "CV%(3m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "CV%(5m)",
@@ -1368,17 +736,8 @@
         "mongoKey": "cv_5m_percent",
         "formula": null,
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5m)",
-          "CV 5m"
-        ],
-        "canonicalName": "CV%(5m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "A%",
@@ -1388,105 +747,11 @@
         "mongoKey": "a_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       }
     ],
     "qms_DRAWFRAMEBREAKER_shift": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "50",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "50",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "50",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -1495,10 +760,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -1508,10 +770,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -1521,10 +780,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -1534,10 +790,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -1547,10 +800,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -1560,10 +810,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -1573,10 +820,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -1586,10 +830,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -1600,10 +841,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL00512036710220f68",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "precision": "COL00512036710220f68"
       },
       {
         "tagName": "Lot name",
@@ -1613,10 +851,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U",
@@ -1626,25 +861,8 @@
         "mongoKey": "u_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max U",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "u_percent",
-        "mongoKey": "max_u_percent",
-        "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Min U",
@@ -1654,11 +872,8 @@
         "mongoKey": "min_u_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "CV Percent 5cm",
@@ -1668,25 +883,8 @@
         "mongoKey": "cv_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Max CV",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "cv_percent",
-        "mongoKey": "max_cv_percent",
-        "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Min CV",
@@ -1696,11 +894,8 @@
         "mongoKey": "min_cv_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "Spectogram",
@@ -1710,10 +905,7 @@
         "mongoKey": "spectrogram_peak",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Spectogram",
@@ -1723,11 +915,8 @@
         "mongoKey": "min_spectrogram_peak",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "minimum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "minimum"
       },
       {
         "tagName": "Spectogram",
@@ -1737,11 +926,8 @@
         "mongoKey": "max_spectrogram_peak",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "maximum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "maximum"
       },
       {
         "tagName": "Doffs",
@@ -1751,10 +937,7 @@
         "mongoKey": "no_of_doffs",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick place",
@@ -1764,11 +947,8 @@
         "mongoKey": "thick_place",
         "formula": "pms_DRAWFRAMEBREAKER_doff",
         "type": "instant",
-        "aggType": "sum",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "sum"
       },
       {
         "tagName": "Thick Place Average Per Can",
@@ -1778,11 +958,8 @@
         "mongoKey": "thick_place_avgcan",
         "formula": "pms_DRAWFRAMEBREAKER_doff",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Feed Roller Stops",
@@ -1792,10 +969,7 @@
         "mongoKey": "feed_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Feed Sensor Stops",
@@ -1805,10 +979,7 @@
         "mongoKey": "feed_sensor_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Spectrogram Stops",
@@ -1818,10 +989,7 @@
         "mongoKey": "spectrogram_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Drafting/Cylinder Roller Stops",
@@ -1831,10 +999,7 @@
         "mongoKey": "drafting_cylinder_roller_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Web Guide Stops",
@@ -1844,10 +1009,7 @@
         "mongoKey": "web_guide_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Coiler Stops",
@@ -1857,10 +1019,7 @@
         "mongoKey": "coiler_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Sliver Monitor Stops",
@@ -1870,10 +1029,7 @@
         "mongoKey": "sliver_monitor_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U Stops",
@@ -1883,10 +1039,7 @@
         "mongoKey": "u_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV Stops",
@@ -1896,10 +1049,7 @@
         "mongoKey": "cv_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick Places Stops",
@@ -1909,10 +1059,7 @@
         "mongoKey": "thick_place_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Servo Drive Stops",
@@ -1922,10 +1069,7 @@
         "mongoKey": "servo_drive_stops",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Run Time Hour",
@@ -1935,10 +1079,7 @@
         "mongoKey": "run_hour",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minutes",
@@ -1948,10 +1089,7 @@
         "mongoKey": "run_minute",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Run Time Minute",
@@ -1961,10 +1099,7 @@
         "mongoKey": "run_time_minute",
         "formula": "MATH(run_hour * 60 + run_minute)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CVM%",
@@ -1974,16 +1109,7 @@
         "mongoKey": "cvm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CVM%",
-          "CVM %"
-        ],
-        "canonicalName": "CVM%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(2Cm)",
@@ -1993,16 +1119,7 @@
         "mongoKey": "cv_2cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(2cm)",
-          "CV% (2cm)"
-        ],
-        "canonicalName": "CV%(2cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(5Cm)",
@@ -2012,16 +1129,7 @@
         "mongoKey": "cv_5cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5cm)",
-          "CV 5cm%"
-        ],
-        "canonicalName": "CV%(5cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(10Cm)",
@@ -2031,16 +1139,7 @@
         "mongoKey": "cv_10cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(10cm)",
-          "CV 10cm"
-        ],
-        "canonicalName": "CV%(10cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(25Cm)",
@@ -2050,16 +1149,7 @@
         "mongoKey": "cv_25cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(25cm)",
-          "CV 25cm"
-        ],
-        "canonicalName": "CV%(25cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(50Cm)",
@@ -2069,16 +1159,7 @@
         "mongoKey": "cv_50cm_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(50cm)",
-          "CV 50cm"
-        ],
-        "canonicalName": "CV%(50cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(1m)",
@@ -2088,16 +1169,7 @@
         "mongoKey": "cv_1m_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(1m)",
-          "CV 1m"
-        ],
-        "canonicalName": "CV%(1m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(3m)",
@@ -2107,16 +1179,7 @@
         "mongoKey": "cv_3m_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(3m)",
-          "CV 3m"
-        ],
-        "canonicalName": "CV%(3m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(5m)",
@@ -2126,16 +1189,7 @@
         "mongoKey": "cv_5m_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5m)",
-          "CV 5m"
-        ],
-        "canonicalName": "CV%(5m)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Thick Place Per Hour",
@@ -2145,10 +1199,7 @@
         "mongoKey": "thickplace_hr",
         "formula": "MATH((thick_place / run_time_minute) * 100)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Sliver Trip Count Dev",
@@ -2158,10 +1209,7 @@
         "mongoKey": "sliver_trip_count_dev_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "A%",
@@ -2171,39 +1219,8 @@
         "mongoKey": "a_percent",
         "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
         "type": "instant",
-        "aggType": "average",
         "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Minimum A%",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "a_percent",
-        "mongoKey": "min_a_percent",
-        "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
-        "type": "instant",
-        "aggType": "minimum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Maximum A%",
-        "dataType": "FLOAT",
-        "groupCode": "formula",
-        "tdEngineKey": "a_percent",
-        "mongoKey": "max_a_percent",
-        "formula": "qms_DRAWFRAMEBREAKER_minutes_time_series",
-        "type": "instant",
-        "aggType": "maximum",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "aggType": "average"
       },
       {
         "tagName": "Feed Weight g/m",
@@ -2213,262 +1230,10 @@
         "mongoKey": "feed_weight_gm",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "U%",
-        "dataType": "Real",
-        "groupCode": "260",
-        "formula": null,
-        "tdEngineKey": "u%",
-        "mongoKey": "u_percent",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift",
-          "row": 18
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shift Cumulative Thick place",
-        "dataType": "FLOAT",
-        "groupCode": null,
-        "formula": "Number_of_thickplace in doff1 + Number_of_thickplace in doff 2 + ... upto No of doffs",
-        "tdEngineKey": null,
-        "mongoKey": "thick_place",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift",
-          "row": 27
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Feed Roller Stoppage",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "feed_roller_stoppage",
-        "mongoKey": "feed_roller_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift",
-          "row": 28
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Draft /Cylinder Roller Stoppage",
-        "dataType": "Integer",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "draft_/cylinder_roller_stoppage",
-        "mongoKey": "drafting_cylinder_roller_stops",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift",
-          "row": 31
-        },
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Run Time Minute",
-        "dataType": "FLOAT",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "run_time_minute",
-        "mongoKey": null,
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift",
-          "row": 49
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Number Of doff",
-        "dataType": "float",
-        "groupCode": "50",
-        "formula": null,
-        "tdEngineKey": "doffs",
-        "mongoKey": "no_of_doffs",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift",
-          "row": 51
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Thick place_AvgCan",
-        "dataType": "FLOAT",
-        "groupCode": null,
-        "formula": "(tthick_place )/ no_of_doffs",
-        "tdEngineKey": null,
-        "mongoKey": "thick_place_AvgCan",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": true,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift",
-          "row": 52
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Feed Weight  g/m",
-        "dataType": "float",
-        "groupCode": "140",
-        "formula": null,
-        "tdEngineKey": "feed_weight",
-        "mongoKey": "feed_weight_gm",
-        "isRequired": true,
-        "isHost": false,
-        "isAutoCalc": false,
-        "excelReference": {
-          "source": "QMS/06 QMS_DrawFrameBreaker_Key_Definitions_and_Source_Mapping.xlsx",
-          "sheet": "qms_DRAWFRAMEBREAKER_shift",
-          "row": 56
-        },
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
     ],
     "qms_DRAWFRAMEBREAKER_minutes_time_series": [
-      {
-        "tagName": "Time Stamp Actual",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": "ts",
-        "mongoKey": "ts_act",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Adjusted Time Stamp",
-        "dataType": "TIMESTAMP",
-        "groupCode": "40",
-        "tdEngineKey": null,
-        "mongoKey": "time_stamp",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Tenant Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "tenant",
-        "mongoKey": "tenant_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Business Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "business",
-        "mongoKey": "business_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Asset Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "asset",
-        "mongoKey": "asset_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Unit Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "unit",
-        "mongoKey": "unit_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
-      {
-        "tagName": "Shed Id",
-        "dataType": "VARCHAR(100)",
-        "groupCode": "40",
-        "tdEngineKey": "shed",
-        "mongoKey": "shed_id",
-        "formula": null,
-        "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
-      },
       {
         "tagName": "Shift Number",
         "dataType": "FLOAT",
@@ -2477,10 +1242,7 @@
         "mongoKey": "shift_id",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Date",
@@ -2490,10 +1252,7 @@
         "mongoKey": "date",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Month",
@@ -2503,10 +1262,7 @@
         "mongoKey": "month",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Year",
@@ -2516,10 +1272,7 @@
         "mongoKey": "year",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift date",
@@ -2529,10 +1282,7 @@
         "mongoKey": "shift_date",
         "formula": "CONCAT(year, '-', month, '-', date)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Shift Hour",
@@ -2542,10 +1292,7 @@
         "mongoKey": "hours",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Minute",
@@ -2555,10 +1302,7 @@
         "mongoKey": "minutes",
         "formula": null,
         "type": "instant",
-        "isRequired": false,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": false
       },
       {
         "tagName": "Shift Hour",
@@ -2568,10 +1312,7 @@
         "mongoKey": "shift_hour",
         "formula": "CONCAT(hours, ':', minutes)",
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Hank",
@@ -2582,10 +1323,7 @@
         "formula": null,
         "type": "instant",
         "isRequired": true,
-        "precision": "COL00512036710220f68",
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "precision": "COL00512036710220f68"
       },
       {
         "tagName": "Lot name",
@@ -2595,10 +1333,7 @@
         "mongoKey": "lot_number",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": false,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "U",
@@ -2608,16 +1343,7 @@
         "mongoKey": "u_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "U",
-          "U%"
-        ],
-        "canonicalName": "U%",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "CV%(5Cm)",
@@ -2627,16 +1353,7 @@
         "mongoKey": "cv_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "aliases": [
-          "CV%(5cm)",
-          "CV 5cm%"
-        ],
-        "canonicalName": "CV%(5cm)",
-        "mappingSource": "knowledge/master/data_model_rules.json",
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Spectogram",
@@ -2646,10 +1363,7 @@
         "mongoKey": "spectrogram_peak",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "Cumulative Thick places",
@@ -2659,10 +1373,7 @@
         "mongoKey": "total_thickplace",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       },
       {
         "tagName": "A%",
@@ -2672,821 +1383,8 @@
         "mongoKey": "a_percent",
         "formula": null,
         "type": "instant",
-        "isRequired": true,
-        "dataTypeRole": "value",
-        "numericValueType": true,
-        "ignoreNameSeparators": true
+        "isRequired": true
       }
-    ]
-  },
-  "queryDetails": {
-    "pms_DRAWFRAMEBREAKER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_shift_live": [
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_doff": [
-      "asset_id",
-      "doff_date",
-      "doff_hour"
-    ],
-    "qms_DRAWFRAMEBREAKER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEBREAKER_shift_live": [
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEBREAKER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEBREAKER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_events": [
-      "shift_date",
-      "shift_id",
-      "asset_id",
-      "status_endtime"
-    ],
-    "pms_DRAWFRAMEBREAKER_stoppages": [
-      "shift_date",
-      "shift_id",
-      "asset_id",
-      "idle_starttime"
-    ],
-    "cms_DRAWFRAMEBREAKER_minutes_time_series": [
-      "shift_date",
-      "shift_id",
-      "ts_act",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEBREAKER_hours": [
-      "shift_date",
-      "shift_id",
-      "end_time",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEBREAKER_shift_live": [
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEBREAKER_shift": [
-      "shift_id",
-      "shift_date",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_raw_data_history": [
-      "asset_id",
-      "group_code",
-      "source_time"
-    ]
-  },
-  "targets": {
-    "DRAWFRAMEBREAKER_PMS": [
-      {
-        "code": "MU",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "PE",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "DOFFT",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      },
-      {
-        "code": "PL",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false
-      }
-    ],
-    "DRAWFRAMEBREAKER_QMS": [
-      {
-        "code": "A%",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Between+_",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "TP",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Between+_",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      }
-    ],
-    "PMS": [
-      {
-        "code": "PKG",
-        "target": 0.0,
-        "inputType": "",
-        "isEditable": true,
-        "direction": "Upper",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      },
-      {
-        "code": "UKG",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "STDW",
-        "target": 0.0,
-        "inputType": "Percentage",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      }
-    ],
-    "QMS": [
-      {
-        "code": "U%",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Control Limit Lower",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "CV%",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Control Limit Lower",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "SP",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": true
-      },
-      {
-        "code": "A%",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Between+_",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      },
-      {
-        "code": "TP",
-        "target": null,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Between+_",
-        "tolerance": null,
-        "threshold": null,
-        "lcl": 0.0,
-        "ucl": 0.0,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": true,
-        "is_sum": false
-      }
-    ],
-    "DRAWFRAMEBREAKER_CMS": [
-      {
-        "code": "DZT_CMS",
-        "target": 65.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DZV_CMS",
-        "target": 1.5,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "MMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "CMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "SMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMP_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMC_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMT_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMIT_CMS",
-        "target": 70.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DMS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      },
-      {
-        "code": "DELS_CMS",
-        "target": 0.0,
-        "inputType": "Direct Value",
-        "isEditable": false,
-        "direction": "Lower",
-        "tolerance": null,
-        "threshold": 0.0,
-        "lcl": null,
-        "ucl": null,
-        "is_active": true,
-        "is_available": false,
-        "is_avg": false,
-        "is_sum": false,
-        "is_dashboard": false,
-        "sequence_number": 0,
-        "is_breach_alert": false
-      }
-    ]
-  },
-  "alertModel": {
-    "QMS": [
-      {
-        "byte_key": "current_fault_4_byte",
-        "key": "Sliver monitor Fault",
-        "group_code": "30",
-        "deviation_key": "sliver_monitor_fault_dev_%",
-        "d_group_code": "20"
-      }
-    ]
-  },
-  "indexDetails": {
-    "pms_DRAWFRAMEBREAKER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "pms_DRAWFRAMEBREAKER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_hours": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "end_time"
-    ],
-    "pms_DRAWFRAMEBREAKER_doff": [
-      "doff_date",
-      "doff_hour",
-      "asset_id",
-      "shift_date",
-      "platform_shift_id"
-    ],
-    "qms_DRAWFRAMEBREAKER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEBREAKER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "qms_DRAWFRAMEBREAKER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "pms_DRAWFRAMEBREAKER_events": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "pms_DRAWFRAMEBREAKER_stoppages": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEBREAKER_minutes_time_series": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "time_stamp"
-    ],
-    "cms_DRAWFRAMEBREAKER_shift_live": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEBREAKER_shift": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id"
-    ],
-    "cms_DRAWFRAMEBREAKER_hours": [
-      "shift_date",
-      "platform_shift_id",
-      "asset_id",
-      "end_time"
     ]
   }
 }
