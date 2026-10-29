@@ -8,6 +8,51 @@ from tests.test_source_parsing import ENGINE
 
 
 class AlarmMetadataTests(unittest.TestCase):
+    def test_group30_keeps_multi_byte_types_in_json_and_saved_workbook(self):
+        from tests.test_packet_response_controls import FINALIZE
+        from openpyxl import load_workbook
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            task = root / 'Logical' / 'SpinConnect' / 'mms_nw_r'
+            task.mkdir(parents=True)
+            (task / 'mms_nw_r.var').write_text('''VAR
+nw_i : UINT;
+product_code : UINT;
+alarm_byte : USINT;
+alarm_count : UDINT;
+alarm_level : REAL;
+END_VAR''', encoding='utf-8')
+            (task / 'mms_nw_r.st').write_text('''CASE nw_group_code OF
+30:(*Fault History*)
+nw_snd_buffer[3] := 0;
+nw_snd_buffer[4] := 11;
+nw_i := 5;
+memcpy(ADR(nw_snd_buffer[nw_i]),ADR(product_code),2);(*Product code*)
+nw_i := nw_i + 2;
+memcpy(ADR(nw_snd_buffer[nw_i]),ADR(alarm_byte),1);(*Alarm byte*)
+nw_i := nw_i + 1;
+memcpy(ADR(nw_snd_buffer[nw_i]),ADR(alarm_count),4);(*Alarm count*)
+nw_i := nw_i + 4;
+memcpy(ADR(nw_snd_buffer[nw_i]),ADR(alarm_level),4);(*Alarm level*)
+nw_i := nw_i + 4;
+''' + FINALIZE + 'END_CASE', encoding='utf-8')
+            ENGINE.initialize_project_context(root)
+            output = root / 'metadata.xlsx'
+            result = ENGINE.generate_metadata_workbook(output)
+            records = [row for row in result['records'] if row['group_code'] == 30]
+            self.assertEqual(['UINT', 'BYTE', 'UDINT', 'REAL'], [row['datatype'] for row in records])
+            self.assertEqual([0, 2, 3, 7], [row['offset'] for row in records])
+            workbook = load_workbook(output, read_only=True, data_only=True)
+            try:
+                rows = list(workbook.worksheets[0].values)
+                headers = {name: index for index, name in enumerate(rows[0])}
+                self.assertEqual(['UINT', 'BYTE', 'UDINT', 'REAL'], [row[headers['TAG_DATA_TYPE']] for row in rows[1:]])
+            finally:
+                workbook.close()
+            self.assertEqual('MISMATCH', ENGINE.metadata_type_compatibility('UINT', 'BYTE', 30, 2))
+            self.assertEqual('EXACT', ENGINE.metadata_type_compatibility('UINT', 'UINT', 30, 2))
+            self.assertEqual('EXACT', ENGINE.metadata_type_compatibility('USINT', 'BYTE', 30, 1))
+
     def test_explicit_bit_set_uses_shared_captions_and_reports_shared_bit(self):
         from tests.test_packet_response_controls import FINALIZE
         from openpyxl import load_workbook

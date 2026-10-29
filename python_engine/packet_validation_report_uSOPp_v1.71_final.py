@@ -17,6 +17,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime
+from io import BytesIO
 import xml.etree.ElementTree as ET
 
 from openpyxl import Workbook, load_workbook
@@ -654,10 +655,6 @@ def master_metadata_fields(metadata_parameter: str) -> Dict[str, Any]:
 def metadata_output_type(value: str, group_code=None) -> str:
     """Normalize generated metadata datatype to the metadata standard."""
     raw = str(value or "").strip()
-    # GC 30 alarm bytes must remain BYTE in the workbook as in the JSON.
-    # Generic PLC alias normalization treats BYTE as USINT for size checks.
-    if str(group_code).strip() in ("30", "30.0"):
-        return "BYTE"
     # Targeted cleanup for the malformed legacy token seen in generated
     # metadata. It is a REAL datatype; do not expose the concatenated
     # REDUNDUNREPLICABLE token in the metadata workbook/view.
@@ -668,6 +665,10 @@ def metadata_output_type(value: str, group_code=None) -> str:
     # narrow so no unrelated PLC datatype is changed.
     if "REDUNDUNREPLICABLE" in upper and upper.endswith("REAL"):
         return "REAL"
+    # Keep an already generated single-byte GC30 field as BYTE during the
+    # final workbook pass. Other GC30 types must retain their actual width.
+    if str(group_code).strip() in ("30", "30.0") and upper == "BYTE":
+        return "BYTE"
     if upper == "REDUNDUNREPLICABLEREAL":
         return "REAL"
     if re.match(r"^(STRING|NCHAR|CHAR|VARCHAR)\s*(?:\[?\d+\]?|\(\d+\))?$", raw, re.IGNORECASE):
@@ -865,7 +866,18 @@ def normalize_bool_metadata_mode(value: Any) -> str:
     return "USINT" if str(value or "").strip().upper() == "USINT" else "BOOL"
 
 
-def metadata_type_compatibility(logic_type: str, metadata_type: str, group_code: Optional[int] = None) -> str:
+def expected_metadata_type(logic_type: str, group_code: Optional[int] = None, byte_size: Optional[int] = None) -> str:
+    """Return the generated metadata type without collapsing multi-byte GC30 fields."""
+    source_type = str(logic_type or "").strip()
+    normalized_type = normalize_type_name(source_type)
+    if group_code == 30 and byte_size == 1 and normalized_type == "USINT":
+        return "BYTE"
+    if normalized_type == "BOOL" and group_code != 30:
+        return normalize_bool_metadata_mode(BOOL_METADATA_MODE)
+    return metadata_output_type(source_type)
+
+
+def metadata_type_compatibility(logic_type: str, metadata_type: str, group_code: Optional[int] = None, byte_size: Optional[int] = None) -> str:
     logic_raw = normalize_name(logic_type or "")
     meta_raw = normalize_name(metadata_type or "")
     logic_norm = normalize_type_name(logic_type or "")
@@ -874,11 +886,9 @@ def metadata_type_compatibility(logic_type: str, metadata_type: str, group_code:
     if not logic_raw or not meta_raw:
         return "MISMATCH"
 
-    # Group 30 is the alarm/fault byte array. PLC code commonly declares the
-    # temporary array as USINT, then packs individual alarm bits into it. Its
-    # metadata contract is always BYTE; it must never be validated as USINT.
     if group_code == 30:
-        return "EXACT" if meta_raw == "BYTE" else "MISMATCH"
+        expected = normalize_type_name(expected_metadata_type(logic_type, group_code, byte_size))
+        return "EXACT" if meta_norm == expected else "MISMATCH"
 
     # Outside Group 30, PLC BOOL representation is an engineer-selected
     # metadata contract. Other PLC datatypes retain their declared type.
@@ -1682,19 +1692,22 @@ def parse_textgroup_file(path: Path) -> Dict[str, object]:
     }
 
 
-def build_textgroup_catalog() -> Dict[str, Dict[str, object]]:
-    catalog: Dict[str, Dict[str, object]] = {}
+def build_textgroup_catalog() -> Dict[Tuple[str, str], Dict[str, object]]:
+    # Names can repeat across display targets with different PLCVAL labels.
+    # Retain that scope so a shared Sheet2 mapping cannot be inferred from a
+    # catalog entry that was silently overwritten by another target.
+    catalog: Dict[Tuple[str, str], Dict[str, object]] = {}
     search_roots = HMI_TEXTGROUP_ROOTS or [LOGICAL_ROOT if LOGICAL_ROOT.exists() else ROOT]
     seen_paths = set()
     for search_root in search_roots:
-        for path in search_root.rglob("*.txtgrp"):
+        for path in sorted(search_root.rglob("*.txtgrp")):
             if is_ignored_project_path(path): continue
             if path in seen_paths:
                 continue
             seen_paths.add(path)
             try:
                 info = parse_textgroup_file(path)
-                catalog[normalize_name(str(info["name"]))] = info
+                catalog[(normalize_name(str(info["family"])), normalize_name(str(info["name"])))] = info
             except Exception:
                 continue
     return catalog
@@ -1731,7 +1744,22 @@ def extract_dropdown_rows() -> Dict[str, List[DropdownRow]]:
             continue
         page_root = tree.getroot()
         relative_parts = page_path.relative_to(search_root).parts
-        family = relative_parts[0] if relative_parts else search_root.name
+        # Keep mappings scoped to the selected HMI target. When discovery
+        # scans Logical as a whole, the first folder identifies the target;
+        # when it scans a target root directly, use that root name instead of
+        # a nested screen/category folder.
+        try:
+            is_logical_root = search_root.resolve() == LOGICAL_ROOT.resolve()
+        except (OSError, RuntimeError):
+            is_logical_root = search_root == LOGICAL_ROOT
+        family = (
+            relative_parts[0]
+            if is_logical_root and relative_parts
+            else search_root.name
+        )
+        # A target with pages but no dropdowns must still prevent a mapping
+        # found only on another target from being labelled shared by all.
+        rows_by_family.setdefault(family, [])
         embedded_index, embedded_summary = extract_page_embedded_textgroup(page_root)
 
         for control in page_root.findall(".//{*}Controls/{*}Control"):
@@ -1752,10 +1780,21 @@ def extract_dropdown_rows() -> Dict[str, List[DropdownRow]]:
             resolved_source = ""
             resolved_index = ""
             resolved_summary = ""
-            external_group_name = extract_last_bracket_value(text_group)
+            group_reference = re.search(r"\bTextGroup\[(.*?)\]", text_group, re.IGNORECASE)
+            external_group_name = group_reference.group(1).strip() if group_reference else ""
             logic_parameter = extract_last_bracket_value(index_datapoint) or index_datapoint.split(".")[-1].strip()
             if external_group_name:
-                catalog_item = textgroup_catalog.get(normalize_name(external_group_name))
+                source_reference = re.search(r"\bSource\[(.*?)\]", text_group, re.IGNORECASE)
+                source = normalize_name(source_reference.group(1)) if source_reference else "LOCAL"
+                source_family = (
+                    normalize_name(family) if source in {"", "LOCAL"}
+                    else "VCSHARED" if source in {"SHARED", "GLOBAL", "VCSHARED"}
+                    else source
+                )
+                group_key = normalize_name(external_group_name)
+                catalog_item = textgroup_catalog.get((source_family, group_key))
+                if catalog_item is None and source in {"", "LOCAL"}:
+                    catalog_item = textgroup_catalog.get(("VCSHARED", group_key))
                 if catalog_item is not None:
                     resolved_source = str(catalog_item["source_file"])
                     resolved_index = "" if catalog_item["index"] is None else str(catalog_item["index"])
@@ -3793,13 +3832,13 @@ def compare_with_metadata(
             ))
 
         datatype_state = metadata_type_compatibility(
-            plc_item.resolved_type_name, metadata_item.datatype, group_code
+            plc_item.resolved_type_name, metadata_item.datatype, group_code, plc_item.memcpy_size
         ) if metadata_item.datatype else "MISMATCH"
         if metadata_item.datatype and datatype_state in {"MISMATCH", "WARNING"}:
             issues.append(create_issue(
                 group_code, plc_item.parameter_name, plc_item.parameter_description,
                 "Metadata Data Type",
-                ("BYTE" if group_code == 30 else (BOOL_METADATA_MODE if normalize_type_name(plc_item.resolved_type_name) == "BOOL" else plc_item.resolved_type_name)),
+                expected_metadata_type(plc_item.resolved_type_name, group_code, plc_item.memcpy_size),
                 metadata_item.datatype,
                 plc_item.source_file, plc_item.line_number,
                 "Update metadata TAG_DATA_TYPE to match the active PLC datatype representation setting.",
@@ -4939,7 +4978,7 @@ def write_excel_report(
                         and bool(row.metadata_parameter)
                         and not metadata_text_exact(plc_parameter_value(row), row.metadata_parameter)
                     )
-                    datatype_state = metadata_type_compatibility(row.data_type, row.metadata_data_type, row.group_code) if row.metadata_data_type else "MISMATCH"
+                    datatype_state = metadata_type_compatibility(row.data_type, row.metadata_data_type, row.group_code, row.memcpy_size) if row.metadata_data_type else "MISMATCH"
                     offset_mismatch = row.metadata_offset is not None and row.offset_buffer is not None and row.metadata_offset != row.offset_buffer
                     if group_mismatch:
                         res_text = "Group Code Mismatch"
@@ -4959,7 +4998,7 @@ def write_excel_report(
                     row.parameter,
                     row.parameter_description,
                     row.group_code,
-                    "BYTE" if row.group_code == 30 else row.data_type,
+                    expected_metadata_type(row.data_type, row.group_code, row.memcpy_size),
                     "" if row.offset_buffer is None else row.offset_buffer,
                     "" if hmi_min is None else hmi_min,
                     "" if hmi_max is None else hmi_max,
@@ -5057,6 +5096,11 @@ def _parse_dropdown_pairs(value_text: str) -> List[Tuple[str, str]]:
     return pairs
 
 
+def sheet2_variant_key(value: Any) -> str:
+    normalized = normalize_name(str(value or "").strip()).casefold()
+    return "both" if normalized in {"", "both", "all", "allvariants"} else normalized
+
+
 def _build_generated_sheet2(
     results: List[GroupResult],
     tag_by_parameter: Optional[Dict[str, Any]] = None,
@@ -5064,6 +5108,7 @@ def _build_generated_sheet2(
     alarm_byte_tags: Optional[Dict[int, Any]] = None,
     master_dropdown_pairs_by_tag: Optional[Dict[Any, List[Tuple[str, str]]]] = None,
     alarm_source_records: Optional[List[Dict[str, Any]]] = None,
+    mapping_warnings: Optional[List[Dict[str, Any]]] = None,
 ) -> List[List[Any]]:
     """
     Build generated Sheet2 from actual HMI dropdown/TextGroup implementation.
@@ -5080,15 +5125,90 @@ def _build_generated_sheet2(
     master_dropdown_pairs_by_tag = master_dropdown_pairs_by_tag or {}
 
     output = [["TAG_CODE", "PLCVAL", "SHOWNVAL", "MACHINE VARIANT", "IS_ALARM"]]
-    seen = set()
+    # Sheet2 is a mapping table, so a tag/value pair must resolve to one label
+    # within a machine variant. Keep source priority and report disagreements
+    # instead of emitting duplicate TAG_CODE + PLCVAL rows.
+    resolved_mappings: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
+    local_mapping_warnings: List[Dict[str, Any]] = []
+
+    def label_key(value: Any) -> str:
+        return str(value or "").strip().casefold()
+
+    def plc_value_key(value: Any) -> str:
+        raw = str(value if value is not None else "").strip()
+        number = to_int(raw)
+        return str(number) if number is not None else normalize_name(raw)
+
+    def add_mapping(
+        tag_code: Any,
+        plc_value: Any,
+        shown_value: Any,
+        machine_variant: Any,
+        is_alarm: str,
+        source: str,
+        priority: int,
+    ) -> None:
+        shown = str(shown_value or "").strip()
+        if not shown:
+            return
+        variant = str(machine_variant or "BOTH").strip() or "BOTH"
+        if sheet2_variant_key(variant) == "both":
+            variant = "BOTH"
+        identity = (
+            normalize_name(str(tag_code)),
+            plc_value_key(plc_value),
+            sheet2_variant_key(variant),
+        )
+        current = resolved_mappings.get(identity)
+        if current is None:
+            resolved_mappings[identity] = {
+                "tagCode": tag_code,
+                "plcValue": plc_value,
+                "shownValue": shown,
+                "machineVariant": variant,
+                "isAlarm": is_alarm,
+                "source": source,
+                "priority": priority,
+            }
+            return
+
+        if label_key(current["shownValue"]) == label_key(shown):
+            if is_alarm == "YES":
+                current["isAlarm"] = "YES"
+            if priority > current["priority"]:
+                current["priority"] = priority
+                current["source"] = source
+            return
+
+        winner = current
+        if priority > current["priority"]:
+            winner = {
+                "tagCode": tag_code,
+                "plcValue": plc_value,
+                "shownValue": shown,
+                "machineVariant": variant,
+                "isAlarm": is_alarm,
+                "source": source,
+                "priority": priority,
+            }
+            resolved_mappings[identity] = winner
+        local_mapping_warnings.append({
+            "tagCode": tag_code,
+            "plcValue": str(plc_value),
+            "machineVariant": variant,
+            "keptShownValue": winner["shownValue"],
+            "keptSource": winner["source"],
+            "otherShownValue": shown if winner is current else current["shownValue"],
+            "otherSource": source if winner is current else current["source"],
+            "resolution": "One mapping retained by source priority; review the competing source labels.",
+        })
 
     # USINT conversion has one deterministic representation. It deliberately
     # takes precedence over HMI/master labels for converted PLC BOOL tags.
     if normalize_bool_metadata_mode(BOOL_METADATA_MODE) == "USINT":
         for tag_code in sorted(bool_tag_codes, key=lambda value: (str(value))):
             for plc_val, shown_val in (("0", "ON"), ("1", "OFF")):
-                seen.add((str(tag_code), plc_val, shown_val))
-                output.append([tag_code, plc_val, shown_val, "BOTH", "NO"])
+                add_mapping(tag_code, plc_val, shown_val, "BOTH", "NO", "BOOL conversion rule", 4)
 
     # Engineer-approved mappings take precedence over a display's TextGroup.
     # They use exact PLC identities, or an explicitly approved missing-tag rule
@@ -5097,10 +5217,7 @@ def _build_generated_sheet2(
         if normalize_bool_metadata_mode(BOOL_METADATA_MODE) == "USINT" and tag_code in bool_tag_codes:
             continue
         for plc_val, shown_val in pairs:
-            key = (str(tag_code), str(plc_val), str(shown_val))
-            if key not in seen:
-                seen.add(key)
-                output.append([tag_code, plc_val, shown_val, "BOTH", "NO"])
+            add_mapping(tag_code, plc_val, shown_val, "BOTH", "NO", "Approved dropdown mapping", 3)
 
     # Group 30 serializes the project's alarm bits into its actual copy buffers.
     # Preserve the byte TAG_CODE while making each individual alarm bit visible.
@@ -5118,11 +5235,8 @@ def _build_generated_sheet2(
         # Two source alarms may set one bit. Keep one PLC value with both
         # captions; validation reports the collision instead of moving bits.
         description = " OR ".join(captions)
-        key = (str(tag_code), str(bit_no), description)
-        if key in seen:
-            continue
-        seen.add(key)
-        output.append([tag_code, bit_no, description, "BOTH", "YES"])
+        if tag_code not in master_dropdown_pairs_by_tag:
+            add_mapping(tag_code, bit_no, description, "BOTH", "YES", "PLC alarm source", 1)
 
     def numeric_order(value):
         number = to_int(value)
@@ -5138,10 +5252,10 @@ def _build_generated_sheet2(
                 continue
             missing_alarm_number += 1
             description = f"NA{missing_alarm_number}"
-            seen.add((str(tag_code), str(bit_no), description))
-            output.append([tag_code, bit_no, description, "BOTH", "YES"])
+            if tag_code not in master_dropdown_pairs_by_tag:
+                add_mapping(tag_code, bit_no, description, "BOTH", "YES", "Alarm placeholder", 0)
 
-    for family_rows in dropdown_rows.values():
+    for family, family_rows in sorted(dropdown_rows.items(), key=lambda item: item[0].casefold()):
         for dr in family_rows:
             raw_logic = str(dr.logic_parameter or "").strip()
             param_key = normalize_name(raw_logic)
@@ -5164,14 +5278,73 @@ def _build_generated_sheet2(
                 continue
 
             for plc_val, shown_val in pairs:
-                key = (str(tag_code), str(plc_val), str(shown_val))
-                if key in seen:
-                    continue
-                seen.add(key)
-                output.append([tag_code, plc_val, shown_val, "BOTH", "NO"])
+                add_mapping(
+                    tag_code,
+                    plc_val,
+                    shown_val,
+                    family,
+                    "NO",
+                    f"HMI TextGroup: {dr.page_file} / {dr.control_name}",
+                    2,
+                )
+
+    # A mapping common to every selected display target belongs to the main
+    # metadata's BOTH scope. One selected target also has no variant-specific
+    # distinction. Partial mappings and conflicting labels retain their target
+    # scope; no missing target value is invented.
+    target_variants = {sheet2_variant_key(family) for family in dropdown_rows} - {"both"}
+    specific_by_pair = defaultdict(list)
+    for key in resolved_mappings:
+        if key[2] != "both":
+            specific_by_pair[key[:2]].append(key)
+    conflicted_pairs = {
+        (normalize_name(str(warning["tagCode"])), plc_value_key(warning["plcValue"]))
+        for warning in local_mapping_warnings
+    }
+    for pair, keys in specific_by_pair.items():
+        shared_key = (*pair, "both")
+        if shared_key in resolved_mappings or pair in conflicted_pairs:
+            continue
+        if {key[2] for key in keys} != target_variants:
+            continue
+        if len({label_key(resolved_mappings[key]["shownValue"]) for key in keys}) != 1:
+            continue
+        shared_record = dict(resolved_mappings[keys[0]], machineVariant="BOTH")
+        for key in keys:
+            del resolved_mappings[key]
+        resolved_mappings[shared_key] = shared_record
+
+    # Do not emit a target-specific row when it is identical to the shared
+    # fallback. Keep specific overrides only where the displayed value differs.
+    shared_labels = {
+        (key[0], key[1]): label_key(record["shownValue"])
+        for key, record in resolved_mappings.items()
+        if key[2] == "both"
+    }
+    for key, record in resolved_mappings.items():
+        if key[2] != "both" and shared_labels.get((key[0], key[1])) == label_key(record["shownValue"]):
+            continue
+        output.append([
+            record["tagCode"], record["plcValue"], record["shownValue"],
+            record["machineVariant"], record["isAlarm"],
+        ])
+
+    if mapping_warnings is not None:
+        mapping_warnings.extend(local_mapping_warnings)
+    else:
+        for warning in local_mapping_warnings:
+            emit_status(
+                "Sheet2 mapping conflict for TAG_CODE "
+                f"{warning['tagCode']} PLCVAL {warning['plcValue']} "
+                f"({warning['machineVariant']}): retained "
+                f"{warning['keptShownValue']} from {warning['keptSource']}."
+            )
 
     # Sort the shared rows before writing either JSON (UI) or the workbook.
-    output[1:] = sorted(output[1:], key=lambda row: (numeric_order(row[0]), numeric_order(row[1])))
+    output[1:] = sorted(
+        output[1:],
+        key=lambda row: (numeric_order(row[0]), numeric_order(row[1]), sheet2_variant_key(row[3])),
+    )
     return output
 
 
@@ -5464,7 +5637,13 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
             if approved_dropdown_pairs:
                 configured_dropdown_pairs_by_tag[tag_code] = approved_dropdown_pairs
             converted_bool = is_bool and normalize_bool_metadata_mode(BOOL_METADATA_MODE) == "USINT" and grp.code != 30
-            shown_diff = "YES" if (converted_bool or normalize_name(plc_tag) in hmi_parameters or normalize_name(plc_parameter) in hmi_parameters) else "<null>"
+            has_alarm_mapping = tag_code in alarm_byte_tags.values()
+            shown_diff = "YES" if (
+                converted_bool
+                or has_alarm_mapping
+                or normalize_name(plc_tag) in hmi_parameters
+                or normalize_name(plc_parameter) in hmi_parameters
+            ) else "<null>"
             if approved_dropdown_pairs:
                 shown_diff = "YES"
             hmi_info = _hmi_usage_for_parameter(param, hmi_usage)
@@ -5478,10 +5657,7 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
             metadata_scale_factor = metadata_numeric_value(master_fields.get("scale_factor", 1))
             metadata_visible = master_fields.get("is_visible", "YES")
             metadata_writable = master_fields.get("is_writable", "NO")
-            metadata_datatype = "BYTE" if grp.code == 30 else (
-                normalize_bool_metadata_mode(BOOL_METADATA_MODE)
-                if is_bool else metadata_output_type(metadata_output_type(str(param.data_type or "")))
-            )
+            metadata_datatype = expected_metadata_type(str(param.data_type or ""), grp.code, param.memcpy_size)
 
             ws.append([
                 tag_code,                                      # S NO.
@@ -5550,9 +5726,11 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
     # workspace, not from a default/reference workbook.
     sheet2 = wb.create_sheet("Sheet2")
     alarm_source_records = extract_group30_alarm_records(alarm_byte_tags=alarm_byte_tags)
+    sheet2_mapping_warnings: List[Dict[str, Any]] = []
     sheet2_rows = _build_generated_sheet2(
         results, tag_by_parameter, bool_tag_codes, alarm_byte_tags,
         configured_dropdown_pairs_by_tag, alarm_source_records,
+        sheet2_mapping_warnings,
     )
     for row in sheet2_rows:
         sheet2.append(row)
@@ -5590,17 +5768,20 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
     # as REDUNDUNREPLICABLEREAL can never be persisted to the generated XLSX.
     try:
         from openpyxl import load_workbook as _load_metadata_wb
-        _check_wb = _load_metadata_wb(output_excel_path)
-        for _ws in _check_wb.worksheets:
-            _headers = {str(_c.value).strip().upper(): _c.column for _c in _ws[1] if _c.value is not None}
-            _dtype_col = _headers.get("TAG_DATA_TYPE")
-            if _dtype_col:
-                for _row in range(2, _ws.max_row + 1):
-                    _cell = _ws.cell(_row, _dtype_col)
-                    if _cell.value is not None:
-                        _group_col = _headers.get("GROUP_CODE")
-                        _cell.value = metadata_output_type(str(_cell.value), _ws.cell(_row, _group_col).value if _group_col else None)
-        _check_wb.save(output_excel_path)
+        _check_wb = _load_metadata_wb(BytesIO(output_excel_path.read_bytes()))
+        try:
+            for _ws in _check_wb.worksheets:
+                _headers = {str(_c.value).strip().upper(): _c.column for _c in _ws[1] if _c.value is not None}
+                _dtype_col = _headers.get("TAG_DATA_TYPE")
+                if _dtype_col:
+                    for _row in range(2, _ws.max_row + 1):
+                        _cell = _ws.cell(_row, _dtype_col)
+                        if _cell.value is not None:
+                            _group_col = _headers.get("GROUP_CODE")
+                            _cell.value = metadata_output_type(str(_cell.value), _ws.cell(_row, _group_col).value if _group_col else None)
+            _check_wb.save(output_excel_path)
+        finally:
+            _check_wb.close()
     except Exception:
         # Workbook generation must not fail because of this presentation-only
         # normalization safeguard.
@@ -5621,6 +5802,7 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
         "excelPath": str(output_excel_path),
         "records": all_params,
         "metadataNamingWarnings": metadata_naming_warnings,
+        "metadataMappingWarnings": sheet2_mapping_warnings,
         "alarmSources": alarm_source_records,
         "alarmSourceSummary": dict(Counter(row["status"] for row in alarm_source_records)),
         "alarmWarnings": [asdict(issue) for issue in source_issues if str(issue.group_code) == "30" and issue.validation_type.startswith("Alarm")],
@@ -5889,7 +6071,8 @@ def run_engine_json(
                 meta_by_group_param[(gc, key)] = mr
                 meta_by_param[key].append(mr)
 
-    # Sheet2 mapping from the uploaded workbook only. Both .xlsx and legacy .xls are supported.
+    # Sheet2 mapping from the uploaded workbook only. Preserve variant scope;
+    # legacy workbooks without a variant column keep the shared BOTH scope.
     uploaded_sheet2 = defaultdict(list)
     if metadata_enabled and metadata_file and metadata_file.exists():
         try:
@@ -5908,7 +6091,10 @@ def run_engine_json(
                             rr=sws.row_values(ridx); tag=rr[cols["TAG_CODE"]-1] if cols["TAG_CODE"]<=len(rr) else ""
                             if tag in (None,""): continue
                             pv=rr[cols["PLCVAL"]-1] if cols["PLCVAL"]<=len(rr) else ""; sv=rr[cols["SHOWNVAL"]-1] if cols["SHOWNVAL"]<=len(rr) else ""
-                            uploaded_sheet2[str(tag).strip()].append((str(pv if pv is not None else "").strip(),str(sv if sv is not None else "").strip()))
+                            variant_col=cols.get("MACHINE VARIANT")
+                            variant=rr[variant_col-1] if variant_col and variant_col<=len(rr) else "BOTH"
+                            tag_number=to_int(tag)
+                            uploaded_sheet2[str(tag_number if tag_number is not None else tag).strip()].append((str(variant or "BOTH").strip(),str(pv if pv is not None else "").strip(),str(sv if sv is not None else "").strip()))
                 ref.release_resources()
             else:
                 ref=load_workbook(metadata_file,data_only=True,read_only=True)
@@ -5922,10 +6108,43 @@ def run_engine_json(
                             tag=rr[cols["TAG_CODE"]-1] if cols["TAG_CODE"]<=len(rr) else ""
                             if tag in (None,""): continue
                             pv=rr[cols["PLCVAL"]-1] if cols["PLCVAL"]<=len(rr) else ""; sv=rr[cols["SHOWNVAL"]-1] if cols["SHOWNVAL"]<=len(rr) else ""
-                            uploaded_sheet2[str(tag).strip()].append((str(pv if pv is not None else "").strip(),str(sv if sv is not None else "").strip()))
+                            variant_col=cols.get("MACHINE VARIANT")
+                            variant=rr[variant_col-1] if variant_col and variant_col<=len(rr) else "BOTH"
+                            tag_number=to_int(tag)
+                            uploaded_sheet2[str(tag_number if tag_number is not None else tag).strip()].append((str(variant or "BOTH").strip(),str(pv if pv is not None else "").strip(),str(sv if sv is not None else "").strip()))
                 ref.close()
         except Exception as exc:
             emit_status(f"Sheet2 metadata mapping load skipped: {exc}")
+
+    def _sheet2_variant_matches(row_variant, target_variant):
+        target = sheet2_variant_key(target_variant)
+        if target == "both":
+            return sheet2_variant_key(row_variant) == "both"
+        parts = re.split(r"[,;/|]+", str(row_variant or ""))
+        return any(sheet2_variant_key(part) == target for part in parts)
+
+    def _sheet2_value_key(value):
+        raw = str(value if value is not None else "").strip()
+        number = to_int(raw)
+        return str(number) if number is not None else normalize_name(raw)
+
+    def _sheet2_pairs_for_variant(tag_code, variant):
+        if tag_code is None:
+            return []
+        tag_number = to_int(tag_code)
+        tag_key = str(tag_number if tag_number is not None else tag_code).strip()
+        rows = uploaded_sheet2.get(tag_key, [])
+        target = sheet2_variant_key(variant)
+        generic = [(plc_value, shown_value) for row_variant, plc_value, shown_value in rows
+                   if sheet2_variant_key(row_variant) == "both"]
+        specific = [(plc_value, shown_value) for row_variant, plc_value, shown_value in rows
+                    if target != "both" and _sheet2_variant_matches(row_variant, variant)]
+        if not specific:
+            return generic
+        # A target-specific value overrides the shared fallback for that
+        # PLCVAL, while shared values for other PLCVALs remain available.
+        specific_values = {_sheet2_value_key(plc_value) for plc_value, _ in specific}
+        return [pair for pair in generic if _sheet2_value_key(pair[0]) not in specific_values] + specific
 
     def _pairs_from_text(text):
         return _parse_dropdown_pairs(text)
@@ -5969,7 +6188,7 @@ def run_engine_json(
             )
             hmi_pairs = configured_pairs or _pairs_from_text(dr.text_group_values)
             pair_source = "Master configured dropdown" if configured_pairs else "HMI TextGroup"
-            meta_pairs = uploaded_sheet2.get(str(tag_code).strip(), []) if tag_code is not None else []
+            meta_pairs = _sheet2_pairs_for_variant(tag_code, dr.family)
             hmi_set = {(str(a).strip(), str(b).strip()) for a, b in hmi_pairs}
             meta_set = {(str(a).strip(), str(b).strip()) for a, b in meta_pairs}
 
@@ -6028,7 +6247,7 @@ def run_engine_json(
                 tag_code = p.metadata_tag_code if p.metadata_tag_code is not None else p.metadata_sequence
                 actual_pairs = {
                     (str(plc_value).strip(), str(shown_value).strip().upper())
-                    for plc_value, shown_value in uploaded_sheet2.get(str(tag_code).strip(), [])
+                    for plc_value, shown_value in _sheet2_pairs_for_variant(tag_code, HMI_TARGET_NAME)
                 } if tag_code is not None else set()
                 mapping_required = BOOL_METADATA_MODE == "USINT" and p.group_code != 30
                 if not metadata_enabled:
@@ -6081,7 +6300,7 @@ def run_engine_json(
                 comment = plc_parameter_value(row)
                 no_comment = not comment
                 datatype_state = metadata_type_compatibility(
-                    row.data_type, row.metadata_data_type, row.group_code
+                    row.data_type, row.metadata_data_type, row.group_code, row.memcpy_size
                 ) if row.metadata_data_type else "MISMATCH"
                 if not row.metadata_parameter and row.metadata_group_code is None:
                     if no_comment:
@@ -6107,7 +6326,7 @@ def run_engine_json(
                         bool_tag_code = row.metadata_tag_code if row.metadata_tag_code is not None else row.metadata_sequence
                         actual_bool_pairs = {
                             (str(plc_value).strip(), str(shown_value).strip().upper())
-                            for plc_value, shown_value in uploaded_sheet2.get(str(bool_tag_code).strip(), [])
+                            for plc_value, shown_value in _sheet2_pairs_for_variant(bool_tag_code, HMI_TARGET_NAME)
                         } if bool_tag_code is not None else set()
                         bool_mapping_mismatch = (
                             actual_bool_pairs != expected_bool_mapping
@@ -6135,7 +6354,7 @@ def run_engine_json(
                         details = f"Parameter mismatch; PLC is {comment}; uploaded metadata is {row.metadata_parameter}"
                     elif datatype_state == "MISMATCH":
                         comp_status = "FAIL"
-                        expected_type = "BYTE" if row.group_code == 30 else (BOOL_METADATA_MODE if normalize_type_name(row.data_type) == "BOOL" else row.data_type)
+                        expected_type = expected_metadata_type(row.data_type, row.group_code, row.memcpy_size)
                         details = f"Data Type mismatch; PLC logic is {row.data_type}; expected metadata is {expected_type}; actual metadata is {row.metadata_data_type}"
                     elif bool_mapping_mismatch:
                         comp_status = "FAIL"
@@ -6173,7 +6392,7 @@ def run_engine_json(
                     "recordType": "PLC_WITH_METADATA" if row.metadata_parameter else "PLC_ONLY",
                     "plcOffset": row.offset_buffer,
                     "plcSize": row.memcpy_size,
-                    "plcType": "BYTE" if row.group_code == 30 else row.data_type,
+                    "plcType": expected_metadata_type(row.data_type, row.group_code, row.memcpy_size),
                     "plcDeclaredType": row.data_type,
                     "metadataOffset": row.metadata_offset,
                     "metadataType": row.metadata_data_type,

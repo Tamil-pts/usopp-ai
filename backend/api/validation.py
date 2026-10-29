@@ -22,6 +22,12 @@ def _bool_metadata_mode(value) -> str:
         raise HTTPException(400,'BOOL metadata mode must be BOOL or USINT.')
     return mode
 
+def _machine_department(value) -> str:
+    department=str(value or '').strip()
+    if not department or department.casefold()=='all':
+        raise HTTPException(400,'Select a machine / department before running validation or generating metadata.')
+    return department
+
 @router.post('/api/project-upload/start')
 def project_upload_start(payload:dict):
     return start_project_upload(
@@ -58,6 +64,7 @@ def _execute(sid, root, project_name, metadata_path=None, generate=False, local=
         return _execute_project(sid,root,project_name,metadata_path,generate,local,machine_department,bool_metadata_mode)
 
 def _execute_project(sid, root, project_name, metadata_path=None, generate=False, local=False, machine_department='All', bool_metadata_mode='BOOL'):
+    machine_department=_machine_department(machine_department)
     root=locate_root(root)
     name=project_name.strip() or root.name
     bool_metadata_mode=_bool_metadata_mode(bool_metadata_mode)
@@ -108,16 +115,18 @@ def _execute_project(sid, root, project_name, metadata_path=None, generate=False
 
 @router.post('/api/local/validate')
 def local_validate(payload:dict):
+    department=_machine_department(payload.get('machine_department'))
     root=_local_path(payload.get('project_path',''),True,True)
     sid,work=_local_session()
     meta=_local_metadata_path(work,payload.get('metadata_path',''))
-    return _execute(sid,root,str(payload.get('project_name') or ''),meta,local=True,machine_department=payload.get('machine_department','All'),bool_metadata_mode=payload.get('bool_metadata_mode','BOOL'))
+    return _execute(sid,root,str(payload.get('project_name') or ''),meta,local=True,machine_department=department,bool_metadata_mode=payload.get('bool_metadata_mode','BOOL'))
 
 @router.post('/api/local/generate-metadata')
 def local_generate_metadata(payload:dict):
+    department=_machine_department(payload.get('machine_department'))
     root=_local_path(payload.get('project_path',''),True,True)
     sid,_=_local_session()
-    return _execute(sid,root,str(payload.get('project_name') or ''),generate=True,local=True,machine_department=payload.get('machine_department','All'),bool_metadata_mode=payload.get('bool_metadata_mode','BOOL'))
+    return _execute(sid,root,str(payload.get('project_name') or ''),generate=True,local=True,machine_department=department,bool_metadata_mode=payload.get('bool_metadata_mode','BOOL'))
 
 async def store_metadata(file:UploadFile,work):
     suffix=file.filename.rsplit('.',1)[-1].lower() if file.filename else ''
@@ -135,13 +144,15 @@ async def upload_metadata(metadata:UploadFile=File(...)):
 
 @router.post('/api/validate')
 async def validate(project_files:Optional[List[UploadFile]]=File(None),
-                   metadata:Optional[UploadFile]=File(None),project_name:str=Form(''),metadata_path:str=Form(''),bool_metadata_mode:str=Form('BOOL')):
+                   metadata:Optional[UploadFile]=File(None),project_name:str=Form(''),metadata_path:str=Form(''),bool_metadata_mode:str=Form('BOOL'),machine_department:str=Form('')):
+    department=_machine_department(machine_department)
     sid,root=await stage_project(project_files,project_name)
     work=WORK/sid
     meta=await store_metadata(metadata,work) if metadata and metadata.filename else _local_metadata_path(work,metadata_path)
-    return await run_in_threadpool(_execute,sid,root,project_name,meta,False,False,'All',bool_metadata_mode)
+    return await run_in_threadpool(_execute,sid,root,project_name,meta,False,False,department,bool_metadata_mode)
 
 @router.post('/api/generate-metadata')
-async def generate_metadata(project_files:Optional[List[UploadFile]]=File(None),project_name:str=Form(''),bool_metadata_mode:str=Form('BOOL')):
+async def generate_metadata(project_files:Optional[List[UploadFile]]=File(None),project_name:str=Form(''),bool_metadata_mode:str=Form('BOOL'),machine_department:str=Form('')):
+    department=_machine_department(machine_department)
     sid,root=await stage_project(project_files,project_name)
-    return await run_in_threadpool(_execute,sid,root,project_name,None,True,False,'All',bool_metadata_mode)
+    return await run_in_threadpool(_execute,sid,root,project_name,None,True,False,department,bool_metadata_mode)

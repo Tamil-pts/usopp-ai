@@ -90,6 +90,58 @@
 .sourceEditorCode textarea{resize:none;width:100%;height:100%;min-height:0;overflow:scroll;background:var(--panel);color:var(--text);outline-offset:-2px}
 .sourceDatatypeView{padding:0 16px 16px}
 .sourceDatatypeView .tableWrap{max-height:56vh;overflow:auto}
+.workbookViewer{min-width:0;overflow:hidden}
+.metadataNavigation{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+.metadataNavigation>.featureTabs{margin:0;min-width:0}
+.metadataRoadmap{display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0;font-size:11px}
+.metadataRoadmapStep{display:flex;align-items:center;gap:5px}
+.metadataRoadmapItem{display:flex;align-items:center;gap:7px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--text);font:inherit;cursor:pointer}
+.metadataRoadmapItem b{font-size:10px;color:var(--muted)}
+.metadataRoadmapItem.pass b{color:#08784e}.metadataRoadmapItem.fail b{color:#c53030}.metadataRoadmapItem.review b{color:#a15a00}
+.metadataRoadmapArrow{color:var(--muted)}
+.metadataRoadmapReady{padding:6px 9px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);color:var(--muted);font-weight:650}
+.metadataRoadmapReady.ready{border-color:#86d4b7;background:#e6f6ef;color:#08784e}
+.metadataQualityNote{font-size:12px;line-height:1.6;color:var(--muted);overflow-wrap:anywhere}
+.workbookViewer .table td.metadataOffsetFailCell{background:#fee2e2!important;color:#9b1c1c;border:1px solid #ef8888}
+.workbookViewer .table td.metadataOffsetReviewCell{background:#fef3c7!important;color:#854d0e;border:1px solid #e6ba4c}
+.metadataOffsetIssueRow>td:first-child{border-left:3px solid #e6a13c}
+.metadataDepartmentDialog{position:fixed;inset:0;z-index:12000;display:grid;place-items:center;padding:20px;background:#09243280}
+.metadataDepartmentDialog form{box-sizing:border-box;width:min(480px,100%);padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--text);box-shadow:0 20px 80px #0003}
+.metadataDepartmentDialog h2{margin:0 0 10px;font-size:21px}
+.metadataDepartmentDialog p{color:var(--muted);line-height:1.6}
+.metadataDepartmentDialog label{display:grid;gap:8px;margin:20px 0}
+.metadataDepartmentDialog .actions{justify-content:flex-end;flex-wrap:wrap}
+.metadataCoverageToggle{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--muted);font-size:13px}
+.metadataCoverageToggle label{display:flex;align-items:center;gap:9px;color:var(--text);font-weight:650;cursor:pointer}
+.metadataCoverageToggle input{accent-color:var(--accent,#15966f);width:16px;height:16px;box-sizing:border-box}
+.metadataCoverage{position:relative;display:flex;flex-direction:column;box-sizing:border-box;max-width:100%;min-height:380px;overflow:auto;margin:12px 0 18px;padding:16px 16px 22px;border:1px solid var(--line);border-radius:10px;background:var(--panel);min-width:0}
+.metadataCoverageActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.metadataCoverageActions>span{margin-left:6px}
+.metadataCoverage .workbookScroll{flex:1 1 auto;min-height:110px;max-height:none;overflow:auto}
+.metadataCoverage.isExpanded .workbookScroll{flex:none;overflow:auto}
+.metadataCoverageHead,.metadataCoverageStats,.metadataCoverageFilters,.metadataCoverageNote{flex-shrink:0}
+.metadataCoverageResizeHandle{position:absolute;bottom:3px;right:3px;display:grid;place-items:center;width:25px;height:25px;padding:0;border:1px solid var(--line);border-radius:4px;background:var(--panel2);color:var(--muted);cursor:nwse-resize;touch-action:none;z-index:2}
+.metadataCoverageResizeHandle:hover,.metadataCoverageResizeHandle:focus-visible{color:var(--accent);border-color:var(--accent)}
+.metadataCoverageHead{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap}
+.metadataCoverageHead h3{margin:0 0 5px;font-size:17px}
+.metadataCoverageHead p,.metadataCoverageNote{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.metadataCoverageHead>label,.metadataCoverageFilters label,.metadataWorkbookFilters label{display:grid;gap:5px;color:var(--muted);font-size:12px;font-weight:600}
+.metadataCoverageHead select{min-width:250px;max-width:100%}
+.metadataCoverageStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}
+.metadataCoverageStats>div{display:grid;gap:3px;padding:11px 13px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)}
+.metadataCoverageStats b{font-size:20px;color:var(--text)}
+.metadataCoverageStats span{font-size:11px;color:var(--muted)}
+.metadataCoverageFilters,.metadataWorkbookFilters{display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin:12px 0}
+.metadataCoverageFilters label,.metadataWorkbookFilters label{min-width:145px}
+.metadataCoverageFilters label:last-child{flex:1;min-width:200px}
+.metadataCoverageFilters .textInput,.metadataWorkbookFilters .textInput{min-width:0;width:100%;box-sizing:border-box}
+.metadataCoverageStatus{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:650;white-space:nowrap}
+.metadataCoverageStatus.available{background:#e6f6ef;color:#08784e}
+.metadataCoverageStatus.missing{background:#fff0e8;color:#b33c18}
+.metadataCoverageNote{margin-top:8px;padding-right:20px}
+.metadataWorkbookFilters{padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.metadataWorkbookFilters>span{padding:8px 0;color:var(--muted);font-size:12px}
+@media(max-width:700px){.metadataCoverageStats{grid-template-columns:1fr}.metadataCoverageHead select{min-width:0;width:100%}.metadataCoverageFilters label,.metadataWorkbookFilters label{flex:1 1 140px}.metadataCoverage{padding:12px}}
 @media(max-width:900px){.validationInputControls{grid-template-columns:1fr}.validationSelection .projectFacts{grid-template-columns:1fr 1fr}.workspaceApp .validationTopBar .projectActions{min-width:0}.sourceEditorCode{margin:8px}}
 @media(max-width:550px){.validationSelection .selectionProjectCard{grid-template-columns:1fr}.selectionIdentity{border-right:0;border-bottom:2px solid #00c6b5;padding-bottom:8px}}
 

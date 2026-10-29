@@ -3,7 +3,6 @@ import {flushQualityDraft} from '../features/workhub/quality/bridge';
 import {userStorage} from '../shared/userStorage';
 import {BuildVersionBadge,BuildVersionNotice} from '../shared/BuildStatus';
 import {useCallback,useEffect,useState} from 'react';
-import {LayoutDashboard,ShieldCheck,GitCompare,BookOpen,MessageSquare,Settings,Activity,HelpCircle} from 'lucide-react';
 import '../styles.css';
 import './workspace.css';
 import type {MetaCol} from '../shared/types';
@@ -33,11 +32,9 @@ import {DEPARTMENTS} from '../features/rules/library';
 import {DEFAULT_MACHINE_PREFIXES,type MachinePrefix} from '../features/validation/projectDetails';
 import {TableLayoutProvider} from '../shared/TableLayout';
 import './responsive.css';
-import usoppLogo from '../usopp_logo.png';
 import petrusLogo from '../petrus_logo.png';
+import {WorkspaceNavigation,WORKSPACE_NAVIGATION as navigation,type WorkspacePage as Page} from '../shared/WorkspaceNavigation';
 
-type Page='home'|'validation'|'compare'|'rules'|'chatbot'|'settings'|'plc'|'help';
-const navigation=[{id:'home',label:'WorkHub',Icon:LayoutDashboard},{id:'validation',label:FEATURES.validation.name,Icon:ShieldCheck},{id:'plc',label:FEATURES.plc.name,Icon:Activity},{id:'compare',label:FEATURES.compare.name,Icon:GitCompare},{id:'rules',label:FEATURES.rules.name,Icon:BookOpen},{id:'chatbot',label:FEATURES.chatbot.name,Icon:MessageSquare},{id:'settings',label:'Settings',Icon:Settings},{id:'help',label:'Help',Icon:HelpCircle}] as const;
 function App(){
   const {user,logout}=useAccount();
   const [page,setPage]=useState<Page>('home');
@@ -85,7 +82,7 @@ function App(){
   const helpRows=page==='validation'?validation.result?.issues:page==='rules'?(ruleResults?.results||ruleResults?.checks||ruleResults?.checkpoints):[];
   const helpFindings=(Array.isArray(helpRows)?helpRows:[]).filter((row:any)=>!['pass','passed'].includes(String(row.status||row.severity||'').toLowerCase())).slice(0,5).map((row:any)=>Object.fromEntries(['id','name','status','severity','actual','expected','message','description','sourceFile','lineNumber','suggestedFix'].filter(key=>row[key]!=null).map(key=>[key,String(row[key]).slice(0,700)])));
   const helpContext={page,label:navigation.find(item=>item.id===page)?.label||'Workspace',projectName:validation.projectName||'',projectPath:validation.localProjectPath||'',details:page==='plc'?plcContext:undefined,findings:helpFindings,counts:page==='validation'&&validation.result?normalized?.counts:undefined};
-  return <TableLayoutProvider><div className="app workspaceApp"><aside className="rail"><div className="brand"><img src={usoppLogo} alt="usop.ai"/></div><nav className="nav railMainNav" aria-label="Main navigation">{navigation.filter(n=>n.id!=='settings'&&n.id!=='help').map(({id,label,Icon})=><button key={id} className={page===id?'active':''} onClick={()=>setPage(id)}><Icon/><span>{label}</span></button>)}</nav><nav className="nav railUtilities" aria-label="Settings and help">{navigation.filter(n=>n.id==='settings'||n.id==='help').map(({id,label,Icon})=><button key={id} className={page===id?'active':''} onClick={()=>setPage(id)}><Icon/><span>{label}</span></button>)}</nav></aside>
+  return <TableLayoutProvider><div className="app workspaceApp"><WorkspaceNavigation page={page} onSelect={setPage}/>
     <header className="top"><div className="crumb"><b>usop.ai</b><span> / </span>{navigation.find(n=>n.id===page)?.label}</div><div className="topSpacer"/><button className="btn" aria-pressed={theme==='dark'} onClick={()=>setTheme(theme==='light'?'dark':'light')}>{theme==='light'?'Dark mode':'Light mode'}</button><div className="accountTop"><button className="accountProfileButton" aria-label="Open my profile" onClick={()=>setPage('settings')}><UserAvatar user={user}/></button><span title={`${user.designation} / ${user.company}`}>{user.username}<small className="accountRoleLabel">{user.role==='admin'?'Admin':'User'}</small></span><button className="btn" onClick={()=>{void flushQualityDraft().then(()=>logout()).catch((error:Error)=>setToast(error.message))}}>Sign out</button></div><NotificationBell onOpen={(project,item)=>{setPage('home');window.dispatchEvent(new CustomEvent('workhub-open-project',{detail:{project,item}}));}}/><BuildVersionBadge health={health}/><ChopperQuickHelp context={helpContext} onOpenChat={()=>setPage('chatbot')}/><img className="petrusTopLogo" src={petrusLogo} alt="Petrus"/></header>
     <main className={`main${page==='chatbot'?' assistantMain':''}`}><div className={`content${page==='plc'?' plcContent':page==='chatbot'?' assistantContent':''}`}><BuildVersionNotice health={health}/>
       {page in FEATURES&&page!=='chatbot'&&<FeatureRecommendation feature={page as EngineeringFeature} projectReady={!!validation.localProjectPath||!!validation.projectFiles.length} hasResult={page==='validation'?!!validation.result:page==='compare'?!!compare.result:page==='rules'?!!ruleResults:false} failures={normalized?.counts.fail||0} warnings={normalized?.counts.warn||0}/>}

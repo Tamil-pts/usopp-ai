@@ -14,6 +14,7 @@ from python_engine.metadata_cells import metadata_numeric_value, is_numeric_meta
 router=APIRouter(tags=['Metadata Workbooks'])
 DUPLICATE_FILL='E4D7FF'
 DUPLICATE_FORMULA='N("uSOPp duplicate row")=0'
+OFFSET_FORMULA='N("uSOPp offset verification")=0'
 
 def normalized_header(value):
     return re.sub(r'[^a-z0-9]+','',str(value or '').strip().lower())
@@ -98,6 +99,82 @@ def read_sheets(path):
     try: return [sheet_data(ws.name,[ws.row_values(i) for i in range(ws.nrows)]) for ws in book.sheets()]
     finally: book.release_resources()
 
+def quality_reference(payload, path):
+    sid=str(payload.get('referenceSessionId') or '')
+    if not sid:return []
+    from backend.core.access import require_session
+    folder=require_session(sid)
+    generated=payload.get('source')=='generated'
+    reference_file=folder/('generated_metadata.json' if generated else 'validation_results.json')
+    if not reference_file.is_file():return []
+    if not generated:
+        manifest_file=folder/'inputs.json'
+        manifest=json.loads(manifest_file.read_text(encoding='utf-8')) if manifest_file.is_file() else {}
+        original=manifest.get('uploaded')
+        if not original or Path(original).resolve()!=path.resolve():return []
+    from python_engine.metadata_quality import source_fields
+    return source_fields(json.loads(reference_file.read_text(encoding='utf-8')), 'generated' if generated else 'uploaded')
+
+def workbook_quality(payload, path):
+    from python_engine.metadata_quality import inspect_workbook
+    sheets=payload.get('sheets') if 'sheets' in payload else read_sheets(path)
+    report=inspect_workbook(sheets,quality_reference(payload,path))
+    metadata=report.pop('metadata')
+    model_id=payload.get('modelId')
+    model_stage={'id':'dataModel','status':'PENDING','checked':0,'issues':[],
+                 'detail':'Choose a department and Data Model to check the required parameters.'}
+    if model_id:
+        from backend.api.data_models import model_for
+        from backend.core.data_models import validate_model,machine_key
+        model=model_for(str(model_id))
+        department=payload.get('machineDepartment')
+        if department and machine_key(department)!=machine_key(model['machine']):
+            raise HTTPException(400,'The Data Model does not match the selected machine / department.')
+        result=validate_model(model,metadata)
+        issues=[{'parameter':row['name'],'groupCode':', '.join(map(str,row['groupCodes'])),
+                 'check':'Data Model parameter','expected':row.get('plcType',''),
+                 'actual':row['detail'],'status':'FAIL' if row['status']=='FAIL' else 'REVIEW'}
+                for row in result['rows'] if row['status'] in {'FAIL','UNRESOLVED'}]
+        checked=sum(result['summary'][state] for state in ('PASS','FAIL','OPTIONAL','UNRESOLVED'))
+        model_stage={'id':'dataModel','status':result['status'] if checked else 'REVIEW','checked':checked,
+                     'issues':issues,'modelId':model['id'],
+                     'detail':f"{model['service']} / {model['machine']}: {result['summary']['PASS']} passed, {result['summary']['FAIL']} failed, {result['summary']['UNRESOLVED']} need review. Optional and server-generated fields do not block readiness."}
+    report['stages'].append(model_stage)
+    report['ready']=all(stage['status'] in {'PASS','NOT_APPLICABLE'} for stage in report['stages'])
+    return report
+
+@router.post('/api/metadata/view/quality')
+def check_workbook_quality(payload:dict):
+    path=resolve_workbook(payload)
+    try:return jsonable_encoder(workbook_quality(payload,path))
+    except (ValueError,TypeError,KeyError) as exc:raise HTTPException(400,f'Cannot check metadata quality: {exc}') from exc
+
+def apply_offset_highlights(wb, issues):
+    """Highlight existing offset cells only; preserve every row and column."""
+    from openpyxl.formatting.rule import FormulaRule
+    from openpyxl.styles import PatternFill
+    for ws in wb.worksheets:
+        for conditional,rules in list(ws.conditional_formatting._cf_rules.items()):
+            retained=[rule for rule in rules if OFFSET_FORMULA not in (getattr(rule,'formula',None) or [])]
+            if retained:ws.conditional_formatting._cf_rules[conditional]=retained
+            else:del ws.conditional_formatting._cf_rules[conditional]
+    locations={}
+    for issue in issues:
+        key=(issue.get('sheet'),issue.get('row'))
+        if key not in locations or issue['status']=='FAIL':locations[key]=issue['status']
+    for (name,row),status in locations.items():
+        if name not in wb.sheetnames or not isinstance(row,int) or row<2:continue
+        ws=wb[name]
+        columns={normalized_header(cell.value):cell.column for cell in ws[1]}
+        column=next((columns[key] for key in ('offsetfromthestartofthegroupinbytes','offset','byteoffset','offsetinbytes') if key in columns),None)
+        if column is None:continue
+        for rules in ws.conditional_formatting._cf_rules.values():
+            for rule in rules:rule.priority=(rule.priority or 1)+1
+        cell=ws.cell(row,column).coordinate
+        rule=FormulaRule(formula=[OFFSET_FORMULA],fill=PatternFill(fill_type='solid',fgColor='FEE2E2' if status=='FAIL' else 'FEF3C7'),stopIfTrue=True)
+        rule.priority=1
+        ws.conditional_formatting.add(cell,rule)
+
 @router.post('/api/metadata/view/sheets')
 def view_sheets(payload:dict):
     path=resolve_workbook(payload)
@@ -141,6 +218,9 @@ def save_copy(payload):
             if {'ALARM_GROUP','ALARM_IMAGE','CAPTION','PACKING_SOURCE'}<=alarm_headers:
                 wb.remove(alarm_sheet)
         apply_duplicate_highlights(wb)
+        from python_engine.metadata_quality import inspect_workbook
+        offset_report=inspect_workbook(sheets,quality_reference(payload,source))
+        apply_offset_highlights(wb,offset_report['stages'][0]['issues'])
         issues=normalize_metadata_workbook(wb)
         if issues: raise HTTPException(400,{'message':'MIN/MAX and scale/offset factors must be numeric or null for SpinConnect.', 'cells':issues[:100]})
         sid,_=_local_session()

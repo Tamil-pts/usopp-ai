@@ -8,12 +8,19 @@
 :root { font-size:16px; }
 body { min-width:0; }
 #root,.tableLayoutRoot { width:100%;min-width:0; }
-.workspaceApp { width:100%;height:100vh;height:100dvh;min-width:0;grid-template-columns:104px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);font-size:1rem;line-height:1.5; }
+.workspaceApp { width:100%;height:100vh;height:100dvh;min-width:0;grid-template-columns:128px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);font-size:1rem;line-height:1.5; }
 .workspaceApp .rail { width:auto;min-width:0;min-height:0;overflow-y:auto;padding:14px 8px;display:flex;flex-direction:column; }
 .workspaceApp .nav { width:100%;min-width:0;display:flex;flex-direction:column;flex:1; }
 .workspaceApp .nav .settingsNav { margin-top:auto; }
 .workspaceApp .nav button { font-size:.8125rem;min-height:62px;padding:10px 4px;gap:6px; }
 .workspaceApp .nav svg { width:20px;height:20px; }
+.workspaceApp .spinConnectNav { display:grid;grid-template-columns:22px minmax(0,1fr);gap:3px;padding:5px 3px 5px 0;margin:3px 0;border:1px solid #2b6272;border-left:3px solid #309bad;border-radius:8px;min-width:0; }
+.workspaceApp .spinConnectNav[data-active] { border-left-color:#72ddbd; }
+.workspaceApp .spinConnectNavLabel { display:flex;align-items:center;justify-content:center;gap:2px;color:#e0f1f5; }
+.workspaceApp .spinConnectNavLabel span { writing-mode:vertical-rl;text-orientation:upright;font-size:10px;line-height:1;letter-spacing:.04em;white-space:nowrap; }
+.workspaceApp .spinConnectNavLabel span:last-child { color:#a7d2dd; }
+.workspaceApp .spinConnectNavTools { display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0; }
+.workspaceApp .spinConnectNavTools button { width:100%;min-width:0; }
 .workspaceApp .top { min-height:64px;min-width:0;flex-wrap:wrap;gap:8px 16px;padding:12px 20px; }
 .workspaceApp .crumb { font-size:.9375rem;overflow-wrap:anywhere; }
 .workspaceApp .top .badge { white-space:normal; }
@@ -74,6 +81,10 @@ body { min-width:0; }
   .workspaceApp .brand { width:46px;height:46px;margin:0; }
   .workspaceApp .nav { display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px; }
   .workspaceApp .nav button { min-height:54px;font-size:.8125rem;padding:6px 2px; }
+  .workspaceApp .spinConnectNav { grid-column:span 2;grid-template-columns:minmax(0,1fr);gap:2px;padding:3px;margin:0; }
+  .workspaceApp .spinConnectNavLabel { flex-direction:row;flex-wrap:wrap;gap:3px; }
+  .workspaceApp .spinConnectNavLabel span { writing-mode:horizontal-tb;text-orientation:mixed;font-size:10px;letter-spacing:0; }
+  .workspaceApp .spinConnectNavTools { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px; }
   .workspaceApp .top { padding:10px 14px; }
   .workspaceApp .usoppTopLogo { width:34px;height:34px; }
   .workspaceApp .petrusTopLogo { height:30px;max-width:112px; }

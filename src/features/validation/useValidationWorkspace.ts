@@ -47,12 +47,14 @@ export function useValidationWorkspace(machinePrefixes:MachinePrefix[]) {
   const setBoolMetadataMode=(value:BoolMetadataMode)=>{setBoolMetadataModeState(value);setResult(null);setGenerated(null);setMessage('');setError('')};
   const selectMetadata=(path:string,name:string)=>{setError('');setMetadata(null);setLocalMetadataPath(path);setLocalMetadataName(name);setResult(null)};
   const uploadMetadata=async(file:File)=>{setBusy('upload');setError('');setMessage('');try{const data=await prepareMetadata(file);selectMetadata(data.path,file.name);setMetadata(file);setMessage(`${file.name} is ready to view or validate.`)}catch(e:any){setError(e.message)}finally{setBusy('')}};
-  const execute=async(kind:'validate'|'metadata')=>{
+  const execute=async(kind:'validate'|'metadata',departmentOverride?:string)=>{
     if(!localProjectPath&&!projectFiles.length){setError('Select a project folder first.');return}
+    const department=(departmentOverride??machineDepartment).trim();
+    if(!department||department.toLowerCase()==='all'){setError('Select a machine / department before running validation or generating metadata.');return}
     setBusy(kind);setError('');setMessage('');setUploadProgress(projectFiles.length?{uploaded:0,total:projectSourceFiles(projectFiles).length}:null);
     try{
       const useMetadata=compareMetadata&&!!(localMetadataPath||metadata);
-      const input={projectFiles,projectName,localProjectPath,localMetadataPath:useMetadata?localMetadataPath:'',metadata:useMetadata?metadata:null,machineDepartment,boolMetadataMode,onUploadProgress:(uploaded:number,total:number)=>setUploadProgress({uploaded,total})};
+      const input={projectFiles,projectName,localProjectPath,localMetadataPath:useMetadata?localMetadataPath:'',metadata:useMetadata?metadata:null,machineDepartment:department,boolMetadataMode,onUploadProgress:(uploaded:number,total:number)=>setUploadProgress({uploaded,total})};
       if(kind==='validate'){setResult(await validateProject(input));setSourceChanged(false);setMessage(useMetadata?'Validation completed. Reports remain available in this session.':'Project validation completed without metadata. Metadata comparisons were skipped; reports remain available in this session.')}
       else {setGenerated(await generateProjectMetadata(input));setMessage('Metadata generated. Open Generated metadata to review, edit or export.')}
     }catch(e:any){setError(e.message||'Processing failed')}finally{setBusy('');setUploadProgress(null)}
@@ -61,7 +63,7 @@ export function useValidationWorkspace(machinePrefixes:MachinePrefix[]) {
     compareMetadata,setCompareMetadata:(value:boolean)=>{setCompareMetadata(value);setResult(null)},
     sourceChanged,markSourceChanged:()=>{setSourceChanged(true);setGenerated(null)},
     setLocalMetadataPath,setLocalMetadataName,result,generated,busy,message,error,uploadProgress,projectDetails,detailsLoading,detailsError,selectProject,selectMetadata,uploadMetadata,
-    runValidation:()=>execute('validate'),generateMetadata:()=>execute('metadata'),
+    runValidation:(department?:string)=>execute('validate',department),generateMetadata:(department?:string)=>execute('metadata',department),
     openHistory:(kind:string,data:any)=>{setLocalProjectPath('');setProjectFiles([]);setMetadata(null);setLocalMetadataPath('');setProjectName(data.projectName||'');setResult(kind==='validation'?data:null);setGenerated(kind==='metadata'?data:null);setSourceChanged(false);setError('');setMessage('Stored result opened. Use WorkHub history reuse actions to run this project again.');},
     adoptEditedProject:(path:string,name:string)=>{setLocalProjectPath(path);setProjectFiles([]);setProjectName(name);setResult(null);setGenerated(null);setSourceChanged(true)},
     clearResults:()=>{setResult(null);setGenerated(null);setSourceChanged(false)},clearProject:()=>selectProject('','')};

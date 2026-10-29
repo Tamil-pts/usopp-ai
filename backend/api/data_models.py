@@ -1,6 +1,6 @@
 from pathlib import Path
 import json
-from fastapi import APIRouter,File,Form,HTTPException,UploadFile
+from fastapi import APIRouter,File,Form,HTTPException,Request,UploadFile
 from fastapi.responses import FileResponse
 from pydantic import BaseModel,Field
 from starlette.concurrency import run_in_threadpool
@@ -23,7 +23,8 @@ def user_folder():
 
 
 def models():
-    bundled=RESOURCE_ROOT/'knowledge/data_models/catalog.json'
+    bundled=KNOWLEDGE/'data_models/catalog.json'
+    if not bundled.is_file():bundled=RESOURCE_ROOT/'knowledge/data_models/catalog.json'
     items=json.loads(bundled.read_text(encoding='utf-8')).get('models',[]) if bundled.is_file() else []
     from backend.core.data_model_rules import load_rules,apply_model
     config,revision=load_rules(KNOWLEDGE/'master/data_model_rules.json')
@@ -46,6 +47,34 @@ def model_for(model_id):
             model=next((item for item in json.loads(legacy.read_text(encoding='utf-8')).get('models',[]) if item['id']==model_id),None)
     if not model:raise HTTPException(404,'Data model not found.')
     return model
+
+
+@router.get('/api/knowledge/data-model-json-keys')
+def list_json_key_sources(request:Request):
+    if not getattr(request.state,'user',None):raise HTTPException(401,'Sign in to view shared data-model JSON Keys.')
+    from backend.core.data_model_json_keys import list_sources
+    try:return {'canEdit':request.state.user.get('role')=='admin','models':list_sources()}
+    except (FileNotFoundError,ValueError) as error:raise HTTPException(503,str(error))
+
+
+@router.get('/api/knowledge/data-model-json-keys/{model_id:path}')
+def get_json_key_source(model_id:str,request:Request):
+    if not getattr(request.state,'user',None):raise HTTPException(401,'Sign in to view shared data-model JSON Keys.')
+    from backend.core.data_model_json_keys import get_source
+    try:return {**get_source(model_id),'canEdit':request.state.user.get('role')=='admin'}
+    except KeyError:raise HTTPException(404,'Fixed PMS/QMS/CMS JSON Key model not found.')
+    except (FileNotFoundError,ValueError) as error:raise HTTPException(503,str(error))
+
+
+@router.put('/api/knowledge/data-model-json-keys/{model_id:path}')
+def save_json_key_source(model_id:str,payload:dict,request:Request):
+    if (getattr(request.state,'user',None) or {}).get('role')!='admin':raise HTTPException(403,'Only an administrator can edit shared PMS/QMS/CMS JSON Key files.')
+    from backend.core.data_model_json_keys import save_source
+    try:return {**save_source(model_id,payload),'canEdit':True}
+    except KeyError:raise HTTPException(404,'Fixed PMS/QMS/CMS JSON Key model not found.')
+    except RuntimeError as error:raise HTTPException(409,str(error))
+    except ValueError as error:raise HTTPException(400,str(error))
+    except (FileNotFoundError,OSError) as error:raise HTTPException(503,str(error))
 
 
 @router.get('/api/nami/data-models')
