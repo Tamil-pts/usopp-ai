@@ -45,6 +45,71 @@ class WorkspaceTests(unittest.TestCase):
         p=self.request('POST','/projects',{'title':'Legacy compatible'})
         self.assertEqual('assigned',p['assignment_state'])
 
+    def test_customer_project_reference_round_trips_to_portfolio(self):
+        p=self.request('POST','/projects',{'workspace_schema':3,'title':'Customer reference fixture','customer':'Example Customer','customer_project_reference':'PO-871','scope':'Internal project scope'})
+        detail=self.request('GET','/projects/'+p['id'])
+        self.assertEqual('PO-871',detail['project_context']['customer_project_reference'])
+        row=next(row for row in self.request('GET','/overview')['items'] if row['id']==p['id'])
+        self.assertEqual(('Example Customer','PO-871'),(row['customer'],row['customer_project_reference']))
+        self.assertNotIn('scope',row)
+        self.request('POST','/projects/'+p['id']+'/issues',{'title':'Recorded issue','owner_id':self.admin['id']})
+        self.assertEqual(1,next(row for row in self.request('GET','/overview')['items'] if row['id']==p['id'])['open_issue_count'])
+        updated=self.request('PUT','/items/'+p['id'],{'version':detail['project']['version'],'customer_project_reference':'PO-872'})
+        self.assertEqual('PO-872',self.request('GET','/projects/'+p['id'])['project_context']['customer_project_reference'])
+        self.assertEqual('PO-872',next(row for row in self.request('GET','/overview')['items'] if row['id']==p['id'])['customer_project_reference'])
+
+    def test_creation_wizard_saves_step_assignments_and_brief_atomically(self):
+        steps=[{'id':'planning','title':'Planning','description':'Plan the work','phase':'development','days':2,'planned_hours':0,'milestone':True,'depends_on':[]},
+               {'id':'review','title':'Review','description':'Review it','phase':'quality','days':1,'planned_hours':0,'milestone':True,'depends_on':['planning']}]
+        payload={'workspace_schema':3,'title':'Wizard fixture','kind':'Electrical','customer':'Fixture','scope':'Upgrade',
+                 'project_requirements':'Protect motor','acceptance_criteria':'Alarm appears','additional_information':'Await site input',
+                 'start_date':'2099-01-01','generate_plan_tasks':False,'workflow_steps':steps,
+                 'workflow_assignees':{'planning':self.engineer['id'],'review':self.manager['id']}}
+        result=self.request('POST','/projects',payload)
+        detail=self.request('GET','/projects/'+result['id'])
+        self.assertEqual('Protect motor',detail['project_context']['project_requirements'])
+        self.assertEqual('Alarm appears',detail['project_context']['acceptance_criteria'])
+        self.assertEqual('Await site input',detail['project_context']['additional_information'])
+        tasks={task['title']:task for task in detail['tasks']}
+        self.assertEqual({'Planning','Review'},set(tasks))
+        self.assertEqual(self.engineer['id'],tasks['Planning']['owner_id'])
+        self.assertEqual(self.manager['id'],tasks['Review']['owner_id'])
+        self.assertEqual([tasks['Planning']['id']],tasks['Review']['dependencies'])
+        self.assertTrue(tasks['Planning']['milestone'])
+        with hub.db() as db:before=db.execute("SELECT count(*) FROM items WHERE type='project'").fetchone()[0]
+        invalid={**payload,'title':'Invalid wizard fixture','workflow_assignees':{'planning':999999}}
+        self.request('POST','/projects',invalid,400)
+        with hub.db() as db:self.assertEqual(before,db.execute("SELECT count(*) FROM items WHERE type='project'").fetchone()[0])
+
+    def test_project_wizard_prepares_unapproved_frd_and_references(self):
+        payload={'workspace_schema':3,'title':'Reference wizard','description':'Upgrade controls','scope':'Upgrade controls','customer':'Customer',
+          'base_reference':'Existing PLC v1','developed_reference':'New PLC v2','project_requirements':'Protect motor',
+          'acceptance_criteria':'Alarm visible','additional_information':'Confirm site network', 'prepare_frd':True,
+          'requirement_items':[{'description':'Protect motor','category':'Alarm & Safety','priority':'high'},{'description':'Update HMI','category':'HMI','priority':'medium'}],
+          'flowchart':{'nodes':[{'id':'start','position':{'x':0,'y':0},'data':{'kind':'start','label':'Start','requirement_ids':['FR-001'],'source_ids':[]}}],'edges':[],'sources':[]},
+          'generate_plan_tasks':False}
+        p=self.request('POST','/projects',payload);detail=self.request('GET','/projects/'+p['id'])
+        self.assertEqual('Existing PLC v1',detail['project_context']['base_reference'])
+        self.assertEqual('New PLC v2',detail['project_context']['developed_reference'])
+        with hub.db() as db:
+            doc=db.execute("SELECT * FROM qc_documents WHERE project_id=? AND stage='frd'",(p['id'],)).fetchone()
+            native=db.execute('SELECT current_revision FROM pi_documents WHERE id=?',(doc['document_id'],)).fetchone()
+            rev=json.loads(db.execute('SELECT content FROM pi_revisions WHERE id=?',(native[0],)).fetchone()[0])
+            status=db.execute('SELECT status FROM qc_revisions WHERE id=?',(native[0],)).fetchone()[0]
+        self.assertEqual('draft',status);self.assertEqual(['FR-001','FR-002'],[r['id'] for r in rev['requirements']])
+        self.assertEqual(('Alarm & Safety','high'),(rev['requirements'][0]['category'],rev['requirements'][0]['priority']))
+        self.assertEqual('Alarm visible',rev['acceptance_summary']);self.assertTrue(rev['flowchart']['needs_review'])
+        self.assertEqual({'Base reference','Developed reference','Additional information'}, {r['heading'] for r in rev['sections']} & {'Base reference','Developed reference','Additional information'})
+
+    def test_project_templates_have_a_default_and_need_no_approval(self):
+        catalog=self.request('GET','/project-templates');self.assertEqual('default',catalog['items'][0]['id'])
+        steps=catalog['items'][0]['content']['steps']
+        row=self.request('POST','/project-templates',{'name':'Reusable workflow','shared':True,'content':{'kind':'PLC','steps':steps,'assignees':{'development':self.engineer['id']}}})
+        self.login(self.engineer);catalog=self.request('GET','/project-templates')
+        saved=next(v for v in catalog['items'] if v['id']==row['id']);self.assertTrue(saved['shared'])
+        self.assertEqual(self.engineer['id'],saved['content']['assignees']['development'])
+        self.assertNotIn('approval',saved)
+
     def test_concurrent_project_numbering_and_duplicate_number(self):
         with ThreadPoolExecutor(max_workers=4) as pool:
             values=list(pool.map(lambda i:workspace.create(self.admin,{'title':'Concurrent '+str(i)}),range(8)))

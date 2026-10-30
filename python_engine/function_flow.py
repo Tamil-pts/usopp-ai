@@ -15,6 +15,7 @@ STRINGS = re.compile(STRING_PATTERN)
 IDENTIFIER = re.compile(r'\b[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*(?:\s*\[[^\]\n]+\])?')
 KEYWORDS = set('IF THEN ELSE ELSIF ELSEIF END_IF ENDIF CASE OF END_CASE FOR TO BY DO END_FOR WHILE END_WHILE LOOP ENDLOOP REPEAT UNTIL END_REPEAT PROGRAM END_PROGRAM FUNCTION END_FUNCTION FUNCTION_BLOCK END_FUNCTION_BLOCK VAR END_VAR TYPE END_TYPE TRUE FALSE AND OR NOT XOR MOD FUB EXIT EXITIF RETURN BOOL USINT UINT UDINT INT DINT REAL LREAL STRING TIME BYTE WORD DWORD ADR SIZEOF'.split())
 CLOSE = {'END_IF', 'ENDIF', 'END_CASE', 'END_FOR', 'END_WHILE', 'ENDLOOP', 'END_REPEAT'}
+DECLARATIONS = {'VAR','VAR_GLOBAL','VAR_INPUT','VAR_OUTPUT','VAR_IN_OUT','VAR_TEMP','VAR_EXTERNAL','VAR_ACCESS','VAR_CONFIG','VAR_STAT'}
 NOTICE = ('Shows source order within one program or function call. Cyclic programs repeat on later scans. '
           'This static view does not simulate live values or expand library internals.')
 
@@ -87,7 +88,7 @@ def _statements(text: str, basic: bool) -> list[dict]:
                 if pending.startswith(('PROGRAM ', 'FUNCTION ', 'FUNCTION_BLOCK ', 'UNTIL ')) or basic and not header:
                     flush(token.start())
             continue
-        if not depth and (upper in CLOSE | {'ELSE', 'END_PROGRAM', 'END_FUNCTION', 'END_FUNCTION_BLOCK', 'REPEAT', 'END_VAR', 'END_TYPE', 'TYPE'} or re.fullmatch(r'VAR(?:_[A-Z]+)?', upper)):
+        if not depth and upper in CLOSE | DECLARATIONS | {'ELSE', 'END_PROGRAM', 'END_FUNCTION', 'END_FUNCTION_BLOCK', 'REPEAT', 'END_VAR', 'END_TYPE', 'TYPE'}:
             flush(token.start())
             start = token.start()
             flush(end)
@@ -156,7 +157,12 @@ def _text_flow(text: str, source_file: str, basic: bool) -> tuple[list, list, li
     for row in _statements(text, basic):
         code, line = row['code'], row['line']
         upper = code.upper()
-        if re.match(r'^(VAR\w*|TYPE)\b', upper):
+        if basic:
+            if upper=='ENDACTION':continue
+            if upper=='ENDCASE':code=upper='END_CASE'
+            elif upper.startswith('ACTION '):code=re.sub(r'^ACTION\s+','',code,flags=re.I);upper=code.upper()
+            elif upper.rstrip(':')=='ELSEACTION':code=upper='ELSE'
+        if upper.split()[0] in DECLARATIONS or upper=='TYPE':
             declaration = True
         if declaration:
             if upper in {'END_VAR', 'END_TYPE'}:
@@ -294,7 +300,8 @@ def _ladder_flow(text, source_file):
                       'parallel': any(link['kind'] == 'branch' for link in network['diagram']['connections']),
                       'network': {key: value for key, value in network.items() if not key.startswith('_')}})
     variable_rows = _variable_rows(variables)
-    notices = [] if networks else ['This legacy ladder encoding has no XML network model. Export its source from Automation Studio to view rung topology.']
+    empty_xml=bool(re.search(r'<networks\b[^>]*>\s*</networks\s*>|<networks\b[^>]*/>',text,re.I))
+    notices = [] if networks or empty_xml else ['This legacy ladder encoding has no XML network model. Export its source from Automation Studio to view rung topology.']
     return [{'name': Path(source_file).stem, 'nodes': nodes}], variable_rows, calls, notices
 
 

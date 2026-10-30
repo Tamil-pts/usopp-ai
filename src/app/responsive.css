@@ -8,12 +8,17 @@
 :root { font-size:16px; }
 body { min-width:0; }
 #root,.tableLayoutRoot { width:100%;min-width:0; }
-.workspaceApp { width:100%;height:100vh;height:100dvh;min-width:0;grid-template-columns:128px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);font-size:1rem;line-height:1.5; }
+.workspaceApp { width:100%;height:100vh;height:100dvh;min-width:0;grid-template-columns:104px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);font-size:1rem;line-height:1.5; }
 .workspaceApp .rail { width:auto;min-width:0;min-height:0;overflow-y:auto;padding:14px 8px;display:flex;flex-direction:column; }
 .workspaceApp .nav { width:100%;min-width:0;display:flex;flex-direction:column;flex:1; }
 .workspaceApp .nav .settingsNav { margin-top:auto; }
 .workspaceApp .nav button { font-size:.8125rem;min-height:62px;padding:10px 4px;gap:6px; }
 .workspaceApp .nav svg { width:20px;height:20px; }
+.workspaceApp .plcNav {width:100%;min-width:0}
+.workspaceApp .plcNavToggle {width:100%;position:relative}
+.workspaceApp .plcNavToggle svg:last-child {width:13px;height:13px;position:absolute;right:5px;top:7px}
+.workspaceApp .plcNavTools {display:flex;flex-direction:column;gap:3px;margin:3px 0 6px}
+.workspaceApp .plcNavTools>button,.workspaceApp .plcNavTools .virtualPlcNav {width:100%;min-height:48px;font-size:.72rem}
 .workspaceApp .spinConnectNav { display:grid;grid-template-columns:minmax(0,1fr);gap:4px;padding:5px 3px;margin:3px 0;border:1px solid #2b6272;border-left:3px solid #309bad;border-radius:8px;min-width:0; }
 .workspaceApp .spinConnectNav[data-active] { border-left-color:#72ddbd; }
 .workspaceApp .spinConnectNavLabel { display:flex;align-items:center;justify-content:center;gap:4px;padding:4px 0;color:#e0f1f5; }
@@ -80,6 +85,9 @@ body { min-width:0; }
   .workspaceApp .brand { width:46px;height:46px;margin:0; }
   .workspaceApp .nav { display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px; }
   .workspaceApp .nav button { min-height:54px;font-size:.8125rem;padding:6px 2px; }
+  .workspaceApp .plcNav[data-expanded] {grid-column:1/-1}
+  .workspaceApp .plcNavTools {display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .workspaceApp .plcNavTools .spinConnectNav {grid-column:1/-1}
   .workspaceApp .spinConnectNav { grid-column:span 2;grid-template-columns:minmax(0,1fr);gap:2px;padding:3px;margin:0; }
   .workspaceApp .spinConnectNavLabel { gap:3px; }
   .workspaceApp .spinConnectNavLabel span { font-size:11px; }
@@ -107,3 +115,24 @@ body { min-width:0; }
   .workspaceApp .petrusTopLogo { height:27px;max-width:96px; }
   .workspaceApp .featureTabs .chip { padding:8px 10px; }
 }
+/* Hierarchical navigation flyout stays above the compact rail. */
+.workspaceApp .railMainNav>button {position:relative;width:100%}
+.workspaceApp .railMainNav .workspaceGroupChevron {position:absolute;right:5px;top:8px;width:13px;height:13px}
+.workspaceFlyout {position:fixed;z-index:1200;width:min(280px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;padding:8px;background:var(--panel,#fff);color:var(--text,#1f2937);border:1px solid var(--line,#dce4ec);border-radius:12px;box-shadow:0 12px 35px #001f3033}
+.workspaceFlyoutHeading {padding:8px 10px;color:var(--muted,#64748b);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.workspaceFlyoutEntry {display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:10px;border:0;border-radius:7px;background:transparent;color:inherit;font:inherit;font-size:.875rem;text-align:left;text-decoration:none;cursor:pointer}
+.workspaceFlyoutEntry:hover,.workspaceFlyoutEntry:focus-visible,.workspaceFlyoutEntry.active {background:var(--soft,#edf6f6);color:var(--accent,#15946b)}
+.workspaceFlyoutEntry>svg {width:18px;height:18px;flex:none}
+.workspaceFlyoutEntry>span {flex:1;min-width:0}
+.workspaceNestedToggle>svg:last-child {width:15px;transition:transform .15s}
+.workspaceNestedToggle>svg:last-child.expanded {transform:rotate(90deg)}
+.workspaceNestedMenu {margin-left:19px;padding-left:8px;border-left:2px solid var(--line,#dce4ec)}
+.validationPageHead {align-items:center!important;gap:16px}
+.validationPageHead .validationHeading {flex:1 1 330px}
+.validationPageHead .tool-project-context {flex:0 1 630px;margin:0 0 0 auto}
+@media(max-width:760px){.validationPageHead .tool-project-context{flex-basis:100%;width:100%;margin:0}}
+.compareHeadingAside {display:flex;flex:0 1 630px;min-width:0;flex-direction:column;align-items:flex-end;gap:10px}
+.compareHeadingAside .tool-project-context {width:100%;margin:0}
+.compareDarkTop>div:first-child,.circuitHeading>div:first-child {min-width:0;flex:1 1 300px}
+.plcHistoryActions {display:flex;justify-content:flex-end;margin-bottom:8px}
+@media(max-width:1000px){.compareHeadingAside{flex-basis:auto;width:100%;align-items:stretch}.compareDarkTop .compareDarkActions,.circuitHeading .circuitActions{justify-content:flex-start}}

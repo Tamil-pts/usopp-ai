@@ -61,7 +61,19 @@ export function ProjectIntelligence({project}:{project:ReturnType<typeof useProj
   {!!state.failedFiles?.length&&<details><summary>Failed files ({state.failedFilesCount})</summary>{state.failedFiles.map((file:any)=><p key={file.path}><code>{file.path}</code> · {file.error}</p>)}</details>}</div>}
  </details>;
 }
-export function ContextUsage({retrieval}:{usage?:any;retrieval?:any}){
- if(!retrieval?.files?.length)return null;
- return <details className="chopperContextUsage"><summary>Source references ({retrieval.files.length})</summary>{retrieval.files.map((file:any,index:number)=><p key={index}><code>[{file.sourceId}] {file.file}:{file.line}-{file.endLine}</code></p>)}</details>;
+export function ContextUsage({usage,retrieval}:{usage?:any;retrieval?:any}){
+ if(!retrieval&&!usage)return null;
+ const coverage=retrieval?.coverage;
+ const sent=retrieval?.filesSent||[],retrieved=retrieval?.files||[];
+ const stages=[['Discovered files',coverage?.discoveredFiles],['Eligible files',coverage?.eligibleFiles],['Indexed files',coverage?.indexedFiles],['Statically parsed files',coverage?.semanticallyParsedFiles],['Retrieved files',coverage?.retrievedFiles],['Model supplied files',coverage?.modelSuppliedFiles],['Analyzed files',coverage?.analyzedFiles]];
+ return <details className="chopperContextUsage"><summary>Analysis coverage ? {coverage?.analyzedFiles??0} files analyzed ? {sent.length} source sections supplied{coverage?.remainingSections?` ? ${coverage.remainingSections} remaining`:''}</summary>
+  {coverage&&<><div className="chopperCoverageStages">{stages.map(([label,value])=><span key={label}><b>{value??'Unavailable'}</b>{label}</span>)}</div><p>Static parsing and source citations do not prove runtime behavior. {coverage.parsedFilesWithNotices||0} files have semantic notices. Coverage is partial.</p></>}
+  {usage&&<p>Tokens: {usage.promptTokens??usage.usedTokens} prompt + {usage.reservedAnswerTokens||0} reserved answer / {usage.maxContext} context. {usage.factsReduced?'Machine facts reduced. ':''}{usage.trimmedHistoryMessages?`${usage.trimmedHistoryMessages} history messages omitted. `:''}{usage.omittedSections?`${usage.omittedSections} sections deferred. `:''}{usage.truncated?'Source text shortened; coverage remains partial.':''}</p>}
+  {coverage&&<div className="chopperCoverageStages">{[['Relevant functions discovered',coverage.relevantFunctionsDiscovered],['Relevant functions analyzed',coverage.relevantFunctionsAnalyzed],['Retrieved source sections',coverage.retrievedSections],['Model supplied source sections',coverage.modelSuppliedSections??sent.length],['Unresolved dependencies',coverage.unresolvedDependencies]].map(([name,value])=><span key={name}><b>{value??'Unavailable'}</b>{name}</span>)}</div>}
+  {!!retrieval?.notices?.length&&<ul>{retrieval.notices.map((notice:string,index:number)=><li key={index}>{notice}</li>)}</ul>}
+  {!!retrieval?.unvisitedFunctions?.length&&<details><summary>Unvisited routine files ({retrieval.unvisitedFunctions.length})</summary>{retrieval.unvisitedFunctions.map((file:string)=><p key={file}><code>{file}</code></p>)}</details>}
+  {!!retrieval?.analysisPasses?.length&&<details><summary>Analysis batches ({retrieval.analysisPasses.length})</summary>{retrieval.analysisPasses.map((batch:any,index:number)=><p key={index}>Batch {batch.pass}: {batch.checked?'Source references checked':'Incomplete'} ? {batch.sourceIds?.length||0} supplied sections{batch.contextUsage?` ? ${batch.contextUsage.promptTokens??batch.contextUsage.usedTokens} prompt tokens / ${batch.contextUsage.maxContext}`:''}{batch.notice?` ? ${batch.notice}`:''}</p>)}</details>}
+  <details><summary>Actually supplied source sections ({sent.length})</summary>{sent.map((file:any,index:number)=><p key={index}><code>[{file.sourceId}] {file.file}:{file.line}-{file.endLine}</code></p>)}</details>
+  <details><summary>Retrieved source sections ({retrieved.length})</summary>{retrieved.map((file:any,index:number)=><p key={index}><code>[{file.sourceId}] {file.file}:{file.line}-{file.endLine}</code></p>)}</details>
+ </details>;
 }

@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import unittest
+import tempfile
 from unittest.mock import patch
 
 from backend.core import project_assistant
@@ -33,29 +34,31 @@ class ChopperWorkbenchPromptSuiteTest(unittest.TestCase):
         self.assertEqual(misses, [])
 
     def test_auto_and_deep_modes_request_different_evidence_budgets(self):
-        class Index:
-            def __init__(self):
-                self.requested_characters = []
-
-            def retrieve(self, question, characters, passes):
+        from backend.core import project_intelligence
+        class LegacyIndex:
+            def __init__(self,index):
+                self.index=index;self.requested_characters=[]
+            def __getattr__(self,key):return getattr(self.index,key)
+            def retrieve(self,question,characters,passes):
                 self.requested_characters.append(characters)
-                return {"evidence": [], "notices": [], "passes": [], "tasks": [], "identity": {},
-                        "candidateCount": 0, "projectId": "fixture"}
+                return self.index.retrieve(question,characters=characters,passes=passes)
+        with tempfile.TemporaryDirectory() as folder:
+            base=Path(folder);root=base/'project';root.mkdir()
+            (root/'Main.st').write_text('PROGRAM Main\nOutput := TRUE;\nEND_PROGRAM',encoding='utf-8')
+            with patch.object(project_intelligence,'WORK',base/'indexes'):
+                actual=project_intelligence.Index(root,'workbench-test');actual.build()
+                index=LegacyIndex(actual)
+                user_token=current_user.set({'id':'workbench-test'})
+                try:
+                    with patch.object(project_assistant,'opened',return_value=index), \
+                         patch.object(project_assistant,'reference_evidence',return_value=[]), \
+                         patch.object(project_assistant,'configuration',return_value={'provider':'local'}):
+                        for mode in ('auto','deep'):
+                            project_assistant.answer({'question':'Summarize the project layout','context':{
+                                'intelligenceProjectId':index.key,'investigationMode':mode}})
+                finally:current_user.reset(user_token)
+                self.assertEqual(index.requested_characters,[16000,28000])
 
-        index = Index()
-        index.key = "fixture"
-        index.root = Path("fixture")
-        user_token = current_user.set({"id": "workbench-test"})
-        try:
-            with patch.object(project_assistant, "opened", return_value=index), \
-                    patch.object(project_assistant, "reference_evidence", return_value=[]), \
-                    patch.object(project_assistant, "configuration", return_value={"provider": "local"}):
-                for mode in ("auto", "deep"):
-                    project_assistant.answer({"question": "Summarize the project layout", "context": {
-                        "intelligenceProjectId": "a" * 64, "investigationMode": mode}})
-        finally:
-            current_user.reset(user_token)
-        self.assertEqual(index.requested_characters, [16000, 28000])
 
 
 if __name__ == "__main__":

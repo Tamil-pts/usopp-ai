@@ -77,12 +77,12 @@ def catalog(user):
     store.personal(user);store.initialize()
     with hub.db() as db:
         current=configuration.current(db);config=current['configuration']
-        return {'version':current['version'],'templates':[{'id':'','name':'Default workflow','steps':len(config['default_profile'].get('workflow_steps',[])),'rules':len(config['default_profile'].get('validation_rules',[]))}]+
-                [{'id':k,'name':k,'steps':len(v.get('workflow_steps',[])),'rules':len(v.get('validation_rules',[]))} for k,v in config['project_profiles'].items()],
+        return {'version':current['version'],'templates':[{'id':'','name':'Default workflow','steps':len(config['default_profile'].get('workflow_steps',[])),'rules':len(config['default_profile'].get('validation_rules',[])),'workflow_steps':config['default_profile'].get('workflow_steps',[])}]+
+                [{'id':k,'name':k,'steps':len(v.get('workflow_steps',[])),'rules':len(v.get('validation_rules',[])),'workflow_steps':v.get('workflow_steps',[])} for k,v in config['project_profiles'].items()],
                 'phases':PHASES,'actions':ACTIONS,'conditions':CONDITIONS,'documents':DOCUMENTS,'fields':FIELDS,'tools':TOOLS}
 
 
-def create_steps(db,p,user):
+def create_steps(db,p,user,assignments=None):
     """Create missing tasks once. Existing assignments, schedules and results survive."""
     schema(db);state=store.ensure_project(db,p,user);steps=state['policy'].get('workflow_steps',[])
     existing={r['step_id']:r['task_id'] for r in db.execute('SELECT * FROM wh_workflow_steps WHERE project_id=?',(p['id'],))}
@@ -98,7 +98,7 @@ def create_steps(db,p,user):
         due=start+timedelta(days=step['days']-1)
         if step['milestone']:start=due
         task=hub.create(user,{'title':step['title'],'description':step['description'],'work_phase':step['phase'],
-             'owner_id':p[ROLES[step['phase']]],'start_date':start.isoformat(),'due_date':due.isoformat(),
+             'owner_id':(assignments or {}).get(step['id'],p[ROLES[step['phase']]]),'start_date':start.isoformat(),'due_date':due.isoformat(),
              'planned_hours':step['planned_hours'],'milestone':step['milestone'],'dependencies':[existing[k] for k in step['depends_on']]},p['id'],transaction=db)
         db.execute('INSERT INTO wh_workflow_steps VALUES(?,?,?,?)',(p['id'],step['id'],task['id'],state['policy_version']))
         existing[step['id']]=task['id'];ends[step['id']]=due;cursor=max(cursor,due);created.append(task['id'])

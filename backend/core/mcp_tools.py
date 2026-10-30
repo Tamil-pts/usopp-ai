@@ -96,3 +96,87 @@ def prepare_rule(answers:dict)->dict:
     """Prepare an engineer-reviewable rule draft; does not save or enable it."""
     from backend.core.rule_configuration import guided_configuration
     return guided_configuration(answers)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=False,destructiveHint=False))
+def build_engineering_model(project_id:str)->dict:
+    """Explicitly build versioned source blocks/relationships for an indexed project. No PLC, validation or chat state writes."""
+    from backend.core.engineering_foundation import build_model
+    return build_model(project_id)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def get_project_structure(project_id:str)->dict:
+    """Read engineering inventory, layers, configured task roots and validation. Never assume a routine named main is an entry point."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).structure()
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def get_function_block(project_id:str,block_id:str,include_ir:bool=False)->dict:
+    """Inspect one scoped routine/function/instance block. Optional IR is Python data, never translated executable PLC code."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).block(block_id,include_ir)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def find_machine_function(project_id:str,question:str,limit:int=20)->dict:
+    """Discover source candidates by concept words. Candidates are not verified machine-function classifications."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).find_function(question,limit)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def trace_signal(project_id:str,signal:str,scope:str='',limit:int=100)->dict:
+    """Trace typed writer/read/control/HMI/I-O links. Ambiguous scoped tags require selection; no live states are inferred."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).trace_signal(signal,scope,limit)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def get_execution_flow(project_id:str,task_id:str='',limit:int=200)->dict:
+    """Read configured task entries, lifecycle routines and call reachability. Concurrent tasks remain separate contexts."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).execution_flow(task_id,limit)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def validate_graph(project_id:str,offset:int=0,limit:int=100)->dict:
+    """Validate graph structure/provenance and page unresolved checks. Structural validity never proves complete PLC semantics."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).validate(offset,limit)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def get_engineering_blocks(project_id:str,kind:str='',file:str='',query:str='',offset:int=0,limit:int=100)->dict:
+    """Page individually inspectable engineering blocks; avoids serializing the entire graph into an LLM prompt."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).blocks(kind,file,query,offset,limit)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def get_engineering_relationships(project_id:str,block_id:str='',kind:str='',offset:int=0,limit:int=100)->dict:
+    """Page all typed relationships, including links beyond initial result limits."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).relations(block_id,kind,offset,limit)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def get_engineering_tokens(project_id:str,file:str,offset:int=0,limit:int=100)->dict:
+    """Read source lexical tokens with exact line/column positions. These are not model tokens or learned embeddings."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).tokens(file,offset,limit)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def compare_engineering_models(project_id:str,other_project_id:str,limit:int=100)->dict:
+    """Compare source block revisions from two projects owned by this account; does not prove behavioral equivalence."""
+    from backend.core.engineering_foundation import model
+    return model(project_id).compare(model(other_project_id),limit)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=False,destructiveHint=False))
+def investigate_engineering_project(project_id:str,question:str,use_model:bool=True,max_passes:int=2)->dict:
+    """Run bounded Think-Act-Check graph RAG. Model selects only verified fact IDs; stores diagnostic memory, never approved training."""
+    from backend.core.engineering_harness import investigate
+    return investigate(project_id,question,use_model=use_model,max_passes=max_passes)

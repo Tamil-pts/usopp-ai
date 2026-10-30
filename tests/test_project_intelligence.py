@@ -138,5 +138,5 @@ def test_context_uses_real_tokenizer_trims_history_and_evidence(monkeypatch):
     messages=[{'role':'system','content':'Rules'},{'role':'user','content':'Old history'*500},{'role':'user','content':'Explain MotorRun.'}]
     usage,sent=am._fit_context(messages,{'baseUrl':'http://127.0.0.1:8202/v1','contextSize':1000},200,[{'excerpt':'Start '*500,'completeSection':True},{'excerpt':'Other '*500}])
     assert usage['usedTokens']+200+32<=1000 and usage['trimmedHistoryMessages']==1
-    assert messages[-1]['content'].startswith('Explain MotorRun.') and usage['omittedSections']>0
-    assert sent
+    assert messages[-1]['content'].startswith('Explain MotorRun.') and usage['truncated']
+    assert len(sent)==2  # Fair excerpt reduction keeps both source files represented.

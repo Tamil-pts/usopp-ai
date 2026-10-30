@@ -26,7 +26,7 @@ def list_users(request:Request):
 def create_user(request:Request,data:dict=Body(...)):
     admin(request)
     try:
-        user=accounts.store.register(username_field(data),field(data,'password',8,128),field(data,'designation'),field(data,'company'),data.get('role','user'),data.get('email',''))
+        user=accounts.store.register(username_field(data),field(data,'password',8,128),field(data,'designation'),field(data,'company'),data.get('role','user'),data.get('email',''),data.get('workspaceModules'))
     except sqlite3.IntegrityError:
         raise HTTPException(409,'This username already exists.')
     except ValueError as error: raise HTTPException(400,str(error))
@@ -38,7 +38,7 @@ def manage_user(user_id:int,request:Request,data:dict=Body(...)):
     if not isinstance(data.get('active'),bool): raise HTTPException(400,'Choose whether this account is enabled.')
     password=field(data,'password',8,128) if data.get('password') else None
     try:
-        user=accounts.store.manage_user(user_id,username_field(data),field(data,'designation'),field(data,'company'),data['active'],password,data.get('role'),request.state.user['id'],data.get('email'))
+        user=accounts.store.manage_user(user_id,username_field(data),field(data,'designation'),field(data,'company'),data['active'],password,data.get('role'),request.state.user['id'],data.get('email'),data.get('workspaceModules'))
     except sqlite3.IntegrityError: raise HTTPException(409,'This username already exists.')
     except ValueError as error: raise HTTPException(400,str(error))
     return {'user':user}

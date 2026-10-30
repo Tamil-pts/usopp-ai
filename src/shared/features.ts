@@ -27,7 +27,7 @@ export const FEATURES:Record<EngineeringFeature,{name:string;purpose:string;step
     'Open ResultView and export the complete run as HTML or PDF. Enter the project name, description, validated by, validation details, approved by and date for the cover.'
   ],recommendation:'Separate a wrong requirement from a source defect. Check the target file, accepted alternative and every cross-reference before teaching; add approved alternatives without replacing the original.'},
   chatbot:{name:'AI Assistant',purpose:'Explain findings, configure requirements and maintain engineering knowledge.',steps:[
-    'Ask Chopper about any usop.ai feature. A selected project is optional; use its evidence when discussing project findings.',
+    'Ask Chopper about any uSOPp.ai feature. A selected project is optional; use its evidence when discussing project findings.',
     'Use the chat paperclip to attach a collected PLC log and metadata, or paste the log. Read and copy decoded tables directly in chat.',
     'Include the relevant file, PLC tag, datatype, Group Code and expected behaviour.',
     'Configure requirements, accepted alternatives and cross-references; run the draft against the selected project.',

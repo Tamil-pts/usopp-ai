@@ -56,7 +56,7 @@ def clean_content(db,pid,stage,content):
         for r in _list(content.get('requirements',[])):
             if not isinstance(r,dict) or not re.fullmatch('FR-\\d{3,6}',str(r.get('id',''))) or r['id'] in seen:raise HTTPException(400,'Requirements need unique FR-001 style IDs.')
             seen.add(r['id']);result['requirements'].append({'id':r['id'],**{k:text(r.get(k) or '',8000) for k in ('title','description','trigger','expected_behavior','subsystem','acceptance_criteria')},
-              'source_ids':refs(r),'mandatory':bool(r.get('mandatory',True)),
+              'source_ids':refs(r),'mandatory':bool(r.get('mandatory',True)),'category':text(r.get('category') or '',200),'source_label':text(r.get('source_label') or '',240),'priority':r.get('priority') if r.get('priority') in {'low','medium','high','urgent'} else 'medium',
               'change':r.get('change') if r.get('change') in {'new','modified','confirmed','removed_proposed','unresolved','unchanged'} else 'new'})
     for r in _list(content.get('changes',[])):
         if not isinstance(r,dict):raise HTTPException(400,'Provide structured correction notes.')
@@ -102,7 +102,8 @@ def create_control(db,p,user,stage,existing=None,initial_content=None,generated_
         kind='frd' if stage=='frd' else 'note'
         doc,rev=pi.create_document(db,user,p['id'],kind,config['templates'][stage]['title'],initial_content if initial_content is not None else {'requirements':[],'sources':[]} if stage=='frd' else {},generated_by=generated_by,quality_control=True)
     else:doc=existing;rev=None
-    number=configuration.allocate(db,stage,setting)
+    is_template=db.execute("SELECT 1 FROM ds_template_drafts WHERE scope_id=?",(p['id'],)).fetchone()
+    number='TEMPLATE-'+key[:20].upper() if is_template else configuration.allocate(db,stage,setting)
     db.execute('INSERT INTO qc_documents VALUES(?,?,?,?,?,?,?,?)',(key,p['id'],stage,doc['id'],number,setting['version'],store.bounded(config),now))
     result=store.control(db,p['id'],key)
     store.audit(db,user,p['id'],'document_registered',{'document_number':number,'native_document_id':doc['id'],'stage':stage},key)

@@ -5,7 +5,7 @@ import io
 import json
 from pathlib import Path
 from urllib.parse import quote
-from fastapi import APIRouter,HTTPException,Request,Query,Depends
+from fastapi import APIRouter,HTTPException,Request,Query,Depends,File,UploadFile
 from fastapi.responses import FileResponse,Response,StreamingResponse,RedirectResponse
 from starlette.concurrency import run_in_threadpool
 from backend.core.workhub import store,identity,timestamp,text,encode
@@ -28,6 +28,24 @@ def overview(request:Request):
         # Count current submitted reports once. Independent private documents
         # have their own register and must not leak through company KPI counts.
         value['summary']['pending_reviews']=db.execute("SELECT count(*) FROM pi_documents d JOIN pi_revisions r ON r.id=d.current_revision JOIN items p ON p.id=d.project_id AND p.type='project' WHERE r.status='review'").fetchone()[0]
+        # Only expose the two portfolio fields; the remaining controlled context stays in project details.
+        contexts={}
+        for row in db.execute("SELECT q.project_id,q.context FROM qc_projects q JOIN items p ON p.id=q.project_id WHERE p.type='project'"):
+            try:
+                context=json.loads(row['context'])
+            except (TypeError,ValueError):
+                continue
+            if isinstance(context,dict):contexts[row['project_id']]=context
+        open_issues={row[0]:row[1] for row in db.execute("SELECT project_id,count(*) FROM issues WHERE status='open' GROUP BY project_id")}
+        approvals={row[0]:row[1] for row in db.execute("SELECT project_id,count(*) FROM items WHERE stage IN ('quality','release_approval','ready_release') GROUP BY project_id")}
+        for item in value['items']:
+            if item['type']=='project':
+                context=contexts.get(item['id'],{})
+                item['customer']=context.get('customer','')
+                item['customer_project_reference']=context.get('customer_project_reference','')
+                item['open_issue_count']=open_issues.get(item['id'],0)
+                item['workflow_approval_count']=approvals.get(item['id'],0)
+
     return {**value,'storage':files.storage_usage()}
 
 def portfolio_filters(role:str='',department:str='',team:str='',manager:int|None=None,status:str='',
@@ -53,6 +71,28 @@ def update_portfolio_rules(request:Request,payload:dict):
 
 @router.post('/projects')
 def create(request:Request,payload:dict):return workspace.create(actor(request),payload)
+
+@router.post('/requirements-preview')
+async def requirements_preview(file:UploadFile=File(...)):
+    from backend.api.assist_attachments import preview,MAX_FILE
+    try:
+        content=await file.read(MAX_FILE+1)
+        if len(content)>MAX_FILE:raise HTTPException(413,'Choose a file smaller than 20 MB.')
+        value=await run_in_threadpool(preview,file.filename or 'Attachment',content)
+        if not value['readable']:raise HTTPException(422,value['notice'] or 'No readable text found.')
+        lines=[line.strip() for line in value['text'].splitlines() if line.strip()]
+        return {'lines':lines[:200],'notice':value.get('notice',''),'truncated':len(lines)>200}
+    finally:await file.close()
+
+@router.get('/project-templates')
+def project_templates(request:Request):
+    from backend.core.workhub_project_templates import list_templates
+    return list_templates(actor(request))
+
+@router.post('/project-templates')
+def save_project_template(request:Request,payload:dict):
+    from backend.core.workhub_project_templates import save
+    return save(actor(request),payload)
 
 @router.get('/project-numbering')
 def project_numbering(request:Request):return workspace.numbering_preview()

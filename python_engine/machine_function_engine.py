@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict, deque
 from pathlib import Path, PurePosixPath
 
+from python_engine.c_control_flow import c_flow
 from python_engine.compare import _ladder_networks, decode_project_text
 from python_engine.function_flow import _ladder_flow, _mask_comments, _names, _text_flow
 from python_engine.project_analysis import _mask
@@ -19,10 +20,10 @@ from python_engine.source_operations import collect_operations
 from python_engine.working_sequence import ASSIGNMENT, branch_guard, records, walk
 
 
-SCHEMA = 3
+SCHEMA = 7
 MAX_SOURCE_BYTES = 8 * 1024 * 1024
 MAX_CODE_FILES = 800
-MAX_EVIDENCE = 3000
+MAX_EVIDENCE = 50000
 STATE_SELECTOR = re.compile(r"^[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*$")
 STATE_NAMES = re.compile(r"(?:step|state|sequence|seq|phase)", re.I)
 ALARM_NAMES = re.compile(r"(?:alarm|fault|trip|error|warning)", re.I)
@@ -119,10 +120,10 @@ class _Evidence:
             last = min(len(lines), max(line + 2, int(end_line or line)))
             if last - first > 8:
                 last = first + 8
-            excerpt = "\n".join(f"{number}: {lines[number - 1]}" for number in range(first, last + 1))
+            excerpt = "\n".join(lines[first-1:last])
             item_id = f"E{len(self.items) + 1:03d}"
-            item = {"id": item_id, "type": kind, "file": file, "line": line,
-                    "endLine": min(int(end_line or line), max(line, len(lines))),
+            item = {"id": item_id, "type": kind, "file": file, "line": first, "eventLine":line,
+                    "endLine": last,
                     "ownership": ownership, "status": "verified from source", "excerpt": excerpt}
             self.items.append(item)
             self.by_source[key] = item_id
@@ -265,7 +266,9 @@ def _read_schedule(index, tasks, evidence):
 
 def _fingerprint(index, db):
     rows = [tuple(row) for row in db.execute("SELECT path,size,mtime,sha,status FROM files ORDER BY path")]
-    details = json.dumps([SCHEMA, index.root.as_posix(), rows], ensure_ascii=False, separators=(",", ":"))
+    parser_files=[Path(__file__),Path(__file__).with_name('function_flow.py'),Path(__file__).with_name('c_control_flow.py')]
+    versions=[hashlib.sha256(path.read_bytes()).hexdigest() for path in parser_files if path.is_file()]
+    details = json.dumps([SCHEMA,versions,index.root.as_posix(),rows], ensure_ascii=False, separators=(",", ":"))
     return hashlib.sha256(details.encode("utf-8")).hexdigest()
 
 
@@ -286,9 +289,9 @@ def analyze(index):
         for row in db.execute("SELECT name,display,kind,datatype,file,line,scope FROM symbols ORDER BY name,file,line"):
             declarations[row["name"].casefold()].append(dict(row))
         files = [dict(row) for row in db.execute("SELECT path,size,category,status FROM files WHERE status='indexed' ORDER BY path")]
-        io_edges = [dict(row) for row in db.execute("SELECT a,b,file,line,detail FROM edges WHERE kind='io-binding' ORDER BY file,line LIMIT 1200")]
-        hmi_edges = [dict(row) for row in db.execute("SELECT a,b,file,line,detail FROM edges WHERE kind='hmi-binding' ORDER BY file,line LIMIT 1200")]
-        dependency_edges = [dict(row) for row in db.execute("SELECT a,b,file,line,scope,detail FROM edges WHERE kind='depends-on' ORDER BY file,line LIMIT 12000")]
+        io_edges = [dict(row) for row in db.execute("SELECT a,b,file,line,detail FROM edges WHERE kind='io-binding' ORDER BY file,line LIMIT 100000")]
+        hmi_edges = [dict(row) for row in db.execute("SELECT a,b,file,line,detail FROM edges WHERE kind='hmi-binding' ORDER BY file,line LIMIT 100000")]
+        dependency_edges = [dict(row) for row in db.execute("SELECT a,b,file,line,scope,detail FROM edges WHERE kind='depends-on' ORDER BY file,line LIMIT 1000000")]
         failed = [dict(row) for row in db.execute("SELECT path,error FROM files WHERE status='failed' ORDER BY path LIMIT 100")]
         c_paths = [row["path"] for row in files if row["category"] == "Logic" and Path(row["path"]).suffix.casefold() == ".c"]
         c_refs = defaultdict(list)
@@ -344,6 +347,7 @@ def analyze(index):
     retained_variables = []
     interlocks = []
     file_owner = {}
+    c_definitions=defaultdict(list)
 
     for file_row in code_files:
         file = file_row["path"]
@@ -361,11 +365,14 @@ def analyze(index):
             if not text.strip():
                 continue
             suffix = path.suffix.casefold()
-            if suffix in {".st", ".ab", ".src", ".fun"}:
+            if suffix in {".st", ".ab", ".src", ".fun", ".c"}:
                 masked = _mask(text)
                 basic = suffix == ".ab" or bool(re.search(r"\b(?:ENDIF|ENDLOOP|FUB)\b", masked, re.I))
-                sections, variable_rows, parsed_calls, parser_notices = _text_flow(text, file, basic)
-                language = "Automation Basic" if basic else "IEC function source" if suffix == ".fun" else "Structured Text"
+                sections, variable_rows, parsed_calls, parser_notices = c_flow(text,file) if suffix==".c" else _text_flow(text, file, basic)
+                if suffix=='.c':
+                    for section in sections:
+                        if section.get('kind')=='function':c_definitions[section['name'].casefold()].append(file)
+                language = "C" if suffix==".c" else "Automation Basic" if basic else "IEC function source" if suffix == ".fun" else "Structured Text"
                 language_counts[language] += 1
                 parsed_count += 1
                 parsed_writes = []
@@ -386,6 +393,7 @@ def analyze(index):
                         entry = {"name": name, "value": expression, "file": file, "line": row.get("line", 1),
                                  "task": task.get("name") if task else None, "ownership": ownership,
                                  "guards": record.get("guards", []) if not parser_notices else [],
+                                 "guardLines":record.get("guard_lines",[]),
                                  "guardCoverage": "parsed" if not parser_notices else "unresolved due to parser notices",
                                  "evidence": [ref] if ref else []}
                         parsed_writes.append(entry)
@@ -450,6 +458,7 @@ def analyze(index):
                                             "status": "commented; not executable" if network.get("commented") else "topology preserved; complex branch conditions are not flattened",
                                             "evidence": [network_ref] if network_ref else []})
                 sections, variable_rows, parsed_calls, parser_notices = _ladder_flow(text, file)
+                if parser_notices:parse_failures.append({'file':file,'notices':parser_notices,'ownership':ownership})
                 operations = collect_operations(file, text, "Ladder", ownership, networks)
                 language_counts["Ladder XML"] += 1
                 parsed_count += 1
@@ -479,19 +488,18 @@ def analyze(index):
                                   "outputs": list(dict.fromkeys(item["name"] for item in parsed_writes))[:32],
                                   "evidence": list(dict.fromkeys([function_ref, *(ref for item in parsed_writes for ref in item["evidence"])]))[:40],
                                   "parserNotices": parser_notices[:6]})
-            elif suffix == ".c":
-                # C is inventoried and linked through the existing reference index,
-                # but its branches are deliberately not parsed as IEC control flow.
-                language_counts["C (control flow unresolved)"] += 1
-                calls_in_file = c_refs.get(file, [])
-                parsed_calls = [{"name": row["name"], "instance": row["name"], "line": row["line"]} for row in calls_in_file if row["kind"] == "call"]
-                calls.extend(_source_call_targets(parsed_calls, declarations, file, task, ownership, evidence))
-                functions.append({"name": Path(file).stem, "file": file, "language": "C", "task": task.get("name") if task else None,
-                                  "ownership": ownership, "operations": 0, "calls": len(parsed_calls), "inputs": [], "outputs": [],
-                                  "evidence": [], "parserNotices": ["C call/reference index only; C control flow and write/return semantics are unresolved."]})
         except (OSError, ValueError, ET.ParseError, IndexError, KeyError, TypeError) as error:
             parse_failures.append({"file": file, "notices": [str(error)[:240]], "ownership": ownership})
 
+    for call in calls:
+        definitions=c_definitions.get(str(call.get('callee') or '').casefold(),[])
+        local=[file for file in definitions if file==call['file']]
+        targets=local or list(dict.fromkeys(definitions))
+        if targets:
+            call['targetFiles']=targets
+            call['resolution']='resolved to local declaration' if len(targets)==1 else 'ambiguous local declaration'
+        call['implementationStatus']=('declaration only; library implementation is unavailable' if call.get('targetFiles') and all(str(file).lower().endswith(('.fun','.h')) for file in call['targetFiles'])
+                                      else 'source implementation available; semantics may remain partial' if call.get('targetFiles') else 'implementation unresolved')
     calls_by_file = defaultdict(list)
     for call in calls:
         if call.get("resolution") == "resolved to local declaration":
@@ -568,7 +576,7 @@ def analyze(index):
         hmi_folder = _hmi_folder_for_path(edge["file"])
         selected = bool(selected_hmi and hmi_folder and hmi_folder.casefold() == selected_hmi.casefold())
         ownership = "selected HMI project" if selected else "other HMI project" if selected_hmi and hmi_folder else "HMI project unresolved"
-        ref = evidence.add(edge["file"], edge["line"], kind="HMI binding", ownership=ownership) if number < 100 else None
+        ref = evidence.add(edge["file"], edge["line"], kind="HMI binding", ownership=ownership)
         hmi_links.append({"control": edge["a"], "signal": edge["b"], "file": edge["file"], "line": edge["line"],
                           "detail": edge["detail"], "hmiProject": hmi_folder, "ownership": ownership,
                           "status": "binding belongs to selected HMI project" if selected else "not linked to the selected HMI target",
@@ -606,13 +614,15 @@ def analyze(index):
     if any(item.get("parserNotices") for item in functions):
         notices.append("Some Structured Text, Automation Basic or ladder sections have parser notices; affected branch coverage is incomplete.")
     if any(item.get("language") == "C" for item in functions):
-        notices.append("C source has call/reference indexing only; control flow and write ordering need a C-aware parser.")
+        notices.append("C uses conservative lexical control-flow extraction; preprocessing, pointer aliases, early returns and library internals remain unresolved when flagged.")
+    declaration_only=sum(1 for call in calls if call.get('implementationStatus','').startswith('declaration only'))
+    if declaration_only:notices.append(f'{declaration_only} call references resolve to declarations only; their library implementations are not available as PLC source.')
     if not any(task.get("configuredTiming") for task in schedule):
         notices.append("The selected CPU task configuration does not expose cycle period or priority attributes; task declaration order is not a proven runtime order.")
     if len(evidence.items) >= MAX_EVIDENCE:
         notices.append("Evidence excerpts are bounded; open the cited source lines for additional surrounding logic.")
-    if len(ladder_networks) > 5000:
-        notices.append("Ladder topology output is bounded to the first 5000 networks; additional networks are indexed but omitted from this model.")
+    if len(io_edges)>=100000 or len(hmi_edges)>=100000 or len(dependency_edges)>=100000:
+        notices.append("Machine relationships reached the 100000-record analysis bound; use the paginated indexed relationships endpoint for remaining records.")
 
     result = {"schemaVersion": SCHEMA, "project": {"name": index.root.name,
               "automationStudioVersion": identity.get("automationStudioVersion"),
@@ -622,6 +632,9 @@ def analyze(index):
               "coverage": {"indexReady": bool(state.get("ready")), "indexedFiles": len(files),
                            "failedIndexedFiles": len(failed), "executableSourceFiles": len(indexed_executable),
                            "parsedSourceFiles": parsed_count, "codeFilesAnalyzed": len(code_files),
+                           "parsedFilesWithNotices":len({item["file"] for item in parse_failures}),
+                           "parsedFilePaths":[item["file"] for item in functions],
+                           "eligibleFiles":state.get("eligibleFiles"),"discoveredFiles":state.get("totalFiles"),
                            "excludedDisabledOrOtherConfigurationFiles": disabled_source_file_count,
                            "activeTaskCount": len(active_tasks), "taskCount": len(schedule),
                            "activeStateGroupCount": sum(1 for item in state_machines if item.get("ownership") == "active task"),
@@ -641,55 +654,46 @@ def analyze(index):
                            "parsingIssues": parse_failures[:100], "notices": list(dict.fromkeys(notices + evidence.notices))[:100]},
               "taskExecution": {"tasks": schedule,
                                 "orderingMeaning": "Rows preserve CPU configuration declaration order only. This does not establish scheduler priority, task period, preemption, or observed runtime order."},
-              "stateMachines": state_machines[:300], "functions": functions[:400],
-              "callGraph": calls[:3000], "timers": list(timer_signals.values())[:500],
-              "edgeAndCounterBlocks": list(edge_signals.values())[:300],
-              "alarmCandidates": list(alarm_signals.values())[:500],
-              "interlockCandidates": interlocks[:1200], "multipleWriters": shared_writes[:800],
-              "retainedVariables": retained_variables[:2000],
+              "stateMachines": state_machines, "functions": functions,
+              "signalWrites":[entry for locations in writers.values() for entry in locations],
+              "callGraph": calls, "timers": list(timer_signals.values()),
+              "edgeAndCounterBlocks": list(edge_signals.values()),
+              "alarmCandidates": list(alarm_signals.values()),
+              "interlockCandidates": interlocks, "multipleWriters": shared_writes,
+              "retainedVariables": retained_variables,
               "typeDefinitions": sorted(type_definitions, key=lambda item: (item.get("file", "").casefold(), item.get("line", 0)))[:5000],
-              "dataDependencies": dependencies[:12000], "hmiLinks": hmi_links[:1200],
-              "hardwareLinks": hardware_links[:1200], "ladderNetworks": ladder_networks[:5000], "evidence": evidence.items}
+              "dataDependencies": dependencies, "hmiLinks": hmi_links,
+              "hardwareLinks": hardware_links, "ladderNetworks": ladder_networks, "evidence": evidence.items}
     with connection(index.path) as db:
         metadata(db, "machine_function_analysis", {"fingerprint": fingerprint, "result": result})
         db.commit()
     return result
 
 
-def compact_for_chat(result):
-    """Small deterministic facts for the LLM; detailed evidence stays in the UI."""
-    coverage = result.get("coverage", {})
-    task_execution = result.get("taskExecution", {})
-    return {"project": result.get("project"),
-            "coverage": {key: coverage.get(key) for key in ("indexReady", "indexedFiles", "failedIndexedFiles", "executableSourceFiles", "parsedSourceFiles", "codeFilesAnalyzed", "excludedDisabledOrOtherConfigurationFiles", "activeTaskCount", "taskCount", "activeStateGroupCount", "reachableStateGroupCount", "reachableRoutineFileCount", "stateTransitionCount", "callReferenceCount", "timerCount", "alarmCandidateCount", "multipleWriterSignalCount", "retainedVariableCount", "typeDefinitionCount", "ladderNetworkCount", "hmiBindingCount", "selectedHmiBindingCount", "hardwareMappingCount", "activeHardwareMappingCount", "dataDependencyCount", "languageFiles", "notices")},
-            "taskExecution": {"orderingMeaning": task_execution.get("orderingMeaning"),
-                              "tasks": [{key: task.get(key) for key in ("name", "source", "configuration", "enabled", "declarationOrder", "configuredTiming")} for task in task_execution.get("tasks", [])[:30]]},
-            "stateMachineGroupCount": len(result.get("stateMachines", [])),
-            "unresolvedOwnershipGroupCount": sum(1 for item in result.get("stateMachines", []) if item.get("ownership") != "active task"),
-            "stateMachines": [{key: item.get(key) for key in ("id", "name", "routine", "file", "task", "ownership", "line", "states", "status")}
-                              | {"transitionCount": len(item.get("transitions", []))}
-                              for item in result.get("stateMachines", []) if item.get("ownership") == "active task"][:24],
-            "reachableStateMachines": [{key: item.get(key) for key in ("id", "name", "routine", "file", "task", "ownership", "reachableFromTasks", "reachabilityStatus", "line", "states", "status")}
-                                        | {"transitionCount": len(item.get("transitions", []))}
-                                        for item in result.get("stateMachines", []) if item.get("ownership") != "active task" and item.get("reachableFromTasks")][:24],
-            "functions": [{key: item.get(key) for key in ("name", "file", "language", "task", "ownership", "operations", "calls", "inputs", "outputs", "parserNotices")}
-                          | {key: item.get(key) for key in ("reachableFromTasks", "reachabilityStatus")}
-                          for item in result.get("functions", [])[:30]],
-            "callGraph": [{key: item.get(key) for key in ("caller", "file", "callee", "instance", "line", "task", "ownership", "resolution", "targetFiles", "reachableFromTasks", "reachabilityStatus", "evidence")}
-                          for item in result.get("callGraph", []) if item.get("ownership") == "active task" or item.get("reachableFromTasks")][:60],
-            "timers": [{key: item.get(key) for key in ("instance", "type", "settings", "status")} for item in result.get("timers", [])[:30]],
-            "edgeAndCounterBlocks": [{key: item.get(key) for key in ("instance", "type", "file", "line")} for item in result.get("edgeAndCounterBlocks", [])[:20]],
-            "alarmCandidates": [{"name": item.get("name"), "status": item.get("status"),
-                                 "writers": [{key: writer.get(key) for key in ("file", "line", "task", "guards")} for writer in item.get("writers", [])[:3]]}
-                                for item in result.get("alarmCandidates", [])[:30]],
-            "interlockCandidates": [{key: item.get(key) for key in ("output", "conditions", "guardCoverage", "file", "line")} for item in result.get("interlockCandidates", [])[:20]],
-            "ladderNetworks": [{key: item.get(key) for key in ("file", "line", "network", "task", "ownership", "label", "comment", "commented", "rows", "summary", "layout", "status", "elements", "evidence")} for item in result.get("ladderNetworks", [])[:30]],
-            "multipleWriters": [{"signal": item.get("signal"), "writerCount": item.get("writerCount"), "status": item.get("status"),
-                                 "writers": [{key: writer.get(key) for key in ("file", "line", "task", "guards")} for writer in item.get("writers", [])[:4]]}
-                                for item in result.get("multipleWriters", [])[:20]],
-            "retainedVariables": [{key: item.get(key) for key in ("name", "datatype", "file", "line", "status")} for item in result.get("retainedVariables", [])[:40]],
-            "typeDefinitions": [{key: item.get(key) for key in ("name", "display", "datatype", "file", "line", "scope")} for item in result.get("typeDefinitions", [])[:40]],
-            "totalTransitionCount": sum(len(item.get("transitions", [])) for item in result.get("stateMachines", [])),
-            "unresolvedCallCount": sum(1 for item in result.get("callGraph", []) if item.get("resolution") == "library, external, or unresolved"),
-            "notices": coverage.get("notices", [])[:30]}
-
+def compact_for_chat(result,question='',files=None):
+    """Question/file-scoped facts. Full graphs remain in the indexed cache."""
+    terms=set(re.findall(r'[a-z_][a-z0-9_]{2,}',question.casefold()))-{'the','and','for','how','why','does','explain','complete','machine','sequence'}
+    selected=set(files or [])
+    def score(item):
+        text=json.dumps(item,ensure_ascii=False).casefold()
+        return (1000 if item.get('file') in selected else 0)+sum(5 for term in terms if term in text)+(2 if item.get('ownership')=='active task' else 0)
+    def choose(name,keys,limit):
+        rows=result.get(name,[])
+        if selected:rows=[row for row in rows if row.get('file') in selected or any(term in str(row.get('name') or row.get('signal') or '').casefold() for term in terms)]
+        return [{key:row.get(key) for key in keys} for row in sorted(rows,key=lambda row:(-score(row),str(row.get('file','')),row.get('line',0)))[:limit]]
+    coverage=result.get('coverage',{})
+    states=choose('stateMachines',('id','name','file','ownership','reachableFromTasks','states','status'),6)
+    for item in states:
+        item['states']=(item.get('states') or [])[:8]
+        item['transitionCount']=next((len(row.get('transitions',[])) for row in result.get('stateMachines',[]) if row['id']==item['id']),0)
+    return {'project':result.get('project'),
+            'coverage':{key:coverage.get(key) for key in ('indexReady','discoveredFiles','eligibleFiles','indexedFiles','executableSourceFiles','parsedSourceFiles','parsedFilesWithNotices','codeFilesAnalyzed','notices')},
+            'functions':choose('functions',('name','file','language','task','ownership','operations','calls','parserNotices'),8),
+            'stateMachines':[row for row in states if row.get('ownership')=='active task'],
+            'reachableStateMachines':[row for row in states if row.get('ownership')!='active task' and row.get('reachableFromTasks')],
+            'callGraph':choose('callGraph',('caller','callee','instance','file','line','resolution','targetFiles','reachableFromTasks'),12),
+            'hmiLinks':choose('hmiLinks',('control','signal','file','line','ownership'),6),
+            'hardwareLinks':choose('hardwareLinks',('variable','address','file','line','ownership'),6),
+            'totalTransitionCount':sum(len(item.get('transitions',[])) for item in result.get('stateMachines',[])),
+            'unresolvedCallCount':sum(1 for item in result.get('callGraph',[]) if item.get('resolution')=='library, external, or unresolved'),
+            'detailLimited':True,'notices':coverage.get('notices',[])[:6]}

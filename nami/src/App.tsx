@@ -750,8 +750,8 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
       {/* Top Header */}
       <fieldset disabled={archived} className="m-0 min-w-0 border-0 p-0">
-      {!archived&&<ToolProjectSelector tool="datainspect"/>}
       <Header
+        projectLink={!archived?<ToolProjectSelector tool="datainspect"/>:undefined}
         selectedPLC={selectedPLC}
         allPLCs={plcs}
         onSelectPLC={(p) => setSelectedPLCId(p.id)}

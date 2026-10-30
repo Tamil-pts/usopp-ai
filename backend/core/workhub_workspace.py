@@ -12,12 +12,13 @@ from fastapi import HTTPException
 from backend.core.workhub import store as hub, text, timestamp, encode
 
 FIELDS={'project_number','priority','assignment_state','assigned_at','supporting_ids','responsibility','assignment_remarks','exception_status','exception_reason'}
-CONTEXT={'customer','machine','scope','customer_id','organization_id'}
+CONTEXT={'customer','customer_project_reference','machine','scope','project_requirements','acceptance_criteria','additional_information','base_reference','developed_reference','customer_id','organization_id'}
 
 
 def migrate(db):
     from .workhub_document_spaces import schema
     schema(db)
+    db.execute('CREATE TABLE IF NOT EXISTS ds_template_drafts(scope_id TEXT PRIMARY KEY,document_id TEXT NOT NULL,kind TEXT NOT NULL,name TEXT NOT NULL,owner_id INTEGER NOT NULL,created_at TEXT NOT NULL)')
     db.execute('CREATE TABLE IF NOT EXISTS wh_closed_schedule(project_id TEXT PRIMARY KEY,due_date TEXT NOT NULL)')
     columns={r[1] for r in db.execute('PRAGMA table_info(items)')}
     for name,default in [('project_number',''),('priority','normal'),('assignment_state','assigned'),('assigned_at',''),('supporting_ids','[]'),('responsibility',''),('assignment_remarks',''),('exception_status',''),('exception_reason','')]:
@@ -100,8 +101,8 @@ def apply(db,p,user,payload,creating=False):
         raise HTTPException(409,'Reopen the project through its controlled workflow before revising project metadata.')
     if CONTEXT.intersection(payload):
         state=store.ensure_project(db,p,user);context=dict(state['context'])
-        for key in ['customer','machine','scope']:
-            if key in payload:context[key]=text(payload[key] or '',8000 if key=='scope' else 180)
+        for key in ['customer','customer_project_reference','machine','scope','project_requirements','acceptance_criteria','additional_information','base_reference','developed_reference']:
+            if key in payload:context[key]=text(payload[key] or '',8000 if key in {'scope','project_requirements','acceptance_criteria','additional_information','base_reference','developed_reference'} else 180)
         context=branding.link_context(db,context,payload)
         db.execute('UPDATE qc_projects SET context=?,version=version+1,updated_at=? WHERE project_id=?',(store.bounded(context),timestamp(),p['id']))
         store.audit(db,user,p['id'],'project_context_updated',{'fields':sorted(CONTEXT.intersection(payload))})
@@ -132,8 +133,47 @@ def create(user,payload):
         apply(db,hub.item(db,value['id']),user,payload,True)
         if payload.get('is_sample'):
             db.execute('UPDATE items SET is_sample=1 WHERE id=?',(value['id'],))
-        from .workhub_workflow import create_steps
-        create_steps(db,hub.item(db,value['id']),user)
+        if payload.get('prepare_frd') is True:
+            from .workhub_quality import authoring,documents
+            p=hub.item(db,value['id']);content=authoring.blank('frd')
+            content.update(purpose=text(payload.get('description',''),12000),scope=text(payload.get('scope',''),12000),acceptance_summary=text(payload.get('acceptance_criteria',''),12000))
+            rows=payload.get('requirement_items',[])
+            if not isinstance(rows,list) or len(rows)>200:raise HTTPException(400,'Provide up to 200 project requirements.')
+            for index,row in enumerate(rows):
+                if not isinstance(row,dict):raise HTTPException(400,'Provide structured requirements.')
+                description=text(row.get('description',''),8000,True)
+                content['requirements'].append({'id':'FR-'+str(index+1).zfill(3),'title':description[:180], 'description':description,'acceptance_criteria':'','trigger':'','expected_behavior':'','subsystem':text(row.get('category',''),200), 'category':text(row.get('category',''),200),'source_label':text(row.get('source_label',''),240),'priority':row.get('priority','medium'),'source_ids':[],'mandatory':True,'change':'new'})
+            if not rows and payload.get('project_requirements'):
+                description=text(payload['project_requirements'],8000,True)
+                content['requirements'].append({'id':'FR-001','title':description[:180],'description':description,'acceptance_criteria':'','source_ids':[],'mandatory':True,'change':'new'})
+            for key,heading in [('base_reference','Base reference'),('developed_reference','Developed reference'),('additional_information','Additional information')]:
+                if payload.get(key):content['sections'].append({'heading':heading,'text':text(payload[key],12000)})
+            if payload.get('flowchart'):
+                if not isinstance(payload['flowchart'],dict):raise HTTPException(400,'Provide a structured flowchart.')
+                content['flowchart']={**payload['flowchart'],'needs_review':True}
+            content=documents.clean_content(db,p['id'],'frd',content)
+            documents.create_control(db,p,user,'frd',initial_content=content)
+        from .workhub_workflow import create_steps,validate_steps
+        if 'workflow_steps' in payload:
+            from .workhub_quality import configuration
+            steps=validate_steps(payload['workflow_steps'])
+            if not steps:raise HTTPException(400,'Add at least one workflow step.')
+            assignments=payload.get('workflow_assignees',{})
+            if not isinstance(assignments,dict) or set(assignments)-{step['id'] for step in steps}:raise HTTPException(400,'Choose assignees for valid workflow steps.')
+            assignments={key:hub.user_id(uid) for key,uid in assignments.items()}
+            template=payload.get('workflow_template','')
+            if not isinstance(template,str):raise HTTPException(400,'Choose a configured workflow template.')
+            current=configuration.current(db)
+            if template and template not in current['configuration']['project_profiles']:raise HTTPException(400,'Choose a configured workflow template.')
+            p=hub.item(db,value['id']);state=store.ensure_project(db,p,user)
+            policy=configuration.profile(current['configuration'],template) if template else configuration.profile(current['configuration'],'')
+            policy['workflow_steps']=steps
+            db.execute('UPDATE qc_projects SET policy=?,policy_version=?,project_type=?,version=version+1,updated_at=? WHERE project_id=?',
+                       (store.bounded(policy),current['version'],template or p['kind'],timestamp(),p['id']))
+            store.audit(db,user,p['id'],'project_workflow_configured',{'template':template,'step_count':len(steps)})
+            create_steps(db,p,user,assignments)
+        else:
+            create_steps(db,hub.item(db,value['id']),user)
         return hub.public(hub.item(db,value['id']))
 
 
@@ -207,7 +247,7 @@ def document_register(user,search='',kind='',status='',project_id='',page=1,page
                  LEFT JOIN items lp ON lp.id=s.linked_project_id JOIN pi_revisions r ON r.id=d.current_revision
                  LEFT JOIN qc_documents q ON q.document_id=d.id LEFT JOIN qc_revisions cr ON cr.id=r.id
                  LEFT JOIN wh_document_numbers dn ON dn.document_id=d.id
-                 WHERE ((p.type='project' AND """+predicate+") OR (s.id IS NOT NULL AND (? OR s.owner_id=? OR s.reviewer_id=? OR (s.library=1 AND s.linked_project_id IS NULL AND COALESCE(cr.status,r.status) IN ('approved','released')))))"
+                 WHERE NOT EXISTS (SELECT 1 FROM ds_template_drafts td WHERE td.scope_id=d.project_id) AND ((p.type='project' AND """+predicate+") OR (s.id IS NOT NULL AND (? OR s.owner_id=? OR s.reviewer_id=? OR (s.library=1 AND s.linked_project_id IS NULL AND COALESCE(cr.status,r.status) IN ('approved','released')))))"
         params=[*args,user['role']=='admin',user['id'],user['id']]
         if project_id:query+=' AND (p.id=? OR s.linked_project_id=?)';params.extend([project_id,project_id])
         if kind:query+=' AND COALESCE(q.stage,d.kind)=?';params.append(kind)

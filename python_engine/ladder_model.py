@@ -107,6 +107,73 @@ def network_model(network, index):
             'cells': cells, 'connections': connections, 'warnings': warnings}
 
 
+def coil_condition(diagram, target):
+    """Trace Boolean power to a coil using the shared AS wire geometry.
+
+    OR marks join RIGHT boundaries; empty cells carry no horizontal power.
+    Blocks and edge contacts are deliberately unresolved, rather than replaced
+    by invented Boolean conditions. Side branches not feeding the coil do not
+    alter its condition. The result is a source expression, never live values.
+    """
+    cells = diagram['cells']
+    coil = next((c for c in cells if c['kind'] == 'coil' and c['name'] == target), None)
+    if not coil or diagram.get('commented'):
+        return {'resolved': False, 'reason': 'Coil absent or network disabled.'}
+    if diagram.get('warnings'):
+        return {'resolved': False, 'reason': '; '.join(diagram['warnings'])}
+    parent = {}
+    def root(point):
+        parent.setdefault(point, point)
+        if parent[point] != point: parent[point] = root(parent[point])
+        return parent[point]
+    def join(a, b): parent[root(b)] = root(a)
+    by_id = {c['id']: c for c in cells}
+    for edge in diagram['connections']:
+        if edge['kind'] == 'branch':
+            a, b = by_id[edge['from']], by_id[edge['to']]
+            join((a['row'], a['column'] + a['span']), (b['row'], b['column'] + b['span']))
+    incoming = {}
+    for cell in cells:
+        if cell['kind'] == 'empty' or cell.get('position') == 'header': continue
+        left = root((cell['row'], cell['column']))
+        right = root((cell['row'], cell['column'] + cell['span']))
+        incoming.setdefault(right, []).append((left, cell))
+    rails = {root((c['row'], 0)) for c in cells if c['column'] == 0 and c['kind'] != 'empty'}
+    memo, visiting, used = {}, set(), {}
+    def expression(point):
+        point = root(point)
+        if point in rails: return 'TRUE'
+        if point in memo: return memo[point]
+        if point in visiting or len(visiting) > 128: raise ValueError('Cyclic or oversized rung topology.')
+        visiting.add(point); paths = []
+        for left, cell in incoming.get(point, []):
+            # The target coil does not feed its own input. Other coils or
+            # function outputs in a path require explicit instruction semantics.
+            prefix = expression(left)
+            if prefix == 'FALSE': continue
+            kind, instruction = cell['kind'], cell['type'].casefold()
+            if kind == 'line': term = 'TRUE'
+            elif kind == 'contact' and instruction in {'open', 'closed'}:
+                term = cell['name'] if instruction == 'open' else 'NOT ' + cell['name']
+                used[cell['id']] = cell
+            else: raise ValueError('Unresolved upstream instruction: ' + (cell.get('instance') or cell['name'] or kind) + ' / ' + cell['type'])
+            path = term if prefix == 'TRUE' else prefix if term == 'TRUE' else '(' + prefix + ' AND ' + term + ')'
+            if path not in paths: paths.append(path)
+        visiting.remove(point)
+        value = 'FALSE' if not paths else paths[0] if len(paths) == 1 else '(' + ' OR '.join(paths) + ')'
+        if len(value) > 16000: raise ValueError('Rung expression exceeds the bounded trace size.')
+        memo[point] = value
+        return value
+    try:
+        value = expression((coil['row'], coil['column']))
+        if value == 'FALSE': raise ValueError('No connected left-rail path was established.')
+        return {'resolved': True, 'expression': value, 'coilType': coil['type'],
+                'inputs': list(dict.fromkeys(c['name'] for c in used.values())),
+                'contacts': [{'name': c['name'], 'type': c['type'], 'row': c['row'], 'column': c['column']} for c in used.values()]}
+    except ValueError as error:
+        return {'resolved': False, 'reason': str(error), 'coilType': coil['type']}
+
+
 def normalized_model(record):
     """Upgrade saved results from before the logical-column correction."""
     model = record.get('diagram') or record

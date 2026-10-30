@@ -95,6 +95,8 @@ class AccountTests(unittest.TestCase):
             self.assertEqual(sum(user['role']=='admin' for user in users),1)
 
     def test_admin_can_create_more_than_six_accounts_and_keeps_session(self):
+        # Seed the administrator with a real hash before stubbing bulk creation.
+        self.store.initialize()
         with patch.object(accounts,'password_hash',return_value='test-hash'):
             self.client.post('/api/auth/login',json={'username':'Admin','password':'usopp.2026'})
             for index in range(200):

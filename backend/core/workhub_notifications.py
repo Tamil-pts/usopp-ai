@@ -133,7 +133,7 @@ def prepare_share(user,key,origin,notification_id=None):
         item=store.item(db,key);project=store.item(db,item['project_id']);row=pref(db,user['id'])
         users={person['id']:person['username'] for person in store.users()}
         public=store.public(item)
-        lines=['usop.ai WorkHub','Project: '+project['title']]
+        lines=['uSOPp.ai WorkHub','Project: '+project['title']]
         if item['type']=='task':lines.append('Task: '+item['title'])
         if notification_id:
             notification=db.execute('SELECT * FROM notifications WHERE id=? AND recipient_id=? AND item_id=?',(notification_id,user['id'],key)).fetchone()

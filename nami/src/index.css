@@ -11,6 +11,10 @@ html[data-theme='dark'] .di-startup-error { background:#161c24; color:#e8edf2; b
 html[data-theme='light'] .di-mimic { --di-bg:#fff; --di-soft:#f1f6fb; --di-line:#d6e2ee; --di-text:#173049; --di-muted:#62788f; --di-accent:#00876b; }
 .di-mimic-title { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; font-size:12px; color:var(--di-muted); }
 .di-mimic-title>div { display:flex; align-items:center; gap:10px; }
+.di-mimic-heading {display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.di-mimic-heading .di-mimic-title {flex:1 1 360px;min-width:0;margin-bottom:0;flex-wrap:wrap}
+.di-mimic-heading .tool-project-context {flex:0 1 630px;margin:0}
+@media(max-width:800px){.di-mimic-heading .tool-project-context{flex-basis:100%;width:100%}}
 .di-mimic-title strong,.di-mimic-title h2 { font-size:17px; color:var(--di-text); }
 .di-mimic-flow { display:grid; grid-template-columns:minmax(0,1fr) 180px minmax(0,1fr); align-items:stretch; gap:14px; }
 .di-mimic-card { padding:16px; border:1px solid var(--di-line); border-top:3px solid #4d8cd9; border-radius:14px; background:var(--di-soft); min-width:0; }

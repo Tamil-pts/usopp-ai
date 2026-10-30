@@ -8,6 +8,7 @@ import {formatDecodedValue} from '../utils/valueDisplay';
 import {RequestFrameSelect} from './RequestFrameSelect';
 
 interface HeaderProps {
+  projectLink?: React.ReactNode;
   selectedPLC: PLCConfig;
   allPLCs: PLCConfig[];
   onSelectPLC: (plc: PLCConfig) => void;
@@ -91,8 +92,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
   const openFrame = () => {setSettingsOpen(false); props.onOpenManualFrameModal?.();};
 
   return <header className="di-mimic">
-    <div className="di-mimic-title"><div><Activity size={20}/><strong>DataInspect</strong><span>Server ↔ PLC</span></div>
-      <span>{props.totalGroupsCount} groups · {props.totalParamsCount} parameters</span>{props.onOpenDataModels&&<button onClick={props.onOpenDataModels}>Data model requirements</button>}</div>
+    <div className="di-mimic-heading"><div className="di-mimic-title"><div><Activity size={20}/><strong>DataInspect</strong><span>Server ↔ PLC</span></div>
+      <span>{props.totalGroupsCount} groups · {props.totalParamsCount} parameters</span>{props.onOpenDataModels&&<button onClick={props.onOpenDataModels}>Data model requirements</button>}</div>{props.projectLink}</div>
     <div className="di-mimic-flow">
       <section className="di-mimic-card di-server">
         <div className="di-device-heading">

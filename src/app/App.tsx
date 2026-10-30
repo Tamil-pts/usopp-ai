@@ -2,15 +2,15 @@ import {ToolProjectSelector} from '../shared/ToolProjectSelector';
 import {flushQualityDraft} from '../features/workhub/quality/bridge';
 import {userStorage} from '../shared/userStorage';
 import {BuildVersionBadge,BuildVersionNotice} from '../shared/BuildStatus';
-import {useCallback,useEffect,useState} from 'react';
+import {useCallback,useEffect,useRef,useState} from 'react';
 import '../styles.css';
 import './workspace.css';
 import type {MetaCol} from '../shared/types';
 import {DEFAULT_META_COLS} from '../features/validation/metadataColumns';
-import {normalizeResult} from '../features/validation/normalizeResult';
 import {ValidationPage} from '../features/validation/ValidationPage';
 import {useValidationWorkspace} from '../features/validation/useValidationWorkspace';
 import {ComparePage} from '../features/compare/ComparePage';
+import {EDesignWorkspace} from '../features/edesign/EDesignWorkspace';
 import {useCompareProjects} from '../features/compare/useCompareProjects';
 import {UserAvatar} from '../features/account/UserAvatar';
 import {useAccount} from '../features/account/AuthProvider';
@@ -19,25 +19,28 @@ import {RunHistory} from '../features/history/RunHistory';
 import {HistoryResultDialog} from '../features/history/HistoryResultDialog';
 import {WorkHub} from '../features/workhub/WorkHub';
 import {NotificationBell} from '../features/workhub/NotificationBell';
-import {FeatureRecommendation} from '../shared/FeatureRecommendation';
-import {FEATURES,type EngineeringFeature} from '../shared/features';
 import '../features/help/help.css';
 import {PLCDataPage} from '../features/plc/PLCDataPage';
 import {RulesPage} from '../features/rules/RulesPage';
 import {validateEngineeringRules} from '../features/rules/api';
 import {AssistWorkspace} from '../features/assist/AssistWorkspace';
-import {ChopperQuickHelp} from '../features/assist/ChopperQuickHelp';
 import {SettingsPage} from '../features/settings/SettingsPage';
 import {DEPARTMENTS} from '../features/rules/library';
 import {DEFAULT_MACHINE_PREFIXES,type MachinePrefix} from '../features/validation/projectDetails';
 import {TableLayoutProvider} from '../shared/TableLayout';
 import './responsive.css';
 import petrusLogo from '../petrus_logo.png';
-import {WorkspaceNavigation,WORKSPACE_NAVIGATION as navigation,type WorkspacePage as Page} from '../shared/WorkspaceNavigation';
+import {WorkspaceNavigation,WORKSPACE_NAVIGATION as navigation,type WorkspacePage as Page,type AssistTab} from '../shared/WorkspaceNavigation';
+import {PAGE_MODULES,visibleModules} from '../shared/workspaceModules';
 
 function App(){
   const {user,logout}=useAccount();
-  const [page,setPage]=useState<Page>('home');
+  const [page,setPageRaw]=useState<Page>('home');
+  const [assistTabRequest,setAssistTabRequest]=useState<{tab:AssistTab;id:number}>();
+  const modules=visibleModules(user),modulesRef=useRef(modules);modulesRef.current=modules;
+  const setPage=(next:Page)=>{const module=PAGE_MODULES[next as keyof typeof PAGE_MODULES];if(module&&!modulesRef.current.includes(module)){setToast('This module is hidden for your account.');return}setPageRaw(next)};
+  useEffect(()=>{const module=PAGE_MODULES[page as keyof typeof PAGE_MODULES];if(module&&!modules.includes(module)){const fallback=Object.entries(PAGE_MODULES).find(([,value])=>modules.includes(value))?.[0] as Page|undefined;setPageRaw(fallback||'settings')}},[page,modules.join('|')]);
+  useEffect(()=>{const open=()=>{if(window.location.hash.startsWith('#e-design/'))setPage('edesign');};open();window.addEventListener('hashchange',open);return()=>window.removeEventListener('hashchange',open);},[]);
   useEffect(()=>{const open=()=>{setPage('help');setTimeout(()=>document.getElementById('help-frd-sample')?.scrollIntoView({behavior:'smooth'}),250);};window.addEventListener('workhub-help-frd',open);return()=>window.removeEventListener('workhub-help-frd',open);},[]);
   useEffect(()=>{
     const openSettings=()=>{setPage('settings');requestAnimationFrame(()=>document.getElementById('workhub-notifications')?.scrollIntoView({block:'start',behavior:'smooth'}));};
@@ -46,7 +49,7 @@ function App(){
     return()=>{window.removeEventListener('workhub-open-settings',openSettings);window.removeEventListener('workhub-open-growth',openGrowth);window.removeEventListener('workhub-open-dashboard',openGrowth);};
   },[]);
   const [dataInspectHistoryId,setDataInspectHistoryId]=useState('');
-  const [plcContext,setPLCContext]=useState<Record<string,unknown>>({});
+  const [,setPLCContext]=useState<Record<string,unknown>>({});
   const [historyDetail,setHistoryDetail]=useState<any>(null);
   const [theme,setTheme]=useState<'light'|'dark'>(()=>userStorage.getItem('usopp_theme')==='dark'?'dark':'light');
   const [accent,setAccent]=useState(()=>userStorage.getItem('usopp_accent')||'#4f7ff2');
@@ -78,23 +81,19 @@ function App(){
     if(!validation.localProjectPath&&!validation.projectFiles.length){setToast('Select a project in the pipeline project box to continue.');return {error:'Select a project in the pipeline project box to continue.'}}
     setRuleBusy('rules');setRuleResults(null);try{const data={...await validateEngineeringRules({...validation,rules}),pipelineRunId:rules.pipelineRunId};setRuleResults(data);setToast('Rule validation completed.');return data}catch(e:any){setToast(e.message);return {error:e.message}}finally{setRuleBusy('')}
   };
-  const normalized=validation.result?normalizeResult(validation.result):null;
-  const helpRows=page==='validation'?validation.result?.issues:page==='rules'?(ruleResults?.results||ruleResults?.checks||ruleResults?.checkpoints):[];
-  const helpFindings=(Array.isArray(helpRows)?helpRows:[]).filter((row:any)=>!['pass','passed'].includes(String(row.status||row.severity||'').toLowerCase())).slice(0,5).map((row:any)=>Object.fromEntries(['id','name','status','severity','actual','expected','message','description','sourceFile','lineNumber','suggestedFix'].filter(key=>row[key]!=null).map(key=>[key,String(row[key]).slice(0,700)])));
-  const helpContext={page,label:navigation.find(item=>item.id===page)?.label||'Workspace',projectName:validation.projectName||'',projectPath:validation.localProjectPath||'',details:page==='plc'?plcContext:undefined,findings:helpFindings,counts:page==='validation'&&validation.result?normalized?.counts:undefined};
-  return <TableLayoutProvider><div className="app workspaceApp"><WorkspaceNavigation page={page} onSelect={setPage}/>
-    <header className="top"><div className="crumb"><b>usop.ai</b><span> / </span>{navigation.find(n=>n.id===page)?.label}</div><div className="topSpacer"/><button className="btn" aria-pressed={theme==='dark'} onClick={()=>setTheme(theme==='light'?'dark':'light')}>{theme==='light'?'Dark mode':'Light mode'}</button><div className="accountTop"><button className="accountProfileButton" aria-label="Open my profile" onClick={()=>setPage('settings')}><UserAvatar user={user}/></button><span title={`${user.designation} / ${user.company}`}>{user.username}<small className="accountRoleLabel">{user.role==='admin'?'Admin':'User'}</small></span><button className="btn" onClick={()=>{void flushQualityDraft().then(()=>logout()).catch((error:Error)=>setToast(error.message))}}>Sign out</button></div><NotificationBell onOpen={(project,item)=>{setPage('home');window.dispatchEvent(new CustomEvent('workhub-open-project',{detail:{project,item}}));}}/><BuildVersionBadge health={health}/><ChopperQuickHelp context={helpContext} onOpenChat={()=>setPage('chatbot')}/><img className="petrusTopLogo" src={petrusLogo} alt="Petrus"/></header>
+  return <TableLayoutProvider><div className="app workspaceApp" data-workspace-modules={modules.join(',')}><WorkspaceNavigation page={page} onSelect={(target,tab)=>{setPage(target);if(tab)setAssistTabRequest({tab,id:Date.now()})}}/>
+    <header className="top"><div className="crumb"><b>uSOPp.ai</b><span> / </span>{navigation.find(n=>n.id===page)?.label}</div><div className="topSpacer"/><button className="btn" aria-pressed={theme==='dark'} onClick={()=>setTheme(theme==='light'?'dark':'light')}>{theme==='light'?'Dark mode':'Light mode'}</button><div className="accountTop"><button className="accountProfileButton" aria-label="Open my profile" onClick={()=>setPage('settings')}><UserAvatar user={user}/></button><span title={`${user.designation} / ${user.company}`}>{user.username}<small className="accountRoleLabel">{user.role==='admin'?'Admin':'User'}</small></span><button className="btn" onClick={()=>{void flushQualityDraft().then(()=>logout()).catch((error:Error)=>setToast(error.message))}}>Sign out</button></div><NotificationBell onOpen={(project,item)=>{setPage('home');window.dispatchEvent(new CustomEvent('workhub-open-project',{detail:{project,item}}));}}/><BuildVersionBadge health={health}/><img className="petrusTopLogo" src={petrusLogo} alt="Petrus"/></header>
     <main className={`main${page==='chatbot'?' assistantMain':''}`}><div className={`content${page==='plc'?' plcContent':page==='chatbot'?' assistantContent':''}`}><BuildVersionNotice health={health}/>
-      {page in FEATURES&&page!=='chatbot'&&<FeatureRecommendation feature={page as EngineeringFeature} projectReady={!!validation.localProjectPath||!!validation.projectFiles.length} hasResult={page==='validation'?!!validation.result:page==='compare'?!!compare.result:page==='rules'?!!ruleResults:false} failures={normalized?.counts.fail||0} warnings={normalized?.counts.warn||0}/>}
       <section className="workHubPage" hidden={page!=='home'}>
         <WorkHub active={page==='home'} renderRecentWork={historyActive=><RunHistory active={historyActive} onOpen={(kind,data)=>{if(kind==='data-model'||data.runStatus==='interrupted'||(data.runStatus==='failed'&&kind!=='datainspect')||['send-rtc','send-raw'].includes(data.operation)||(kind==='datainspect'&&!data.metadata?.length)){setHistoryDetail(data)}else if(kind==='datainspect'){setDataInspectHistoryId(data.historyId);setPage('plc')}else if(kind==='compare'){compare.openHistory(data);setPage('compare')}else if(kind==='rules'){setRuleResults(data);setPage('rules')}else{validation.openHistory(kind,data);setPage('validation')}}} onReuse={(project,kind)=>{validation.selectProject(project.projectPath,project.projectName);if(project.metadataPath)validation.selectMetadata(project.metadataPath,project.metadataPath.split(/[\\/]/).pop()||'Stored metadata');setPage(kind==='rules'?'rules':'validation');setToast('Stored project loaded. Run validation, generate metadata, or select rules using the normal controls.')}}/>}/>
       </section>
-      <section hidden={page!=='validation'}>{page==='validation'&&<ToolProjectSelector tool="bytemap"/>}<ValidationPage workspace={validation} metaCols={metaCols} departments={departments}/></section>
-      {page==='plc'&&<section><PLCDataPage theme={theme} setTheme={setTheme} historyId={dataInspectHistoryId} onLive={()=>setDataInspectHistoryId('')} onContext={setPLCContext}/></section>}
-      <section hidden={page!=='compare'}>{page==='compare'&&<ToolProjectSelector tool="matchview"/>}<ComparePage {...compare}/></section>
+      <section hidden={page!=='validation'}><ValidationPage workspace={validation} metaCols={metaCols} departments={departments} projectLink={page==='validation'?<ToolProjectSelector tool="bytemap"/>:undefined}/></section>
+      {page==='plc'&&<section><PLCDataPage theme={theme} historyId={dataInspectHistoryId} onLive={()=>setDataInspectHistoryId('')} onContext={setPLCContext}/></section>}
+      <section hidden={page!=='compare'&&page!=='circuit'}><ComparePage {...compare} type={page==='circuit'?'circuit':'plc'} projectLink={(page==='compare'||page==='circuit')?<ToolProjectSelector tool="matchview"/>:undefined}/></section>
+      <section hidden={page!=='edesign'}><EDesignWorkspace active={page==='edesign'}/></section>
       <section hidden={page!=='rules'}><RulesPage onSourceSaved={(path,name)=>{validation.adoptEditedProject(path,name);setRuleResults(null);setToast("Source saved with backup. Run the pipeline again to refresh results.")}} projectReady={!!validation.localProjectPath||!!validation.projectFiles.length} projectName={validation.projectName||''} projectPath={validation.localProjectPath||''} machineDepartment={validation.machineDepartment} onProjectSelected={(path,name,files)=>validation.selectProject(path,name,files)} onMachineDepartmentChange={validation.setMachineDepartment} departments={departments} ruleResults={ruleResults} runRules={runRules} busy={ruleBusy} revision={ruleRevision} onAssist={(result,rule)=>{setAssistFinding({result,rule,projectName:ruleResults?.projectName||validation.projectName,projectPath:ruleResults?.projectPath||validation.localProjectPath||validation.result?.projectPath||'',requestId:Date.now()});setPage('chatbot')}}/></section>
-      <section hidden={page!=='chatbot'}><AssistWorkspace comparisonResult={compare.result} onOpenFeature={feature=>{if(['home','validation','compare','rules','chatbot','settings','plc','help'].includes(feature))setPage(feature as Page)}} onSourceSaved={(path,name)=>{validation.adoptEditedProject(path,name);setRuleResults(null);setToast("Source saved with backup. Run validation again.")}} finding={assistFinding} revision={ruleRevision} onSaved={rulesSaved} result={validation.result} projectPath={validation.localProjectPath||validation.result?.projectPath||ruleResults?.projectPath||''} projectFiles={validation.projectFiles} projectName={validation.projectName} machineDepartment={validation.machineDepartment} departments={departments} ruleResults={ruleResults}/></section>
-      {page==='help'&&<HelpPage onOpen={feature=>{if(feature==='virtual-plc')window.location.assign('/virtual-plc/');else setPage(feature)}}/>}
+      <section hidden={page!=='chatbot'}><AssistWorkspace requestedTab={assistTabRequest} comparisonResult={compare.result} onOpenFeature={feature=>{if(['home','validation','compare','rules','chatbot','settings','plc','help'].includes(feature))setPage(feature as Page)}} onSourceSaved={(path,name)=>{validation.adoptEditedProject(path,name);setRuleResults(null);setToast("Source saved with backup. Run validation again.")}} finding={assistFinding} revision={ruleRevision} onSaved={rulesSaved} result={validation.result} projectPath={validation.localProjectPath||validation.result?.projectPath||ruleResults?.projectPath||''} projectFiles={validation.projectFiles} projectName={validation.projectName} machineDepartment={validation.machineDepartment} departments={departments} ruleResults={ruleResults}/></section>
+      {page==='help'&&<HelpPage onOpen={feature=>{if(feature==='virtual-plc'){if(modulesRef.current.includes('virtual_plc'))window.location.assign('/virtual-plc/');else setToast('This module is hidden for your account.')}else setPage(feature)}}/>}
       <section hidden={page!=='settings'}><SettingsPage testingProject={{path:validation.localProjectPath||validation.result?.projectPath||ruleResults?.projectPath||'',files:validation.projectFiles,name:validation.projectName,onSaved:rulesSaved}} theme={theme} setTheme={setTheme} accent={accent} setAccent={setAccent} metaCols={metaCols} setMetaCols={setMetaCols} departments={departments} machinePrefixes={machineConfig.prefixes} onMachineConfigChange={saveMachineConfig} boolMetadataMode={validation.boolMetadataMode} setBoolMetadataMode={validation.setBoolMetadataMode} localMetadataPath={validation.localMetadataPath} setLocalMetadataPath={p=>validation.selectMetadata(p,p.split(/[\\/]/).pop()||'')} localMetadataName={validation.localMetadataName} setLocalMetadataName={validation.setLocalMetadataName} onClearResults={()=>{validation.clearResults();compare.clearResults()}}/></section>
     </div></main>{historyDetail&&<HistoryResultDialog result={historyDetail} onClose={()=>setHistoryDetail(null)}/>} {toast&&<div className="toast" role="status">{toast}</div>}
   </div></TableLayoutProvider>;

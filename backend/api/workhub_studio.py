@@ -36,6 +36,11 @@ def comments(pid:str,did:str,request:Request):return reviews.list_comments(reque
 def comment(pid:str,did:str,payload:dict,request:Request):return reviews.add(request.state.user,pid,did,payload)
 @router.post(BASE+'/comments/{key}')
 def respond(pid:str,did:str,key:str,payload:dict,request:Request):return reviews.update(request.state.user,pid,did,key,payload)
+@router.get('/api/workhub/studio/template-drafts')
+def template_drafts(request:Request):return library.template_drafts(request.state.user)
+@router.post('/api/workhub/studio/template-drafts')
+def create_template_draft(payload:dict,request:Request):return library.create_template_draft(request.state.user,payload)
+
 @router.get('/api/workhub/studio/templates')
 def templates(request:Request):return library.templates(request.state.user)
 @router.post(BASE+'/templates')

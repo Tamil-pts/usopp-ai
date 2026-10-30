@@ -26,18 +26,11 @@
 
   function attach() {
     const nav = document.querySelector('.workspaceApp .railMainNav[aria-label="Main navigation"]');
-    if (nav && !nav.querySelector('#virtual-plc-navigation')) {
-      const link = document.createElement('a');
-      link.id = 'virtual-plc-navigation';
-      link.className = 'virtualPlcNav';
-      link.href = '/virtual-plc/';
-      link.setAttribute('aria-label', 'Open Virtual PLC workspace');
-      link.title = 'Virtual PLC: controller, logic, I/O and HMI simulation';
-      link.innerHTML = icon + '<span>Virtual PLC</span>';
-      nav.appendChild(link);
-    }
+    nav?.querySelector('#virtual-plc-navigation')?.remove();
+    const allowed = (document.querySelector('.workspaceApp')?.dataset.workspaceModules || '').split(',').includes('virtual_plc');
     const grid = document.querySelector('.workHubTaskGrid');
-    if (grid && !grid.querySelector('#virtual-plc-workhub')) {
+    if (!allowed) grid?.querySelector('#virtual-plc-workhub')?.remove();
+    if (allowed && grid && !grid.querySelector('#virtual-plc-workhub')) {
       const card = document.createElement('a');
       card.id = 'virtual-plc-workhub';
       card.className = 'workHubTask virtualPlcCard';
@@ -55,6 +48,6 @@
     if (scheduled) return;
     scheduled = true;
     requestAnimationFrame(() => { scheduled = false; attach(); });
-  }).observe(document.documentElement, {childList: true, subtree: true});
+  }).observe(document.documentElement, {childList: true, subtree: true, attributes: true, attributeFilter: ['data-workspace-modules']});
   attach();
 })();

@@ -5,7 +5,12 @@ router=APIRouter(tags=['Chopper MCP'])
 
 @router.get('/api/assist/mcp')
 def settings(request:Request):
-    return {'endpoint':str(request.base_url).rstrip('/')+'/api/mcp/','protocol':'MCP Streamable HTTP (2025-11-25)','authentication':'Bearer token or signed-in session','tools':['project_context','read_source','find_variable','ladder_networks','validate_project','prepare_rule'],'sourceWrites':'Review and save in the uSOPp source editor.'}
+    return {'endpoint':str(request.base_url).rstrip('/')+'/api/mcp/','protocol':'MCP Streamable HTTP (2025-11-25)','authentication':'Bearer token or signed-in session',
+            'tools':['project_context','understand_project','compare_explanation','read_source','find_variable','ladder_networks','validate_project','prepare_rule',
+                     'build_engineering_model','get_project_structure','get_function_block','find_machine_function','trace_signal','get_execution_flow',
+                     'validate_graph','get_engineering_blocks','get_engineering_relationships','get_engineering_tokens','compare_engineering_models','investigate_engineering_project'],
+            'engineeringFoundation':{'automaticChatEnabled':False,'buildRequired':True,'validation':'Structural validity and unresolved semantics are reported separately.'},
+            'sourceWrites':'Review and save in the uSOPp source editor.'}
 
 @router.post('/api/assist/mcp/token')
 def token(request:Request):

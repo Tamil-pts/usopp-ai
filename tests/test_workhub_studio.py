@@ -34,6 +34,26 @@ class StudioTests(unittest.TestCase):
         d=service.get(self.admin,self.pid,self.did);qc.action(self.admin,self.pid,self.control,{'revision_id':d['revision']['id'],'version':d['revision']['version'],'action':'submit'})
         d=service.get(self.reviewer,self.pid,self.did);qc.action(self.reviewer,self.pid,self.control,{'revision_id':d['revision']['id'],'version':d['revision']['version'],'action':'approve','comment':'Reviewed the original requirement and document layout.'})
         self.data=service.get(self.admin,self.pid,self.did);return self.data
+    def test_settings_template_draft_is_private_and_applies_custom_layout(self):
+        from backend.core import workhub_workspace
+        before=workhub_workspace.document_register(self.admin)['total']
+        with hub.db() as db:sequences=list(db.execute('SELECT scope,last_value FROM qc_sequences ORDER BY scope'))
+        draft=library.create_template_draft(self.admin,{'name':'Settings layout','kind':'frd'})
+        self.assertEqual(before,workhub_workspace.document_register(self.admin)['total'])
+        with hub.db() as db:self.assertEqual(sequences,list(db.execute('SELECT scope,last_value FROM qc_sequences ORDER BY scope')))
+        self.assertFalse(library.template_drafts(self.reviewer)['items'])
+        source=service.get(self.admin,draft['scope_id'],draft['document_id'])
+        layout=copy.deepcopy(source['layout']);layout['blocks'].append({'id':'custom-template-intro','type':'paragraph','data':{'runs':[{'text':'Template introduction'}]},'style':{}})
+        source=service.save(self.admin,draft['scope_id'],draft['document_id'],{'revision_id':source['revision']['id'],'version':source['revision']['version'],'etag':source['revision']['etag'],'content':source['revision']['content'],'layout':layout})
+        template=library.save_template(self.admin,draft['scope_id'],draft['document_id'],{'revision_id':source['revision']['id'],'name':'Settings layout','layout':source['layout'],'shared':True,'version':0})
+        self.populated();original=copy.deepcopy(self.data['revision']['content']['requirements'])
+        result=library.apply_template(self.admin,self.pid,self.did,template['id'],{'revision_id':self.data['revision']['id'],'version':self.data['revision']['version']})
+        self.assertEqual(original,result['revision']['content']['requirements'])
+        self.assertEqual('Template introduction',next(b for b in result['layout']['blocks'] if b['id']=='custom-template-intro')['data']['runs'][0]['text'])
+        result=library.apply_template(self.admin,self.pid,self.did,template['id'],{'revision_id':result['revision']['id'],'version':result['revision']['version']})
+        self.assertEqual(1,sum(b['id']=='custom-template-intro' for b in result['layout']['blocks']))
+        with self.assertRaises(HTTPException):service.get(self.reviewer,draft['scope_id'],draft['document_id'])
+
     def test_page_content_persists_through_original_save_route(self):
         self.populated();layout=copy.deepcopy(self.data['layout']);layout['page']['accent']='#145b77';layout['blocks'].insert(2,{'id':'custom-note','type':'panel','style':{},'data':{'title':'Design note','runs':[{'text':'Retain the reset guard.','bold':True}]}})
         self.save(layout=layout);d=self.data

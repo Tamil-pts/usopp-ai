@@ -1,5 +1,6 @@
 """Persistent local accounts and revocable browser sessions."""
 import hashlib
+import json
 import hmac
 import secrets
 import sqlite3
@@ -14,6 +15,20 @@ COOKIE = 'usopp_session'
 SESSION_SECONDS = 12 * 60 * 60
 DEMO_SESSION_SECONDS = 30 * 60
 ITERATIONS = 600000
+WORKSPACE_MODULES = ('workhub','bytemap','datainspect','matchview','logicscan','virtual_plc','edesign','assistant')
+
+def validate_workspace_modules(value):
+    if value is None:return None
+    if not isinstance(value,list) or any(not isinstance(v,str) or v not in WORKSPACE_MODULES for v in value):
+        raise ValueError('Choose valid workspace modules.')
+    return [v for v in WORKSPACE_MODULES if v in value]
+
+def visible_modules(row):
+    if row['role']=='admin' or not row['workspace_modules']:return list(WORKSPACE_MODULES)
+    try:
+        value=json.loads(row['workspace_modules'])
+        return validate_workspace_modules(value) if isinstance(value,list) else list(WORKSPACE_MODULES)
+    except (ValueError,TypeError):return list(WORKSPACE_MODULES)
 def password_hash(password):
     salt = secrets.token_bytes(16)
     digest = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, ITERATIONS)
@@ -34,7 +49,7 @@ def email_address(value):
 
 def public_user(row):
     return {key:row[key] for key in ('id','username','designation','company','role','email')} | {'active':bool(row['active']), 'approved':bool(row['approved']), 'createdAt':row['created_at'], 'isDemo':bool(row['is_demo']),
-        'avatarUrl':f'/api/auth/profile-image/{row["id"]}?v={row["profile_image_version"]}' if row['profile_image'] else None}
+        'avatarUrl':f'/api/auth/profile-image/{row["id"]}?v={row["profile_image_version"]}' if row['profile_image'] else None,'workspaceModules':visible_modules(row)}
 
 def session_seconds(user):
     return DEMO_SESSION_SECONDS if user.get('isDemo') else SESSION_SECONDS
@@ -89,23 +104,26 @@ class AccountStore:
                     connection.execute('ALTER TABLE users ADD COLUMN profile_image BLOB')
                 if 'profile_image_version' not in columns:
                     connection.execute('ALTER TABLE users ADD COLUMN profile_image_version INTEGER NOT NULL DEFAULT 0')
+                if 'workspace_modules' not in columns:
+                    connection.execute('ALTER TABLE users ADD COLUMN workspace_modules TEXT')
                 # Seed only once. A password change is never overwritten on restart.
                 if not connection.execute("SELECT 1 FROM users WHERE username_key='admin'").fetchone():
                     initial_password = os.getenv('USOPP_INITIAL_ADMIN_PASSWORD', 'usopp.2026')
                     if not 8 <= len(initial_password) <= 128:
                         raise ValueError('The initial Admin password must contain 8 to 128 characters.')
                     connection.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at) VALUES (?,?,?,?,?,?,?)',
-                        ('Admin','admin',password_hash(initial_password),'Administrator','usop.ai','admin',time.time()))
+                        ('Admin','admin',password_hash(initial_password),'Administrator','uSOPp.ai','admin',time.time()))
                 # Preserve existing accounts; keep the demonstration login
                 # separate from real account listings and workspaces.
                 if not connection.execute("SELECT 1 FROM users WHERE username_key='demo'").fetchone():
                     connection.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at,is_demo) VALUES (?,?,?,?,?,?,?,1)',
-                        ('demo','demo',password_hash('demo'),'Demo user','usop.ai','user',time.time()))
+                        ('demo','demo',password_hash('demo'),'Demo user','uSOPp.ai','user',time.time()))
                 connection.commit()
             self._ready = True
 
-    def register(self, username, password, designation, company, role='user', email=''):
+    def register(self, username, password, designation, company, role='user', email='', workspace_modules=None):
         email=email_address(email)
+        workspace_modules=validate_workspace_modules(workspace_modules)
         if role not in ('admin','user'): raise ValueError('Choose Admin or User.')
         encoded = password_hash(password)
         with self.db() as db:
@@ -115,6 +133,7 @@ class AccountStore:
             result = db.execute('INSERT INTO users (username,username_key,password_hash,designation,company,role,created_at) VALUES (?,?,?,?,?,?,?)',
                 (username,username.casefold(),encoded,designation,company,role,time.time()))
             db.execute('UPDATE users SET email=? WHERE id=?',(email,result.lastrowid))
+            if workspace_modules is not None:db.execute('UPDATE users SET workspace_modules=? WHERE id=?',(json.dumps(workspace_modules),result.lastrowid))
             return public_user(db.execute('SELECT * FROM users WHERE id=?',(result.lastrowid,)).fetchone())
 
     def request_account(self, username, password, designation, company, email=''):
@@ -183,7 +202,8 @@ class AccountStore:
         return {'maxActiveUsers': None, 'activeUsers': count,
                 'availableSlots': None, 'includesAdmin': True, 'unlimited': True}
 
-    def manage_user(self, user_id, username, designation, company, active, password=None, role=None, actor_id=None, email=None):
+    def manage_user(self, user_id, username, designation, company, active, password=None, role=None, actor_id=None, email=None, workspace_modules=None):
+        workspace_modules=validate_workspace_modules(workspace_modules)
         with self.db() as db:
             db.execute('BEGIN IMMEDIATE')
             row=db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone()
@@ -201,6 +221,7 @@ class AccountStore:
             db.execute('UPDATE users SET username=?,username_key=?,designation=?,company=?,role=?,active=?,approved=CASE WHEN ?=1 THEN 1 ELSE approved END WHERE id=?',
                        (username,username.casefold(),designation,company,role,int(active),int(active),user_id))
             if email is not None: db.execute('UPDATE users SET email=? WHERE id=?',(email_address(email),user_id))
+            if workspace_modules is not None:db.execute('UPDATE users SET workspace_modules=? WHERE id=?',(json.dumps(workspace_modules),user_id))
             if password:
                 db.execute('UPDATE users SET password_hash=? WHERE id=?',(password_hash(password),user_id))
             if password or not active or row['username']!=username or row['role']!=role:

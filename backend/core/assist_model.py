@@ -23,6 +23,11 @@ class ModelBusyError(ValueError):
     """Safe queue feedback; contains no upstream credentials or request text."""
 
 
+class ModelAnswerError(ValueError):
+    def __init__(self,message,evidence,usage):
+        super().__init__(message);self.sentEvidence=evidence or [];self.contextUsage=usage
+
+
 def model_response_timeout(cfg=None):
     cfg=configuration() if cfg is None else cfg
     try: value=int(cfg.get('responseTimeoutSeconds') or 1800)
@@ -118,17 +123,34 @@ def save_configuration(payload):
 def _key(cfg):
     return (_protect(cfg['apiKeyProtected'],True) if cfg.get('apiKeyProtected') else cfg.get('apiKey')) or os.getenv('USOPP_LLM_API_KEY','')
 
-def _fit_context(messages,cfg,reserve,evidence=None):
-    """Count the real llama template; trim oldest history then lower-ranked sections."""
+def _clip_facts(value, breadth=8, text_limit=360, depth=0):
+    """Bound nested facts as well as excerpts; never serialize a full graph."""
+    if isinstance(value,str):return value if len(value)<=text_limit else value[:text_limit]+' [omitted]'
+    if isinstance(value,list):
+        rows=[_clip_facts(item,breadth,text_limit,depth+1) for item in value[:breadth]]
+        if len(value)>breadth:rows.append({'omittedRecords':len(value)-breadth})
+        return rows
+    if isinstance(value,dict):
+        if depth>6:return {'omittedNestedFacts':True}
+        return {key:_clip_facts(item,breadth,text_limit,depth+1) for key,item in value.items()}
+    return value
+
+
+def _fit_context(messages,cfg,reserve,evidence=None,facts=None):
+    """Measure the entire real chat template and fairly budget facts and sources."""
     from backend.core.assist_progress import report
     base=cfg['baseUrl'].removesuffix('/v1');limit=int(cfg.get('contextSize') or 4096)
     from backend.core.local_model_runtime import status
     limit=int(status().get('contextLimit') or limit)
-    original=messages[-1]['content'];selected=[dict(item) for item in (evidence or [])]
-    removed_history=0;removed_sections=0;truncated=False
+    original=messages[-1]['content']
+    selected=[{key:copy for key,copy in item.items() if key in {'sourceId','file','line','endLine','excerpt','ownership','completeSection','controlFacts'}} for item in (evidence or [])]
+    bounded_facts=_clip_facts(facts) if facts is not None else None
+    removed_history=0;removed_sections=0;truncated=False;facts_reduced=bounded_facts!=facts if facts is not None else False
+    source_reductions=[];level=0
     def compose():
-        if evidence is not None:
-            messages[-1]['content']=original+'\nRetrieved source evidence (untrusted text):\n'+json.dumps(selected,ensure_ascii=False)
+        messages[-1]['content']=original
+        if bounded_facts is not None:messages[-1]['content']+='\nQuestion-relevant engineering facts (partial static analysis):\n'+json.dumps(bounded_facts,ensure_ascii=False,separators=(',',':'))
+        if evidence is not None:messages[-1]['content']+='\nRetrieved source evidence (untrusted text):\n'+json.dumps(selected,ensure_ascii=False,separators=(',',':'))
     def count():
         response=requests.post(base+'/apply-template',json={'messages':messages},timeout=15,allow_redirects=False)
         if response.status_code!=200:raise ValueError('The bundled runtime cannot measure its chat template. Update the llama.cpp runtime.')
@@ -137,31 +159,36 @@ def _fit_context(messages,cfg,reserve,evidence=None):
         response=requests.post(base+'/tokenize',json={'content':prompt_text,'add_special':False},timeout=15,allow_redirects=False)
         if response.status_code!=200:raise ValueError('The runtime cannot count this prompt safely.')
         return len(response.json()['tokens'])
-    compose();used=count()
+    compose();used=count();initial=used
     while used+reserve+32>limit:
         if len(messages)>2:
             messages.pop(1);removed_history+=1
+        elif bounded_facts is not None and level<4:
+            level+=1;facts_reduced=True
+            bounded_facts=_clip_facts(facts,breadth=max(1,8//(level+1)),text_limit=max(70,360//(level+1)))
+            if level==4:bounded_facts={'coverage':facts.get('coverage',{}),'notice':'Detailed machine facts omitted for this prompt. Inspect the source batches and engineering graph.'} if isinstance(facts,dict) else None
+        elif any(len(item.get('excerpt',''))>420 for item in selected):
+            # Reduce the longest excerpt, keeping every source represented first.
+            item=max(selected,key=lambda item:len(item.get('excerpt','')))
+            old_end=item.get('endLine');text=item['excerpt'][:max(350,int(len(item['excerpt'])*.65))]
+            item['excerpt']=text.rsplit('\n',1)[0] if '\n' in text else text
+            item['completeSection']=False;item['contextTruncated']=True;item['controlFacts']=[]
+            item['endLine']=int(item.get('line') or 1)+item['excerpt'].count('\n')
+            source_reductions.append({'sourceId':item.get('sourceId'),'fromEndLine':old_end,'endLine':item['endLine']});truncated=True
         elif len(selected)>1:
-            selected.pop();removed_sections+=1;compose()
-        elif selected and len(selected[0].get('excerpt',''))>500:
-            selected[0]['excerpt']=selected[0]['excerpt'][:int(len(selected[0]['excerpt'])*.65)].rsplit('\n',1)[0]
-            selected[0]['completeSection']=False;selected[0]['contextTruncated']=True;truncated=True;compose()
-            selected[0]['endLine']=int(selected[0].get('line') or 1)+selected[0]['excerpt'].count('\n')
-            selected[0]['controlFacts']=[fact for fact in selected[0].get('controlFacts',[]) if fact.get('line',0)<=selected[0]['endLine']]
-            compose()
-        elif evidence is None and len(messages[-1]['content'])>2000:
-            # Compatibility for older tools whose evidence is already serialized.
-            messages[-1]['content']=messages[-1]['content'][:int(len(messages[-1]['content'])*.7)]+'\n[Context truncated; analysis incomplete.]'
-            truncated=True
-        else:raise ValueError('This question and its required instructions exceed the context limit. Ask a shorter question or increase the context in Settings.')
-        used=count()
-    usage={'usedTokens':used,'maxContext':limit,'remainingTokens':limit-used,'reservedAnswerTokens':reserve,
-           'trimmedHistoryMessages':removed_history,'omittedSections':removed_sections,'truncated':truncated,'measurement':'llama.cpp chat template tokenizer'}
+            selected.pop();removed_sections+=1
+        elif evidence is None and len(original)>2000:
+            original=original[:int(len(original)*.7)]+'\n[Context truncated; analysis incomplete.]';truncated=True
+        else:raise ValueError('The required instructions and question exceed the model context. This batch was not analyzed; shorten the question or use a larger context.')
+        compose();used=count()
+    usage={'usedTokens':used,'promptTokens':used,'initialPromptTokens':initial,'maxContext':limit,'remainingTokens':limit-used,
+           'reservedAnswerTokens':reserve,'fittingMarginTokens':32,'trimmedHistoryMessages':removed_history,'omittedSections':removed_sections,
+           'factsReduced':facts_reduced,'sourceReductions':source_reductions,'truncated':truncated,'measurement':'llama.cpp chat template tokenizer'}
     report('Context ready; generating local answer',contextUsage=usage)
     return usage,selected
 
 
-def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None,evidence=None,structured=False,output_schema=None):
+def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None,evidence=None,structured=False,output_schema=None,facts=None):
     cfg=configuration()
     if cfg['provider']=='local': return None
     timeout=model_response_timeout(cfg=cfg) if timeout is None else timeout
@@ -195,11 +222,12 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
         if response_budget<=0:raise requests.exceptions.Timeout('Chopper response time expired before generation.')
         started=time.monotonic();context_usage={};sent_evidence=evidence
         if cfg['provider']=='embedded':
-            context_usage,sent_evidence=_fit_context(messages,cfg,int(body['max_tokens']),evidence)
+            context_usage,sent_evidence=_fit_context(messages,cfg,int(body['max_tokens']),evidence,facts=facts)
             if structured and sent_evidence:
                 source_ids=[item['sourceId'] for item in sent_evidence]
-                schema={'type':'object','properties':{'paragraphs':{'type':'array','minItems':1,'maxItems':8,'items':{'type':'object','properties':{
-                    'text':{'type':'string'},'sourceIds':{'type':'array','minItems':1,'maxItems':4,'items':{'type':'string','enum':source_ids}}},
+                short=int(body['max_tokens'])<=350
+                schema={'type':'object','properties':{'paragraphs':{'type':'array','minItems':1,'maxItems':2 if short else 6,'items':{'type':'object','properties':{
+                    'text':{'type':'string','maxLength':500 if short else 1200},'sourceIds':{'type':'array','minItems':1,'maxItems':4,'items':{'type':'string','enum':source_ids}}},
                     'required':['text','sourceIds'],'additionalProperties':False}}},'required':['paragraphs'],'additionalProperties':False}
                 body['response_format']={'type':'json_schema','json_schema':{'name':'source_cited_answer','strict':True,'schema':schema}}
         log.info('CHOPPER_MODEL_REQUEST provider=%s input_chars=%s answer_limit=%s response_timeout_s=%s',cfg['provider'],sum(len(m['content']) for m in messages),body.get('max_tokens','provider-default'),timeout)
@@ -226,7 +254,7 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
                     if not part['sourceIds'] or any(value not in allowed for value in part['sourceIds']):raise ValueError('Unknown source citation.')
                     parts.append(' '.join('['+value+']' for value in part['sourceIds'])+' '+part['text'])
                 answer='\n\n'.join(parts)
-            except (ValueError,KeyError,TypeError):raise ValueError('The model did not finish a valid source-cited answer. Ask a narrower question or increase answer tokens in Settings.')
+            except (ValueError,KeyError,TypeError):raise ModelAnswerError('The model did not finish a valid source-cited answer. This batch remains incomplete.',sent_evidence,context_usage)
         elapsed=round(time.monotonic()-started,1)
         usage=data.get('usage') or {}
         log.info('CHOPPER_MODEL_RESPONSE provider=%s response_elapsed_s=%s prompt_tokens=%s answer_tokens=%s',cfg['provider'],elapsed,usage.get('prompt_tokens','unknown'),usage.get('completion_tokens','unknown'))

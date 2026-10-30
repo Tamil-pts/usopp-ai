@@ -5,6 +5,38 @@ from fastapi import HTTPException
 from . import store,bindings,schema,media,service
 from .store import hub,quality,pi,identity,timestamp,text
 
+def _template_author(user):
+    quality.personal(user)
+
+
+def template_drafts(user):
+    _template_author(user);store.initialize()
+    with hub.db() as db:
+        return {'items':[dict(r) for r in db.execute('SELECT * FROM ds_template_drafts WHERE owner_id=? OR ? ORDER BY created_at DESC LIMIT 200',(user['id'],user['role']=='admin'))]}
+
+
+def create_template_draft(user,payload):
+    from backend.core.workhub_document_spaces import find
+    from backend.core.workhub_quality import authoring,documents
+    _template_author(user);store.initialize()
+    kind=payload.get('kind');name=text(payload.get('name',''),180,True)
+    if kind not in {*quality.STAGES,'mom'}:raise HTTPException(400,'Choose a supported document type.')
+    with hub.db(True) as db:
+        scope=identity();now=timestamp()
+        db.execute('INSERT INTO wh_document_spaces(id,title,owner_id,created_at,updated_at) VALUES(?,?,?,?,?)',(scope,'Template: '+name,user['id'],now,now))
+        db.execute('INSERT INTO ds_template_drafts VALUES(?,?,?,?,?,?)',(scope,'',kind,name,user['id'],now))
+        p=find(db,scope);quality.ensure_project(db,p,user)
+        if kind=='mom':
+            doc,rev=pi.create_document(db,user,scope,'mom',name,{'meeting_subject':'','participants':[],'discussion_summary':[],'decisions':[],'actions':[],'clarifications':[],'next_meeting_items':[],'engineering_requirements':[],'sources':[]})
+        else:
+            content=documents.clean_content(db,scope,kind,authoring.blank(kind))
+            control=documents.create_control(db,p,user,kind,initial_content=content)
+            doc=quality.native(db,control);rev=pi.revision(db,doc['current_revision'],doc['id'])
+        db.execute('UPDATE ds_template_drafts SET document_id=? WHERE scope_id=?',(doc['id'],scope))
+        store.audit(db,user,scope,doc['id'],rev['id'],'template_design_started',{'kind':kind,'name':name})
+    return {'scope_id':scope,'document_id':doc['id'],'kind':kind,'name':name,'owner_id':user['id'],'created_at':now}
+
+
 def templates(user):
     store.initialize();quality.personal(user)
     with hub.db() as db:
@@ -41,12 +73,23 @@ def lock_template(user,key,payload):
         store.audit(db,user,None,None,None,'template_locked' if lock else 'template_unlocked',{'template_id':key,'version':new['version'],'reason':reason})
     return {'saved':True,'version':new['version']}
 
-def _apply_layout(current,template):
-    """Match slots, retaining every existing paragraph, cell and custom block."""
+def _apply_layout(current,template,include_design_elements=False):
+    """Keep existing content and add reusable elements from Settings template drafts."""
     result=deepcopy(current);result.update({k:deepcopy(template[k]) for k in ('page','header','footer')});remaining=deepcopy(current['blocks']);blocks=[]
+    used_ids={b['id'] for b in remaining}
     for slot in template['blocks']:
-        binding=slot['data'].get('binding');match=next((b for b in remaining if b['type']==slot['type'] and (not binding or b['data'].get('binding')==binding)),None)
-        if not match:continue
+        binding=slot['data'].get('binding')
+        if include_design_elements:
+            match=next((b for b in remaining if b['id']==slot['id'] and b['type']==slot['type']),None)
+            if not match and binding:match=next((b for b in remaining if b['type']==slot['type'] and b['data'].get('binding')==binding),None)
+        else:
+            match=next((b for b in remaining if b['type']==slot['type'] and (not binding or b['data'].get('binding')==binding)),None)
+        if not match:
+            if include_design_elements and not slot['type'].startswith('native_'):
+                match=deepcopy(slot)
+                if match['id'] in used_ids:match['id']=identity()
+                used_ids.add(match['id']);blocks.append(match)
+            continue
         match['style']=deepcopy(slot['style'])
         if match['type']=='native_table':match['data'].update({k:deepcopy(v) for k,v in slot['data'].items() if k!='binding'})
         blocks.append(match);remaining.remove(match)
@@ -58,8 +101,10 @@ def apply_template(user,pid,did,key,payload):
         p,doc,rev,control=store.editable(db,user,pid,did,payload.get('revision_id'),payload.get('version'))
         row=db.execute('SELECT * FROM ds_templates WHERE id=? ORDER BY version DESC LIMIT 1',(key,)).fetchone()
         if not row or not row['active'] or not row['shared'] and row['owner_id']!=user['id'] and user['role']!='admin':raise HTTPException(404,'Reusable template is unavailable.')
+        if row['kind']!=(control['stage'] if control else doc['kind']):raise HTTPException(400,'Choose a template for this document type.')
         wrapper=json.loads(row['layout']);current=bindings.layout(rev['content'],control['stage'] if control else doc['kind'])
-        result=_apply_layout(current,wrapper['studio']);result['template_id']=key+':'+str(row['version'])
+        is_design=bool(db.execute('SELECT 1 FROM ds_template_drafts WHERE scope_id=?',(wrapper.get('source_project_id',''),)).fetchone())
+        result=_apply_layout(current,wrapper['studio'],is_design);result['template_id']=key+':'+str(row['version'])
         store.guard(db,user,rev['id'],{**rev['content'],'studio':current},{**rev['content'],'studio':result})
     result=media.restore(user,pid,result,wrapper.get('assets',{}))
     # Applying is an explicit normal draft save, not a parallel layout store.

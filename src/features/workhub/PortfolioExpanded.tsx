@@ -1,0 +1,20 @@
+﻿import {AlertTriangle,ArrowRight,CalendarDays,ClipboardCheck,Users} from 'lucide-react';
+import {dayLabel,when,type HubRow} from './projectApi';
+
+type Props={project:HubRow;detail:HubRow|null;error:string;users:HubRow[];onOpen:(id:string,item?:string)=>void;onIssues:(id:string)=>void;onUpdates:(id:string)=>void;onRoadmap:(id:string)=>void;onNewTask:(row:HubRow)=>void;canManage:boolean};
+const name=(users:HubRow[],id:number)=>users.find(user=>user.id===id)?.username||'Not assigned';
+const initials=(s:string)=>s.split(/\s+/).filter(Boolean).slice(0,2).map(v=>v[0]).join('').toUpperCase()||'?';
+export function PortfolioExpanded({project,detail,error,users,onOpen,onIssues,onUpdates,onRoadmap,onNewTask,canManage}:Props){
+ if(error)return <div className="pp-expand-error" role="alert">Project details could not be loaded: {error}</div>;
+ if(!detail)return <div className="pp-expand-error" role="status">Loading project details…</div>;
+ const milestones=(detail.tasks||[]).filter((task:HubRow)=>task.milestone).sort((a:HubRow,b:HubRow)=>(a.due_date||'9999').localeCompare(b.due_date||'9999'));
+ const issues=(detail.issues||[]).filter((issue:HubRow)=>issue.status==='open'),events=detail.events||[];
+ let supporting:number[]=[];try{const value=typeof project.supporting_ids==='string'?JSON.parse(project.supporting_ids):project.supporting_ids;if(Array.isArray(value))supporting=value;}catch{/* Invalid supporting data is unavailable. */}
+ const ids=[...new Set([project.assignment_state==='unassigned'?null:project.owner_id,project.quality_id,project.approver_id,project.release_id,...supporting].filter((id):id is number=>Number.isInteger(id)&&id>0))];
+ return <div className="pp-expanded" aria-label={'Details for '+project.title}>
+  <section><header><h4>Project roadmap <small>({milestones.length})</small></h4><button onClick={()=>onRoadmap(project.id)}>View timeline <ArrowRight size={13}/></button></header>{milestones.slice(0,4).map((task:HubRow,index:number)=><button className="pp-expand-item" key={task.id} onClick={()=>onOpen(project.id,task.id)}><i className="pp-milestone-number">{index+1}</i><span><b>{task.title}</b><small>{task.due_date?dayLabel(task.due_date):'No date scheduled'} · {task.stage_label||task.stage}</small></span></button>)}{!milestones.length&&<p>No milestones recorded.</p>}</section>
+  <section><header><h4>Latest updates</h4><button onClick={()=>onUpdates(project.id)}>View all <ArrowRight size={13}/></button></header>{events.slice(0,4).map((event:HubRow)=><button className="pp-expand-item" key={event.id} onClick={()=>onUpdates(project.id)}><CalendarDays size={15}/><span><b>{String(event.event||'Update').replaceAll('_',' ')}</b><small>{event.detail?.actor_name||name(users,event.actor_id)} · {when(event.created_at)}</small></span></button>)}{!events.length&&<p>No activity recorded.</p>}</section>
+  <section><header><h4>Action required</h4><button onClick={()=>onIssues(project.id)}>View issues <ArrowRight size={13}/></button></header>{issues.slice(0,3).map((issue:HubRow)=><button className="pp-expand-item" key={issue.id} onClick={()=>onIssues(project.id)}><AlertTriangle size={16}/><span><b>{issue.title}</b><small>{name(users,issue.owner_id)} · Open</small></span></button>)}{(detail.pending_approvals||0)>0&&<button className="pp-expand-item" onClick={()=>onOpen(project.id)}><ClipboardCheck size={16}/><span><b>Workflow approvals pending</b><small>{detail.pending_approvals} work item(s)</small></span></button>}{!issues.length&&!detail.pending_approvals&&<p>No open issues or workflow approvals.</p>}</section>
+  <section><header><h4><Users size={16}/> Project team</h4>{canManage&&<button onClick={()=>onNewTask(project)}>Assign task</button>}</header>{ids.slice(0,5).map(id=><div className="pp-expand-item" key={id}><i className="pp-expand-avatar">{initials(name(users,id))}</i><span><b>{name(users,id)}</b><small>{[project.owner_id===id&&'Owner',project.quality_id===id&&'Quality',project.approver_id===id&&'Approval',project.release_id===id&&'Release'].filter(Boolean).join(' · ')||'Supporting engineer'}</small></span></div>)}{!ids.length&&<p>No team assigned.</p>}</section>
+ </div>;
+}

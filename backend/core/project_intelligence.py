@@ -20,6 +20,7 @@ from python_engine.compare import decode_project_text
 from python_engine.project_info import local_project_details
 
 SCHEMA=1
+PARSER_REVISION=2
 EXCLUDED=IGNORED_PROJECT_DIRS|{'cache','generated','generatedcode','debug','release','.idea','.vs','.vscode','dbk'}
 RELEVANT=EXTENSIONS|{'.prg','.pkg','.xml'}
 MAX_FILE=8*1024*1024
@@ -277,6 +278,13 @@ class Index:
             blocks=_blocks(text) if suffix in {'.st','.ab','.src','.fun'} else [(i+1,min(len(lines),i+100),'Source context',False) for i in range(0,len(lines),90)]
             for first,last,label,complete in blocks:section(first,last,label,complete)
         clean=_mask(text);code=_mask(text,strings=True)
+        if suffix=='.c':
+            from python_engine.c_control_flow import c_flow
+            parts,_,_,c_notices=c_flow(text,relative)
+            notices.extend(c_notices)
+            for part in parts:
+                if part.get('kind')=='function':
+                    symbols.append((part['name'].casefold(),part['name'],'function','C source',relative,part['line'],scope+'/'+part['name'].casefold()))
         if suffix=='.prg':symbols.append((path.stem.casefold(),path.stem,'program','',relative,1,scope))
         for match in re.finditer(r'(?im)^\s*(PROGRAM|FUNCTION_BLOCK|FUNCTION)\s+([A-Za-z_]\w*)\s*(?::\s*([^\n;]+))?',clean):
             role=match[1].casefold();name=match[2];datatype=(match[3] or '').strip()
@@ -352,6 +360,7 @@ class Index:
                 metadata(db,'root',str(self.root))
                 metadata(db,'identity',local_project_details(self.root))
                 existing={row['path']:dict(row) for row in db.execute('SELECT path,size,mtime,status FROM files')}
+                parser_current=metadata(db,'parser_revision')==PARSER_REVISION
                 for name in set(existing)-names:db.execute('DELETE FROM files WHERE path=?',(name,));state['removedFiles']+=1
                 db.commit()
                 for number,path in enumerate(files,1):
@@ -361,7 +370,7 @@ class Index:
                     except OSError:
                         db.execute('DELETE FROM files WHERE path=?',(relative,));db.commit();state['removedFiles']+=1;continue
                     state.update(phase='indexing',stage='Indexing '+relative,currentFile=relative,processedFiles=number-1,percentage=round(100*(number-1)/max(1,len(files)),1))
-                    if mode!='rebuild' and previous and previous['mtime']==stat.st_mtime_ns and previous['size']==stat.st_size and previous['status']=='indexed':
+                    if mode!='rebuild' and parser_current and previous and previous['mtime']==stat.st_mtime_ns and previous['size']==stat.st_size and previous['status']=='indexed':
                         state['unchangedFiles']+=1;state['indexedFiles']+=1
                     else:
                         try:
@@ -389,6 +398,7 @@ class Index:
                     state['processedFiles']=number;state['percentage']=round(100*number/max(1,len(files)),1)
                     if number%10==0 or number==len(files):emit();metadata(db,'state',state);db.commit()
                 state.update(phase='ready',stage='Project ready' if not state['failedFilesCount'] else 'Project ready with failed files to review',ready=True,percentage=100)
+                state['parserRevision']=PARSER_REVISION;metadata(db,'parser_revision',PARSER_REVISION)
                 emit();metadata(db,'state',state);metadata(db,'root',str(self.root));db.commit()
         except InterruptedError:
             state.update(phase='cancelled',stage='Indexing cancelled; analysis is incomplete',ready=False);emit()
@@ -396,7 +406,9 @@ class Index:
         finally:INDEX_LOCK.release()
         return self.snapshot()
 
-    def retrieve(self,question,characters=18000,passes=3):
+    def retrieve(self,question,characters=18000,passes=3,offset=0,limit=14):
+        offset=max(0,min(100000,int(offset)));limit=max(1,min(200,int(limit)))
+        characters=max(1000,min(2000000,int(characters)))
         candidates={};pass_log=[];query_symbols=[]
         tokens=list(dict.fromkeys(re.findall(r'[A-Za-z_][A-Za-z0-9_]{1,70}',question.casefold())))
         terms=[word for word in tokens if word not in QUERY_STOP and word not in KEYWORDS][:16]
@@ -429,7 +441,7 @@ class Index:
                         add(db.execute('SELECT * FROM sections WHERE file=? AND first<=? AND last>=? ORDER BY (last-first) ASC LIMIT 1',(row['file'],row['line'],row['line'])).fetchone(),105,'Declaration '+token,1)
             if terms:
                 expression=' OR '.join('"'+term.replace('"','""')+'"' for term in terms)
-                for row in db.execute('SELECT s.*,bm25(section_search) rank FROM section_search JOIN sections s ON s.id=section_search.rowid WHERE section_search MATCH ? ORDER BY rank LIMIT 60',(expression,)):
+                for row in db.execute('SELECT s.*,bm25(section_search) rank FROM section_search JOIN sections s ON s.id=section_search.rowid WHERE section_search MATCH ? ORDER BY rank LIMIT 600',(expression,)):
                     add(row,40+min(15,-float(row['rank'])),'Full-text search',1)
             if not candidates:
                 for row in db.execute("SELECT * FROM sections WHERE enabled=1 AND kind IN ('Logic','Ladder') ORDER BY complete DESC,length(text) DESC LIMIT 20"):add(row,10,'Project overview candidate',1)
@@ -442,10 +454,10 @@ class Index:
             traced=set()
             for number in range(2,min(4,passes)+1):
                 before=len(candidates);next_frontier=set()
-                for name in sorted(frontier-traced)[:32]:
+                for name in sorted(frontier-traced)[:128]:
                     traced.add(name)
                     shared=db.execute("SELECT 1 FROM symbols WHERE name=? AND (scope LIKE '@global/%' OR kind IN ('function','function_block','data_type')) LIMIT 1",(name,)).fetchone()
-                    for edge in db.execute('SELECT * FROM edges WHERE a=? OR b=? LIMIT 25',(name,name)):
+                    for edge in db.execute('SELECT * FROM edges WHERE a=? OR b=? ORDER BY file,line LIMIT 200',(name,name)):
                         scopes=relevant_scopes.get(name,set())
                         if scopes and not shared and not any(edge['scope']==scope or edge['scope'].startswith(scope+'/') or scope.startswith(edge['scope']+'/') for scope in scopes):continue
                         next_frontier.update([edge['a'],edge['b']])
@@ -468,9 +480,11 @@ class Index:
                         selected=active and task['configuration'].casefold()==str(active).casefold()
                         if selected:return 'active task' if task['enabled'] else 'disabled task'
                 return 'shared / task assignment unresolved'
-            chosen=[];used=0;seen=[]
-            for row in sorted(candidates.values(),key=lambda value:(-value['score'],value['file'],value['first'])):
-                if used>=characters or len(chosen)>=14:break
+            chosen=[];used=0;seen=[];cursor=offset
+            ranked=sorted(candidates.values(),key=lambda value:(-value['score'],value['file'],value['first']))
+            for position,row in enumerate(ranked[offset:],offset):
+                if used>=characters or len(chosen)>=limit:break
+                cursor=position+1
                 if not include_disabled and ownership(row)=='disabled task':continue
                 if any(file==row['file'] and first<=row['first'] and last>=row['last'] for file,first,last in seen):continue
                 remaining=characters-used
@@ -491,7 +505,22 @@ class Index:
         if state.get('unreadableFolders'):notices.append('Some project folders could not be enumerated. Their sources are unavailable to this analysis.')
         if ambiguous:notices.append('Same-named symbols occur in multiple scopes; do not merge their behavior: '+', '.join(ambiguous[:12]))
         if any(not item['completeSection'] for item in chosen):notices.append('Some retrieved sections are bounded source windows. Full sequence or branch completeness is not established by those windows.')
-        return {'evidence':chosen,'passes':pass_log,'notices':notices,'tasks':tasks,'identity':identity,'characters':used,'candidateCount':len(candidates),'projectId':self.key}
+        return {'evidence':chosen,'passes':pass_log,'notices':notices,'tasks':tasks,'identity':identity,'characters':used,'candidateCount':len(candidates),'projectId':self.key,'offset':offset,'nextOffset':cursor if cursor<len(ranked) else None,'candidateFiles':len({row['file'] for row in ranked})}
+
+
+    def relationships(self,kind='',query='',file='',offset=0,limit=100):
+        """Page indexed relationships without a first-N-only graph snapshot."""
+        offset=max(0,min(10000000,int(offset)));limit=max(1,min(500,int(limit)))
+        clauses=[];values=[]
+        if kind:clauses.append('kind=?');values.append(str(kind)[:60])
+        if file:clauses.append('file=?');values.append(str(file)[:1000])
+        if query:
+            clauses.append('(a=? OR b=?)');values.extend([symbol(str(query)[:200])]*2)
+        where=' WHERE '+' AND '.join(clauses) if clauses else ''
+        with connection(self.path) as db:
+            total=db.execute('SELECT count(*) FROM edges'+where,values).fetchone()[0]
+            rows=[dict(row) for row in db.execute('SELECT a,b,kind,file,line,scope,detail FROM edges'+where+' ORDER BY file,line,kind,a,b LIMIT ? OFFSET ?',[*values,limit,offset])]
+        return {'items':rows,'total':total,'offset':offset,'nextOffset':offset+len(rows) if offset+len(rows)<total else None}
 
 
 def start(root,owner,mode='refresh'):

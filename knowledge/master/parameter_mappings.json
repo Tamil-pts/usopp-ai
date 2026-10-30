@@ -16751,6 +16751,419 @@
       "machine_department": "Carding",
       "metadata_parameter": "Del A %",
       "status": "configured"
+    },
+    {
+      "plc_parameter": "FLAP LH TEST",
+      "plc_tag": "LHS_TEST_ON",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "FLAP LH TEST ON",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "FLAP RH TEST",
+      "plc_tag": "RHS_TEST_ON",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "FLAP RHS TEST ON",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "FLAP RH TEST",
+      "plc_tag": "SAFETY_DOOR_OPEN_V",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Safety Door open",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "FALP TEST",
+      "plc_tag": "HMI_PRESSURE_PID_READ",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "HMI PRESSURE PID READ",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "FLAP LH TEST",
+      "plc_tag": "PRESSURE_CONTR_PAR.Kp",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "PRESSURE CONTR PAR Kp",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "FLAP RH TEST",
+      "plc_tag": "PRESSURE_CONTR_PAR.Tn",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "PRESSURE CONTR PAR Tn",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "FLAP RH TEST",
+      "plc_tag": "HMI_PRESSURE_PID_WRITE",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "HMI PRESSURE PID WRITE",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "FALP TEST",
+      "plc_tag": "TEST_FLAP",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "FALP TEST",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[11]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[12]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[14]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_1_PARAMETER[15]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[35]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[36]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Timer Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[11]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[12]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[14]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_2_PARAMETER[15]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[37]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[38]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[11]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[12]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[15]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_3_PARAMETER[14]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[11]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[12]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[14]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_4_PARAMETER[15]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[41]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[42]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail  Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[11]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[12]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[14]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_5_PARAMETER[15]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[43]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[44]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail  Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[11]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[12]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[14]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_6_PARAMETER[15]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[45]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail  Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[46]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[11]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[12]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[14]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.PREVIOUS_SHIFT_7_PARAMETER[15]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[47]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail  Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[48]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail  Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "PD_PARAMETER_RUN_HOUR",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "PD_PARAMETER_RUN_MIN",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Hour",
+      "plc_tag": "PD_PARAMETER_IDLE_HOUR",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Idle Time Minute",
+      "plc_tag": "PD_PARAMETER_IDLE_MIN",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[39]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.INPUT_PARAMETERS[40]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Power fail Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Shift Machine Run Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[11]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Shift Machine Run Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[12]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Run Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Shift Machine Idle Time Hour",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[14]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Hour",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Shift Machine Idle Time Minute",
+      "plc_tag": "MC_SHIFT_REPORT.CURRENT_SHIFT_PARAMETER[15]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "Idle Time Minute",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "machine status for fault history",
+      "plc_tag": "machine_status_hmi[1]",
+      "machine_department": "Blow Room",
+      "metadata_parameter": "machine status for fault history 2",
+      "status": "configured"
     }
   ],
   "entry_schema": {

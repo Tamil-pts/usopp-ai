@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 
-export function PLCDataPage({theme, setTheme,historyId='',onLive,onContext}:{theme:'light'|'dark';setTheme:(theme:'light'|'dark')=>void;historyId?:string;onLive:()=>void;onContext?:(value:Record<string,unknown>)=>void}){
+export function PLCDataPage({theme,historyId='',onLive,onContext}:{theme:'light'|'dark';historyId?:string;onLive:()=>void;onContext?:(value:Record<string,unknown>)=>void}){
   const [ready, setReady] = useState(false);
   const [error, setError] = useState('');
   const frame=useRef<HTMLIFrameElement>(null);
@@ -26,7 +26,7 @@ export function PLCDataPage({theme, setTheme,historyId='',onLive,onContext}:{the
       .then(async response => {
         const html = await response.text();
         if (!response.ok || !html.includes('/nami/assets/')) {
-          throw new Error('The PLC Data interface is unavailable. Rebuild the interface and restart usop.ai.');
+          throw new Error('The PLC Data interface is unavailable. Rebuild the interface and restart uSOPp.ai.');
         }
         setReady(true);
       })
@@ -38,14 +38,7 @@ export function PLCDataPage({theme, setTheme,historyId='',onLive,onContext}:{the
   if (error) return <div className="card" role="alert"><h2>DataInspect</h2><p>{error}</p></div>;
   if (!ready) return <p role="status">Loading PLC Data…</p>;
   return <div className="plcWorkspace">
-    <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,marginBottom:8}}>
-      <span>DataInspect · PLC packet and metadata checks</span>
-      <div style={{display:'flex',gap:8}}>
-        {historyId&&<button className="btn primary" onClick={onLive}>New live test</button>}
-        <button className="btn" onClick={()=>setTheme(theme==='light'?'dark':'light')}>{theme==='light'?'Dark mode':'Light mode'}</button>
-
-      </div>
-    </div>
+    {historyId&&<div className="plcHistoryActions"><button className="btn primary" onClick={onLive}>New live test</button></div>}
     <iframe ref={frame} key={historyId} title="Nami PLC Data Verification V1.5" src={`/nami/index.html${historyId?'?historyId='+encodeURIComponent(historyId):''}`} style={{width:'100%',height:'100%',minHeight:0,flex:1,border:0,display:'block',background:theme==='light'?'#ffffff':'#020617'}}/>
   </div>;
 }

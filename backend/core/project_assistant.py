@@ -140,146 +140,114 @@ def _machine_chat_preview(machine):
         network['summary']=str(network.get('summary') or '')[:1600]
         network['layout']=str(network.get('layout') or '')[:1600]
     preview['detailLimited']=True
+    preview['signalWrites']=[item for item in preview.get('signalWrites',[]) if any(ref in selected for ref in item.get('evidence',[]))][:100]
+    preview['detailCounts']={key:len(value) for key,value in machine.items() if isinstance(value,list)}
     return preview
 
 
+def _source_supported_transitions(machine,evidence):
+    by_id={item['id']:item for item in machine.get('evidence',[])};lines=[]
+    for sequence in machine.get('stateMachines',[]):
+        if sequence.get('notices') or not (sequence.get('ownership')=='active task' or sequence.get('reachableFromTasks')):continue
+        for transition in sequence.get('transitions',[]):
+            required=list(dict.fromkeys([*transition.get('conditionEvidence',[]),*transition.get('assignmentEvidence',[])]))
+            if not required:continue
+            supplied=[]
+            for ref in required:
+                source=by_id.get(ref)
+                if not source:break
+                event=source.get('eventLine',source['line'])
+                match=next((item for item in evidence if item['file']==source['file'] and item['line']<=event<=item['endLine']),None)
+                if not match:break
+                supplied.append(match['sourceId'])
+            else:
+                refs=' '.join('['+key+']' for key in dict.fromkeys(supplied))
+                guards=' AND '.join(transition.get('conditions',[])) or 'condition unresolved'
+                lines.append(f"{refs} In `{sequence['name']}` ({sequence['file']}), source state `{transition['from']}` assigns `{transition['to']}` when {guards}. The selector's physical meaning and runtime progression are unconfirmed.")
+            if len(lines)>=12:return lines
+    return lines
+
+
 def answer(payload):
+    from backend.core.engineering_analysis import run,broad_question
     context=payload.get('context') or {};question=str(payload.get('question') or '')[:12000]
-    owner=(current_user.get() or {}).get('id') or (current_user.get() or {}).get('username')
-    index=opened(context['intelligenceProjectId'],owner)
-    deep_mode=context.get('investigationMode')=='deep'
-    report('Retrieval pass 1: exact symbols and full-text search')
-    retrieval=index.retrieve(question,characters=28000 if deep_mode else 16000,passes=3)
-    evidence=retrieval['evidence'];notices=list(retrieval['notices'])
-    machine_analysis=None;compact_machine=None;machine_source_ids={}
-    if _complete_sequence_question(question):
-        report('Reconstructing task-aware machine functions and state transitions')
-        try:
-            machine_analysis=analyze_machine_functions(index)
-            selected=_machine_model_evidence(machine_analysis)
-            for number,item in enumerate(selected,len(evidence)+1):
-                item['sourceId']='S'+str(number);item['chatSourceId']=item['sourceId'];machine_source_ids[item['id']]=item['sourceId']
-                evidence.append({**item,'retrievalPass':5,'matchReason':'Deterministic machine-function evidence'})
-            compact_machine=copy.deepcopy(compact_for_chat(machine_analysis))
-            full_sequences={item['id']:item for item in machine_analysis.get('stateMachines',[])}
-            for sequence in [*compact_machine.get('stateMachines',[]),*compact_machine.get('reachableStateMachines',[])]:
-                full=full_sequences.get(sequence.get('id'),{})
-                selected_transitions=[]
-                for transition in full.get('transitions',[]):
-                    refs=[*transition.get('conditionEvidence',[]),*transition.get('assignmentEvidence',[])]
-                    source_ids=list(dict.fromkeys(machine_source_ids[ref] for ref in refs if ref in machine_source_ids))
-                    if not source_ids:continue
-                    selected_transitions.append({key:transition.get(key) for key in ('from','to','conditions','line','status')} |
-                        {'sourceIds':source_ids,'actions':[{'code':action.get('code'),'line':action.get('line')} for action in transition.get('actions',[])[:5]]})
-                sequence['omittedTransitionCount']=max(0,sequence.get('transitionCount',0)-len(selected_transitions))
-                sequence['transitions']=selected_transitions
-            for call in compact_machine.get('callGraph',[]):
-                refs=call.pop('evidence',[])
-                call['sourceIds']=[machine_source_ids[ref] for ref in refs if ref in machine_source_ids]
-            for function in compact_machine.get('functions',[]):
-                refs=function.pop('evidence',[])
-                function['sourceIds']=[machine_source_ids[ref] for ref in refs if ref in machine_source_ids]
-            for network in compact_machine.get('ladderNetworks',[]):
-                refs=network.pop('evidence',[])
-                network['sourceIds']=[machine_source_ids[ref] for ref in refs if ref in machine_source_ids]
-            if not machine_analysis.get('coverage',{}).get('indexReady'):
-                notices.append('Project indexing is incomplete; the machine model covers only sources indexed so far.')
-        except Exception as error:
-            machine_analysis={'analysisMode':'deterministic static analysis','executionSimulated':False,
-                              'coverage':{'indexReady':False,'notices':['Machine-function analysis did not complete: '+str(error)[:220]]},
-                              'stateMachines':[],'functions':[],'evidence':[]}
-            compact_machine={'coverage':machine_analysis['coverage'],'stateMachines':[],'functions':[]}
-            notices.extend(machine_analysis['coverage']['notices'])
-    # A second focused search resolves block types discovered in declarations.
-    if len(evidence)<10:
-        types=list(dict.fromkeys(re.findall(r':\s*([A-Za-z_]\w*)\s*;', '\n'.join(item['excerpt'] for item in evidence))))[:4]
-        if types:
-            extra=index.retrieve(' '.join(types),characters=5000,passes=1)
-            seen={(item['file'],item['line'],item['endLine']) for item in evidence}
-            for item in extra['evidence']:
-                if (item['file'],item['line'],item['endLine']) not in seen and len(evidence)<12:
-                    item['sourceId']='S'+str(len(evidence)+1);item['retrievalPass']=4;evidence.append(item)
-            retrieval['passes'].append({'pass':4,'strategy':'Resolve discovered function-block types','types':types})
-    for item in evidence:
-        if not item.get('category'):
-            item['controlFacts']=[]
-            continue
-        facts=collect_operations(item['file'],item['excerpt'],item['category'],item['ownership'])[:8]
-        item['controlFacts']=[{'target':fact['name'],'value':fact.get('value'),'guards':fact.get('guards'),'coverage':fact.get('guardCoverage') if item['completeSection'] else 'partial section; enclosing guards unresolved',
-                               'line':item['line']+fact['eventLine']-1} for fact in facts]
-    summary={'passes':retrieval['passes'],'files':[{'file':item['file'],'line':item['line'],'endLine':item['endLine'],'pass':item['retrievalPass'],'sourceId':item['sourceId']} for item in evidence],
-             'candidateCount':retrieval['candidateCount'],'notices':notices,'projectId':index.key}
-    report('Tracing related functions, variables, tasks and interlocks',retrieval=summary)
-    help_items=reference_evidence(question,evidence)[:3]
-    # Manuals compete for the same context; keep compact contracts with source IDs.
-    manuals=[{**item,'excerpt':item.get('excerpt','')[:800]} for item in help_items]
-    identity={key:retrieval['identity'].get(key) for key in ('projectName','automationStudioVersion','activeConfiguration','configurationStatus','plcType')}
-    facts={'project':index.root.name,'identity':identity,'tasks':retrieval['tasks'][:4],
-           'coverageNotices':notices,'help':manuals,'validation':str(context.get('counts') or {})[:800]}
-    if compact_machine:facts['deterministicMachineFunctionModel']=compact_machine
-    documents=[item for item in context.get('attachments',[]) if isinstance(item,dict) and item.get('text')][:2]
-    if documents:facts['attachmentPreviews']=[{'name':item.get('name'),'text':str(item['text'])[:1200],'previewOnly':True} for item in documents]
-    prompt='Question: '+question+'\n\nProject facts and reference help:\n'+json.dumps(facts,ensure_ascii=False)
-    focused=[]
-    for item in evidence[:3]:
-        for fact in item['controlFacts']:
-            if fact['coverage']=='parsed' and re.search(r'\b'+re.escape(fact['target'])+r'\b',question,re.I):
-                guards=' AND '.join(fact['guards']) or 'no enclosing IF/CASE/loop condition at this source position'
-                focused.append(f"[{item['sourceId']}] line {fact['line']}: {fact['target']} receives {fact['value']}. Parsed enclosing guards: {guards}. This source fact takes precedence over an inferred guard.")
-    if focused:prompt+='\n\nVerified source facts for this question:\n'+'\n'.join(focused[:5])
-    if focused and re.search(r'inside|outside|enclosing|which condition',question,re.I):
-        text='\n\n'.join(focused[:5])+'\n\nThese conditions apply when the containing routine is called; task assignment and live execution remain separate checks.'
-        return {'answer':text,'source':'local-control-flow','model':None,'evidence':evidence[:3],'helpEvidence':[],
-                'retrieval':summary,'contextUsage':None,'review':True,'machineAnalysis':machine_analysis}
-    cfg=configuration();model_notice='';response=None
-    if cfg['provider'] not in {'embedded','local'}:
-        model_notice='Project Intelligence uses the bundled offline model. Select Local CPU model in Settings to generate an explanation.'
-    elif cfg['provider']=='embedded':
-        try:
-            complex_question=deep_mode or bool(re.search(r'complete|reverse.engineer|all.*interlock|machine.*(?:sequence|function)|startup.*stop',question,re.I))
-            findings=[]
-            if complex_question and len(evidence)>5:
-                for number,batch in enumerate((evidence[:6],evidence[6:12]),1):
-                    if not batch:continue
-                    report(f'Analysis pass {number}: checking selected source sections',retrieval={**summary,'analysisPass':number})
-                    partial=chat_model(SYSTEM,'Extract concise source-cited facts relevant to: '+question+'\nDo not give a complete machine verdict. Separate facts and unresolved dependencies.',max_tokens=320,on_progress=report,evidence=batch,structured=True)
-                    actual=partial.get('sentEvidence') or []
-                    if not explanation_reference_issue(partial['answer'],actual,require_project_citations=True):
-                        findings.append({'pass':number,'findings':partial['answer'][:2000],'sourceIds':[item['sourceId'] for item in actual]})
-                summary['analysisPasses']=findings
-                report('Combining checked intermediate findings with project evidence',retrieval=summary)
-                prompt+='\nIntermediate source-cited findings (partial, not independent proof):\n'+json.dumps(findings)
-            response=chat_model(SYSTEM,prompt,payload.get('history'),on_progress=report,evidence=evidence,structured=True)
-        except Exception as error:
-            # Indexing, validation and prior results remain independent of inference.
-            from backend.core.assist_model import ModelBusyError
-            model_notice=str(error) if isinstance(error,(ValueError,ModelBusyError)) else 'The local model did not complete this analysis. Review its status in Settings and retry.'
-    sent=evidence
-    if response:
-        sent=response.get('sentEvidence') or []
-        issue=explanation_reference_issue(response['answer'],sent,help_evidence=manuals,require_project_citations=bool(sent))
-        if sent and not re.search(r'\[S\d+\]',response['answer']):issue='missing_explicit_source_citations'
-        if issue:
-            model_notice='The generated answer failed source citation checks ('+issue+'). Review the retrieved evidence below; no complete explanation is established.'
-            response=None
-    if response:
-        text=response['answer']
-        usage=response.get('contextUsage') or {}
-        if response.get('finishReason')=='length':notices.append('The answer reached its output limit and may end mid-explanation. Ask to continue; the index is retained.')
-        if usage.get('omittedSections') or usage.get('truncated'):notices.append('Some retrieved evidence was omitted or shortened to fit the model context. Analysis is incomplete for those sources.')
-    else:
-        if machine_analysis is not None:
-            text=_deterministic_machine_answer(compact_machine or machine_analysis,machine_source_ids)
+    user=current_user.get() or {};index=opened(context['intelligenceProjectId'],user.get('id') or user.get('username'))
+    report('Building question-relevant engineering work queue')
+    try:machine=analyze_machine_functions(index)
+    except Exception as error:
+        machine={'coverage':{'indexReady':False,'notices':['Machine analysis did not finish: '+str(error)[:240]]},'functions':[],'stateMachines':[],'evidence':[]}
+    if re.search(r'inside|outside|enclosing|which condition',question,re.I):
+        local=index.retrieve(question);focused=[]
+        for item in local['evidence'][:3]:
+            if not item.get('completeSection'):continue
+            for fact in collect_operations(item['file'],item['excerpt'],item.get('category',''),item.get('ownership','')):
+                if fact.get('guardCoverage')=='parsed' and re.search(r'\b'+re.escape(fact['name'])+r'\b',question,re.I):
+                    guards=' AND '.join(fact.get('guards',[])) or 'no enclosing IF/CASE/loop condition at this source position'
+                    focused.append(f"[{item['sourceId']}] {fact['name']} receives {fact.get('value')}. Parsed enclosing guards: {guards}.")
+        if focused:return {'answer':'\n\n'.join(focused)+'\nTask assignment and live execution remain separate checks.',
+                           'source':'local-control-flow','model':None,'evidence':local['evidence'][:3],'retrieval':local,'contextUsage':None,'review':True}
+    from backend.core.engineering_question import plan, answer as trace_answer
+    selected_plan=plan(question,machine)
+    focused=trace_answer(index,question,machine,selected_plan)
+    if focused:return focused
+    outcome=run(index,question,payload,machine,chat_model,configuration(),SYSTEM,help_lookup=reference_evidence)
+    response=outcome['response'];evidence=outcome['evidence'];text=outcome['answer']
+    if broad_question(question):
+        if not evidence:evidence=outcome.get('retrievedEvidence',[])[:200]
+        transitions=_source_supported_transitions(machine,evidence)
+        intro='Partial machine-sequence analysis. A complete operating timeline and scheduler execution order are not established from the reviewed sources.'
+        if transitions:intro+='\n\nSelected source-parsed CASE transitions with condition and assignment evidence:\n\n'+'\n\n'.join(transitions)
+        calls=[];by_id={item['id']:item for item in machine.get('evidence',[])}
+        for call in machine.get('callGraph',[]):
+            for ref in call.get('evidence',[]):
+                source=by_id.get(ref)
+                if not source:continue
+                event=source.get('eventLine',source['line'])
+                found=next((item for item in evidence if item['file']==source['file'] and item['line']<=event<=item['endLine']),None)
+                callee=call.get('callee') or call.get('name')
+                if found and callee and re.search(r'\b'+re.escape(callee)+r'\b',found.get('excerpt',''),re.I):
+                    calls.append(f"[{found['sourceId']}] `{callee}` is referenced as a call in {call['file']}:{call['line']}. {call.get('implementationStatus','Implementation semantics unresolved')}.")
+                    break
+            if len(calls)>=6:break
+        if calls:intro+='\n\nSelected source-parsed call relationships:\n\n'+'\n\n'.join(calls)
+        # Citation checks cannot establish semantic entailment. Keep model
+        # summaries in the diagnostic run, but do not publish free-text PLC
+        # claims as a machine explanation without deterministic proof.
+        text=intro
+        if not transitions:text+='\n\nNo connected sequence with supplied condition and assignment proofs was established in the reviewed batches.'
+        if outcome.get('answer'):
+            outcome['modelNotice']='Model summaries were retained for diagnostics but omitted from the answer because their PLC claims were not semantically verified.'
+    writers=[item for item in outcome.get('retrievedEvidence',[]) if item.get('writerFact')]
+    if writers:
+        traced=[];seen=set()
+        for item in writers:
+            fact=item['writerFact'];key=(fact['file'],fact['line'],fact['name'])
+            if key in seen:continue
+            seen.add(key)
+            guards=' AND '.join(fact.get('guards',[]))
+            condition=('Enclosing source conditions: '+(guards or 'no enclosing IF/CASE/loop in the parsed routine')) if fact.get('guardCoverage')=='parsed' else 'Guard semantics are unresolved or the ladder rung has complex topology; inspect the linked source.'
+            operation=(f"contains a ladder coil for `{fact['name']}` (coil type `{fact.get('value')}`, network {fact['network']})" if fact.get('network') else f"writes `{fact['name']}` with `{fact.get('value')}`")
+            traced.append(f"[{item['sourceId']}] {fact['file']}:{fact.get('sourceLine',fact['line'])} {operation}. {condition}.")
+        trace='Static writer trace. No live PLC values were supplied, so the actual blocking condition is not established. Multiple writers may override one another during cyclic execution.\n\n'+'\n\n'.join(traced)
+        text=trace+('\n\nModel-assisted source findings:\n\n'+text if text else '')
+        known={item['sourceId'] for item in evidence};evidence.extend(item for item in writers if item['sourceId'] not in known)
+    if not text:
+        evidence=outcome.get('retrievedEvidence',[])[:200]
+    source_ids={item['id']:item['sourceId'] for item in evidence if item.get('id')}
+    view={**machine,'evidence':[{**item,'chatSourceId':source_ids[item['id']]} if item['id'] in source_ids else item for item in machine.get('evidence',[])]}
+    if not text:
+        if broad_question(question) or _complete_sequence_question(question):
+            static={**machine,'callGraph':[{**call,'sourceIds':[source_ids[ref] for ref in call.get('evidence',[]) if ref in source_ids]} for call in machine.get('callGraph',[])]}
+            text=_deterministic_machine_answer(static,source_ids)
         else:
-            text='Local project evidence for your question\n\n'
-            text+='\n'.join(f"[{item['sourceId']}] {item['file']}:{item['line']}-{item['endLine']} | {item['matchReason']} | {item['ownership']}" for item in evidence)
-            text+='\n\n'+(model_notice or 'Select and start the local model to connect these source sections into an explanation.')
-            if not evidence:text+='\nNo relevant indexed source was found. Provide the routine, variable or function-block name, or refresh the index.'
-            text+='\nAnalysis is incomplete; this source list is not a verified machine operating sequence.'
-    summary['filesSent']=[{'file':item['file'],'line':item['line'],'endLine':item['endLine'],'sourceId':item['sourceId']} for item in sent] if response else []
-    if notices:text+='\n\nAnalysis coverage:\n'+'\n'.join('- '+notice for notice in dict.fromkeys(notices))
+            text='Retrieved project sources; no model interpretation was completed.\n\n'+'\n'.join(f"[{item['sourceId']}] {item['file']}:{item['line']}-{item['endLine']}" for item in evidence[:30])
+    notices=outcome['notices']
+    if notices:text+='\n\nAnalysis coverage (partial static analysis):\n'+'\n'.join('- '+notice for notice in notices)
+    counts=outcome['retrieval']['coverage']
+    text+=f"\n\nModel coverage: {counts['analyzedFiles']} files analyzed; {counts['modelSuppliedFiles']} files supplied; {counts['remainingSections']} retrieved sections still unvisited or incomplete."
     return {'answer':text,'source':'embedded' if response else 'local-project-intelligence','model':response.get('model') if response else None,
-            'evidence':sent if response else evidence,'helpEvidence':manuals,'retrieval':summary,'contextUsage':response.get('contextUsage') if response else None,
-            'responseSeconds':response.get('responseSeconds') if response else None,'review':True,'modelNotice':model_notice or None,
-            'machineAnalysis':_machine_chat_preview(machine_analysis),
-            'machineAnalysisProjectId':index.key if machine_analysis is not None else None}
+            'evidence':evidence,'helpEvidence':[],'retrieval':outcome['retrieval'],'contextUsage':outcome['contextUsage'],
+            'responseSeconds':response.get('responseSeconds') if response else None,'review':True,'modelNotice':outcome['modelNotice'],
+            'machineAnalysis':_machine_chat_preview(view),'machineAnalysisProjectId':index.key,
+            'engineeringVerification':{'status':'partial','trainingEligible':False,'plan':selected_plan['kind'],
+                                       'reason':'Model citations establish source locations, not complete engineering claim verification.'}}

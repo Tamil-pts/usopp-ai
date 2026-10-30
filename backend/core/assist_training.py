@@ -38,6 +38,10 @@ def task_guidance(intent):
 
 
 def capture(user, question, result, project_name):
+    verification = result.get('engineeringVerification')
+    if verification is not None and not verification.get('trainingEligible', False): return None
+    if verification is None and (result.get('machineAnalysis') or result.get('semanticReviewRequired') or result.get('review')):
+        return None
     evidence = result.get('evidence') or []
     if not user or not user.get('id') or not evidence or not result.get('answer'): return None
     _initialize()
