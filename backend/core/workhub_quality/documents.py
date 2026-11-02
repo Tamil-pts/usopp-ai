@@ -27,7 +27,24 @@ def clean_content(db,pid,stage,content):
       'sections':[],'sources':[],'missing':[],'flowchart':None,
       'applicability':content.get('applicability','applicable'),'na_reason':text(content.get('na_reason',''),2000)}
     if stage=='frd':
-        for k in ('purpose','scope','acceptance_summary'):result[k]=text(content.get(k) or '',12000)
+        for k in ('purpose','background','expected_outcome','scope','acceptance_summary'):result[k]=text(content.get(k) or '',12000)
+        criteria=content.get('acceptance_items')
+        # The text field remains compatible with older forms and drafting tools.
+        # New forms update the checklist and its summary together.
+        if isinstance(criteria,list) and 'acceptance_summary' in content and result['acceptance_summary']!='\n'.join(str(c.get('text','')) for c in criteria if isinstance(c,dict)):
+            criteria=None
+        if criteria is None:criteria=[{'id':'AC-'+str(i+1).zfill(3),'text':v,'confirmed':False} for i,v in enumerate(result['acceptance_summary'].splitlines()) if v.strip()]
+        result['acceptance_items']=[];seen_criteria=set()
+        for i,item in enumerate(_list(criteria,200)):
+            if not isinstance(item,dict):raise HTTPException(400,'Provide structured acceptance criteria.')
+            key=item.get('id') or 'AC-'+str(i+1).zfill(3)
+            if not isinstance(key,str) or not re.fullmatch(r'AC-\d{3,6}',key) or key in seen_criteria:raise HTTPException(400,'Acceptance criteria need unique AC-001 style IDs.')
+            if type(item.get('confirmed',False)) is not bool:raise HTTPException(400,'Choose whether the acceptance criterion wording is confirmed.')
+            seen_criteria.add(key);result['acceptance_items'].append({'id':key,'text':text(item.get('text') or '',8000),'confirmed':item.get('confirmed',False)})
+        if criteria is not None:result['acceptance_summary']='\n'.join(item['text'] for item in result['acceptance_items'])
+    if stage in {'test','fat'}:
+        from .report_templates import clean
+        result=clean(db,pid,content,result);result['report_type']=stage
     if result['applicability'] not in {'applicable','not_applicable'} or result['applicability']=='not_applicable' and stage!='corrections':raise HTTPException(400,'Only Correction Notes can be marked Not Applicable. Use a formal disposition for other exceptions.')
     for raw in _list(content.get('sources',[]),4000):
         if not isinstance(raw,dict) or not isinstance(raw.get('id'),str):raise HTTPException(400,'Sources need stable source IDs.')
@@ -49,14 +66,15 @@ def clean_content(db,pid,stage,content):
         return list(dict.fromkeys(ids))
     def requirement_ids(raw):
         ids=_list(raw.get('requirement_ids',[]),2000)
-        if any(not isinstance(key,str) or not re.fullmatch('FR-\\d{3,6}',key) for key in ids):raise HTTPException(400,'Use requirement IDs from the approved FRD.')
+        if any(not isinstance(key,str) or not re.fullmatch('(?:FR|REQ)-\\d{3,6}',key) for key in ids):raise HTTPException(400,'Use requirement IDs from the approved FRD.')
         return list(dict.fromkeys(ids))
     if stage=='frd':
         seen=set()
         for r in _list(content.get('requirements',[])):
-            if not isinstance(r,dict) or not re.fullmatch('FR-\\d{3,6}',str(r.get('id',''))) or r['id'] in seen:raise HTTPException(400,'Requirements need unique FR-001 style IDs.')
+            if not isinstance(r,dict) or not re.fullmatch('(?:FR|REQ)-\\d{3,6}',str(r.get('id',''))) or r['id'] in seen:raise HTTPException(400,'Requirements need unique REQ-001 or FR-001 style IDs.')
             seen.add(r['id']);result['requirements'].append({'id':r['id'],**{k:text(r.get(k) or '',8000) for k in ('title','description','trigger','expected_behavior','subsystem','acceptance_criteria')},
               'source_ids':refs(r),'mandatory':bool(r.get('mandatory',True)),'category':text(r.get('category') or '',200),'source_label':text(r.get('source_label') or '',240),'priority':r.get('priority') if r.get('priority') in {'low','medium','high','urgent'} else 'medium',
+              'status':r.get('status') if r.get('status') in {'open','in_review','confirmed'} else 'open',
               'change':r.get('change') if r.get('change') in {'new','modified','confirmed','removed_proposed','unresolved','unchanged'} else 'new'})
     for r in _list(content.get('changes',[])):
         if not isinstance(r,dict):raise HTTPException(400,'Provide structured correction notes.')
@@ -100,7 +118,8 @@ def create_control(db,p,user,stage,existing=None,initial_content=None,generated_
     setting=numbering(db,p,configuration.current(db));config=setting['configuration'];now=timestamp();key=identity()
     if not existing:
         kind='frd' if stage=='frd' else 'note'
-        doc,rev=pi.create_document(db,user,p['id'],kind,config['templates'][stage]['title'],initial_content if initial_content is not None else {'requirements':[],'sources':[]} if stage=='frd' else {},generated_by=generated_by,quality_control=True)
+        title='Test Report' if stage=='test' and p.get('document_type')=='test_report' else config['templates'][stage]['title']
+        doc,rev=pi.create_document(db,user,p['id'],kind,title,initial_content if initial_content is not None else {'requirements':[],'sources':[]} if stage=='frd' else {},generated_by=generated_by,quality_control=True)
     else:doc=existing;rev=None
     is_template=db.execute("SELECT 1 FROM ds_template_drafts WHERE scope_id=?",(p['id'],)).fetchone()
     number='TEMPLATE-'+key[:20].upper() if is_template else configuration.allocate(db,stage,setting)

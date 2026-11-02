@@ -5,7 +5,8 @@ export type Metric={field:string;aggregation:string};
 export type Filter={field:string;op:string;value:any};
 export type GlobalFilters={project_id:string;engineer_id:string;from:string;to:string};
 export type Query={source:string;dimensions:Dimension[];metrics:Metric[];filters:Filter[];global:GlobalFilters;limit:number;sort:string;mode:string;bin_count?:number};
-export type Widget={id:string;type:string;title:string;query:Query;columns:string[];text:string;appearance:{colors:string[];legend:boolean;axes:boolean;horizontal:boolean;smooth:boolean;format:string;decimals:number;min:number;max:number;bins:number;x_label:string;y_label:string;series_types?:string[];secondary_axis?:boolean}};
+export type OverviewSettings={content:string;caption:string;tone:string;limit:number};
+export type Widget={id:string;type:string;title:string;query:Query;columns:string[];text:string;overview?:OverviewSettings;appearance:{colors:string[];legend:boolean;axes:boolean;horizontal:boolean;smooth:boolean;format:string;decimals:number;min:number;max:number;bins:number;x_label:string;y_label:string;series_types?:string[];secondary_axis?:boolean}};
 export type Breakpoint='desktop'|'tablet'|'mobile';
 export type Dashboard={schema_version:number;name:string;widgets:Widget[];layouts:Record<Breakpoint,LayoutItem[]>;filters:GlobalFilters;appearance:{theme:string;background:string;density:string;accent:string}};
 export const COLS={desktop:12,tablet:8,mobile:4};
@@ -15,6 +16,7 @@ export const emptyDashboard=(name='My dashboard'):Dashboard=>({schema_version:1,
 export function makeWidget(type:string,registry:Row):Widget{
  const source=type==='documents'?'documents':type==='calendar'?'milestones':'projects',s=registry.sources[source];
  return {id:crypto.randomUUID().replaceAll('-',''),type,title:registry.widgets[type],text:'',columns:[],
+ ...(registry.overview_content?.[type]?{overview:{content:Object.keys(registry.overview_content[type])[0],caption:'',tone:'blue',limit:4}}:{}),
  query:{source,dimensions:[{field:s.default_dimension,grain:s.default_dimension==='date'?'day':'value'}],metrics:[{field:s.default_metric,aggregation:s.default_aggregation}],filters:[],global:{...EMPTY_FILTERS},limit:100,sort:'dimension',mode:'aggregate'},
  appearance:{colors:['#16a394','#4269d0','#a383e3','#e8aa48','#d2657e'],legend:true,axes:true,horizontal:false,smooth:false,format:'number',decimals:0,min:0,max:100,bins:10,x_label:'',y_label:''}};
 }
@@ -27,7 +29,7 @@ export function settle(rows:LayoutItem[],cols:number):LayoutItem[]{
 }
 export function insertWidget(config:Dashboard,widget:Widget,bp?:Breakpoint,position?:LayoutItem){
  const next=clone(config);next.widgets.push(widget);
- for(const key of Object.keys(COLS) as Breakpoint[]){const rows=next.layouts[key];rows.push(bp===key&&position?{...position,i:widget.id}:{i:widget.id,x:0,y:Math.max(0,...rows.map(r=>r.y+r.h)),w:Math.min(key==='mobile'?4:6,COLS[key]),h:['kpi','progress','scorecard'].includes(widget.type)?3:6});next.layouts[key]=settle(rows,COLS[key]);}
+ for(const key of Object.keys(COLS) as Breakpoint[]){const rows=next.layouts[key];rows.push(bp===key&&position?{...position,i:widget.id}:{i:widget.id,x:0,y:Math.max(0,...rows.map(r=>r.y+r.h)),w:Math.min(key==='mobile'?4:6,COLS[key]),h:['kpi','progress','scorecard','workhub_shortcut'].includes(widget.type)?3:6});next.layouts[key]=settle(rows,COLS[key]);}
  return next;
 }
 export function queryFor(widget:Widget,filters:GlobalFilters):Query{

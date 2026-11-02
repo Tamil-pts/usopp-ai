@@ -14,7 +14,7 @@ from fastapi import HTTPException
 from . import store, configuration
 from .store import hub, identity, timestamp, text
 
-KINDS = {**store.STAGES, 'frd': 'Functional Requirements Document', 'mom': 'Minutes of Meeting'}
+KINDS = {**store.STAGES, 'test':'Validation Test Report', 'fat':'Factory Acceptance Test Report', 'frd': 'Functional Requirements Document', 'mom': 'Minutes of Meeting'}
 BLOCKS = ['summary', 'purpose', 'scope', 'requirements', 'flowchart', 'changes',
           'cases', 'sections', 'details', 'sources', 'signatures']
 ORG = {'name': 'PTPL', 'address': '', 'department': 'ES', 'team': 'PLC',

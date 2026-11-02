@@ -6,7 +6,7 @@ const Context=createContext<Value|null>(null);
 
 export function normalizeFieldLinks(body:Row):Row{
  const next:Row={...body,sections:(body.sections||[]).map((s:Row,i:number)=>({...s,id:s.id||'SECTION-'+String(i+1).padStart(3,'0')}))};
- const allowed=new Set(['summary','purpose','scope','acceptance_summary','na_reason']);
+ const allowed=new Set(['summary','purpose','background','expected_outcome','scope','acceptance_summary','conclusion','na_reason']);
  for(const [prefix,key,fields] of [['requirement','requirements',['title','description','trigger','expected_behavior','subsystem','acceptance_criteria']],['case','cases',['objective','procedure','expected_result','acceptance_criteria','actual','observations']],['change','changes',['summary','existing_behavior','expected_behavior','plc_references','impact','before_evidence','after_evidence','verification']],['section','sections',['text']]] as [string,string,string[]][]){for(const r of next[key]||[])for(const f of fields)allowed.add(prefix+'/'+r.id+'/'+f);}
  for(const b of body.studio?.blocks||[]){const base='element/'+b.id;allowed.add(base);for(const cell of b.data.cells||[])allowed.add(base+'/cell/'+cell.id);if(b.type==='native_table')for(const row of body[b.data.binding]||[])if(row&&typeof row==='object')for(const field of Object.keys(row))allowed.add(base+'/cell/'+row.id+':'+field);}
  next.field_files=Object.fromEntries(Object.entries(body.field_files||{}).filter(([path,ids])=>allowed.has(path)&&Array.isArray(ids)&&ids.length));

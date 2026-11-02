@@ -25,6 +25,8 @@ def records(user,key):
         items=read(db,'SELECT * FROM items');projects={r['id']:r for r in items if r['type']=='project'}
         names={k:r['title'] for k,r in projects.items()};tasks_by_project=defaultdict(list)
         if key=='projects':
+            from backend.core.workhub_billing import approved_hours
+            billing=approved_hours(db)
             for task in items:
                 if task['type']=='task':tasks_by_project[task['project_id']].append(hub.public(task))
         managed=growth.managed_projects(db,user)
@@ -48,6 +50,7 @@ def records(user,key):
                   'development_progress':value.get('development_progress'),'completed':int(r['stage'] in {'development_completed','quality','release_approval','ready_release','released'}),
                   'released':int(r['stage']=='released'),'start':r.get('start_date'),'end':r.get('due_date'),
                   'hours':r.get('planned_hours'),'health':value.get('health'),
+                  **({'billing_hours':billing.get(r['id'],0)} if key=='projects' else {}),
                   '_url':'/?workhubProject='+r['project_id']+'&workhubItem='+r['id']})
         elif key=='approvals':
             item_map={r['id']:r for r in items}

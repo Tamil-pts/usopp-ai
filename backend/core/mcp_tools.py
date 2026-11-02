@@ -180,3 +180,12 @@ def investigate_engineering_project(project_id:str,question:str,use_model:bool=T
     """Run bounded Think-Act-Check graph RAG. Model selects only verified fact IDs; stores diagnostic memory, never approved training."""
     from backend.core.engineering_harness import investigate
     return investigate(project_id,question,use_model=use_model,max_passes=max_passes)
+
+
+@server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+def get_machine_context(project_id:str,question:str='',limit:int=60)->dict:
+    """Decode active hardware, conditional HMI names/settings, typed calls with local B&R help and source state/dependency links. No PLC execution."""
+    from backend.core.project_intelligence import opened
+    from backend.core.run_history import current_user
+    from backend.core.machine_context import view
+    return view(opened(project_id,(current_user.get() or {})['id']),question[:6000],limit)

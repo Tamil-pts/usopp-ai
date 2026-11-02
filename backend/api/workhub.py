@@ -21,10 +21,12 @@ def actor(request):return request.state.user
 
 @router.get('/overview')
 def overview(request:Request):
-    from backend.core.workhub_intelligence import store as intelligence
-    intelligence.initialize()
+    from backend.core.workhub_quality import store as quality
+    quality.initialize()
     value=store.overview()
     with store.db() as db:
+        from backend.core.workhub_billing import approved_hours
+        billing=approved_hours(db)
         # Count current submitted reports once. Independent private documents
         # have their own register and must not leak through company KPI counts.
         value['summary']['pending_reviews']=db.execute("SELECT count(*) FROM pi_documents d JOIN pi_revisions r ON r.id=d.current_revision JOIN items p ON p.id=d.project_id AND p.type='project' WHERE r.status='review'").fetchone()[0]
@@ -45,6 +47,9 @@ def overview(request:Request):
                 item['customer_project_reference']=context.get('customer_project_reference','')
                 item['open_issue_count']=open_issues.get(item['id'],0)
                 item['workflow_approval_count']=approvals.get(item['id'],0)
+                item['billing_hours']=billing.get(item['id'],0)
+                from backend.core.workhub_custom_fields import read
+                item['custom_fields']=read(db,item['id'])
 
     return {**value,'storage':files.storage_usage()}
 
@@ -124,10 +129,30 @@ def delete_project(project:str,request:Request,payload:dict):
 def common_documents(request:Request,search:str='',kind:str='',status:str='',project_id:str='',page:int=Query(1,ge=1),page_size:int=Query(20,ge=1,le=50),library_only:bool=False):
     return workspace.document_register(actor(request),search,kind,status,project_id,page,page_size,library_only)
 
+@router.get('/inbox')
+def personal_inbox(request:Request,page:int=Query(1,ge=1),kind:str=Query('',pattern='^(|workflow|document|time|correction)$')):
+    from backend.core.workhub_inbox import inbox
+    return inbox(actor(request),page,kind)
+
+@router.post('/documents/{document_id}/delete')
+def delete_document(document_id:str,request:Request,payload:dict):
+    from backend.core.workhub_document_actions import delete
+    return delete(actor(request),document_id,payload)
+
 @router.post('/document-spaces')
 def create_independent_document(request:Request,payload:dict):
     from backend.core.workhub_document_spaces import create
     return create(actor(request),payload)
+
+@router.get('/items/{item}/approval-documents')
+def workflow_approval_documents(item:str,request:Request,offset:int=Query(0,ge=0)):
+    from backend.core.workhub_approval_documents import overview
+    return overview(actor(request),item,offset)
+
+@router.put('/items/{item}/approval-documents')
+def attach_workflow_documents(item:str,request:Request,payload:dict):
+    from backend.core.workhub_approval_documents import save
+    return save(actor(request),item,payload)
 
 @router.get('/documents/{document_id}/library-preview')
 def preview_library_document(document_id:str,request:Request):
@@ -221,6 +246,7 @@ def create_issue(project:str,request:Request,payload:dict):
     user=actor(request);store.actor(user)
     with store.db(True) as db:
         item=store.item(db,payload.get('item_id') or project)
+        store.contribute(db,project,user)
         if item['project_id']!=project:raise HTTPException(400,'Choose a task from this project.')
         key=identity();now=timestamp();title=text(payload.get('title',''),2000,True);owner=store.user_id(payload.get('owner_id',item['owner_id']))
         db.execute('INSERT INTO issues VALUES(?,?,?,?,?,?,?,?,?)',(key,project,item['id'],title,owner,user['id'],'open',now,now))
@@ -389,12 +415,36 @@ def shared_download(project:str,run_id:str,name:str,request:Request):
     if not path.is_file():raise HTTPException(404,'Shared result file is unavailable.')
     return FileResponse(path,filename=name,headers={'Cache-Control':'private, no-store'})
 
+@router.get('/project-exports')
+def project_export_catalog(request:Request,role:str=''):
+    from backend.core.workhub_project_exports import catalog
+    return catalog(actor(request),role)
+
+@router.post('/project-exports')
+def project_export(request:Request,payload:dict):
+    from backend.core.workhub_project_exports import export
+    return export(actor(request),payload)
+
+@router.post('/project-exports/views')
+def project_export_view(request:Request,payload:dict):
+    from backend.core.workhub_project_exports import save_view
+    return save_view(actor(request),payload)
+
+@router.delete('/project-exports/views/{view_id}')
+def delete_project_export_view(view_id:str,request:Request):
+    from backend.core.workhub_project_exports import delete_view
+    return delete_view(actor(request),view_id)
+
 @router.get('/reports/{format}')
 def report(format:str,request:Request):
     overview=store.overview();items=overview['items']
+    from backend.core.workhub_billing import approved_hours
+    with store.db() as db:billing=approved_hours(db)
+    for item in items:
+        if item['type']=='project':item['billing_hours']=billing.get(item['id'],0)
     users={row['id']:row['username'] for row in overview['users']}
-    headers=['Project / task','Type','Assignee','Stage','Planned start','Baseline due','Current due','Actual start','Released at','Work completion %']
-    values=[[row['title'],row['kind'],users.get(row['current_user_id'],'Account unavailable'),row['stage_label'],row['start_date'],row['baseline_due'],row['due_date'],row['started_at'] or '',row['completed_at'] or '',row.get('progress','')] for row in items]
+    headers=['Project / task','Type','Assignee','Stage','Planned start','Baseline due','Current due','Actual start','Released at','Work completion %','Billing hours (approved time)']
+    values=[[row['title'],row['kind'],users.get(row['current_user_id'],'Account unavailable'),row['stage_label'],row['start_date'],row['baseline_due'],row['due_date'],row['started_at'] or '',row['completed_at'] or '',row.get('progress',''),round(row['billing_hours'],2) if row['type']=='project' else ''] for row in items]
     if format=='csv':
         stream=io.StringIO();writer=csv.writer(stream);writer.writerow(headers)
         writer.writerows([["'"+str(value) if str(value).startswith(('=','+','-','@')) else value for value in row] for row in values])

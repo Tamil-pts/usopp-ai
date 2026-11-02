@@ -4,7 +4,7 @@ import re
 from urllib.parse import urlsplit
 
 
-def answer(model, runtime, question, owner, history=None):
+def answer(model, runtime, question, owner, history=None, machine_context=None):
     from backend.core.assist_model import chat_model, configuration
     from backend.core.project_intelligence import opened
     from python_engine.project_knowledge import explanation_reference_issue
@@ -22,6 +22,8 @@ def answer(model, runtime, question, owner, history=None):
         except (ValueError, OSError, PermissionError) as error:
             notices.append('Original source index unavailable: ' + str(error))
     terms = {term.casefold() for term in re.findall(r'[A-Za-z_]\w*', question) if len(term) > 2}
+    if machine_context:
+        terms.update(root.split(':',1)[-1].casefold() for root in machine_context.get('roots',[]))
     if not evidence:
         candidates = sorted(model.get('programs', []), key=lambda program: (
             -sum(term in str(program.get('code', '')).casefold() for term in terms),
@@ -55,6 +57,11 @@ def answer(model, runtime, question, owner, history=None):
              'variables': selected[:20], 'tasks': runtime.get('tasks', [])[:12],
              'recentExecution': runtime.get('trace', [])[-18:],
              'compatibility': runtime.get('compatibility'), 'diagnostics': runtime.get('diagnostics', [])[:10]}
+    if machine_context:
+        state['linkedMachineContext']={key:machine_context.get(key) for key in ('roots','activeConfiguration')}
+        state['linkedMachineContext']['aliases']=[{k:a.get(k) for k in ('signal','choices','association')} for a in machine_context.get('aliases',[])[:4]]
+        state['linkedMachineContext']['hardware']=machine_context.get('hardware',[])[:4]
+        state['linkedMachineContext']['observations']={k:v for k,v in list(machine_context.get('runtime',{}).get('values',{}).items())[:12]}
     # Compact values before model token budgeting; never supply the whole PLC memory.
     state_text = json.dumps(state, ensure_ascii=False)
     if len(state_text) > 9000:
@@ -93,7 +100,18 @@ def answer(model, runtime, question, owner, history=None):
         if evidence:
             text += '\n\nSource evidence:\n' + '\n'.join(f"[{row['sourceId']}] {row['file']}:{row['line']}–{row['endLine']}" for row in evidence[:8])
         text += '\n\nThese observations do not establish a complete operating sequence or the cause of an output state. Review the cited logic and unsupported dependencies.'
+    if machine_context:
+        links=[]
+        for alias in machine_context.get('aliases',[])[:4]:
+            labels='; '.join(c['label']+(f" when {c['selector']}={c['value']}" if c.get('selector') else '') for c in alias['choices'])
+            links.append(f"{alias['signal']}: {labels}. {alias['association']}.")
+        for operation in machine_context.get('operations',[])[:8]:
+            location=operation['sources'][0]
+            guards=' AND '.join(operation['guards']) if operation['guardCoverage']=='parsed' else 'controlling syntax unresolved'
+            links.append(f"{location['file']}:{location['line']} — {operation['output']} receives {operation['expression'] or operation['kind']}; source conditions: {guards or 'no enclosing condition at this position'}.")
+        if links:text='Source-linked machine context:\n'+'\n'.join(links)+'\n\n'+text
     return {'answer': text, 'source': 'chopper-virtual-plc' if response else 'local-virtual-plc-evidence',
+            'machineContext':machine_context,
             'evidence': response.get('sentEvidence', evidence) if response else evidence,
             'runtimeEvidence': state, 'retrieval': retrieval.get('passes', []), 'notices': notices,
             'model': response.get('model') if response else None, 'modelNotice': model_notice or None,

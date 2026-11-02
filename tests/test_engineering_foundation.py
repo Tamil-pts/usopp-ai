@@ -213,6 +213,15 @@ def test_actual_mcp_jsonrpc_transport_exposes_account_bound_graph(reference):
         assert structured['validation']['structurallyValid']
         denied=client.post('/api/mcp/',headers={**headers,'test-user':'outsider'},json=payload)
         assert denied.json()['result']['isError']
+        linked={'jsonrpc':'2.0','id':3,'method':'tools/call','params':{'name':'get_machine_context','arguments':{'project_id':reference.key,'question':'Motor','limit':10}}}
+        result=client.post('/api/mcp/',headers=headers,json=linked)
+        assert result.status_code==200,result.text
+        response_payload=result.json()['result']
+        assert not response_payload.get('isError'),response_payload
+        data=response_payload.get('structuredContent') or json.loads(''.join(item.get('text','') for item in response_payload['content']))
+        assert data['roots']==['@global:Motor'] and not data['completeMachineSequence']
+        denied=client.post('/api/mcp/',headers={**headers,'test-user':'outsider'},json=linked)
+        assert denied.json()['result']['isError']
 
 
 def test_empty_ladder_init_is_still_an_individual_routine(reference):

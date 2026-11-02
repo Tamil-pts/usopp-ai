@@ -12,7 +12,8 @@
     "status": "python3 scripts/ubuntu_demo.py status",
     "logs": "python3 scripts/ubuntu_demo.py logs",
     "prebuild": "node scripts/build_nami.mjs --install-only",
-    "build": "tsc -b && vite build && npm run build:nami && npm run build:virtual-plc",
+    "build": "tsc -b && npm run build:compare-report && vite build && npm run build:nami && npm run build:virtual-plc",
+    "build:compare-report": "node scripts/build_compare_report.mjs",
     "preview": "vite preview",
     "build:nami": "node scripts/build_nami.mjs",
     "build:virtual-plc": "tsc --noEmit --strict --jsx react-jsx --module ESNext --moduleResolution bundler --target ES2022 --lib ES2022,DOM --skipLibCheck --esModuleInterop virtual_plc/ui/src/main.tsx && vite build --config virtual_plc/vite.config.ts"

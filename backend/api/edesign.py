@@ -71,21 +71,33 @@ def public_mark(row):
 class Markup(BaseModel):
     page: int = Field(ge=1)
     kind: Literal['modify', 'add', 'remove', 'comment'] = 'modify'
-    shape: Literal['rectangle', 'cloud', 'arrow', 'note'] = 'rectangle'
+    shape: Literal['rectangle', 'cloud', 'cloud-only', 'arrow', 'note','highlight','underline','marker'] = 'rectangle'
     box: list[float] = Field(min_length=4, max_length=4)
-    body: str = Field(min_length=1, max_length=6000)
+    body: str = Field(default='', max_length=6000)
     status: Literal['open', 'resolved'] = 'open'
     reverseX: bool = False
     reverseY: bool = False
+    callout: list[float] | None = Field(default=None,min_length=4,max_length=4)
     version: int = Field(default=0, ge=0)
+    color:str|None=Field(default=None,pattern=r'^#[0-9a-fA-F]{6}$')
+    opacity:float|None=Field(default=None,ge=.05,le=1)
+    points:list[list[float]]|None=Field(default=None,min_length=2,max_length=2000)
 
     @model_validator(mode='after')
     def geometry(self):
-        if not self.body.strip(): raise ValueError('Enter a correction comment.')
+        if not self.body.strip() and self.shape not in {'cloud-only','highlight','underline','marker'}: raise ValueError('Enter a correction comment.')
         x0, y0, x1, y1 = self.box
         if not all(math.isfinite(n) and 0 <= n <= 1 for n in self.box) or x1-x0 < .001 or y1-y0 < .001:
             raise ValueError('Select an area inside the drawing.')
         self.body = self.body.strip()
+        if self.color:self.color=self.color.lower()
+        if self.shape=='cloud-only':self.callout=None
+        if self.points is not None and any(len(p)!=2 or not all(math.isfinite(v) and 0<=v<=1 for v in p) for p in self.points):
+            raise ValueError('Keep marker strokes inside the drawing.')
+        if self.callout is not None:
+            a,b,c,d=self.callout
+            if not all(math.isfinite(n) and 0<=n<=1 for n in self.callout) or c-a<.01 or d-b<.01:
+                raise ValueError('Place the comment text box inside the drawing.')
         return self
 
 
@@ -94,13 +106,13 @@ def create_review(folder, sid, name, who):
     import pypdfium2 as pdfium
     reader = PdfReader(folder / 'source.pdf')
     if reader.is_encrypted: raise ValueError('Upload an unlocked PDF.')
-    if not 1 <= len(reader.pages) <= 150: raise ValueError('Use a drawing set with 1–150 pages.')
+    if not 1 <= len(reader.pages) <= 160: raise ValueError('Use a drawing set with 1–150 drawing pages.')
     from python_engine.edesign_pdf import read_review,review_background
     imported=read_review(folder/'source.pdf')
     review_background(folder/'source.pdf',folder/'background.pdf')
     # PDFium returns displayed dimensions, including rotation/crop, matching previews.
     with PDFIUM_LOCK:
-        with pdfium.PdfDocument(str(folder / 'source.pdf')) as doc:
+        with pdfium.PdfDocument(str(folder / 'background.pdf')) as doc:
             pages = [{'number': i+1, 'width': doc.get_page_size(i)[0], 'height': doc.get_page_size(i)[1]} for i in range(len(doc))]
     with database(folder) as db:
         db.executescript('''
@@ -116,12 +128,15 @@ def create_review(folder, sid, name, who):
         incoming=[]
         for mark in imported['marks']:
             payload=Markup(**mark)
-            incoming.append({**payload.model_dump(),'id':mark['id'],'author':mark['author'],'author_id':who['id'],'deleted':False})
+            incoming.append({**payload.model_dump(),'id':mark['id'],'referenceNo':mark.get('referenceNo'),'author':mark['author'],'author_id':who['id'],'deleted':False})
         if incoming:
             history.change(db,incoming,who,'import PDF comments','PDF file / reported authors')
             for mark in imported['marks']:history.retain_portable(db,mark)
     meta = {'id': sid, 'name': name, 'ownerId': who['id'], 'owner': who['username'], 'created': time.time(),
             'pages': pages, 'sourceHash': hashlib.sha256((folder / 'source.pdf').read_bytes()).hexdigest()}
+    if imported['envelope'].get('cover'):
+        from backend.core.edesign_document import Cover,CoverUpdate,save
+        with database(folder) as db:save(db,CoverUpdate(version=0,details=Cover(**imported['envelope']['cover'])),who)
     envelope=imported['envelope']
     if re.fullmatch(r'edesign_[a-f0-9]{32}',str(envelope.get('reviewId',''))):
         meta.update(lineageId=envelope['reviewId'],originSourceHash=envelope.get('sourceHash',''))
@@ -188,7 +203,51 @@ def read(sid: str):
         marks = [public_mark(row) for row in db.execute('SELECT * FROM marks WHERE deleted=0 ORDER BY page,created')]
         members = [dict(row) for row in db.execute('SELECT * FROM members')] if access == 'owner' else []
         commands=history.stacks(db,user())
-    return {**meta, 'access': access, 'marks': marks, 'members': members, 'commands':commands}
+        prepared=db.execute("SELECT 1 FROM commands WHERE label='show comments on drawing' LIMIT 1").fetchone()
+        from backend.core.edesign_document import details
+        assigned={r[0] for r in db.execute("SELECT user_id FROM members WHERE access='review'")}
+        cover,cover_version=details(db,meta,user(),[p['username'] for p in accounts.store.list_users() if p['id'] in assigned] if assigned else [])
+        next_reference=db.execute('SELECT COALESCE(MAX(reference_no),0)+1 FROM marks').fetchone()[0]
+    needed=not prepared and any(m['shape'] in {'cloud','rectangle'} and not m.get('callout') for m in marks)
+    return {**meta, 'access': access, 'marks': marks, 'members': members, 'commands':commands,'calloutSetupNeeded':needed,
+            'cover':cover,'coverVersion':cover_version,'nextReference':f'R{next_reference:03}'}
+
+
+from backend.core.edesign_document import CoverUpdate
+
+@router.put('/{sid}/cover')
+def save_cover(sid:str,payload:CoverUpdate):
+    folder,_,_=workspace(sid,write=True)
+    from backend.core.edesign_document import save
+    with database(folder) as db:
+        db.execute('BEGIN IMMEDIATE');save(db,payload,user())
+    return read(sid)
+
+
+class CalloutSetup(BaseModel):
+    versions: dict[str,int] = Field(min_length=1,max_length=2000)
+
+
+@router.post('/{sid}/callouts')
+def prepare_callouts(sid: str, payload: CalloutSetup):
+    """One conflict-checked, undoable placement for existing bubble comments."""
+    folder,meta,_=workspace(sid,write=True)
+    from python_engine.edesign_callout import default_callout
+    with database(folder) as db:
+        db.execute('BEGIN IMMEDIATE')
+        marks=[public_mark(r) for r in db.execute('SELECT * FROM marks WHERE deleted=0 ORDER BY page,created')]
+        known={m['id']:m for m in marks}
+        if any(key not in known or type(version)is not int or known[key]['version']!=version for key,version in payload.versions.items()):
+            raise HTTPException(409,'A correction changed while placing its text. Refresh the drawing and try again.')
+        occupied={n+1:[r for m in marks if m['page']==n+1 for r in ([m['box']]+([m['callout']] if m.get('callout') else []))] for n in range(len(meta['pages']))}
+        changed=[]
+        for m in marks:
+            if m['id'] not in payload.versions or m['shape'] not in {'cloud','rectangle'} or m.get('callout'):continue
+            page=meta['pages'][m['page']-1]
+            label=default_callout(m['box'],page['width']/page['height'],occupied[m['page']])
+            changed.append({**m,'callout':label});occupied[m['page']].append(label)
+        if changed:history.change(db,changed,user(),'show comments on drawing')
+    return {**read(sid),'calloutsPrepared':len(changed)}
 
 
 @router.get('/{sid}/original')
@@ -223,7 +282,12 @@ def add_mark(sid: str, payload: Markup):
     who, mark_id, now = user(), uuid.uuid4().hex, time.time()
     with database(folder) as db:
         db.execute('BEGIN IMMEDIATE')
-        values,command=history.change(db,[{**payload.model_dump(),'id':mark_id,'author':who['username'],'author_id':who['id'],'created':now,'deleted':False}],who,'create')
+        value=payload.model_dump()
+        if payload.shape in {'cloud','rectangle','highlight'} and 'callout' not in payload.model_fields_set:
+            from python_engine.edesign_callout import default_callout
+            occupied=[r for row in db.execute('SELECT * FROM marks WHERE deleted=0 AND page=?',(payload.page,)) for r in ([public_mark(row)['box']]+([public_mark(row)['callout']] if public_mark(row).get('callout') else []))]
+            page=meta['pages'][payload.page-1];value['callout']=default_callout(payload.box,page['width']/page['height'],occupied)
+        values,command=history.change(db,[{**value,'id':mark_id,'author':who['username'],'author_id':who['id'],'created':now,'deleted':False}],who,'create')
         return {**values[mark_id],'commandId':command,'commands':history.stacks(db,who)}
 
 
@@ -244,7 +308,11 @@ def update_mark(sid: str, mark_id: str, payload: Markup):
         old = editable_mark(db, mark_id, access)
         if old['version'] != payload.version: raise HTTPException(409, 'This correction changed in another window. Refresh comments before editing.')
         action=('resolve' if payload.status=='resolved' else 'reopen') if old['status']!=payload.status else 'update'
-        values,command=history.change(db,[{**public_mark(old),**payload.model_dump()}],user(),action)
+        patch=payload.model_dump()
+        if 'callout' not in payload.model_fields_set and payload.shape!='cloud-only':patch.pop('callout')
+        for key in ('color','opacity','points'):
+            if key not in payload.model_fields_set:patch.pop(key)
+        values,command=history.change(db,[{**public_mark(old),**patch}],user(),action)
         return {**values[mark_id],'commandId':command,'commands':history.stacks(db,user())}
 
 
@@ -345,7 +413,7 @@ def import_feedback(folder,meta,path,who):
                     raise HTTPException(409,'A returned comment conflicts with a newer local revision. No comments were imported; review the returned PDF separately.')
                 incoming={**existing,**incoming}
             else:incoming={**incoming,'author':item['author'],'author_id':who['id'],'deleted':False}
-            incoming['id']=item['id'];changes.append(incoming)
+            incoming['id']=item['id'];incoming['referenceNo']=item.get('referenceNo');changes.append(incoming)
         if changes:history.change(db,changes,who,'import feedback','Returned PDF / reported reviewer comments')
         for item in parsed['marks']:history.retain_portable(db,item,keep_base=False)
     return {'updated':len(changes),'unchanged':unchanged,'unmatched':len(envelope.get('marks',[]))-len([m for m in parsed['marks'] if m.get('reportedVersion')])}
@@ -370,7 +438,7 @@ async def import_pdf(sid:str,file:UploadFile=File(...)):
 
 
 @router.get('/{sid}/export/{format}')
-def export(sid: str, format: Literal['pdf','report','docx','csv','html']):
+def export(sid: str, format: Literal['pdf','report','docx','csv','html'],include_cover:bool=False):
     folder, meta, _ = workspace(sid)
     with database(folder) as db:
         marks = [public_mark(row) for row in db.execute('SELECT * FROM marks WHERE deleted=0 ORDER BY page,created')]
@@ -378,6 +446,9 @@ def export(sid: str, format: Literal['pdf','report','docx','csv','html']):
         for mark in marks:
             baseline=db.execute('SELECT version,snapshot FROM portable_bases WHERE mark_id=?',(mark['id'],)).fetchone()
             if baseline:mark['baseline']={'version':baseline['version'],'snapshot':json.loads(baseline['snapshot'])}
+        if include_cover:
+            from backend.core.edesign_document import details
+            cover,_=details(db,meta,user());meta={**meta,'cover':cover}
     from python_engine.edesign_export import export_review
     extension='pdf' if format=='report' else format
     target = folder / f'export-{uuid.uuid4().hex}.{extension}'

@@ -144,7 +144,7 @@
     {
       "plc_parameter": "Product code to identify the machine type",
       "plc_tag": "Blow_room_product_code",
-      "metadata_parameter": "Product code",
+      "metadata_parameter": "Machine Model",
       "machine_department": "Blow Room",
       "plc_type": "INT",
       "metadata_type": "INT",

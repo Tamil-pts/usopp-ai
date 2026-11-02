@@ -1,9 +1,11 @@
-"""One editable starter design; values always come from authorized live queries."""
+"""Editable starter designs; values always come from authorized live records."""
 from . import schema
 
 KEY='engineering-overview'
 NAME='Engineering project overview'
 DESCRIPTION='Project delivery, reviewed work, scheduled tasks, validation activity and current documents. Every widget is editable.'
+OVERVIEW_KEY='workhub-overview'
+OVERVIEW_NAME='WorkHub overview'
 
 
 def configuration():
@@ -35,5 +37,33 @@ def configuration():
     return schema.dashboard({'name':NAME,'widgets':widgets,'layouts':layouts,'appearance':{'theme':'inherit','background':'plain','density':'comfortable','accent':'#16a394'}})
 
 
+def overview_configuration():
+    entries=[
+        ('work','workhub_shortcut','My work','Your current responsibilities','blue'),
+        ('projects','workhub_shortcut','Projects','Open the project portfolio','green'),
+        ('approvals','workhub_shortcut','Approvals','Documents, workflow and time','amber'),
+        ('team','workhub_shortcut','Team Management','Plan resources and availability','purple'),
+        ('actions','workhub_list','My next actions','','blue'),
+        ('milestones','workhub_list','Milestones & due dates','','amber'),
+        ('recent','workhub_list','Recently updated projects','','green'),
+        ('links','workhub_list','Team & documents','','purple')]
+    widgets=[{'id':'overview_'+key,'type':kind,'title':title,
+        'overview':{'content':key,'caption':caption,'tone':tone,'limit':4}} for key,kind,title,caption,tone in entries]
+    layouts={}
+    for bp,cols in schema.COLS.items():
+        positions=[];y=0
+        for i,w in enumerate(widgets):
+            shortcut=i<4
+            if bp=='desktop':x=(i%4)*3 if shortcut else (i%2)*6;top=0 if shortcut else 4+((i-4)//2)*8;width=3 if shortcut else 6;height=4 if shortcut else 8
+            elif bp=='tablet':x=(i%2)*4 if shortcut else 0;top=(i//2)*3 if shortcut else 6+(i-4)*8;width=4 if shortcut else 8;height=3 if shortcut else 8
+            else:x=0;top=y;width=cols;height=3 if shortcut else 8;y+=height
+            positions.append(dict(i=w['id'],x=x,y=top,w=width,h=height))
+        layouts[bp]=positions
+    return schema.dashboard({'name':OVERVIEW_NAME,'widgets':widgets,'layouts':layouts,
+        'appearance':{'theme':'inherit','background':'plain','density':'comfortable','accent':'#119773'}})
+
+
 def catalog():
-    return {'items':[{'id':KEY,'name':NAME,'description':DESCRIPTION,'version':1,'configuration':configuration()}]}
+    return {'items':[
+        {'id':OVERVIEW_KEY,'name':OVERVIEW_NAME,'description':'Your live WorkHub shortcuts and lists. Resize, rearrange or add any widget.','version':1,'configuration':overview_configuration()},
+        {'id':KEY,'name':NAME,'description':DESCRIPTION,'version':1,'configuration':configuration()}]}

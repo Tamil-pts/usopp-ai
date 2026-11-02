@@ -118,10 +118,10 @@ body { min-width:0; }
 /* Hierarchical navigation flyout stays above the compact rail. */
 .workspaceApp .railMainNav>button {position:relative;width:100%}
 .workspaceApp .railMainNav .workspaceGroupChevron {position:absolute;right:5px;top:8px;width:13px;height:13px}
-.workspaceFlyout {position:fixed;z-index:1200;width:min(280px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;padding:8px;background:var(--panel,#fff);color:var(--text,#1f2937);border:1px solid var(--line,#dce4ec);border-radius:12px;box-shadow:0 12px 35px #001f3033}
-.workspaceFlyoutHeading {padding:8px 10px;color:var(--muted,#64748b);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.workspaceFlyout {position:fixed;z-index:1200;width:min(280px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;padding:8px;background:#073b4c;color:#e4f0f4;border:1px solid #326678;border-radius:12px;box-shadow:0 16px 45px #001f3055}
+.workspaceFlyoutHeading {padding:8px 10px;color:#97bac6;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .workspaceFlyoutEntry {display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:10px;border:0;border-radius:7px;background:transparent;color:inherit;font:inherit;font-size:.875rem;text-align:left;text-decoration:none;cursor:pointer}
-.workspaceFlyoutEntry:hover,.workspaceFlyoutEntry:focus-visible,.workspaceFlyoutEntry.active {background:var(--soft,#edf6f6);color:var(--accent,#15946b)}
+.workspaceFlyoutEntry:hover,.workspaceFlyoutEntry:focus-visible,.workspaceFlyoutEntry.active {background:#1a5969;color:#b4fce3}
 .workspaceFlyoutEntry>svg {width:18px;height:18px;flex:none}
 .workspaceFlyoutEntry>span {flex:1;min-width:0}
 .workspaceNestedToggle>svg:last-child {width:15px;transition:transform .15s}
@@ -136,3 +136,5 @@ body { min-width:0; }
 .compareDarkTop>div:first-child,.circuitHeading>div:first-child {min-width:0;flex:1 1 300px}
 .plcHistoryActions {display:flex;justify-content:flex-end;margin-bottom:8px}
 @media(max-width:1000px){.compareHeadingAside{flex-basis:auto;width:100%;align-items:stretch}.compareDarkTop .compareDarkActions,.circuitHeading .circuitActions{justify-content:flex-start}}
+
+.workspaceFlyoutEntry:focus-visible{outline:2px solid #82e9cc;outline-offset:-2px}.workspaceNestedMenu{border-left-color:#39707d}.workspaceFlyout .workspaceNestedMenu .workspaceFlyoutEntry{color:#d1e8ee}

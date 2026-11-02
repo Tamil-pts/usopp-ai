@@ -365,9 +365,15 @@ class WorkHub:
                          'continue_development':({'development_completed'},'development'),'submit_quality':({'development_completed'},'quality'),
                          'quality_pass':({'quality'},'release_approval'),'approve_release':({'release_approval'},'ready_release'),
                          'release':({'ready_release'},'released'),'request_changes':({'quality','release_approval','ready_release'},'development'),
+                         'reject':({'quality','release_approval','ready_release'},'development'),
                          'block':({'development'},'blocked'),'resume':({'blocked'},'development'),'reopen':({'released'},'development')}
             if action not in transitions or stage not in transitions[action][0]:raise HTTPException(409,'This action is unavailable at the current stage.')
             target=transitions[action][1]
+            from .workhub_approval_documents import attach as attach_documents, guard as guard_documents
+            if 'approval_documents' in payload:
+                if action not in {'submit_quality','quality_pass','approve_release','release','request_changes','reject'}:raise HTTPException(400,'Choose a workflow submission or review action.')
+                attach_documents(db,item,user,payload['approval_documents'],review=action!='submit_quality')
+            checked_documents=guard_documents(db,item,action)
             if item['type']=='project' and action=='reopen':db.execute('DELETE FROM wh_closed_schedule WHERE project_id=?',(key,))
             if item['type']=='project':
                 from .workhub_workflow import guard
@@ -380,7 +386,7 @@ class WorkHub:
                 parent=self.item(db,item['project_id'])
                 expected='quality' if item['work_phase']=='quality' else 'ready_release'
                 if parent['stage']!=expected:raise HTTPException(409,'Open the corresponding project review or release phase before continuing this task.')
-            if action in {'request_changes','block','reopen'} and not comment:raise HTTPException(400,'Add a short reason.')
+            if action in {'request_changes','reject','block','reopen'} and not comment:raise HTTPException(400,'Add a short reason.')
             if action=='start':
                 if item['type']=='task':
                     parent=self.item(db,item['project_id'])
@@ -429,10 +435,15 @@ class WorkHub:
                     self.notify(db,project,user['id'],[project['owner_id'],project['created_by']],'Development: '+project['title'],'Work resumed on '+item['title']+'. Previous review decisions remain in the history.')
             from .workhub_praxis.outcomes import record as record_work_feedback
             feedback_id=record_work_feedback(db,user,item,action,payload.get('work_feedback')) if payload.get('work_feedback') is not None else None
+            from .workhub_signoff import record as record_signoff
+            stamp=record_signoff(db,user,payload,project_id=item['project_id'],subject_id=key,subject_type='workflow',
+                decision='approve' if action in {'quality_pass','approve_release','release'} else action,
+                role={'quality':'Quality reviewer','release_approval':'Release approver','ready_release':'Release owner'}.get(stage,'Workflow owner'),
+                basis={'item_id':key,'version':item['version'],'stage':stage,'action':action,'revision_id':revision,'run_id':review_run},documents=checked_documents)
             self.event(db,item,user,action,{'from':stage,'to':target,'comment':comment,'revision_id':revision,'run_id':review_run,'owner_id':item['owner_id'],'due_date':item.get('due_date'),'baseline_due':item.get('baseline_due'),'work_feedback_id':feedback_id,
-                       'checked_run_id':checked_run[0] if checked_run else None,
+                       'checked_run_id':checked_run[0] if checked_run else None,'approval_documents':checked_documents,'sign_off':stamp,
                        'reviewers':{field:item[field] for field in ('quality_id','approver_id','release_id')}})
-            if action=='request_changes':
+            if action in {'request_changes','reject'}:
                 db.execute('INSERT INTO issues VALUES(?,?,?,?,?,?,?,?,?)',(identity(),item['project_id'],key,comment,item['owner_id'],user['id'],'open',now,now))
             new=self.item(db,key);recipients=[new[NEXT_OWNER[target]],item['created_by'],item['owner_id']]
             self.notify(db,new,user['id'],recipients,STAGES[target]+': '+item['title'],comment or 'The workflow is ready for its next action.')

@@ -110,6 +110,46 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(self.engineer['id'],saved['content']['assignees']['development'])
         self.assertNotIn('approval',saved)
 
+    def test_project_default_frd_preserves_edited_content_and_stable_flow_links(self):
+        content=authoring.blank('frd')
+        content.update(purpose='Record production',background='Existing PLC',expected_outcome='Speed ≥ 10 µm/s',
+            acceptance_summary='Alarm ≤ 2 s',acceptance_items=[{'id':'AC-001','text':'Alarm ≤ 2 s','confirmed':True}],
+            requirements=[{'id':'FR-002','title':'Temperature','description':'Temperature ≥ 40 °C → alarm','category':'Alarm','priority':'high','status':'confirmed','source_ids':[]}],
+            flowchart={'nodes':[{'id':'n1','position':{'x':0,'y':0},'data':{'kind':'process','label':'Temperature ≥ 40 °C','requirement_ids':['FR-002'],'source_ids':[]}}],'edges':[]})
+        content['sections'].append({'heading':'Deliverables','text':'PLC archive\nValidation report'})
+        p=self.request('POST','/projects',{'workspace_schema':3,'title':'Edited FRD fixture','customer':'Fixture',
+            'scope':'Controls','prepare_frd':True,'frd_content':content,'generate_plan_tasks':False})
+        with hub.db() as db:doc=dict(db.execute("SELECT * FROM qc_documents WHERE project_id=? AND stage='frd'",(p['id'],)).fetchone())
+        result=self.request('GET','/projects/'+p['id']+'/quality/documents/'+doc['id']);saved=result['revision']['content']
+        self.assertEqual('draft',result['revision']['status']);self.assertFalse(result['revision'].get('approved_by'))
+        self.assertEqual('Speed ≥ 10 µm/s',saved['expected_outcome']);self.assertEqual('Existing PLC',saved['background'])
+        self.assertEqual('FR-002',saved['requirements'][0]['id']);self.assertEqual('confirmed',saved['requirements'][0]['status'])
+        self.assertTrue(saved['acceptance_items'][0]['confirmed']);self.assertTrue(saved['flowchart']['needs_review'])
+        self.assertEqual(['FR-002'],saved['flowchart']['nodes'][0]['data']['requirement_ids'])
+        from backend.core.workhub_quality.pdf_templates import blocks,context,fallback
+        rendered=json.dumps(blocks(saved),ensure_ascii=False)
+        for value in ['Existing PLC','Speed ≥ 10 µm/s','PLC archive','Alarm ≤ 2 s','Temperature ≥ 40 °C → alarm','high']:
+            self.assertIn(value,rendered)
+        import io
+        from pypdf import PdfReader
+        with hub.db() as db:
+            value=context(db,hub.item(db,p['id']),doc,result['revision'])
+        raw=fallback(value)
+        pdf_text=' '.join(page.extract_text() for page in PdfReader(io.BytesIO(raw)).pages)
+        for value in ['Existing PLC','Speed ≥ 10 µm/s','PLC archive','Alarm ≤ 2 s','Temperature ≥ 40 °C']:
+            self.assertIn(value,pdf_text)
+        # Editing the older summary field must not silently restore stale checklist text.
+        saved['acceptance_summary']='Updated criterion'
+        documents.save(self.admin,p['id'],doc['id'],{'revision_id':result['revision']['id'],'version':result['revision']['version'],'content':saved})
+        updated=self.request('GET','/projects/'+p['id']+'/quality/documents/'+doc['id'])['revision']['content']
+        self.assertEqual('Updated criterion',updated['acceptance_items'][0]['text']);self.assertFalse(updated['acceptance_items'][0]['confirmed'])
+
+    def test_invalid_project_frd_rolls_back_project_creation(self):
+        with hub.db() as db:before=db.execute("SELECT count(*) FROM items WHERE type='project'").fetchone()[0]
+        self.request('POST','/projects',{'title':'Invalid FRD','prepare_frd':True,'frd_content':{'requirements':[],
+            'flowchart':{'nodes':[{'id':'bad','position':{'x':0,'y':0},'data':{'label':'Start','requirement_ids':['FR-999']}}],'edges':[]}}},400)
+        with hub.db() as db:self.assertEqual(before,db.execute("SELECT count(*) FROM items WHERE type='project'").fetchone()[0])
+
     def test_concurrent_project_numbering_and_duplicate_number(self):
         with ThreadPoolExecutor(max_workers=4) as pool:
             values=list(pool.map(lambda i:workspace.create(self.admin,{'title':'Concurrent '+str(i)}),range(8)))
@@ -215,6 +255,60 @@ class WorkspaceTests(unittest.TestCase):
         self.request('GET','/projects/'+first['scope_id']+'/quality',expected=403)
         self.request('GET','/projects/'+first['scope_id']+'/intelligence',expected=403)
         self.assertEqual(0,self.request('GET','/documents')['total'])
+
+    def test_numbered_requirements_keep_req_ids_in_project_frd_and_related_reports(self):
+        content=training.example()['frd'];content.pop('flowchart',None)
+        for index,row in enumerate(content['requirements']):row['id']='REQ-'+str(index*2+1).zfill(3)
+        p=self.request('POST','/projects',{'workspace_schema':3,'title':'Numbered project requirements',
+          'customer':'Fixture customer','description':'REQ identity test','prepare_frd':True,'frd_content':content})
+        record=service.get_document(self.admin,p['id'],'frd')
+        self.assertEqual([r['id'] for r in content['requirements']],[r['id'] for r in record['revision']['content']['requirements']])
+        related=authoring.prepare_related(self.admin,p['id'])
+        test=service.get_document(self.admin,p['id'],'test')
+        self.assertEqual([r['id'] for r in content['requirements']],[c['requirement_ids'][0] for c in test['revision']['content']['cases']])
+
+    def test_document_management_types_linked_or_standalone_keep_separate_records(self):
+        before=self.request('GET','/overview')['items']
+        created=[]
+        for kind in ('mom','frd','test','test_report','fat','closure'):
+            for linked in (False,True):
+                payload={'stage':'test' if kind=='test_report' else kind,'document_type':kind,
+                         'request_id':kind+str(linked),'title':'Test Report' if kind=='test_report' else kind}
+                if linked:payload['linked_project_id']=self.project['id']
+                row=self.request('POST','/document-spaces',payload);created.append(row)
+                again=self.request('POST','/document-spaces',payload)
+                self.assertEqual(row['scope_id'],again['scope_id'])
+                space=self.request('GET','/document-spaces/'+row['scope_id'])['project']
+                self.assertEqual(kind,space['document_type'])
+                self.assertEqual(self.project['id'] if linked else None,space['linked_project_id'])
+                register=self.request('GET','/documents?kind='+kind)['items']
+                self.assertTrue(any(d['project_id']==row['scope_id'] for d in register))
+                self.assertTrue(all(d['type']==kind for d in register))
+        self.assertEqual({r['id'] for r in before},{r['id'] for r in self.request('GET','/overview')['items']})
+        validation=self.request('GET','/documents?kind=test')['items']
+        tests=self.request('GET','/documents?kind=test_report')['items']
+        self.assertFalse({r['id'] for r in tests}&{r['id'] for r in validation})
+        self.assertEqual(4,len({r['document_number'] for r in tests+validation}))
+        linked_docs=self.request('GET','/documents?project_id='+self.project['id'])['items']
+        self.assertTrue(all(d['linked_project_id']==self.project['id'] for d in linked_docs if d['independent']))
+        self.login(self.outsider)
+        self.assertEqual(0,self.request('GET','/documents?kind=test_report')['total'])
+        self.request('GET','/document-spaces/'+created[7]['scope_id'],expected=403)
+
+    def test_test_report_has_own_pdf_identity_and_rejects_request_type_changes(self):
+        from backend.core.workhub_quality import pdf_templates
+        payload={'stage':'test','document_type':'test_report','title':'Test Report','request_id':'distinct-test'}
+        row=self.request('POST','/document-spaces',payload);pid=row['scope_id']
+        self.request('POST','/document-spaces',{**payload,'document_type':'test'},expected=409)
+        self.request('POST','/document-spaces',{**payload,'document_type':'test_report','stage':'fat'},expected=400)
+        with hub.db() as db:
+            p=hub.item(db,pid);doc=store.control(db,pid,row['control_id'])
+            revision=store.revision(db,doc['id'],row['revision_id'])
+            view=pdf_templates.context(db,p,doc,revision)
+            self.assertEqual('Test Report',view['title'])
+            self.assertIn('5. Test Results',[s['title'] for s in view['sections']])
+            self.assertIn('Test result: Not tested',next(s['text'] for s in view['sections'] if s['title']=='8. Conclusion'))
+            self.assertFalse(view['approved'])
 
     def test_frd_related_drafts_reuse_requirements_without_test_results(self):
         frd=self.draft();r=self.document(frd)['revision'];content=training.example()['frd'];content.pop('flowchart')

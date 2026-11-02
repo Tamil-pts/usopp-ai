@@ -18,6 +18,7 @@ def initialize():
                 name TEXT NOT NULL,configuration TEXT NOT NULL,version INTEGER NOT NULL DEFAULT 1,
                 created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
               CREATE INDEX IF NOT EXISTS wh_dashboard_owner ON wh_dashboards(owner_id,updated_at);
+              CREATE TABLE IF NOT EXISTS wh_dashboard_defaults(user_id INTEGER PRIMARY KEY,dashboard_id TEXT NOT NULL);
               CREATE TABLE IF NOT EXISTS wh_dashboard_access(dashboard_id TEXT NOT NULL,user_id INTEGER NOT NULL,
                 permission TEXT NOT NULL CHECK(permission IN ('viewer','editor')),PRIMARY KEY(dashboard_id,user_id));
               CREATE INDEX IF NOT EXISTS wh_dashboard_recipient ON wh_dashboard_access(user_id,dashboard_id);
@@ -53,7 +54,8 @@ def listing(user):
     personal(user);initialize()
     with hub.db() as db:
         values=db.execute('SELECT d.* FROM wh_dashboards d WHERE d.owner_id=? OR EXISTS(SELECT 1 FROM wh_dashboard_access a WHERE a.dashboard_id=d.id AND a.user_id=?) ORDER BY d.updated_at DESC',(user['id'],user['id'])).fetchall()
-        return {'items':[public(db,row(db,user,r['id']),False) for r in values],
+        home=db.execute('SELECT h.dashboard_id FROM wh_dashboard_defaults h JOIN wh_dashboards d ON d.id=h.dashboard_id AND d.owner_id=h.user_id WHERE h.user_id=?',(user['id'],)).fetchone()
+        return {'items':[public(db,row(db,user,r['id']),False) for r in values],'default_id':home[0] if home else None,
                 'users':[u for u in hub.users() if u['active']]}
 
 def get(user,key):
@@ -86,17 +88,23 @@ def from_template(user,key,payload):
     """Atomic first-use creation leaves all existing dashboards and sharing intact."""
     from . import templates
     personal(user);initialize();schema.bounded(payload)
-    if key!=templates.KEY:raise HTTPException(404,'Dashboard template not found.')
+    if key not in {templates.KEY,templates.OVERVIEW_KEY}:raise HTTPException(404,'Dashboard template not found.')
     if type(payload.get('if_empty',False)) is not bool:schema.fail('Use true or false for first-use creation.')
-    config=templates.configuration();now=timestamp()
+    if type(payload.get('if_default_missing',False)) is not bool:schema.fail('Use true or false for default creation.')
+    make_default=key==templates.OVERVIEW_KEY and payload.get('if_default_missing',False)
+    config=templates.overview_configuration() if key==templates.OVERVIEW_KEY else templates.configuration();now=timestamp()
     with hub.db(True) as db:
+        if make_default:
+            existing=db.execute('SELECT d.id FROM wh_dashboard_defaults h JOIN wh_dashboards d ON d.id=h.dashboard_id AND d.owner_id=h.user_id WHERE h.user_id=?',(user['id'],)).fetchone()
+            if existing:return public(db,row(db,user,existing['id']))
         if payload.get('if_empty'):
             existing=db.execute('SELECT d.id FROM wh_dashboards d WHERE d.owner_id=? OR EXISTS(SELECT 1 FROM wh_dashboard_access a WHERE a.dashboard_id=d.id AND a.user_id=?) ORDER BY d.updated_at DESC LIMIT 1',(user['id'],user['id'])).fetchone()
             if existing:return public(db,row(db,user,existing['id']))
         if db.execute('SELECT COUNT(*) FROM wh_dashboards WHERE owner_id=?',(user['id'],)).fetchone()[0]>=100:raise HTTPException(409,'You can own up to 100 dashboards.')
         key=identity()
         db.execute('INSERT INTO wh_dashboards VALUES(?,?,?,?,?,?,?)',(key,user['id'],config['name'],schema.bounded(config),1,now,now))
-        change(db,user,key,'created_from_engineering_template',1)
+        if make_default:db.execute('INSERT OR REPLACE INTO wh_dashboard_defaults VALUES(?,?)',(user['id'],key))
+        change(db,user,key,'created_from_workhub_template' if config['name']==templates.OVERVIEW_NAME else 'created_from_engineering_template',1)
         return public(db,row(db,user,key))
 
 def share(user,key,payload):
@@ -121,5 +129,6 @@ def delete(user,key,version):
         before=row(db,user,key,owner=True)
         if version!=before['version']:raise HTTPException(409,'Dashboard changed. Reload before deleting.')
         change(db,user,key,'deleted',version)
+        db.execute('DELETE FROM wh_dashboard_defaults WHERE dashboard_id=?',(key,))
         db.execute('DELETE FROM wh_dashboard_access WHERE dashboard_id=?',(key,));db.execute('DELETE FROM wh_dashboards WHERE id=?',(key,))
     return {'deleted':True}

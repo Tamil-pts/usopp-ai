@@ -11,10 +11,15 @@ from fastapi import HTTPException
 WIDGETS = {
     'kpi':'KPI card','scorecard':'Scorecard','gauge':'Gauge','progress':'Progress indicator',
     'bar':'Bar chart','stacked_bar':'Stacked bars','line':'Line chart','area':'Area chart',
-    'pie':'Pie chart','donut':'Donut chart','scatter':'Scatter chart','combo':'Combo chart',
+    'pie':'Pie chart','donut':'Donut chart','scatter':'Scatter chart','combo':'Comparison chart',
     'heatmap':'Heatmap','histogram':'Histogram','treemap':'Treemap','funnel':'Funnel','radar':'Radar chart',
     'table':'Table','pivot':'Pivot table','matrix':'Matrix','gantt':'Gantt chart','roadmap':'Roadmap',
-    'calendar':'Calendar','text':'Text','documents':'Document links'}
+    'calendar':'Calendar','text':'Text','documents':'Document links',
+    'workhub_shortcut':'WorkHub shortcut','workhub_list':'WorkHub list'}
+OVERVIEW_CONTENT={
+    'workhub_shortcut':{'work':'My work','projects':'Projects','approvals':'Approvals','team':'Team Management'},
+    'workhub_list':{'actions':'My next actions','milestones':'Milestones & due dates',
+                    'recent':'Recently updated projects','links':'Team & documents'}}
 COLS={'desktop':12,'tablet':8,'mobile':4}
 AGGS=['count','distinct','sum','avg','min','max']
 COMMON={'id':('Record ID','string'),'title':('Title','string'),'project_id':('Project ID','string'),
@@ -28,10 +33,10 @@ def source(title, description, fields, default_dimension, default_metric='id', d
         'default_metric':default_metric,'default_aggregation':default_aggregation}
 
 SOURCES={
- 'projects':source('Projects','Existing WorkHub project completion calculations; all enabled personal accounts.',
+ 'projects':source('Projects','Recorded project progress and hours. Billing hours totals all approved project time; date filters select project records, not time-entry dates.',
    {'status':('Stage','string'),'work_type':('Work type','string'),'progress':('Project completion (%)','number'),
     'development_progress':('Development completion (%)','number'),'start':('Planned start','date'),'end':('Due date','date'),
-    'hours':('Planned hours','number'),'health':('Health','string')},'status'),
+    'hours':('Planned hours','number'),'billing_hours':('Billing hours (approved time)','number'),'health':('Health','string')},'status'),
  'tasks':source('Tasks','Workflow steps with their recorded phase and completion.',
    {'status':('Stage','string'),'phase':('Work phase','string'),'work_type':('Work type','string'),
     'progress':('Task completion (%)','number'),'completed':('Development completed (0/1)','number'),
@@ -138,7 +143,14 @@ def widget(value):
     columns=[choice(k,SOURCES[q['source']]['fields']) for k in array(v.get('columns',[]),16)]
     palette=[color(k) for k in array(a.get('colors',['#16a394','#4269d0','#a383e3','#e8aa48','#d2657e']),12)]
     if not palette:fail('Choose at least one chart color.')
+    overview={}
+    if kind in OVERVIEW_CONTENT:
+        settings=obj(v.get('overview',{}))
+        overview={'content':choice(settings.get('content',next(iter(OVERVIEW_CONTENT[kind]))),OVERVIEW_CONTENT[kind]),
+            'caption':string(settings.get('caption',''),300),'limit':integer(settings.get('limit',4),1,20),
+            'tone':choice(settings.get('tone','blue'),['blue','green','amber','purple','plain'])}
     return {'id':key,'type':kind,'title':string(v.get('title',WIDGETS[kind])), 'query':q,'columns':columns,
+      **({'overview':overview} if overview else {}),
       'text':string(v.get('text',''),12000),
       'appearance':{'colors':palette,'legend':bool(a.get('legend',True)),'axes':bool(a.get('axes',True)),
         'horizontal':bool(a.get('horizontal',False)),'smooth':bool(a.get('smooth',False)),
@@ -179,6 +191,6 @@ def dashboard(value):
          'accent':color(a.get('accent','#16a394'))}}
 
 def registry():
-    return {'sources':SOURCES,'widgets':WIDGETS,'columns':COLS,'schema_version':1,
+    return {'sources':SOURCES,'widgets':WIDGETS,'overview_content':OVERVIEW_CONTENT,'columns':COLS,'schema_version':1,
       'limits':{'widgets':60,'result_rows':500,'dimensions':2,'metrics':4},
       'note':'Sharing a dashboard shares its configuration. Data is re-authorized for each viewer.'}

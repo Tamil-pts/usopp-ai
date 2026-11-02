@@ -568,5 +568,8 @@ def analyze_project(root, progress=None, cancel=None, configuration=None):
                        'backend.core.project_intelligence.Index.parse', 'python_engine.compare.parse_cpu_tasks',
                        'python_engine.compare.parse_hardware_modules', 'python_engine.compare.parse_io_mappings',
                        'python_engine.compare.hmi_screen_layout', 'python_engine.ladder_model.network_model']}
+    publish('Linking machine names, settings, drive calls and source sequences')
+    from .machine_identity import build as build_machine_identity
+    model['machineContext'] = build_machine_identity(model, sources)
     publish('Project model ready for compatibility compilation', len(sources), len(sources))
     return model

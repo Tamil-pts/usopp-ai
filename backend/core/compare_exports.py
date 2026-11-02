@@ -725,7 +725,7 @@ def _html_block(block: dict, base_name: str, developed_name: str) -> str:
     )
 
 
-def _html_change(diff: dict, number: int, base_name: str, developed_name: str) -> str:
+def _html_change(diff: dict, number: int, base_name: str, developed_name: str, *, skip_layout=False) -> str:
     report_progress(f'Preparing HTML: {diff.get("path", "comparison")}')
     status = escape(str(diff.get("status") or "modified"))
     category = escape(str(diff.get("category") or "config").title())
@@ -742,11 +742,16 @@ def _html_change(diff: dict, number: int, base_name: str, developed_name: str) -
             svg=render_svg(record,records[other],side) if record and record.get('diagram') else '<p>Network not present</p>'
             panes.append(f'<div style="min-width:0;padding:8px"><b>{escape(base_name if side=="base" else developed_name)} / {side.title()}</b><div style="overflow:auto"><div style="min-width:100%;width:max-content">{svg}</div></div></div>')
         diagrams+=f'<h3>{escape(control.get("name","Network"))}</h3><div class="file-split">{"".join(panes)}</div>'
+    screen=_preview_html(diff)
+    if diff.get('category')=='screen':
+        from backend.core.compare_hmi_report import interactive_screen
+        screen=interactive_screen(diff,base_name,developed_name,screen+blocks,skip_layout=skip_layout)
+        blocks=''
     return (
         f'<section class="change" id="change-{number}"><div class="change-title"><div><span class="status {status}">{status.upper()}</span>'
         f'<b>Change {number}: {escape(str(diff.get("path") or ""))}</b></div><small>{category} / {subroutine}</small></div>'
         f'<div class="file-paths"><div><b>Base file</b>{escape(_relative_file(diff, "base"))}</div>'
-        f'<div><b>Developed file</b>{escape(_relative_file(diff, "developed"))}</div></div>{_preview_html(diff)}{diagrams}{blocks}</section>'
+        f'<div><b>Developed file</b>{escape(_relative_file(diff, "developed"))}</div></div>{screen}{diagrams}{blocks}</section>'
     )
 
 
@@ -765,7 +770,7 @@ def export_html(result: dict, path: Path, logo: Path):
             continue
         sections.append(
             f'<section class="report-section" id="category-{category}"><h2>{title}<small>{len(changes)} selected file(s)</small></h2>'
-            + "".join(_html_change(diff, number, base_name, developed_name) for number, diff in changes)
+            + "".join(_html_change(diff, number, base_name, developed_name,skip_layout=bool(result.get('skippedHmiProperties'))) for number, diff in changes)
             + "</section>"
         )
     if _hardware_blocks(result):sections.append('<section class="report-section" id="hardware-mappings"><h2>Hardware and mapped datapoints</h2>'+"".join(_html_block(block,base_name,developed_name) for block in _hardware_blocks(result))+"</section>")
@@ -787,6 +792,9 @@ svg{{width:100%;height:auto}}
     navigation='<nav class="report-toc" aria-label="Table of contents"><h2>Table of contents</h2><a href="#report-top">Report overview</a>'+links+'</nav>'
     css='<style>.report-toc{position:sticky;top:12px;align-self:start;min-width:180px;max-width:50vw;width:270px;max-height:85vh;overflow:auto;resize:horizontal;padding:12px;border:1px solid #cbd7e3;background:#f3f7fb}.report-toc h2{font-size:15px}.report-toc a{display:block;padding:5px;color:#173b68;overflow-wrap:anywhere}.report-toc .toc-level-1{padding-left:18px;font-size:11px}.report-layout{display:flex;gap:18px}.report-layout main{min-width:0;flex:1}.change,.report-section{scroll-margin-top:12px}@media print{.report-layout{display:block}.report-toc{position:static;width:auto;max-width:none;max-height:none;resize:none;break-after:page}}@media(max-width:850px){.report-layout{display:block}.report-toc{position:static;width:auto;max-width:none;max-height:260px;resize:vertical}}</style>'
     html=html.replace('</head>',css+'</head>').replace('</header>','</header><div class="report-layout">'+navigation+'<main id="report-top">',1).replace('<footer>','</main></div><footer>',1)
+    if any(diff.get('category')=='screen' and (diff.get('parsed_screen') or {}).get('layouts') for _,diff in numbered):
+        from backend.core.compare_hmi_report import viewer_assets
+        html=html.replace('</body>',viewer_assets()+'</body>')
     path.write_text(html, encoding="utf-8")
 
 

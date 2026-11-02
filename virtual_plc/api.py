@@ -722,12 +722,44 @@ def signals(identity: str, request: Request):
                 'clock': 'deterministic-virtual', 'physicalPLC': False}
 
 
+@router.get('/projects/{identity}/machine-context')
+def machine_context(identity:str,request:Request,q:str='',limit:int=60):
+    from .core.machine_identity import build, select, VERSION
+    from .core.machine_calls import add_help
+    from .core.storage import bounded_json
+    from .core.hmi_runtime import control_state
+    workspace=opened(request,identity)
+    with workspace.lock:
+        model=workspace.model
+        if not model:raise HTTPException(409,'Finish project analysis first.')
+        context=model.get('machineContext')
+        if not context or context.get('version')!=VERSION:
+            path=service.store.folder(owner(request),identity)/'sources.json'
+            sources={p:row['text'] for p,row in bounded_json(path).items()} if path.is_file() else {}
+            context=build(model,sources);model['machineContext']=context
+        data=select(context,q[:6000],max(1,min(200,limit)))
+        runtime=workspace.runtime
+        if runtime:
+            data['runtime']={'mode':'virtual simulation','timeMs':runtime.time_ms if hasattr(runtime,'time_ms') else runtime_view(runtime).get('timeMs'),
+                             'status':runtime.status,'values':{},'controls':{}}
+            for v in data['variables']:
+                try:
+                    from .core.preview import value_preview
+                    data['runtime']['values'][v['id']]=value_preview(runtime.get_value(v['id']))[0]
+                except (ValueError,KeyError,TypeError):pass
+            originals={c['id']:c for p in model.get('hmi',{}).get('pages',[]) for c in p.get('objects',[])}
+            for c in data['controls']:
+                if c['id'] in originals:data['runtime']['controls'][c['id']]=control_state(originals[c['id']],runtime)
+    return add_help(data)
+
+
 @router.post('/projects/{identity}/chopper')
 def chopper(identity: str, payload: dict, request: Request):
     workspace = opened(request, identity)
     question = str(payload.get('question') or '').strip()
     if not question or len(question) > 6000:
         raise HTTPException(400, 'Ask a question of 1..6000 characters.')
+    linked_context=machine_context(identity,request,question,40)
     # Copy only bounded diagnostic state, then release the simulation lock.
     with workspace.lock:
         snapshot = runtime_view(workspace.runtime, workspace.document.get('watchlist', [])) if workspace.runtime else {}
@@ -736,4 +768,4 @@ def chopper(identity: str, payload: dict, request: Request):
     history = payload.get('history')
     history = [{'role': row['role'], 'content': str(row.get('content', ''))[:2000]}
                for row in history[-6:] if isinstance(row, dict) and row.get('role') in {'user', 'assistant'}] if isinstance(history, list) else []
-    return answer(model, snapshot, question, owner(request), history)
+    return answer(model, snapshot, question, owner(request), history, machine_context=linked_context)

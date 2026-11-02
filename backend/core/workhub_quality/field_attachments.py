@@ -2,7 +2,7 @@
 import re
 from fastapi import HTTPException
 
-ROOT_FIELDS=('summary','purpose','scope','acceptance_summary','na_reason','meeting_subject','meeting_date','meeting_mode','location','agenda','follow_up')
+ROOT_FIELDS=('summary','purpose','background','expected_outcome','scope','acceptance_summary','conclusion','na_reason','meeting_subject','meeting_date','meeting_mode','location','agenda','follow_up')
 ROW_FIELDS={
  'requirement':('requirements',('title','description','trigger','expected_behavior','subsystem','acceptance_criteria')),
  'case':('cases',('objective','procedure','expected_result','acceptance_criteria','actual','observations')),

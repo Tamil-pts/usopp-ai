@@ -25,7 +25,9 @@ export default defineConfig(({ mode }) => {
       }
     }],
     resolve: {dedupe: ['react', 'react-dom']},
-    build: { sourcemap: false, minify: 'esbuild' },
+    // Existing tabs may still import a previous build's hashed page modules.
+    // Retain those assets so a rebuild does not turn an open page blank.
+    build: { sourcemap: false, minify: 'esbuild', emptyOutDir:false },
     server: {
       port: frontendPort,
       host: '127.0.0.1',

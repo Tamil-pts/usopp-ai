@@ -1,0 +1,41 @@
+.report-hmi{--text:#172033;--muted:#52677b;--panel:#fff;--panel2:#f1f5f9;--line:#c6d3e0;--accent:#176da0;--accentbg:#e1f0fb;min-width:0}
+.report-hmi [data-hmi-mount]{display:none}
+.report-hmi[data-mounted=true] [data-hmi-mount]{display:block}
+.report-hmi[data-mounted=true] .report-hmi-static{display:none}
+.report-hmi .hmiPreview{position:relative;min-width:0;max-height:1250px;overflow:auto;background:var(--panel);color:var(--text);resize:vertical;min-height:400px}
+.report-hmi .hmiPreviewToolbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:10px;max-height:190px;overflow:auto;background:var(--panel2);border-bottom:1px solid var(--line)}
+.report-hmi button,.report-hmi select{font:12px/1.4 system-ui,sans-serif;color:var(--text);border:1px solid var(--line);border-radius:5px;padding:5px 8px;background:var(--panel);cursor:pointer;max-width:100%}
+.report-hmi button:focus-visible,.report-hmi select:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+.report-hmi button:disabled{opacity:.5;cursor:default}
+.report-hmi .hmiPreviewToolbar label{display:flex;align-items:center;gap:6px;font:12px system-ui,sans-serif;min-width:0}
+.report-hmi .hmiPreviewToolbar select{max-width:230px;min-width:0}
+.report-hmi .hmiPreviewToolbar .hmiControlSelect{max-width:290px}
+.report-hmi .hmiPreviewToolbar input[type=range]{width:90px;accent-color:var(--accent)}
+.report-hmi .hmiPreviewToolbar input[type=checkbox]{width:15px;height:15px;flex:none}
+.report-hmi .hmiFontButtons{display:flex;align-items:center;gap:6px}.report-hmi .hmiFontButtons output{font-size:12px;min-width:36px;text-align:center}
+.report-hmi .hmiPreviewNote{font:12px/1.5 system-ui,sans-serif;color:var(--muted);margin:0;padding:9px 12px}
+.report-hmi .hmiPreviewLegend{display:flex;gap:16px;flex-wrap:wrap;padding:0 12px 10px;font:12px system-ui,sans-serif}
+.report-hmi .hmiPreviewLegend span{display:flex;align-items:center;gap:5px}.report-hmi .hmiPreviewLegend i{width:18px;height:18px;border-radius:50%;color:white;font-style:normal;line-height:18px;text-align:center}
+.report-hmi .hmiPreviewPair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1px;background:var(--line)}
+.report-hmi .hmiPreviewSide{min-width:0;background:var(--panel)}
+.report-hmi .hmiPreviewSide>header{display:flex;flex-direction:column;align-items:stretch;gap:4px;margin:0;padding:10px 12px;border:0;border-top:3px solid #00c6b5;background:var(--panel2);font:12px system-ui,sans-serif;overflow-wrap:anywhere}
+.report-hmi .hmiPreviewSide.developed>header{border-top-color:#b5718f}
+.report-hmi .hmiPreviewCanvasScroll{overflow:scroll;scrollbar-gutter:stable;padding:10px;background:#e6edf2;min-height:0;scroll-behavior:auto}
+.report-hmi .hmiPreviewCanvasScroll>svg{max-width:none;height:auto}
+.report-hmi .hmiPreviewCanvasScroll>svg:not([width="100%"]){width:auto}
+.report-hmi .hmiPreviewControl{cursor:pointer;outline:none}.report-hmi .hmiPreviewControl:hover>rect,.report-hmi .hmiPreviewControl:focus>rect{stroke:#2563eb;stroke-width:2}
+.report-hmi .hmiPreviewControlLabel{box-sizing:border-box;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:2px 4px;font-family:Arial,sans-serif;line-height:1.12}
+.report-hmi .hmiPreviewControlLabel small{font-size:9px;line-height:1.1;opacity:.85}.report-hmi .hmiPreviewControlLabel>span{font-size:inherit;line-height:inherit;flex-shrink:0;max-width:100%;overflow:hidden}
+.report-hmi .hmiPreviewMissing{padding:36px 14px;color:var(--muted)}
+.report-hmi .hmiPreviewInspector{border-top:1px solid var(--line)}
+.report-hmi .hmiInspectorHeading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px}
+.report-hmi .hmiInspectorHeading h3{font:600 14px system-ui,sans-serif;margin:0;overflow-wrap:anywhere}
+.report-hmi .hmiOverlapChoices{display:flex;flex-basis:100%;flex-wrap:wrap;align-items:center;gap:8px;padding:8px;border:1px solid #bed4e8;border-radius:6px;background:#eef6fc;font:12px/1.4 system-ui,sans-serif}
+.report-hmi .hmiOverlapChoices button[aria-pressed=true]{border-color:#2563eb;background:#dceaff}.report-hmi .hmiOverlapChoices small{display:block;font-size:10px}
+.report-hmi .compareResizeHandle{touch-action:none;cursor:row-resize;text-align:center;padding:8px;background:var(--panel2);border-block:1px solid var(--line);font:12px/1.4 system-ui,sans-serif;user-select:none}
+.report-hmi .compareResizeHandle:focus-visible,.report-hmi .compareResizeHandle:hover{background:var(--accentbg);outline:2px solid var(--accent)}
+.report-hmi .hmiGroupedPropertyScroll{height:430px}.report-hmi .hmiGroupedPropertyTable th,.report-hmi .hmiGroupedPropertyTable td{font-size:12px}
+.report-hmi .hmiGroupedPropertyTable th{width:auto}
+@media screen{body{max-width:2000px!important}.report-toc{width:230px;flex:none}.report-layout main{overflow:hidden}}
+@media(max-width:850px){body{padding:0 10px!important}.report-hmi .hmiPreview{max-height:1100px}.report-hmi .hmiPreviewCanvasScroll{padding:5px}.report-hmi .hmiPreviewToolbar{max-height:220px}.report-hmi .hmiInspectorHeading{flex-wrap:wrap}.report-hmi .hmiPreviewToolbar select{max-width:190px}}
+@media print{.report-hmi [data-hmi-mount]{display:none!important}.report-hmi .report-hmi-static{display:block!important}}

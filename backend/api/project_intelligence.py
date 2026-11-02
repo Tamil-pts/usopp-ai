@@ -7,6 +7,13 @@ from backend.core.project_retrieval import retrieve_page
 router=APIRouter(tags=['Chopper Project Intelligence'])
 
 
+@router.get('/api/assist/projects/{key}/machine-context')
+def machine_context(key:str,request:Request,q:str='',limit:int=60):
+    from backend.core.machine_context import view
+    try:return view(intelligence.opened(key,owner(request)),q[:6000],limit)
+    except (ValueError,PermissionError,OSError) as error:raise HTTPException(400,str(error))
+
+
 def owner(request):return request.state.user['id']
 
 

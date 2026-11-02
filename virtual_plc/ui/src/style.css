@@ -7,3 +7,12 @@
 .jig-toggle.is-on{background:#087c6140;border-color:#12ad86;color:var(--green)}.command-bar .jig-toggle{font-size:11px;min-width:132px}
 
 .execution-stop-notice{margin:8px 12px;flex-shrink:0;align-items:flex-start}.execution-stop-notice>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}.execution-stop-notice strong,.execution-stop-notice p,.execution-stop-notice small{flex-basis:100%;margin:0}.execution-stop-notice p{white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* Keep zoomed and small workspaces usable without clipping the command bar. */
+.app-shell{width:100%;min-width:0;max-width:100%}.app-topbar{height:auto;min-height:59px;flex-wrap:wrap;padding:10px 14px;min-width:0}.command-bar{height:auto;min-height:49px;flex-wrap:wrap;padding:8px;min-width:0}.project-actions{flex-wrap:wrap;max-width:100%}.engineering-body,.upper-workspace{min-width:0}.upper-workspace{position:relative}.central{min-width:0}.command-bar>.spacer{min-width:0}.view-toolbar>*{max-width:100%}
+@media(max-width:1100px){.command-bar>.spacer{display:none}.command-bar .panel-toggles{margin-left:auto}.app-topbar>.spacer{display:none}.workspace-title{white-space:normal;min-width:0}}
+@media(max-width:1000px){.upper-workspace>.explorer,.upper-workspace>.inspector{position:absolute;top:0;bottom:0;width:min(320px,calc(100% - 16px))!important;max-width:calc(100% - 16px);z-index:25;box-shadow:var(--shadow)}.upper-workspace>.explorer{left:0}.upper-workspace>.inspector{right:0}.upper-workspace>.resize-handle.vertical{display:none}}
+@media(max-width:600px){.app-topbar{gap:8px}.app-topbar .brand{font-size:18px}.command-bar .toolbar-divider,.command-caption{display:none}.command-bar .panel-toggles{margin-left:0}.welcome{padding:24px 18px;justify-content:flex-start}.welcome h1{font-size:26px;overflow-wrap:anywhere}.welcome p{max-width:100%;overflow-wrap:anywhere}.welcome-actions{flex-wrap:wrap}.view-toolbar select,.view-toolbar .search{max-width:100%;min-width:0}.status-bar{height:auto;min-height:24px;flex-wrap:wrap;gap:5px}}
+
+.toolbar-menu:not([open])>.menu-popover{display:none}
+@media(max-width:600px){.toolbar-menu>.menu-popover{position:fixed;left:12px;right:12px;top:106px;width:auto;max-height:calc(100dvh - 130px);overflow:auto;z-index:60}.toolbar-menu>.menu-popover button{white-space:normal;text-align:left;justify-content:flex-start}}

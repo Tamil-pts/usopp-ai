@@ -152,6 +152,14 @@ def detail(db,doc,rev):
     ex=executions(db,rev['id'])
     for case in value['content'].get('cases',[]):
         result=ex.get(case['id']);case['execution']=result if result and result['specification_hash']==case_hash(case,rev['frd_revision_id']) else None
+        case['outcome']=case['execution']['outcome'] if case['execution'] else 'not_run'
+        if case.get('native_run_id'):
+            run=db.execute('SELECT * FROM engineering_runs WHERE project_id=? AND run_id=?',(doc['project_id'],case['native_run_id'])).fetchone()
+            if run:
+                from .checks import native_outcome
+                source=dict(run);case['source_result']={'run_id':source['run_id'],'kind':source['kind'],'status':source['status'],'outcome':native_outcome(source),'summary':json.loads(source['summary'])}
+                if not case['execution'] and rev['confirmed_at'] and rev['confirmed_hash']==rev['content_hash']:case['outcome']=native_outcome(source)
+    value['execution_history']=[{**dict(r),'file_ids':json.loads(r['file_ids'])} for r in db.execute('SELECT * FROM qc_executions WHERE revision_id=? ORDER BY rowid DESC',(rev['id'],))]
     acceptance=db.execute('SELECT * FROM qc_acceptances WHERE revision_id=? ORDER BY rowid DESC LIMIT 1',(rev['id'],)).fetchone()
     value['acceptance']={**dict(acceptance),'file_ids':json.loads(acceptance['file_ids'])} if acceptance else None
     value['confirmed']=bool(rev['confirmed_at'] and rev['confirmed_hash']==rev['content_hash'])

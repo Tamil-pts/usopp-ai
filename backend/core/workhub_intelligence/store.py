@@ -157,6 +157,8 @@ def save_document(user,project_id,payload,document_id=None):
         content=payload.get('content',{})
         if not isinstance(content,dict):raise HTTPException(400,'Provide structured document content.')
         validate_content(kind,content)
+        if document_id and kind=='mom' and (content.get('meeting_subject') or '').strip():
+            db.execute('UPDATE pi_documents SET title=? WHERE id=?',(text(content['meeting_subject'],240,True),document_id))
         doc,rev=create_document(db,user,project_id,kind,payload.get('title') or kind.upper(),content,
                                payload.get('file_id',existing.get('file_id')),payload.get('meeting_id'),document_id=document_id,expected_revision=payload.get('version'))
         return {'document':doc,'revision':rev}
@@ -171,6 +173,18 @@ def validate_content(kind,value):
             if not isinstance(entries,list) or len(entries)>2000 or any(not isinstance(entry,dict) for entry in entries):raise HTTPException(400,'Use structured MOM section items.')
         people=value.get('participants',[])
         if not isinstance(people,list) or len(people)>100 or any(not isinstance(person,str) for person in people):raise HTTPException(400,'Provide known participant names as a list.')
+        for field in ('meeting_subject','meeting_mode','location','agenda','meeting_objective','meeting_start_time','meeting_end_time'):
+            if field in value:text(value[field] or '',12000 if field in {'agenda','meeting_objective'} else 500)
+        details=value.get('participant_details',[])
+        if not isinstance(details,list) or len(details)>100 or any(not isinstance(p,dict) for p in details):raise HTTPException(400,'Use up to 100 structured participant rows.')
+        for person in details:
+            for field in ('name','role','organization'):text(person.get(field,'') or '',500)
+            if person.get('attendance','Not confirmed') not in {'Present','Absent','Invited','Not confirmed'}:raise HTTPException(400,'Choose a recorded attendance status.')
+        types=value.get('meeting_types',[])
+        if not isinstance(types,list) or len(types)>4 or any(t not in {'Project Review','Requirement','Issue / Resolution','Others'} for t in types):raise HTTPException(400,'Choose a supported meeting type.')
+        next_meeting=value.get('next_meeting',{})
+        if not isinstance(next_meeting,dict):raise HTTPException(400,'Provide structured next meeting details.')
+        for field in ('date','time','mode'):text(next_meeting.get(field,'') or '',500)
     if kind=='flowchart':
         nodes=value.get('nodes',[]);edges=value.get('edges',[])
         if not isinstance(nodes,list) or not isinstance(edges,list) or len(nodes)>500 or len(edges)>1500:raise HTTPException(400,'Use up to 500 nodes and 1,500 connections.')
@@ -193,7 +207,7 @@ def validate_content(kind,value):
         requirements=value.get('requirements',[])
         if not isinstance(requirements,list) or len(requirements)>2000:raise HTTPException(400,'Use up to 2,000 requirements per document.')
         ids=[r.get('id') for r in requirements if isinstance(r,dict)]
-        if len(ids)!=len(requirements) or any(not re.fullmatch(r'FR-\d{3,6}',str(i or '')) for i in ids) or len(set(ids))!=len(ids):raise HTTPException(400,'Every requirement needs a unique FR-001 style ID.')
+        if len(ids)!=len(requirements) or any(not re.fullmatch(r'(?:FR|REQ)-\d{3,6}',str(i or '')) for i in ids) or len(set(ids))!=len(ids):raise HTTPException(400,'Every requirement needs a unique REQ-001 or FR-001 style ID.')
         for requirement in requirements:
             for field in ('title','description','trigger','expected_behavior','subsystem','acceptance_criteria'):
                 item=requirement.get(field)
@@ -235,7 +249,7 @@ def overview(user,key):
             meetings.append({**dict(row),'participants':json.loads(row['participants'])})
         documents=[]
         fields=('id','number','file_id','status','reviewer_id','created_by','created_at','reviewed_at','applied_at')
-        sql='SELECT d.*,'+','.join('r.'+f+' AS rev_'+f for f in fields)+' FROM pi_documents d LEFT JOIN pi_revisions r ON r.id=d.current_revision WHERE d.project_id=? ORDER BY d.updated_at DESC LIMIT 500'
+        sql='SELECT d.*,'+','.join('r.'+f+' AS rev_'+f for f in fields)+" FROM pi_documents d LEFT JOIN pi_revisions r ON r.id=d.current_revision WHERE d.project_id=? AND COALESCE(r.status,'')!='archived' ORDER BY d.updated_at DESC LIMIT 500"
         for row in db.execute(sql,(key,)):
             value=dict(row);current={f:value.pop('rev_'+f) for f in fields}
             documents.append({**value,'revision':current if current['id'] else {}})
@@ -257,14 +271,17 @@ def overview(user,key):
 def get_document(user,key,doc_id):
     initialize()
     with hub.db() as db:
-        project(db,key,user);doc=document(db,doc_id,key)
+        p=project(db,key,user);doc=document(db,doc_id,key)
         revisions=[]
         for row in db.execute('SELECT * FROM pi_revisions WHERE document_id=? ORDER BY number DESC LIMIT 100',(doc_id,)):
             value=dict(row);raw=value.pop('content')
             if row['id']==doc['current_revision']:value['content']=json.loads(raw)
             revisions.append(value)
         annotations=[dict(row) for row in db.execute('SELECT * FROM pi_annotations WHERE document_id=? ORDER BY created_at',(doc_id,))]
-        return {'document':doc,'revisions':revisions,'annotations':annotations}
+        from backend.core.workhub_signoff import history
+        current=next((r for r in revisions if r['id']==doc['current_revision']),{})
+        can_delete=p['stage']!='released' and current.get('status')!='archived' and (user['role']=='admin' or user['id'] in {p['owner_id'],p['created_by'],doc['created_by'],current.get('created_by')})
+        return {'document':doc,'revisions':revisions,'annotations':annotations,'can_delete':can_delete,'sign_offs':[stamp for rev in revisions for stamp in history(db,rev['id'])]}
 
 
 def review(user,key,doc_id,payload):
@@ -285,10 +302,13 @@ def review(user,key,doc_id,payload):
             reviewer=hub.user_id(payload.get('reviewer_id',item['quality_id']))
             db.execute("UPDATE pi_revisions SET status='review',reviewer_id=? WHERE id=?",(reviewer,rev['id']))
             hub.notify(db,item,user['id'],[reviewer],'Document review: '+doc['title'],f'Review revision {rev["number"]} in Project Intelligence.')
-        elif action in {'approve','request_changes'}:
+        elif action in {'approve','request_changes','reject'}:
             if rev['status']!='review' or rev['reviewer_id']!=user['id']:raise HTTPException(403,'The assigned document reviewer must record this decision.')
             if doc['current_revision']!=rev['id']:raise HTTPException(409,'A newer document revision exists. Review the latest revision.')
-            if action=='request_changes' and not comment.strip():raise HTTPException(400,'Describe the requested corrections.')
+            if action!='approve' and not comment.strip():raise HTTPException(400,'Describe the requested corrections or rejection.')
+            from backend.core.workhub_signoff import record as sign
+            stamp=sign(db,user,payload,project_id=key,subject_id=rev['id'],subject_type='document_revision',
+                decision=action,role='Document reviewer',basis={'document_id':doc_id,'revision_id':rev['id'],'revision':rev['number'],'content_hash':__import__('hashlib').sha256(_bounded(rev['content']).encode()).hexdigest()})
             if action=='approve':
                 if rev['base_approved']!=doc['approved_revision']:raise HTTPException(409,'The approved baseline changed. Refresh and prepare a new revision.')
                 validate_content(doc['kind'],rev['content'])
@@ -298,15 +318,15 @@ def review(user,key,doc_id,payload):
                 if doc['kind']=='plan' and not rev['content'].get('tasks'):raise HTTPException(400,'Add activities before approving the plan.')
                 db.execute('UPDATE pi_documents SET approved_revision=?,updated_at=? WHERE id=?',(rev['id'],timestamp(),doc_id))
             db.execute('UPDATE pi_revisions SET status=?,reviewed_at=?,review_comment=?,reviewed_by=? WHERE id=?',
-                       ('approved' if action=='approve' else 'changes_requested',timestamp(),comment,user['id'],rev['id']))
+                       ('approved' if action=='approve' else 'rejected' if action=='reject' else 'changes_requested',timestamp(),comment,user['id'],rev['id']))
             if action=='approve':
                 from backend.core.workhub_quality.pdf_templates import freeze
                 freeze(db,item,doc,revision(db,rev['id'],doc_id),user,controlled=False)
                 from backend.core.workhub_studio.exporting import freeze as freeze_studio
                 freeze_studio(db,item,doc,revision(db,rev['id'],doc_id),user)
             hub.notify(db,item,user['id'],[rev['created_by']],('Document approved: ' if action=='approve' else 'Document changes requested: ')+doc['title'],comment or 'The assigned reviewer approved this recorded revision.')
-        else:raise HTTPException(400,'Choose submit, approve or request changes.')
-        hub.event(db,item,user,'intelligence_document_'+action,{'document_id':doc_id,'revision_id':rev['id'],'comment':comment})
+        else:raise HTTPException(400,'Choose submit, approve, reject or request changes.')
+        hub.event(db,item,user,'intelligence_document_'+action,{'document_id':doc_id,'revision_id':rev['id'],'comment':comment,'sign_off':stamp if action in {'approve','request_changes','reject'} else None})
         return {'document':doc,'revision':revision(db,rev['id'],doc_id)}
 
 

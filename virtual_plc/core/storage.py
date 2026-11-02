@@ -164,7 +164,10 @@ class WorkspaceStore:
 
     def save_model(self, owner, identity, model):
         with self.lock:
-            atomic_json(self.folder(owner, identity) / 'model.json', model, MAX_MODEL)
+            # Derived inspection graphs can be rebuilt from the source snapshot.
+            # Keep canonical model/export budgets independent of their size.
+            canonical={key:value for key,value in model.items() if key!='machineContext'}
+            atomic_json(self.folder(owner, identity) / 'model.json', canonical, MAX_MODEL)
 
     def model(self, owner, identity):
         return bounded_json(self.folder(owner, identity) / 'model.json')

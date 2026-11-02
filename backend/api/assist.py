@@ -286,7 +286,9 @@ def _assist(payload:dict):
     if task=='Window assistant' and payload.get('guideOnly') and current_guide:
         return {'answer':window_answer(context),'source':'local-window-guide','model':None,'evidence':[]}
     from backend.api.assist_flow import is_flow_question, flow_reply
-    if is_flow_question(question):
+    machine_flow=bool(context.get('intelligenceProjectId') and not context.get('comparisonFocus') and
+                      not re.search(r'\b(?:routine|subroutine)\b|[\w.-]+\.(?:st|ab|ld|src|c)\b',str(question),re.I))
+    if is_flow_question(question) and not machine_flow:
         return flow_reply(str(question), context)
     if context.get('intelligenceProjectId') and not context.get('comparisonFocus') and not context.get('logSummary') and not application_help:
         from backend.core.project_assistant import answer as indexed_answer

@@ -108,7 +108,7 @@ class Workspace:
 
 def public_model(model, runtime=None):
     """Source is fetched by path; avoid retransmitting code/IR with every poll."""
-    view = {key: value for key, value in model.items() if key not in {'programs', 'functions', 'sources'}}
+    view = {key: value for key, value in model.items() if key not in {'programs', 'functions', 'sources', 'machineContext'}}
     for key in ('programs', 'functions'):
         collection = model.get(key, [])
         if isinstance(collection, list):

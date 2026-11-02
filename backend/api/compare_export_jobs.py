@@ -132,7 +132,7 @@ def start_export(sid:str, request:ExportRequest):
     options = request.model_dump(mode='json')
     options['formats'] = sorted(set(options['formats']))
     from python_engine.ladder_model import RENDER_VERSION
-    fingerprint = hashlib.sha256(json.dumps({'schema':9, 'ladderRenderVersion':RENDER_VERSION, 'owner':identity, 'sessionId':sid, **options},sort_keys=True).encode()).hexdigest()
+    fingerprint = hashlib.sha256(json.dumps({'schema':10, 'ladderRenderVersion':RENDER_VERSION, 'owner':identity, 'sessionId':sid, **options},sort_keys=True).encode()).hexdigest()
     ROOT.mkdir(parents=True,exist_ok=True)
     with LOCK:
         for path in ROOT.glob('*/manifest.json'):

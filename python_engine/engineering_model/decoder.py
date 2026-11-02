@@ -18,9 +18,12 @@ def decode(file, text):
     suffix = Path(file).suffix.casefold()
     language = LANGUAGES.get(suffix, 'XML' if suffix in XML else 'declaration/configuration')
     notices, sections, calls = [], [], []
-    if suffix == '.c': sections, _, calls, notices = c_flow(text, file)
-    elif suffix == '.ld': sections, _, calls, notices = _ladder_flow(text, file)
-    elif suffix in {'.st', '.src', '.ab'}: sections, _, calls, notices = _text_flow(text, file, suffix == '.ab')
+    # A trailing line terminator is an EOF sentinel, not a further source line.
+    # Keep all actual line positions while avoiding one-past-EOF AST ranges.
+    syntax_text=text.rstrip('\r\n')
+    if suffix == '.c': sections, _, calls, notices = c_flow(syntax_text, file)
+    elif suffix == '.ld': sections, _, calls, notices = _ladder_flow(syntax_text, file)
+    elif suffix in {'.st', '.src', '.ab'}: sections, _, calls, notices = _text_flow(syntax_text, file, suffix == '.ab')
     tree = None
     if suffix in XML or text.lstrip().startswith('<?xml'):
         try: tree = ET.fromstring(text)

@@ -31,14 +31,20 @@ def save(user,payload):
     assignees=content.get('assignees',{})
     if not isinstance(assignees,dict) or set(assignees)-{s['id'] for s in steps}:raise HTTPException(400,'Choose valid workflow assignees.')
     clean={'kind':text(content.get('kind','General'),50,True),'steps':steps,'assignees':{k:hub.user_id(v) for k,v in assignees.items()}}
-    for key in ('objective','requirements','acceptance','additional','base_reference','developed_reference'):clean[key]=text(content.get(key,'') or '',8000)
+    for key in ('objective','background','expected_outcome','requirements','acceptance','additional','base_reference','developed_reference'):clean[key]=text(content.get(key,'') or '',8000)
     rows=content.get('requirement_items',[]);criteria=content.get('acceptance_items',[])
     if not isinstance(rows,list) or len(rows)>200 or not isinstance(criteria,list) or len(criteria)>200:raise HTTPException(400,'Use up to 200 requirement and acceptance rows.')
     clean['requirement_items']=[]
     for row in rows:
         if not isinstance(row,dict):raise HTTPException(400,'Provide structured requirement rows.')
         clean['requirement_items'].append({'description':text(row.get('description','') or '',8000),'category':text(row.get('category','') or '',200),'source_label':text(row.get('source_label','') or '',240),'priority':row.get('priority') if row.get('priority') in {'low','medium','high','urgent'} else 'medium'})
+        if row.get('id'):clean['requirement_items'][-1]['id']=text(row['id'],80,True)
     clean['acceptance_items']=[text(v,8000) for v in criteria]
+    deliverables=content.get('deliverables',[])
+    if not isinstance(deliverables,list) or len(deliverables)>200:raise HTTPException(400,'Use up to 200 deliverables.')
+    clean['deliverables']=[text(v,8000) for v in deliverables]
+    from .workhub_custom_fields import clean as clean_fields
+    clean['custom_fields']=clean_fields(content.get('custom_fields',[]))
     flow=content.get('flowchart')
     if flow:
         if not isinstance(flow,dict):raise HTTPException(400,'Provide a structured flowchart.')

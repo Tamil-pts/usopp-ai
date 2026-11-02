@@ -28,6 +28,19 @@ def health():
     data={'status':'ok' if good else 'version-mismatch','version':VERSION,'apiVersion':VERSION,'uiVersion':build['version'],'frontendBuild':build,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True,'workhubPerformanceCapability':True,'contributionPassport':True,'workhubDashboardBuilder':True,'engineeringQualityClosure':True,'workhubUnifiedProjectWorkspace':True,'workhubDefaultDashboardTemplate':True,'workhubReliableBackgroundJobs':True,'workhubRevisionProcessingCache':True},'applicationRoot':str(BASE),'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30','logFile':str(LOG_FILE)}
     data['capabilities']['circuitCompare']=True
     data['capabilities']['eDesignReview']=True
+    data['capabilities']['eDesignInlineCallouts']=True
+    data['capabilities']['workhubProjectWorkflowSettings']=True
+    data['capabilities']['workhubStructuredProjectFRD']=True
+    data['capabilities']['workhubValidationFatReports']=True
+    data['capabilities']['workhubWorkflowApprovalDocuments']=True
+    data['capabilities']['workhubPersonalInbox']=True
+    data['capabilities']['workhubBillingHours']=True
+    data['capabilities']['workhubDefaultDashboard']=True
+    data['capabilities']['workhubMomStructuredReport']=True
+    data['capabilities']['workhubReviewSignoff']=True
+    data['capabilities']['workhubDocumentActions']=True
+    data['capabilities']['workhubCustomProjectFields']=True
+    data['capabilities']['workhubProjectExports']=True
     return JSONResponse(data,status_code=200 if good else 503,headers={'Cache-Control':'no-store'})
 @router.post('/api/log')
 def frontend_log(payload:dict):

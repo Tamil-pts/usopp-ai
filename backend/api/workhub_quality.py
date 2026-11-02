@@ -93,6 +93,10 @@ def apply_frd_assist(pid:str,key:str,job_id:str,request:Request,payload:dict):
 def action(pid:str,key:str,request:Request,payload:dict):return service.action(actor(request),pid,key,payload)
 @router.post(PREFIX+'/documents/{key}/execution')
 def execution(pid:str,key:str,request:Request,payload:dict):return documents.execute(actor(request),pid,key,payload)
+@router.post(PREFIX+'/documents/{key}/import-cases')
+def import_report_cases(pid:str,key:str,request:Request,payload:dict):
+    from backend.core.workhub_quality.report_templates import import_cases
+    return import_cases(actor(request),pid,key,payload)
 @router.post(PREFIX+'/documents/{key}/acceptance')
 def acceptance(pid:str,key:str,request:Request,payload:dict):return documents.acceptance(actor(request),pid,key,payload)
 @router.get(PREFIX+'/documents/{key}/export/{format}')

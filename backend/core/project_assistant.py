@@ -172,6 +172,27 @@ def answer(payload):
     from backend.core.engineering_analysis import run,broad_question
     context=payload.get('context') or {};question=str(payload.get('question') or '')[:12000]
     user=current_user.get() or {};index=opened(context['intelligenceProjectId'],user.get('id') or user.get('username'))
+    from backend.core.machine_context import analyze as decode_machine_context, decorate
+    machine_context=None;machine_context_notice=None;original_question=question
+    report('Resolving active hardware, HMI names, settings and callable identities')
+    try:
+        machine_context=decode_machine_context(index)
+        from virtual_plc.core.machine_identity import select
+        resolved=select(machine_context,question,20)
+        if len(resolved['roots'])==1:
+            name=resolved['roots'][0].split(':',1)[-1]
+            if name not in question:question+=' PLC symbol: '+name
+    except (ValueError,OSError,KeyError) as error:
+        machine_context_notice='Machine identity decoding incomplete: '+str(error)[:240]
+    def enrich(reply):
+        if machine_context:
+            try:return decorate(reply,index,original_question,machine_context)
+            except (ValueError,OSError) as error:return {**reply,'machineContextNotice':str(error)[:240]}
+        return {**reply,'machineContextNotice':machine_context_notice}
+    if machine_context and resolved.get('callQuery'):
+        return enrich({'answer':'Source call identities and installed B&R reference matches are shown below. Unresolved implementation behavior and argument binding remain open checks.',
+                       'source':'local-machine-context','model':None,'review':True,'evidence':[],
+                       'engineeringVerification':{'status':'partial','trainingEligible':False,'runtimeObserved':False}})
     report('Building question-relevant engineering work queue')
     try:machine=analyze_machine_functions(index)
     except Exception as error:
@@ -184,12 +205,12 @@ def answer(payload):
                 if fact.get('guardCoverage')=='parsed' and re.search(r'\b'+re.escape(fact['name'])+r'\b',question,re.I):
                     guards=' AND '.join(fact.get('guards',[])) or 'no enclosing IF/CASE/loop condition at this source position'
                     focused.append(f"[{item['sourceId']}] {fact['name']} receives {fact.get('value')}. Parsed enclosing guards: {guards}.")
-        if focused:return {'answer':'\n\n'.join(focused)+'\nTask assignment and live execution remain separate checks.',
-                           'source':'local-control-flow','model':None,'evidence':local['evidence'][:3],'retrieval':local,'contextUsage':None,'review':True}
+        if focused:return enrich({'answer':'\n\n'.join(focused)+'\nTask assignment and live execution remain separate checks.',
+                            'source':'local-control-flow','model':None,'evidence':local['evidence'][:3],'retrieval':local,'contextUsage':None,'review':True})
     from backend.core.engineering_question import plan, answer as trace_answer
     selected_plan=plan(question,machine)
     focused=trace_answer(index,question,machine,selected_plan)
-    if focused:return focused
+    if focused:return enrich(focused)
     outcome=run(index,question,payload,machine,chat_model,configuration(),SYSTEM,help_lookup=reference_evidence)
     response=outcome['response'];evidence=outcome['evidence'];text=outcome['answer']
     if broad_question(question):
@@ -245,9 +266,9 @@ def answer(payload):
     if notices:text+='\n\nAnalysis coverage (partial static analysis):\n'+'\n'.join('- '+notice for notice in notices)
     counts=outcome['retrieval']['coverage']
     text+=f"\n\nModel coverage: {counts['analyzedFiles']} files analyzed; {counts['modelSuppliedFiles']} files supplied; {counts['remainingSections']} retrieved sections still unvisited or incomplete."
-    return {'answer':text,'source':'embedded' if response else 'local-project-intelligence','model':response.get('model') if response else None,
+    return enrich({'answer':text,'source':'embedded' if response else 'local-project-intelligence','model':response.get('model') if response else None,
             'evidence':evidence,'helpEvidence':[],'retrieval':outcome['retrieval'],'contextUsage':outcome['contextUsage'],
             'responseSeconds':response.get('responseSeconds') if response else None,'review':True,'modelNotice':outcome['modelNotice'],
             'machineAnalysis':_machine_chat_preview(view),'machineAnalysisProjectId':index.key,
             'engineeringVerification':{'status':'partial','trainingEligible':False,'plan':selected_plan['kind'],
-                                       'reason':'Model citations establish source locations, not complete engineering claim verification.'}}
+                                       'reason':'Model citations establish source locations, not complete engineering claim verification.'}})

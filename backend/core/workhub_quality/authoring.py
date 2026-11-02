@@ -8,8 +8,8 @@ from .store import hub, pi, text
 SECTIONS={
  'frd':['Existing machine behavior','Proposed machine behavior','PLC & HMI functions','Alarms & interlocks','Open clarifications'],
  'corrections':['Existing behavior','Observed problem','Expected behavior','Required correction','Assigned engineer','Modified PLC/HMI references','Before evidence','After evidence','Impact analysis','Implementation notes','Verification results','Review and closure'],
- 'test':['Validation objective','Test environment','Validation scope','Reference documents','Findings and deviations'],
- 'fat':['Test scope','Prerequisites','Test environment','Deviations','Authorized sign-off'],
+ 'test':['Validation objective','Test environment','Validation scope','Reference documents','Issues & Corrections','Conclusion'],
+ 'fat':['FAT objective','Test scope','Prerequisites','Test environment','Reference documents','Issues & Observations'],
  'quality':['FRD revision verification','Correction note disposition','Test report review','FAT evidence verification','Outstanding issues','Reviewer comments'],
  'closure':['Completion summary','Final deliverables','Document revisions','Handover information','Open issues','Closure remarks','Approval fields'],
 }
@@ -111,6 +111,9 @@ def create(user,pid,payload):
         elif payload.get('from_project') is True:
             state=store.policy_row(db,p);content['summary']=p.get('description') or ''
             if stage=='frd':content['scope']=state['context'].get('scope') or p.get('description') or ''
+        if stage in {'test','fat'} and not source_id:
+            from .report_templates import seed_frd
+            seed_frd(db,pid,stage,content)
         content=documents.clean_content(db,pid,stage,content)
         content['file_ids']=documents.file_ids(db,pid,payload.get('file_ids',[]))
         doc=documents.create_control(db,p,user,stage,initial_content=content)
@@ -127,24 +130,29 @@ def create_mom(user,pid,payload):
         p=store.project(db,pid,user,True)
         if p['stage']=='released':raise HTTPException(409,'Reopen the project before creating documents.')
         request_id=text(payload.get('request_id',''),80,True)
-        content={'project_name':p['title'],'meeting_subject':'','meeting_date':None,'participants':[],
+        linked=hub.item(db,p['linked_project_id']) if p.get('linked_project_id') else p
+        context=store.policy_row(db,p)['context']
+        content={'project_name':linked['title'],'customer':context.get('customer') or linked.get('customer') or '',
+                 'meeting_subject':'','meeting_date':None,'meeting_start_time':'','meeting_end_time':'','meeting_types':[],
+                 'meeting_objective':'','agenda':'','participants':[],'participant_details':[],'next_meeting':{'date':'','time':'','mode':''},
                  'discussion_summary':[],'decisions':[],'engineering_requirements':[],'actions':[],'clarifications':[],'sources':[]}
         if payload.get('library_revision_id'):
             raw=db.execute("SELECT r.*,d.project_id,d.kind,d.title FROM pi_revisions r JOIN pi_documents d ON d.id=r.document_id WHERE r.id=? AND r.status='approved' AND d.kind='mom'",(payload['library_revision_id'],)).fetchone()
             if not raw:raise HTTPException(404,'Choose an approved MOM revision.')
             library_access(db,raw['project_id'],user);content=json.loads(raw['content'])
-            content.update(project_name=p['title'],meeting_date=None,participants=[],sources=[])
+            content.update(project_name=linked['title'],customer=context.get('customer') or '',meeting_date=None,participants=[],participant_details=[],sources=[],
+                meeting_start_time='',meeting_end_time='',next_meeting={'date':'','time':'','mode':''})
             for name in ('discussion_summary','decisions','engineering_requirements','actions','clarifications'):
                 for row in content.get(name,[]):
                     row['source_ids']=[]
-                    if name=='actions':row.update(responsible=None,target_date=None)
+                    if name=='actions':row.update(responsible=None,target_date=None,status='Open')
             content['sources']=[{'id':'LIBRARY-'+raw['id'],'label':raw['title']+' / revision '+str(raw['number']),'text':'Reused source wording requires review for this meeting. Source SHA-256 '+store.digest(json.loads(raw['content']))}]
         files=documents.file_ids(db,pid,payload.get('file_ids',[]))
         pi.validate_content('mom',content)
         doc,rev=pi.create_document(db,user,pid,'mom','Minutes of Meeting',content,file_id=files[0] if files else None,generated_by='manual:'+str(user['id'])+':'+request_id)
         if not db.execute('SELECT 1 FROM wh_document_numbers WHERE document_id=?',(doc['id'],)).fetchone():
             from .branding import numbering
-            setting=numbering(db,p,configuration.current(db));setting['configuration']['codes']['mom']='MOM'
+            setting=numbering(db,p,configuration.current(db));setting['configuration']['codes'].setdefault('mom','MOM')
             number=configuration.allocate(db,'mom',setting)
             db.execute('INSERT INTO wh_document_numbers VALUES(?,?,?)',(doc['id'],number,store.bounded(setting['configuration'])))
         if files and rev['status']=='draft':

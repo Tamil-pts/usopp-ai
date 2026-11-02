@@ -11,11 +11,13 @@ from zoneinfo import ZoneInfo
 from fastapi import HTTPException
 from backend.core.workhub import store as hub, text, timestamp, encode
 
-FIELDS={'project_number','priority','assignment_state','assigned_at','supporting_ids','responsibility','assignment_remarks','exception_status','exception_reason'}
+FIELDS={'custom_fields','project_number','priority','assignment_state','assigned_at','supporting_ids','responsibility','assignment_remarks','exception_status','exception_reason'}
 CONTEXT={'customer','customer_project_reference','machine','scope','project_requirements','acceptance_criteria','additional_information','base_reference','developed_reference','customer_id','organization_id'}
 
 
 def migrate(db):
+    from .workhub_custom_fields import schema as field_schema
+    field_schema(db)
     from .workhub_document_spaces import schema
     schema(db)
     db.execute('CREATE TABLE IF NOT EXISTS ds_template_drafts(scope_id TEXT PRIMARY KEY,document_id TEXT NOT NULL,kind TEXT NOT NULL,name TEXT NOT NULL,owner_id INTEGER NOT NULL,created_at TEXT NOT NULL)')
@@ -97,7 +99,7 @@ def apply(db,p,user,payload,creating=False):
         ids=payload['supporting_ids']
         if not isinstance(ids,list) or len(ids)>100:raise HTTPException(400,'Choose up to 100 supporting engineers.')
         values['supporting_ids']=encode(list(dict.fromkeys(hub.user_id(uid) for uid in ids)))
-    if p['stage']=='released' and (values or CONTEXT.intersection(payload)) and not creating:
+    if p['stage']=='released' and (values or CONTEXT.intersection(payload) or 'custom_fields' in payload) and not creating:
         raise HTTPException(409,'Reopen the project through its controlled workflow before revising project metadata.')
     if CONTEXT.intersection(payload):
         state=store.ensure_project(db,p,user);context=dict(state['context'])
@@ -115,7 +117,11 @@ def apply(db,p,user,payload,creating=False):
         if new_support:hub.notify(db,p,user['id'],new_support,'Project team assignment: '+p['title'],'You are assigned as a supporting engineer. Open the project to view its tasks and documents.')
         if not creating and p.get('assignment_state')=='unassigned' and values.get('assignment_state')=='assigned':
             hub.notify(db,p,user['id'],[payload.get('owner_id',p['owner_id'])],'Project assigned: '+p['title'],'You are the responsible engineer. Open My Work to begin.')
-    return bool(values or CONTEXT.intersection(payload))
+    if 'custom_fields' in payload:
+        from .workhub_custom_fields import save
+        fields=save(db,p['id'],payload['custom_fields'])
+        hub.event(db,p,user,'custom_fields_updated',{'fields':fields})
+    return bool(values or CONTEXT.intersection(payload) or 'custom_fields' in payload)
 
 
 def create(user,payload):
@@ -137,12 +143,14 @@ def create(user,payload):
             from .workhub_quality import authoring,documents
             p=hub.item(db,value['id']);content=authoring.blank('frd')
             content.update(purpose=text(payload.get('description',''),12000),scope=text(payload.get('scope',''),12000),acceptance_summary=text(payload.get('acceptance_criteria',''),12000))
+            content['background']=text(payload.get('background',''),12000)
+            content['expected_outcome']=text(payload.get('expected_outcome',''),12000)
             rows=payload.get('requirement_items',[])
             if not isinstance(rows,list) or len(rows)>200:raise HTTPException(400,'Provide up to 200 project requirements.')
             for index,row in enumerate(rows):
                 if not isinstance(row,dict):raise HTTPException(400,'Provide structured requirements.')
                 description=text(row.get('description',''),8000,True)
-                content['requirements'].append({'id':'FR-'+str(index+1).zfill(3),'title':description[:180], 'description':description,'acceptance_criteria':'','trigger':'','expected_behavior':'','subsystem':text(row.get('category',''),200), 'category':text(row.get('category',''),200),'source_label':text(row.get('source_label',''),240),'priority':row.get('priority','medium'),'source_ids':[],'mandatory':True,'change':'new'})
+                content['requirements'].append({'id':row.get('id') or 'FR-'+str(index+1).zfill(3),'title':description[:180], 'description':description,'acceptance_criteria':'','trigger':'','expected_behavior':'','subsystem':text(row.get('category',''),200), 'category':text(row.get('category',''),200),'source_label':text(row.get('source_label',''),240),'priority':row.get('priority','medium'),'source_ids':[],'mandatory':True,'change':'new'})
             if not rows and payload.get('project_requirements'):
                 description=text(payload['project_requirements'],8000,True)
                 content['requirements'].append({'id':'FR-001','title':description[:180],'description':description,'acceptance_criteria':'','source_ids':[],'mandatory':True,'change':'new'})
@@ -151,6 +159,11 @@ def create(user,payload):
             if payload.get('flowchart'):
                 if not isinstance(payload['flowchart'],dict):raise HTTPException(400,'Provide a structured flowchart.')
                 content['flowchart']={**payload['flowchart'],'needs_review':True}
+            if payload.get('deliverables'):
+                content['sections'].append({'heading':'Deliverables','text':text(payload['deliverables'],12000)})
+            if 'frd_content' in payload:
+                if not isinstance(payload['frd_content'],dict):raise HTTPException(400,'Provide structured FRD content.')
+                content=payload['frd_content']
             content=documents.clean_content(db,p['id'],'frd',content)
             documents.create_control(db,p,user,'frd',initial_content=content)
         from .workhub_workflow import create_steps,validate_steps
@@ -227,6 +240,8 @@ def details(user,key):
         quality=db.execute("SELECT r.status FROM qc_documents d JOIN pi_documents n ON n.id=d.document_id JOIN qc_revisions r ON r.id=n.current_revision WHERE d.project_id=? AND d.stage='quality'",(key,)).fetchone()
         p.update(project_status=lifecycle(p),portfolio_progress=assessed['progress'],portfolio_health=assessed['health'],health_reasons=assessed['reasons'],
                  progress_basis=assessed['progress_basis'],quality_status=quality[0] if quality else 'Workflow review' if p['stage'] in {'quality','release_approval','ready_release'} else 'Not submitted')
+        from .workhub_custom_fields import read
+        p['custom_fields']=read(db,key)
         value['project_context']=state['context']
         value['pending_approvals']=db.execute("SELECT COUNT(*) FROM items WHERE project_id=? AND stage IN ('quality','release_approval','ready_release')",(key,)).fetchone()[0]
     return value
@@ -240,9 +255,10 @@ def document_register(user,search='',kind='',status='',project_id='',page=1,page
         db.execute('BEGIN')
         _,_,predicate,args=portfolio.scope(db,user,'management' if user['role']=='admin' else 'engineer')
         query="""SELECT d.id,d.project_id,COALESCE(p.title,lp.title,'Independent document') AS project,COALESCE(p.project_number,lp.project_number,'') AS project_number,
-                 s.linked_project_id,s.library,s.owner_id AS space_owner,s.reviewer_id AS space_reviewer,CASE WHEN s.id IS NULL THEN 0 ELSE 1 END AS independent,d.kind,d.title,d.updated_at,d.current_revision,
+                 s.linked_project_id,s.library,s.document_type AS space_document_type,s.owner_id AS space_owner,s.reviewer_id AS space_reviewer,CASE WHEN s.id IS NULL THEN 0 ELSE 1 END AS independent,d.kind,d.title,d.updated_at,d.current_revision,d.created_by AS document_creator,
                  r.number AS revision,r.status,r.created_by AS owner_id,q.id AS control_id,COALESCE(q.number,dn.number) AS document_number,q.stage,
-                 cr.label AS revision_label,cr.status AS controlled_status,cr.owner_id AS controlled_owner
+                 cr.label AS revision_label,cr.status AS controlled_status,cr.owner_id AS controlled_owner,cr.version AS revision_version,
+                 p.created_by AS project_creator,p.owner_id AS project_owner,p.stage AS project_stage
                  FROM pi_documents d LEFT JOIN items p ON p.id=d.project_id LEFT JOIN wh_document_spaces s ON s.id=d.project_id
                  LEFT JOIN items lp ON lp.id=s.linked_project_id JOIN pi_revisions r ON r.id=d.current_revision
                  LEFT JOIN qc_documents q ON q.document_id=d.id LEFT JOIN qc_revisions cr ON cr.id=r.id
@@ -250,8 +266,10 @@ def document_register(user,search='',kind='',status='',project_id='',page=1,page
                  WHERE NOT EXISTS (SELECT 1 FROM ds_template_drafts td WHERE td.scope_id=d.project_id) AND ((p.type='project' AND """+predicate+") OR (s.id IS NOT NULL AND (? OR s.owner_id=? OR s.reviewer_id=? OR (s.library=1 AND s.linked_project_id IS NULL AND COALESCE(cr.status,r.status) IN ('approved','released')))))"
         params=[*args,user['role']=='admin',user['id'],user['id']]
         if project_id:query+=' AND (p.id=? OR s.linked_project_id=?)';params.extend([project_id,project_id])
-        if kind:query+=' AND COALESCE(q.stage,d.kind)=?';params.append(kind)
+        type_expression="CASE WHEN q.stage='test' AND s.document_type='test_report' THEN 'test_report' ELSE COALESCE(q.stage,d.kind) END"
+        if kind:query+=' AND '+type_expression+'=?';params.append(kind)
         if status:query+=' AND COALESCE(cr.status,r.status)=?';params.append(status)
+        else:query+=" AND COALESCE(cr.status,r.status)!='archived'"
         if library_only:query+=" AND COALESCE(cr.status,r.status) IN ('approved','released') AND (s.library=1 OR p.id IS NOT NULL)"
         if search:
             query+=' AND (d.title LIKE ? ESCAPE \'\\\' OR p.title LIKE ? ESCAPE \'\\\' OR p.project_number LIKE ? ESCAPE \'\\\' OR q.number LIKE ? ESCAPE \'\\\')'
@@ -261,11 +279,16 @@ def document_register(user,search='',kind='',status='',project_id='',page=1,page
         people={u['id']:u['username'] for u in hub.users()}
         for r in rows:
             r['status']=r['controlled_status'] or r['status'];r['owner']=people.get(r['controlled_owner'] or r['owner_id'])
-            r['type']=r['stage'] or r['kind'];r['section']='meetings' if r['type'] in {'mom','frd','flowchart'} else 'quality' if r['type'] in {'fat','quality','closure'} else 'overview' if r['type']=='plan' else 'documents'
+            r['type']=r['stage'] or r['kind']
+            if r['stage']=='test' and r['space_document_type']=='test_report':r['type']='test_report'
+            r['section']='meetings' if r['type'] in {'mom','frd','flowchart'} else 'quality' if r['type'] in {'fat','quality','closure'} else 'overview' if r['type']=='plan' else 'documents'
             r['document_number']=r['document_number'] or 'Native '+r['id'][:8].upper()
             r['pdf_url']='/api/workhub/projects/'+r['project_id']+('/quality/documents/'+r['control_id']+'/export/pdf' if r['control_id'] else '/intelligence/documents/'+r['id']+'/export/pdf')+'?revision_id='+r['current_revision']
             r['api_url']='/api/workhub/projects/'+r['project_id']+('/quality/documents/'+r['control_id'] if r['control_id'] else '/intelligence/documents/'+r['id'])
             r['library_preview_only']=bool(r['independent'] and user['role']!='admin' and user['id'] not in {r['space_owner'],r['space_reviewer']})
+            managed=user['role']=='admin' or user['id'] in {r['space_owner'],r['document_creator'],r['project_creator'],r['project_owner'],r['controlled_owner'] or r['owner_id']}
+            r['can_edit']=managed and r['project_stage']!='released' and not r['library_preview_only']
+            r['can_delete']=r['can_edit'] and r['status']!='archived'
             if r['library_preview_only']:r['pdf_url']='/api/workhub/documents/'+r['id']+'/library-preview'
         return {'items':rows,'total':total,'page':page,'page_size':page_size,
-                'types':[{'id':k,'label':v} for k,v in {'mom':'Minutes of Meeting','frd':'FRD','flowchart':'Functional Flowchart',**store.STAGES,'source':'Source document','note':'Engineering note','plan':'Planning proposal'}.items()]}
+                'types':[{'id':k,'label':v} for k,v in {'mom':'Minutes of Meeting','frd':'FRD','flowchart':'Functional Flowchart',**store.STAGES,'test':'Validation Report','test_report':'Test Report','source':'Source document','note':'Engineering note','plan':'Planning proposal'}.items()]}

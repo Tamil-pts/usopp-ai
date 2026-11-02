@@ -41,10 +41,13 @@ def overview(user,pid):
 def get_document(user,pid,key,rid=None):
     store.initialize()
     with hub.db() as db:
-        store.project(db,pid,user);doc=store.control(db,pid,key);native=store.native(db,doc)
+        p=store.project(db,pid,user);doc=store.control(db,pid,key);native=store.native(db,doc)
         rev=store.revision(db,doc['id'],rid or native['current_revision'])
         from .authoring import readiness
-        return {'document':doc,'revision':store.detail(db,doc,rev),'readiness':readiness(db,store.project(db,pid,user),doc,rev),
+        from backend.core.workhub_signoff import history
+        can_delete=rev['id']==native['current_revision'] and p['stage']!='released' and rev['status']!='archived' and (user['role']=='admin' or user['id'] in {p['owner_id'],p['created_by'],native['created_by'],rev['owner_id']})
+        return {'document':{**doc,'title':native['title']},'revision':store.detail(db,doc,rev),'can_delete':can_delete,'readiness':readiness(db,store.project(db,pid,user),doc,rev),
+          'sign_offs':history(db,rev['id']),
           'approved_revision':store.detail(db,doc,store.revision(db,doc['id'],native['approved_revision'])) if native['approved_revision'] else None,
           'revisions':[dict(r) for r in db.execute('SELECT id,number,label,status,reason,owner_id,confirmed_by,confirmed_at,reviewer_id,approver_id,approved_by,approved_at,released_by,released_at,customer_safe,created_at FROM qc_revisions WHERE control_id=? ORDER BY number DESC',(doc['id'],))]}
 
@@ -158,6 +161,11 @@ def action(user,pid,key,payload):
             if rev['status']!='in_review' or user['id']!=rev['reviewer_id'] or user['id']!=reviewer:raise HTTPException(403,'Only the currently assigned reviewer can decide this submitted revision.')
             if native['current_revision']!=rev['id']:raise HTTPException(409,'Review the current revision.')
             if action!='approve' and not comment:raise HTTPException(400,'Describe the rejection or requested corrections.')
+            from backend.core.workhub_signoff import record as record_signoff
+            stamp=record_signoff(db,user,payload,project_id=pid,subject_id=rev['id'],subject_type='document_revision',
+                decision='request_changes' if action=='request_corrections' else action,
+                role='Closure approver' if doc['stage']=='closure' else 'Document reviewer',
+                basis={'document_id':doc['document_id'],'control_id':key,'revision_id':rev['id'],'version':rev['version'],'content_hash':rev['content_hash']})
             if action=='approve':
                 if policy['independent_review'] and rev['owner_id']==user['id']:raise HTTPException(403,'Independent review is required.')
                 if not rev['confirmed_at'] or rev['confirmed_hash']!=rev['content_hash']:raise HTTPException(409,'The document has no current human confirmation.')
@@ -167,6 +175,8 @@ def action(user,pid,key,payload):
                     if doc['stage']=='quality':
                         from backend.core.workhub_workflow import guard
                         guard(db,p,user,'quality_pass')
+                        from backend.core.workhub_approval_documents import guard as guard_documents
+                        guard_documents(db,p,'quality_pass',exclude_document=doc['document_id'])
                     value=checks.report(db,p,doc['stage']=='closure');blockers=[b for b in value['blockers'] if b['code']!='approval:closure']
                     if blockers or rev['baseline']!=checks.baseline(db,p,doc['stage']=='closure'):raise HTTPException(409,'Quality conditions changed after preparation. Review a fresh draft.')
                     required=['documents','requirements','tests','fat','issues','approvals']
@@ -210,7 +220,7 @@ def action(user,pid,key,payload):
                 status='rejected' if action=='reject' else 'correction_required'
                 db.execute('UPDATE qc_revisions SET status=?,reviewed_by=?,reviewed_at=?,confirmed_by=NULL,confirmed_at=NULL,confirmed_hash=NULL,version=version+1 WHERE id=?',(status,user['id'],now,rev['id']))
                 db.execute('UPDATE pi_revisions SET status=?,reviewed_by=?,reviewed_at=?,review_comment=? WHERE id=?',('changes_requested',user['id'],now,comment,rev['id']))
-            store.audit(db,user,pid,'document_'+action,{'comment':comment,'checklist':payload.get('checklist') or {}},doc['id'],rev['id'])
+            store.audit(db,user,pid,'document_'+action,{'comment':comment,'checklist':payload.get('checklist') or {},'sign_off':stamp},doc['id'],rev['id'])
         elif action in {'release','archive','customer_authorize','customer_revoke'}:
             allowed=p['release_id'] if action=='release' else p['approver_id']
             if user['id']!=allowed and user['role']!='admin':raise HTTPException(403,'This action requires the assigned release authority or Admin.')

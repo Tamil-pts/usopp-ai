@@ -26,9 +26,11 @@ def context(db,p,doc,rev,controlled=True):
     state=store.policy_row(db,p);org=branding.organization(db,state['context'])
     customer=branding.record(db,'customer',state['context']['customer_id']) if state['context'].get('customer_id') else None
     kind=doc.get('stage',doc.get('kind','note'));layout=branding.template(db,kind,state['context'])
-    content=store.detail(db,doc,rev)['content'] if controlled else rev['content']
+    detail=store.detail(db,doc,rev) if controlled else rev
+    content=detail['content']
     users={u['id']:u['username'] for u in hub.users()}
     org_data=json.loads(store.bounded(org['data']));customer_data=customer['data'].copy() if customer else {'name':state['context'].get('customer') or p.get('customer') or '','address':''}
+    if kind=='mom' and not customer_data.get('name'):customer_data['name']=content.get('customer') or ''
     assets=[]
     for value in [org_data,customer_data]:
         item=branding.asset(db,value.get('logo_id'))
@@ -57,9 +59,23 @@ def context(db,p,doc,rev,controlled=True):
        ['Customer',customer_data['name'] or 'Not linked'],['Customer address',customer_data.get('address','')],
        ['Machine / System',state['context'].get('machine') or p.get('machine') or ''],['Document number',doc.get('number') or doc['id']],
        ['Project due date',p.get('due_date') or 'Not set'],
+       ['Customer project reference',state['context'].get('customer_project_reference') or ''],
+       ['Project type',p.get('kind') or ''],['Base reference',state['context'].get('base_reference') or ''],
+       ['Developed reference',state['context'].get('developed_reference') or ''],
        ['Revision',rev.get('label',str(rev['number']))],['Status','APPROVED SNAPSHOT' if rev['status'] in APPROVED else 'DRAFT - NOT APPROVED'],
        ['Prepared by',author],['Reviewed by',reviewed],['Approved by',approved],['Approval date',rev.get('approved_at',rev.get('reviewed_at')) or 'Pending']]
-    sections=blocks(content)
+    structured=kind in {'test','fat','mom'}
+    if kind in {'test','fat'}:
+        from .report_templates import blocks as report_blocks
+        sections=report_blocks(content,kind,detail.get('acceptance'),report_label='Test' if p.get('document_type')=='test_report' else None)
+        if layout['data']['show_metadata']:
+            sections[:0]=[
+                {'key':'summary','title':'1. Document Details','text':'','columns':['Document No.','Revision','Date'],'rows':[[doc.get('number') or doc['id'],rev.get('label',str(rev['number'])),content.get('report_date') or rev['created_at'][:10]]],'svg':''},
+                {'key':'summary','title':'2. Project Details','text':'','columns':['Project Name','Project ID','Customer','Customer Reference ID'],'rows':[[project_name,project_number,customer_data['name'],state['context'].get('customer_project_reference') or '']],'svg':''}]
+    elif kind=='mom':
+        from .mom_template import blocks as mom_blocks
+        sections=mom_blocks(content)
+    else:sections=blocks(content)
     if content.get('field_files'):
         names={r['id']:r['name'] for r in db.execute('SELECT id,name FROM files WHERE project_id=?',(p['id'],))}
         sections.append({'key':'details','title':'Attachments by field','text':'Files linked to this document revision.','columns':['Document field','Attachment'],
@@ -72,15 +88,28 @@ def context(db,p,doc,rev,controlled=True):
     signatures=[[label,name,status,at] for label,name,status,at in zip(layout['data']['signature_labels'],
         [author,reviewed,approved],['Prepared','Reviewed' if rev.get('reviewed_at') else 'Pending','Approved' if rev['status'] in APPROVED else 'Pending'],
         [rev.get('created_at',''),rev.get('reviewed_at') or '',rev.get('approved_at',rev.get('reviewed_at')) or ''])]
-    sections.append({'key':'signatures','title':'Review and approval','text':'Recorded identities and decisions. Signature images are not generated.',
+    if structured and kind=='fat':
+        acceptance=detail.get('acceptance') or {}
+        signatures[2]=['Customer / Authorized Approver',acceptance.get('representative') or 'Pending acceptance',acceptance.get('status') or 'Pending',acceptance.get('accepted_at') or '']
+    sections.append({'key':'signatures','title':'Approval' if kind=='mom' else '9. Sign-Off' if structured else 'Review and approval','text':'Recorded review decisions.' if kind=='mom' else 'Recorded identities and decisions. Signature images are not generated.',
                      'columns':['Stage','Name / Role','Status','Date'],'rows':signatures,'svg':''})
-    return {'engine':'engineering-html-v1','engine_hash':hashlib.sha256(TEMPLATE.read_text('utf-8').encode()).hexdigest(),
-        'engine_source':TEMPLATE.read_text('utf-8'),'renderer_hash':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+    from backend.core.workhub_signoff import history
+    stamps=history(db,rev['id'])
+    if stamps:sections.append({'key':'signatures','title':'Review Audit Stamps','text':'Authenticated account attestations for this exact revision.','columns':['Stamp / Account','Decision','Recorded At','Remarks'],
+        'rows':[[s['id']+' / '+s['account_name'],s['decision'],s['recorded_at'],s['remarks']] for s in stamps],'svg':''})
+    for stamp in stamps:
+        evidence=stamp['evidence'];rows=[['Document',d['number'],d['revision'],d['title']] for d in evidence.get('documents',[])]
+        rows.extend(['Issue',r['id'],r['status'],r['title']] for r in evidence.get('issues',[]))
+        if rows:sections.append({'key':'details','title':'Evidence for Review '+stamp['id'],'text':'Evidence SHA-256 '+stamp['evidence_hash'],
+            'columns':['Type','Reference','Revision / Status','Title'],'rows':rows,'svg':''})
+    template=TEMPLATE.with_name('mom.html.j2') if kind=='mom' else TEMPLATE
+    return {'engine':'engineering-html-v1','engine_hash':hashlib.sha256(template.read_text('utf-8').encode()).hexdigest(),
+        'engine_source':template.read_text('utf-8'),'renderer_hash':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'organization':org_data,'customer':customer_data,'layout':layout['data'],
-        'title':layout['data'].get('title') or branding.KINDS.get(kind,doc.get('title','Engineering Document')),
+        'title':'Test Report' if kind=='test' and p.get('document_type')=='test_report' else layout['data'].get('title') or branding.KINDS.get(kind,doc.get('title','Engineering Document')),
         'project_name':project_name,'project_number':project_number,'number':doc.get('number',doc['id']),'revision':rev.get('label',str(rev['number'])),
         'revision_id':rev['id'],'source_hash':source_hash(rev),'approved':rev['status'] in APPROVED,
-        'metadata':metadata,'sections':sections,'captured_at':rev.get('approved_at',rev.get('reviewed_at')) or rev['created_at'],
+        'metadata':[] if structured else metadata,'sections':sections,'captured_at':rev.get('approved_at',rev.get('reviewed_at')) or rev['created_at'],
         'manifest':{'organization':{'id':org['id'],'version':org['version']},
           'customer':{'id':customer['id'],'version':customer['version']} if customer else None,
           'template':{'id':layout['id'],'version':layout['version']},'assets':assets,
@@ -92,7 +121,7 @@ def blocks(content):
     result=[]
     def add(key,title,body='',columns=None,rows=None,svg=''):
         if body or rows or svg:result.append({'key':key,'title':title,'text':str(body or ''),'columns':columns or [],'rows':rows or [],'svg':svg})
-    for key in ['summary','purpose','scope']:add(key,key.title(),content.get(key))
+    for key,title in [('summary','Summary'),('purpose','Project objective'),('background','Background'),('expected_outcome','Expected outcome'),('scope','Included in scope')]:add('purpose' if key in {'background','expected_outcome'} else key,title,content.get(key))
     mom_fields={'meeting_subject','meeting_mode','meeting_date','location','agenda','participants','discussion_summary','decisions','actions','clarifications','next_meeting_items','engineering_requirements','follow_up','project_name'}
     if any(k in content for k in ('discussion_summary','meeting_subject','actions')):
         add('summary','Meeting information',columns=['Field','Detail'],rows=[[label,content.get(k) or 'Not recorded'] for k,label in [('meeting_subject','Meeting title'),('meeting_date','Meeting date'),('meeting_mode','Meeting mode'),('location','Location / platform')]])
@@ -107,6 +136,11 @@ def blocks(content):
     rows=[[r.get('id',''),r.get('title',''),r.get('description',''),r.get('trigger',''),r.get('expected_behavior',''),r.get('acceptance_criteria','')]
           for r in content.get('requirements',[])]
     add('requirements','Functional requirements',columns=['ID','Requirement','Description','Trigger','Expected behavior','Acceptance criteria'],rows=rows)
+    add('requirements','Requirement classification and sources',columns=['ID','Type / Category','Priority','Source','Status'],rows=[
+        [r.get('id',''),r.get('category') or r.get('subsystem',''),r.get('priority','medium'),r.get('source_label') or ', '.join(r.get('source_ids',[])),r.get('status','open')] for r in content.get('requirements',[])])
+    criteria=content.get('acceptance_items')
+    if criteria:add('sections','Acceptance criteria',columns=['ID','Criterion','Wording confirmed'],rows=[[r['id'],r['text'],'Yes' if r.get('confirmed') else 'No'] for r in criteria])
+    else:add('sections','Acceptance criteria',content.get('acceptance_summary'))
     flow=content.get('flowchart') or (content if content.get('nodes') else None)
     if flow:add('flowchart','Functional sequence and flowchart','Engineering interpretation; review against the linked requirements.',svg=diagram_svg(flow))
     add('changes','Correction notes',columns=['ID','Change','Requirements'],rows=[[r.get('id',''),r.get('summary',''),', '.join(r.get('requirement_ids',[]))] for r in content.get('changes',[])])
@@ -117,7 +151,7 @@ def blocks(content):
          (r.get('execution') or {}).get('outcome','Recorded native validation' if r.get('native_run_id') else 'NOT TESTED'),
          json.dumps(r['execution'],ensure_ascii=False) if r.get('execution') else 'Linked validation run: '+r['native_run_id'] if r.get('native_run_id') else 'No execution recorded'] for r in content.get('cases',[])])
     add('sections','Document sections',columns=['Section','Content'],rows=[[r.get('heading',''),r.get('text','')] for r in content.get('sections',[])])
-    known={'summary','purpose','scope','requirements','flowchart','changes','cases','sections','sources','nodes','edges','field_files'}|mom_fields
+    known={'summary','purpose','background','expected_outcome','scope','acceptance_summary','acceptance_items','requirements','flowchart','changes','cases','sections','sources','nodes','edges','field_files'}|mom_fields
     other={k:v for k,v in content.items() if k not in known}
     add('details','Supporting document details','\n'.join(readable_lines(other)))
     add('sources','Source references',columns=['Reference','Location','Source excerpt'],rows=[
@@ -265,7 +299,7 @@ def fallback(v):
         if show and data:
             im=Image(io.BytesIO(base64.b64decode(data.split(',',1)[1])));ratio=min(110/im.imageWidth,45/im.imageHeight);im.drawWidth=im.imageWidth*ratio;im.drawHeight=im.imageHeight*ratio;logos.append(im)
     story.extend(logos);story.extend([Paragraph(escape(v['title']),styles['Title']),para(v['project_name']),Spacer(1,12)])
-    if layout['show_metadata']:table(['Document field','Value'],v['metadata'])
+    if layout['show_metadata'] and v['metadata']:table(['Document field','Value'],v['metadata'])
     for key in layout['sections']:
         for section in v['sections']:
             if section['key']!=key or key=='signatures' and not layout['show_signatures']:continue

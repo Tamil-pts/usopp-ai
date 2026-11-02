@@ -1,0 +1,21 @@
+# e-design bubble comments on the drawing
+
+Implemented and checked 2 November 2026.
+
+The later [review tools and front-page update](EDESIGN_REVIEW_TOOLS_20261102.md) adds a separate cloud-only tool, permanent reference numbers, colour controls, a split sidebar and editable export covers. The cloud-with-comment tool continues to create its arrow and text box automatically.
+
+With a correction tool and **Revision cloud** or **Rectangle** selected, draw over the relevant area. Releasing the pointer automatically places an on-page text box and an arrow pointing back to the region. The text box receives keyboard focus and scrolls into view. Type the comment and use **Save**, or Ctrl+Enter. The saved text remains visible when editing ends, when the comments panel is closed and after reopening the review.
+
+Drag the text box to position it independently. Use its corner handle to resize it; the arrow follows its position. Moving the bubble moves both the bubble and its text box while retaining their relative layout. Double-click the text, or choose **Edit text on drawing** in its properties, to edit it. Clouds and rectangles need no visibility checkbox. Text boxes and geometry remain inside the drawing. Automatic placement considers page edges, existing regions and existing text boxes.
+
+The normalized `callout` rectangle belongs to the same versioned correction. On the first editable opening, existing clouds and rectangles without a callout receive placements in a single conflict-checked, undoable **show comments on drawing** command. Their bodies, region geometry, correction type, status and original authors are preserved. Reopening does not repeat the command, including after Undo; Redo restores it. View-only opening never writes placements. The batch endpoint rejects a stale version without partial changes.
+
+New region API requests that omit `callout` receive a default placement too. Older API updates that omit the field preserve an existing callout. Explicit null remains accepted for compatibility; selecting and saving that region in the current UI supplies a placement. Current version checks, sharing permissions, revision history and source immutability remain in effect.
+
+PDF exports retain editable bubble annotations with grouped Line and FreeText annotations for the arrow and visible text. The portable review envelope includes the callout geometry. Reimport does not duplicate the grouped elements as separate corrections. Changes made to the visible PDF text box can be imported; conflicting changes to its text and the bubble comment are rejected. The PDF correction report and HTML drawing also show the callout. Long comments remain stored in full and available through the comment editor and report; the on-page box can be enlarged as needed.
+
+Verification: `tests/test_edesign.py`, `tests/test_edesign_portable.py`, and `tests/test_edesign_callouts.py` exercise storage, geometry, history, permissions, rotated/cropped pages, native PDF rendering and PDF feedback: **24 passed**. Browser and deployment evidence for the automatic existing-comment setup is under `.build/edesign-auto-callouts/`; earlier drawing/editing artifacts are under `.build/workhub-project-reference/edesign-callout-*`.
+
+The browser checks used a copy of the actual 18-page `4C9935069 - 21.08.26-Correction.pdf` review and covered its six existing comments, new clouds and rectangles, focused inline entry, save/reopen, dragging/resizing, light/dark layouts at 1800, 900 and 390 CSS pixels, mobile editing and unchanged editable-PDF reimport. The roundtrip also preserves reverse-drag flags on region annotations, avoiding false revisions.
+
+Deployed through the authenticated API to the live review on 2 November 2026: **six** missing placements added as command **9**, `show comments on drawing`. The original PDF SHA and all original comment bodies, boxes, correction types, statuses, authors and creation dates were retained. The review database, manifest and PDF were backed up under `.build/edesign-auto-callouts/production-before/`. Live browser verification found six text boxes and six leaders with no JavaScript errors; exported PDF inspection confirmed six editable FreeText annotations. WorkHub record counts were unchanged. All three production interfaces built successfully.

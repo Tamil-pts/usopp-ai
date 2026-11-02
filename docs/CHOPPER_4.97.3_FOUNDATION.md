@@ -1,5 +1,7 @@
 # Chopper engineering foundation and investigation harness — 4.97.3
 
+Subsequent work: [shared machine names, settings, hardware and function-call decoding for Chopper and Virtual PLC](CHOPPER_MACHINE_CONTEXT_20261102.md).
+
 Implemented and checked on 30 October 2026. This is the first independent block/graph foundation. It does not certify complete machine understanding or replace incomplete PLC semantics with model guesses.
 
 ## Architecture

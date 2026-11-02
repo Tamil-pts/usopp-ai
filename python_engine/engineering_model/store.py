@@ -231,14 +231,28 @@ class EngineeringModel:
             text=re.sub(r'([a-z])([A-Z])',r'\1 \2',text)
             return {re.sub(r'^(?:changing|changer)$','change',t) for t in re.findall(r'[a-z0-9]+',text.casefold())}-stop
         wanted=terms(question);scored=[]
+        named={};identity_notice=None
+        try:
+            from backend.core.machine_context import analyze as decode_context
+            from virtual_plc.core.machine_identity import select
+            context=decode_context(self.index);view=select(context,question,40)
+            for alias in view['aliases']:
+                variable=next((v for v in context['variables'] if v['id']==alias['signal']),None)
+                if variable:
+                    named[(variable['name'],variable['sources'][0]['file'])]=alias
+        except (ValueError,OSError,KeyError) as error:
+            identity_notice='HMI-name decoding unavailable: '+str(error)[:180]
         with self.connect() as (db,_):
             for raw in db.execute("SELECT * FROM blocks WHERE kind IN ('routine','function','function_block','variable','program')"):
                 row=unpack(raw);overlap=terms(row['name']+' '+row['file'])&wanted
-                if not overlap:continue
-                row['properties'].pop('ir',None);row['matchTerms']=sorted(overlap);row['score']=len(overlap)
+                alias=named.get((row['name'],row['file']))
+                if not overlap and not alias:continue
+                row['properties'].pop('ir',None);row['matchTerms']=sorted(overlap);row['score']=len(overlap)+(100 if alias else 0)
+                if alias:row['hmiNames']=alias
                 row['classification']='source candidate, not a verified machine function';scored.append(row)
         return {'candidates':sorted(scored,key=lambda r:(-r['score'],r['file'],r['first']))[:limit],
-                'candidateCount':len(scored),'query':question,'usesEmbeddings':False,'meaning':'Lexical concept discovery; inspect relationships before inferring purpose.'}
+                'candidateCount':len(scored),'query':question,'usesEmbeddings':False,'identityNotice':identity_notice,
+                'meaning':'Lexical and source-associated HMI-name candidates; inspect selectors, label association and relationships before inferring purpose.'}
 
     def compare(self,other,limit=100):
         _,limit=page_args(0,limit)

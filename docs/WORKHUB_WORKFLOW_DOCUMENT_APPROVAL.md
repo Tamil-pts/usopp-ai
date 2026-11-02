@@ -1,0 +1,27 @@
+# WorkHub project documents and workflow approval
+
+The WorkHub sidebar contains Overview, My Work & Approvals, Projects and Document Management. Projects contains Project Portfolio, Team Management, Team Activity and Reports. Competency Hub and TechShare are sidebar entries. Document Studio remains in Settings for template design.
+
+Overview opens a saved, editable **WorkHub overview** dashboard. Its default template contains My work, Projects, Approvals and Team Management shortcuts, plus My next actions, Milestones & due dates, Recently updated projects and Team & documents lists. These eight colored widgets use the existing builder; **Customize dashboard** enables moving, resizing, renaming, removing and adding widgets. Live widgets also have configurable captions, background colors and list lengths. Additional cards, tables, graphs and comparison series can be added to the same dashboard and saved with their aggregation settings and responsive layouts. There is one overview canvas, without a separate static/custom mode.
+
+First-use setup creates a private default per account, including accounts with earlier dashboards. It never replaces an existing design or a shared dashboard. Reopening the default preserves the user's saved edits. The dashboard selector retains access to other designs and remembers the selected dashboard for that account. Switching WorkHub sections retains unsaved editor state. Live shortcuts and lists use the signed-in user's authorized overview; analytical dashboard filters apply to query-backed cards, charts and tables.
+
+My Work & Approvals combines assignments with the signed-in user's project decisions, document reviews, time approvals and correction requests. The approval queue includes independently authored documents assigned to that reviewer. Filters and pagination apply to this personal queue.
+
+The portfolio includes **Billing hours**, calculated from approved time entries for the project and its tasks. Pending entries, correction requests and planned-hour estimates do not contribute. This column is added once to an existing saved column selection and can subsequently be hidden normally. CSV/JSON exports and the dashboard Projects source also expose the total. Dashboard billing-hour aggregations use unrounded values; display formatting controls decimal places. Project-source date filters select projects by their recorded date, rather than restricting individual time-entry dates.
+
+My work follows the supplied desk reference: a large serif heading and three interactive cards for **Requests**, **In my hands** and **With quality**. The cards filter the signed-in user's assignments. **Accept & start** runs the existing start transition and respects assignment, dependency and phase checks. Submitted work stays visible under With quality; review decisions remain in the combined Approvals view. Search, completed-work filtering, pagination and the existing timeline are available below the cards. Refresh reloads both work and approvals.
+
+Project creation uses numbered requirement rows and **+ Add requirement**. New rows have stable `REQ-001` identities; removing another row does not renumber them. Existing `FR-001` references remain supported. The saved project draft, prefilled FRD, flowchart references and related reports preserve these identities.
+
+Document Management can create MOM, FRD, Validation Report, Test Report, FAT and Project Closure documents. A document can be standalone or linked to a project. Validation Reports and Test Reports remain separate records with their own configured numbers and revisions. They share the structured test-report editor and its result recording controls.
+
+To prepare approval evidence, open a project and expand **Documents for workflow approval**, either on its summary or under Workflow & timeline. Select the project approval or a particular workflow step, choose the related document revisions, and click **Attach selected documents**. Submission for quality review also offers this picker. A document must already belong or be linked to that project.
+
+Attachments retain the document number, revision, source identity and attachment history. Attaching a standalone document shares its workspace for reading with the existing project team; its author and assigned document reviewer retain editing and approval responsibility. Detaching the last current attachment removes this additional read access. The recorded attachment history remains in the project events.
+
+The assigned document reviewer approves each document through its existing review process. Project and step approvals check the selected revisions. Unapproved, unavailable or superseded selections block the relevant decision. A new current revision requires the selection to be refreshed and reviewed. Development and quality attachments are checked at quality and release approval; release-step attachments are checked at project closure. An approval event records the checked document identities and content hashes.
+
+These attachments supplement the configured project procedure. Existing phase, validation, FRD, test, FAT, reviewer, issue and closure checks continue to apply. Selecting a document does not record test execution, acceptance or document approval.
+
+Verification covers linked and standalone document types, stable requirement identities, independent reviewers, project isolation, version conflicts, stale selections, phase-specific gates and actual project transitions. Browser artifacts are under `.build/workhub-project-reference/`.

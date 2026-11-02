@@ -4,12 +4,22 @@ from fastapi import HTTPException
 from .workhub import store as hub,identity,timestamp,text,encode
 
 def schema(db):
+    db.execute('''CREATE TABLE IF NOT EXISTS wh_workflow_documents(
+      project_id TEXT NOT NULL,item_id TEXT NOT NULL,document_id TEXT NOT NULL,revision_id TEXT NOT NULL,
+      snapshot TEXT NOT NULL,attached_by INTEGER NOT NULL,attached_at TEXT NOT NULL,
+      PRIMARY KEY(item_id,document_id))''')
+    db.execute('CREATE INDEX IF NOT EXISTS workflow_document_scope ON wh_workflow_documents(project_id,document_id)')
     db.execute('CREATE TABLE IF NOT EXISTS wh_document_numbers(document_id TEXT PRIMARY KEY,number TEXT NOT NULL UNIQUE,numbering_snapshot TEXT NOT NULL)')
     db.execute('''CREATE TABLE IF NOT EXISTS wh_document_spaces(
       id TEXT PRIMARY KEY,title TEXT NOT NULL,owner_id INTEGER NOT NULL,reviewer_id INTEGER,
       linked_project_id TEXT,library INTEGER NOT NULL DEFAULT 0,version INTEGER NOT NULL DEFAULT 1,
       created_at TEXT NOT NULL,updated_at TEXT NOT NULL)''')
     if 'request_id' not in {r[1] for r in db.execute('PRAGMA table_info(wh_document_spaces)')}:db.execute("ALTER TABLE wh_document_spaces ADD COLUMN request_id TEXT NOT NULL DEFAULT ''")
+    if 'document_type' not in {r[1] for r in db.execute('PRAGMA table_info(wh_document_spaces)')}:
+        db.execute("ALTER TABLE wh_document_spaces ADD COLUMN document_type TEXT NOT NULL DEFAULT ''")
+        tables={r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+        if {'qc_documents','pi_documents'}<=tables:
+            db.execute("UPDATE wh_document_spaces SET document_type=COALESCE((SELECT stage FROM qc_documents WHERE project_id=wh_document_spaces.id ORDER BY created_at LIMIT 1),(SELECT kind FROM pi_documents WHERE project_id=wh_document_spaces.id ORDER BY created_at LIMIT 1),'')")
     db.execute("CREATE UNIQUE INDEX IF NOT EXISTS document_space_request ON wh_document_spaces(owner_id,request_id) WHERE request_id!=''")
     db.execute('CREATE INDEX IF NOT EXISTS document_space_owner ON wh_document_spaces(owner_id,updated_at)')
     db.execute('CREATE INDEX IF NOT EXISTS document_space_project ON wh_document_spaces(linked_project_id)')
@@ -18,6 +28,7 @@ def find(db,key):
     row=db.execute('SELECT * FROM wh_document_spaces WHERE id=?',(key,)).fetchone()
     if not row:return None
     r=dict(row)
+    linked=db.execute('SELECT title,project_number FROM items WHERE id=?',(r['linked_project_id'],)).fetchone() if r['linked_project_id'] else None
     # A scope adapter lets existing document services retain their contracts.
     # No project or task is created and portfolio calculations never count it.
     return {'id':key,'project_id':key,'type':'document_space','title':r['title'],'kind':'Documentation',
@@ -27,11 +38,18 @@ def find(db,key):
       'baseline_due':'','completed_at':None,'created_at':r['created_at'],'updated_at':r['updated_at'],
       'version':r['version'],'dependencies':'[]','supporting_ids':'[]','project_number':'','milestone':False,
       'is_document_space':True,'library':bool(r['library']),'linked_project_id':r['linked_project_id'],
-      'reviewer_id':r['reviewer_id']}
+      'reviewer_id':r['reviewer_id'],'document_type':r['document_type'],
+      'linked_project_name':linked['title'] if linked else '', 'linked_project_number':linked['project_number'] if linked else ''}
 
 def authorize(db,scope,user,write=False,allow_library=False):
     hub.actor(user)
     member=user['role']=='admin' or user['id'] in {scope['owner_id'],scope['reviewer_id']}
+    if not member and not write and scope['linked_project_id']:
+        shared=db.execute('''SELECT 1 FROM wh_workflow_documents a JOIN pi_documents d ON d.id=a.document_id
+          WHERE a.project_id=? AND d.project_id=? LIMIT 1''',(scope['linked_project_id'],scope['id'])).fetchone()
+        if shared:
+            hub.contribute(db,scope['linked_project_id'],user)
+            return scope
     if not member and (write or not scope['library'] or not allow_library):raise HTTPException(403,'This document is private to its author and reviewer.')
     if scope['linked_project_id']:
         # Sharing a document does not grant access to a linked project.
@@ -42,21 +60,35 @@ def create(user,payload):
     from .workhub_quality import store,authoring
     store.initialize();hub.actor(user)
     key=identity();now=timestamp();title=text(payload.get('title') or 'Engineering document',180,True)
+    document_type=payload.get('document_type') or payload.get('stage')
+    expected_stage='test' if document_type=='test_report' else document_type
+    if expected_stage not in {'mom',*store.STAGES} or payload.get('stage')!=expected_stage:
+        raise HTTPException(400,'Choose a supported document type and its structured template.')
     linked=payload.get('linked_project_id') or None
     request_id=text(payload.get('request_id') or '',80)
     with hub.db(True) as db:
         prior=db.execute('SELECT id FROM wh_document_spaces WHERE owner_id=? AND request_id=?',(user['id'],request_id)).fetchone() if request_id else None
         if prior:
             key=prior[0]
+            prior_space=find(db,key)
+            if prior_space['document_type']!=document_type or prior_space['linked_project_id']!=linked:
+                raise HTTPException(409,'This creation request already belongs to a different document. Open that document or start a new request.')
         else:
             if linked:hub.contribute(db,linked,user)
-            db.execute('INSERT INTO wh_document_spaces(id,title,owner_id,linked_project_id,created_at,updated_at,request_id) VALUES(?,?,?,?,?,?,?)',(key,title,user['id'],linked,now,now,request_id))
+            db.execute('INSERT INTO wh_document_spaces(id,title,owner_id,linked_project_id,created_at,updated_at,request_id,document_type) VALUES(?,?,?,?,?,?,?,?)',(key,title,user['id'],linked,now,now,request_id,document_type))
         p=find(db,key);state=store.ensure_project(db,p,user)
         if linked:
             source=db.execute('SELECT context FROM qc_projects WHERE project_id=?',(linked,)).fetchone()
             if source:db.execute('UPDATE qc_projects SET context=? WHERE project_id=?',(source[0],key))
         store.audit(db,user,key,'independent_document_created',{'linked_project_id':linked})
     result=authoring.create(user,key,payload)
+    if not result.get('existing'):
+        with hub.db(True) as db:
+            document_id=result.get('document_id')
+            if result.get('control_id'):
+                controlled=db.execute('SELECT document_id FROM qc_documents WHERE id=?',(result['control_id'],)).fetchone()
+                document_id=controlled[0]
+            if document_id:db.execute('UPDATE pi_documents SET title=? WHERE id=?',(title,document_id))
     return {**result,'scope_id':key,'independent':True}
 
 def details(user,key):

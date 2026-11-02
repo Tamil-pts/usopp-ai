@@ -4,12 +4,17 @@ import time
 
 from fastapi import HTTPException
 
-FIELDS=('page','kind','shape','box','body','status','reverseX','reverseY')
+FIELDS=('page','kind','shape','box','body','status','reverseX','reverseY','callout','color','opacity','points')
 
 
 def public(row):
     value=dict(row)
     if isinstance(value['box'],str):value['box']=json.loads(value['box'])
+    value['callout']=json.loads(value['callout']) if isinstance(value.get('callout'),str) else value.get('callout')
+    value['points']=json.loads(value['points']) if isinstance(value.get('points'),str) else value.get('points')
+    value.setdefault('color',None);value.setdefault('opacity',None)
+    value['referenceNo']=value.pop('reference_no',value.get('referenceNo'))
+    if value['referenceNo']:value['reference']=f'R{value["referenceNo"]:03}'
     value['reverseX']=bool(value.pop('reverse_x',value.get('reverseX',False)))
     value['reverseY']=bool(value.pop('reverse_y',value.get('reverseY',False)))
     value['deleted']=bool(value.get('deleted',False))
@@ -20,6 +25,16 @@ def migrate(db):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='marks'").fetchone():return
     if 'deleted' not in {c[1] for c in db.execute('PRAGMA table_info(marks)')}:
         db.execute('ALTER TABLE marks ADD COLUMN deleted INTEGER NOT NULL DEFAULT 0')
+    if 'callout' not in {c[1] for c in db.execute('PRAGMA table_info(marks)')}:
+        db.execute('ALTER TABLE marks ADD COLUMN callout TEXT')
+    columns={c[1] for c in db.execute('PRAGMA table_info(marks)')}
+    for name,kind in [('color','TEXT'),('opacity','REAL'),('points','TEXT'),('reference_no','INTEGER')]:
+        if name not in columns:db.execute(f'ALTER TABLE marks ADD COLUMN {name} {kind}')
+    next_reference=db.execute('SELECT COALESCE(MAX(reference_no),0) FROM marks').fetchone()[0]
+    for row in db.execute('SELECT id FROM marks WHERE reference_no IS NULL ORDER BY page,created,id').fetchall():
+        next_reference+=1;db.execute('UPDATE marks SET reference_no=? WHERE id=?',(next_reference,row['id']))
+    db.execute('CREATE UNIQUE INDEX IF NOT EXISTS mark_reference ON marks(reference_no)')
+    db.execute('CREATE TABLE IF NOT EXISTS document_covers(version INTEGER PRIMARY KEY,payload TEXT NOT NULL,actor TEXT NOT NULL,at REAL NOT NULL)')
     db.execute('''CREATE TABLE IF NOT EXISTS revisions(mark_id TEXT NOT NULL,version INTEGER NOT NULL,
         snapshot TEXT NOT NULL,action TEXT NOT NULL,actor_id INTEGER,actor TEXT NOT NULL,at REAL NOT NULL,
         origin TEXT NOT NULL DEFAULT '',PRIMARY KEY(mark_id,version))''')
@@ -48,16 +63,20 @@ def current(db,mark_id):
 
 def semantic(mark):
     if not mark or mark.get('deleted'):return None
-    return {k:mark[k] for k in (*FIELDS,'author','author_id')}
+    return {k:mark.get(k) for k in (*FIELDS,'author','author_id')}
 
 
 def revision(db,desired,who,action,origin=''):
     old=current(db,desired['id']);now=time.time()
     value={**desired,'version':old['version']+1 if old else 1,'updated':now,'created':old['created'] if old else desired.get('created',now)}
-    db.execute('''INSERT OR REPLACE INTO marks(id,page,kind,shape,box,body,status,author_id,author,created,updated,version,reverse_x,reverse_y,deleted)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+    reference=old['referenceNo'] if old else desired.get('referenceNo')
+    if not reference or (not old and db.execute('SELECT 1 FROM marks WHERE reference_no=?',(reference,)).fetchone()):
+        reference=db.execute('SELECT COALESCE(MAX(reference_no),0)+1 FROM marks').fetchone()[0]
+    db.execute('''INSERT OR REPLACE INTO marks(id,page,kind,shape,box,body,status,author_id,author,created,updated,version,reverse_x,reverse_y,deleted,callout,color,opacity,points,reference_no)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
         (value['id'],value['page'],value['kind'],value['shape'],json.dumps(value['box']),value['body'],value['status'],
-         value['author_id'],value['author'],value['created'],now,value['version'],value['reverseX'],value['reverseY'],bool(value.get('deleted'))))
+         value['author_id'],value['author'],value['created'],now,value['version'],value['reverseX'],value['reverseY'],bool(value.get('deleted')),json.dumps(value.get('callout')) if value.get('callout') else None,
+         value.get('color'),value.get('opacity'),json.dumps(value['points']) if value.get('points') else None,reference))
     value=current(db,value['id'])
     db.execute('INSERT INTO revisions VALUES (?,?,?,?,?,?,?,?)',
                (value['id'],value['version'],json.dumps(value),action,who['id'],who['username'],now,origin))

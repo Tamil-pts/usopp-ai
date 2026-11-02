@@ -16,7 +16,7 @@ from python_engine.working_sequence import records, ASSIGNMENT, branch_guard
 from python_engine.ladder_model import coil_condition
 from python_engine.project_analysis import _mask
 
-VERSION = 1
+VERSION = 2
 
 
 def identity(*parts):
