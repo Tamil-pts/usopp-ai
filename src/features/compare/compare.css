@@ -532,3 +532,16 @@
 .compareDarkWorkspace .compareSourceNotice{border-bottom:1px solid var(--line,#294050);background:var(--panel2,#142433);color:var(--muted,#87a4bb);font:12px/1.5 'Segoe UI',system-ui,sans-serif}
 .hmiSkipLayout small{color:var(--muted);font-size:11px}
 .compareReportsDialog{padding:24px}.compareReportFormats{display:flex;gap:18px;border:1px solid #ccd7e3;border-radius:8px;padding:12px}.compareReportFormats label{display:flex;align-items:center;gap:6px}.compareReportFormats input{width:auto}.compareReportDownloads{display:grid;gap:12px}.compareReportDownloads>div{display:flex;align-items:center;gap:12px;border:1px solid #ccd7e3;padding:12px;border-radius:8px}.compareReportDownloads span{flex:1;overflow-wrap:anywhere}.compareReportError{font-size:12px;color:#e59393;max-width:320px}.compareReportsDialog select{width:100%;padding:8px;margin:8px 0}
+.workspaceApp .compareDarkWorkspaceBody.compareAdjustableTree{resize:none;min-height:360px;overflow:hidden}
+.compareDarkWorkspaceBody .compareDarkDetail{min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.compareDarkWorkspaceBody .compareDarkDetail>.compareSourceView{flex:1;min-height:0;max-height:none;resize:none;overflow:hidden}
+.compareDarkWorkspaceBody .compareDarkDetail>.compareSourceView .compareSourceCommonScroll{flex:1;min-height:100px;max-height:none}
+.compareDarkWorkspaceBody .compareDarkDetail>.compareDarkDiff{flex:1;min-height:0;max-height:none}
+.compareWorkspaceFilterLabel{font-size:11px;color:var(--muted);align-self:center}
+.compareSourceLine.gap{background:var(--panel2);color:var(--muted);font-style:italic}
+.compareSourceLine.contextOnly{background:transparent;opacity:.8}
+.compareDarkLogicSummary>summary{cursor:pointer}
+@media(max-width:760px){.workspaceApp .compareDarkWorkspaceBody.compareAdjustableTree{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:210px minmax(0,1fr)}.compareAdjustableTree>.compareTreeWidthHandle{display:none}.compareAdjustableTree>.compareDarkFilePane{max-height:210px}.workspaceApp .compareDarkWorkspaceBody.compareAdjustableTree{min-height:500px}}
+.compareReportFormats{flex-wrap:wrap;gap:10px 16px;min-width:0}
+.compareReportFormats label{min-width:125px;flex:1 1 150px;overflow-wrap:normal}
+.compareReportFormats input[type=checkbox]{width:16px;min-width:16px;flex:none;margin:0}

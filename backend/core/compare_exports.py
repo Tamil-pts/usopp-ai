@@ -241,10 +241,16 @@ def _ladder_blocks(parsed: dict) -> list[dict]:
 
 def _logic_blocks(diff: dict) -> list[dict]:
     if diff.get('source_rows'):
-        rows=[_row('Source line',r.get('base'),r.get('new'),group='PLC source',
-                   base_ref=f"L{r['base_line']}" if r.get('base_line') else '',
-                   developed_ref=f"L{r['new_line']}" if r.get('new_line') else '',state=r['status']) for r in diff['source_rows']]
-        return [{'title':'Changed source lines','subtitle':'Whitespace-only changes ignored','status':diff.get('status','unchanged'),'rows':rows}]
+        from python_engine.source_compare import source_windows
+        source=diff['source_rows']
+        spans=[(0,len(source))] if diff.get('status')=='unchanged' else source_windows(source,5)
+        return [{'title':f'Difference {index+1}' if diff.get('status')!='unchanged' else 'Original source',
+                 'subtitle':'Five surrounding lines before and after each change; whitespace-only changes ignored',
+                 'status':diff.get('status','modified'),'source_context':True,
+                 'rows':[_row('Source line',r.get('base'),r.get('new'),group='PLC source',
+                     base_ref=f"L{r['base_line']}" if r.get('base_line') else '',
+                     developed_ref=f"L{r['new_line']}" if r.get('new_line') else '',state=r['status'])
+                     for r in source[start:end]]} for index,(start,end) in enumerate(spans)]
     blocks: list[dict] = []
     for number, hunk in enumerate(diff.get("hunks") or [], start=1):
         rows = []
@@ -571,7 +577,7 @@ def _changed_blocks(blocks):
 
 def _blocks_for_diff(diff):
     blocks=_all_blocks_for_diff(diff)
-    return blocks if diff.get('report_include_same') else _changed_blocks(blocks)
+    return blocks if diff.get('report_include_same') or any(block.get('source_context') for block in blocks) else _changed_blocks(blocks)
 
 
 def _knowledge_blocks(result):
@@ -707,10 +713,12 @@ def _html_block(block: dict, base_name: str, developed_name: str) -> str:
             if group != last_group:
                 rendered.append(f'<div class="detail-group">{escape(str(group))}</div>')
                 last_group = group
-            reference = row.get(ref_key) or row.get("label") or "Detail"
+            source=row.get('group')=='PLC source'
+            reference = (row.get(ref_key) or '') if source else row.get(ref_key) or row.get("label") or "Detail"
+            rendered_value=escape(str(row.get(value_key) or '')) if source else _html_value(row.get(value_key))
             rendered.append(
                 f'<div class="detail-row {escape(str(row.get("state") or "unchanged"))}">'
-                f'<span>{escape(str(reference))}</span><code>{_html_value(row.get(value_key))}</code></div>'
+                f'<span>{escape(str(reference))}</span><code>{rendered_value}</code></div>'
             )
         return (
             f'<article class="side {side}"><h4>{"BASE / REFERENCE" if side == "base" else "DEVELOPED / COMPARE"}</h4>'
@@ -779,7 +787,7 @@ def export_html(result: dict, path: Path, logo: Path):
 {COVER_CSS}
 svg{{width:100%;height:auto}}
 @page{{size:A4 landscape;margin:22mm 10mm 17mm;@bottom-left{{content:"{escape(generated)}";color:{MUTED};font-size:8pt}}@bottom-right{{content:"Page " counter(page) " / " counter(pages);color:{MUTED};font-size:8pt}}}}
-*{{box-sizing:border-box}}body{{margin:0;font:12px/1.45 Segoe UI,Arial,sans-serif;color:#172033;background:#fff}}header{{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid {DARK_BLUE};padding-bottom:9px;margin-bottom:14px}}header h1{{margin:0;color:{DARK_BLUE};font-size:22px}}header img{{width:125px;max-height:58px;object-fit:contain}}.projects,.file-split,.file-paths{{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}}.project,.summary div{{border:1px solid #cbd7e3;border-radius:7px;padding:9px}}.project.base{{border-top:5px solid {BASE_COLOR}}}.project.developed{{border-top:5px solid {DEVELOPED_COLOR}}}.project span,.summary span{{display:block;color:{MUTED};font-size:9px;text-transform:uppercase;letter-spacing:.06em}}.project b{{overflow-wrap:anywhere}}.project dl{{display:grid;grid-template-columns:max-content 1fr;gap:3px 8px;margin:7px 0 0;font-size:9px}}.project dt{{color:{MUTED}}}.project dd{{margin:0;font-weight:600}}.summary{{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 15px}}.summary b{{font-size:18px;color:{DARK_BLUE}}}.report-section{{margin-top:18px}}.report-section>h2{{display:flex;justify-content:space-between;align-items:end;margin:0 0 8px;padding:7px 10px;color:{DARK_BLUE};background:#e8eef5;border-left:5px solid {DARK_BLUE};font-size:15px}}.report-section>h2 small{{color:{MUTED};font-size:9px}}.change{{border:1px solid #cad5e1;border-radius:7px;margin:10px 0;overflow:hidden}}.change-title,.record-title{{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 9px;background:#f1f5f9;border-bottom:1px solid #d9e2eb}}.change-title b,.record-title b{{font-size:11px;overflow-wrap:anywhere}}.change-title small,.record-title small{{color:{MUTED};text-align:right}}.status{{display:inline-block;margin-right:7px;border-radius:999px;padding:2px 7px;color:white;background:#64748b;font-size:8px;font-weight:700}}.status.added{{background:#16975f}}.status.removed{{background:#d34b55}}.status.modified{{background:#d18b16}}.status.information{{background:{DARK_BLUE}}}.file-paths{{gap:0;background:#f8fafc;border-bottom:1px solid #d9e2eb}}.file-paths>div{{padding:6px 9px;font:8px/1.35 Consolas,monospace;overflow-wrap:anywhere}}.file-paths>div+div{{border-left:1px solid #d9e2eb}}.file-paths b{{display:block;color:{MUTED};font:700 8px Segoe UI,Arial,sans-serif;text-transform:uppercase}}.record{{margin:8px;border:1px solid #d4dee8;border-radius:6px;overflow:hidden;break-inside:auto}}.record-title{{padding:5px 7px;background:#fff}}.file-split{{gap:0}}.side{{min-width:0}}.side+.side{{border-left:1px solid #c9d5df}}.side.base{{background:{BASE_TINT}}}.side.developed{{background:{DEVELOPED_TINT}}}.side h4{{margin:0;padding:6px 9px;color:#fff;font-size:9px;letter-spacing:.06em}}.side.base h4{{background:{BASE_COLOR}}}.side.developed h4{{background:{DEVELOPED_COLOR}}}.side-project{{padding:4px 9px;background:rgba(255,255,255,.66);font:700 8px Consolas,monospace;overflow-wrap:anywhere}}.detail-group{{padding:5px 8px 2px;color:{MUTED};font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}}.detail-row{{display:grid;grid-template-columns:minmax(80px,25%) minmax(0,1fr);border-top:1px solid rgba(148,163,184,.25);min-height:25px}}.detail-row>span{{padding:5px 7px;color:#52677a;font-size:8px;font-weight:700;overflow-wrap:anywhere}}.detail-row>code{{padding:5px 7px;border-left:1px solid rgba(148,163,184,.22);color:#1f3345;font:8px/1.4 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}}.detail-row.added{{background:#dcfce7;box-shadow:inset 3px 0 #16975f}}.detail-row.removed{{background:#fee2e2;box-shadow:inset 3px 0 #d34b55}}.detail-row.modified{{background:#fef3c7;box-shadow:inset 3px 0 #d18b16}}footer{{display:flex;justify-content:space-between;color:{MUTED};font-size:9px;margin-top:20px;padding-top:8px;border-top:1px solid #d7e0e9}}footer .pages:after{{content:"Page 1 / 1"}}@media print{{footer{{display:none}}.record{{break-inside:auto}}}}@media screen{{body{{max-width:1500px;margin:24px auto;padding:0 24px}}}}
+*{{box-sizing:border-box}}body{{margin:0;font:12px/1.45 Segoe UI,Arial,sans-serif;color:#172033;background:#fff}}header{{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid {DARK_BLUE};padding-bottom:9px;margin-bottom:14px}}header h1{{margin:0;color:{DARK_BLUE};font-size:22px}}header img{{width:125px;max-height:58px;object-fit:contain}}.projects,.file-split,.file-paths{{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}}.project,.summary div{{border:1px solid #cbd7e3;border-radius:7px;padding:9px}}.project.base{{border-top:5px solid {BASE_COLOR}}}.project.developed{{border-top:5px solid {DEVELOPED_COLOR}}}.project span,.summary span{{display:block;color:{MUTED};font-size:9px;text-transform:uppercase;letter-spacing:.06em}}.project b{{overflow-wrap:anywhere}}.project dl{{display:grid;grid-template-columns:max-content 1fr;gap:3px 8px;margin:7px 0 0;font-size:9px}}.project dt{{color:{MUTED}}}.project dd{{margin:0;font-weight:600}}.summary{{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 15px}}.summary b{{font-size:18px;color:{DARK_BLUE}}}.report-section{{margin-top:18px}}.report-section>h2{{display:flex;justify-content:space-between;align-items:end;margin:0 0 8px;padding:7px 10px;color:{DARK_BLUE};background:#e8eef5;border-left:5px solid {DARK_BLUE};font-size:15px}}.report-section>h2 small{{color:{MUTED};font-size:9px}}.change{{border:1px solid #cad5e1;border-radius:7px;margin:10px 0;overflow:hidden}}.change-title,.record-title{{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 9px;background:#f1f5f9;border-bottom:1px solid #d9e2eb}}.change-title b,.record-title b{{font-size:11px;overflow-wrap:anywhere}}.change-title small,.record-title small{{color:{MUTED};text-align:right}}.status{{display:inline-block;margin-right:7px;border-radius:999px;padding:2px 7px;color:white;background:#64748b;font-size:8px;font-weight:700}}.status.added{{background:#16975f}}.status.removed{{background:#d34b55}}.status.modified{{background:#d18b16}}.status.information{{background:{DARK_BLUE}}}.file-paths{{gap:0;background:#f8fafc;border-bottom:1px solid #d9e2eb}}.file-paths>div{{padding:6px 9px;font:8px/1.35 Consolas,monospace;overflow-wrap:anywhere}}.file-paths>div+div{{border-left:1px solid #d9e2eb}}.file-paths b{{display:block;color:{MUTED};font:700 8px Segoe UI,Arial,sans-serif;text-transform:uppercase}}.record{{margin:8px;border:1px solid #d4dee8;border-radius:6px;overflow:hidden;break-inside:auto}}.record-title{{padding:5px 7px;background:#fff}}.file-split{{gap:0}}.side{{min-width:0}}.side+.side{{border-left:1px solid #c9d5df}}.side.base{{background:{BASE_TINT}}}.side.developed{{background:{DEVELOPED_TINT}}}.side h4{{margin:0;padding:6px 9px;color:#fff;font-size:9px;letter-spacing:.06em}}.side.base h4{{background:{BASE_COLOR}}}.side.developed h4{{background:{DEVELOPED_COLOR}}}.side-project{{padding:4px 9px;background:rgba(255,255,255,.66);font:700 8px Consolas,monospace;overflow-wrap:anywhere}}.detail-group{{padding:5px 8px 2px;color:{MUTED};font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}}.detail-row{{display:grid;grid-template-columns:minmax(80px,25%) minmax(0,1fr);border-top:0;min-height:25px}}.detail-row>span{{padding:5px 7px;color:#52677a;font-size:8px;font-weight:700;overflow-wrap:anywhere}}.detail-row>code{{padding:5px 7px;border-left:0;color:#1f3345;font:8px/1.4 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}}.detail-row.added{{background:#dcfce7;box-shadow:inset 3px 0 #16975f}}.detail-row.removed{{background:#fee2e2;box-shadow:inset 3px 0 #d34b55}}.detail-row.modified{{background:#fef3c7;box-shadow:inset 3px 0 #d18b16}}footer{{display:flex;justify-content:space-between;color:{MUTED};font-size:9px;margin-top:20px;padding-top:8px;border-top:1px solid #d7e0e9}}footer .pages:after{{content:"Page 1 / 1"}}@media print{{footer{{display:none}}.record{{break-inside:auto}}}}@media screen{{body{{max-width:1500px;margin:24px auto;padding:0 24px}}}}
 </style></head><body>{cover_section}<header><div><h1>uSOPp.ai</h1><b>Structured Project Comparison Report</b></div>{logo_html}</header>
 <p><b>Test ID:</b> {escape(str(result.get("testId") or "Earlier run: not recorded"))} &nbsp; <b>Department:</b> {escape(str(result.get("machineDepartment") or "All"))}</p>
 <div class="projects"><div class="project base"><span>Base project</span><b>{escape(base_name)}</b><dl>{_project_identity_html(result, 'base')}</dl></div><div class="project developed"><span>Developed project</span><b>{escape(developed_name)}</b><dl>{_project_identity_html(result, 'developed')}</dl></div></div>
@@ -885,7 +893,6 @@ def export_pdf(result: dict, path: Path, logo: Path):
             style=TableStyle(
                 [
                     ("BOX", (0, 0), (-1, -1), .5, colors.HexColor("#aab7c4")),
-                    ("INNERGRID", (0, 0), (-1, -1), .4, colors.HexColor("#cbd5df")),
                     ("BACKGROUND", (0, 0), (0, 0), colors.HexColor(BASE_TINT)),
                     ("BACKGROUND", (1, 0), (1, 0), colors.HexColor(DEVELOPED_TINT)),
                     ("LINEABOVE", (0, 0), (0, 0), 4, colors.HexColor(BASE_COLOR)),
@@ -899,7 +906,7 @@ def export_pdf(result: dict, path: Path, logo: Path):
         Table(
             [[f"Modified\n{summary.get('modified', 0)}", f"Added\n{summary.get('added', 0)}", f"Removed\n{summary.get('removed', 0)}", f"Unchanged\n{summary.get('unchanged', 0)}"]],
             colWidths=[67.5 * mm] * 4,
-            style=TableStyle([("GRID", (0, 0), (-1, -1), .4, colors.HexColor("#aab7c4")), ("ALIGN", (0, 0), (-1, -1), "CENTER"), ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#eef3f7")), ("FONTNAME", (0, 0), (-1, -1), "Helvetica-Bold"), ("FONTSIZE", (0, 0), (-1, -1), 8)]),
+            style=TableStyle([("ALIGN", (0, 0), (-1, -1), "CENTER"), ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#eef3f7")), ("FONTNAME", (0, 0), (-1, -1), "Helvetica-Bold"), ("FONTSIZE", (0, 0), (-1, -1), 8)]),
         ),
         Spacer(1, 7),
     ]
@@ -909,12 +916,12 @@ def export_pdf(result: dict, path: Path, logo: Path):
         rows = block.get("rows") or []
         table_rows = [[Paragraph(f"<b>BASE / REFERENCE</b><br/>{safe(base_name)}", header_style), Paragraph(f"<b>DEVELOPED / COMPARE</b><br/>{safe(developed_name)}", header_style)]]
         for row in rows:
-            left_label = row.get("base_ref") or row.get("label")
-            right_label = row.get("developed_ref") or row.get("label")
+            left_label = (row.get("base_ref") or "") if row.get("group")=="PLC source" else row.get("base_ref") or row.get("label")
+            right_label = (row.get("developed_ref") or "") if row.get("group")=="PLC source" else row.get("developed_ref") or row.get("label")
             table_rows.append(
                 [
-                    Paragraph(f"<b>{safe(left_label)}</b><br/>{source_value(row, 'base')}", cell_style),
-                    Paragraph(f"<b>{safe(right_label)}</b><br/>{source_value(row, 'developed')}", cell_style),
+                    Paragraph(f"<b>{safe(left_label) if left_label else ''}</b><br/>{source_value(row, 'base')}", cell_style),
+                    Paragraph(f"<b>{safe(right_label) if right_label else ''}</b><br/>{source_value(row, 'developed')}", cell_style),
                 ]
             )
         # Bound repeated table splitting/layout work without omitting rows.
@@ -923,7 +930,6 @@ def export_pdf(result: dict, path: Path, logo: Path):
             table.setStyle(
                 TableStyle(
                     [
-                        ("GRID", (0, 0), (-1, -1), .3, colors.HexColor("#bdc9d4")),
                         ("BACKGROUND", (0, 0), (0, 0), colors.HexColor(BASE_COLOR)),
                         ("BACKGROUND", (1, 0), (1, 0), colors.HexColor(DEVELOPED_COLOR)),
                         ("BACKGROUND", (0, 1), (0, -1), colors.HexColor(BASE_TINT)),
@@ -1047,13 +1053,13 @@ def export_docx(result: dict, path: Path, logo: Path):
             for run in paragraph.runs:
                 run.font.color.rgb = RGBColor.from_string(color)
 
-    def add_cell_detail(cell, label, value):
+    def add_cell_detail(cell, label, value, source=False):
         paragraph = cell.paragraphs[0]
-        label_run = paragraph.add_run(_display(label))
+        label_run = paragraph.add_run(str(label or '') if source else _display(label))
         label_run.bold = True
         label_run.font.name = "Consolas"
         label_run.font.size = Pt(7.5)
-        value_run = paragraph.add_run("\n" + _display(value))
+        value_run = paragraph.add_run('\n' + (str(value or '') if source else _display(value)))
         value_run.font.name = "Consolas"
         value_run.font.size = Pt(7.5)
 
@@ -1094,7 +1100,7 @@ def export_docx(result: dict, path: Path, logo: Path):
     doc.add_paragraph('Department: '+str(result.get('machineDepartment') or 'All'))
     project_table = doc.add_table(rows=2, cols=2)
     project_table.alignment = WD_TABLE_ALIGNMENT.CENTER
-    project_table.style = "Table Grid"
+    project_table.style = "Normal Table"
     project_table.cell(0, 0).text = "BASE / REFERENCE"
     project_table.cell(0, 1).text = "DEVELOPED / COMPARE"
     shade(project_table.cell(0, 0), BASE_COLOR[1:])
@@ -1118,7 +1124,7 @@ def export_docx(result: dict, path: Path, logo: Path):
         rows = block.get("rows") or []
         table = doc.add_table(rows=len(rows) + 1, cols=2)
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
-        table.style = "Table Grid"
+        table.style = "Normal Table"
         # column.cells flattens the table once. Repeated table.cell() calls
         # traverse every cell again, causing quadratic work on large reports.
         left_cells, right_cells = table.columns[0].cells, table.columns[1].cells
@@ -1130,8 +1136,8 @@ def export_docx(result: dict, path: Path, logo: Path):
         set_cell_color(right_cells[0], "FFFFFF")
         for index, row in enumerate(rows, start=1):
             left_cell, right_cell = left_cells[index], right_cells[index]
-            add_cell_detail(left_cell, row.get("base_ref") or row.get("label"), row.get("base"))
-            add_cell_detail(right_cell, row.get("developed_ref") or row.get("label"), row.get("developed"))
+            add_cell_detail(left_cell, (row.get("base_ref") or "") if row.get("group")=="PLC source" else row.get("base_ref") or row.get("label"), row.get("base"), source=row.get("group")=="PLC source")
+            add_cell_detail(right_cell, (row.get("developed_ref") or "") if row.get("group")=="PLC source" else row.get("developed_ref") or row.get("label"), row.get("developed"), source=row.get("group")=="PLC source")
             shade(left_cell, BASE_TINT[1:])
             shade(right_cell, DEVELOPED_TINT[1:])
             tint = {"added":"dcfce7", "removed":"fee2e2", "modified":"fef3c7"}.get(row.get("state"))

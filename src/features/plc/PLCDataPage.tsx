@@ -1,9 +1,14 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 export function PLCDataPage({theme,historyId='',onLive,onContext}:{theme:'light'|'dark';historyId?:string;onLive:()=>void;onContext?:(value:Record<string,unknown>)=>void}){
   const [ready, setReady] = useState(false);
   const [error, setError] = useState('');
   const frame=useRef<HTMLIFrameElement>(null);
+  useLayoutEffect(()=>()=>{
+    // Dispose React portals and document listeners before removing the frame.
+    try{frame.current?.contentWindow?.dispatchEvent(new Event('usopp:datainspect-dispose'));}
+    catch{/* A frame that has already navigated away has no selector to dispose. */}
+  },[]);
   useEffect(()=>{
     onContext?.({});
     const receive=(event:MessageEvent)=>{

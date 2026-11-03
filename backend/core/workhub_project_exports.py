@@ -9,6 +9,7 @@ from .workhub import store as hub,identity,timestamp,text,encode,day
 from . import workhub_portfolio as portfolio
 from .workhub_quality import store as quality
 from .workhub_custom_fields import read as fields
+from . import workhub_project_dates as dates
 
 COLUMNS={'title':'Project Name','number':'Project Number','customer':'Customer','reference':'Customer Reference','team':'Team','owner':'Owner','status':'Status','stage':'Workflow Stage','progress':'Completion %','tasks':'Tasks','phases':'Phases','issues':'Open Issues','start':'Start Date','due':'End Date','billing':'Billing Hours (Approved Time)','type':'Project Type','updated':'Last Updated'}
 DEFAULT=['title','number','owner','status','progress','start','due','billing']
@@ -29,15 +30,17 @@ def source(user,role=''):
 
 
 def catalog(user,role=''):
-    value=source(user,role);columns=dict(COLUMNS)
+    value=source(user,role);columns=dict(COLUMNS);date_fields=dict(dates.DATE_FIELDS)
     with hub.db() as db:
         for p in value['projects']:
-            for f in fields(db,p['id']):columns[f['id']]=f['label']
+            for f in fields(db,p['id']):
+                columns[f['id']]=f['label']
+                if f['type']=='date':date_fields[f['id']]='Custom: '+f['label']
         teams=[dict(r) for r in db.execute("SELECT id,name FROM wh_org_units WHERE kind='team' AND active=1 ORDER BY name")]
         views=[{**dict(r),'config':json.loads(r['config'])} for r in db.execute('SELECT * FROM wh_project_export_views WHERE owner_id=? ORDER BY created_at DESC',(user['id'],))]
         history=[{**dict(r),'config':json.loads(r['config'])} for r in db.execute('SELECT * FROM wh_project_export_history WHERE owner_id=? ORDER BY created_at DESC LIMIT 50',(user['id'],))]
     people={m['id']:m['name'] for p in value['projects'] for m in p['assigned_team']}
-    return {'columns':[{'id':k,'label':v} for k,v in columns.items()],'defaults':DEFAULT,'people':[{'id':k,'name':v} for k,v in sorted(people.items())],'teams':teams,'projects':value['options']['projects'],'views':views,'history':history,'role':value['role'],'roles':value['roles']}
+    return {'columns':[{'id':k,'label':v} for k,v in columns.items()],'date_fields':[{'id':k,'label':v} for k,v in date_fields.items()],'defaults':DEFAULT,'people':[{'id':k,'name':v} for k,v in sorted(people.items())],'teams':teams,'projects':value['options']['projects'],'views':views,'history':history,'role':value['role'],'roles':value['roles']}
 
 
 def config(user,payload):
@@ -56,10 +59,12 @@ def config(user,payload):
     if team and team not in {t['id'] for t in cat['teams']}:raise HTTPException(400,'Choose an available team.')
     if pid and pid not in {p['id'] for p in cat['projects']}:raise HTTPException(403,'This project is outside your selected reporting scope.')
     start=day(payload.get('from_date',''));end=day(payload.get('to_date',''))
-    if start and end and start>end:raise HTTPException(400,'The delivery date range is reversed.')
+    if start and end and start>end:raise HTTPException(400,'The From date must be on or before the To date.')
+    date_field=payload.get('date_field','due_date')
+    if not isinstance(date_field,str) or date_field not in {f['id'] for f in cat['date_fields']}:raise HTTPException(400,'Choose an available project date field.')
     files=payload.get('files',False)
     if type(files) is not bool:raise HTTPException(400,'Choose whether to include file information.')
-    return {'columns':columns,'format':fmt,'role':cat['role'],'status':status,'member':member,'team':team,'project':pid,'from_date':start,'to_date':end,'files':files,'search':text(payload.get('search',''),180)}
+    return {'columns':columns,'format':fmt,'role':cat['role'],'status':status,'member':member,'team':team,'project':pid,'date_field':date_field,'from_date':start,'to_date':end,'files':files,'search':text(payload.get('search',''),180)}
 
 
 def save_view(user,payload):
@@ -87,7 +92,7 @@ def dataset(user,settings):
             for f in fields(db,p['id']):columns[f['id']]=f['label']
             raw=hub.item(db,p['id']);members={m['id'] for m in p['assigned_team']};status='completed' if p['stage']=='released' else raw.get('exception_status') or 'ongoing'
             if settings['project'] and p['id']!=settings['project'] or settings['status'] and status!=settings['status'] or settings['member'] and settings['member'] not in members or settings['team'] and not members.intersection(team_members):continue
-            if settings['from_date'] and (not raw['due_date'] or raw['due_date']<settings['from_date']) or settings['to_date'] and (not raw['due_date'] or raw['due_date']>settings['to_date']):continue
+            if not dates.matches(raw,settings.get('date_field','due_date'),settings['from_date'],settings['to_date'],fields(db,p['id'])):continue
             ctx=db.execute('SELECT context FROM qc_projects WHERE project_id=?',(p['id'],)).fetchone();ctx=json.loads(ctx[0]) if ctx else {}
             if settings['search'].casefold() not in ' '.join(str(v or '') for v in [p['title'],raw.get('project_number'),ctx.get('customer')]).casefold():continue
             row={'title':p['title'],'number':raw.get('project_number',''),'customer':ctx.get('customer',''),'reference':ctx.get('customer_project_reference',''),'team':', '.join(m['name'] for m in p['assigned_team']),'owner':people.get(raw['owner_id'],'Account unavailable'),'status':status.replace('_',' ').title(),'stage':raw['stage'].replace('_',' ').title(),'progress':p.get('progress'),'tasks':db.execute("SELECT count(*) FROM items WHERE project_id=? AND type='task'",(p['id'],)).fetchone()[0],'phases':db.execute('SELECT count(*) FROM project_phases WHERE project_id=?',(p['id'],)).fetchone()[0],'issues':p['open_issues'],'start':raw['start_date'],'due':raw['due_date'],'billing':round(billing.get(p['id'],0),2),'type':raw['kind'],'updated':raw['updated_at']}

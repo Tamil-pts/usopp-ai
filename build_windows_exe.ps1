@@ -50,8 +50,12 @@ if (-not (Test-Path -LiteralPath (Join-Path $AppRoot 'virtual_plc\dist\index.htm
     throw 'Virtual PLC interface is missing. Run again with -RebuildFrontend.'
 }
 
-& $Python -m pip install 'pyinstaller==6.22.3' --disable-pip-version-check
-if ($LASTEXITCODE -ne 0) { throw 'PyInstaller installation failed.' }
+$InstalledPyInstaller = & $Python -c "import importlib.metadata, importlib.util; print(importlib.metadata.version('pyinstaller') if importlib.util.find_spec('PyInstaller') else '')"
+if ($LASTEXITCODE -ne 0) { throw 'Unable to check the build environment.' }
+if (([string]$InstalledPyInstaller).Trim() -ne '6.22.3') {
+    & $Python -m pip install 'pyinstaller==6.22.3' --disable-pip-version-check
+    if ($LASTEXITCODE -ne 0) { throw 'PyInstaller installation failed.' }
+}
 
 $ReleaseRoot = Join-Path $AppRoot ('release\windows-source-free\' + (Get-Date -Format 'yyyyMMdd_HHmmss'))
 $WorkRoot = Join-Path $AppRoot '.build\pyinstaller'
@@ -69,10 +73,12 @@ $Arguments = @(
     '--noupx',
     '--name', 'uSOPp_AI',
     '--paths', $AppRoot,
+    '--additional-hooks-dir', (Join-Path $AppRoot 'deploy\pyinstaller\hooks'),
     '--distpath', $ReleaseRoot,
     '--workpath', $WorkRoot,
     '--specpath', $SpecRoot,
     '--add-data', ((Join-Path $AppRoot 'dist') + ';dist'),
+    '--add-data', ((Join-Path $AppRoot 'public') + ';public'),
     '--add-data', ((Join-Path $EngineStage 'python_engine') + ';python_engine'),
     '--paths', (Join-Path $AppRoot 'python_engine'),
     '--collect-submodules', 'python_engine',
@@ -83,6 +89,7 @@ $Arguments = @(
     '--add-data', ((Join-Path $AppRoot 'src\petrus_logo.png') + ';src'),
     '--collect-submodules', 'uvicorn',
     '--collect-submodules', 'backend',
+    '--add-data', ((Join-Path $AppRoot 'backend\core\workhub_quality\templates') + ';backend/core/workhub_quality/templates'),
     '--collect-submodules', 'virtual_plc.core',
     '--add-data', ((Join-Path $AppRoot 'virtual_plc\dist') + ';virtual_plc/dist'),
     '--add-data', ((Join-Path $AppRoot 'virtual_plc\examples') + ';virtual_plc/examples'),
@@ -94,7 +101,10 @@ $Arguments = @(
     '--collect-submodules', 'reportlab', '--collect-data', 'reportlab',
     '--collect-submodules', 'docx', '--collect-data', 'docx',
     '--collect-submodules', 'pypdf', '--collect-data', 'pypdf',
-    '--collect-all', 'pypdfium2', '--collect-all', 'pypdfium2_raw',
+    # collect-all also copies Python source as data. Keep modules in the frozen
+    # archive and collect only PDFium's runtime DLLs and non-code resources.
+    '--collect-submodules', 'pypdfium2', '--collect-data', 'pypdfium2',
+    '--collect-submodules', 'pypdfium2_raw', '--collect-binaries', 'pypdfium2_raw', '--collect-data', 'pypdfium2_raw',
     '--collect-submodules', 'pdfplumber', '--collect-submodules', 'pdfminer', '--collect-data', 'pdfminer',
     '--collect-submodules', 'fontTools', '--collect-data', 'fontTools',
     '--collect-submodules', 'svglib', '--collect-data', 'svglib',
@@ -136,7 +146,12 @@ $Output = if ($SingleFile) {
 
 Write-Host ''
 Write-Host "Build complete: $Output" -ForegroundColor Green
-if (Get-ChildItem -LiteralPath $ReleaseRoot -Recurse -File | Where-Object { $_.Extension -in @('.py','.pyw','.tsx','.ts','.map') }) {
+$RawSources = @(Get-ChildItem -LiteralPath $ReleaseRoot -Recurse -File | Where-Object { $_.Extension -in @('.py','.pyw','.tsx','.ts','.map') })
+if ($RawSources.Count -gt 0) {
+    Write-Host "Release audit found $($RawSources.Count) forbidden files (first 25):" -ForegroundColor Red
+    foreach ($SourceFile in ($RawSources | Select-Object -First 25)) {
+        Write-Host ('  ' + $SourceFile.FullName.Substring($ReleaseRoot.Length).TrimStart([char[]]'\/'))
+    }
     throw 'Release audit failed: raw source or source maps found in the distribution.'
 }
 Write-Host 'Raw source audit passed. Bytecode is reversible; this is not encryption.'

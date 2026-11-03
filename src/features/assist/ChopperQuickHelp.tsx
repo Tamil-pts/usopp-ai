@@ -10,7 +10,7 @@ import {openDashboardBuilder,isWorkHubDashboardRequest} from '../workhub/dashboa
 
 type WindowContext={page:string;label:string;projectName?:string;projectPath?:string;details?:Record<string,unknown>;findings?:any[];counts?:Record<string,number>};
 type Message={role:'user'|'assistant';text:string;scope:string;source?:string;evidence?:any[];contextUsage?:any;retrieval?:any};
-export function ChopperQuickHelp({context,onOpenChat}:{context:WindowContext;onOpenChat:()=>void}){
+export function ChopperQuickHelp({context,onOpenChat,placement='floating'}:{context:WindowContext;onOpenChat:()=>void;placement?:'floating'|'top'}){
  const [open,setOpen]=useState(false),[question,setQuestion]=useState(''),[messages,setMessages]=useState<Message[]>([]);
  const [busy,setBusy]=useState(false),[progress,setProgress]=useState(''),[error,setError]=useState('');
  const intelligence=useProjectIntelligence(open?context.projectPath||'':'');
@@ -34,11 +34,11 @@ export function ChopperQuickHelp({context,onOpenChat}:{context:WindowContext;onO
   }catch(reason){if(!abort.signal.aborted)setError(reason instanceof Error?reason.message:'Chopper is unavailable.')}
   finally{if(!abort.signal.aborted){setBusy(false);setProgress('');lock.current=false}}
  }
- return <><button type="button" ref={launcher} className={'btn chopperQuickLauncher '+(open?'selected':'')} title="Chat with Chopper" aria-label="Open Chopper chat" aria-haspopup="dialog" aria-expanded={open} aria-controls="chopper-quick-help" onClick={()=>open?close():setOpen(true)}><Bot size={20}/><span>Chopper</span>{busy&&<i className="chopperBusyDot"/>}</button>{open&&createPortal(<section id="chopper-quick-help" role="dialog" aria-modal="false" aria-labelledby="chopper-quick-title" className="chopperQuickPanel">
+ return <><button type="button" ref={launcher} className={'btn chopperQuickLauncher '+(open?'selected':'')} title="How can I help?" aria-label="Open Chopper chat" aria-haspopup="dialog" aria-expanded={open} aria-controls="chopper-quick-help" onClick={()=>open?close():setOpen(true)}><Bot size={20}/><span>{placement==='top'?'How can I help?':'Chopper'}</span>{busy&&<i className="chopperBusyDot"/>}</button>{open&&createPortal(<section id="chopper-quick-help" role="dialog" aria-modal="false" aria-labelledby="chopper-quick-title" className={'chopperQuickPanel'+(placement==='top'?' topCentered':'')}>
   <header><span className="chopperQuickAvatar"><Bot size={22}/></span><div><h2 id="chopper-quick-title">Chopper</h2><p>Chat and step-by-step guidance</p></div><button className="btn" title="Open full Chat" aria-label="Open full Chopper Chat" onClick={()=>{close();onOpenChat()}}><Expand size={16}/></button><button className="btn" aria-label="Close Chopper chat" onClick={close}><X size={18}/></button></header>
   <div className="chopperQuickContext"><span>Current window</span><b>{context.label}</b>{context.details?.target!=null&&<small>{String(context.details.target)}</small>}</div>
   <div className="chopperQuickMessages" ref={scroll} role="log" aria-label="Chopper conversation" aria-live="polite">
-   {!messages.length&&<div className="chopperQuickWelcome"><Bot size={28}/><h3>Let?s work through it together.</h3><p>Ask any engineering question, or let Chopper guide you through this app one step at a time. Your current window provides optional context.</p></div>}
+   {!messages.length&&<div className="chopperQuickWelcome"><Bot size={28}/><h3>How can I help?</h3><p>Ask about this page or your engineering work.</p></div>}
    {messages.map((message,index)=><article key={index} className={'chopperQuickMessage '+message.role}><small>{message.role==='assistant'?'Chopper':'You'} · {message.scope}</small><ChopperReply text={message.text}/><ContextUsage usage={message.contextUsage} retrieval={message.retrieval}/>{message.evidence?.length? <details><summary>View evidence ({message.evidence.length})</summary>{message.evidence.map((item,i)=><div key={i}><b>{item.sourceId?`[${item.sourceId}] `:''}{item.file}{item.line?`:${item.line}`:''}</b><pre>{item.excerpt}</pre></div>)}</details>:null}{message.source==='local-window-guide'&&<small>Workflow guide · deterministic results remain in the workspace.</small>}</article>)}
    {busy&&<p className="chopperQuickProgress" role="status">{progress}</p>}
   </div>

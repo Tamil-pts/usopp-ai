@@ -39,7 +39,9 @@ async function start() {
     if (saved.record.kind !== 'datainspect') throw new Error('This is not a DataInspect test.');
     initialHistory = saved.result;
   }
-  createRoot(document.getElementById('root')!).render(<StrictMode><DataInspectBoundary><App initialHistory={initialHistory}/><StorageNotice/></DataInspectBoundary></StrictMode>);
+  const root=createRoot(document.getElementById('root')!);
+  window.addEventListener('usopp:datainspect-dispose',()=>root.unmount(),{once:true});
+  root.render(<StrictMode><DataInspectBoundary><App initialHistory={initialHistory}/><StorageNotice/></DataInspectBoundary></StrictMode>);
 }
 void start().catch(error => {
   const message = document.createElement('p');

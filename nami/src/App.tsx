@@ -1,3 +1,4 @@
+import {createPortal} from 'react-dom';
 import {ToolProjectSelector} from '../../src/shared/ToolProjectSelector';
 import {toolProjectHeaders} from '../../src/shared/toolProject';
 import {frameProtocol,isYbsTarget,metadataMachine} from './utils/frameProfile';
@@ -82,6 +83,12 @@ const INITIAL_PLCS: PLCConfig[] = [
 
 export default function App({initialHistory}: {initialHistory?: SavedInspectRun}) {
   const archived = Boolean(initialHistory);
+  // Render the real DataInspect selector in the same-origin shell toolbar.
+  // Its settings and request headers stay owned by this workspace.
+  const [projectLinkHost]=useState(()=>{
+    try{return window.parent!==window?window.parent.document.getElementById('datainspect-project-link'):null;}
+    catch{return null;}
+  });
   const [workspaceView,setWorkspaceView]=useState<'packets'|'dashboard'>('packets');
   const [latestTestId, setLatestTestId] = useState(initialHistory?.testId || '');
   const [historyWarning, setHistoryWarning] = useState('');
@@ -748,10 +755,11 @@ export default function App({initialHistory}: {initialHistory?: SavedInspectRun}
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
+      {projectLinkHost&&!archived&&createPortal(<ToolProjectSelector tool="datainspect" compact/>,projectLinkHost)}
       {/* Top Header */}
       <fieldset disabled={archived} className="m-0 min-w-0 border-0 p-0">
       <Header
-        projectLink={!archived?<ToolProjectSelector tool="datainspect"/>:undefined}
+        projectLink={!archived&&!projectLinkHost?<ToolProjectSelector tool="datainspect"/>:undefined}
         selectedPLC={selectedPLC}
         allPLCs={plcs}
         onSelectPLC={(p) => setSelectedPLCId(p.id)}

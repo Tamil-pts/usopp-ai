@@ -88,11 +88,11 @@ def from_template(user,key,payload):
     """Atomic first-use creation leaves all existing dashboards and sharing intact."""
     from . import templates
     personal(user);initialize();schema.bounded(payload)
-    if key not in {templates.KEY,templates.OVERVIEW_KEY}:raise HTTPException(404,'Dashboard template not found.')
+    if key not in {templates.KEY,templates.OVERVIEW_KEY,templates.PROJECTS_KEY}:raise HTTPException(404,'Dashboard template not found.')
     if type(payload.get('if_empty',False)) is not bool:schema.fail('Use true or false for first-use creation.')
     if type(payload.get('if_default_missing',False)) is not bool:schema.fail('Use true or false for default creation.')
     make_default=key==templates.OVERVIEW_KEY and payload.get('if_default_missing',False)
-    config=templates.overview_configuration() if key==templates.OVERVIEW_KEY else templates.configuration();now=timestamp()
+    config=templates.overview_configuration() if key==templates.OVERVIEW_KEY else templates.projects_configuration() if key==templates.PROJECTS_KEY else templates.configuration();now=timestamp()
     with hub.db(True) as db:
         if make_default:
             existing=db.execute('SELECT d.id FROM wh_dashboard_defaults h JOIN wh_dashboards d ON d.id=h.dashboard_id AND d.owner_id=h.user_id WHERE h.user_id=?',(user['id'],)).fetchone()

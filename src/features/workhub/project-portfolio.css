@@ -43,3 +43,16 @@
 .pp-workspace .pp-table td:last-child{min-width:110px}
 
 .pp-column-popover{position:fixed;z-index:1300;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box;padding:12px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px #001a3030}.pp-column-popover>p{margin:0 0 9px;font-size:13px;font-weight:600}.pp-column-popover>label{display:flex;align-items:flex-start;justify-content:flex-start;gap:10px;padding:9px 3px;font-size:14px;line-height:1.4;cursor:pointer}.pp-column-popover input[type=checkbox]{flex:0 0 16px;width:16px;min-width:16px;max-width:16px;height:16px;margin:2px 0 0;padding:0;accent-color:var(--pass)}.pp-column-popover label>span{flex:1;min-width:0;overflow-wrap:anywhere}.pp-column-popover .btn{margin-top:10px}.pp-filters>label{min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:7px}.pp-filters>label>select{min-width:0;max-width:100%}
+
+/* Date controls stay visible and fit the register at browser zoom widths. */
+.pp-date-filters{display:flex;align-items:flex-end;flex-wrap:wrap;gap:10px;padding:0;margin:0 0 15px;min-width:0}
+.pp-date-filters>label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);min-width:0;flex:0 1 220px}
+.pp-date-filters .textInput{width:100%;min-width:0;box-sizing:border-box;color:var(--text)}
+.pp-date-hint{flex:1 1 280px;color:var(--muted);font-size:11px;align-self:center}
+.pp-reset-filters{align-self:flex-end;min-height:38px}
+.pp-field-project-list{display:grid;gap:6px;margin-top:12px;max-height:50vh;overflow:auto}
+.pp-field-project-list .btn{justify-content:flex-start;text-align:left;white-space:normal}
+@media(max-width:480px){.pp-date-filters>label{flex:1 1 100%}.pp-filters>input{flex-basis:100%}}
+
+.pp-date-range-control .pp-date-trigger{align-self:flex-start;min-height:38px;min-width:200px}.pp-date-filters .pp-date-trigger{color:var(--text)}
+@media(max-width:480px){.pp-date-range-control .pp-date-trigger{width:100%;min-width:0}}

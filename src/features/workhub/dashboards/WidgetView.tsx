@@ -9,14 +9,14 @@ import {formatValue,queryFor,type Widget,type GlobalFilters,type Row} from './mo
 
 const numeric=(v:any):v is number=>typeof v==='number'&&Number.isFinite(v);
 const CHART_TYPES=new Set(['bar','stacked_bar','line','area','pie','donut','scatter','combo','heatmap','histogram','treemap','funnel','radar','gauge']);
-type WidgetProps={widget:Widget;filters:GlobalFilters;registry:Row;dark:boolean;refresh:number};
+type WidgetProps={widget:Widget;filters:GlobalFilters;registry:Row;dark:boolean;refresh:number;scope?:{project_ids:string[]}};
 class WidgetBoundary extends Component<{children:ReactNode;resetKey:string},{failed:boolean}>{
  state={failed:false};
  static getDerivedStateFromError(){return {failed:true};}
  componentDidUpdate(previous:{resetKey:string}){if(this.state.failed&&previous.resetKey!==this.props.resetKey)this.setState({failed:false});}
  render(){return this.state.failed?<div className="db-state db-error" role="alert"><AlertCircle size={20}/><span>This widget could not be displayed. Your dashboard and project records are saved.</span><button className="btn" onClick={()=>this.setState({failed:false})}><RefreshCw size={14}/>Reload widget</button></div>:this.props.children;}
 }
-export function WidgetView(props:WidgetProps){return <WidgetBoundary resetKey={JSON.stringify([props.widget,props.filters,props.refresh])}><WidgetContent {...props}/></WidgetBoundary>;}
+export function WidgetView(props:WidgetProps){return <WidgetBoundary resetKey={JSON.stringify([props.widget,props.filters,props.refresh,props.scope])}><WidgetContent {...props}/></WidgetBoundary>;}
 echarts.use([BarChart,LineChart,PieChart,ScatterChart,GaugeChart,HeatmapChart,TreemapChart,FunnelChart,RadarChart,GridComponent,LegendComponent,TooltipComponent,VisualMapComponent,RadarComponent,AriaComponent,CanvasRenderer]);
 function Chart({option}:{option:Row}){
  const ref=useRef<HTMLDivElement>(null),[error,setError]=useState('');
@@ -68,9 +68,10 @@ function Pivot({data,w}:{data:Row;w:Widget}){
  const rows:Row[]=data.rows,cols=[...new Set(rows.map(r=>r.dimensions[1]))],groups=[...new Set(rows.map(r=>r.dimensions[0]))],max=Math.max(1,...rows.map(r=>r.values[0]).filter(numeric));
  return <div className="db-table-wrap"><table><thead><tr><th>{w.query.dimensions[0].field}</th>{cols.map(c=><th key={c}>{c}</th>)}</tr></thead><tbody>{groups.map(g=><tr key={g}><th>{g}</th>{cols.map(c=>{const v=rows.find(r=>r.dimensions[0]===g&&r.dimensions[1]===c)?.values[0];return <td key={c} style={w.type==='matrix'&&numeric(v)?{background:w.appearance.colors[0]+Math.max(0,Math.min(255,Math.round(30+100*v/max))).toString(16).padStart(2,'0')}:undefined}>{v==null?'—':formatValue(v,w)}</td>;})}</tr>)}</tbody></table></div>;
 }
-function WidgetContent({widget:w,filters,registry,dark,refresh}:WidgetProps){
+function WidgetContent({widget:w,filters,registry,dark,refresh,scope}:WidgetProps){
  const [data,setData]=useState<Row|null>(null),[error,setError]=useState(''),[loading,setLoading]=useState(false),[retry,setRetry]=useState(0);
- const q=JSON.stringify(queryFor(w,filters));
+ const request=queryFor(w,filters);
+ const q=JSON.stringify(scope?{...request,global:{...request.global,project_ids:scope.project_ids}}:request);
  useEffect(()=>{if(w.type==='text')return;const abort=new AbortController();setLoading(true);setError('');setData(null);void hub('/dashboards/query',JSON.parse(q),'POST',abort.signal).then(result=>{if(!abort.signal.aborted)setData(result);}).catch(e=>{if(!abort.signal.aborted)setError(e.message);}).finally(()=>{if(!abort.signal.aborted)setLoading(false);});return()=>abort.abort();},[q,w.type,refresh,retry]);
  // Tables, calendars, KPIs and timelines return raw records, not chart series.
  // Computing an aggregate chart option for those rows crashed saved dashboards.

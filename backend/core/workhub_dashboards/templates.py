@@ -6,6 +6,7 @@ NAME='Engineering project overview'
 DESCRIPTION='Project delivery, reviewed work, scheduled tasks, validation activity and current documents. Every widget is editable.'
 OVERVIEW_KEY='workhub-overview'
 OVERVIEW_NAME='WorkHub overview'
+PROJECTS_KEY='project-summary'
 
 
 def configuration():
@@ -66,4 +67,31 @@ def overview_configuration():
 def catalog():
     return {'items':[
         {'id':OVERVIEW_KEY,'name':OVERVIEW_NAME,'description':'Your live WorkHub shortcuts and lists. Resize, rearrange or add any widget.','version':1,'configuration':overview_configuration()},
-        {'id':KEY,'name':NAME,'description':DESCRIPTION,'version':1,'configuration':configuration()}]}
+        {'id':KEY,'name':NAME,'description':DESCRIPTION,'version':1,'configuration':configuration()},
+        {'id':PROJECTS_KEY,'name':'Project cards & graphs','description':'Editable project indicators and charts using the Projects page filters.','version':1,'configuration':projects_configuration()}]}
+
+
+def projects_configuration():
+    def widget(key,kind,title,filters=None,dimensions=None):
+        return {'id':key,'type':kind,'title':title,'query':{'source':'projects','dimensions':dimensions or [],
+            'metrics':[{'field':'id','aggregation':'count'}],'filters':filters or [],'limit':100},
+            'appearance':{'colors':['#119773','#2563eb','#a67a1e','#c75f76'],'legend':kind!='kpi','axes':True}}
+    eq=lambda field,value:{'field':field,'op':'eq','value':value}
+    dim=lambda field:[{'field':field,'grain':'value'}]
+    widgets=[widget('total_projects','kpi','Total projects'),
+        widget('active_projects','kpi','Active projects',[{'field':'delivery_group','op':'in','value':['Ongoing','Upcoming','On hold']}]),
+        widget('completed_projects','kpi','Completed projects',[eq('delivery_group','Completed')]),
+        widget('projects_in_review','kpi','Projects awaiting review',[{'field':'status','op':'in','value':['quality','release_approval','ready_release']}]),
+        widget('projects_by_stage','bar','Projects by delivery group',dimensions=dim('delivery_group')),
+        widget('projects_by_owner','donut','Projects by owner',dimensions=dim('engineer'))]
+    layouts={}
+    for bp,cols in schema.COLS.items():
+        positions=[];y=0
+        for i,w in enumerate(widgets):
+            card=i<4
+            if bp=='desktop':x=i*3 if card else (i-4)*6;top=0 if card else 3;width=3 if card else 6;height=3 if card else 7
+            elif bp=='tablet':x=(i%2)*4 if card else 0;top=(i//2)*3 if card else 6+(i-4)*7;width=4 if card else 8;height=3 if card else 7
+            else:x=0;top=y;width=cols;height=3 if card else 7;y+=height
+            positions.append(dict(i=w['id'],x=x,y=top,w=width,h=height))
+        layouts[bp]=positions
+    return schema.dashboard({'name':'Project cards & graphs','widgets':widgets,'layouts':layouts})

@@ -51,7 +51,18 @@ def records(user,key):
                   'released':int(r['stage']=='released'),'start':r.get('start_date'),'end':r.get('due_date'),
                   'hours':r.get('planned_hours'),'health':value.get('health'),
                   **({'billing_hours':billing.get(r['id'],0)} if key=='projects' else {}),
+                  **({'delivery_group':'Cancelled' if r.get('exception_status')=='cancelled' else 'On hold' if r.get('exception_status')=='on_hold' else 'Completed' if r['stage']=='released' else 'Upcoming' if r['stage']=='todo' else 'Ongoing',
+                      'dataset':'Sample' if r.get('is_sample') else 'Recorded'} if key=='projects' else {}),
                   '_url':'/?workhubProject='+r['project_id']+'&workhubItem='+r['id']})
+        elif key=='time_entries':
+            for r in read(db,'SELECT * FROM updates WHERE minutes>0 ORDER BY work_date,id'):
+                if not (user['role']=='admin' or user['id'] in {r['author_id'],r['reviewer_id']} or r['project_id'] in managed):continue
+                project=projects.get(r['project_id'])
+                if not project:continue
+                output.append({**base({**r,'title':r['body'][:180]},r['author_id'],r['work_date']),
+                  'hours':r['minutes']/60,'approved_hours':r['minutes']/60 if r['time_status']=='approved' else 0,
+                  'status':r['time_status'],'dataset':'Sample' if project.get('is_sample') else 'Recorded',
+                  '_url':'/?workhubProject='+r['project_id']+'&workhubItem='+r['item_id']})
         elif key=='approvals':
             item_map={r['id']:r for r in items}
             for r in items:
@@ -147,12 +158,13 @@ def aggregate(rows,metric):
 
 def execute(user,payload):
     q=schema.query(payload);rows=records(user,q['source']);g=q['global'];notes=[]
-    if q['source']=='capabilities' and any(g[k] for k in ('project_id','from','to')):
+    if q['source']=='capabilities' and (any(g[k] for k in ('project_id','from','to')) or 'project_ids' in g):
         # Capability snapshots are not dated facts; never pretend a date filter changed the assessment.
         raise HTTPException(422,'Capability snapshots use the existing 365-day profile window. Clear project/date filters for this widget, or use Reviewed contributions for date-filtered work.')
     filters=q['filters'][:]
     if g['project_id']:filters.append({'field':'project_id','op':'eq','value':g['project_id']})
     if g['engineer_id']:filters.append({'field':'engineer_id','op':'eq','value':g['engineer_id']})
+    if 'project_ids' in g:filters.append({'field':'project_id','op':'in','value':g['project_ids']})
     rows=[r for r in rows if all(matches(r,f) for f in filters) and (not g['from'] or r.get('date') and str(r['date'])[:10]>=g['from']) and (not g['to'] or r.get('date') and str(r['date'])[:10]<=g['to'])]
     if q['source']=='validation':notes.append('Runs and iterations measure activity. Run completion does not imply validation passed. Scores are included only when exactly one recorded score field exists.')
     if q['source']=='capabilities':notes.append('Existing 365-day capability profile. Supporting work counts are not capability scores. Missing reviewed work is not poor performance.')

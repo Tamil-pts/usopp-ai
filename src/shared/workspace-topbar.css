@@ -15,3 +15,12 @@
 .adminCredentialNotice{display:flex;align-items:center;gap:12px;padding:12px 15px;border:1px solid var(--warn);border-radius:9px;background:var(--warnbg);color:var(--text);font-size:12px;margin-bottom:16px}.adminCredentialNotice>svg{color:var(--warn);flex-shrink:0}.adminCredentialNotice>span{flex:1}.adminCredentialNotice .btn{font-size:11px;white-space:nowrap}
 @media(max-width:1050px){.workspaceTopActions{gap:7px}.workspaceAccountTrigger>span:not(.userAvatar),.workspaceAccountTrigger>svg{display:none}.workspacePartnerLogo{max-width:90px}.workspaceApp .top.workspaceTopBar{padding:8px 14px;gap:10px}}
 @media(max-width:600px){.workspaceApp .top.workspaceTopBar{padding:8px 12px;min-height:60px}.workspaceCrumb{display:grid;gap:2px;font-size:11px;max-width:34vw}.workspaceCrumb>b{font-size:14px}.workspaceCrumb>span[aria-hidden]{display:none}.workspaceTopActions{gap:6px}.workspaceApp .top .buildVersionCompact{display:none}.workspacePartnerLogo{height:23px;max-width:77px;padding-left:7px}.workspaceIconButton,.workspaceTopActions .wh-bell-button{width:34px;min-width:34px;height:34px}.workspaceAccountTrigger{padding:0}.workspaceAccountMenu{right:-70px}.adminCredentialNotice{flex-wrap:wrap}.adminCredentialNotice .btn{margin-left:28px}}
+.workspaceApp .top.workspaceTopBar.hasAssistant{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+.workspaceTopAssistant{justify-self:center;min-width:0}
+.workspaceTopBar.hasAssistant>.workspaceTopActions{justify-self:end}
+.workspaceTopAssistant .chopperQuickLauncher{height:36px;min-height:0;padding:5px 12px;border-radius:20px;font-size:12px;white-space:nowrap}
+@media(max-width:1500px){.hasAssistant .workspaceAccountTrigger>span:not(.userAvatar),.hasAssistant .workspaceAccountTrigger>svg{display:none}}
+@media(max-width:600px){.workspaceTopAssistant .chopperQuickLauncher{height:34px;width:34px;padding:0;display:grid;place-items:center}.workspaceApp .top.workspaceTopBar.hasAssistant{gap:6px}.hasAssistant .workspaceCrumb{max-width:none}}
+@media(max-width:430px){.hasAssistant .workspacePartnerLogo{display:none}}
+
+@media(max-width:1050px){.hasAssistant .buildVersionCompact{display:none!important}}

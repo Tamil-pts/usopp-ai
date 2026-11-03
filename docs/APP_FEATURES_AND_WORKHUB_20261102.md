@@ -2,7 +2,7 @@
 
 Verified against the current checkout on 2 November 2026 (Asia/Calcutta).
 
-Follow-up changes: [six delivery handoffs and landing copy](WORKHUB_DELIVERY_20261102.md) and [updated parameter mappings, deletion and viewport checks](PARAMETER_MAPPINGS_20261102.md).
+Follow-up changes: [six delivery handoffs and landing copy](WORKHUB_DELIVERY_20261102.md), [updated parameter mappings, deletion and viewport checks](PARAMETER_MAPPINGS_20261102.md), and [calendar date filters and the default Portfolio & delivery Overview](WORKHUB_DATES_OVERVIEW_20261103.md), and [dashboard tabs and customizable Projects cards and graphs](WORKHUB_DASHBOARD_WORKSPACE_20261103.md), and [top submenus, MatchView filters/exports and chat sizing](NAVIGATION_MATCHVIEW_CHAT_20261103.md), and [compact Spin Connect workspace controls and the top assistant](COMPACT_WORKSPACE_BAR_20261103.md), and [Document Compare in AI Assist](DOCUMENT_COMPARE_20261103.md).
 
 uSOPp.ai combines engineering checks, project delivery, controlled documents and
 technical investigation. The landing page now presents these areas together.
@@ -23,6 +23,7 @@ indicator, not a security certification.
 | e-design | PDF drawing review, revision clouds, markers/highlights, comments, reference numbers, correction status, properties and reviewed exports. |
 | Chopper / KnowHub | Source-linked investigation and drafting, rule configuration, reviewed technical knowledge, machine/HMI/settings/hardware context and bounded graph inspection. Unsupported semantics and stale evidence remain unresolved. |
 | Virtual workspaces | Supported Virtual PLC model inspection and native electrical editing/simulation. Electrical imports exclude recognized ancillary content and require review before simulation. Motor mechanics and arbitrary vendor models are not implemented. |
+| Document Compare (AI Assist) | Compare selected CSV/XLS/XLSX columns with optional row keys, or compare PDF/DOCX/TXT extracted text. Source references, difference filters, private results and CSV export are available. |
 | Settings and accounts | Account approval, roles, module visibility, profile/password, templates, machine/department configuration, local services and connection settings. |
 
 AI proposals, parser coverage and simulation outputs do not replace physical

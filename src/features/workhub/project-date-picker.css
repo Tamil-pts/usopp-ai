@@ -1,0 +1,44 @@
+.pp-date-trigger{min-width:0;max-width:100%;justify-content:flex-start;gap:8px;text-align:left}
+.pp-date-trigger span{overflow-wrap:anywhere}.pp-date-trigger svg{flex:none}
+.pp-date-overlay{position:fixed;inset:0;z-index:1500;background:#071c2a15}
+.pp-date-popover{position:fixed;box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;background:var(--panel,#fff);color:var(--text,#182834);border:1px solid var(--line,#d5dfec);border-radius:10px;box-shadow:0 14px 45px #071c2a33;font-size:13px}
+.pp-date-tabs{display:flex;justify-content:center;gap:2px;background:var(--panel2,#f1f5fa);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:1}
+.pp-date-tabs button{font:inherit;padding:12px 16px;border:0;border-bottom:2px solid transparent;background:none;color:var(--text);cursor:pointer}
+.pp-date-tabs button[aria-selected=true]{border-color:#2878ed;color:#2878ed}
+.pp-calendars{display:grid;grid-template-columns:1fr;gap:16px;padding:10px}
+.mode-range .pp-calendars{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pp-calendar-month{min-width:0}.pp-calendar-month>header{display:flex;align-items:center;justify-content:space-between;min-height:36px;gap:4px}
+.pp-calendar-heading{display:flex;align-items:center;justify-content:center;flex:1;min-width:0;gap:2px}
+.pp-calendar-heading select,.pp-calendar-heading input,.pp-month-year input{font:inherit;font-weight:600;border:0;color:var(--text);background:var(--panel);padding:5px 0;min-width:0}
+.pp-calendar-heading select{width:100px}.pp-calendar-heading input{width:63px;text-align:center}
+.pp-calendar-nav{display:flex;flex:none}.pp-calendar-nav button,.pp-month-year button{background:none;border:0;color:var(--muted,#69798b);padding:4px;cursor:pointer}
+.pp-calendar-grid{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:6px}
+.pp-calendar-grid th{font-weight:500;font-size:10px;padding:6px 0;text-transform:uppercase;text-align:center;color:var(--text)}
+.pp-calendar-grid th:first-child{width:27px}.pp-calendar-grid tbody th{background:var(--panel2,#f1f5fa);padding:0}
+.pp-calendar-grid td{padding:0;text-align:center}.pp-calendar-grid button{border:0;background:none;color:inherit;cursor:pointer;font:inherit;display:grid;place-items:center;width:100%;height:32px;border-radius:50%}
+.pp-calendar-grid tbody th button{font-size:10px;border-radius:0;color:var(--muted)}
+.pp-calendar-grid td.selected{background:#e4efff;color:#16344e}.pp-calendar-grid td.edge button{background:#2878ed;color:#fff}
+.pp-calendar-grid td.weekend:not(.selected){color:#e65e67}.pp-calendar-grid td.outside:not(.selected){opacity:.35}
+.pp-calendar-grid button[aria-current=date]:not([aria-pressed=true]){outline:1px solid #2878ed;outline-offset:-3px;color:#2878ed}
+.pp-calendar-grid button:hover,.pp-month-options button:hover{background:#2878ed20;outline:1px solid #2878ed}
+.pp-date-selection{padding:4px 14px;margin:0 0 8px;font-size:12px;min-height:18px;color:var(--muted)}
+.pp-date-selection small{display:block;font-size:11px;margin-top:4px}
+.pp-date-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 14px 12px}
+.pp-date-inputs label{display:flex;flex-direction:column;gap:4px;min-width:0;color:var(--muted);font-size:11px}
+.pp-date-inputs input{font:inherit;font-size:13px;width:100%;min-width:0;box-sizing:border-box;padding:7px;border:1px solid var(--line);border-radius:5px;background:var(--panel);color:var(--text)}
+.pp-date-popover>footer{position:sticky;bottom:0;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px;background:var(--panel);border-top:1px solid var(--line)}
+.pp-date-popover>footer>div{display:flex;gap:8px;margin-left:auto}.pp-date-popover .btn{font-size:13px;min-height:32px;padding:5px 13px}
+.pp-calendar-current{font:inherit;background:none;border:0;padding:4px;color:#2878ed;cursor:pointer}
+.pp-date-popover .wh-error{margin:8px 14px}.pp-month-year{display:flex;align-items:center;justify-content:space-between;padding:14px}.pp-month-year input{width:90px;text-align:center}
+.pp-month-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:0 14px 20px}
+.pp-month-options button{border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--panel);color:var(--text);cursor:pointer;font:inherit}
+.pp-month-options button[aria-pressed=true]{background:#2878ed;color:#fff;border-color:#2878ed}
+.pp-date-popover button:focus-visible,.pp-date-popover input:focus-visible,.pp-date-popover select:focus-visible{outline:2px solid #2878ed;outline-offset:1px}
+@media(max-width:620px){.mode-range .pp-calendars{grid-template-columns:minmax(0,1fr)}.pp-date-tabs button{padding:11px 13px}.pp-date-inputs{gap:8px}.pp-date-popover>footer{padding:9px;gap:4px}}
+
+.pp-date-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.pp-calendar-grid td.edge button:hover{background:#1763ce;color:#fff}
+
+.pp-calendar-grid td button{width:32px;max-width:100%;margin:auto}.pp-date-popover .btn:disabled{opacity:.45;cursor:not-allowed}
+[data-theme=dark] .pp-date-popover input{color-scheme:dark}

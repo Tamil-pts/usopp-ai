@@ -1,0 +1,8 @@
+.chopperInterface .chopperWorkspace .chopperChat.hasCustomResponseHeight{max-height:none}
+.chopperInterface .chopperChat.hasCustomResponseHeight>.chopperMessages{flex:none;min-height:0;max-height:none;overflow:auto;box-sizing:border-box}
+.chopperResponseSize{display:flex;align-items:center;gap:10px;flex-shrink:0;min-width:0;padding:4px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;background:var(--panel2)}
+.chopperResponseSize>span{min-width:0}.chopperResponseSize small{font:inherit;white-space:nowrap}
+.chopperResponseSize>.btn{font-size:11px;padding:4px 7px;min-height:28px;gap:4px}
+.chopperResponseGrip{margin-left:auto;display:flex;align-items:center;justify-content:flex-end;gap:7px;min-width:40px;min-height:32px;padding:0 4px;color:var(--accent);cursor:ns-resize;touch-action:none;user-select:none;border-radius:5px}
+.chopperResponseGrip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.chopperResponseGrip:hover,.chopperResponseSize.isResizing .chopperResponseGrip{background:var(--accentbg)}
+@media(max-width:600px){.chopperResponseSize{padding:4px 10px;gap:6px}.chopperResponseGrip>span{display:none}}

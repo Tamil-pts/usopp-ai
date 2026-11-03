@@ -1,0 +1,20 @@
+.app.workspaceApp{grid-template-rows:auto auto minmax(0,1fr);grid-template-areas:'rail top' 'rail subnav' 'rail main'}
+.workspaceSubnav{grid-area:subnav;min-width:0;z-index:100;background:#073b4c;color:#e4f0f4;border-bottom:1px solid #326678;padding:5px 14px}
+.workspaceSubnav.isEmpty{padding:0;border:0;height:0;overflow:hidden}
+.workspaceSubnavRow{display:flex;align-items:flex-start;gap:5px;flex-wrap:wrap;min-width:0}
+.workspaceSubnavRow>.workspaceFlyoutEntry,.workspaceSubnavRow>div>.workspaceFlyoutEntry{width:auto;min-height:38px;padding:7px 12px;font-size:13px;white-space:nowrap}
+.workspaceSubnavRow>div{position:relative;min-width:0}
+.workspaceSubnav .workspaceNestedMenu{position:absolute;top:100%;left:0;min-width:220px;max-height:65vh;overflow:auto;margin:4px 0 0;padding:7px;background:#073b4c;border:1px solid #326678;border-radius:8px;box-shadow:0 12px 28px #001f3033;z-index:110}
+.workspaceSubnav .workspaceNestedMenu>.workspaceFlyoutEntry{font-size:13px;min-height:38px}
+.workspaceSubnav .workspaceNestedToggle>svg:last-child{transform:rotate(90deg);width:14px;height:14px;margin-left:4px}
+.workspaceSubnav .workspaceFlyoutEntry:focus-visible{outline:2px solid #82e9cc;outline-offset:-2px}
+.workspaceApp .rail .workspaceGroupChevron{display:none}
+@media(max-width:760px){.workspaceSubnav{padding:5px 8px}.workspaceSubnavRow{gap:2px}.workspaceSubnavRow>.workspaceFlyoutEntry,.workspaceSubnavRow>div>.workspaceFlyoutEntry{padding:7px 8px;font-size:12px;white-space:normal}.workspaceSubnav .workspaceNestedMenu{position:fixed;left:12px;right:12px;top:auto;min-width:0;max-height:55dvh}.app.workspaceApp{grid-template-areas:'top' 'rail' 'subnav' 'main';grid-template-rows:auto auto auto minmax(0,1fr)}}
+.workspaceSubnav.hasProjectLink{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.workspaceSubnav.hasProjectLink>.workspaceSubnavRow{flex:1;min-width:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.workspaceSubnav.hasProjectLink>.workspaceSubnavRow::-webkit-scrollbar{display:none}
+.workspaceSubnav.hasProjectLink .workspaceSubnavRow>.workspaceFlyoutEntry,.workspaceSubnav.hasProjectLink .workspaceSubnavRow>div{flex:none}
+.workspaceSubnavProject{flex:0 1 auto;min-width:0;max-width:55%}
+.workspaceSpinMenu{position:fixed;z-index:1400;width:240px;max-width:calc(100vw - 16px);overflow:auto;padding:6px;background:#073b4c;color:#e4f0f4;border:1px solid #326678;border-radius:8px;box-shadow:0 12px 28px #001f3033}
+.workspaceSpinMenu .workspaceFlyoutEntry{font-size:13px;min-height:38px}
+.workspaceSpinMenu .workspaceFlyoutEntry:focus-visible{outline:2px solid #82e9cc;outline-offset:-2px}

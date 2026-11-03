@@ -36,7 +36,11 @@ SOURCES={
  'projects':source('Projects','Recorded project progress and hours. Billing hours totals all approved project time; date filters select project records, not time-entry dates.',
    {'status':('Stage','string'),'work_type':('Work type','string'),'progress':('Project completion (%)','number'),
     'development_progress':('Development completion (%)','number'),'start':('Planned start','date'),'end':('Due date','date'),
-    'hours':('Planned hours','number'),'billing_hours':('Billing hours (approved time)','number'),'health':('Health','string')},'status'),
+    'hours':('Planned hours','number'),'billing_hours':('Billing hours (approved time)','number'),'health':('Health','string'),
+    'delivery_group':('Delivery group','string'),'dataset':('Dataset','string')},'status'),
+ 'time_entries':source('Recorded working hours','Saved daily work entries, grouped by their work date. Submitted time is not approved billing time. Sample projects are explicitly labelled.',
+   {'hours':('Recorded hours','number'),'approved_hours':('Approved hours','number'),
+    'status':('Time review status','string'),'dataset':('Dataset','string')},'date','hours','sum'),
  'tasks':source('Tasks','Workflow steps with their recorded phase and completion.',
    {'status':('Stage','string'),'phase':('Work phase','string'),'work_type':('Work type','string'),
     'progress':('Task completion (%)','number'),'completed':('Development completed (0/1)','number'),
@@ -102,6 +106,9 @@ def global_filters(value):
     v=obj(value or {})
     result={'project_id':string(v.get('project_id',''),64),'engineer_id':string(str(v.get('engineer_id','')),32),
             'from':iso(v.get('from')),'to':iso(v.get('to'))}
+    if 'project_ids' in v:
+        result['project_ids']=list(dict.fromkeys(string(key,64) for key in array(v['project_ids'],10000)))
+        if any(not key for key in result['project_ids']):fail('Use nonempty project IDs for the selected project scope.')
     if result['from'] and result['to'] and result['from']>result['to']:fail('The end date must follow the start date.')
     return result
 

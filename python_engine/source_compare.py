@@ -31,14 +31,18 @@ def aligned_source(base, developed):
     blanks(len(left),len(right))
     return rows
 
-def source_diff(base, developed, max_hunks=80, context=5):
-    rows=aligned_source(base,developed)
+def source_windows(rows, context=5):
     changed=[i for i,row in enumerate(rows) if row['status']!='unchanged']
     spans=[]
     for i in changed:
         start=max(0,i-context);end=min(len(rows),i+context+1)
         if spans and start<=spans[-1][1]:spans[-1][1]=end
         else:spans.append([start,end])
+    return spans
+
+def source_diff(base, developed, max_hunks=80, context=5):
+    rows=aligned_source(base,developed)
+    spans=source_windows(rows,context)
     hunks=[]
     for start,end in spans[:max_hunks]:
         lines=[]

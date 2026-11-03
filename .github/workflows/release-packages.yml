@@ -34,12 +34,17 @@ jobs:
         shell: pwsh
         run: |
           python -m venv .venv
+          if ($LASTEXITCODE -ne 0) { throw 'Python environment creation failed.' }
           & .venv/Scripts/python.exe -m pip install -r backend_requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Python dependency installation failed.' }
           npm ci --no-audit --no-fund
           if ($LASTEXITCODE -ne 0) { throw 'npm installation failed.' }
       - name: Build frontend and portable Windows application
         shell: pwsh
         run: ./build_windows_exe.ps1 -RebuildFrontend
+      - name: Verify the frozen Windows UI and APIs in an isolated installation
+        shell: pwsh
+        run: ./scripts/verify_windows_release.ps1
       - name: Create audited ZIPs and checksums
         shell: pwsh
         run: |
@@ -67,7 +72,18 @@ jobs:
           version=$(python3 -c "import json; print(json.load(open('package.json'))['version'])")
           [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
           mkdir -p release/downloads/ci
-          docker build --platform linux/amd64 --build-arg APP_VERSION="$version" -t "usopp-ai:$version" .
+          docker build --platform linux/amd64 --build-arg APP_VERSION="$version" --build-arg SOURCE_COMMIT="$GITHUB_SHA" -t "usopp-ai:$version" .
+          secret_dir=$(mktemp -d "$RUNNER_TEMP/usopp-release-smoke.XXXXXX")
+          openssl rand -base64 30 > "$secret_dir/admin-password.txt"
+          chmod 644 "$secret_dir/admin-password.txt"
+          volume="usopp-release-smoke-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          name="usopp-release-smoke-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          cleanup() { docker rm -f "$name" >/dev/null 2>&1 || true; docker volume rm "$volume" >/dev/null 2>&1 || true; rm -f "$secret_dir/admin-password.txt"; rmdir "$secret_dir"; }
+          trap cleanup EXIT
+          docker volume create "$volume" >/dev/null
+          docker run -d --name "$name" --read-only --tmpfs /tmp:rw,nosuid,nodev,size=1g --cap-drop ALL --security-opt no-new-privileges:true -p 127.0.0.1:18200:8200 -v "$volume:/data" -v "$secret_dir/admin-password.txt:/run/secrets/usopp_admin_password:ro" -e USOPP_INITIAL_ADMIN_PASSWORD_FILE=/run/secrets/usopp_admin_password "usopp-ai:$version"
+          if ! python3 scripts/container_smoke.py --version "$version" --password-file "$secret_dir/admin-password.txt"; then docker logs --tail 120 "$name"; exit 1; fi
+          docker exec "$name" python -c "import os,pathlib; assert os.getuid()==10001; bad=[str(p) for p in pathlib.Path('/opt/usopp').rglob('*') if p.is_file() and p.suffix in ('.py','.pyw','.ts','.tsx','.map')]; assert not bad,bad[:10]"
           image="release/downloads/ci/uSOPp_AI_${version}_Container_linux_amd64.tar.gz"
           docker image save "usopp-ai:$version" | gzip -1 > "$image"
           (cd release/downloads/ci && sha256sum "$(basename "$image")" > "$(basename "$image").sha256")

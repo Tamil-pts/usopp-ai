@@ -7,6 +7,7 @@ import {downloadCSV} from '../../shared/download';
 import {LocalFolderTree} from '../../shared/LocalFileBrowser';
 import {ResizeHandle} from './ResizeHandle';
 import {CompareView} from './CompareView';
+import {matchesChange,type ChangeStatus} from './sourceRows';
 import {FunctionFlow} from './FunctionFlow';
 import {HmiScreenPreview} from './HmiScreenPreview';
 import {HmiPropertyComparison} from './HmiPropertyComparison';
@@ -132,7 +133,7 @@ function SplitDiffHunk({hunk,baseLabel,newLabel}:{hunk:any,baseLabel:string,newL
   const ctx=(hunk.lines||[]).filter((l:any)=>l.t==='ctx').length;
   const addCnt=(hunk.lines||[]).filter((l:any)=>l.t==='add').length;
   const delCnt=(hunk.lines||[]).filter((l:any)=>l.t==='del').length;
-  const lineRange=(values:any[])=>{const numbers=values.filter((value:any)=>Number.isFinite(Number(value))).map(Number);if(!numbers.length)return 'No lines';const first=Math.min(...numbers),last=Math.max(...numbers);return first===last?`L${first}`:`L${first}-L${last}`};
+  const lineRange=(values:any[])=>{const numbers=values.filter((value:any)=>value!=null&&Number.isFinite(Number(value))&&Number(value)>0).map(Number);if(!numbers.length)return 'No lines';const first=Math.min(...numbers),last=Math.max(...numbers);return first===last?`L${first}`:`L${first}-L${last}`};
   const baseRange=lineRange(lines.map((line:any)=>line.bl));
   const developedRange=lineRange(lines.map((line:any)=>line.nl));
   return <div className="splitHunk">
@@ -420,7 +421,7 @@ export function CompareModule({
   const baseRef=React.useRef<HTMLInputElement>(null);
   const newRef=React.useRef<HTMLInputElement>(null);
   const [chopperSummaryOpen,setChopperSummaryOpen]=React.useState(false);
-  const [workspacePages,setWorkspacePages]=React.useState(2);
+  const [workspacePages,setWorkspacePages]=React.useState(2),[workspaceHeight,setWorkspaceHeight]=React.useState<number|null>(null);
   const [baseBrowserOpen,setBaseBrowserOpen]=React.useState(false);
   const [newBrowserOpen,setNewBrowserOpen]=React.useState(false);
   const [filter,setFilter]=React.useState<CompareFilter>('logic');
@@ -428,7 +429,8 @@ export function CompareModule({
   const resizeTree=(width:number)=>{setTreeWidth(width);try{userStorage.setItem('usopp_compare_tree_width',String(width))}catch{}};
   const [search,setSearch]=React.useState('');
   const [activeTab,setActiveTab]=React.useState<'changes'|'summary'|'knowledge'>('changes');
-  const [fileStatus,setFileStatus]=React.useState<'all'|'modified'|'added'|'removed'>('all');
+  const [fileStatus,setFileStatus]=React.useState<ChangeStatus>('all');
+  const [workspaceStatus,setWorkspaceStatus]=React.useState<ChangeStatus>('all');
   const [treeScope,setTreeScope]=React.useState<'all'|'base'|'developed'>('all');
   const [selectedIndex,setSelectedIndex]=React.useState(0);
   const [hmiView,setHmiView]=React.useState<'structured'|'preview'>('structured');
@@ -452,10 +454,10 @@ export function CompareModule({
   const projectInfo=result?.projects||{};
   const cats:CompareFilter[]=['all','logic','screen','hardware','config'];
 
-  const viewItems:any[]=[...(result?.diffs||[]),...(fileStatus==='all'?[...(result?.same_logic_files||[]),...(result?.same_screen_files||[]),...(result?.same_project_files||[])]:[])];
+  const viewItems:any[]=[...(result?.diffs||[]),...(['all','unchanged'].includes(fileStatus)?[...(result?.same_logic_files||[]),...(result?.same_screen_files||[]),...(result?.same_project_files||[])]:[])];
   const diffs:any[]=viewItems.filter((d:any)=>
     !/\.(pkg|prg)$/i.test(String(d.path||''))&&(filter==='all'||d.category===filter)&&
-    (fileStatus==='all'||d.status===fileStatus)&&
+    matchesChange(d.status,fileStatus)&&
     (!search||String(d.path||'').toLowerCase().includes(search.toLowerCase())||String(d.subroutine||'').toLowerCase().includes(search.toLowerCase())||String(d.file_name||'').toLowerCase().includes(search.toLowerCase()))
   );
   const treeItems=diffs.filter((d:any)=>treeScope==='all'||(treeScope==='base'&&d.base_file_name)||(treeScope==='developed'&&d.new_file_name)).map((d:any)=>({...d,tree_path:treeScope==='base'?(d.base_relative_path||d.path):treeScope==='developed'?(d.new_relative_path||d.path):d.path}));
@@ -495,7 +497,7 @@ export function CompareModule({
   },[detailKey]);
   const loadedDetail=screenDetail?.key===detailKey?screenDetail.data:undefined;
   const selected=selectedRaw?{...selectedRaw,...(selectedRaw.project_detail_id?loadedDetail:{}),parsed_ladder:needsLadderDetail?loadedDetail:selectedRaw.parsed_ladder,parsed_screen:filterHmiDifferences(selectedRaw.parsed_screen||(selectedRaw.screen_detail_id?loadedDetail:undefined),skipHmiLayout)}:null;
-  const selectedHunks=(selected?.hunks||[]).slice(0,40);
+  const selectedHunks=(selected?.hunks||[]).filter((h:any)=>workspaceStatus==='all'||(h.lines||[]).some((line:any)=>(line.status|| (line.t==='add'?'added':line.t==='del'?'removed':'unchanged'))===workspaceStatus));
 
   const selectLocal=(which:'base'|'new',path:string,name:string)=>{
     if(which==='base'){
@@ -602,11 +604,11 @@ export function CompareModule({
 
     {result&&<div style={{display:activeTab==='summary'?undefined:'none'}}><ProjectObjectComparison key={result.sessionId||result.testId||baseLabel+'|'+newLabel} result={result} onOpen={openProjectObject}/></div>}
 
-    {result&&activeTab==='changes'&&<><div className="compareSizeToolbar"><label>Workspace height <select value={workspacePages} onChange={e=>setWorkspacePages(Number(e.target.value))}><option value={1}>1 screen</option><option value={2}>2 screens</option><option value={3}>3 screens</option></select></label><label>Tree width <input aria-label="Project tree width" type="range" min="200" max="650" step="10" value={treeWidth} onChange={event=>resizeTree(Number(event.target.value))}/><output>{treeWidth}px</output></label><span>Drag the tree divider to adjust width; drag the bottom-right corner to adjust height.</span></div><div className="compareDarkWorkspaceBody compareAdjustableTree" style={{height:`${workspacePages*85}vh`,gridTemplateColumns:`${treeWidth}px 7px minmax(0,1fr)`}}>
+    {result&&activeTab==='changes'&&<><div className="compareSizeToolbar"><label>Workspace height <select value={workspacePages} onChange={e=>{setWorkspacePages(Number(e.target.value));setWorkspaceHeight(null);}}><option value={1}>1 screen</option><option value={2}>2 screens</option><option value={3}>3 screens</option></select></label><label>Tree width <input aria-label="Project tree width" type="range" min="200" max="650" step="10" value={treeWidth} onChange={event=>resizeTree(Number(event.target.value))}/><output>{treeWidth}px</output></label><span>Drag the tree divider to adjust width; use the resize bar below the workspace to adjust height.</span></div><div className="compareDarkWorkspaceBody compareAdjustableTree" style={{height:workspaceHeight??`min(4000px, ${workspacePages*85}vh)`,gridTemplateColumns:`${treeWidth}px 7px minmax(0,1fr)`}}>
       <aside className="compareDarkFilePane">
         <div className="compareDarkSearch"><Search size={13}/><input aria-label="Search comparison project" placeholder="Search project files and folders" value={search} onChange={e=>setSearch(e.target.value)}/></div>
         <label className="compareStatusSelect compareTreeScope"><span>Tree</span><select value={treeScope} onChange={event=>{setTreeScope(event.target.value as typeof treeScope);setSelectedIndex(0)}}><option value="all">All projects</option><option value="base">Base project</option><option value="developed">Developed project</option></select></label>
-        <label className="compareStatusSelect"><span>Show</span><select value={fileStatus} onChange={e=>setFileStatus(e.target.value as typeof fileStatus)}><option value="all">All</option><option value="modified">Modified / differences</option><option value="removed">Removed</option><option value="added">Added</option></select></label>
+        <label className="compareStatusSelect"><span>Tree filter</span><select aria-label="Tree file status" value={fileStatus} onChange={e=>setFileStatus(e.target.value as typeof fileStatus)}><option value="all">All files</option><option value="differences">Differences (added, modified, removed)</option><option value="modified">Modified only</option><option value="removed">Removed</option><option value="added">Added</option><option value="unchanged">Unchanged</option></select></label>
         <div className="compareDarkFilterRow">{cats.map(c=><button key={c} className={filter===c?'active':''} onClick={()=>setFilter(c)}>{c==='all'?'All':c==='logic'?'Logic':c==='screen'?'HMI':c==='hardware'?'HW':'Config'}</button>)}</div>
         <div className="compareTreeLegend"><span><i className="treeStatusIcon added">+</i>Added</span><span><i className="treeStatusIcon modified">{String.fromCharCode(8594)}</i>Modified</span><span><i className="treeStatusIcon removed">-</i>Removed</span><span><i className="treeStatusIcon unchanged">=</i>Same</span></div>
         <div className="compareDarkFileCount">{treeItems.length} file(s) | {treeScope==='all'?'combined':treeScope} tree</div>
@@ -619,7 +621,7 @@ export function CompareModule({
         {filter==='hardware'?<HardwareCompareView base={knowledge.base||{}} new_={knowledge.developed||{}} baseLabel={baseLabel} newLabel={newLabel}/>:!selected?<div className="compareDarkEmpty">Select a file to view the Base and Developed comparison.</div>:<>
           <div className="compareDarkDetailHead">
             <div><div className="compareDarkDetailTitle">{selected.file_name||String(selected.path).split('/').pop()} <span className={`detailStatus ${selected.status}`}>{String(selected.status).toUpperCase()}</span></div><div className="compareDarkDetailPath">{selected.path}</div></div>
-            <div className="compareDarkDetailActions">{isLadder&&<button className={sourceView==='diagram'?'selected':''} onClick={()=>setSourceView('diagram')}>Ladder diagram</button>}{selected.category!=='screen'&&selected.source_view_available&&<><button className={sourceView==='difference'?'selected':''} onClick={()=>setSourceView('difference')}>Differences</button><button className={sourceView==='source'?'selected':''} onClick={()=>setSourceView('source')}>Show all source</button></>}{selected.category==='screen'&&<><button className={hmiView==='structured'?'selected':''} onClick={()=>setHmiView('structured')}>Structured HMI</button>{(selected.parsed_screen?.layouts?.base?.layers||selected.parsed_screen?.layouts?.new?.layers)&&<button className={hmiView==='preview'?'selected':''} title="View HMI screen layout" onClick={()=>setHmiView('preview')}><Monitor size={15}/> Screen preview</button>}</>}<span className="detailActionDivider"/>{(['all','modified','removed','added'] as const).map(status=><button key={status} className={fileStatus===status?'selected':''} onClick={()=>setFileStatus(status)}>{status[0].toUpperCase()+status.slice(1)}</button>)}</div>
+            <div className="compareDarkDetailActions">{isLadder&&<button className={sourceView==='diagram'?'selected':''} onClick={()=>setSourceView('diagram')}>Ladder diagram</button>}{selected.category!=='screen'&&selected.source_view_available&&<><button className={sourceView==='difference'?'selected':''} onClick={()=>{setSourceView('difference');setWorkspaceStatus('all');}} title="Added, modified and removed changes with five surrounding lines">Differences</button><button className={sourceView==='source'?'selected':''} onClick={()=>{setSourceView('source');setWorkspaceStatus('all');}}>Show all source</button></>}{selected.category==='screen'&&<><button className={hmiView==='structured'?'selected':''} onClick={()=>setHmiView('structured')}>Structured HMI</button>{(selected.parsed_screen?.layouts?.base?.layers||selected.parsed_screen?.layouts?.new?.layers)&&<button className={hmiView==='preview'?'selected':''} title="View HMI screen layout" onClick={()=>setHmiView('preview')}><Monitor size={15}/> Screen preview</button>}</>}{selected.category!=='screen'&&!selected.parsed_hardware&&(sourceView==='difference'||sourceView==='source')&&<><span className="detailActionDivider"/><span className="compareWorkspaceFilterLabel">Workspace filter</span>{(['all','modified','removed','added'] as const).map(status=><button key={status} aria-pressed={workspaceStatus===status} className={workspaceStatus===status?'selected':''} onClick={()=>setWorkspaceStatus(status)}>{status==='all'?'All changes':status[0].toUpperCase()+status.slice(1)}</button>)}</>}</div>
           </div>
           <div className="compareDarkProjectHeaders"><div className="base"><span>BASE / REFERENCE</span><b>{baseLabel}</b><small>AS {projectInfo.base?.automation_studio_version||'Not detected'} | {projectInfo.base?.active_configuration||'No active configuration'} | PLC {projectInfo.base?.plc_type||'Not detected'} | Screen {projectInfo.base?.active_hmi||'Not detected'}</small></div><div className="developed"><span>DEVELOPED / COMPARE</span><b>{newLabel}</b><small>AS {projectInfo.developed?.automation_studio_version||'Not detected'} | {projectInfo.developed?.active_configuration||'No active configuration'} | PLC {projectInfo.developed?.plc_type||'Not detected'} | Screen {projectInfo.developed?.active_hmi||'Not detected'}</small></div></div>
           {selected.category==='screen'&&<label className="hmiSkipLayout"><input type="checkbox" checked={skipHmiLayout} onChange={event=>setSkipHmiLayout(event.target.checked)}/> Skip layout properties in screen differences <small>Width, Top, Left, AlignmentVertical, AlignmentHorizontal, and screen Index</small></label>}
@@ -632,18 +634,18 @@ export function CompareModule({
           {selected.parsed_hardware&&<ParsedHardwareView data={selected.parsed_hardware}/>}
           {isLadder&&sourceView==='diagram'&&!selected.parsed_ladder&&<div className="compareDarkEmpty" role="status">{screenDetail?.key===detailKey&&screenDetail.error?screenDetail.error:'Reading ladder networks...'}</div>}
           {selected.parsed_ladder&&sourceView==='diagram'&&<ParsedLadderView key={selected.path} data={selected.parsed_ladder} baseLabel={baseLabel} newLabel={newLabel} testId={result.testId}/>}
-          {sourceView!=='diagram'&&sourceView!=='flow'&&(selected.logic_added?.length>0||selected.logic_removed?.length>0)?<div className="compareDarkLogicSummary">
+          {sourceView==='difference'&&!selected.source_rows?.length&&(selected.logic_added?.length>0||selected.logic_removed?.length>0)?<details className="compareDarkLogicSummary"><summary>PLC logic summary</summary>
             <div className="logicSummaryTitle">PLC LOGIC SUMMARY</div>
             <div className="logicSummaryCols">{(['new','base'] as const).map(side=><div key={side}><b className={side==='new'?'green':'red'}>{side==='new'?'Developed ? added / modified':'Base ? removed / modified'} ({logicSummaryLines(selected,side).length})</b>{logicSummaryLines(selected,side).map((row:any,i:number)=><pre key={i}><span className="summaryLineNumber">{row.line?`L${row.line}`:'?'}</span>{row.text}</pre>)}</div>)}</div>
-          </div>:null}
-          {selected.category!=='screen'&&sourceView==='source'?<CompareView entry={selected} baseLabel={baseLabel} newLabel={newLabel}/>:selected.category!=='screen'&&sourceView==='difference'&&<div className="compareDarkDiff">
+          </details>:null}
+          {selected.category!=='screen'&&(sourceView==='source'||sourceView==='difference'&&selected.source_rows?.length)?<CompareView entry={selected} baseLabel={baseLabel} newLabel={newLabel} mode={sourceView==='difference'?'difference':'source'} status={workspaceStatus}/>:selected.category!=='screen'&&sourceView==='difference'&&<div className="compareDarkDiff">
             {(selectedHunks.length?selectedHunks:[]).map((h:any,i:number)=><SplitDiffHunk key={i} hunk={h} baseLabel={baseLabel} newLabel={newLabel}/>)}
             {!selectedHunks.length&&<div className="compareDarkEmpty">No line-level detail is available for this file. The file status is <b>{selected.status}</b>.</div>}
             {selected.hunks?.length>selectedHunks.length&&<div className="compareDarkMore">Showing {selectedHunks.length} of {selected.hunks.length} diff sections. Select Full File Split to inspect more context.</div>}
           </div>}
         </>}
       </section>
-    </div></>}
+    </div><ResizeHandle height={workspaceHeight??Math.min(4000,Math.round(window.innerHeight*.85*workspacePages))} onChange={setWorkspaceHeight} minHeight={window.innerWidth<=760?500:360} maxHeight={4000} label="comparison workspace"/></>}
 
     {result&&activeTab==='knowledge'&&<div className="compareDarkKnowledge"><div className="linkedKnowledgePane" ref={knowledgeScroll.refs[0]} onScroll={knowledgeScroll.onScroll(0)}><KbPanel kb={knowledge.base||{}} label={`BASE / ${baseLabel}`} expanded={expandedKnowledge} onExpand={expandKnowledge}/></div><div className="linkedKnowledgePane" ref={knowledgeScroll.refs[1]} onScroll={knowledgeScroll.onScroll(1)}><KbPanel kb={knowledge.developed||{}} label={`DEVELOPED / ${newLabel}`} expanded={expandedKnowledge} onExpand={expandKnowledge}/></div></div>}
 

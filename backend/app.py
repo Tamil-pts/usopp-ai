@@ -19,6 +19,7 @@ from backend.api import assist_training, assist_flow, project_intelligence, circ
 from backend.api import live_data, data_simulator, dashboard_layouts
 from backend.api import spinconnect_write
 from backend.api import nami_edit
+from backend.api import document_comparison
 from backend.api import workhub,workhub_intelligence,workhub_office,workhub_growth,workhub_dashboards,workhub_quality,workhub_branding,workhub_training,workhub_people,workhub_praxis,workhub_studio
 from backend.core.mcp_tools import server as mcp_server, http_app as mcp_app
 from contextlib import asynccontextmanager
@@ -164,6 +165,7 @@ app.include_router(workhub_people.router)
 app.include_router(workhub_praxis.router)
 app.include_router(workhub_studio.router)
 app.include_router(nami_edit.router)
+app.include_router(document_comparison.router)
 app.include_router(workhub.router)
 app.include_router(workhub_intelligence.router)
 app.include_router(workhub_office.router)
