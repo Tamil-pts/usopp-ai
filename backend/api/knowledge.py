@@ -143,7 +143,7 @@ async def local_knowledge_master_csv(payload:dict):
     path=_local_path(payload.get('path',''),True,False)
     if not path.is_file() or path.suffix.lower()!='.csv': raise HTTPException(400,'Select a CSV mapping file.')
     upload=UploadFile(filename=path.name,file=io.BytesIO(path.read_bytes()))
-    result=await knowledge_master_csv(upload)
+    result=await knowledge_master_csv(upload,mode=payload.get('mode','merge'),revision=payload.get('revision'))
     return {**result,'localMode':True}
 @router.get('/api/knowledge/master')
 def knowledge_master():
@@ -154,12 +154,13 @@ def knowledge_master():
         log.exception('KNOWLEDGE_MASTER_READ_ERROR')
         raise HTTPException(500,'Master knowledge configuration could not be loaded.')
 @router.post('/api/knowledge/master/csv')
-async def knowledge_master_csv(file: UploadFile = File(...)):
+async def knowledge_master_csv(file: UploadFile = File(...),mode: str = Form('merge'),revision: str | None = Form(None)):
     """Replace/add global parameter mappings from a simple CSV template.
 
     Required columns are PLC_PARAMETER, PLC_TAG, METADATA_PARAMETER.
     Mappings with the same parameter, tag and metadata identity are updated.
     """
+    if mode not in {'merge','replace'}:raise HTTPException(400,'Choose merge or replace import mode.')
     name=(file.filename or '').lower()
     if not name.endswith('.csv'):
         raise HTTPException(400,'Please upload a CSV mapping file.')
@@ -176,15 +177,17 @@ async def knowledge_master_csv(file: UploadFile = File(...)):
     missing=required-set(normalized)
     if missing:
         raise HTTPException(400,'Missing CSV columns: '+', '.join(sorted(missing)))
-    data, revision = _read_master()
+    data, current_revision = _read_master()
+    if mode=='replace' and revision!=current_revision:raise HTTPException(409,'Reload the table before replacing mappings.')
     if isinstance(data,list): data={'version':'1.0','mappings':data}
-    mappings=data.setdefault('mappings',[])
+    mappings=[] if mode=='replace' else data.setdefault('mappings',[])
     imported=0
-    for row in reader:
+    for line,row in enumerate(reader,2):
         plc_parameter=str(row.get(normalized['PLC_PARAMETER'],'') or '').strip()
         plc_tag=str(row.get(normalized['PLC_TAG'],'') or '').strip()
         metadata_parameter=str(row.get(normalized['METADATA_PARAMETER'],'') or '').strip()
         if not plc_parameter or not metadata_parameter:
+            if mode=='replace':raise HTTPException(400,f'CSV row {line}: PLC Parameter and Metadata Parameter are required. Nothing was replaced.')
             continue
         machine=str(row.get(normalized.get('MACHINE_DEPARTMENT',''),'') or 'All').strip() or 'All'
         found=next((m for m in mappings if all(str(m.get(key,'') or '').strip().casefold()==value.casefold() for key,value in [('plc_parameter',plc_parameter),('plc_tag',plc_tag),('metadata_parameter',metadata_parameter),('machine_department',machine)])),None)
@@ -192,12 +195,14 @@ async def knowledge_master_csv(file: UploadFile = File(...)):
         for src,dst in [('UNITS','units'),('MIN','MIN'),('MAX','MAX'),('OFFSET_FACTOR','offset_factor'),('SCALE_FACTOR','scale_factor'),('IS_VISIBLE','is_visible'),('IS_WRITABLE','is_writable'),('STATUS','status')]:
             if normalized.get(src):
                 item[dst]=str(row.get(normalized[src]) or '').strip() or None
-        if found: found.update(item)
+        if mode=='merge' and found: found.update(item)
         else: mappings.append(item)
         imported+=1
-    result = _write_master(data, revision)
+    if not imported:raise HTTPException(400,'CSV contains no valid mapping rows. Nothing was changed.')
+    data['mappings']=mappings
+    result = _write_master(data, current_revision)
     log.info('KNOWLEDGE_MASTER_CSV_IMPORTED filename=%r imported=%d',file.filename,imported)
-    return {**result,'status':'ok','imported':imported}
+    return {**result,'status':'ok','imported':imported,'mode':mode}
 @router.post('/api/knowledge/master')
 def knowledge_master_add(payload:dict):
     machine=str(payload.get('machine_department') or 'All').strip() or 'All'

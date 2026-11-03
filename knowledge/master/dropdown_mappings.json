@@ -157,6 +157,35 @@
           "SHOWNVAL": "Blow room"
         }
       ]
+    },
+    {
+      "plc_parameter": "Machine Status",
+      "plc_tag": "MMS_MACHINE_STATUS",
+      "metadata_parameter": "Machine Status",
+      "machine_department": "Ringframe",
+      "plc_type": "INT",
+      "metadata_type": "INT",
+      "allowed": true,
+      "allow_missing_plc_tag": true,
+      "reason": "Approved Blow Room product identification: PLC value 0 displays Blow room. If the PLC tag is missing, use the exact approved product-code parameter within Ringframe",
+      "mapping": [
+        {
+          "PLCVAL": "0",
+          "SHOWNVAL": "MACHINE ON"
+        },
+        {
+          "PLCVAL": "1",
+          "SHOWNVAL": "MACHINE ON"
+        },
+        {
+          "PLCVAL": "2",
+          "SHOWNVAL": "MACHINE OFF"
+        },
+        {
+          "PLCVAL": "3",
+          "SHOWNVAL": "MACHINE DOFF"
+        }
+      ]
     }
   ],
   "entry_schema": {

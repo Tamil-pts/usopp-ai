@@ -36,8 +36,10 @@ def prepare_related(user,pid):
         requirements=[r for r in content.get('requirements',[]) if r.get('change')!='removed_proposed']
         if not requirements:raise HTTPException(400,'Add the FRD requirements first.')
         existing={r['stage']:dict(r) for r in db.execute('SELECT * FROM qc_documents WHERE project_id=?',(pid,))}
+        fat_applicable='fat' in store.policy_row(db,p)['policy']['required_stages']
     source='FRD-'+rid
     for stage in ('test','fat','closure'):
+        if stage=='fat' and not fat_applicable:continue
         if stage in existing:
             results.append({'stage':stage,'control_id':existing[stage]['id'],'existing':True});continue
         draft=blank(stage);draft.update(summary=content.get('summary') or content.get('purpose') or p['title'],purpose=content.get('purpose',''),scope=content.get('scope',''))
@@ -59,7 +61,7 @@ def prepare_related(user,pid):
                     if linked:draft['field_files']['case/'+case['id']+'/'+target]=linked
         else:
             draft['sections']=[{'heading':'Completion summary','text':content.get('scope') or p['title']},
-                {'heading':'Final deliverables','text':'FRD, Validation Test Report and FAT for '+p['title']},
+                {'heading':'Final deliverables','text':'FRD, Validation Test Report'+(' and FAT' if fat_applicable else '')+' for '+p['title']},
                 {'heading':'Open issues','text':'Testing, document review, approvals and handover remain to be confirmed.'},
                 {'heading':'Handover information','text':''},{'heading':'Closure remarks','text':''}]
         result=documents.draft(user,pid,stage,draft,'Prepared from saved FRD '+revision['label'],generated_by='frd-derived:'+rid+':'+revision['content_hash']+':'+stage,frd_revision=rid)

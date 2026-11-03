@@ -48,6 +48,8 @@ def main():
             if not path.startswith('/'):continue
             body,_=get(path)
             assert body and not body.lstrip().lower().startswith(b'<!doctype'),path+' did not return an asset.'
+    print_asset,_=get('/studio/paged.polyfill.min.js')
+    assert len(print_asset)>1000 and not print_asset.lstrip().lower().startswith(b'<!doctype'),'Studio print asset is missing.'
     try:get('/api/nami/server-status')
     except urllib.error.HTTPError as error:assert error.code==401
     else:raise AssertionError('A protected API accepted an anonymous request.')
@@ -55,23 +57,32 @@ def main():
     request=urllib.request.Request(args.url+'/api/auth/login',data=json.dumps({'username':'Admin','password':password}).encode(),
                                    headers={'Content-Type':'application/json'},method='POST')
     with client.open(request,timeout=15) as response:assert response.status==200
-    assert data('/api/auth/session')['user']['role']=='admin'
-    data('/api/account/storage');data('/api/nami/server-status')
-    assert any(item['kind']=='cylinder' for item in data('/api/virtual-plc/component-catalog')['catalog'])
-    assert isinstance(data('/api/virtual-plc/component-library')['items'],list)
-    schema=data('/openapi.json')
-    routes={path for path in schema['paths'] if path.startswith('/api/')}
-    assert len(routes)>100,len(routes)
-    for required in ('/api/spinconnect/write-st/discover','/api/spinconnect/write-st/analyze',
-                     '/api/spinconnect/write-st/generate','/api/nami/plc/prepare-edit','/api/nami/plc/send-edit',
-                     '/api/virtual-plc/projects/{identity}/simulation-jig',
-                     '/api/virtual-plc/projects/{identity}/environment/mappings/{mapping_id}/confirm'):
-        assert required in routes,required
-    print(json.dumps({'result':'passed','ui':manifest['version'],'api':health['version'],
-                      'apiPaths':len(routes),'sourceCommit':manifest.get('sourceCommit'),
-                      'checks':['three UI entries and assets','compiled UI checksum','version agreement',
-                                'cache headers','authentication','account storage','registered feature APIs',
-                                'cylinder catalog and account component library']}))
+    try:
+        assert data('/api/auth/session')['user']['role']=='admin'
+        data('/api/account/storage');data('/api/nami/server-status')
+        master=data('/api/knowledge/master');assert isinstance(master['mappings'],list)
+        data('/api/workhub/resources');data('/api/workhub/overview')
+        assert any(item['kind']=='cylinder' for item in data('/api/virtual-plc/component-catalog')['catalog'])
+        assert isinstance(data('/api/virtual-plc/component-library')['items'],list)
+        schema=data('/openapi.json')
+        routes={path for path in schema['paths'] if path.startswith('/api/')}
+        assert len(routes)>100,len(routes)
+        for required in ('/api/spinconnect/write-st/discover','/api/spinconnect/write-st/analyze',
+                         '/api/spinconnect/write-st/generate','/api/nami/plc/prepare-edit','/api/nami/plc/send-edit',
+                         '/api/virtual-plc/projects/{identity}/simulation-jig',
+                         '/api/knowledge/master/csv',
+                         '/api/workhub/projects/{key}/delivery-readiness',
+                         '/api/virtual-plc/projects/{identity}/environment/mappings/{mapping_id}/confirm'):
+            assert required in routes,required
+        print(json.dumps({'result':'passed','ui':manifest['version'],'api':health['version'],
+                          'apiPaths':len(routes),'sourceCommit':manifest.get('sourceCommit'),
+                          'checks':['three UI entries and assets','Studio print asset','compiled UI checksum','version agreement',
+                                    'cache headers','authentication','account storage','registered feature APIs',
+                                    'cylinder catalog and account component library','master mappings and WorkHub read APIs']}))
+    finally:
+        request=urllib.request.Request(args.url+'/api/auth/logout',data=b'{}',headers={'Content-Type':'application/json'},method='POST')
+        with client.open(request,timeout=10) as response:assert response.status==200
+
 
 
 if __name__=='__main__':main()

@@ -58,7 +58,20 @@ if($Action -eq 'Restart'){
     & (Join-Path $AppRoot 'stop_usopp.ps1') -Port $Port
 }
 function Get-AppHealth {
-    try { return Invoke-RestMethod -Uri "$Url/api/health" -TimeoutSec 2 } catch { return $null }
+    try {
+        $Health=Invoke-RestMethod -Uri "$Url/api/health" -TimeoutSec 2
+        # New APIs publish an opaque installation identity. Retain the local
+        # ownership checks and compatibility with older APIs that return a path.
+        if(-not $Health.applicationRoot -and $Health.installationId){
+            $Hasher=[System.Security.Cryptography.SHA256]::Create()
+            try {
+                $Bytes=[System.Text.Encoding]::UTF8.GetBytes($AppRoot.ToLowerInvariant())
+                $ExpectedId=([System.BitConverter]::ToString($Hasher.ComputeHash($Bytes))).Replace('-','').ToLowerInvariant()
+            } finally { $Hasher.Dispose() }
+            if($Health.installationId -eq $ExpectedId){$Health | Add-Member -NotePropertyName applicationRoot -NotePropertyValue $AppRoot}
+        }
+        return $Health
+    } catch { return $null }
 }
 $Health=Get-AppHealth
 if($Health){

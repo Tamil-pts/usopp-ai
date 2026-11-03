@@ -13,8 +13,9 @@ from backend.core.runtime import RESOURCE_ROOT, VERSION, log
 from backend.api import assist, comparison, knowledge, rules, system, validation, metadata, validation_source, nami, auth, report_exports, history
 from backend.core.run_history import current_user
 from backend.core import accounts
+from backend.core.web_security import SecurityHeadersMiddleware,response_headers,unsafe_origin
 from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models, user_settings, br_help, admin_settings, admin_knowledge
-from backend.api import assist_training, assist_flow, project_intelligence, circuit_compare, edesign
+from backend.api import assist_training, assist_flow, project_intelligence, circuit_compare, edesign, virtual_electrical
 from backend.api import live_data, data_simulator, dashboard_layouts
 from backend.api import spinconnect_write
 from backend.api import nami_edit
@@ -71,13 +72,14 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         fields = '; '.join(f'{" / ".join(str(part) for part in error["loc"] if part != "body")}: {error["msg"]}' for error in exc.errors())
         log.warning('REPORT_REQUEST_VALIDATION_ERROR path=%s fields=%s',request.url.path,fields)
         return JSONResponse({'detail':f'Check the report details. {fields}'},status_code=400)
-    log.error('REQUEST_VALIDATION_ERROR method=%s path=%s errors=%s', request.method, request.url.path, exc.errors())
-    return JSONResponse({'detail':'Request could not be processed. See backend log for details.','errors':exc.errors()}, status_code=400)
+    fields=[{'loc':list(e['loc']),'type':e['type']} for e in exc.errors()]
+    log.warning('REQUEST_VALIDATION_ERROR method=%s path=%s fields=%s',request.method,request.url.path,fields)
+    return JSONResponse({'detail':'Check the required request fields.','errors':fields},status_code=400)
 
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception):
     log.exception('UNHANDLED_EXCEPTION method=%s path=%s error=%s', request.method, request.url.path, exc)
-    return JSONResponse({'detail': f'Backend error: {type(exc).__name__}: {exc}'}, status_code=500)
+    return JSONResponse({'detail':'An internal error occurred. Contact your administrator and check the server log.'},status_code=500,headers=response_headers(request.url.scheme)|{'Cache-Control':'private, no-store'})
 
 @app.middleware('http')
 async def request_logger(request, call_next):
@@ -107,10 +109,10 @@ async def account_session(request:Request,call_next):
     public={'/api/health','/api/auth/session','/api/auth/login','/api/auth/register','/api/auth/logout'}
     path=request.url.path
     office_callback=path.startswith(('/api/workhub/intelligence/office/files/','/api/workhub/intelligence/office/callback/'))
-    if path.startswith('/api/') and request.method!='OPTIONS':
+    api_docs=path in {'/docs','/docs/oauth2-redirect','/redoc','/openapi.json'}
+    if (path.startswith('/api/') or api_docs) and request.method!='OPTIONS':
         if request.method not in ('GET','HEAD') and not office_callback:
-            origin=request.headers.get('origin')
-            if origin and origin not in DEV_ORIGINS and origin != f'{request.url.scheme}://{request.headers.get("host")}':
+            if unsafe_origin(request,DEV_ORIGINS):
                 return JSONResponse({'detail':'Request origin does not match this application.'},status_code=403)
         if path not in public and not office_callback:
             from starlette.concurrency import run_in_threadpool
@@ -119,6 +121,7 @@ async def account_session(request:Request,call_next):
             user=await run_in_threadpool(accounts.store.user_for_token,token_value)
             if not user:
                 return JSONResponse({'detail':'Sign in to uSOPp.ai to continue.'},status_code=401)
+            if api_docs and user.get('role')!='admin':return JSONResponse({'detail':'API documentation is available to administrators.'},status_code=403)
             request.state.user=user
     token=current_user.set(getattr(request.state,'user',None))
     from backend.core.workhub_tool_context import selection,validate as validate_test_project
@@ -140,10 +143,13 @@ async def account_session(request:Request,call_next):
         selection.reset(project_token)
         current_user.reset(token)
 
+app.add_middleware(SecurityHeadersMiddleware)
+
 for feature_router in (system.router, validation.router, metadata.router, knowledge.router, compare_export_jobs.router, comparison.router, rules.router, assist.router, validation_source.router, nami.router, auth.router, report_exports.router, history.router,data_models.router):
     app.include_router(feature_router)
 app.include_router(circuit_compare.router)
 app.include_router(edesign.router)
+app.include_router(virtual_electrical.router)
 
 # Reports and workbook sessions remain available until explicitly cleared.
 

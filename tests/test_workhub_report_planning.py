@@ -110,6 +110,14 @@ class ReportPlanningTests(unittest.TestCase):
         with hub.db(True) as db:
             policy=quality.policy_row(db,hub.item(db,pid))['policy'];policy.update(required_stages=['quality','closure'],required_project_fields=[])
             db.execute('UPDATE qc_projects SET policy=? WHERE project_id=?',(quality.bounded(policy),pid));db.execute("UPDATE items SET stage='quality' WHERE id=?",(pid,))
+        validation=documents.draft(self.manager,pid,'test',{'summary':'Saved validation fixture'})
+        from backend.core.workhub_approval_documents import attach
+        with hub.db(True) as db:
+            control=quality.control(db,pid,validation['control_id']);rid=validation['revision_id']
+            db.execute("UPDATE qc_revisions SET status='approved',approved_by=? WHERE id=?",(self.lead['id'],rid))
+            db.execute("UPDATE pi_revisions SET status='approved',reviewed_by=? WHERE id=?",(self.lead['id'],rid))
+            db.execute('UPDATE pi_documents SET approved_revision=? WHERE id=?',(rid,control['document_id']))
+            attach(db,hub.item(db,pid),self.lead,[{'document_id':control['document_id'],'revision_id':rid}],review=True)
         from backend.core.workhub_quality import checks
         with hub.db() as db:basis=checks.baseline(db,hub.item(db,pid))
         documents.draft(self.manager,pid,'quality',{'summary':'Prepared fictional review'},baseline=basis)

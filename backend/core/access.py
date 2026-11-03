@@ -8,6 +8,9 @@ from backend.core import accounts
 from backend.core.run_history import current_user
 from backend.core.runtime import WORK, EXPORTS
 
+def project_roots():
+    return [Path(p.strip()).expanduser().resolve() for p in os.getenv('USOPP_PROJECT_ROOTS','').split(os.pathsep) if p.strip()]
+
 def resource_key(path):
     return os.path.normcase(str(Path(path).resolve()))
 
@@ -30,6 +33,8 @@ def require_resource(path):
     if not any(resolved == root.resolve() or resolved.is_relative_to(root.resolve()) for root in (WORK, EXPORTS)):
         if user.get('isDemo'):
             raise HTTPException(403, 'Upload a project or file to use it in your demo workspace.')
+        if not any(resolved==root or resolved.is_relative_to(root) for root in project_roots()):
+            raise HTTPException(403,'Server files are restricted to Admin or approved project folders. Upload the file, or ask Admin to configure USOPP_PROJECT_ROOTS.')
         return
     keys = [resource_key(item) for item in (resolved, *resolved.parents)]
     with accounts.store.db() as db:

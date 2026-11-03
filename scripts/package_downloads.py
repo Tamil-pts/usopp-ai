@@ -58,7 +58,7 @@ def main():
                      for p in sorted((ROOT / 'distribution/windows').iterdir()) if p.is_file())
         write_zip(output / f'uSOPp_AI_{version}_Windows_x64.zip', files)
     launchers = [(p, p.name) for p in sorted((ROOT / 'distribution').iterdir())
-                 if p.is_file() and p.name in {'README.md', 'LAN_SERVER.md', 'compose.yaml', 'usopp-container.ps1', 'usopp-container.sh'}]
+                 if p.is_file() and p.name in {'README.md', 'LAN_SERVER.md', 'CONTAINER_BUILD.md', 'compose.yaml', 'usopp-container.ps1', 'usopp-container.sh'}]
     write_zip(output / f'uSOPp_AI_{version}_Container_Launchers.zip', launchers)
 
 

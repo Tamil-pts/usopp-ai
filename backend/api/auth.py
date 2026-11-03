@@ -26,7 +26,7 @@ def list_users(request:Request):
 def create_user(request:Request,data:dict=Body(...)):
     admin(request)
     try:
-        user=accounts.store.register(username_field(data),field(data,'password',8,128),field(data,'designation'),field(data,'company'),data.get('role','user'),data.get('email',''),data.get('workspaceModules'))
+        user=accounts.store.register(username_field(data),field(data,'password',12,128),field(data,'designation'),field(data,'company'),data.get('role','user'),data.get('email',''),data.get('workspaceModules'))
     except sqlite3.IntegrityError:
         raise HTTPException(409,'This username already exists.')
     except ValueError as error: raise HTTPException(400,str(error))
@@ -36,7 +36,7 @@ def create_user(request:Request,data:dict=Body(...)):
 def manage_user(user_id:int,request:Request,data:dict=Body(...)):
     admin(request)
     if not isinstance(data.get('active'),bool): raise HTTPException(400,'Choose whether this account is enabled.')
-    password=field(data,'password',8,128) if data.get('password') else None
+    password=field(data,'password',12,128) if data.get('password') else None
     try:
         user=accounts.store.manage_user(user_id,username_field(data),field(data,'designation'),field(data,'company'),data['active'],password,data.get('role'),request.state.user['id'],data.get('email'),data.get('workspaceModules'))
     except sqlite3.IntegrityError: raise HTTPException(409,'This username already exists.')
@@ -151,7 +151,7 @@ def register(request:Request,response:Response,data:dict=Body(...)):
     username=field(data,'username',3,40)
     if not re.fullmatch(r'[A-Za-z0-9_.-]+',username):
         raise HTTPException(400,'Username can contain letters, numbers, dots, underscores and hyphens.')
-    password=field(data,'password',8,128)
+    password=field(data,'password',12,128)
     try:
         user=accounts.store.request_account(username,password,field(data,'designation'),field(data,'company'),data.get('email',''))
     except sqlite3.IntegrityError:
@@ -184,7 +184,7 @@ def change_password(request:Request,response:Response,data:dict=Body(...)):
     if user.get('isDemo'):
         raise HTTPException(403,'The demo account uses fixed demonstration credentials. Create your own account to set a private password.')
     current=field(data,'currentPassword',1,128)
-    replacement=field(data,'newPassword',8,128)
+    replacement=field(data,'newPassword',12,128)
     if current==replacement:
         raise HTTPException(400,'Choose a different new password.')
     if not accounts.store.change_password(user['id'],current,replacement):

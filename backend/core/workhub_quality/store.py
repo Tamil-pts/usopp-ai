@@ -102,7 +102,12 @@ def guard_native(db,document_id):
 def policy_row(db,p):
     from .configuration import current,profile
     row=db.execute('SELECT * FROM qc_projects WHERE project_id=?',(p['id'],)).fetchone()
-    if row:return {**dict(row),'policy':json.loads(row['policy']),'context':json.loads(row['context'])}
+    if row:
+        state={**dict(row),'policy':json.loads(row['policy']),'context':json.loads(row['context'])}
+        applicable=state['context'].get('fat_applicable')
+        if applicable is False:state['policy']['required_stages']=[s for s in state['policy']['required_stages'] if s!='fat']
+        elif applicable is True and 'fat' not in state['policy']['required_stages']:state['policy']['required_stages'].append('fat')
+        return state
     setting=current(db)
     return {'project_id':p['id'],'policy':profile(setting['configuration'],p['kind']),'policy_version':setting['version'],
       'project_type':p['kind'],'context':{},'version':0,'created_at':None,'updated_at':None}

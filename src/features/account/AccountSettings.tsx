@@ -25,7 +25,7 @@ export function AccountSettings(){
     event.preventDefault();setError('');setMessage('');
     if(replacement!==confirm){setError('New passwords do not match.');return;}
     setBusy(true);
-    try{const result=await accountRequest('password',{currentPassword:current,newPassword:replacement});setMessage(result.message);setCurrent('');setReplacement('');setConfirm('')}
+    try{const result=await accountRequest('password',{currentPassword:current,newPassword:replacement});await refreshUser();setMessage(result.message);setCurrent('');setReplacement('');setConfirm('')}
     catch(reason:any){setError(reason.message)}finally{setBusy(false)}
   };
   if(user.isDemo)return <div className="card setting"><h3>My account</h3><p><b>{user.username}</b> · Demo user</p><p>This demo session signs out automatically after 30 minutes. Your uploads and results belong to this demo session. Create a personal account for a continuing workspace.</p></div>;
@@ -36,7 +36,7 @@ export function AccountSettings(){
     {error&&<p role="alert" className="accountError">{error}</p>}{message&&<p role="status">{message}</p>}
     <form onSubmit={saveEmail} className="accountForm"><label>Email ID (optional)<input className="textInput" type="email" maxLength={254} value={email} onChange={e=>setEmail(e.target.value)}/></label><button className="btn" disabled={busy}>Save email ID</button><small>Contact information. Sending notifications still uses your existing connection preferences.</small></form><form onSubmit={submit} className="accountForm"><h4>Change password</h4>
       <PasswordInput label="Current password" autoComplete="current-password" required value={current} onChange={e=>setCurrent(e.target.value)}/>
-      <PasswordInput label="New password" autoComplete="new-password" required minLength={8} maxLength={128} value={replacement} onChange={e=>setReplacement(e.target.value)}/>
+      <PasswordInput label="New password" autoComplete="new-password" required minLength={12} maxLength={128} value={replacement} onChange={e=>setReplacement(e.target.value)}/>
       <PasswordInput label="Confirm new password" autoComplete="new-password" required value={confirm} onChange={e=>setConfirm(e.target.value)}/>
       <button className="btn primary" disabled={busy}>{busy?'Changing…':'Change password'}</button>
     </form></div>;

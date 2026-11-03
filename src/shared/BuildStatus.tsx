@@ -4,9 +4,10 @@ export type AppHealth={version:string;status?:string;frontendBuild?:{version:str
 export function updatedInterfaceUrl(current:string,version:string,now=Date.now()){
  const url=new URL(current);url.searchParams.set('usopp_build',`${version}-${now}`);return url.href;
 }
-export function BuildVersionBadge({health}:{health:AppHealth|null}){
+export function BuildVersionBadge({health,compact=false}:{health:AppHealth|null;compact?:boolean}){
  const matches=!!health&&health.version===packageInfo.version&&health.status!=='version-mismatch';
- return <span className={'badge '+(matches?'pass':'warn')}>{health?`UI ${packageInfo.version} | API ${health.version}`:'API unavailable — check launcher logs'}</span>;
+ const detail=health?`UI ${packageInfo.version} | API ${health.version}`:'API unavailable — check launcher logs';
+ return <span title={detail} aria-label={detail} className={(compact?'buildVersionCompact ':'badge ')+(matches?'pass':'warn')}>{compact?(matches?`v${packageInfo.version}`:health?'Version mismatch':'API unavailable'):detail}</span>;
 }
 export function BuildVersionNotice({health}:{health:AppHealth|null}){
  if(!health)return null;

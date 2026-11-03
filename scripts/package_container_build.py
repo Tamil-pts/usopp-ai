@@ -1,4 +1,4 @@
-"""Create a small private source bundle for building the Linux container on Ubuntu."""
+"""Create a small private source bundle for building the Linux container on Ubuntu or Windows Docker Desktop."""
 from __future__ import annotations
 
 import argparse
@@ -13,7 +13,7 @@ ROOT_FILES = {
     'package.json', 'package-lock.json', 'vite.config.ts',
 }
 DIRECTORIES = (
-    'backend', 'python_engine', 'src', 'nami', 'virtual_plc', 'knowledge/virtual_plc', 'knowledge/master',
+    'backend', 'python_engine', 'src', 'public', 'nami', 'virtual_plc', 'knowledge/virtual_plc', 'knowledge/master',
     'knowledge/data_models', 'knowledge/dashboard_layouts', 'knowledge/lapformer', 'knowledge/chopper', 'knowledge/help_index',
     'rules',
 )
@@ -21,9 +21,17 @@ EXTRA_FILES = (
     'REPORT_ANALYSIS.md', 'YBS_DATAINSPECT.md', 'SPINCONNECT_WRITE_ST.md', 'scripts/audit_ybs.py',
     'deploy/container/entrypoint.sh',
     'distribution/usopp-container.sh',
+    'distribution/usopp-container.ps1',
+    'distribution/README.md',
+    'distribution/LAN_SERVER.md',
+    'distribution/CONTAINER_BUILD.md',
+    'deploy/container/build-windows.ps1',
+    'deploy/container/build-ubuntu.sh',
+    'scripts/container_smoke.py',
     'distribution/compose.yaml',
     'distribution/PRIVATE_UBUNTU_BUILD.md',
     'scripts/build_nami.mjs',
+    'scripts/build_compare_report.mjs',
     'scripts/package_container.py',
     'scripts/container_bootstrap.py',
     'scripts/container_maintenance.py',

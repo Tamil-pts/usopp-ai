@@ -26,8 +26,9 @@ def overview(user,pid):
             if stage=='closure' and complete and p['stage']!='released':complete=False;label='Approved - awaiting project release'
             stage_states.append({'id':stage,'title':title,'required':stage in state['policy']['required_stages'],'document':d,'complete':complete,'display_status':label})
         from .branding import choices
+        from backend.core.workhub_delivery import readiness
         return {'project':hub.public(p),'context':{**state['context'],**report['context']},'branding_choices':choices(db),'context_version':state['version'],'can_edit':can_edit,
-          'stages':stage_states,
+          'stages':stage_states,'delivery':readiness(db,p),'can_manage':user['role']=='admin' or user['id'] in {p['owner_id'],p['created_by']},
           'register':register,'report':report,'users':hub.users(),
           'clarifications':[{**dict(r),'options':json.loads(r['options']),'source_refs':json.loads(r['source_refs'])} for r in db.execute('SELECT * FROM pi_clarifications WHERE project_id=? ORDER BY updated_at DESC LIMIT 500',(pid,))],
           'files':[dict(r) for r in db.execute('SELECT * FROM files WHERE project_id=? ORDER BY created_at DESC',(pid,))],
@@ -58,6 +59,11 @@ def context(user,pid,payload):
         if payload.get('version')!=state['version']:raise HTTPException(409,'Project context changed. Reload before saving.')
         from .branding import link_context
         values=link_context(db,{**state['context'],**{k:text(payload.get(k,state['context'].get(k,'')) or '',8000 if k=='scope' else 180) for k in ('customer','machine','scope')}},payload)
+        if 'fat_applicable' in payload:
+            hub.manage(p,user)
+            if type(payload['fat_applicable']) is not bool:raise HTTPException(400,'Choose whether FAT applies to this project.')
+            values['fat_applicable']=payload['fat_applicable']
+            values['fat_reason']=text(payload.get('fat_reason',''),2000,True)
         if p['stage']=='released':raise HTTPException(409,'Closed project context is historical. Reopen the project to revise it.')
         db.execute('UPDATE qc_projects SET context=?,version=version+1,updated_at=? WHERE project_id=?',(store.bounded(values),timestamp(),pid))
         store.audit(db,user,pid,'project_context_updated',{'before':state['context'],'after':values})
@@ -173,13 +179,15 @@ def action(user,pid,key,payload):
                 assert_ready(db,p,doc,{**rev,'content':pi.revision(db,rev['id'],doc['document_id'])['content']},doc)
                 if doc['stage'] in {'quality','closure'}:
                     if doc['stage']=='quality':
+                        from backend.core.workhub_delivery import guard as guard_delivery
+                        guard_delivery(db,p,'quality_pass',{})
                         from backend.core.workhub_workflow import guard
                         guard(db,p,user,'quality_pass')
                         from backend.core.workhub_approval_documents import guard as guard_documents
                         guard_documents(db,p,'quality_pass',exclude_document=doc['document_id'])
                     value=checks.report(db,p,doc['stage']=='closure');blockers=[b for b in value['blockers'] if b['code']!='approval:closure']
                     if blockers or rev['baseline']!=checks.baseline(db,p,doc['stage']=='closure'):raise HTTPException(409,'Quality conditions changed after preparation. Review a fresh draft.')
-                    required=['documents','requirements','tests','fat','issues','approvals']
+                    required=['documents','requirements','tests','issues','approvals']+(['fat'] if 'fat' in policy['required_stages'] else [])
                     if not isinstance(payload.get('checklist'),dict) or not all(payload['checklist'].get(k) is True for k in required):raise HTTPException(400,'Confirm the six applicable review checks before approval.')
                     if doc['stage']=='quality' and p['stage']=='quality':
                         from backend.core.workhub import DONE_DEVELOPMENT

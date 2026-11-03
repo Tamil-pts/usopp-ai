@@ -106,6 +106,7 @@ def snapshot(user,from_date='',to_date='',project_id='',team_id='',department_id
                          'capacity_hours':round(capacity,2),'allocated_hours':round(assigned,2),'available_hours':round(free,2) if free is not None else None,
                          'utilization':round(100*assigned/capacity,1) if capacity else None,'unplanned_tasks':unknown,'blocked_tasks':blocked,
                          'status':state,'assignment_status':assignment['status'],'assigned_projects':assignment['projects'],
+                         'assigned_project_details':[{'id':pid,'title':projects[pid]['title']} for pid in dict.fromkeys(t['project_id'] for t in assignment['items']) if pid in projects],
                          'daily_hours':profile['daily_hours'],'workdays':profile['workdays'],
                          'availability':profile['availability'],'unavailable_until':profile['unavailable_until'],
                          'availability_note':profile['availability_note'],'tasks':matching,'all_open_tasks':len(all_tasks),

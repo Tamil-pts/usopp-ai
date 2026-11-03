@@ -152,7 +152,9 @@ def evaluate(db,p,action=None):
         if (condition,parameter) in facts:
             passed,detail=facts[(condition,parameter)]
             results.append({**rule,'passed':passed,'detail':detail,'action_label':ACTIONS[rule['action']]});continue
-        if condition=='document_approved':
+        if condition in {'document_approved','tests_passed'} and parameter=='fat' and 'fat' not in state['policy']['required_stages']:
+            passed=True;detail='FAT is not applicable under the recorded project procedure.'
+        elif condition=='document_approved':
             if parameter in {'mom','flowchart'}:
                 passed=bool(db.execute('SELECT 1 FROM pi_documents WHERE project_id=? AND kind=? AND approved_revision IS NOT NULL AND current_revision=approved_revision',(p['id'],parameter)).fetchone())
                 if parameter=='flowchart' and not passed and documents.get('frd') and documents['frd']['approved_revision'] and documents['frd']['current_revision']==documents['frd']['approved_revision']:

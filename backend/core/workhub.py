@@ -374,6 +374,10 @@ class WorkHub:
                 if action not in {'submit_quality','quality_pass','approve_release','release','request_changes','reject'}:raise HTTPException(400,'Choose a workflow submission or review action.')
                 attach_documents(db,item,user,payload['approval_documents'],review=action!='submit_quality')
             checked_documents=guard_documents(db,item,action)
+            from .workhub_delivery import guard as guard_delivery
+            if action=='submit_quality':
+                from .workhub_approval_documents import attached
+                checked_documents=attached(db,key)
             if item['type']=='project' and action=='reopen':db.execute('DELETE FROM wh_closed_schedule WHERE project_id=?',(key,))
             if item['type']=='project':
                 from .workhub_workflow import guard
@@ -439,10 +443,15 @@ class WorkHub:
             stamp=record_signoff(db,user,payload,project_id=item['project_id'],subject_id=key,subject_type='workflow',
                 decision='approve' if action in {'quality_pass','approve_release','release'} else action,
                 role={'quality':'Quality reviewer','release_approval':'Release approver','ready_release':'Release owner'}.get(stage,'Workflow owner'),
-                basis={'item_id':key,'version':item['version'],'stage':stage,'action':action,'revision_id':revision,'run_id':review_run},documents=checked_documents)
+                basis={'item_id':key,'version':item['version'],'stage':stage,'action':action,'revision_id':revision,'run_id':review_run,'closure_checks':payload.get('closure_checks',{}),'deliverable_file_ids':payload.get('deliverable_file_ids',[])},documents=checked_documents)
+            # Validate authenticated sign-off evidence before delivery gates; this
+            # entire transition (including any stamp) rolls back on rejection.
+            guard_delivery(db,item,action,payload)
             self.event(db,item,user,action,{'from':stage,'to':target,'comment':comment,'revision_id':revision,'run_id':review_run,'owner_id':item['owner_id'],'due_date':item.get('due_date'),'baseline_due':item.get('baseline_due'),'work_feedback_id':feedback_id,
                        'checked_run_id':checked_run[0] if checked_run else None,'approval_documents':checked_documents,'sign_off':stamp,
-                       'reviewers':{field:item[field] for field in ('quality_id','approver_id','release_id')}})
+                       'reviewers':{field:item[field] for field in ('quality_id','approver_id','release_id')},
+                       'deliverables_complete':payload.get('deliverables_complete'),
+                       'deliverable_file_ids':payload.get('deliverable_file_ids',[]),'closure_checks':payload.get('closure_checks',{})})
             if action in {'request_changes','reject'}:
                 db.execute('INSERT INTO issues VALUES(?,?,?,?,?,?,?,?,?)',(identity(),item['project_id'],key,comment,item['owner_id'],user['id'],'open',now,now))
             new=self.item(db,key);recipients=[new[NEXT_OWNER[target]],item['created_by'],item['owner_id']]

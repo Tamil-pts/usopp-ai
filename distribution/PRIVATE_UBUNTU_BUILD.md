@@ -1,5 +1,9 @@
 # Copy and install the private Ubuntu build
 
+For the current checkout, use [the Windows/Ubuntu build guide](CONTAINER_BUILD.md)
+and its version-aware build helpers. The older version and server-path examples
+below are retained as historical handover notes.
+
 Current handover: **uSOPp 4.75.0 / Virtual PLC 0.10.0**.
 
 `uSOPp_4.75.0_server_build.tar.gz` contains Docker build inputs and the existing

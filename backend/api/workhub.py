@@ -19,6 +19,13 @@ def personal_account(request:Request):
 router=APIRouter(prefix='/api/workhub',tags=['WorkHub projects'],dependencies=[Depends(personal_account)])
 def actor(request):return request.state.user
 
+@router.get('/projects/{key}/delivery-readiness')
+def delivery_readiness(key:str,request:Request):
+    from backend.core.workhub_quality import store as quality
+    from backend.core.workhub_delivery import readiness
+    quality.initialize()
+    with store.db() as db:return readiness(db,quality.project(db,key,actor(request),True))
+
 @router.get('/overview')
 def overview(request:Request):
     from backend.core.workhub_quality import store as quality

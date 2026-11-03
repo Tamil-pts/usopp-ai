@@ -71,3 +71,6 @@ rules/archive/
 test_meta.xlsx
 *.tar.gz
 *.zip
+
+# Optional portable electrical simulation runtime; install with scripts/install_ngspice.py
+local_simulators/

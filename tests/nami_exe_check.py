@@ -1,5 +1,6 @@
 """Smoke check a portable release on 8301, isolated from the user's data."""
 import json
+import hashlib
 import os
 from pathlib import Path
 import re
@@ -31,7 +32,8 @@ try:
         except OSError:
             if time.monotonic()>deadline: raise
             time.sleep(.2)
-    assert Path(health['applicationRoot']).resolve()==data
+    expected_id=hashlib.sha256(os.path.normcase(str(data)).encode()).hexdigest()
+    assert health.get('installationId')==expected_id if 'installationId' in health else Path(health['applicationRoot']).resolve()==data
     html=request('/nami/index.html').decode()
     assets=re.findall(r'(?:src|href)="(/nami/assets/[^"]+)"',html)
     assert assets

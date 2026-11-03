@@ -21,7 +21,7 @@ class ContainerPackagingTests(unittest.TestCase):
                      'python_engine/__init__.py', 'python_engine/engine.py',
                      'scripts/container_bootstrap.py', 'scripts/container_maintenance.py'):
             self.write(root, name, 'VALUE = 1\n')
-        for name in ('dist/index.html', 'dist/nami/index.html', 'rules/default.json', 'rules/references/lapformer.json',
+        for name in ('backend/core/workhub_quality/templates/fixture.html', 'dist/index.html', 'dist/nami/index.html', 'rules/default.json', 'rules/references/lapformer.json',
                      'knowledge/master/default.json', 'knowledge/data_models/default.json',
                      'knowledge/dashboard_layouts/catalog.json', 'knowledge/lapformer/catalog.json',
                      'knowledge/chopper/engineering_tasks.json',
@@ -104,6 +104,23 @@ class ContainerPackagingTests(unittest.TestCase):
             self.assertIn('scripts/package_container.py', paths)
             self.assertFalse(set(private) & paths)
 
+    def test_host_profiles_use_one_runtime_and_complete_build_bundle(self):
+        root=Path(__file__).resolve().parents[1]
+        dockerfile=(root/'Dockerfile').read_text()
+        self.assertIn('FROM runtime AS windows-desktop',dockerfile)
+        self.assertIn('FROM runtime AS ubuntu',dockerfile)
+        self.assertIn('USER 10001:10001',dockerfile)
+        self.assertIn('ngspice',dockerfile)
+        self.assertIn('COPY public ./public',dockerfile)
+        paths={p.relative_to(root).as_posix() for p in package_container_build.files_to_pack()}
+        for required in ['distribution/usopp-container.ps1','distribution/usopp-container.sh',
+                         'distribution/compose.yaml','distribution/CONTAINER_BUILD.md',
+                         'deploy/container/build-windows.ps1','deploy/container/build-ubuntu.sh',
+                         'scripts/container_smoke.py','scripts/build_compare_report.mjs','public/studio/paged.polyfill.min.js']:
+            self.assertIn(required,paths)
+        for script in ['deploy/container/entrypoint.sh','deploy/container/build-ubuntu.sh']:
+            self.assertNotIn(b'\r\n',(root/script).read_bytes())
+
     def test_container_rejects_stale_or_tampered_frontend(self):
         for condition in ('old version','changed asset','missing manifest'):
             with self.subTest(condition=condition),tempfile.TemporaryDirectory() as directory:
@@ -128,7 +145,7 @@ class ContainerPackagingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.write(root, 'package.json', '{"version":"1.2.3"}')
-            for name in ('README.md', 'LAN_SERVER.md', 'compose.yaml',
+            for name in ('README.md', 'LAN_SERVER.md', 'CONTAINER_BUILD.md', 'compose.yaml',
                          'usopp-container.ps1', 'usopp-container.sh',
                          'uSOPp_AI_1.2.3_Container_Build_Source.tar.gz'):
                 self.write(root, 'distribution/' + name)
@@ -137,7 +154,7 @@ class ContainerPackagingTests(unittest.TestCase):
                     ['package_downloads.py', '--output', str(output)]):
                 package_downloads.main()
             with zipfile.ZipFile(output / 'uSOPp_AI_1.2.3_Container_Launchers.zip') as archive:
-                self.assertEqual(set(archive.namelist()), {'README.md', 'LAN_SERVER.md',
+                self.assertEqual(set(archive.namelist()), {'README.md', 'LAN_SERVER.md', 'CONTAINER_BUILD.md',
                     'compose.yaml', 'usopp-container.ps1', 'usopp-container.sh'})
 
 

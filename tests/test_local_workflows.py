@@ -71,6 +71,29 @@ class LocalWorkflows(unittest.TestCase):
         self.assertEqual(2,len(rows))
         self.assertEqual({'All','Carding'},{row['machine_department'] for row in rows})
 
+    def test_parameter_replace_csv_preserves_every_supplied_row_and_field(self):
+        revision=self.client.get('/api/knowledge/master').json()['revision']
+        text='PLC_PARAMETER,PLC_TAG,METADATA_PARAMETER,MACHINE_DEPARTMENT,UNITS,MIN,MAX,OFFSET_FACTOR,SCALE_FACTOR,IS_VISIBLE,IS_WRITABLE\nSpeed,Motor.Speed,Motor speed,Finisher,rpm,0,1500,0,0.1,YES,NO\nSpeed,Motor.Speed,Motor speed,Ringframe,rpm,10,2000,1,1,NO,YES\nSpeed,Motor.Speed,Motor speed,Finisher,rpm,0,1500,0,0.1,YES,NO\n'
+        response=self.client.post('/api/knowledge/master/csv',data={'mode':'replace','revision':revision},files={'file':('updated.csv',text,'text/csv')})
+        self.assertEqual(200,response.status_code,response.text)
+        result=response.json();self.assertEqual(3,len(result['mappings']));self.assertEqual(3,result['imported'])
+        self.assertNotIn('Existing',[r['plc_parameter'] for r in result['mappings']])
+        self.assertEqual(('0','1500','0','0.1'),tuple(result['mappings'][0][k] for k in ['MIN','MAX','offset_factor','scale_factor']))
+        self.assertEqual(['Finisher','Ringframe','Finisher'],[r['machine_department'] for r in result['mappings']])
+
+    def test_parameter_replace_rejects_stale_empty_and_invalid_csv_atomically(self):
+        before=self.master.read_bytes();revision=self.client.get('/api/knowledge/master').json()['revision']
+        header='PLC_PARAMETER,PLC_TAG,METADATA_PARAMETER\n'
+        for text,rev,status in [(header+'Speed,speed,Speed\n','stale',409),(header,revision,400),(header+'Speed,speed,Speed\nMissing,,\n',revision,400)]:
+            response=self.client.post('/api/knowledge/master/csv',data={'mode':'replace','revision':rev},files={'file':('updated.csv',text,'text/csv')})
+            self.assertEqual(status,response.status_code,response.text);self.assertEqual(before,self.master.read_bytes())
+
+    def test_parameter_deletion_uses_saved_revision_and_remains_persistent(self):
+        data=self.client.get('/api/knowledge/master').json()
+        response=self.client.put('/api/knowledge/master',json={'revision':data['revision'],'mappings':[]})
+        self.assertEqual(200,response.status_code,response.text);self.assertEqual([],self.client.get('/api/knowledge/master').json()['mappings'])
+        self.assertEqual(409,self.client.put('/api/knowledge/master',json={'revision':data['revision'],'mappings':data['mappings']}).status_code)
+
     def test_dropdown_import_keeps_machine_value_lists_separate(self):
         folder=self.temp/'dropdown_knowledge';(folder/'master').mkdir(parents=True)
         with patch.object(knowledge,'KNOWLEDGE',folder):
@@ -106,7 +129,7 @@ class LocalWorkflows(unittest.TestCase):
         self.assertIn('Multiple PLC projects',response.text)
 
     def test_local_validation_uses_selected_metadata_and_manifest(self):
-        data=self.post('/api/local/validate',{'project_path':str(self.project),'metadata_path':str(self.book)})
+        data=self.post('/api/local/validate',{'project_path':str(self.project),'metadata_path':str(self.book),'machine_department':'Carding'})
         self.assertIn(str(self.book),self.calls[-1])
         self.assertEqual(data['metadataPath'],str(self.book))
         sheets=self.post('/api/metadata/view/sheets',{'sessionId':data['sessionId'],'source':'uploaded'})
@@ -114,14 +137,14 @@ class LocalWorkflows(unittest.TestCase):
         self.assertEqual(self.client.get(data['downloadExcelUrl']).status_code,200)
 
     def test_local_generation_persists_workbook(self):
-        data=self.post('/api/local/generate-metadata',{'project_path':str(self.project)})
+        data=self.post('/api/local/generate-metadata',{'project_path':str(self.project),'machine_department':'Carding'})
         self.assertTrue(Path(data['workbookPath']).is_file())
         sheets=self.post('/api/metadata/view/sheets',{'sessionId':data['sessionId'],'source':'generated'})
         self.assertEqual(len(sheets['sheets']),2)
         self.assertEqual(self.client.get(data['downloadExcelUrl']).status_code,200)
 
     def test_upload_generation_uses_same_persistent_viewer(self):
-        response=self.client.post('/api/generate-metadata',files=[('project_files',('Demo/Machine.apj',b'<Project/>'))])
+        response=self.client.post('/api/generate-metadata',data={'machine_department':'Carding'},files=[('project_files',('Demo/Machine.apj',b'<Project/>'))])
         self.assertEqual(response.status_code,200,response.text)
         data=response.json()
         self.assertTrue(Path(data['workbookPath']).is_file())
@@ -150,11 +173,11 @@ class LocalWorkflows(unittest.TestCase):
         response=self.client.post('/api/metadata/upload',files={'metadata':('metadata.xlsx',self.book.read_bytes())})
         self.assertEqual(response.status_code,200,response.text)
         path=response.json()['path']
-        self.post('/api/local/validate',{'project_path':str(self.project),'metadata_path':path})
+        self.post('/api/local/validate',{'project_path':str(self.project),'metadata_path':path,'machine_department':'Carding'})
         self.assertIn(path,self.calls[-1])
 
     def test_uploaded_project_with_local_metadata(self):
-        response=self.client.post('/api/validate',data={'metadata_path':str(self.book)},files=[('project_files',('Demo/Machine.apj',b'<Project/>'))])
+        response=self.client.post('/api/validate',data={'metadata_path':str(self.book),'machine_department':'Carding'},files=[('project_files',('Demo/Machine.apj',b'<Project/>'))])
         self.assertEqual(response.status_code,200,response.text)
         self.assertIn(str(self.book),self.calls[-1])
 
@@ -230,7 +253,7 @@ class LocalWorkflows(unittest.TestCase):
         self.assertTrue((path/'report.xlsx').exists())
 
     def test_upload_traversal_and_invalid_download_are_rejected(self):
-        response=self.client.post('/api/generate-metadata',files=[('project_files',('../escape.apj',b'bad'))])
+        response=self.client.post('/api/generate-metadata',data={'machine_department':'Carding'},files=[('project_files',('../escape.apj',b'bad'))])
         self.assertEqual(response.status_code,400)
         self.assertEqual(self.client.get('/api/download/../package.json').status_code,404)
 
@@ -242,7 +265,7 @@ class LocalWorkflows(unittest.TestCase):
 
     def test_long_windows_upload_path_is_staged(self):
         relative='Demo/Logical/'+'/'.join(['nested_'+'x'*65]*3)+'/source.st'
-        response=self.client.post('/api/generate-metadata',files=[
+        response=self.client.post('/api/generate-metadata',data={'machine_department':'Carding'},files=[
             ('project_files',('Demo/Machine.apj',b'<Project/>')),
             ('project_files',(relative,b'PROGRAM _CYCLIC END_PROGRAM')),
         ])

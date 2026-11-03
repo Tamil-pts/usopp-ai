@@ -13,6 +13,7 @@ def baseline(db,p,include_quality=False):
     docs=[]
     for d in db.execute('SELECT * FROM qc_documents WHERE project_id=? ORDER BY stage',(p['id'],)):
         if d['stage']=='closure' or d['stage']=='quality' and not include_quality:continue
+        if d['stage']=='fat' and 'fat' not in state['policy']['required_stages']:continue
         native=pi.document(db,d['document_id'],p['id'])
         current=store.revision(db,d['id'],native['current_revision']) if native['current_revision'] else None
         docs.append({'id':d['id'],'current':native['current_revision'],'approved':native['approved_revision'],

@@ -6,13 +6,13 @@ import {FEATURES} from './features';
 import {PAGE_MODULES,visibleModules,type WorkspaceModule} from './workspaceModules';
 import usoppLogo from '../usopp_logo.png';
 
-export type WorkspacePage='home'|'validation'|'compare'|'circuit'|'edesign'|'rules'|'chatbot'|'settings'|'plc'|'help';
+export type WorkspacePage='home'|'validation'|'compare'|'circuit'|'edesign'|'rules'|'chatbot'|'settings'|'plc'|'help'|'electrical';
 export type AssistTab='chat'|'configure'|'learning';
 export const WORKSPACE_NAVIGATION=[
   {id:'home',label:'WorkHub',Icon:LayoutDashboard}, {id:'validation',label:FEATURES.validation.name,Icon:ShieldCheck},
   {id:'plc',label:FEATURES.plc.name,Icon:Activity}, {id:'rules',label:FEATURES.rules.name,Icon:BookOpen},
   {id:'compare',label:FEATURES.compare.name,Icon:GitCompare}, {id:'circuit',label:'Circuit Compare',Icon:CircuitBoard},
-  {id:'edesign',label:'e-design',Icon:FilePenLine}, {id:'chatbot',label:'AI Assist',Icon:MessageSquare},
+  {id:'electrical',label:'Virtual Electrical',Icon:CircuitBoard}, {id:'edesign',label:'e-design',Icon:FilePenLine}, {id:'chatbot',label:'AI Assist',Icon:MessageSquare},
   {id:'settings',label:'Settings',Icon:Settings}, {id:'help',label:'Help',Icon:HelpCircle},
 ] as const;
 type Group='workhub'|'plc'|'design'|'assist'|'virtual';
@@ -34,7 +34,7 @@ export function WorkspaceNavigation({page,onSelect}:{page:WorkspacePage;onSelect
     {can('workhub')&&groupButton('workhub','WorkHub',LayoutDashboard,page==='home')}{plcVisible&&groupButton('plc','PLC',Cpu,['validation','plc','compare','rules'].includes(page))}
     {can('edesign')&&groupButton('design','e-design',FilePenLine,['edesign','circuit'].includes(page))}
     {can('assistant')&&groupButton('assist','AI Assist',MessageSquare,page==='chatbot')}
-    {can('virtual_plc')&&groupButton('virtual','Virtual',Cpu,false)}
+    {(can('virtual_plc')||can('edesign'))&&groupButton('virtual','Virtual',Cpu,page==='electrical')}
     </nav><nav className="nav railUtilities" aria-label="Settings and help">{item('settings')}{item('help')}</nav></aside>
     {group&&createPortal(<div ref={panel} id="workspace-flyout" className="workspaceFlyout" style={{left:position.left,top:position.top}} role="group" aria-label={`${group==='workhub'?'WorkHub':group==='design'?'e-design':group==='assist'?'AI Assist':group==='virtual'?'Virtual':'PLC'} submenu`}>
       <div className="workspaceFlyoutHeading">{group==='workhub'?'WorkHub':group==='plc'?'PLC':group==='design'?'e-design':group==='assist'?'AI Assist':'Virtual'}</div>
@@ -43,6 +43,6 @@ export function WorkspaceNavigation({page,onSelect}:{page:WorkspacePage;onSelect
       {group==='plc'&&<>{(can('bytemap')||can('datainspect'))&&<><button type="button" className="workspaceFlyoutEntry workspaceNestedToggle" aria-expanded={spin} aria-controls="spin-connect-submenu" onClick={()=>setSpin(v=>!v)}><Activity aria-hidden="true"/><span>Spin connect</span><ChevronRight className={spin?'expanded':''} aria-hidden="true"/></button>{spin&&<div id="spin-connect-submenu" className="workspaceNestedMenu">{can('bytemap')&&entry('ByteMap',ShieldCheck,()=>choose('validation'),page==='validation')}{can('datainspect')&&entry('DataInspect',Activity,()=>choose('plc'),page==='plc')}</div>}</>}{can('matchview')&&entry('MatchView',GitCompare,()=>choose('compare'),page==='compare')}{can('logicscan')&&entry('LogicScan',BookOpen,()=>choose('rules'),page==='rules')}</>}
       {group==='design'&&<>{entry('MatchView',CircuitBoard,()=>choose('circuit'),page==='circuit')}{entry('Review',FilePenLine,()=>choose('edesign'),page==='edesign')}</>}
       {group==='assist'&&<>{entry('Chat',MessageSquare,()=>choose('chatbot','chat'))}{entry('Rule configuration',Bot,()=>choose('chatbot','configure'))}{entry('KnowHub',BrainCircuit,()=>choose('chatbot','learning'))}</>}
-      {group==='virtual'&&<a className="workspaceFlyoutEntry virtualPlcNav" href="/virtual-plc/" aria-label="Open Virtual PLC workspace"><Cpu aria-hidden="true"/><span>PLC</span></a>}
+      {group==='virtual'&&<>{can('virtual_plc')&&<a className="workspaceFlyoutEntry virtualPlcNav" href="/virtual-plc/" aria-label="Open Virtual PLC workspace"><Cpu aria-hidden="true"/><span>PLC</span></a>}{can('edesign')&&entry('Electrical',CircuitBoard,()=>choose('electrical'),page==='electrical')}</>}
     </div>,document.body)}</>;
 }

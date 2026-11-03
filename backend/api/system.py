@@ -1,4 +1,5 @@
 from __future__ import annotations
+import hashlib
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from backend.core.runtime import (
@@ -25,8 +26,10 @@ def health():
     build=frontend_build_info(RESOURCE_ROOT/'dist',VERSION)
     strict=os.getenv('USOPP_REQUIRE_FRONTEND_BUILD')=='1' or (RESOURCE_ROOT/'dist/build-info.json').is_file()
     good=build['matches'] or not strict
-    data={'status':'ok' if good else 'version-mismatch','version':VERSION,'apiVersion':VERSION,'uiVersion':build['version'],'frontendBuild':build,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True,'workhubPerformanceCapability':True,'contributionPassport':True,'workhubDashboardBuilder':True,'engineeringQualityClosure':True,'workhubUnifiedProjectWorkspace':True,'workhubDefaultDashboardTemplate':True,'workhubReliableBackgroundJobs':True,'workhubRevisionProcessingCache':True},'applicationRoot':str(BASE),'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30','logFile':str(LOG_FILE)}
+    data={'status':'ok' if good else 'version-mismatch','version':VERSION,'apiVersion':VERSION,'uiVersion':build['version'],'frontendBuild':build,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True,'workhubPerformanceCapability':True,'contributionPassport':True,'workhubDashboardBuilder':True,'engineeringQualityClosure':True,'workhubUnifiedProjectWorkspace':True,'workhubDefaultDashboardTemplate':True,'workhubReliableBackgroundJobs':True,'workhubRevisionProcessingCache':True},'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30'}
     data['capabilities']['circuitCompare']=True
+    # Launcher identity without disclosing a filesystem path to network clients.
+    data['installationId']=hashlib.sha256(os.path.normcase(str(BASE.resolve())).encode()).hexdigest()
     data['capabilities']['eDesignReview']=True
     data['capabilities']['eDesignInlineCallouts']=True
     data['capabilities']['workhubProjectWorkflowSettings']=True

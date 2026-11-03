@@ -305,13 +305,20 @@ def _local_path(raw:str, must_exist:bool=True, directory:bool=False)->Path:
         if not p.is_absolute(): p=BASE/p
         p=p.resolve()
     except Exception: raise HTTPException(400,'Invalid local path.')
+    from backend.core.access import require_resource
+    require_resource(p)
     if must_exist and not p.exists(): raise HTTPException(404,f'Local path not found: {p}')
     if directory and p.is_file() and p.suffix.lower()=='.apj': p=p.parent
     if directory and p.exists() and not p.is_dir(): raise HTTPException(400,'Selected local path is not a folder.')
-    from backend.core.access import require_resource
-    require_resource(p)
     return p
 def _local_roots():
+    from backend.core.run_history import current_user
+    from backend.core.access import project_roots
+    user=current_user.get()
+    if user and user.get('role')!='admin':
+        roots=project_roots() if not user.get('isDemo') else []
+        if not roots:raise HTTPException(403,'Server browsing is restricted to Admin. Upload a project or ask Admin to approve a project folder.')
+        return [p for p in roots if p.is_dir()]
     if os.name=='nt':
         return [Path(f'{chr(c)}:\\') for c in range(ord('A'),ord('Z')+1) if Path(f'{chr(c)}:\\').exists()]
     return [Path('/')]

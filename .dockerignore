@@ -9,6 +9,8 @@
 !vite.config.ts
 !src/
 !src/**
+!public/
+!public/**
 !nami/
 !nami/**
 !backend/
@@ -19,6 +21,7 @@
 !virtual_plc/**
 !scripts/
 !scripts/build_nami.mjs
+!scripts/build_compare_report.mjs
 !scripts/package_container.py
 !scripts/container_bootstrap.py
 !scripts/container_maintenance.py

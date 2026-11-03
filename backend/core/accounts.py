@@ -9,6 +9,7 @@ import time
 import os
 import re
 from contextlib import contextmanager, closing
+from functools import lru_cache
 from backend.core.runtime import BASE
 
 COOKIE = 'usopp_session'
@@ -39,6 +40,11 @@ def password_matches(password, encoded):
     actual = hashlib.pbkdf2_hmac('sha256', password.encode(), bytes.fromhex(salt), int(count)).hex()
     return hmac.compare_digest(actual, digest)
 
+@lru_cache(maxsize=64)
+def factory_password(encoded):
+    try:return password_matches('usopp.2026',encoded)
+    except (ValueError,TypeError):return False
+
 def email_address(value):
     if value is None: return ''
     if not isinstance(value,str): raise ValueError('Enter a valid email address.')
@@ -49,7 +55,8 @@ def email_address(value):
 
 def public_user(row):
     return {key:row[key] for key in ('id','username','designation','company','role','email')} | {'active':bool(row['active']), 'approved':bool(row['approved']), 'createdAt':row['created_at'], 'isDemo':bool(row['is_demo']),
-        'avatarUrl':f'/api/auth/profile-image/{row["id"]}?v={row["profile_image_version"]}' if row['profile_image'] else None,'workspaceModules':visible_modules(row)}
+        'avatarUrl':f'/api/auth/profile-image/{row["id"]}?v={row["profile_image_version"]}' if row['profile_image'] else None,'workspaceModules':visible_modules(row),
+        'passwordChangeRequired':row['role']=='admin' and factory_password(row['password_hash'])}
 
 def session_seconds(user):
     return DEMO_SESSION_SECONDS if user.get('isDemo') else SESSION_SECONDS

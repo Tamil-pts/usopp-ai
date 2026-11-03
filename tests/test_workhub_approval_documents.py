@@ -24,11 +24,13 @@ class WorkflowDocumentTests(unittest.TestCase):
 
     def approve_fixture(self,row):
         with hub.db(True) as db:
+            db.execute("UPDATE qc_revisions SET status='approved',approved_by=?,approved_at=? WHERE id=?",(self.lead['id'],timestamp(),row['revision_id']))
             db.execute("UPDATE pi_revisions SET status='approved',reviewed_by=?,reviewed_at=? WHERE id=?",(self.lead['id'],timestamp(),row['revision_id']))
             db.execute('UPDATE pi_documents SET approved_revision=? WHERE id=?',(row['revision_id'],row['document_id']))
 
     def test_selected_documents_follow_submission_and_actual_project_decision(self):
-        self.login(self.manager);doc=self.mom()
+        self.login(self.manager);doc=self.request('POST','/document-spaces',{'stage':'test','title':'Saved Validation Test Report','request_id':identity(),'linked_project_id':self.project['id']})
+        with hub.db() as db:doc['document_id']=store.control(db,doc['scope_id'],doc['control_id'])['document_id']
         with hub.db(True) as db:db.execute("UPDATE items SET stage='development_completed' WHERE project_id=?",(self.project['id'],))
         p=self.current();payload={'action':'submit_quality','version':p['version'],'revision_id':None,'approval_documents':self.selection(doc)}
         submitted=self.request('POST','/items/'+p['id']+'/transition',payload)

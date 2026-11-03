@@ -1,0 +1,8 @@
+# Example only. Replace the hostname and configure USOPP_ALLOWED_HOSTS in the app service.
+# Corporate clients must trust this internal CA, or replace `tls internal` with company certificates.
+usopp.company.local {
+    tls internal
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:8200
+    header -Server
+}

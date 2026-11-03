@@ -1,5 +1,10 @@
 # uSOPp.ai downloads
 
+For the current source checkout or private build bundle, follow
+[Build on Windows or Ubuntu](CONTAINER_BUILD.md). Its helpers read the current
+version automatically. The prebuilt-package examples below use the version of
+the package you downloaded.
+
 This repository contains installation instructions and release packages. Users do not need the private application source repository.
 
 ## Download the published release

@@ -138,3 +138,10 @@ body { min-width:0; }
 @media(max-width:1000px){.compareHeadingAside{flex-basis:auto;width:100%;align-items:stretch}.compareDarkTop .compareDarkActions,.circuitHeading .circuitActions{justify-content:flex-start}}
 
 .workspaceFlyoutEntry:focus-visible{outline:2px solid #82e9cc;outline-offset:-2px}.workspaceNestedMenu{border-left-color:#39707d}.workspaceFlyout .workspaceNestedMenu .workspaceFlyoutEntry{color:#d1e8ee}
+
+/* Knowledge tabs wrap at browser zoom breakpoints; wide data stays in its own scroll pane. */
+.workspaceApp .assistTabs{max-width:100%;min-width:0;flex-wrap:wrap;gap:8px}
+.workspaceApp .assistTabs>.btn{min-width:0;flex:0 1 auto;overflow-wrap:anywhere}
+.workspaceApp .knowledgeTableCard{max-width:100%;overflow-wrap:anywhere}
+.workspaceApp .knowledgeTableScroll{width:100%;min-width:0;max-width:100%}
+.workspaceApp .knowledgeSearch input{min-width:min(200px,100%)}

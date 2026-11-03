@@ -8,10 +8,11 @@ COPY nami/package*.json ./nami/
 RUN npm ci --no-audit --no-fund && npm --prefix nami ci --no-audit --no-fund
 COPY index.html tsconfig*.json vite.config.ts ./
 COPY src ./src
+COPY public ./public
 COPY nami ./nami
 COPY virtual_plc/ui ./virtual_plc/ui
 COPY virtual_plc/vite.config.ts ./virtual_plc/vite.config.ts
-COPY scripts/build_nami.mjs ./scripts/build_nami.mjs
+COPY scripts/build_nami.mjs scripts/build_compare_report.mjs ./scripts/
 RUN npm run build
 
 # Same pinned llama.cpp CPU release used by the Windows runtime.
@@ -55,7 +56,7 @@ FROM python:3.12-slim-bookworm AS runtime
 ARG APP_VERSION
 ARG SOURCE_COMMIT
 LABEL org.opencontainers.image.title="uSOPp.ai" org.opencontainers.image.version="${APP_VERSION}" org.opencontainers.image.revision="${SOURCE_COMMIT}"
-RUN apt-get update && apt-get install -y --no-install-recommends libcairo2 fonts-dejavu-core libgomp1 libstdc++6 ca-certificates && rm -rf /var/lib/apt/lists/* \
+RUN apt-get update && apt-get install -y --no-install-recommends libcairo2 fonts-dejavu-core libgomp1 libstdc++6 ca-certificates ngspice && rm -rf /var/lib/apt/lists/* \
     && groupadd --gid 10001 usopp && useradd --uid 10001 --gid usopp --home-dir /data --no-create-home usopp \
     && mkdir /data && chown usopp:usopp /data
 COPY --from=compiler /opt/venv /opt/venv
@@ -73,3 +74,12 @@ EXPOSE 8200
 VOLUME ["/data"]
 HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8200/api/health', timeout=4)" || exit 1
 ENTRYPOINT ["usopp-start"]
+
+# Host profiles share the same Linux runtime and persistent data format.
+# Windows builds use Docker Desktop with its Linux-container engine.
+FROM runtime AS windows-desktop
+LABEL ai.usopp.host-profile="windows-docker-desktop-linux"
+
+# The default target remains compatible with existing Ubuntu build commands.
+FROM runtime AS ubuntu
+LABEL ai.usopp.host-profile="ubuntu-docker-engine"

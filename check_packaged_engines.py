@@ -1,5 +1,6 @@
 """Smoke-check a release's engine dispatch without using developer source."""
 import json
+import hashlib
 from pathlib import Path
 import subprocess
 import sys
@@ -65,7 +66,8 @@ with tempfile.TemporaryDirectory(prefix='usopp_exe_smoke_') as folder:
                     time.sleep(0.5)
             else:
                 raise RuntimeError('Packaged server did not become ready')
-            assert Path(health['applicationRoot']) == root / 'appdata', health
+            expected_id=hashlib.sha256(os.path.normcase(str((root/'appdata').resolve())).encode()).hexdigest()
+            assert health.get('installationId')==expected_id if 'installationId' in health else Path(health['applicationRoot'])==root/'appdata'
             for route in ('/', '/api/rules/library', '/api/rules/features'):
                 with urllib.request.urlopen(f'http://127.0.0.1:{port}{route}', timeout=10) as response:
                     assert response.status == 200
