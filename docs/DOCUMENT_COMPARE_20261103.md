@@ -101,3 +101,14 @@ results, paging beyond 100 rows, and account-specific preferences. Twelve
 light/dark layouts covered 1600, 1067, 800, 760, 390 and 320 pixels. Main production
 build and TypeScript checks passed. Artifacts:
 `.build/document-table-view-20261103/`.
+
+The optional header filters passed 32 comparison/document/competency regression
+tests, 14 focused browser checks and 12 light/dark viewport checks. The table-view
+regression also passed its 12 browser checks and 12 layouts. Checks covered value
+search, selection beyond the first 100 rows, combined filters, numeric sorting,
+Cancel/Escape, blank versus absent cells and filtered CSV export. TypeScript and
+the main production build passed. After restarting the local server, the new
+query, value-list and filtered-export APIs returned HTTP 200; UI/API versions
+remain **4.99.3**. Temporary live smoke-test files were removed, with the existing
+53 projects and 34 accounts retained. Artifacts:
+`.build/document-header-filters-20261103/`.

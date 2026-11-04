@@ -26,6 +26,12 @@ def clean_content(db,pid,stage,content):
       'file_ids':file_ids(db,pid,content.get('file_ids',[])),'requirements':[],'changes':[],'cases':[],
       'sections':[],'sources':[],'missing':[],'flowchart':None,
       'applicability':content.get('applicability','applicable'),'na_reason':text(content.get('na_reason',''),2000)}
+    if 'document_info' in content:
+        from backend.core.workhub_document_information import clean
+        result['document_info']=clean(content['document_info'])
+    from backend.core.workhub_document_information import links
+    linked=links(db,pid)
+    if linked is not None:result['document_links']=linked
     if stage=='frd':
         for k in ('purpose','background','expected_outcome','scope','acceptance_summary'):result[k]=text(content.get(k) or '',12000)
         criteria=content.get('acceptance_items')

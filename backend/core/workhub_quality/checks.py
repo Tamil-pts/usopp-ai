@@ -130,14 +130,14 @@ def report(db,p,closure=False):
     issues=[dict(r) for r in db.execute("SELECT * FROM issues WHERE project_id=? AND status='open'",(p['id'],))]
     for r in issues:add('issue:'+r['id'],'Unresolved issue: '+r['title'],r)
     from backend.core.workhub_workflow import evaluate
-    for rule in evaluate(db,p,'release' if closure else 'quality_pass'):
+    for rule in ([] if p.get('is_document_space') else evaluate(db,p,'release' if closure else 'quality_pass')):
         # The existing approval blockers handle these documents without making
         # a document's own approval a prerequisite to reviewing that document.
         if rule['passed'] or rule['severity']!='block' or rule['condition']=='document_approved' and rule['parameter'] in {'quality','closure'}:continue
         add('workflow:'+rule['id'],rule['name']+': '+rule['detail'],rule,False)
     quality=docs.get('quality');current_basis=baseline(db,p)
     quality_valid=bool(quality and quality['current'] and quality['approved']['baseline']==current_basis and not blockers)
-    if closure:
+    if closure and not p.get('is_document_space'):
         if not quality_valid:add('approval:quality','Current authorized quality approval is required',{'quality':quality['approved_revision'] if quality else None,'baseline':current_basis},False)
         c=docs.get('closure')
         if not c or not c['current'] or c['approved']['baseline']!=baseline(db,p,True):add('approval:closure','Current authorized closure approval is required',{'closure':c['approved_revision'] if c else None,'baseline':baseline(db,p,True)},False)

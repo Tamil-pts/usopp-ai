@@ -14,7 +14,7 @@ from .resources import setting,admission,kill_owned_tree,tree_rss
 
 STOP=threading.Event();THREAD=None;GUARD=threading.Lock()
 LEASE_SECONDS=90
-KINDS={'meeting','transcribe','frd','flowchart','plan','extract','ocr','pdf','convert','document_answer','clarifications','q_generate','q_package','q_iso','q_answer','q_frd_assist','export','q_export','studio_build'}
+KINDS={'meeting','transcribe','frd','flowchart','plan','extract','ocr','pdf','convert','document_answer','clarifications','q_generate','q_package','q_iso','q_answer','q_frd_assist','export','q_export','studio_build','diagram_assist'}
 WORKER_ID=socket.gethostname()+':'+str(os.getpid())+':'+uuid.uuid4().hex
 
 

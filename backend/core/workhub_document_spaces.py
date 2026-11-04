@@ -23,6 +23,9 @@ def schema(db):
     db.execute("CREATE UNIQUE INDEX IF NOT EXISTS document_space_request ON wh_document_spaces(owner_id,request_id) WHERE request_id!=''")
     db.execute('CREATE INDEX IF NOT EXISTS document_space_owner ON wh_document_spaces(owner_id,updated_at)')
     db.execute('CREATE INDEX IF NOT EXISTS document_space_project ON wh_document_spaces(linked_project_id)')
+    for column in ('linked_document_id','linked_revision_id'):
+        if column not in {r[1] for r in db.execute('PRAGMA table_info(wh_document_spaces)')}:
+            db.execute('ALTER TABLE wh_document_spaces ADD COLUMN '+column+' TEXT')
 
 def find(db,key):
     row=db.execute('SELECT * FROM wh_document_spaces WHERE id=?',(key,)).fetchone()
@@ -39,6 +42,7 @@ def find(db,key):
       'version':r['version'],'dependencies':'[]','supporting_ids':'[]','project_number':'','milestone':False,
       'is_document_space':True,'library':bool(r['library']),'linked_project_id':r['linked_project_id'],
       'reviewer_id':r['reviewer_id'],'document_type':r['document_type'],
+      'linked_document_id':r['linked_document_id'],'linked_revision_id':r['linked_revision_id'],
       'linked_project_name':linked['title'] if linked else '', 'linked_project_number':linked['project_number'] if linked else ''}
 
 def authorize(db,scope,user,write=False,allow_library=False):
@@ -62,7 +66,7 @@ def create(user,payload):
     key=identity();now=timestamp();title=text(payload.get('title') or 'Engineering document',180,True)
     document_type=payload.get('document_type') or payload.get('stage')
     expected_stage='test' if document_type=='test_report' else document_type
-    if expected_stage not in {'mom',*store.STAGES} or payload.get('stage')!=expected_stage:
+    if expected_stage not in {'mom','flowchart','mindmap',*store.STAGES} or payload.get('stage')!=expected_stage:
         raise HTTPException(400,'Choose a supported document type and its structured template.')
     linked=payload.get('linked_project_id') or None
     request_id=text(payload.get('request_id') or '',80)
@@ -76,11 +80,17 @@ def create(user,payload):
         else:
             if linked:hub.contribute(db,linked,user)
             db.execute('INSERT INTO wh_document_spaces(id,title,owner_id,linked_project_id,created_at,updated_at,request_id,document_type) VALUES(?,?,?,?,?,?,?,?)',(key,title,user['id'],linked,now,now,request_id,document_type))
+            if payload.get('linked_document_id'):
+                linked_doc,linked_rev=frd_link(db,payload['linked_document_id'],user)
+                db.execute('UPDATE wh_document_spaces SET linked_document_id=?,linked_revision_id=? WHERE id=?',(linked_doc['id'],linked_rev['id'],key))
         p=find(db,key);state=store.ensure_project(db,p,user)
         if linked:
             source=db.execute('SELECT context FROM qc_projects WHERE project_id=?',(linked,)).fetchone()
             if source:db.execute('UPDATE qc_projects SET context=? WHERE project_id=?',(source[0],key))
         store.audit(db,user,key,'independent_document_created',{'linked_project_id':linked})
+        if document_type in {'flowchart','mindmap'}:
+            from .workhub_diagrams import create
+            return create(db,user,p,document_type,payload.get('diagram_template'))
     result=authoring.create(user,key,payload)
     if not result.get('existing'):
         with hub.db(True) as db:
@@ -98,9 +108,15 @@ def details(user,key):
         p=find(db,key)
         if not p:raise HTTPException(404,'Document workspace not found.')
         authorize(db,p,user)
-        native=db.execute('SELECT id FROM pi_documents WHERE project_id=? AND kind=\'mom\' ORDER BY created_at LIMIT 1',(key,)).fetchone()
+        stage='test' if p['document_type']=='test_report' else p['document_type']
+        kind='flowchart' if stage=='mindmap' else stage
+        document=db.execute('''SELECT d.id,d.kind,q.stage,COALESCE(q.number,n.number) AS number
+            FROM pi_documents d LEFT JOIN qc_documents q ON q.document_id=d.id
+            LEFT JOIN wh_document_numbers n ON n.document_id=d.id
+            WHERE d.project_id=? AND (q.stage=? OR d.kind=?) ORDER BY d.created_at LIMIT 1''',(key,stage,kind)).fetchone()
+        initial='native:'+document['id'] if document and document['kind'] in {'mom','flowchart'} else document['stage'] if document and document['stage'] else 'frd'
         return {'project':hub.public(p),'tasks':[],'phases':[],'sprints':[],'files':[dict(r) for r in db.execute('SELECT * FROM files WHERE project_id=? ORDER BY created_at DESC',(key,))],
-                'initial_document':'native:'+native[0] if native else 'frd','project_context':store.policy_row(db,p)['context'],'can_manage':user['role']=='admin' or user['id']==p['owner_id']}
+                'initial_document':initial,'document_number':document['number'] if document else None,'project_context':store.policy_row(db,p)['context'],'can_manage':user['role']=='admin' or user['id']==p['owner_id']}
 
 def update(user,key,payload):
     from .workhub_quality import store
@@ -111,10 +127,35 @@ def update(user,key,payload):
         authorize(db,p,user,True);hub.manage(p,user)
         if payload.get('version')!=p['version']:raise HTTPException(409,'Document settings changed. Reload before saving.')
         reviewer=payload.get('reviewer_id',p['reviewer_id']) or None
-        if reviewer:hub.user_id(reviewer)
+        if reviewer!=p['reviewer_id'] and db.execute("SELECT 1 FROM pi_documents d JOIN pi_revisions r ON r.id=d.current_revision WHERE d.project_id=? AND r.status IN ('review','in_review')",(key,)).fetchone():raise HTTPException(409,'Finish the pending review before changing its reviewer.')
+        if reviewer:
+            hub.user_id(reviewer)
+            if reviewer==p['owner_id']:raise HTTPException(400,'Choose a reviewer other than the document author.')
+        linked=payload.get('linked_project_id',p['linked_project_id']) or None
+        linked_document=payload.get('linked_document_id',p.get('linked_document_id')) or None
+        link_changed=linked!=p['linked_project_id'] or linked_document!=p.get('linked_document_id')
+        if link_changed:
+            state=db.execute('SELECT r.status FROM pi_documents d JOIN pi_revisions r ON r.id=d.current_revision WHERE d.project_id=?',(key,)).fetchone()
+            if state and state[0] not in {'draft','changes_requested','correction_required'}:raise HTTPException(409,'Create an editable revision before changing document links.')
+            if linked:hub.contribute(db,linked,user)
+            doc,rev=frd_link(db,linked_document,user) if linked_document else (None,None)
+            if doc and doc['project_id']==key:raise HTTPException(400,'A document cannot link to itself.')
+            db.execute('UPDATE wh_document_spaces SET linked_project_id=?,linked_document_id=?,linked_revision_id=? WHERE id=?',(linked,linked_document,rev['id'] if rev else None,key))
+            from .workhub_document_information import snapshot
+            from .workhub_diagrams import fill_information
+            changed_scope=find(db,key)
+            fill_information(db,user,changed_scope,snapshot(db,changed_scope) if payload.get('autofill') is True else None)
         library=payload.get('library',p['library'])
         if type(library) is not bool:raise HTTPException(400,'Choose whether to add the approved document to the library.')
         if library and not db.execute("SELECT 1 FROM pi_documents WHERE project_id=? AND approved_revision IS NOT NULL",(key,)).fetchone():raise HTTPException(409,'Approve a revision before sharing it in the library.')
         db.execute('UPDATE wh_document_spaces SET reviewer_id=?,library=?,version=version+1,updated_at=? WHERE id=?',(reviewer,int(library),timestamp(),key))
         store.audit(db,user,key,'document_access_updated',{'reviewer_id':reviewer,'library':library})
     return details(user,key)
+
+
+def frd_link(db,key,user):
+    from .workhub_intelligence import store as pi
+    row=db.execute("SELECT * FROM pi_documents WHERE id=? AND kind='frd'",(key,)).fetchone()
+    if not row:raise HTTPException(404,'Choose an accessible FRD document.')
+    doc=dict(row);hub.contribute(db,doc['project_id'],user)
+    return doc,pi.revision(db,doc['current_revision'],doc['id'])

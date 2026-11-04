@@ -237,24 +237,26 @@ def generate(job,user):
     return {'packages':created}
 
 def export_document(user,pid,key,rid=None,format='pdf',record_download=True):
+    from backend.core.workhub_document_filename import filename
     store.initialize()
     with hub.db(True) as db:
         p=store.project(db,pid,user);doc=store.control(db,pid,key);rev=store.revision(db,doc['id'],rid or store.native(db,doc)['current_revision'])
         value=snapshot(db,p);value['documents']=[{'document':doc,'revision':store.detail(db,doc,rev)}]
         value['quality']={};value['audit']=[];value['files']=[];value['approval_history']=[]
         if record_download:store.audit(db,user,pid,'document_downloaded',{'format':format,'status':rev['status']},doc['id'],rev['id'])
-    if format=='json':return store.bounded(value).encode(),'application/json',doc['number']+'-'+rev['label']+'.json'
+    if format=='json':return store.bounded(value).encode(),'application/json',filename(doc,rev,'json')
     if format=='svg':
         flow=value['documents'][0]['revision']['content'].get('flowchart')
         if not flow:raise HTTPException(404,'This FRD revision has no saved flowchart.')
         from backend.core.workhub_intelligence.documents import diagram_svg
-        return diagram_svg(flow).encode(),'image/svg+xml',doc['number']+'-'+rev['label']+'.svg'
+        return diagram_svg(flow).encode(),'image/svg+xml',filename(doc,rev,'svg')
     if format=='docx' or format=='pdf' and value['documents'][0]['revision']['content'].get('studio'):
         from backend.core.workhub_studio.exporting import export as studio_export
-        return studio_export(user,pid,doc['document_id'],rev['id'],format)
+        data,mime,_=studio_export(user,pid,doc['document_id'],rev['id'],format)
+        return data,mime,filename(doc,rev,format)
     if format!='pdf':raise HTTPException(400,'Choose controlled PDF or JSON.')
     from .pdf_templates import export
-    return export(user,pid,doc,rev),'application/pdf',doc['number']+'-'+rev['label']+'.pdf'
+    return export(user,pid,doc,rev),'application/pdf',filename(doc,rev,'pdf')
 
 def package_download(user,pid,key):
     store.initialize()

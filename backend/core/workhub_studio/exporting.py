@@ -88,6 +88,7 @@ def preview(user,pid,did,payload=None):
     return html_renderer.html(value,editable,locks)
 
 def export(user,pid,did,rid=None,format='pdf'):
+    from backend.core.workhub_document_filename import filename
     store.initialize()
     if format not in {'pdf','docx'}:raise HTTPException(400,'Choose PDF or DOCX.')
     with hub.db(True) as db:
@@ -106,10 +107,10 @@ def export(user,pid,did,rid=None,format='pdf'):
             old=db.execute('SELECT * FROM ds_exports WHERE revision_id=? AND format=?',(rev['id'],format)).fetchone() if approved else None
             if old:
                 if hashlib.sha256(old['data']).hexdigest()!=old['sha256']:raise HTTPException(409,'The approved export failed integrity verification.')
-                return old['data'],'application/pdf' if format=='pdf' else 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',str(value['fields']['document_number'])+'-'+str(value['fields']['revision'])+'.'+format
+                return old['data'],'application/pdf' if format=='pdf' else 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',filename(control or doc,rev,format)
     if legacy:
         from backend.core.workhub_quality.pdf_templates import export as legacy_export
-        p,doc,rev,control=legacy;data=legacy_export(user,pid,control or doc,rev,controlled=bool(control));name=(control['number'] if control else doc['title'])+'.pdf'
+        p,doc,rev,control=legacy;data=legacy_export(user,pid,control or doc,rev,controlled=bool(control));name=filename(control or doc,rev,'pdf')
         return data,'application/pdf',name
     if format=='pdf':data=render_pdf(value)
     else:
@@ -123,4 +124,4 @@ def export(user,pid,did,rid=None,format='pdf'):
             if hashlib.sha256(row['data']).hexdigest()!=row['sha256']:raise HTTPException(409,'The preserved export failed integrity verification.')
             data=row['data']
             store.audit(db,user,pid,did,rev['id'],'approved_studio_export_stored',{'format':format,'sha256':row['sha256']})
-    return data,'application/pdf' if format=='pdf' else 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',str(value['fields']['document_number'])+'-'+str(value['fields']['revision'])+'.'+format
+    return data,'application/pdf' if format=='pdf' else 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',filename(control or doc,rev,format)

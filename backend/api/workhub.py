@@ -151,6 +151,12 @@ def create_independent_document(request:Request,payload:dict):
     from backend.core.workhub_document_spaces import create
     return create(actor(request),payload)
 
+@router.get('/diagram-templates')
+def diagram_templates(request:Request):
+    actor(request)
+    from backend.core.workhub_diagram_templates import catalog
+    return catalog()
+
 @router.get('/items/{item}/approval-documents')
 def workflow_approval_documents(item:str,request:Request,offset:int=Query(0,ge=0)):
     from backend.core.workhub_approval_documents import overview
@@ -193,6 +199,22 @@ def project_options(request:Request):
     from backend.core.workhub_quality import store as quality,branding
     quality.initialize()
     with store.db() as db:return branding.choices(db)
+
+@router.post('/document-spaces/{space}/diagram/assist')
+def assist_independent_diagram(space:str,request:Request,payload:dict):
+    from backend.core.workhub_intelligence import jobs
+    from backend.core.workhub_quality import store as quality
+    quality.initialize();user=actor(request)
+    with store.db() as db:
+        scope=store.contribute(db,space,user)
+        if not scope.get('is_document_space') or scope.get('document_type') not in {'flowchart','mindmap'}:raise HTTPException(400,'Open a Flowchart or Mind Map document.')
+        if not str(payload.get('brief') or '').strip():raise HTTPException(400,'Describe the diagram to prepare.')
+    return jobs.enqueue(user,space,'diagram_assist',payload)
+
+@router.post('/document-spaces/{space}/diagram/proposals/{job}/apply')
+def apply_independent_diagram(space:str,job:str,request:Request,payload:dict):
+    from backend.core.workhub_diagrams import apply
+    return apply(actor(request),space,job,payload)
 
 @router.post('/projects/{project}/condition')
 def project_condition(project:str,request:Request,payload:dict):return workspace.exception(actor(request),project,payload)

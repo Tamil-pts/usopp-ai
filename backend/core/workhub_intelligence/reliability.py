@@ -57,6 +57,17 @@ def digest(value):
 def snapshot(db, pid, kind, payload):
     """Revision identities, never confidential text. Exclude generated pack blobs."""
     value = {}
+    if kind=='diagram_assist':
+        p=hub.item(db,pid)
+        # Queue input identities include the exact editable revision and FRD link.
+        from . import store
+        doc=store.document(db,payload.get('document_id'),pid)
+        revision=store.revision(db,doc['current_revision'],doc['id'])
+        linked=db.execute('SELECT current_revision FROM pi_documents WHERE id=?',(p.get('linked_document_id'),)).fetchone()
+        source=db.execute('SELECT content FROM pi_revisions WHERE id=? AND document_id=?',(p.get('linked_revision_id'),p.get('linked_document_id'))).fetchone()
+        return {'diagram':{'revision_id':revision['id'],'content_hash':digest(revision['content']),
+                           'linked_document_id':p.get('linked_document_id'),'linked_revision_id':p.get('linked_revision_id'),
+                           'source_current_revision':linked[0] if linked else None,'source_hash':digest(json.loads(source[0])) if source else None}}
     if kind in {'export','q_export'}:
         from .exports import _source
         return {'export':_source(db,pid,kind,payload)[2]}

@@ -55,6 +55,9 @@ def context(db,p,doc,rev,controlled=True):
     linked=hub.item(db,p['linked_project_id']) if p.get('is_document_space') and p.get('linked_project_id') else None
     project_name=(linked['title'] if linked else 'Independent document') if p.get('is_document_space') else p['title']
     project_number=(linked.get('project_number') or linked['id'] if linked else '') if p.get('is_document_space') else p.get('project_number') or state['context'].get('project_reference') or p['id']
+    information=content.get('document_info',{})
+    project_name=information.get('project_name',project_name);project_number=information.get('project_number',project_number)
+    if 'customer' in information:customer_data['name']=information['customer']
     metadata=[['Project',project_name],['Project reference',project_number or 'Not linked'],
        ['Customer',customer_data['name'] or 'Not linked'],['Customer address',customer_data.get('address','')],
        ['Machine / System',state['context'].get('machine') or p.get('machine') or ''],['Document number',doc.get('number') or doc['id']],
@@ -64,6 +67,9 @@ def context(db,p,doc,rev,controlled=True):
        ['Developed reference',state['context'].get('developed_reference') or ''],
        ['Revision',rev.get('label',str(rev['number']))],['Status','APPROVED SNAPSHOT' if rev['status'] in APPROVED else 'DRAFT - NOT APPROVED'],
        ['Prepared by',author],['Reviewed by',reviewed],['Approved by',approved],['Approval date',rev.get('approved_at',rev.get('reviewed_at')) or 'Pending']]
+    overrides={'Customer project reference':'customer_project_reference','Project type':'project_type','Base reference':'base_reference','Developed reference':'developed_reference'}
+    metadata=[[label,information.get(overrides[label],value) if label in overrides else value] for label,value in metadata]
+    if information.get('document_date'):metadata.append(['Document date',information['document_date']])
     structured=kind in {'test','fat','mom'}
     if kind in {'test','fat'}:
         from .report_templates import blocks as report_blocks
@@ -151,7 +157,7 @@ def blocks(content):
          (r.get('execution') or {}).get('outcome','Recorded native validation' if r.get('native_run_id') else 'NOT TESTED'),
          json.dumps(r['execution'],ensure_ascii=False) if r.get('execution') else 'Linked validation run: '+r['native_run_id'] if r.get('native_run_id') else 'No execution recorded'] for r in content.get('cases',[])])
     add('sections','Document sections',columns=['Section','Content'],rows=[[r.get('heading',''),r.get('text','')] for r in content.get('sections',[])])
-    known={'summary','purpose','background','expected_outcome','scope','acceptance_summary','acceptance_items','requirements','flowchart','changes','cases','sections','sources','nodes','edges','field_files'}|mom_fields
+    known={'summary','purpose','background','expected_outcome','scope','acceptance_summary','acceptance_items','requirements','flowchart','changes','cases','sections','sources','nodes','edges','field_files','document_info','document_links','diagram_type'}|mom_fields
     other={k:v for k,v in content.items() if k not in known}
     add('details','Supporting document details','\n'.join(readable_lines(other)))
     add('sources','Source references',columns=['Reference','Location','Source excerpt'],rows=[

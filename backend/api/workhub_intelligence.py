@@ -1,5 +1,6 @@
 """Project Intelligence API, using the existing WorkHub account and access rules."""
 import json
+from urllib.parse import quote
 from pathlib import Path
 from fastapi import APIRouter,Depends,HTTPException,Request
 from fastapi.responses import Response,FileResponse
@@ -138,8 +139,9 @@ def export(project_id:str,document_id:str,format:str,request:Request,revision_id
     try:data,mime=documents.export_document(doc,revision,format,user=request.state.user)
     except ServiceUnavailable as error:raise HTTPException(503,str(error))
     except ValueError as error:raise HTTPException(400,str(error))
-    name=doc['kind']+'-r'+str(revision['number'])+'.'+format
-    return Response(data,media_type=mime,headers={'Content-Disposition':'attachment; filename="'+name+'"','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})
+    from backend.core.workhub_document_filename import filename
+    name=filename(doc,revision,format)
+    return Response(data,media_type=mime,headers={'Content-Disposition':"attachment; filename*=UTF-8''"+quote(name,safe=''),'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})
 
 
 @router.get('/documents/{document_id}/content')

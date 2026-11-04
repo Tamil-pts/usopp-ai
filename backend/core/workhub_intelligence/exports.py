@@ -48,14 +48,15 @@ def process(job,user):
     pid=job.row['project_id'];payload=job.row['payload'];kind=job.row['kind'];format=payload.get('format','pdf')
     if format not in {'pdf','docx','json','svg'}:raise ValueError('Choose a supported document export format.')
     with hub.db() as db:doc,rev,signature=source(db,pid,kind,payload,user)
-    cache_key=reliability.digest({'processor':'export-v2','source':signature,'format':format})
+    cache_key=reliability.digest({'processor':'export-v3-numbered','source':signature,'format':format})
     def render():
         job.progress(25,'Preparing the selected document revision')
         if kind=='q_export':
             from backend.core.workhub_quality.packages import export_document
             data,mime,name=export_document(user,pid,doc['id'],rev['id'],format,record_download=False)
         else:
-            data,mime=documents.export_document(doc,rev,format,user=user);name=doc['kind']+'-r'+str(rev['number'])+'.'+format
+            from backend.core.workhub_document_filename import filename
+            data,mime=documents.export_document(doc,rev,format,user=user);name=filename(doc,rev,format)
         job.check()
         with hub.db() as db:
             if source(db,pid,kind,payload,user)[2]!=signature:raise reliability.SourceChanged('The document changed during export. Prepare the current revision again.')

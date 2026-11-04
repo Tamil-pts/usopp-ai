@@ -346,47 +346,43 @@ def _source_hyperlink(paragraph,project_id,source):
 def diagram_svg(content):
     from xml.sax.saxutils import escape
     import textwrap
-    nodes=content.get('nodes',[]);edges=content.get('edges',[])
-    positions={n['id']:n for n in nodes};sizes={}
+    nodes=content.get('nodes',[]);edges=content.get('edges',[]);positions={n['id']:n for n in nodes};sizes={}
     for node in nodes:
-        body=str(node.get('data',{}).get('label',''))
-        data=node.get('data',{});links=', '.join(str(i) for i in data.get('requirement_ids',[]))
-        if data.get('plc_references'):links+='\nI/O: '+', '.join(str(v) for v in data['plc_references'])
+        data=node.get('data',{});w=float(node.get('width') or 240)
+        label=str(data.get('label',''));refs=', '.join(str(v) for v in data.get('requirement_ids',[]))
+        if data.get('plc_references'):refs+=' I/O: '+', '.join(data['plc_references'])
         lines=[]
-        for line in (body+('\n'+links if links else '')).splitlines() or ['']:
-            lines.extend(textwrap.wrap(line,width=30,replace_whitespace=False,drop_whitespace=False) or [''])
-        sizes[node['id']]=(lines,max(75,len(lines)*17+30))
-    low_x=min([n['position']['x'] for n in nodes]+[0])-40;low_y=min([n['position']['y'] for n in nodes]+[0])-110
-    width=max([n['position']['x']+250 for n in nodes]+[500])-low_x+40
-    height=max([n['position']['y']+sizes[n['id']][1] for n in nodes]+[300])-low_y+125
-    result=[f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{low_x} {low_y} {width} {height}" width="{width}" height="{height}"><rect x="{low_x}" y="{low_y}" width="{width}" height="{height}" fill="white"/><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#126575"/></marker></defs>']
-    return_lane=0
+        for line in (label+('\n'+refs if refs else '')).splitlines() or ['']:
+            lines.extend(textwrap.wrap(line,width=max(10,int((w-35)/7)),replace_whitespace=False) or [''])
+        sizes[node['id']]=(w,max(float(node.get('height') or 80),len(lines)*17+30),lines)
+    lx=min([n['position']['x'] for n in nodes]+[0])-50;ly=min([n['position']['y'] for n in nodes]+[0])-100
+    width=max([n['position']['x']+sizes[n['id']][0] for n in nodes]+[450])-lx+100
+    height=max([n['position']['y']+sizes[n['id']][1] for n in nodes]+[260])-ly+70
+    result=[f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{lx} {ly} {width} {height}" width="{width}" height="{height}"><rect x="{lx}" y="{ly}" width="{width}" height="{height}" fill="white"/><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#126575"/></marker></defs>']
     for edge in edges:
         a=positions.get(edge['source']);b=positions.get(edge['target'])
         if not a or not b:continue
-        ax=a['position']['x'];ay=a['position']['y'];bx=b['position']['x'];by=b['position']['y'];ah=sizes[a['id']][1];bh=sizes[b['id']][1]
+        aw,ah,_=sizes[a['id']];bw,bh,_=sizes[b['id']];ax=a['position']['x'];ay=a['position']['y'];bx=b['position']['x'];by=b['position']['y']
+        x=ax+aw;y=ay+ah/2;tx=bx;ty=by+bh/2
+        if edge.get('sourceHandle')=='bottom':x=ax+aw/2;y=ay+ah
+        if edge.get('targetHandle')=='top':tx=bx+bw/2;ty=by
+        middle=(x+tx)/2
+        path=f'M{x} {y} L{tx} {ty}' if edge.get('type')=='straight' else f'M{x} {y} C{middle} {y} {middle} {ty} {tx} {ty}' if edge.get('type')=='default' else f'M{x} {y} H{middle} V{ty} H{tx}'
         if a['id']==b['id']:
-            x=ax+240;y=ay+ah/2;bend=ay+ah+65
-            path=f'M{x} {y} H{ax+285} V{bend} H{ax+120} V{ay+ah}'
-            lx=ax+140;ly=bend+17
+            bend=ay+ah+40;path=f'M{x} {y} H{ax+aw+50} V{bend} H{ax+aw/2} V{ay+ah}'
         elif bx<ax-20:
-            bend=min(ay,by)-45-return_lane*22;return_lane=(return_lane+1)%3
-            path=f'M{ax+120} {ay-12 if a.get("data",{}).get("kind")=="decision" else ay} V{bend} H{bx+120} V{by-12 if b.get("data",{}).get("kind")=="decision" else by}'
-            lx=(ax+bx)/2+120;ly=bend-7
-        elif abs(bx-ax)<40 and by>ay:
-            x=ax+120;y=ay+ah;tx=bx+120;ty=by-12 if b.get('data',{}).get('kind')=='decision' else by
-            path=f'M{x} {y} L{tx} {ty}';lx=x+8;ly=(y+ty)/2
-        else:
-            x=ax+(255 if a.get('data',{}).get('kind')=='decision' else 240);y=ay+ah/2
-            tx=bx-(15 if b.get('data',{}).get('kind')=='decision' else 0);ty=by+bh/2;middle=(x+tx)/2
-            path=f'M{x} {y} C{middle} {y} {middle} {ty} {tx} {ty}';lx=middle;ly=(y+ty)/2-8
-        result.append(f'<path d="{path}" stroke="#126575" stroke-width="2" fill="none" marker-end="url(#arrow)"/>')
-        for i,line in enumerate(textwrap.wrap(str(edge.get('label') or ''),width=35)):
-            result.append(f'<text x="{lx}" y="{ly+i*15}" text-anchor="middle" font-size="12" fill="#17344b">{escape(line)}</text>')
+            bend=min(ay,by)-60;path=f'M{ax+aw/2} {ay} V{bend} H{bx+bw/2} V{by}'
+        arrow='' if content.get('diagram_type')=='mindmap' else ' marker-end="url(#arrow)"'
+        result.append(f'<path d="{path}" stroke="#126575" stroke-width="2" fill="none"{arrow}/>')
+        result.append(f'<text x="{middle}" y="{(y+ty)/2-8}" text-anchor="middle" font-family="Arial" font-size="12">{escape(str(edge.get("label") or ""))}</text>')
     for node in nodes:
-        x=node['position']['x'];y=node['position']['y'];data=node.get('data',{});kind=data.get('kind','process');lines,h=sizes[node['id']]
-        if kind=='decision':result.append(f'<path d="M{x+120} {y-12} L{x+255} {y+h/2} L{x+120} {y+h+12} L{x-15} {y+h/2} Z" fill="#fff6d8" stroke="#b08623"/>')
-        else:result.append(f'<rect x="{x}" y="{y}" width="240" height="{h}" rx="{30 if kind in ("start","end") else 8}" fill="#e7f5f4" stroke="#126575"/>')
-        for index,line in enumerate(lines):result.append(f'<text x="{x+120}" y="{y+23+index*17}" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#17344b">{escape(line)}</text>')
-    result.append(f'<text x="{low_x+20}" y="{height+low_y-20}" font-size="11" fill="#546b77">Engineering draft: sequence requires review; not validated PLC logic.</text></svg>')
-    return ''.join(result)
+        x=node['position']['x'];y=node['position']['y'];w,h,lines=sizes[node['id']];data=node.get('data',{});kind=data.get('kind','process')
+        color=data.get('color') or ('#fff6d8' if kind=='decision' else '#e7f5f4')
+        if not re.fullmatch(r'#[0-9a-fA-F]{6}',color):color='#e7f5f4'
+        if kind=='decision':shape=f'<path d="M{x+w/2} {y-12} L{x+w+15} {y+h/2} L{x+w/2} {y+h+12} L{x-15} {y+h/2} Z"'
+        elif kind=='io':shape=f'<path d="M{x+18} {y} H{x+w} L{x+w-18} {y+h} H{x} Z"'
+        else:shape=f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{min(h/2,40) if kind in ("start","end","topic") else 8}"'
+        result.append(shape+f' fill="{color}" stroke="#126575"/>')
+        if kind=='subprocess':result.append(f'<path d="M{x+9} {y} V{y+h} M{x+w-9} {y} V{y+h}" stroke="#126575"/>')
+        for i,line in enumerate(lines):result.append(f'<text x="{x+w/2}" y="{y+23+i*17}" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#17344b">{escape(line)}</text>')
+    result.append('</svg>');return ''.join(result)

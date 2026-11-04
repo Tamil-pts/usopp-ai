@@ -429,6 +429,9 @@ def process(job,user):
         if existing:return {'document_id':existing['document_id'],'revision_id':existing['id'],'recovered':True}
     kind=job.row['kind']
     if kind in {'meeting','transcribe'}:return meeting_job(job,user)
+    if kind=='diagram_assist':
+        from backend.core.workhub_diagrams import generate_job
+        return generate_job(job,user)
     if kind=='frd':return requirement_job(job,user)
     if kind in {'flowchart','plan'}:return generation_job(job,user)
     if kind in {'extract','ocr','pdf','convert'}:return document_job(job,user)

@@ -46,6 +46,12 @@ Within a project, the main sections are **Overview**, **Meetings & Requirements*
 the existing workflow/timeline, backlog/sprints, updates, issues and approval
 history in their contextual views.
 
+Subsequent update: [independent documents, editable document information,
+Flowchart and Mind Map workspaces](WORKHUB_INDEPENDENT_DOCUMENTS_20261104.md).
+Document creation now gives each document its own identity, with optional
+project prefilling and FRD links. Diagrams have separate numbers, revisions,
+manual drawing tools and reviewable Chopper proposals.
+
 Team Management shows actual resource totals, assigned/available capacity,
 roles/skills, workload and project progress. Engineers can search/filter resources,
 inspect workload, and use the existing authorized assignment controls. Counts are

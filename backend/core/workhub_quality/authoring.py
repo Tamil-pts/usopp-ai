@@ -117,6 +117,8 @@ def create(user,pid,payload):
             from .report_templates import seed_frd
             seed_frd(db,pid,stage,content)
         content=documents.clean_content(db,pid,stage,content)
+        from backend.core.workhub_document_information import snapshot
+        content['document_info']=snapshot(db,p)
         content['file_ids']=documents.file_ids(db,pid,payload.get('file_ids',[]))
         doc=documents.create_control(db,p,user,stage,initial_content=content)
         rid=store.native(db,doc)['current_revision']

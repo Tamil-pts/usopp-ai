@@ -266,13 +266,13 @@ def document_register(user,search='',kind='',status='',project_id='',page=1,page
                  WHERE NOT EXISTS (SELECT 1 FROM ds_template_drafts td WHERE td.scope_id=d.project_id) AND ((p.type='project' AND """+predicate+") OR (s.id IS NOT NULL AND (? OR s.owner_id=? OR s.reviewer_id=? OR (s.library=1 AND s.linked_project_id IS NULL AND COALESCE(cr.status,r.status) IN ('approved','released')))))"
         params=[*args,user['role']=='admin',user['id'],user['id']]
         if project_id:query+=' AND (p.id=? OR s.linked_project_id=?)';params.extend([project_id,project_id])
-        type_expression="CASE WHEN q.stage='test' AND s.document_type='test_report' THEN 'test_report' ELSE COALESCE(q.stage,d.kind) END"
+        type_expression="CASE WHEN s.document_type IN ('mindmap','flowchart') THEN s.document_type WHEN q.stage='test' AND s.document_type='test_report' THEN 'test_report' ELSE COALESCE(q.stage,d.kind) END"
         if kind:query+=' AND '+type_expression+'=?';params.append(kind)
         if status:query+=' AND COALESCE(cr.status,r.status)=?';params.append(status)
         else:query+=" AND COALESCE(cr.status,r.status)!='archived'"
         if library_only:query+=" AND COALESCE(cr.status,r.status) IN ('approved','released') AND (s.library=1 OR p.id IS NOT NULL)"
         if search:
-            query+=' AND (d.title LIKE ? ESCAPE \'\\\' OR p.title LIKE ? ESCAPE \'\\\' OR p.project_number LIKE ? ESCAPE \'\\\' OR q.number LIKE ? ESCAPE \'\\\')'
+            query+=' AND (d.title LIKE ? ESCAPE \'\\\' OR COALESCE(p.title,lp.title) LIKE ? ESCAPE \'\\\' OR COALESCE(p.project_number,lp.project_number) LIKE ? ESCAPE \'\\\' OR COALESCE(q.number,dn.number) LIKE ? ESCAPE \'\\\')'
             term='%'+text(search,180).replace('\\','\\\\').replace('%','\\%').replace('_','\\_')+'%';params.extend([term]*4)
         total=db.execute('SELECT COUNT(*) FROM ('+query+')',params).fetchone()[0]
         rows=[dict(r) for r in db.execute(query+' ORDER BY d.updated_at DESC,d.id LIMIT ? OFFSET ?',(*params,page_size,(page-1)*page_size))]
@@ -280,6 +280,7 @@ def document_register(user,search='',kind='',status='',project_id='',page=1,page
         for r in rows:
             r['status']=r['controlled_status'] or r['status'];r['owner']=people.get(r['controlled_owner'] or r['owner_id'])
             r['type']=r['stage'] or r['kind']
+            if r['space_document_type'] in {'mindmap','flowchart'}:r['type']=r['space_document_type']
             if r['stage']=='test' and r['space_document_type']=='test_report':r['type']='test_report'
             r['section']='meetings' if r['type'] in {'mom','frd','flowchart'} else 'quality' if r['type'] in {'fat','quality','closure'} else 'overview' if r['type']=='plan' else 'documents'
             r['document_number']=r['document_number'] or 'Native '+r['id'][:8].upper()
@@ -291,4 +292,4 @@ def document_register(user,search='',kind='',status='',project_id='',page=1,page
             r['can_delete']=r['can_edit'] and r['status']!='archived'
             if r['library_preview_only']:r['pdf_url']='/api/workhub/documents/'+r['id']+'/library-preview'
         return {'items':rows,'total':total,'page':page,'page_size':page_size,
-                'types':[{'id':k,'label':v} for k,v in {'mom':'Minutes of Meeting','frd':'FRD','flowchart':'Functional Flowchart',**store.STAGES,'test':'Validation Report','test_report':'Test Report','source':'Source document','note':'Engineering note','plan':'Planning proposal'}.items()]}
+                'types':[{'id':k,'label':v} for k,v in {'mom':'Minutes of Meeting','frd':'FRD','flowchart':'Flowchart','mindmap':'Mind Map',**store.STAGES,'test':'Validation Report','test_report':'Test Report','source':'Source document','note':'Engineering note','plan':'Planning proposal'}.items()]}

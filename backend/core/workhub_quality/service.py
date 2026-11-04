@@ -131,7 +131,9 @@ def _confirm(db,user,p,doc,rev):
         for case in content.get('cases',[]):
             if any(rid not in known for rid in case.get('requirement_ids',[])):raise HTTPException(400,'Link only requirements in the approved FRD.')
             if not all(case.get(k) for k in ('objective','procedure','expected_result','acceptance_criteria')):raise HTTPException(400,'Verify each test objective, procedure, expected result and acceptance criterion before confirmation.')
-    if doc['stage'] in {'quality','closure'}:
+    if doc['stage'] in {'quality','closure'} and p.get('is_document_space'):
+        if not content.get('summary') and not any(s.get('text','').strip() for s in content.get('sections',[])):raise HTTPException(400,'Complete the document content before confirming it.')
+    if doc['stage'] in {'quality','closure'} and not p.get('is_document_space'):
         value=checks.report(db,p,doc['stage']=='closure')
         blockers=[b for b in value['blockers'] if b['code']!='approval:closure']
         if blockers:raise HTTPException(409,'Resolve or formally disposition: '+'; '.join(b['title'] for b in blockers[:5]))
@@ -177,7 +179,7 @@ def action(user,pid,key,payload):
                 if not rev['confirmed_at'] or rev['confirmed_hash']!=rev['content_hash']:raise HTTPException(409,'The document has no current human confirmation.')
                 from backend.core.workhub_studio.quality import assert_ready
                 assert_ready(db,p,doc,{**rev,'content':pi.revision(db,rev['id'],doc['document_id'])['content']},doc)
-                if doc['stage'] in {'quality','closure'}:
+                if doc['stage'] in {'quality','closure'} and not p.get('is_document_space'):
                     if doc['stage']=='quality':
                         from backend.core.workhub_delivery import guard as guard_delivery
                         guard_delivery(db,p,'quality_pass',{})
@@ -223,7 +225,7 @@ def action(user,pid,key,payload):
                 from backend.core.workhub_studio.exporting import freeze as freeze_studio
                 freeze_studio(db,p,doc,store.revision(db,doc['id'],rev['id']),user,doc)
                 hub.event(db,p,user,'intelligence_document_approve',{'document_id':doc['document_id'],'revision_id':rev['id'],'kind':doc['stage'],'comment':comment})
-                queue_packages=doc['stage'] in {'quality','closure'};bridge_quality=doc['stage']=='quality' and p['stage']=='quality'
+                queue_packages=doc['stage'] in {'quality','closure'} and not p.get('is_document_space');bridge_quality=doc['stage']=='quality' and p['stage']=='quality' and not p.get('is_document_space')
             else:
                 status='rejected' if action=='reject' else 'correction_required'
                 db.execute('UPDATE qc_revisions SET status=?,reviewed_by=?,reviewed_at=?,confirmed_by=NULL,confirmed_at=NULL,confirmed_hash=NULL,version=version+1 WHERE id=?',(status,user['id'],now,rev['id']))
@@ -251,7 +253,7 @@ def action(user,pid,key,payload):
             store.audit(db,user,pid,action,{'reason':comment},doc['id'],rev['id'])
         else:raise HTTPException(400,'Choose a supported controlled document action.')
     notices=[]
-    if action=='confirm' and doc['stage']=='frd':
+    if action=='confirm' and doc['stage']=='frd' and not p.get('is_document_space'):
         from .authoring import prepare_related
         related=prepare_related(user,pid)
         notices.append(related['notice'])

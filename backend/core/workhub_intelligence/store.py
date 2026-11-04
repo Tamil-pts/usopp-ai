@@ -151,11 +151,15 @@ def create_document(db,user,project_id,kind,title,content,file_id=None,meeting_i
 def save_document(user,project_id,payload,document_id=None):
     initialize()
     with hub.db(True) as db:
-        project(db,project_id,user,write=True)
+        scope=project(db,project_id,user,write=True)
+        if scope.get('document_type') in {'flowchart','mindmap'} and user['role']!='admin' and user['id']!=scope['owner_id']:raise HTTPException(403,'Only the diagram author can edit it; the reviewer records review decisions.')
         kind=document(db,document_id,project_id)['kind'] if document_id else payload.get('kind','note')
         existing=revision(db,document(db,document_id,project_id)['current_revision'],document_id) if document_id else {}
         content=payload.get('content',{})
         if not isinstance(content,dict):raise HTTPException(400,'Provide structured document content.')
+        if scope.get('is_document_space'):
+            from backend.core.workhub_document_information import links
+            content={**content,'document_links':links(db,project_id)}
         validate_content(kind,content)
         if document_id and kind=='mom' and (content.get('meeting_subject') or '').strip():
             db.execute('UPDATE pi_documents SET title=? WHERE id=?',(text(content['meeting_subject'],240,True),document_id))
@@ -166,6 +170,9 @@ def save_document(user,project_id,payload,document_id=None):
 
 def validate_content(kind,value):
     _bounded(value)
+    if 'document_info' in value:
+        from backend.core.workhub_document_information import clean
+        clean(value['document_info'])
     if not isinstance(value.get('sources',[]),list) or any(not isinstance(s,dict) or not isinstance(s.get('id'),str) for s in value.get('sources',[])):raise HTTPException(400,'Use structured source references with source IDs.')
     if kind=='mom':
         for field in ('discussion_summary','decisions','engineering_requirements','actions','clarifications','next_meeting_items'):
@@ -196,11 +203,15 @@ def validate_content(kind,value):
             if any(type(position.get(k)) not in (int,float) or not math.isfinite(position[k]) or abs(position[k])>100000 for k in ('x','y')):raise HTTPException(400,'Use finite diagram positions.')
             text(str(node.get('data',{}).get('label','')),2000)
             data=node.get('data',{})
-            if data.get('kind','process') not in {'start','process','decision','end','alarm','interlock','io'}:raise HTTPException(400,'Choose a supported engineering node type.')
+            if data.get('kind','process') not in {'start','process','decision','end','alarm','interlock','io','topic','subtopic','document','subprocess','note'}:raise HTTPException(400,'Choose a supported engineering node type.')
+            for dimension in ('width','height'):
+                if dimension in node and (type(node[dimension]) not in (int,float) or not math.isfinite(node[dimension]) or not 60<=node[dimension]<=1200):raise HTTPException(400,'Use node dimensions from 60 to 1200 pixels.')
+            if data.get('color') and not re.fullmatch(r'#[0-9a-fA-F]{6}',str(data['color'])):raise HTTPException(400,'Choose a valid node color.')
             refs=data.get('plc_references',[])
             if not isinstance(refs,list) or len(refs)>100 or any(not isinstance(v,str) or len(v)>180 for v in refs):raise HTTPException(400,'Use up to 100 short PLC I/O references per node.')
         for edge in edges:
             if not isinstance(edge,dict) or edge.get('source') not in ids or edge.get('target') not in ids:raise HTTPException(400,'Connect existing diagram nodes.')
+            text(edge.get('label') or '',2000)
         edge_ids=[edge.get('id') for edge in edges]
         if any(not isinstance(key,str) or not key for key in edge_ids) or len(set(edge_ids))!=len(edge_ids):raise HTTPException(400,'Diagram connection IDs must be unique.')
     if kind=='frd':
@@ -281,7 +292,13 @@ def get_document(user,key,doc_id):
         from backend.core.workhub_signoff import history
         current=next((r for r in revisions if r['id']==doc['current_revision']),{})
         can_delete=p['stage']!='released' and current.get('status')!='archived' and (user['role']=='admin' or user['id'] in {p['owner_id'],p['created_by'],doc['created_by'],current.get('created_by')})
-        return {'document':doc,'revisions':revisions,'annotations':annotations,'can_delete':can_delete,'sign_offs':[stamp for rev in revisions for stamp in history(db,rev['id'])]}
+        can_edit=False
+        if p['stage']!='released' and current.get('status') not in {'archived','review','in_review'}:
+            try:project(db,key,user,write=True);can_edit=True
+            except HTTPException as error:
+                if error.status_code not in {403,404}:raise
+        if p.get('document_type') in {'flowchart','mindmap'} and user['role']!='admin' and user['id']!=p['owner_id']:can_edit=False
+        return {'document':doc,'revisions':revisions,'annotations':annotations,'can_edit':can_edit,'can_delete':can_delete,'sign_offs':[stamp for rev in revisions for stamp in history(db,rev['id'])]}
 
 
 def review(user,key,doc_id,payload):
@@ -297,9 +314,11 @@ def review(user,key,doc_id,payload):
         if action=='submit':
             project(db,key,user,write=True)
             if doc['current_revision']!=rev['id'] or rev['status'] not in {'draft','changes_requested'}:raise HTTPException(409,'Submit the latest editable revision.')
+            if doc['kind']=='flowchart' and not rev['content'].get('nodes'):raise HTTPException(400,'Add diagram content before submitting it.')
             from backend.core.workhub_studio.quality import assert_ready
             assert_ready(db,item,doc,rev)
             reviewer=hub.user_id(payload.get('reviewer_id',item['quality_id']))
+            if item.get('is_document_space') and (not item.get('reviewer_id') or reviewer!=item['reviewer_id'] or reviewer==rev['created_by']):raise HTTPException(400,'Choose an independent reviewer in document settings before submitting.')
             db.execute("UPDATE pi_revisions SET status='review',reviewer_id=? WHERE id=?",(reviewer,rev['id']))
             hub.notify(db,item,user['id'],[reviewer],'Document review: '+doc['title'],f'Review revision {rev["number"]} in Project Intelligence.')
         elif action in {'approve','request_changes','reject'}:

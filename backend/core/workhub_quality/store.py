@@ -104,6 +104,13 @@ def policy_row(db,p):
     row=db.execute('SELECT * FROM qc_projects WHERE project_id=?',(p['id'],)).fetchone()
     if row:
         state={**dict(row),'policy':json.loads(row['policy']),'context':json.loads(row['context'])}
+        if p.get('is_document_space'):
+            # Document approval is independent of releasing any linked project.
+            kind='test' if p.get('document_type')=='test_report' else p.get('document_type')
+            state['policy']['required_stages']=[kind] if kind in STAGES else []
+            state['policy']['required_project_fields']=[]
+            state['policy']['independent_review']=True
+            return state
         applicable=state['context'].get('fat_applicable')
         if applicable is False:state['policy']['required_stages']=[s for s in state['policy']['required_stages'] if s!='fat']
         elif applicable is True and 'fat' not in state['policy']['required_stages']:state['policy']['required_stages'].append('fat')
