@@ -15,7 +15,7 @@ import {ProcessingTimePopup} from '../../shared/ProcessingTimePopup';
 import './validation.css';
 import {ValidationSourceEditor,type SourceSelection} from './ValidationSourceEditor';
 import {DEPARTMENTS} from '../rules/library';
-import {MetadataRoadmap,type QualityState,type QualityFocus} from './MetadataQuality';
+import {MissingSheet2Dialog,MetadataRoadmap,type QualityState,type QualityFocus} from './MetadataQuality';
 
 const tabs=[['packets','Configured packets'],['offset','ByteMap'],['metadata','MetaWorks'],['dropdown','Dropdowns'],['write-st','Write ST'],['generated','MetaWorks · Generated'],['uploaded','MetaWorks · Uploaded']] as const;
 export function ValidationPage({workspace:w,metaCols,departments=DEPARTMENTS,projectLink}:{workspace:ValidationWorkspace;metaCols:MetaCol[];departments?:string[];projectLink?:ReactNode}) {
@@ -32,6 +32,8 @@ export function ValidationPage({workspace:w,metaCols,departments=DEPARTMENTS,pro
   const [qualityFocus,setQualityFocus]=useState<(QualityFocus&{source:string})>();
   const [departmentAction,setDepartmentAction]=useState<'metadata'|'validate'|null>(null);
   const [departmentChoice,setDepartmentChoice]=useState('');
+  const [referenceError,setReferenceError]=useState('');
+  useEffect(()=>{if(w.error?.includes('Missing Sheet2 reference:'))setReferenceError(w.error);},[w.error]);
   useEffect(()=>setDraftProject(w.localProjectPath),[w.localProjectPath]);
   useEffect(()=>setDraftMetadata(w.localMetadataPath),[w.localMetadataPath]);
   useEffect(()=>{if(w.generated)setTab('generated');else if(w.result)setTab('packets')},[w.generated,w.result]);
@@ -48,6 +50,7 @@ export function ValidationPage({workspace:w,metaCols,departments=DEPARTMENTS,pro
   };
   useEffect(()=>{if(!departmentAction)return;const previous=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.body.style.overflow=previous}},[departmentAction]);
   return <>
+    <MissingSheet2Dialog message={referenceError} onClose={()=>setReferenceError('')}/>
     <ProcessingTimePopup active={!!w.busy} label={transferring?'Project upload':w.busy==='metadata'?'Metadata generation':w.busy==='validate'?'Project validation':'File preparation'} progress={transferring&&w.uploadProgress?100*w.uploadProgress.uploaded/w.uploadProgress.total:undefined} defaultEstimate={w.busy==='metadata'?55:w.busy==='validate'?75:25}/>
     {departmentAction&&<div className="metadataDepartmentDialog" onClick={event=>{if(event.target===event.currentTarget)setDepartmentAction(null)}} onKeyDown={event=>{if(event.key==='Escape')setDepartmentAction(null)}}><form role="dialog" aria-modal="true" aria-labelledby="metadata-department-title" onSubmit={event=>{event.preventDefault();if(!departmentChoice)return;const action=departmentAction;setDepartmentAction(null);w.setMachineDepartment(departmentChoice);if(action==='metadata')void w.generateMetadata(departmentChoice);else void w.runValidation(departmentChoice)}}><h2 id="metadata-department-title">Select a department</h2><p>Department-specific mappings, units and Data Models need this selection before processing.</p><label>Machine / department<select className="textInput" value={departmentChoice} onChange={event=>setDepartmentChoice(event.target.value)} required autoFocus><option value="">Select department</option>{departments.filter(value=>value&&value.toLowerCase()!=='all').map(value=><option key={value}>{value}</option>)}</select></label><div className="actions"><button type="button" className="btn" onClick={()=>setDepartmentAction(null)}>Cancel</button><button type="submit" className="btn primary" disabled={!departmentChoice}>Continue {departmentAction==='metadata'?'generation':'validation'}</button></div></form></div>}
     <div className="pageHead validationPageHead"><div className="validationHeading"><div className="eyebrow">ENGINEERING WORKSPACE</div><h1>ByteMap</h1><p>Validate SpinConnect packets, offsets and metadata against the selected B&R project. Review workbook edits before using them.</p>{w.result?.downloadExcelUrl&&<a className="btn" href={w.result.downloadExcelUrl}>Download validation report</a>}</div>{projectLink}</div>

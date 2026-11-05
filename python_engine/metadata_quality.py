@@ -107,7 +107,7 @@ def inspect_workbook(sheets, reference=None):
 
     def issue(target, row, check, expected, actual, status='FAIL'):
         item = {'sheet': row.get('sheet', ''), 'row': row.get('row'),
-                'groupCode': row.get('groupCode'), 'parameter': row.get('parameter', ''),
+                'groupCode': row.get('groupCode'), 'tagCode': row.get('tagCode'), 'parameter': row.get('parameter', ''),
                 'check': check, 'expected': expected, 'actual': actual, 'status': status}
         if item not in target:
             target.append(item)
@@ -221,7 +221,7 @@ def inspect_workbook(sheets, reference=None):
             for row in rows:
                 issue(mapping_issues, row, 'Duplicate Sheet2 mapping', 'One mapping per tag, PLC value and variant', len(rows))
     for row in metadata:
-        if row['shownDifferent'] and not any(mapping['tagCode'] == row['tagCode'] and
+        if row['shownDifferent'] and not any(mapping['tagCode'] == row['tagCode'] and mapping['plcValue'] and mapping['shownValue'] and
                 (row['variant'] in {'both', 'all'} or mapping['variant'] in {'both', 'all', row['variant']}) for mapping in mappings):
             issue(mapping_issues, row, 'Missing Sheet2 mapping', f"Mapping for TAG_CODE {row['tagCode']}", 'Not found')
 

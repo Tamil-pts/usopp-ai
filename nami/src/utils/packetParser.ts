@@ -509,11 +509,17 @@ export function parseGroupValues(
         }
       }
       const outsideLimits = typeof actualValue==='number' && ((item.min!==null && actualValue<item.min) || (item.max!==null && actualValue>item.max));
-      const qualityIssue = item.protocol==='ybs' ? (actualValue===null ? `Missing or invalid YBS value at payload offset ${offset} (${dataBytes.length} bytes received).` : outsideLimits ? 'Actual value is outside the metadata limits.' : undefined) : dataQualityIssue(rawValue, item.parameter);
+      let qualityIssue = item.protocol==='ybs' ? (actualValue===null ? `Missing or invalid YBS value at payload offset ${offset} (${dataBytes.length} bytes received).` : outsideLimits ? 'Actual value is outside the metadata limits.' : undefined) : dataQualityIssue(rawValue, item.parameter);
       isInRange = !qualityIssue;
 
       // Check for Dropdown Reference mapping (Sheet 2)
       const isGroup30BitAlarm = item.groupCode === 30 && (item.dropdownOptions || []).some((opt) => opt.isAlarm === true);
+      if(item.protocol!=='ybs'&&item.isShownValueDifferent&&!(item.dropdownOptions||[]).some(option=>
+        String(option.value??'').trim()!==''&&!/^(?:<null>|null|none)?$/i.test(String(option.label??'').trim()))) {
+        qualityIssue=[qualityIssue,`Missing Sheet2 reference for TAG_CODE ${item.tagCode}. Displayed labels are unavailable; review the workbook.`].filter(Boolean).join(' ');
+        isInRange=false;
+        if(typeof rawValue==='boolean')formattedValue=String(rawValue);
+      }
       if (item.protocol!=='ybs' && !isGroup30BitAlarm && item.dropdownOptions && item.dropdownOptions.length > 0 && rawValue !== null && rawValue !== undefined) {
         const matchedOption = item.dropdownOptions.find(
           (opt) => Number(opt.value) === Number(rawValue) || String(opt.value) === String(rawValue)

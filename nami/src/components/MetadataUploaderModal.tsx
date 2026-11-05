@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { X, Upload, FileSpreadsheet, RefreshCw, CheckCircle2, AlertCircle, Layers, AlertTriangle } from 'lucide-react';
 import { MetadataItem, SpinningMachineType } from '../types';
-import { parseCSVMetadata, parseExcelWithDropdownReferences, analyzeMetadata, MetadataAnalysis, MetadataValidationError } from '../utils/metadataParser';
+import { parseCSVMetadata, parseExcelWithDropdownReferences, analyzeMetadata, MetadataAnalysis, MetadataValidationError, requireSheet2References } from '../utils/metadataParser';
 
 interface MetadataUploaderModalProps {
   isOpen: boolean;
@@ -54,7 +54,7 @@ export const MetadataUploaderModal: React.FC<MetadataUploaderModalProps> = ({
         items = result.items;
         sheet2Count = result.dropdownReferences.length;
       } else if (lower.endsWith('.csv') || lower.endsWith('.txt')) {
-        items = parseCSVMetadata(await file.text());
+        items = requireSheet2References(parseCSVMetadata(await file.text()));
       } else {
         throw new Error('Unsupported file. Upload .xlsx, .xls, or .csv.');
       }
@@ -91,7 +91,7 @@ export const MetadataUploaderModal: React.FC<MetadataUploaderModalProps> = ({
         setAnalysis(report);
         setUploadedFileName(file.name);
         const issues = err.issues?.length ? err.issues : [err.message];
-        setMessage({ type: 'error', text: `Metadata analysed but NOT activated. ${issues.length} validation issue(s) found.` });
+        setMessage({ type: 'error', text: `Metadata analysed but NOT activated. ${issues.length} validation issue(s) found.\n${issues.slice(0,12).join('\n')}` });
       } else {
         setMessage({ type: 'error', text: err?.message || 'Failed to read metadata file.' });
       }
@@ -107,7 +107,7 @@ export const MetadataUploaderModal: React.FC<MetadataUploaderModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-6xl w-full flex flex-col max-h-[94vh] overflow-hidden">
+      <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-6xl w-full flex flex-col max-h-[94vh] overflow-hidden" role="dialog" aria-modal="true" aria-label="Metadata validation">
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-700 flex items-center justify-center text-white">
@@ -146,7 +146,7 @@ export const MetadataUploaderModal: React.FC<MetadataUploaderModalProps> = ({
                 {loading ? <RefreshCw className="w-6 h-6 animate-spin" /> : <Upload className="w-6 h-6" />}
               </div>
               <div className="text-sm font-semibold text-white">Upload metadata file for {currentMachineType}</div>
-              <div className="text-xs text-slate-400">.xlsx / .xls / .csv • Excel Sheet 1 = Parameters, Sheet 2 = Dropdown Reference (optional)</div>
+              <div className="text-xs text-slate-400">.xlsx / .xls / .csv • Excel Sheet 1 = Parameters, Sheet 2 = Dropdown Reference (required when shown value is YES)</div>
             </div>
           </div>
 
@@ -161,7 +161,7 @@ export const MetadataUploaderModal: React.FC<MetadataUploaderModalProps> = ({
           {message && (
             <div className={`p-3 rounded-xl text-xs flex items-start gap-2 ${message.type === 'success' ? 'bg-emerald-950/60 border border-emerald-800 text-emerald-300' : 'bg-rose-950/70 border border-rose-800 text-rose-300'}`}>
               {message.type === 'success' ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
-              <span>{message.text}</span>
+              <span role={message.type==='error'?'alert':'status'} className="whitespace-pre-wrap">{message.text}</span>
             </div>
           )}
 

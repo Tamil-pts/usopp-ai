@@ -33,7 +33,8 @@ register, approved library and document workflows.
 Table view uses one scroll area with sticky headers and a compact source-row
 column. Full cell references and value types are available on hover. Missing
 rows stay visibly absent on the appropriate side, and unavailable values remain
-Needs review. PDF and Word retain the existing text layout.
+Needs review. Word and mixed-format text comparisons retain the text layout. For two PDFs,
+the original-page review is described below.
 
 Header filtering operates on the complete saved comparison, before paging.
 Filters on File 1 and File 2 combine, and value lists respect the current
@@ -55,6 +56,52 @@ numbers. The Differences filter includes five surrounding text lines. This view
 does not compare images, page geometry, typography or tracked-change history.
 Scanned PDFs need an OCR/text copy; unreadable pages in a partially readable PDF
 remain Needs review. Use e-design MatchView for visual electrical drawing review.
+
+## Original PDF review ? 4 November 2026
+
+When both uploads are PDFs, **Original PDF pages** opens paired source pages
+with text changes highlighted in place. Choose a page pair, fit to width or
+zoom, toggle highlights and use linked scrolling. The page panes can be resized
+vertically. Click a highlight or a Before/After note to locate the change.
+**Text differences** remains available with five surrounding text lines.
+
+**Ignore printed page numbers** is on by default. Only complete counter labels
+in the outer page margins are excluded, for example `1 / 181`, `Page 1 of 181`
+or `Page 1`, checked against the actual page index/total. Bare numbers remain
+compared. Routine names, program headers, timestamps, tags and PLC operands
+remain evidence. Ignored labels and counts are retained with the result.
+
+Text aligns across page boundaries. Page pairing uses shared text in source
+order; an inserted page remains accessible without an invented counterpart.
+Content may continue onto an adjacent page. The engine compares extracted text;
+ladder connections, symbols drawn as graphics and program execution are outside
+this comparison. Image-only pages in a partially readable PDF stay Needs review.
+
+**PDF exports** provides an all-changes comparison PDF, highlighted Base and
+Compared PDFs, and HTML change notes. The comparison PDF contains Before/After
+notes followed by paired original pages with transparent highlights. Highlighted
+originals retain their page counts and include annotation notes. CSV continues
+to export the selected text filter. All exports include source references;
+HTML/PDF reports retain source hashes. Owner checks and source-hash validation
+also apply to previews, cached downloads and exports.
+
+New PDF endpoints under `/results/{id}` are `GET /pdf-pairs/{pair_id}`,
+`GET /pdf-pages/{base|compared}/{page}.png`, `GET /highlighted-{base|compared}.pdf`,
+`GET /report.pdf`, and `GET /report.html`. They require the same signed-in owner.
+No new dependencies were added.
+
+Verification of the supplied `TSV9444.pdf` / `TSV9445.pdf` samples: 181 / 183
+original pages, 364 ignored printed counters, 183 review pairs, 188 modified
+text lines, 29 added, 1 removed and 3,653 unchanged. These totals include changed
+project headers and timestamps; they are not counts of changed PLC functions.
+Sources were unchanged after comparison and export. The highlighted originals
+retain 181 / 183 pages; the comparison report contains 213 pages including notes.
+Artifacts: `.build/document-pdf-20261104/`.
+
+The update passed 30 focused comparison/API tests, nine integrated browser
+checks, five responsive layouts (320?1,600 px), TypeScript checks and the main
+production build. The local UI/API remains 4.99.3; startup, served assets and
+unchanged account/project counts were checked after the supported restart.
 
 Uploaded copies and results are private to the signed-in account under
 `.usopp_workspaces/document-comparisons/`. Source SHA256 snapshots are checked

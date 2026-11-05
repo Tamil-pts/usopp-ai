@@ -180,6 +180,20 @@ def read_document(name: str, content: bytes):
         import logging
         logging.getLogger(__name__).exception('Could not read the attached report')
         raise HTTPException(422, 'The report could not be read. Attach an unlocked, complete XLSX, XLS or CSV file.')
+    if Path(name).suffix.casefold() in {'.xlsx','.xls','.csv'}:
+        from backend.core.run_history import current_user
+        user=current_user.get()
+        if user:
+            from backend.core.spreadsheet_analysis import upload
+            dataset=upload(user,name,content)
+            if result and result.get('report',{}).get('id'):
+                from backend.core.report_analysis import load_report
+                report,_=load_report(result['report']['id'])
+                headers={}
+                for table in report['tables']:headers.setdefault(table['sheet'],set()).add(table['headerRow'])
+                dataset['header_rows']={sheet:next(iter(values)) for sheet,values in headers.items() if len(values)==1}
+            return {**(result or {'readable':True,'text':f'{name}: {len(dataset["sheets"])} worksheets available for source-based analysis.',
+                                  'notice':'Choose a worksheet and header row to explore its actual cells.'}),'dataset':dataset}
     return result or preview(name, content)
 
 

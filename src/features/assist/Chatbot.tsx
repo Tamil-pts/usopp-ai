@@ -21,6 +21,10 @@ import {ChopperReportSummary,type ReportAnalysis} from './ChopperReportSummary';
 import {ChopperPerformanceDashboard,type ReportSection} from './ChopperPerformanceDashboard';
 import {useReportDashboard} from './reportDashboard';
 import {MachineFunctionAnalysis} from './MachineFunctionAnalysis';
+import {useDatasetWorkspace} from './datasetWorkspace';
+import {DatasetAnalysis,DatasetTitleControls} from './DatasetAnalysis';
+import {useChatWindow,ChatWindowControls} from './ChatWindow';
+import './chat-studio.css';
 
 type Evidence={file:string;line?:number;excerpt?:string;sourceId?:string};
 type HelpEvidence=Evidence&{id:string;sourceId:string;title:string;helpSet:string;truncated?:boolean};
@@ -40,6 +44,8 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
  const [activeWorkbenchCategory,setActiveWorkbenchCategory]=useState<WorkbenchCategory['id']>(questionSuite.categories[0].id),[investigationMode,setInvestigationMode]=useState<'auto'|'deep'>('auto');
  const [messages,setMessages]=useState<ChatMessage[]>([{role:'assist',text:GREETING}]),[attachments,setAttachments]=useState<ChatAttachment[]>([]);
  const reports=attachments.filter(item=>item.kind==='report');const reportManager=useReportDashboard(attachments,user.username);
+ const dataset=useDatasetWorkspace(attachments),chatWindow=useChatWindow();
+ const [analysisKind,setAnalysisKind]=useState<'workbook'|'report'>('workbook'),[dragDepth,setDragDepth]=useState(0);
  const [reportView,setReportView]=useState<'split'|'chat'|'dashboard'>('split'),[reportSection,setReportSection]=useState<ReportSection>('overview'),[reportExpanded,setReportExpanded]=useState(false),[reportTools,setReportTools]=useState(false);
  useEffect(()=>{if(!reportExpanded)return;const before=document.body.style.overflow;document.body.style.overflow='hidden';const close=(event:KeyboardEvent)=>{if(event.key==='Escape')setReportExpanded(false)};window.addEventListener('keydown',close);return()=>{document.body.style.overflow=before;window.removeEventListener('keydown',close)}},[reportExpanded]);
  const [source,setSource]=useState<SourceSelection|null>(null),[sourceNotice,setSourceNotice]=useState(''),[copyNotice,setCopyNotice]=useState('');
@@ -56,7 +62,7 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
  useEffect(()=>{fetch('/api/rules/learning/model').then(r=>r.ok?r.json():{recordCount:0}).then(data=>setLearningCount(Number(data.recordCount||0))).catch(()=>{});return()=>{generation.current++;controller.current?.abort();}},[]);
  useEffect(()=>{if(messages[messages.length-1]?.functionFlow&&!busy&&!reading)flowReplyStart.current?.scrollIntoView({block:'start'});else if(messages.length>1||busy||reading)messageEnd.current?.scrollIntoView({block:'nearest'});},[messages,busy,reading]);
  const reply=(text:string,choices?:Choice[])=>setMessages(current=>[...current,{role:'assist',text,choices}]);
- const newChat=()=>{generation.current++;controller.current?.abort();lock.current=false;pendingDecode.current=false;setBusy(false);setComparisonFocus(false);setProgress(null);setReading(false);setMessages([{role:'assist',text:GREETING}]);setQuestion('');setAttachments([]);setProjectId('');setAttachmentMenu(false);setCopyNotice('');reportManager.reset();setReportSection('overview');setReportView('split');setReportExpanded(false);};
+ const newChat=()=>{generation.current++;controller.current?.abort();lock.current=false;pendingDecode.current=false;setBusy(false);setComparisonFocus(false);setProgress(null);setReading(false);setMessages([{role:'assist',text:GREETING}]);setQuestion('');setAttachments([]);setProjectId('');setAttachmentMenu(false);setCopyNotice('');reportManager.reset();setReportSection('overview');setReportView('split');setReportExpanded(false);setAnalysisKind('workbook');setReportTools(false);};
 
  async function attachProject(files:File[]) {
   if(!files.length||lock.current)return;
@@ -84,6 +90,7 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
    }
    if(turn!==generation.current)return;
    setAttachments(current=>[...current,...added]);const uploaded=added.filter(a=>a.kind==='project');if(uploaded.length)setProjectId(uploaded[uploaded.length-1].id);pendingDecode.current=added.some(a=>a.kind==='log'||a.kind==='metadata')||pendingDecode.current;
+   if(added.some(item=>item.dataset)){setAnalysisKind('workbook');setReportView(window.innerWidth<960?'dashboard':'split');}
    const reportChoices=added.some(a=>a.kind==='report')?[{label:'Analyze reports',action:'suggest:Analyze the attached reports and summarize the main machine results.'},{label:'Highest production',action:'suggest:Which machine has the highest production kg?'},{label:'Highest stoppage and reasons',action:'suggest:Which machine has the highest total stoppage duration and what are its reasons?'}]:undefined;
    reply(notices.join('\n\n'),reportChoices||(added.some(a=>a.kind==='log'||a.kind==='metadata')?[{label:'Decode attached log',action:'decode'}]:undefined));
   }finally{if(turn===generation.current){lock.current=false;setReading(false);setProgress(null);}}
@@ -115,6 +122,12 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
   }
   if(!selectedCapture&&files.some(a=>a.kind==='log')&&(pendingDecode.current||/\b(decode|raw|table|log decoder)\b/i.test(text))) {showLogReply(files);return;}
   if(/\b(decode|log)\b/i.test(text)&&!files.some(a=>a.kind==='log')&&!files.some(a=>a.kind==='document')){showLogReply(files);return;}
+  if(dataset.source&&analysisKind==='workbook'&&!selectedCapture&&!/\b(?:PLC|SpinConnect|ladder|packet|variable|HMI|source code|project|function block|interlock)\b/i.test(text)){
+   lock.current=true;setBusy(true);setProgress({stage:'Calculating from the selected worksheet'});const turn=generation.current;
+   try{const answer=await dataset.answer(text);if(turn===generation.current){reply(answer);setReportView(window.innerWidth<960?'chat':'split');}}
+   catch(problem){if(turn===generation.current)reply((problem as Error).message);}
+   finally{if(turn===generation.current){lock.current=false;setBusy(false);setProgress(null);}}return;
+  }
   lock.current=true;setBusy(true);setProgress({stage:'Preparing project context',elapsedSeconds:0});const turn=generation.current;const abort=new AbortController();controller.current=abort;
   try {
    const normalized=result?normalizeResult(result):null;
@@ -164,11 +177,16 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
  // Keep the investigation landing screen visible while a project or files are
  // being attached. Upload notices are represented by the attachment chips;
  // switch to the conversation layout only after the user sends a question.
- const showWelcome=!messages.some(message=>message.role==='user')&&!busy&&!reading;
+ const showWelcome=messages.length<=1&&!attachments.length&&!busy&&!reading;
  const selectedWorkbenchCategory=questionSuite.categories.find(category=>category.id===activeWorkbenchCategory)||questionSuite.categories[0];
  const indexStatus=intelligence.state?.ready?'Project indexed':intelligence.state?.running?'Indexing project':effectiveProjectPath?'Checking project index':'No project selected';
  const WorkbenchCategoryIcon=WORKBENCH_ICONS[selectedWorkbenchCategory.icon as keyof typeof WORKBENCH_ICONS];
- return <div className={`chopperInterface${reports.length?' hasReports':''}${reportExpanded?' reportExpanded':''}${reportTools?' showReportTools':''}`}>
+ const analytical=dataset.files.length>0||reports.length>0;
+ const fillPrompt=(text:string)=>{setQuestion(text);setReportView(window.innerWidth<960?'chat':'split');requestAnimationFrame(()=>composer.current?.focus());};
+ return chatWindow.render(<div hidden={chatWindow.docked} className={`chopperInterface chopperStudio${reports.length?' hasReports':''}${analytical?' hasDatasets':''}${reportExpanded?' reportExpanded':''}${reportTools?' showReportTools':''}${chatWindow.popped?' studioPopped':''}`} onKeyDown={event=>{if(event.key==='Escape'){setReportExpanded(false);setAttachmentMenu(false);}}} onDragEnter={event=>{if(event.dataTransfer.types.includes('Files')){event.preventDefault();setDragDepth(value=>value+1);}}} onDragLeave={()=>setDragDepth(value=>Math.max(0,value-1))} onDragOver={event=>{if(event.dataTransfer.types.includes('Files'))event.preventDefault();}} onDrop={event=>{event.preventDefault();setDragDepth(0);if(!busy&&!reading)void attach(Array.from(event.dataTransfer.files));}}>
+  <header className="studioTitleBar"><div className="studioIdentity"><span><Bot size={23}/></span><div><b>Chopper</b><small>Engineering & data workspace</small></div></div><DatasetTitleControls manager={dataset}/><ChatWindowControls onUpload={()=>picker.current?.click()} onNew={newChat} tools={reportTools} onTools={()=>setReportTools(value=>!value)} onMinimize={()=>{setReportExpanded(false);chatWindow.minimize();}} fullscreen={reportExpanded} onFullscreen={()=>setReportExpanded(value=>!value)} popped={chatWindow.popped} onPopOut={()=>{setReportExpanded(false);chatWindow.popOut();}} onRestore={chatWindow.restore}/></header>
+  {chatWindow.error&&<p className="studioNotice" role="alert">{chatWindow.error}</p>}
+  {dragDepth>0&&<div className="studioDropOverlay"><Paperclip size={36}/><strong>Drop your files here</strong><span>Excel, CSV, reports, PLC logs or a project ZIP · spreadsheets up to 20 MB</span></div>}
   {source&&sessionId&&<ValidationSourceEditor sessionId={sessionId} selection={source} datatypes={result?.datatypes||[]} onClose={()=>setSource(null)} onSaved={()=>{setSource(null);setSourceNotice('Source saved with backup. Run ByteMap / LogicScan again to refresh findings.');onSourceSaved?.(result?.projectPath||ruleResults?.projectPath||projectPath,projectName)}}/>}
   {sourceNotice&&<p role="status">{sourceNotice}</p>}
   <div className={`chopperWorkspace card${showWelcome?' chopperWelcomeWorkspace':''}`}>
@@ -183,19 +201,14 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
     <div className="chopperLearningBadge"><BrainCircuit size={16}/><div><b>{learningCount}</b><span>learning records</span></div></div>
    </aside>
    <div className="chopperWorkArea">
-   {!!reports.length&&<div className="chopperReportViewBar"><span><BarChart3 size={16}/><b>Performance workspace</b> · {reports.length} reports</span><div className="reportViewButtons"><button className={`btn ${reportView==='chat'?'active':''}`} onClick={()=>setReportView('chat')}><MessageSquare size={13}/>Chat</button><button className={`btn ${reportView==='split'?'active':''}`} onClick={()=>setReportView('split')}><Columns2 size={13}/>Split</button><button className={`btn ${reportView==='dashboard'?'active':''}`} onClick={()=>setReportView('dashboard')}><BarChart3 size={13}/>Dashboard</button><button className="btn" aria-label="Show engineering tools" aria-pressed={reportTools} onClick={()=>setReportTools(value=>!value)}><Settings2 size={13}/></button><button className="btn" aria-label={reportExpanded?'Restore report workspace':'Expand report workspace'} onClick={()=>setReportExpanded(value=>!value)}>{reportExpanded?<Minimize2 size={14}/>:<Maximize2 size={14}/>}</button></div></div>}
-   <div className={`chopperAnalysisLayout${reports.length?` view-${reportView}`:''}`}>
+   {analytical&&<div className="studioViewBar"><div role="group" aria-label="Chat workspace view">{([['chat','Chat',MessageSquare],['split','Split view',Columns2],['dashboard','Results',BarChart3]] as const).map(([id,label,Icon])=><button type="button" key={id} aria-pressed={reportView===id} onClick={()=>setReportView(id)}><Icon size={14}/>{label}</button>)}</div><span>{dataset.files.length} workbook{dataset.files.length===1?'':'s'}</span>{reports.length>0&&<label className="studioAnalysisKind">Analysis<select aria-label="Analysis workspace" value={analysisKind} onChange={event=>setAnalysisKind(event.target.value as 'workbook'|'report')}><option value="workbook">Selected worksheet</option><option value="report">Mill report analytics</option></select></label>}</div>}
+   <div className={`chopperAnalysisLayout${analytical?` view-${reportView}`:' view-chat'}`}>
    <section className={'chopperChat'+(!showWelcome&&responseSize.height!==null?' hasCustomResponseHeight':'')}><header><span className="chopperAvatar"><Bot size={22}/></span><div><b>Chopper</b><span>{reports.length?'Your mill performance assistant':'All uSOPp.ai features in one chat'}</span></div><i><Sparkles size={12}/>Engineering assistant</i></header>
     {!showWelcome&&<div className="chopperContextBanner"><Cpu size={20}/><span>{effectiveProjectPath?<>Project context · <b>{contextLabel}</b></>:'Ready for your questions. Attach a report, project or PLC log to add context.'}</span></div>}
-    {reports.length?<details className="reportEngineeringContext"><summary>Project context</summary><ProjectIntelligence project={intelligence}/></details>:<div className={showWelcome?'workbenchIndexDetails':''}><ProjectIntelligence project={intelligence}/></div>}
+    <details className="studioProjectContext"><summary><Cpu size={13}/>Project context · {effectiveProjectPath?contextLabel:'Optional for chat and spreadsheets'}</summary><ProjectIntelligence project={intelligence}/></details>
     <div className={`chopperMessages${showWelcome?' isWelcome':''}`} ref={responseSize.pane} id={responseSize.id} style={!showWelcome&&responseSize.height!==null?{height:responseSize.height}:undefined} role="log" aria-live="polite">
-     {showWelcome&&<section className="chopperReferenceWelcome" aria-labelledby="chopperWelcomeHeading">
-      <header className="chopperReferenceTop"><div className="chopperReferenceBrand"><span className="chopperReferenceAvatar"><Bot size={17}/></span><div><b>Chopper AI</b><small>PLC Engineering Assistant</small></div></div><span className={`chopperProjectStatus${intelligence.state?.ready?' isReady':''}`}><Activity size={12}/>{indexStatus}</span></header>
-      <div className="chopperReferenceControls"><label>Active engineering project<select aria-label="Active engineering project" value={projectId} disabled={busy||reading} onChange={event=>setProjectId(event.target.value)}><option value="">{effectiveProjectPath?`${contextLabel} (current project)`:'Select or attach a project'}</option>{projects.map(item=><option key={item.id} value={item.id}>{item.projectName||item.name}</option>)}</select></label><div className="chopperModeControl"><span>Investigation mode</span><div role="group" aria-label="Investigation mode"><button type="button" aria-pressed={investigationMode==='auto'} className={investigationMode==='auto'?'active':''} onClick={()=>setInvestigationMode('auto')}>Auto</button><button type="button" aria-pressed={investigationMode==='deep'} className={investigationMode==='deep'?'active':''} onClick={()=>setInvestigationMode('deep')}>Deep</button></div></div></div>
-      <div className="chopperReferenceHero"><Bot size={26}/><h2 id="chopperWelcomeHeading">What would you like to investigate?</h2><p>Ask about PLC logic, machine functions, alarms, runtime faults, code review or engineering documents.</p></div>
-      <p className="chopperWorkbenchHint">{effectiveProjectPath?<>Selected project: <b>{contextLabel}</b>. Answers use indexed evidence where available.</>:'Select a project or attach a PLC project to get source-linked answers. You can also ask general questions without a project.'}</p>
-     </section>}
-     {!showWelcome&&messages.map((message,index)=><div className={'chopperMessage '+message.role+(message.logs?' withLog':'')+(message.functionFlow?' withFlow':'')} key={index} ref={message.functionFlow&&index===messages.length-1?flowReplyStart:undefined}>
+     {showWelcome&&<section className="studioWelcome" aria-labelledby="chopperWelcomeHeading"><span className="studioWelcomeIcon"><Sparkles size={30}/></span><span className="studioEyebrow">YOUR ENGINEERING ASSISTANT</span><h2 id="chopperWelcomeHeading">What would you like to explore?</h2><p>Bring a spreadsheet, review a report, or investigate your PLC project. Start with a question or drop a file into this window.</p><button type="button" className="btn primary" onClick={()=>picker.current?.click()}><Paperclip size={17}/>Attach Excel / CSV or a file</button><div className="studioWelcomeCards">{[['Explore a dataset','Upload a workbook, switch sheets and turn saved data into clear charts.','dataset'],['Decode a PLC log','Inspect captured bytes with the matching metadata.','decode'],['Investigate engineering','Use project evidence to understand functions and findings.','understand']].map(([title,description,action])=><button type="button" key={action} onClick={()=>action==='dataset'?picker.current?.click():choose(action)}><b>{title}<ArrowUpRight size={15}/></b><small>{description}</small></button>)}</div><small>Spreadsheet calculations use saved cell values. Engineering answers retain their source checks.</small></section>}
+     {!showWelcome&&messages.map((message,index)=>index===0&&message.text===GREETING?null:<div className={'chopperMessage '+message.role+(message.logs?' withLog':'')+(message.functionFlow?' withFlow':'')} key={index} ref={message.functionFlow&&index===messages.length-1?flowReplyStart:undefined}>
      {message.role==='assist'&&<span className="messageAvatar"><Bot size={15}/></span>}<div>{message.reportAnalysis&&<ChopperReportSummary data={message.reportAnalysis} compact={!!reports.length}/>} {message.role==='assist'?<ChopperReply text={message.reportAnalysis?.summary||message.text} onReference={id=>{
       const sourceIndex=message.evidence?.findIndex((item,i)=>(item.sourceId||`S${i+1}`)===id)??-1;
       const helpIndex=message.helpEvidence?.findIndex(item=>item.sourceId===id)??-1;
@@ -227,13 +240,13 @@ export function Chatbot({result,comparisonResult,projectPath,projectName,ruleRes
      <input type="file" multiple hidden ref={projectPicker} {...({webkitdirectory:'',directory:''} as any)} onChange={e=>{const files=Array.from(e.target.files||[]);e.target.value='';void attachProject(files);}}/>
      <input type="file" multiple hidden ref={picker} onChange={e=>{const files=Array.from(e.target.files||[]);e.target.value='';void attach(files);}}/>
      <button className="btn chatAttachButton" title="Attach files, a project ZIP or a project folder" aria-label="Attach files to Chopper" disabled={busy||reading} aria-expanded={attachmentMenu} onClick={()=>setAttachmentMenu(value=>!value)}><Paperclip size={16}/>{showWelcome&&<span>Attach</span>}</button>{attachmentMenu&&<div className="chatAttachmentMenu"><button className="btn" onClick={()=>{setAttachmentMenu(false);picker.current?.click()}}>Files / project ZIP</button><button className="btn" onClick={()=>{setAttachmentMenu(false);projectPicker.current?.click()}}>Project folder</button></div>}
-     <textarea ref={composer} aria-label="Message Chopper" value={question} disabled={busy||reading} onChange={e=>setQuestion(e.target.value)} placeholder={reports.length?"Compare report fields, machines, dates, shifts or lots in your own words...":showWelcome?"Describe the PLC behavior you want to investigate...":"Ask about a report, paste a PLC log, or attach files..."} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.nativeEvent.isComposing){e.preventDefault();void ask();}}}/>
+     <textarea ref={composer} aria-label="Message Chopper" value={question} disabled={busy||reading} onChange={e=>setQuestion(e.target.value)} placeholder={dataset.files.length&&analysisKind==='workbook'?'Ask about the selected worksheet, or choose a Dataset Prompt...':reports.length?"Compare report fields, machines, dates, shifts or lots in your own words...":showWelcome?"Ask a question or attach a spreadsheet, report or PLC log...":"Ask about a report, paste a PLC log, or attach files..."} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.nativeEvent.isComposing){e.preventDefault();void ask();}}}/>
      <button className="btn primary" disabled={busy||reading||(!question.trim()&&!attachments.length)} onClick={()=>void ask()}><Send size={14}/> {showWelcome?'Ask Chopper':'Send'}</button>
      <small role="status">{copyNotice||'Attach your reports, metadata or logs and ask a question. Shift + Enter adds a line.'}</small>
     </div>
    </section>
-   {!!reports.length&&<ChopperPerformanceDashboard manager={reportManager} section={reportSection} onSection={setReportSection} onAsk={text=>{setReportView('split');void ask(text)}} disabled={busy||reading}/>}
+   {analytical&&reportView!=='chat'&&(analysisKind==='workbook'&&dataset.files.length?<DatasetAnalysis manager={dataset} onPrompt={fillPrompt}/>:<ChopperPerformanceDashboard manager={reportManager} section={reportSection} onSection={setReportSection} onAsk={text=>{setReportView('split');void ask(text)}} disabled={busy||reading}/>)}
    </div></div>
   </div>
- </div>;
+ </div>);
 }

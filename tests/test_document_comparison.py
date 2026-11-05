@@ -25,6 +25,7 @@ class DocumentComparisonTests(unittest.TestCase):
 
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.stack=ExitStack()
+        self.stack.enter_context(patch.object(comparison,'WORK',Path(self.temp.name)/'work'))
         self.store=accounts.AccountStore(Path(self.temp.name)/'accounts.sqlite3')
         self.stack.enter_context(patch.object(accounts,'store',self.store))
         self.stack.enter_context(patch.object(accounts,'password_hash',return_value=self.hash))

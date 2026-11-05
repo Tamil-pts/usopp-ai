@@ -3,6 +3,7 @@ import { RefreshCw, CheckCircle2, AlertTriangle, AlertCircle, Binary, Copy, Chec
 import { MetadataItem, GroupResponseData, ParsedParamValue } from '../types';
 import {formatDecodedValue} from '../utils/valueDisplay';
 import {metadataRowKey, groupDataModelReferences, type DataModelCheck, type DataModelReference, type DataModelReferenceData} from '../utils/dataModelChecks';
+import {downloadDecoderCsv,responseDecoderRows} from '../utils/decoderCsv';
 import {DataModelReferenceCell} from './DataModelReferenceCell';
 
 interface GroupDataViewProps {
@@ -106,6 +107,7 @@ export const GroupDataView: React.FC<GroupDataViewProps> = ({
 
           {responseData?.testId && <p className="text-xs text-slate-400 font-mono break-all">Test ID: {responseData.testId}</p>}
           <div className="flex flex-wrap items-center gap-3">
+            {responseData&&<button type="button" onClick={()=>downloadDecoderCsv(responseDecoderRows(responseData),`decoded-GC${groupCode}-${responseData.timestamp}.csv`)} className="flex items-center gap-2 px-4 py-2 border border-slate-600 rounded-lg text-xs text-slate-100">Export decoded CSV</button>}
             {/* Poll this group button */}
             <button
               onClick={() => onPollGroup(groupCode)}

@@ -1,11 +1,32 @@
-import {useEffect,useState} from 'react';
+import {useEffect,useState,useRef,useId} from 'react';
 
-export type QualityIssue={sheet?:string;row?:number;groupCode?:number|string;parameter?:string;check:string;expected:unknown;actual:unknown;status:string};
+export type QualityIssue={sheet?:string;row?:number;groupCode?:number|string;tagCode?:number|string;parameter?:string;check:string;expected:unknown;actual:unknown;status:string};
 export type QualityStage={id:string;status:string;checked:number;issues:QualityIssue[];detail:string;workbookStatus?:string;sourceCompared?:boolean};
 export type OffsetQuality={sheet:string;row:number;status:string;offset:number|null;expectedOffsets:number[];sourceOffset:number|null;size:number|null;issues:QualityIssue[]};
 export type QualityReport={ready:boolean;stages:QualityStage[];offsetRows:OffsetQuality[]};
 export type QualityState={report:QualityReport|null;loading:boolean;error:string;dirty?:boolean};
 export type QualityFocus={stage:string;request:number};
+
+export function MissingSheet2Dialog({message,onClose,onReview}:{message:string;onClose:()=>void;onReview?:()=>void}){
+ const title=useId(),box=useRef<HTMLDivElement>(null);
+ useEffect(()=>{if(!message)return;const previous=document.activeElement as HTMLElement|null;box.current?.querySelector<HTMLButtonElement>('button')?.focus();return()=>previous?.focus();},[message]);
+ if(!message)return null;
+ return <div className="metadataDepartmentDialog" onKeyDown={event=>{
+  if(event.key==='Escape'){event.preventDefault();onClose();}
+  if(event.key==='Tab'){
+   const buttons=box.current?.querySelectorAll<HTMLButtonElement>('button');
+   if(buttons?.length){const first=buttons[0],last=buttons[buttons.length-1];
+    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+    else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+   }
+  }
+ }}><div ref={box} role="alertdialog" aria-modal="true" aria-labelledby={title} className="metadataReferenceError">
+  <h2 id={title}>Missing Sheet2 reference</h2><p style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{message}</p>
+  <p>Add the actual PLC value and displayed label for each listed tag. Check the PLC/HMI source or an approved mapping.</p>
+  <div className="actions">{onReview&&<button type="button" className="btn primary" onClick={onReview}>Review Sheet2</button>}
+   <button type="button" className="btn" onClick={onClose}>Close</button></div>
+ </div></div>;
+}
 
 export function useMetadataQuality(input:{workbookPath:string;sheets:unknown[];source:string;referenceSessionId?:string;modelId:string;machineDepartment?:string}){
   const [state,setState]=useState<QualityState>({report:null,loading:false,error:''});

@@ -987,20 +987,41 @@ def export_pdf(result: dict, path: Path, logo: Path):
                         previews.append(pane)
                     story.extend([Table([previews],colWidths=[doc.width/2]*2),Spacer(1,6)])
             if diff.get('category')=='screen':
+                from backend.core.compare_screen_notes import notes as screen_notes,views as screen_views,options as screen_options
                 from reportlab.platypus import Image as ReportImage
-                previews=[]
-                for side,data in screen_previews(diff).items():
-                    if data:
-                        from PIL import Image as PillowImage
-                        size=PillowImage.open(BytesIO(data)).size
-                        factor=min((doc.width/2-12)/size[0],100*mm/size[1])
-                        previews.append([Paragraph(side.title(),project_style),ReportImage(BytesIO(data),width=size[0]*factor,height=size[1]*factor)])
-                    else: previews.append([Paragraph(side.title()+': screen not present',project_style)])
-                if any(len(p)>1 for p in previews):
-                    story.append(Table([previews],colWidths=[doc.width/2]*2))
-                    story.append(Paragraph('Static screen context; configured bitmaps use Released state at level 0. Live values, bitmap indexes and visibility are not simulated. Missing images retain their references.',project_style))
-            for block in _report_blocks(diff):
-                add_block(block)
+                blocks=_report_blocks(diff);notes,markers=screen_notes(diff,blocks,number)
+                for view in screen_views(diff,screen_options(result),markers):
+                    story.append(Paragraph(safe(view['title']),title_style))
+                    story.append(Paragraph(safe(view['note']),project_style))
+                    panes=[]
+                    for side,data in view['previews'].items():
+                        project=base_name if side=='base' else developed_name
+                        pane=[Paragraph(safe(side.title()+' / '+project),project_style)]
+                        if data:
+                            from PIL import Image as PillowImage
+                            with PillowImage.open(BytesIO(data)) as image:size=image.size
+                            factor=min((doc.width/2-12)/size[0],100*mm/size[1])
+                            pane.append(ReportImage(BytesIO(data),width=size[0]*factor,height=size[1]*factor))
+                        else:pane.append(Paragraph('Screen or layer not present on this side.',project_style))
+                        panes.append(pane)
+                    story.extend([Table([panes],colWidths=[doc.width/2]*2),Spacer(1,7)])
+                story.append(Paragraph('Static source configuration. Runtime values and visibility are not simulated. Numbered control markers match the correction-note headings below.',project_style))
+                if notes:
+                    story.append(Paragraph('Correction notes / Base to Developed',category_style))
+                    for note in notes:
+                        story.append(Paragraph(safe(note['id']+' / ['+note['marker']+'] '+note['name']),title_style))
+                        story.append(Paragraph(safe('Control: '+note['identity']+' / Layer: '+note['layer']+' / Type: '+note['class']),project_style))
+                        story.append(Paragraph(safe(note['summary']),project_style))
+                        table_rows=[[Paragraph('<b>Property</b>',project_style),Paragraph('<b>Before / Base</b>',project_style),Paragraph('<b>After / Developed</b>',project_style)]]
+                        for row in note['rows']:
+                            table_rows.append([Paragraph(safe(row['label']),project_style),Paragraph(safe(row['base']),project_style),Paragraph(safe(row['developed']),project_style)])
+                        table=Table(table_rows,colWidths=[doc.width*.24,doc.width*.38,doc.width*.38],repeatRows=1,splitByRow=1,splitInRow=1)
+                        table.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('BACKGROUND',(0,0),(-1,0),colors.HexColor('#eef3f7')),('BACKGROUND',(1,1),(1,-1),colors.HexColor(BASE_TINT)),('BACKGROUND',(2,1),(2,-1),colors.HexColor(DEVELOPED_TINT)),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),5),('BOTTOMPADDING',(0,0),(-1,-1),5)]))
+                        story.extend([table,Spacer(1,9)])
+                for block in blocks:
+                    if not any(row.get('state')!='unchanged' for row in block.get('rows',[])):add_block(block)
+            else:
+                for block in _report_blocks(diff):add_block(block)
 
     if _hardware_blocks(result):heading('Hardware and mapped datapoints','hardware-mappings')
     for block in _hardware_blocks(result):
@@ -1177,20 +1198,44 @@ def export_docx(result: dict, path: Path, logo: Path):
                             cell.add_paragraph().add_run().add_picture(BytesIO(panel_png(records[key],panel,records[other],side)),width=Inches(width))
                         else:cell.add_paragraph('Network not present' if not records[key] else 'No continuation on this side')
             if diff.get('category')=='screen':
-                previews=screen_previews(diff)
-                if any(previews.values()):
-                    table=doc.add_table(rows=1,cols=2)
-                    for index,(side,data) in enumerate(previews.items()):
-                        cell=table.cell(0,index);cell.text=side.title()
+                from backend.core.compare_screen_notes import notes as screen_notes,views as screen_views,options as screen_options
+                blocks=_report_blocks(diff);notes,markers=screen_notes(diff,blocks,number)
+                for view in screen_views(diff,screen_options(result),markers):
+                    doc.add_heading(view['title'],3)
+                    doc.add_paragraph(view['note'])
+                    table=doc.add_table(rows=1,cols=2);table.autofit=False
+                    for index,(side,data) in enumerate(view['previews'].items()):
+                        cell=table.cell(0,index);cell.width=Inches(5.1);cell.text=side.title()+' / '+(base_name if side=='base' else developed_name)
                         if data:
                             from PIL import Image as PillowImage
-                            size=PillowImage.open(BytesIO(data)).size
+                            with PillowImage.open(BytesIO(data)) as image:size=image.size
                             width=min(4.8,3.7*size[0]/size[1])
                             cell.add_paragraph().add_run().add_picture(BytesIO(data),width=Inches(width))
-                        else: cell.add_paragraph('Screen not present')
-                    doc.add_paragraph('Static screen context; configured bitmaps use Released state at level 0. Live values, bitmap indexes and visibility are not simulated. Missing images retain their references.')
-            for block in _report_blocks(diff):
-                add_block(block)
+                        else:cell.add_paragraph('Screen or layer not present on this side.')
+                doc.add_paragraph('Static source configuration. Runtime values and visibility are not simulated. Numbered control markers match the correction-note headings below.')
+                if notes:
+                    doc.add_heading('Correction notes / Base to Developed',2)
+                    for note in notes:
+                        doc.add_heading(note['id']+' / ['+note['marker']+'] '+note['name'],3)
+                        doc.add_paragraph('Control: '+note['identity']+' / Layer: '+note['layer']+' / Type: '+note['class'])
+                        doc.add_paragraph(note['summary'])
+                        table=doc.add_table(rows=len(note['rows'])+1,cols=3);table.style='Normal Table';table.autofit=False
+                        for column,width in zip(table.columns,[2.5,4,4]):column.width=Inches(width)
+                        repeat=OxmlElement('w:tblHeader');repeat.set(qn('w:val'),'true');table.rows[0]._tr.get_or_add_trPr().append(repeat)
+                        columns=[list(column.cells) for column in table.columns]
+                        for index,label in enumerate(['Property','Before / Base','After / Developed']):
+                            columns[index][0].text=label;shade(columns[index][0],'eef3f7')
+                        for i,row in enumerate(note['rows'],1):
+                            for j,key in enumerate(['label','base','developed']):
+                                cell=columns[j][i];cell.text=str(row[key]);cell.vertical_alignment=WD_CELL_VERTICAL_ALIGNMENT.TOP
+                                for paragraph in cell.paragraphs:
+                                    for run in paragraph.runs:run.font.name='Calibri';run.font.size=Pt(10)
+                            shade(columns[1][i],BASE_TINT[1:]);shade(columns[2][i],DEVELOPED_TINT[1:])
+                        doc.add_paragraph()
+                for block in blocks:
+                    if not any(row.get('state')!='unchanged' for row in block.get('rows',[])):add_block(block)
+            else:
+                for block in _report_blocks(diff):add_block(block)
 
     if _hardware_blocks(result):doc.add_heading("Hardware and mapped datapoints", 1)
     for block in _hardware_blocks(result):

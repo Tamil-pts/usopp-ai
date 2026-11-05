@@ -103,6 +103,7 @@ export function parseCSVMetadata(csvText: string): MetadataItem[] {
     isWritable: header.findIndex(h => h.includes('IS_WRITABLE') || h.includes('WRITABLE')),
     bitNo: header.findIndex(h => h.includes('BIT_NO')),
     conditionTagName: header.findIndex(h => h.includes('CONDITION_TAG')),
+    shownDifferent: header.findIndex(h => /^(?:IS_)?SHOWN_VALUE_(?:IS_)?DIFFERENT$/.test(h)),
   };
 
   const requiredColumns: Array<[string, number]> = [
@@ -189,6 +190,7 @@ export function parseCSVMetadata(csvText: string): MetadataItem[] {
       isWritable,
       bitNo,
       conditionTagName,
+      isShownValueDifferent: parseStr(colIndex.shownDifferent)?/^(YES|TRUE|1)$/i.test(parseStr(colIndex.shownDifferent)):undefined,
     });
   }
 
@@ -373,11 +375,35 @@ export function parseExcelWithDropdownReferences(arrayBuffer: ArrayBuffer): {
   }
 
   // Attach dropdown references to items
-  const items = dropdownReferences.length > 0
-    ? attachDropdownsToMetadata(rawItems, dropdownReferences)
-    : rawItems;
+  // Uploaded references identify TAG_CODE. Equal captions on another tag are
+  // not evidence that the missing reference can be substituted.
+  const items = rawItems.map(item=>{
+    const matched=dropdownReferences.filter(reference=>reference.tagCode===item.tagCode);
+    return matched.length?{...item,dropdownOptions:matched.map(reference=>({value:reference.value,label:reference.displayText,
+      machineVariant:reference.machineVariant,isAlarm:reference.isAlarm}))}:item;
+  });
 
+  requireSheet2References(items);
   return { items: items.map(item => ({...item, sheet2MappingVersion: 2})), dropdownReferences };
+}
+
+export function sheet2ReferenceIssues(items:MetadataItem[]):string[] {
+ const clean=(text:unknown)=>String(text??'').trim();
+ const variant=(text:unknown)=>/^(?:both|all|all variants|\*)?$/i.test(clean(text))?'both':clean(text).toLowerCase();
+ return items.flatMap(item=>{
+  if(item.protocol==='ybs'||!item.isShownValueDifferent)return [];
+  const target=variant(item.machineVariants);
+  const valid=(item.dropdownOptions||[]).some(option=>clean(option.value)!==''&&
+   !/^(?:<null>|null|none)?$/i.test(clean(option.label))&&
+   (target==='both'||variant(option.machineVariant)==='both'||variant(option.machineVariant)===target));
+  return valid?[]:[`Missing Sheet2 reference: TAG_CODE ${item.tagCode} (GC ${item.groupCode}, ${item.parameter}) has IS_SHOWN_VALUE_DIFFERENT=YES. Add valid PLCVAL/SHOWNVAL rows for this tag and machine variant.`];
+ });
+}
+
+export function requireSheet2References(items:MetadataItem[]):MetadataItem[] {
+ const issues=sheet2ReferenceIssues(items);
+ if(issues.length)throw new MetadataValidationError(issues.slice(0,8).join('\n')+(issues.length>8?`\n${issues.length-8} more missing references.`:''),items,issues);
+ return items;
 }
 
 /** Old parsed caches have lost SHOWNVAL. Flag them for re-upload rather than
@@ -654,22 +680,19 @@ export function exportMetadataTemplateExcel(
     'BIT_CONDITION': '<null>',
     'TAG_VALUE': '<null>',
     'TAG_CONDITION': '<null>',
-    'IS_SHOWN_VALUE_DIFFERENT': '<null>',
+    'IS_SHOWN_VALUE_DIFFERENT': item.isShownValueDifferent===undefined?'<null>':item.isShownValueDifferent?'YES':'NO',
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(rows);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, `${machineType} Metadata`);
 
-  // Sheet 2: Dropdown Reference
-  const dropdownRows = STANDARD_DROPDOWN_REFERENCES.map((ref) => ({
-    'TAG_CODE': ref.tagCode,
-    'PARAMETER': ref.parameter,
-    'VALUE': ref.value,
-    'DISPLAY_TEXT': ref.displayText,
-  }));
-  const dropdownSheet = XLSX.utils.json_to_sheet(dropdownRows);
-  XLSX.utils.book_append_sheet(workbook, dropdownSheet, 'Dropdown Reference');
+  requireSheet2References(sampleItems);
+  const dropdownRows=sampleItems.flatMap(item=>(item.dropdownOptions||[]).map(option=>({TAG_CODE:item.tagCode,
+    PLCVAL:option.value,SHOWNVAL:option.label,'MACHINE VARIANT':option.machineVariant||'BOTH',IS_ALARM:option.isAlarm?'YES':'NO'})));
+  const uniqueRows=[...new Map(dropdownRows.map(row=>[JSON.stringify(row),row])).values()];
+  const dropdownSheet = XLSX.utils.json_to_sheet(uniqueRows,{header:['TAG_CODE','PLCVAL','SHOWNVAL','MACHINE VARIANT','IS_ALARM']});
+  XLSX.utils.book_append_sheet(workbook, dropdownSheet, 'Sheet2');
 
   const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
   return new Uint8Array(excelBuffer);

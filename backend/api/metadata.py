@@ -267,7 +267,13 @@ def save_copy(payload):
                 wb.remove(alarm_sheet)
         apply_duplicate_highlights(wb)
         from python_engine.metadata_quality import inspect_workbook
-        offset_report=inspect_workbook(sheets,quality_reference(payload,source))
+        checked_sheets=[sheet_data(ws.title,value_rows(ws)) for ws in wb.worksheets]
+        offset_report=inspect_workbook(checked_sheets,quality_reference(payload,source))
+        missing=[issue for issue in offset_report['stages'][1]['issues'] if issue['check']=='Missing Sheet2 mapping']
+        if missing:
+            raise HTTPException(422,'Missing Sheet2 reference: '+ '; '.join(
+                f"TAG_CODE {issue['tagCode']} (GC {issue['groupCode']}, {issue['sheet']} row {issue['row']}, {issue['parameter']})"
+                for issue in missing[:20])+'. IS_SHOWN_VALUE_DIFFERENT=YES requires valid PLCVAL/SHOWNVAL rows for the same tag and machine variant. Correct the reference before saving or exporting.')
         apply_offset_highlights(wb,offset_report['stages'][0]['issues'])
         issues=normalize_metadata_workbook(wb)
         if issues: raise HTTPException(400,{'message':'MIN/MAX and scale/offset factors must be numeric or null for SpinConnect.', 'cells':issues[:100]})

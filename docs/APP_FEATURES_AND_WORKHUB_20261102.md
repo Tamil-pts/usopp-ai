@@ -6,6 +6,10 @@ Follow-up changes: [six delivery handoffs and landing copy](WORKHUB_DELIVERY_202
 
 uSOPp.ai combines engineering checks, project delivery, controlled documents and
 technical investigation. The landing page now presents these areas together.
+PLC MatchView also supports [printed PLC block/network and pixel comparison](PLC_PDF_MATCHVIEW_20261105.md).
+Metadata and decoder updates are documented in [required Sheet2 references and CSV export](SHEET2_REFERENCES_DECODER_CSV_20261105.md).
+The [Chopper chat and spreadsheet workspace](CHAT_STUDIO_20261105.md) adds direct
+workbook uploads, sheet switching, native interactive charts, pivots and window controls.
 The top bar groups profile/password/sign-out into an accessible account menu,
 retains notifications and theme switching, and shows a compact build indicator.
 The complete UI/API version is available in the account menu. It is a build
@@ -51,6 +55,11 @@ Flowchart and Mind Map workspaces](WORKHUB_INDEPENDENT_DOCUMENTS_20261104.md).
 Document creation now gives each document its own identity, with optional
 project prefilling and FRD links. Diagrams have separate numbers, revisions,
 manual drawing tools and reviewable Chopper proposals.
+
+Editing and interface update: [document workspace usability, test-case cards
+and diagram starter templates](WORKHUB_DOCUMENT_UX_20261104.md). MOM opens in the
+workspace, reports offer clearer save/edit controls, and the FRD editor omits
+the Additional engineering details option.
 
 Team Management shows actual resource totals, assigned/available capacity,
 roles/skills, workload and project progress. Engineers can search/filter resources,

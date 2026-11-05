@@ -1,6 +1,6 @@
 import {useEffect,useMemo,useRef,useState,type PointerEvent,type KeyboardEvent} from 'react';
 import {Expand,Minimize2,MoveDiagonal2} from 'lucide-react';
-import {qualityDescription,useMetadataQuality,type QualityState,type QualityFocus} from './MetadataQuality';
+import {MissingSheet2Dialog,qualityDescription,useMetadataQuality,type QualityState,type QualityFocus} from './MetadataQuality';
 import {MetadataRenameDialog,type MetadataRename} from './MetadataRenameDialog';
 
 type Sheet={name:string;headers:string[];rows:Record<string,any>[]};
@@ -42,6 +42,7 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
   const [duplicateFilter,setDuplicateFilter]=useState<'all'|'duplicate'|'unique'>('all');
   const [offsetFilter,setOffsetFilter]=useState('all');
   const [qualityNotice,setQualityNotice]=useState('bytes');
+  const [referenceError,setReferenceError]=useState('');const seenReferenceError=useRef('');
   const [coverageOpen,setCoverageOpen]=useState(false);
   const [models,setModels]=useState<DataModel[]>([]);
   const [modelId,setModelId]=useState('');
@@ -88,6 +89,14 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
     return()=>{cancelled=true};
   },[sheets.length,source,machineDepartment]);
   useEffect(()=>{
+    if(quality.loading||!quality.report)return;
+    const missing=quality.report.stages.find(stage=>stage.id==='sheet2')?.issues.filter(issue=>issue.check==='Missing Sheet2 mapping')||[];
+    const key=JSON.stringify([workbook,missing]);
+    if(!missing.length){seenReferenceError.current='';setReferenceError('');return;}
+    if(seenReferenceError.current===key)return;seenReferenceError.current=key;
+    setReferenceError(missing.slice(0,20).map(issue=>`TAG_CODE ${issue.tagCode} ? GC ${issue.groupCode} ? ${issue.sheet} row ${issue.row}: ${issue.parameter}`).join('\n')+'\nIS_SHOWN_VALUE_DIFFERENT=YES requires valid PLCVAL/SHOWNVAL rows for the same tag and machine variant.');
+  },[quality.report,quality.loading,workbook]);
+  useEffect(()=>{
     if(!qualityFocus)return;
     setQualityNotice(qualityFocus.stage);
     if(qualityFocus.stage==='bytes'){setDuplicateFilter('all');setOffsetFilter(quality.report?.stages.find(stage=>stage.id==='bytes')?.issues.length?'issues':'all');const main=sheets.findIndex(sheet=>normalizedHeader(sheet.name)!=='sheet2');if(main>=0)setActive(main)}
@@ -126,7 +135,7 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
       const j=await r.json();if(!r.ok)throw new Error(typeof j.detail==='string'?j.detail:j.detail?.message+' '+(j.detail?.cells||[]).map((c:any)=>`${c.sheet}!${c.cell}: ${c.value}`).join('; ')||'Save failed');
       setWorkbook(j.workbookPath);setDownload(j.downloadUrl);setDirty(false);setEdit(false);setMessage('Saved all worksheets to '+j.fileName);
       if(exportFile){const link=document.createElement('a');link.href=j.downloadUrl;link.download=j.fileName;link.click()}
-    }catch(e:any){setMessage(e.message)}finally{setBusy(false)}
+    }catch(e:any){setMessage(e.message);if(e.message.includes('Missing Sheet2 reference:'))setReferenceError(e.message)}finally{setBusy(false)}
   };
 
   const sheet=sheets[active];
@@ -223,6 +232,7 @@ export function WorkbookViewer({path,sessionId,source,projectName,machineDepartm
   };
 
   return <section id={`metadata-workbook-${source}`} className="card workbookViewer">
+    <MissingSheet2Dialog message={referenceError} onClose={()=>setReferenceError('')} onReview={()=>{setReferenceError('');const index=sheets.findIndex(sheet=>normalizedHeader(sheet.name)==='sheet2');if(index>=0)setActive(index);setEdit(true);}}/>
     <div className="panelHead"><div><h2>{source==='generated'?'MetaWorks · Generated':'MetaWorks · Uploaded / selected'}</h2><p>{sheet?.rows.length||0} rows · {sheets.length} worksheets{dirty?' · Unsaved edits':''}</p></div>
       <div className="actions"><button className="btn" disabled={busy||!sheet} onClick={()=>{if(!renameOpen.current)setEdit(!edit)}}>{edit?'Finish editing':'Edit'}</button><button className="btn" disabled={busy||!dirty} onClick={()=>save()}>Save copy</button><button className="btn primary" disabled={busy||!sheet} onClick={()=>save(true)}>Export XLSX</button>{download&&<a className="btn" href={download}>Download saved copy</a>}{onUse&&workbook&&<button className="btn" disabled={dirty||busy} onClick={()=>onUse(workbook,workbook.split(/[\\/]/).pop()||'Metadata')}>Use for validation</button>}</div></div>
     <p role="status">{message}</p>

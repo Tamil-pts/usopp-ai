@@ -78,6 +78,7 @@ PACKET_CONTROL_CHECK_TYPES = {
     "Alarm Array Bounds", "Alarm Array Missing", "Alarm Loop Bounds", "Alarm Buffer Mismatch",
     "Alarm Packing Sequence", "Alarm Buffer Capacity", "Alarm Copy Start", "Alarm Copy Size",
     "Alarm Copy Missing", "Alarm Packing Ambiguous", "Alarm Bit Position", "Alarm Bit Collision",
+    "Sheet2 Reference Missing",
 }
 
 PACKET_HEADER_BYTES = 5
@@ -1639,6 +1640,41 @@ def load_metadata() -> MetadataInfo:
             metadata[item.group_code].append(item)
     return MetadataInfo(path=metadata_path,rows=metadata,issues=issues,workbook=workbook)
 
+def required_sheet2_issues(metadata_info: MetadataInfo) -> List[ValidationIssue]:
+    """Validate required references even when no matching HMI control exists."""
+    required = [row for rows in metadata_info.rows.values() for row in rows
+                if str(row.shown_value_different).strip().upper() in {"YES", "TRUE", "1"}]
+    if not required:
+        return []
+    headers = ['Parameters', 'GROUP_CODE', 'TAG_CODE', 'TAG_DATA_TYPE', 'OFFSET', 'Machine Varients', 'IS_SHOWN_VALUE_DIFFERENT']
+    sheets = [{'name': 'Required references', 'headers': headers, 'rows': [dict(zip(headers, [
+        row.parameter, row.group_code, row.tag_code, row.datatype, row.offset, row.machine_variants, 'YES'])) for row in required]}]
+    def reference_sheet(name, values):
+        if sheet2_variant_key(name) != 'sheet2' or not values:
+            return
+        keys = [str(value or '') for value in values[0]]
+        sheets.append({'name':'Sheet2','headers':keys,'rows':[dict(zip(keys,row)) for row in values[1:]]})
+    if metadata_info.workbook is not None:
+        for sheet in metadata_info.workbook.worksheets:
+            if normalize_name(sheet.title).casefold() == 'sheet2': reference_sheet(sheet.title,value_rows(sheet))
+    elif metadata_info.path and metadata_info.path.suffix.lower() == '.xls':
+        book = xlrd.open_workbook(str(metadata_info.path), on_demand=True)
+        try:
+            for sheet in book.sheets():
+                if normalize_name(sheet.name).casefold() == 'sheet2':reference_sheet(sheet.name,[sheet.row_values(i) for i in range(sheet.nrows)])
+        finally:book.release_resources()
+    from python_engine.metadata_quality import inspect_workbook
+    missing = [issue for issue in inspect_workbook(sheets)['stages'][1]['issues'] if issue['check']=='Missing Sheet2 mapping']
+    result = []
+    for issue in missing:
+        row = required[issue['row']-2]
+        result.append(create_issue(row.group_code,row.parameter,row.description,'Sheet2 Reference Missing',
+            f'Valid PLCVAL/SHOWNVAL rows for TAG_CODE {row.tag_code} ({row.machine_variants or "BOTH"})','NOT FOUND',
+            row.sheet_name,row.row_number,
+            f'Missing Sheet2 reference: TAG_CODE {row.tag_code} has IS_SHOWN_VALUE_DIFFERENT=YES. Add the actual PLC values and displayed labels for this tag and machine variant, using the PLC/HMI source or an approved mapping.'))
+    return result
+
+
 def english_text_values(node) -> Dict[str, str]:
     """Read one English layer, including regional AS language IDs such as en-US.
 
@@ -2723,8 +2759,8 @@ def parse_group(
     block = lines[start_line - 1 : end_line + 1]
     clean_block = packet_code_lines("\n".join(lines))[start_line - 1 : end_line + 1]
     source_file = str(safe_relative_path(path))
-    # GC10's single program-version copy can address payload byte 5 directly.
-    # Other groups and any layout using nw_i retain the cursor checks.
+    # Single fixed copies don't use nw_i. GC30's fault-buffer layout is an
+    # accepted warning; mixed/conditional layouts retain all cursor checks.
     group_code_text = "\n".join(clean_block)
     fixed_version_payload = (
         code == 10
@@ -2733,6 +2769,28 @@ def parse_group(
         and bool(re.search(r"\bmemcpy\s*\(\s*ADR\(\s*nw_snd_buffer\s*\[\s*5\s*\]\s*\)", group_code_text, re.I))
         and not re.search(r"nw_snd_buffer\s*\[\s*(?:[5-9]|\d{2,})\s*\]\s*:=", group_code_text, re.I)
     )
+    fixed_copies = list(re.finditer(
+        r"\bmemcpy\s*\(\s*ADR\((.+?)\)\s*,\s*ADR\((.+?)\)\s*,\s*(.+?)\s*\)\s*;",
+        group_code_text, re.I,
+    ))
+    fixed_fault_payload = (
+        code == 30
+        and not re.search(r"\bnw_i\b", group_code_text, re.I)
+        and len(fixed_copies) == 1
+        and bool(re.fullmatch(r"\s*nw_snd_buffer\s*\[\s*5\s*\]\s*", fixed_copies[0][1], re.I))
+        and bool(re.fullmatch(r"\s*[A-Za-z_]\w*\s*\[\s*\d+\s*\]\s*", fixed_copies[0][2]))
+        and not re.match(r"\s*nw_(?:snd|rcv)_buffer\s*\[", fixed_copies[0][2], re.I)
+        and (evaluate_size_expr(fixed_copies[0][3], fixed_copies[0][2]) or 0) > 0
+        and not re.search(r"(?im)^\s*(?:IF|ELSIF|ELSE|CASE|FOR|WHILE|REPEAT)\b", group_code_text)
+        and all(re.fullmatch(r"\s*[0-4]\s*", index) for index in re.findall(
+            r"\bnw_snd_buffer\s*\[([^]]+)\]\s*:=", group_code_text, re.I))
+    )
+    if fixed_fault_payload:
+        fixed_source_type = resolve_type_info(fixed_copies[0][2])
+        if fixed_source_type is not None:
+            fixed_source_type = dereference_type(fixed_source_type)
+            if fixed_source_type.kind in {"bool", "string"} or normalize_type_name(format_type_info(fixed_source_type)) == "BOOL":
+                fixed_fault_payload = False
     active_states: List[_PacketPathState] = [_PacketPathState()]
     conditional_stack: List[dict] = []
     operation_sequence = 0
@@ -3071,7 +3129,7 @@ def parse_group(
 
     def finalize_variant(state: _PacketPathState, variant_index: int) -> dict:
         validate_path(state)
-        if fixed_version_payload and len(state.parameters) == 1:
+        if (fixed_version_payload or fixed_fault_payload) and len(state.parameters) == 1:
             state.pending_index = None
         if state.pending_index is not None and state.pending_index < len(state.parameters):
             parameter = state.parameters[state.pending_index]
@@ -3210,7 +3268,7 @@ def parse_group(
             "configuredBytes": configured_bytes,
             "writtenBytes": written_bytes,
             "cursorBytes": cursor_bytes,
-            "addressingMode": "fixed" if fixed_version_payload else "cursor",
+            "addressingMode": "fixed" if fixed_version_payload or fixed_fault_payload else "cursor",
             "calculatedByOffset": calculated_by_offset,
             "responseLengthSet": state.response_length_line is not None,
             "responseEnabled": state.response_trigger_value.upper() in {"TRUE", "1"},
@@ -3442,7 +3500,7 @@ def parse_group(
                     }],
                     condition_context=condition,
                 )
-                if not state.cursor_initialized and not state.initialization_reported and not fixed_version_payload:
+                if not state.cursor_initialized and not state.initialization_reported and not (fixed_version_payload or fixed_fault_payload):
                     parameter_issue(
                         state,
                         parameter,
@@ -3487,6 +3545,35 @@ def parse_group(
                         parameter_issue(state, parameter, "Data Type Size", expected_size, memcpy_size, rel_idx, "Match the memcpy size to the resolved datatype size.")
                 if running_offset is not None and running_offset != state.expected_offset:
                     parameter_issue(state, parameter, "Offset", state.expected_offset, running_offset, rel_idx, "Start the memcpy at the expected running offset.")
+                if fixed_fault_payload:
+                    parameter.sequence_validation = "WARNING"
+                    parameter.increment_relation = "FIXED-GC30"
+                    parameter_issue(
+                        state, parameter, "GC30 Fixed Bulk Copy",
+                        "Single fixed-address fault payload starting at buffer byte 5",
+                        f"{dest_expr} <- {src_expr}, {memcpy_size} bytes",
+                        rel_idx,
+                        "Accepted with warning: this single Group 30 copy uses a fixed payload address, so nw_i initialization and increment are not required. Review the fault packing and metadata. If more payload fields or conditional writes are added, use the normal cursor-based layout and revalidate.",
+                        severity="WARNING",
+                    )
+                    for expression, kind in ((src_expr, "Packet Source Bounds"), (dest_expr, "Packet Destination Bounds")):
+                        indexed = re.fullmatch(r"\s*([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]\s*", expression)
+                        array_type = resolve_type_info(indexed[1]) if indexed else None
+                        array_type = dereference_type(array_type) if array_type is not None else None
+                        if array_type is None or array_type.kind != "array" or array_type.array_range is None:
+                            continue
+                        element_type = dereference_type_name(array_type.base) if array_type.base else None
+                        element_size = size_from_type_info(element_type) if element_type is not None else None
+                        low, high = array_type.array_range
+                        first = int(indexed[2])
+                        available = max(0, high - first + 1) * element_size if element_size else None
+                        if first < low or first > high or (available is not None and memcpy_size > available):
+                            parameter_issue(
+                                state, parameter, kind,
+                                f"{indexed[1]}[{low}..{high}]" + (f"; {available} bytes available from index {first}" if available is not None else ""),
+                                f"{memcpy_size} bytes from {expression}", rel_idx,
+                                "Keep the entire fixed copy within the declared array bounds. Correct the starting index, buffer capacity or copy length, then recalculate the Group 30 size and metadata.",
+                            )
                 add_parameter(state, parameter)
             continue
 
@@ -4461,6 +4548,7 @@ def build_group_results(
     metadata_map = metadata_info.rows
     metadata_issues = metadata_info.issues
     metadata_enabled = metadata_compare_enabled and metadata_path is not None and bool(metadata_map)
+    reference_issues = required_sheet2_issues(metadata_info) if metadata_enabled else []
 
     groups_found: List[Tuple[Path, int, str, int, int]] = []
     duplicate_group_issues: List[ValidationIssue] = []
@@ -4528,6 +4616,13 @@ def build_group_results(
             group_issues,
             packet_variants,
         ) = parse_group(path, code, description, start_line, end_line, include_variants=True, validate_response_setup=True)
+        missing_references = [issue for issue in reference_issues if str(issue.group_code) == str(code)]
+        group_issues.extend(missing_references)
+        if missing_references:
+            for variant in packet_variants:
+                variant['status'] = 'FAIL'
+                variant['packetCalResult'] = 'FAIL — Required Sheet2 reference is missing'
+                variant['issues'].extend(packet_issue_json(issue) for issue in missing_references)
         if code == 30:
             alarm_issues = validate_alarm_packings(alarm_packings, packet_parameters)
             group_issues.extend(alarm_issues)
@@ -5148,8 +5243,8 @@ def _build_generated_sheet2(
         source: str,
         priority: int,
     ) -> None:
-        shown = str(shown_value or "").strip()
-        if not shown:
+        shown = str(shown_value if shown_value is not None else "").strip()
+        if tag_code in (None, "") or not shown or shown.casefold() in {"<null>", "null", "none"}:
             return
         variant = str(machine_variant or "BOTH").strip() or "BOTH"
         if sheet2_variant_key(variant) == "both":
@@ -5264,29 +5359,22 @@ def _build_generated_sheet2(
             # Match the final variable token as well as the full normalized value.
             final_logic = raw_logic.split(".")[-1].strip()
             final_key = normalize_name(final_logic)
-            tag_code = tag_by_parameter.get(param_key, tag_by_parameter.get(final_key, ""))
+            tag_codes = tag_by_parameter.get(param_key, tag_by_parameter.get(final_key, []))
+            if not isinstance(tag_codes, (list, tuple, set)):
+                tag_codes = [tag_codes]
             # Converted BOOL uses the deterministic mapping above rather than
             # a page-specific label such as Enabled/Disabled.
-            if normalize_bool_metadata_mode(BOOL_METADATA_MODE) == "USINT" and tag_code in bool_tag_codes:
-                continue
-            if tag_code in master_dropdown_pairs_by_tag:
-                continue
             pairs = _parse_dropdown_pairs(dr.text_group_values)
             # Sheet2 is PLC metadata. A display-only dropdown with no packet
             # TAG_CODE is deliberately excluded from this five-column sheet.
-            if tag_code == "":
-                continue
-
-            for plc_val, shown_val in pairs:
-                add_mapping(
-                    tag_code,
-                    plc_val,
-                    shown_val,
-                    family,
-                    "NO",
-                    f"HMI TextGroup: {dr.page_file} / {dr.control_name}",
-                    2,
-                )
+            for tag_code in tag_codes:
+                if normalize_bool_metadata_mode(BOOL_METADATA_MODE) == "USINT" and tag_code in bool_tag_codes:
+                    continue
+                if tag_code in master_dropdown_pairs_by_tag:
+                    continue
+                for plc_val, shown_val in pairs:
+                    add_mapping(tag_code, plc_val, shown_val, family, "NO",
+                                f"HMI TextGroup: {dr.page_file} / {dr.control_name}", 2)
 
     # A mapping common to every selected display target belongs to the main
     # metadata's BOTH scope. One selected target also has no variant-specific
@@ -5619,9 +5707,11 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
             plc_parameter = naming['plc_parameter']
             plc_tag = naming['plc_tag']
             metadata_parameter, mapping_source = metadata_display_name(naming['parameter']), naming['mapping_source']
-            tag_by_parameter.setdefault(normalize_name(plc_tag), tag_code)
-            tag_by_parameter.setdefault(normalize_name(plc_parameter), tag_code)
-            tag_by_parameter.setdefault(normalize_name(metadata_parameter), tag_code)
+            # Bind HMI variable identities, not coincidentally equal captions.
+            for identity in (plc_tag,):
+                tags = tag_by_parameter.setdefault(normalize_name(identity), [])
+                if tag_code not in tags:
+                    tags.append(tag_code)
             if grp.code == 30:
                 alarm_byte = re.fullmatch(r"([A-Za-z_]\w*(?:\.\w+)*)\s*\[\s*(\d+)\s*\]", plc_tag, re.I)
                 if alarm_byte and alarm_byte.group(1).casefold() in alarm_buffers:
@@ -5642,7 +5732,6 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
                 converted_bool
                 or has_alarm_mapping
                 or normalize_name(plc_tag) in hmi_parameters
-                or normalize_name(plc_parameter) in hmi_parameters
             ) else "<null>"
             if approved_dropdown_pairs:
                 shown_diff = "YES"
@@ -5732,6 +5821,19 @@ def generate_metadata_workbook(output_excel_path: Path, output_json_path: Option
         configured_dropdown_pairs_by_tag, alarm_source_records,
         sheet2_mapping_warnings,
     )
+    # Check the displayed-value promise before publishing either JSON or XLSX.
+    mapped_tags = {str(row[0]) for row in sheet2_rows[1:]
+                   if row[1] not in (None, "") and str(row[2]).strip().casefold() not in {"", "<null>", "null", "none"}}
+    missing_references = [
+        f"TAG_CODE {record['tag_code']} (GC {record['group_code']}, row {index+2}, {record['parameter']})"
+        for index, record in enumerate(all_params)
+        if record['is_shown_value_different'] == 'YES' and str(record['tag_code']) not in mapped_tags
+    ]
+    if missing_references:
+        wb.close()
+        raise ValueError('Missing Sheet2 reference: ' + '; '.join(missing_references[:20])
+                         + (f'; and {len(missing_references)-20} more' if len(missing_references)>20 else '')
+                         + '. IS_SHOWN_VALUE_DIFFERENT=YES requires valid PLCVAL/SHOWNVAL rows for the same tag. Resolve the HMI TextGroup or approved mapping; labels have not been invented.')
     for row in sheet2_rows:
         sheet2.append(row)
     for cell in sheet2[1]:

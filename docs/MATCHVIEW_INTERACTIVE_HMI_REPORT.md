@@ -1,5 +1,8 @@
 # MatchView HMI report screen
 
+Printable report follow-up: [screen identification, layer views and clearer
+PDF/Word correction notes](MATCHVIEW_SCREEN_CORRECTIONS_20261104.md).
+
 Updated 2 November 2026 using the Existing / How actual need screenshots in `match view report screen sample.docx` as the visual reference.
 
 This updates the existing **MatchView → Reports / download → HTML** export through the existing export handler. There is no additional report type, menu or separate authoring workflow.

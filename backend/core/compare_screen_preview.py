@@ -20,7 +20,7 @@ def _font(path, size):
     return ImageFont.truetype(path, size) if path else ImageFont.load_default()
 
 
-def preview_png(layout):
+def preview_png(layout, *, show_control_names=False, annotations=None):
     if not layout or not layout.get('layers'):
         return None
     from PIL import Image, ImageDraw, ImageFont
@@ -53,6 +53,7 @@ def preview_png(layout):
     if not paste_bitmap(image, background_asset) and background:
         ImageDraw.Draw(image).text((8, 8), 'Bitmap unavailable: ' + str(background.get('file') or background.get('name') or background.get('reference') or ''), fill='#975719')
     font_path=next((str(p) for p in [Path('C:/Windows/Fonts/arial.ttf'),Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')] if p.exists()),None)
+    name_tags=[]
     for layer in layout['layers']:
         if layer.get('hidden'): continue
         for control in layer.get('controls') or []:
@@ -99,14 +100,29 @@ def preview_png(layout):
                 draw.text((max(2,x_text),y_text),line,font=font,fill=color(props.get('ForeColor'),'#182738'))
                 y_text+=max(6,int(size*scale*1.2))
             image.paste(panel,(x,y),panel)
+            if show_control_names:
+                marker=(annotations or {}).get(str(control.get('id') or ''))
+                name=str(control.get('name') or control.get('id') or 'Unnamed control')
+                name_tags.append((x,y,(str(marker)+' ' if marker else '')+name,border))
+    if name_tags:
+        draw=ImageDraw.Draw(image);name_font=_font(font_path,max(8,int(9*scale)))
+        for x,y,label,border in name_tags:
+            # Names are an inspection overlay; never replace the configured caption.
+            box=draw.textbbox((0,0),label,font=name_font);tw=box[2]-box[0]+8;th=box[3]-box[1]+7
+            left=max(0,min(x,image.width-tw));top=max(0,min(y-th,image.height-th))
+            draw.rectangle((left,top,min(image.width-1,left+tw),top+th),fill='#ffffff',outline=border)
+            draw.text((left+4,top+3-box[1]),label,font=name_font,fill='#172033')
     stream=BytesIO();image.save(stream,format='PNG');return stream.getvalue()
 
 
-def screen_previews(diff):
+def screen_previews(diff, *, layer_id=None, show_control_names=False, annotations=None):
     layouts=(diff.get('parsed_screen') or {}).get('layouts') or {}
     result = {}
     for side,key in [('base','base'),('developed','new')]:
         layout = layouts.get(key)
+        if layer_id is not None and layout:
+            selected=[{**layer,'hidden':False} for layer in layout.get('layers',[]) if str(layer.get('id'))==str(layer_id)]
+            layout={**layout,'layers':selected}
         if not layout or not layout.get('layers'):
             result[side] = None
             continue
@@ -115,14 +131,14 @@ def screen_previews(diff):
         if directory:
             # Captions, dimensions, colors and filtered change states all affect
             # the image. Cover edits can safely reuse the same rendered screen.
-            digest = hashlib.sha256(json.dumps(['preview-v3',layout],sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest()
+            digest = hashlib.sha256(json.dumps(['preview-v4-named-layers',layout,show_control_names,annotations],sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest()
             path = Path(directory) / (digest + '.png')
             if path.is_file():
                 result[side] = path.read_bytes()
                 continue
         callback = preview_progress.get()
         if callback: callback(f"Rendering {side} screen preview: {diff.get('file_name') or diff.get('path','HMI')}")
-        data = preview_png(layout)
+        data = preview_png(layout,show_control_names=show_control_names,annotations=annotations)
         if path and data:
             path.parent.mkdir(parents=True,exist_ok=True)
             descriptor,temporary = tempfile.mkstemp(dir=path.parent,suffix='.tmp')

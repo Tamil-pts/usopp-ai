@@ -111,6 +111,8 @@ def _execute_project(sid, root, project_name, metadata_path=None, generate=False
         log.exception('VALIDATION_WORKFLOW_ERROR session=%s',sid)
         failed={**identity,'runStatus':'failed','error':str(exc)}
         record_run('metadata' if generate else 'validation',failed,root,metadata_path)
+        if 'Missing Sheet2 reference:' in str(exc):
+            raise HTTPException(422,'Missing Sheet2 reference: '+str(exc).rsplit('Missing Sheet2 reference:',1)[-1].strip()) from exc
         raise HTTPException(500,str(exc)) from exc
 
 @router.post('/api/local/validate')

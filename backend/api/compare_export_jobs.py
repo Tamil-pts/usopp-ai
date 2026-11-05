@@ -33,6 +33,8 @@ class ExportRequest(BaseModel):
     categories: list[Literal['logic','screen','config','hardware']] = Field(default_factory=lambda:['logic','screen','config','hardware'], max_length=4)
     statuses: list[Literal['modified','added','removed','unchanged']] = Field(default_factory=lambda:['modified','added','removed'], min_length=1, max_length=4)
     includeKnowledge: bool = True
+    screenControlNames: bool = True
+    screenLayerViews: list[Literal['visible','all']] = Field(default_factory=lambda:['visible','all'],min_length=1,max_length=2)
 
 
 def owner():
@@ -98,7 +100,7 @@ def prepare(job_id):
                 persist(job)
             started = time.time()
             try:
-                response = _export_comparison(job['sessionId'], fmt, job['cover'], skip_layout_properties=job['skipLayoutProperties'], selection={key:job[key] for key in ('categories','statuses','includeKnowledge')})
+                response = _export_comparison(job['sessionId'], fmt, job['cover'], skip_layout_properties=job['skipLayoutProperties'], selection={key:job[key] for key in ('categories','statuses','includeKnowledge','screenControlNames','screenLayerViews')})
                 artifact = Path(response.path).resolve()
                 relative = artifact.relative_to(ROOT.resolve())
                 with LOCK:
@@ -132,7 +134,7 @@ def start_export(sid:str, request:ExportRequest):
     options = request.model_dump(mode='json')
     options['formats'] = sorted(set(options['formats']))
     from python_engine.ladder_model import RENDER_VERSION
-    fingerprint = hashlib.sha256(json.dumps({'schema':10, 'ladderRenderVersion':RENDER_VERSION, 'owner':identity, 'sessionId':sid, **options},sort_keys=True).encode()).hexdigest()
+    fingerprint = hashlib.sha256(json.dumps({'schema':11, 'ladderRenderVersion':RENDER_VERSION, 'owner':identity, 'sessionId':sid, **options},sort_keys=True).encode()).hexdigest()
     ROOT.mkdir(parents=True,exist_ok=True)
     with LOCK:
         for path in ROOT.glob('*/manifest.json'):

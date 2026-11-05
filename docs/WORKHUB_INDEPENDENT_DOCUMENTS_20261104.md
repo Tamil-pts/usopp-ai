@@ -1,5 +1,8 @@
 # Independent documents, Flowcharts and Mind Maps
 
+Subsequent interface fixes and starter templates:
+[WorkHub document editing and interface update](WORKHUB_DOCUMENT_UX_20261104.md).
+
 WorkHub's **Create Document** action creates an independent numbered document.
 Choose FRD, Validation Report, Test Report, FAT, Project Closure, Flowchart or
 Mind Map (the existing MOM, corrections and quality templates remain available).

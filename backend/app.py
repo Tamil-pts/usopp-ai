@@ -16,6 +16,8 @@ from backend.core import accounts
 from backend.core.web_security import SecurityHeadersMiddleware,response_headers,unsafe_origin
 from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models, user_settings, br_help, admin_settings, admin_knowledge
 from backend.api import assist_training, assist_flow, project_intelligence, circuit_compare, edesign, virtual_electrical
+from backend.api import plc_pdf_comparison
+from backend.api import spreadsheet_analysis
 from backend.api import live_data, data_simulator, dashboard_layouts
 from backend.api import spinconnect_write
 from backend.api import nami_edit
@@ -149,6 +151,8 @@ app.add_middleware(SecurityHeadersMiddleware)
 for feature_router in (system.router, validation.router, metadata.router, knowledge.router, compare_export_jobs.router, comparison.router, rules.router, assist.router, validation_source.router, nami.router, auth.router, report_exports.router, history.router,data_models.router):
     app.include_router(feature_router)
 app.include_router(circuit_compare.router)
+app.include_router(plc_pdf_comparison.router)
+app.include_router(spreadsheet_analysis.router)
 app.include_router(edesign.router)
 app.include_router(virtual_electrical.router)
 

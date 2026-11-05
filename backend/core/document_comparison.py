@@ -345,11 +345,21 @@ def run(user,payload):
     configs=[{'id':c.get('id'),'sheet':c.get('sheet',''),'header_row':c.get('header_row',1)} for c in configs]
     inputs=[source(user,c.get('id')) for c in configs];files=[i[0] for i in inputs];infos=[i[1] for i in inputs]
     if infos[0]['kind']!=infos[1]['kind']:fail('Compare two spreadsheets, or compare two text documents (PDF, DOCX or TXT).',400)
-    options={k:payload.get(k) for k in ('columns','keys','match_by','value_mode','ignore_case','ignore_whitespace','compare_types') if k in payload}
-    for k in ('ignore_case','ignore_whitespace','compare_types'):
+    options={k:payload.get(k) for k in ('columns','keys','match_by','value_mode','ignore_case','ignore_whitespace','compare_types','ignore_page_numbers','plc_networks','pixel_compare') if k in payload}
+    for k in ('ignore_case','ignore_whitespace','compare_types','ignore_page_numbers','plc_networks','pixel_compare'):
         if k in options and not isinstance(options[k],bool):fail('Choose valid text comparison options.',400)
+    pdf=None
+    if options.get('plc_networks') and not all(info['extension']=='.pdf' for info in infos):fail('PLC network comparison requires two PDF files.',400)
     try:
-        rows,labels,notices=table_diff(files,infos,configs,options) if infos[0]['kind']=='table' else text_diff(files,options)
+        if all(info['extension']=='.pdf' for info in infos):
+            if options.get('plc_networks'):
+                from backend.core.plc_pdf_comparison import compare
+            else:
+                from backend.core.document_pdf_comparison import compare
+            options.setdefault('ignore_page_numbers',True)
+            rows,labels,notices,pdf=compare(files,options)
+        else:
+            rows,labels,notices=table_diff(files,infos,configs,options) if infos[0]['kind']=='table' else text_diff(files,options)
     except HTTPException:raise
     except Exception:fail('The comparison could not read these files. Upload complete, unlocked copies and check the selection.')
     # Recheck the immutable snapshots before publishing any results.
@@ -358,13 +368,14 @@ def run(user,payload):
     result={'id':key,'kind':infos[0]['kind'],'base':infos[0],'compared':infos[1],'selection':{'base':configs[0],'compared':configs[1],**options},
             'columns':labels,'created_at':datetime.now(timezone.utc).isoformat(),'notices':notices,'rows':rows,
             'summary':{s:sum(r['status']==s for r in rows) for s in ('added','removed','modified','unchanged','unresolved')}}
+    if pdf:result['pdf']=pdf
     publish(folder(user)/'results'/key,result)
     return page(user,key)
 
 
 def filtered(result,status):
     if not isinstance(status,str) or status not in {'all','differences','added','removed','modified','unchanged','unresolved'}:fail('Choose a valid difference filter.',400)
-    if result['kind']=='text' and status=='differences':
+    if result['kind']=='text' and result.get('pdf',{}).get('mode')!='plc_networks' and status=='differences':
         positions=set()
         for i,row in enumerate(result['rows']):
             if row['status']!='unchanged':positions.update(range(max(0,i-5),min(len(result['rows']),i+6)))
@@ -428,7 +439,9 @@ def view_rows(result,status,column_filters=None,sort=None):
 
 def page(user,key,status='differences',offset=0,limit=100,column_filters=None,sort=None):
     if offset<0 or not 1<=limit<=200:fail('Use a nonnegative offset and a page size from 1 to 200.',400)
-    _,result=record(user,key,'results');rows,rules,sorting,status_total=view_rows(result,status,column_filters,sort)
+    _,result=record(user,key,'results')
+    for side in ('base','compared'):source(user,result[side]['id'])
+    rows,rules,sorting,status_total=view_rows(result,status,column_filters,sort)
     return {**result,'rows':rows[offset:offset+limit],'total':len(rows),'offset':offset,'limit':limit,'filter':status,'column_filters':rules,'sort':sorting,'status_total':status_total}
 
 
@@ -446,7 +459,9 @@ def column_values(user,key,payload):
 
 
 def export_csv(user,key,status='differences',column_filters=None,sort=None):
-    _,result=record(user,key,'results');rows,rules,sorting,_=view_rows(result,status,column_filters,sort)
+    _,result=record(user,key,'results')
+    for side in ('base','compared'):source(user,result[side]['id'])
+    rows,rules,sorting,_=view_rows(result,status,column_filters,sort)
     out=io.StringIO(newline='');writer=csv.writer(out)
     def safe(value):
         value=str(value)
