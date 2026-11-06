@@ -67,7 +67,12 @@ def extract(path, ignore_page_numbers=True, options=None):
             for line in body:
                 field=next((key for key,pattern in [('author',r'^Author\s*:'),('created',r'^Created\s*:'),('modified',r'^(?:Last\s+)?Modified\s*:')] if re.match(pattern,line['text'],re.I)),None)
                 if field and not options.get('compare_'+field,True):
-                    masks.append(line['bbox']);ignored.append(dict(page=number,text=line['text'],kind=field));continue
+                    # Cover glyph antialiasing and small rasterization offsets too.
+                    # The same padded mask is applied to both sides before pixel
+                    # comparison and when a cached preview/export is rendered.
+                    x0,y0,x1,y1=line['bbox']
+                    masks.append([max(0,x0-3),max(0,y0-3),min(width,x1+3),min(height,y1+3)])
+                    ignored.append(dict(page=number,text=line['text'],kind=field));continue
                 if not options.get('compare_comments',True):
                     chars=line.get('chars',[])
                     def is_comment(char):
@@ -280,7 +285,7 @@ def compare(files, options):
     ignored={side:item[2] for side,item in zip(('base','compared'),extracted)}
     omitted=[name for name in ('author','created','modified','comments') if not options.get('compare_'+name,True)]
     if omitted:notes.append('Excluded from text and rendered pixel comparison: '+', '.join(omitted)+'. Masked preview areas are omitted from exports too. Comment exclusion recognizes green printed comment text; other comment styles remain compared for review.')
-    return rows,[],notes,dict(mode='plc_networks',pixel_compare=pixels,blocks=blocks_info,pages=pages,
+    return rows,[],notes,dict(mode='plc_networks',comparison_version=3,pixel_compare=pixels,blocks=blocks_info,pages=pages,
         comparison_fields={name:options.get('compare_'+name,True) for name in ('author','created','modified','comments')},
         pairs=pdf.align_pages(rows,pages['base'],pages['compared']),ignore_page_numbers=options.get('ignore_page_numbers',True),ignored_page_numbers=ignored)
 
@@ -320,7 +325,9 @@ def network_image(user,key,row_id,side,overlay=False,highlight=False):
     if not row.get(side+'_segments'):core.fail('This network is absent from this side.',404)
     if overlay and (not result['pdf']['pixel_compare'] or not all(row.get(s+'_segments') for s in ('base','compared'))):
         core.fail('Pixel comparison is unavailable for this network.',400)
-    cache=path/f'network-v2-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
+    # v3 invalidates previews generated before metadata/comment masks were
+    # included in both the comparison and displayed evidence.
+    cache=path/f'network-v3-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
     if cache.is_file():return cache.read_bytes()
     renderers=[Renderer(files[s],result['pdf']['pages'][s]) for s in ('base','compared')]
     image=None
@@ -330,7 +337,7 @@ def network_image(user,key,row_id,side,overlay=False,highlight=False):
             try:_,image=pixel_diff(a,b)
             finally:a.close();b.close()
         elif highlight and row['status']!='unchanged':
-            if row['status']=='modified' and row.get('pixels'):
+            if row['status']=='modified' and (row.get('pixels') or {}).get('changed_pixels'):
                 a,b=[r.network(dict(segments=row[s+'_segments'])) for r,s in zip(renderers,('base','compared'))]
                 try:
                     marked=status_highlights(a,b,'modified')
@@ -349,18 +356,26 @@ def network_image(user,key,row_id,side,overlay=False,highlight=False):
     pdf.result_sources(user,key);pdf.save_cache(cache,data);return data
 
 
-def export_report(user,key,format):
+def export_report(user,key,format,status='differences',metadata=None):
     """Matched network crops and explicit before/after evidence in every report."""
     import base64
     from html import escape
     path,result,_=pdf.result_sources(user,key)
     if result['pdf'].get('mode')!='plc_networks':
         raise HTTPException(400,'Choose a PLC network comparison.')
-    cache=path/f'plc-network-report-v2.{format}'
+    if status not in {'all','differences','modified','added','removed','unresolved'}:
+        raise HTTPException(400,'Choose All, Differences, Modified, Added, Removed or Needs review.')
+    metadata=metadata or {}
+    metadata_fields=('project_name','project_id','department','base','description','approved_by','objective_scope','developed','reviewed_by')
+    metadata={name:str(metadata.get(name,'') or '').strip()[:500] for name in metadata_fields}
+    import hashlib,json
+    metadata_hash=hashlib.sha256(json.dumps(metadata,sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest()[:12]
+    cache=path/f'plc-network-report-v6-{status}-{metadata_hash}.{format}'
     if cache.is_file():return cache.read_bytes()
-    rows=[row for row in result['rows'] if row['status']!='unchanged']
+    from backend.core import document_comparison as core
+    rows=core.filtered(result,status)
     heading=result['base']['name']+' -> '+result['compared']['name']
-    notes=[*result['notices'],'Compared network crops mark observed changed pixels in red when pixel comparison is enabled.',
+    notes=[*result['notices'],f'Export selection: {status}. Reports show Before and After side by side; both sides mark detected changes when highlighting is available.',
            *(f"{side.title()} SHA256: {result[side]['sha256']}" for side in ('base','compared'))]
     def description(row):
         return f"{row['block']} | {'Network' if row['unit']=='network' else 'Block information'} {row['base_network'] if row['base_network'] is not None else ''} -> {row['compared_network'] if row['compared_network'] is not None else ''} | {row['status']}"
@@ -368,9 +383,16 @@ def export_report(user,key,format):
         metric=row.get('pixels')
         return ('Text changed. ' if row['text_changed'] else 'Extracted text unchanged. ')+(
             f"{metric['changed_pixels']} of {metric['total_pixels']} rendered pixels differ (threshold {metric['threshold']}/255). Review wiring and print layout." if metric else 'Pixel comparison not available for this pair.')
+    def text_changes(row):
+        """Return literal line changes, with compared-side additions and base-side removals."""
+        added=[];removed=[]
+        before=row['base'].splitlines();after=row['compared'].splitlines()
+        for operation,left_start,left_end,right_start,right_end in SequenceMatcher(None,before,after,autojunk=False).get_opcodes():
+            if operation in {'replace','delete'}:removed.extend(before[left_start:left_end])
+            if operation in {'replace','insert'}:added.extend(after[right_start:right_end])
+        return added,removed
     def png(row,side):
-        overlay=side=='compared' and bool(row.get('pixels',{}).get('changed_pixels') if row.get('pixels') else False)
-        return network_image(user,key,row['id'],side,overlay=overlay) if row.get(side+'_segments') else None
+        return network_image(user,key,row['id'],side,highlight=row['status']!='unchanged') if row.get(side+'_segments') else None
     def tiles(row):
         from PIL import Image
         images={side:Image.open(io.BytesIO(data)).convert('RGB') for side in ('base','compared') if (data:=png(row,side))}
@@ -396,14 +418,17 @@ def export_report(user,key,format):
                 image=png(row,side)
                 picture=f'<img alt="{label} source network" src="data:image/png;base64,{base64.b64encode(image).decode()}"/>' if image else '<p>Network absent on this side.</p>'
                 columns.append(f'<div><h3>{label}</h3><p>{escape(row[side+"_ref"])}</p>{picture}<pre>{escape(row[side])}</pre></div>')
-            sections.append(f'<section><h2>{escape(description(row))}</h2><p>{escape(evidence(row))}</p><div class="pair">{"".join(columns)}</div></section>')
+            added,removed=text_changes(row)
+            change_summary=''.join((f'<h3>Added content · Compared</h3><pre class="added">{escape(chr(10).join(added))}</pre>' if added else '',f'<h3>Removed content · Base</h3><pre class="removed">{escape(chr(10).join(removed))}</pre>' if removed else '')) or '<p>No extracted text additions or removals. Review the side-by-side images for visual or wiring changes.</p>'
+            sections.append(f'<section><h2>{escape(description(row))}</h2><p>{escape(evidence(row))}</p><div class="pair">{"".join(columns)}</div><h2>Text changes</h2>{change_summary}</section>')
         data=('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-              '<title>PLC PDF network comparison</title><style>body{font:14px system-ui;margin:24px;color:#182b37}section{border-top:1px solid #ccd4db;margin-top:24px}.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}img{max-width:100%;height:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}p{overflow-wrap:anywhere}@media(max-width:650px){.pair{grid-template-columns:1fr}}</style>'
+              '<title>PLC PDF network comparison</title><style>body{font:14px system-ui;margin:24px;color:#182b37}section{border-top:1px solid #ccd4db;margin-top:24px}.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}img{max-width:100%;height:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;padding:8px}.added{background:#e3f7eb;border-left:4px solid #159447}.removed{background:#fde8e8;border-left:4px solid #d43f4d}p{overflow-wrap:anywhere}@media(max-width:650px){.pair{grid-template-columns:1fr}}</style>'
               f'<h1>PLC PDF network comparison</h1><h2>{escape(heading)}</h2>'+''.join(f'<p>{escape(note)}</p>' for note in notes)+
               (''.join(sections) or '<p>No differences in the compared networks.</p>')+'</html>').encode('utf8')
     elif format=='docx':
         from docx import Document
         from docx.shared import Inches
+        from docx.shared import RGBColor
         from PIL import Image
         document=Document();document.add_heading('PLC PDF network comparison',0);document.add_paragraph(heading)
         for note in notes:document.add_paragraph(note)
@@ -419,8 +444,15 @@ def export_report(user,key,format):
                         with Image.open(io.BytesIO(image)) as im: width,height=im.size
                         scale=min(2.9/width,3.5/height)
                         cell.add_paragraph().add_run().add_picture(io.BytesIO(image),width=Inches(width*scale),height=Inches(height*scale))
-            for side,label in [('base','Before'),('compared','After')]:
-                document.add_heading(label+' extracted text',2);document.add_paragraph(row[side] or '(Network absent)')
+            added,removed=text_changes(row)
+            document.add_heading('Text changes',2)
+            for title,lines,color in [('Added content · Compared',added,'00843D'),('Removed content · Base',removed,'C62828')]:
+                if lines:
+                    document.add_heading(title,3)
+                    for line in lines:
+                        paragraph=document.add_paragraph(line)
+                        for run in paragraph.runs:run.font.color.rgb=RGBColor.from_string(color)
+            if not added and not removed:document.add_paragraph('No extracted text additions or removals. Review the side-by-side images for visual or wiring changes.')
         if not rows:document.add_paragraph('No differences in the compared networks.')
         document.save(output);data=output.getvalue()
     else:
@@ -433,9 +465,16 @@ def export_report(user,key,format):
         font=_pdf_font('\n'.join([heading,*notes,*(row[side] for row in rows for side in ('base','compared'))]))
         if font!='Helvetica':pdfmetrics.registerFontFamily(font,normal=font,bold=font,italic=font,boldItalic=font)
         for style in styles.byName.values():style.fontName=font
-        story=[Paragraph('PLC PDF network comparison',styles['Title']),Paragraph(escape(heading),styles['Heading2'])]
-        for note in notes:story.append(Paragraph(escape(note),styles['BodyText']))
+        story=[Paragraph('PLC PDF network comparison',styles['Title']),Paragraph(escape(heading),styles['Heading2']),Paragraph(f'Included: {escape(status)}',styles['BodyText'])]
+        detail_labels=(('project_name','Project name'),('project_id','Project ID'),('department','Department'),('base','Base'),('description','Description'),('approved_by','Approved by'),('objective_scope','Objective / scope'),('developed','Developed'),('reviewed_by','Reviewed by'))
+        detail_rows=[[Paragraph(f'<b>{label}</b>',styles['BodyText']),Paragraph(escape(metadata[key]) or '—',styles['BodyText'])] for key,label in detail_labels if metadata[key]]
+        if detail_rows:
+            story.extend([Spacer(1,10),Paragraph('Project and approval details',styles['Heading2'])])
+            details=Table(detail_rows,colWidths=[135,605],repeatRows=0)
+            details.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('BACKGROUND',(0,0),(0,-1),'#edf3f8'),('GRID',(0,0),(-1,-1),0.4,'#c8d3dd'),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),5),('BOTTOMPADDING',(0,0),(-1,-1),5)]))
+            story.append(details)
         for row in rows:
+            added,removed=text_changes(row)
             for number,part in enumerate(tiles(row),1):
                 story.extend([PageBreak(),Paragraph(escape(description(row))+f' | Crop part {number}',styles['Heading2']),Paragraph(escape(evidence(row)),styles['BodyText']),Spacer(1,10)])
                 cells=[]
@@ -448,10 +487,22 @@ def export_report(user,key,format):
                     cells.append(items)
                 table=Table([cells],colWidths=[370,370]);table.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP')]))
                 story.append(table)
-            for side,label in [('base','Before'),('compared','After')]:
-                story.append(Paragraph(label+' extracted text',styles['Heading3']))
-                # Separate source lines can paginate without a single oversized table row.
-                story.extend(Paragraph(escape(line) or '(blank)',styles['Code']) for line in row[side].splitlines())
+            story.append(Paragraph('Text changes',styles['Heading2']))
+            change_rows=[]
+            for label,lines,background in [('Added content · Compared',added,'#e3f7eb'),('Removed content · Base',removed,'#fde8e8')]:
+                if lines:
+                    change_rows.append([Paragraph(f'<b>{escape(label)}</b>',styles['BodyText'])])
+                    change_rows.extend([Paragraph(escape(line) or '(blank)',styles['Code'])] for line in lines)
+            if change_rows:
+                changes=Table(change_rows,colWidths=[740],repeatRows=0)
+                table_style=[('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),8),('RIGHTPADDING',(0,0),(-1,-1),8),('TOPPADDING',(0,0),(-1,-1),4),('BOTTOMPADDING',(0,0),(-1,-1),4)]
+                for index,row_cells in enumerate(change_rows):
+                    if len(row_cells)==1 and isinstance(row_cells[0],Paragraph) and row_cells[0].getPlainText().startswith('Added content'):
+                        table_style.append(('BACKGROUND',(0,index),(-1,index),'#e3f7eb'))
+                    elif len(row_cells)==1 and isinstance(row_cells[0],Paragraph) and row_cells[0].getPlainText().startswith('Removed content'):
+                        table_style.append(('BACKGROUND',(0,index),(-1,index),'#fde8e8'))
+                changes.setStyle(TableStyle(table_style));story.append(changes)
+            else:story.append(Paragraph('No extracted text additions or removals. Review the side-by-side images for visual or wiring changes.',styles['BodyText']))
         if not rows:story.append(Paragraph('No differences in the compared networks.',styles['BodyText']))
         SimpleDocTemplate(output,pagesize=landscape(A4),leftMargin=35,rightMargin=35,topMargin=30,bottomMargin=30).build(story)
         data=output.getvalue()

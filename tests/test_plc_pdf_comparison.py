@@ -48,6 +48,7 @@ class PLCPDFTests(unittest.TestCase):
         a,b=printed('Alice','2000','2024','Old comment'),printed('Bob','2001','2026','New comment')
         skipped={k:False for k in ('compare_author','compare_created','compare_modified','compare_comments')}
         data=self.compare(a,b,**skipped)
+        self.assertEqual(data['pdf']['comparison_version'],3)
         self.assertEqual(data['summary']['modified'],0)
         self.assertTrue(all(not row['pixels']['changed_pixels'] for row in data['rows']))
         for field in skipped:
@@ -174,8 +175,59 @@ class PLCPDFTests(unittest.TestCase):
             else:
                 document=Document(io.BytesIO(response.content));text='\n'.join(p.text for p in document.paragraphs)+'\n'+'\n'.join(cell.text for table in document.tables for row in table.rows for cell in row.cells)
                 self.assertTrue(document.inline_shapes)
-            for word in ('Before','After','MOTOR','VW4008','SHA256'):self.assertIn(word,text)
+            for word in ('Before','After','MOTOR','VW4008'):self.assertIn(word,text)
+            if extension!='pdf':self.assertIn('SHA256',text)
         self.assertEqual(self.client.get(url+'/export.csv').status_code,200)
+
+    def test_export_status_selection_filters_every_format_and_highlighted_source(self):
+        data=self.compare(program([[(1,'M1'),(2,'UNCHANGED'),(3,'REMOVED')]]),
+                          program([[(1,'M2'),(2,'UNCHANGED'),(4,'ADDED')]]),pixel_compare=False)
+        url=API+f"/results/{data['id']}"
+        for status,expected,excluded in [('all',('Network 1','Network 2','Network 3','Network 4'),()),
+                ('differences',('Network 1','Network 3','Network 4'),('Network 2',)),
+                ('modified',('Network 1',),('Network 2','Network 3','Network 4')),
+                ('added',('Network 4',),('Network 1','Network 2','Network 3')),
+                ('removed',('Network 3',),('Network 1','Network 2','Network 4'))]:
+            response=self.client.get(url+f'/report.html?status={status}')
+            self.assertEqual(response.status_code,200)
+            for value in expected:self.assertIn(value,response.text)
+            for value in excluded:self.assertNotIn(value,response.text)
+            csv_response=self.client.get(url+f'/export.csv?status={status}')
+            self.assertEqual(csv_response.status_code,200)
+            self.assertIn(f'Filter,{status}',csv_response.text)
+        for extension in ('pdf','docx'):
+            response=self.client.get(url+f'/report.{extension}?status=modified')
+            self.assertEqual(response.status_code,200,response.text[:300] if extension=='docx' else '')
+            if extension=='pdf':
+                report_text='\n'.join(page.extract_text() or '' for page in PdfReader(io.BytesIO(response.content)).pages)
+            else:
+                document=Document(io.BytesIO(response.content))
+                report_text='\n'.join(p.text for p in document.paragraphs)+'\n'+'\n'.join(cell.text for table in document.tables for row in table.rows for cell in row.cells)
+            self.assertIn('Network 1',report_text)
+            self.assertNotIn('Network 4',report_text)
+            if extension=='pdf':
+                self.assertIn('Before',report_text)
+                self.assertIn('After',report_text)
+                self.assertIn('Added content',report_text)
+                self.assertIn('Removed content',report_text)
+                self.assertIn('M1',report_text)
+        detail_response=self.client.get(url+'/report.pdf',params={'status':'modified','project_name':'Comber Line','project_id':'PRJ-104','department':'Automation','base':'TSV9444.pdf','description':'PLC logic revision review','approved_by':'A. Reviewer','objective_scope':'Compare block and network logic','developed':'TSV9445.pdf','reviewed_by':'B. Engineer'})
+        self.assertEqual(detail_response.status_code,200)
+        detail_pages=PdfReader(io.BytesIO(detail_response.content)).pages
+        cover_text=detail_pages[0].extract_text() or ''
+        details_text='\n'.join(page.extract_text() or '' for page in detail_pages)
+        self.assertIn('Project and approval details',cover_text)
+        self.assertNotIn('Networks are matched',cover_text)
+        self.assertNotIn('Base SHA256',cover_text)
+        for value in ('Project and approval details','Comber Line','PRJ-104','Automation','TSV9444.pdf','PLC logic revision review','A. Reviewer','Compare block and network logic','TSV9445.pdf','B. Engineer'):
+            self.assertIn(value,details_text)
+        base=self.client.get(url+'/highlighted-base.pdf?status=added')
+        compared=self.client.get(url+'/highlighted-compared.pdf?status=added')
+        self.assertEqual(base.status_code,200);self.assertEqual(compared.status_code,200)
+        self.assertEqual(len(PdfReader(io.BytesIO(base.content)).pages[0].get('/Annots',[])),0)
+        self.assertEqual(len(PdfReader(io.BytesIO(compared.content)).pages[0].get('/Annots',[])),1)
+        invalid=self.client.get(url+'/report.html?status=unknown')
+        self.assertEqual(invalid.status_code,400)
 
     def test_owner_isolation_stale_sources_and_invalid_options(self):
         data=self.compare(program([[(1,'M1')]]),program([[(1,'M2')]]))

@@ -1,7 +1,7 @@
 import {frameProtocol,isYbsTarget,metadataMachine,frameProtocolUpdates} from '../utils/frameProfile';
 import {targetMode} from '../utils/targetMode';
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Plus, Trash2, CheckCircle2, AlertTriangle, RefreshCw, Cpu, Globe, Clock, FileSpreadsheet, Sliders, Upload } from 'lucide-react';
+import { X, Plus, Trash2, CheckCircle2, AlertTriangle, RefreshCw, Cpu, Globe, Clock, FileSpreadsheet, Sliders, Upload, Radio } from 'lucide-react';
 import { PLCConfig, SpinningMachineType } from '../types';
 import { SPINNING_MACHINE_TYPES } from '../data/machinePresets';
 import { ManualFrameSender } from './ManualFrameSender';
@@ -35,6 +35,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
   const [items, setItems] = useState<PLCConfig[]>(plcs);
   const [activeTab, setActiveTab] = useState<'targets' | 'manual-frame'>(initialTab);
   const [testingId, setTestingId] = useState<string | null>(null);
+  const [pingingId, setPingingId] = useState<string | null>(null);
   const [draftSelectedId, setDraftSelectedId] = useState(selectedPLCId);
   const [formError, setFormError] = useState('');
   const [saving,setSaving]=useState(false);
@@ -43,16 +44,19 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
   const [testResults, setTestResults] = useState<
     Record<string, { ok: boolean; msg: string; rtt?: number; version?: string | null }>
   >({});
+  const [pingResults, setPingResults] = useState<Record<string, {ok:boolean;msg:string;rtt?:number}>>({});
 
   // Each opening starts from saved settings; Cancel must discard the draft.
   useEffect(() => {
     requestRef.current?.abort();
     setTestingId(null);
+    setPingingId(null);
     if (isOpen) {
       setItems(plcs.map(p => ({...p})));
       setGroupText(Object.fromEntries(plcs.map(p=>[p.id,(p.liveGroupCodes||[]).join(', ')])));
       setDraftSelectedId(selectedPLCId);
       setTestResults({});
+      setPingResults({});
       setFormError('');
       setActiveTab(initialTab);
     }
@@ -93,7 +97,9 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
         error: undefined, programVersion: undefined, programVersionStr: undefined} : p));
       requestRef.current?.abort();
       setTestingId(null);
+      setPingingId(null);
       setTestResults(prev => { const next = {...prev}; delete next[id]; return next; });
+      setPingResults(prev => { const next = {...prev}; delete next[id]; return next; });
     }
   };
 
@@ -175,6 +181,34 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
     }
   };
 
+  const handlePingIp = async (plc: PLCConfig) => {
+    if (!plc.ip.trim()) { setFormError(`${plc.name}: enter an IP address to ping.`); return; }
+    const controller = new AbortController();
+    requestRef.current = controller;
+    setPingingId(plc.id);
+    setPingResults(previous => ({...previous,[plc.id]:{ok:false,msg:'Sending one ICMP ping…'}}));
+    try {
+      const response = await fetch('/api/nami/plc/ping', {
+        signal: controller.signal,
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ip:plc.ip,timeoutMs:Math.min(Math.max(plc.timeoutMs || 2000,100),10000)}),
+      });
+      const data = await response.json();
+      if (controller.signal.aborted) return;
+      setPingResults(previous => ({...previous,[plc.id]:{
+        ok: response.ok && data.success === true,
+        msg: data.message || data.detail || 'Ping failed.',
+        rtt: data.rttMs ?? undefined,
+      }}));
+    } catch (error: any) {
+      if (controller.signal.aborted) return;
+      setPingResults(previous => ({...previous,[plc.id]:{ok:false,msg:error?.message || 'Ping request failed.'}}));
+    } finally {
+      if (requestRef.current === controller) setPingingId(null);
+    }
+  };
+
   const handleSaveAndClose = async () => {
     if (await applyDraft()) onClose();
   };
@@ -240,6 +274,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
             <>
               {items.map((plc, idx) => {
                 const test = testResults[plc.id];
+                const ping = pingResults[plc.id];
                 const isSelected = draftSelectedId === plc.id;
 
                 return (
@@ -277,12 +312,21 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
 
                       <div className="flex flex-wrap items-center gap-2">
                         <button
+                          onClick={() => handlePingIp(plc)}
+                          disabled={pingingId !== null || testingId !== null}
+                          className="flex items-center gap-1.5 px-3 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-medium rounded-lg border border-slate-600 transition-colors disabled:opacity-50"
+                          title="Send one ICMP echo request only. This does not send PLC data."
+                        >
+                          <Radio className={`w-3.5 h-3.5 ${pingingId === plc.id ? 'animate-pulse' : ''}`} />
+                          <span>{pingingId === plc.id ? 'Pinging IP…' : 'Ping IP'}</span>
+                        </button>
+                        <button
                           onClick={() => handleTestConnection(plc)}
-                          disabled={testingId !== null}
+                          disabled={testingId !== null || pingingId !== null}
                           className="flex items-center gap-1.5 px-3 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-medium rounded-lg border border-slate-600 transition-colors"
                         >
                           <RefreshCw className={`w-3.5 h-3.5 ${testingId === plc.id ? 'animate-spin' : ''}`} />
-                          <span>{testingId === plc.id ? 'Testing GC 10...' : 'Ping / GC 10 Test'}</span>
+                          <span>{testingId === plc.id ? 'Testing TCP / GC 10…' : 'TCP / GC 10 Test'}</span>
                         </button>
 
                         {onOpenMetadataModal && (
@@ -378,7 +422,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                       </div>
 
                       <div>
-                        <label className="block text-slate-400 mb-1">PLC TCP Port</label>
+                          <label className="block text-slate-400 mb-1">SpinConnect TCP server port</label>
                         <input
                           type="number"
                           value={plc.port}
@@ -427,7 +471,12 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                       </div>
                     </div>
 
-                    {targetMode(plc)==='automation-studio'&&<p className="mt-3 text-xs text-slate-300">Start ARsim with your SpinConnect TCP server program running. Enter that program's TCP listening port. The 11160 INA/UDP online port is a different service. 127.0.0.1 refers to the computer running the uSOPp server; enter the ARsim computer's IP if it runs elsewhere.</p>}
+                    {targetMode(plc)==='automation-studio'&&<div className="mt-3 rounded-lg border border-sky-700/60 bg-sky-950/30 p-3 text-xs text-slate-300 space-y-2">
+                      <p className="font-semibold text-sky-200">Choose the port for the service Nami uses</p>
+                      <p><code className="text-slate-100">REPO=11160</code> is the Automation Studio simulation’s INA port (UDP). <code className="text-slate-100">/PT</code> is the ANSL online port (TCP, commonly 11169). Nami’s GC 10 check uses neither B&amp;R protocol; it sends SpinConnect frames to your PLC program’s TCP server.</p>
+                      <p>If you want Nami’s TCP server to use port <strong>11160</strong>, configure the PLC program’s <code className="text-slate-100">TcpServer</code> to listen for SpinConnect frames on TCP port 11160, then enter 11160 above. Changing <code className="text-slate-100">REPO</code> alone will not do this. The current configured value is <strong>{plc.port}</strong>.</p>
+                      <p>Addresses in <code className="text-slate-100">127.0.0.0/8</code>, including 127.0.0.1 and 127.0.0.2, refer to this same computer. Use the simulation computer’s LAN IP only when it runs on another computer.</p>
+                    </div>}
                     {targetMode(plc)==='data-simulator'&&<p className="mt-3 text-xs text-slate-300">Save this target, select it, then open Data simulator in PLC details to load metadata, configure the generated values and start the virtual PLC.</p>}
                     <fieldset className="mt-4 p-3 border border-slate-700 rounded-lg text-xs space-y-3" disabled={saving}>
                       <legend className="px-2 font-semibold text-emerald-400">Live collection &amp; report history</legend>
@@ -444,6 +493,15 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                     </fieldset>
 
                     {/* Status response badge if tested */}
+                    {ping && (
+                      <div role="status" className={`mt-2.5 px-3 py-2 rounded-lg text-xs flex items-center justify-between gap-2 ${ping.ok ? 'bg-emerald-950/60 border border-emerald-700 text-emerald-300' : 'bg-amber-950/50 border border-amber-800 text-amber-200'}`}>
+                        <div className="flex items-center gap-2">
+                          {ping.ok ? <CheckCircle2 className="w-4 h-4 shrink-0"/> : <AlertTriangle className="w-4 h-4 shrink-0"/>}
+                          <div><div className="font-semibold">{ping.msg}</div><div className="text-[11px] opacity-80">ICMP only — no PLC protocol request was sent.</div></div>
+                        </div>
+                        {ping.rtt !== undefined && <span className="font-mono text-[11px] shrink-0">{ping.rtt} ms</span>}
+                      </div>
+                    )}
                     {test && (
                       <div className="mt-2.5 space-y-2">
                         <div
@@ -480,6 +538,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                               <span>Industrial Ethernet Connection Troubleshooting:</span>
                             </div>
                             <ul className="list-disc pl-4 space-y-1 text-slate-400">
+                              {targetMode(plc)==='automation-studio' && <li><strong className="text-slate-200">Automation Studio:</strong> RUN/ANSL and its online port do not confirm that the SpinConnect TCP listener is running. A connection refused at {plc.ip}:{plc.port} means there is no accepting TCP service at that address and port. Start the SpinConnect <code className="text-slate-300">TcpServer</code> program and verify its configured listening address and port.</li>}
                               <li>
                                 <strong className="text-slate-200">PLC IP ({plc.ip}):</strong> Note that <code className="text-amber-300">192.168.1.1</code> is usually your Wi-Fi router. Verify your B&R PLC Ethernet IP in Automation Studio (commonly <code className="text-emerald-300">192.168.1.100</code> or similar).
                               </li>
@@ -487,7 +546,7 @@ export const PLCManagerModal: React.FC<PLCManagerModalProps> = ({
                                 <strong className="text-slate-200">Laptop Static IP:</strong> When connected directly via RJ45 cable, your Windows Ethernet adapter must be set to a static IP in the same subnet (e.g. <code className="text-emerald-300">192.168.1.50</code>, Mask <code className="text-emerald-300">255.255.255.0</code>).
                               </li>
                               <li>
-                                <strong className="text-slate-200">TCP Port {plc.port}:</strong> Ensure the PLC's <code className="text-slate-300">TcpServer</code> function block is running and listening on port {plc.port}.
+                                <strong className="text-slate-200">SpinConnect TCP port {plc.port}:</strong> Ensure the PLC program’s <code className="text-slate-300">TcpServer</code> is listening for the SpinConnect protocol on TCP port {plc.port}. B&amp;R INA/UDP and ANSL/TCP online services are not interchangeable with this data service.
                               </li>
                               <li>
                                 <strong className="text-slate-200">Machine ID ({plc.machineId}):</strong> Ensure the PLC's ST buffer check <code className="text-slate-300">IF (Rx_buffer[1] = {plc.machineId})</code> matches this ID (default is 0).

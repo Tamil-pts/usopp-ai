@@ -238,7 +238,7 @@ def save_cache(path, data):
         temporary.unlink(missing_ok=True)
 
 
-def annotated_pdf(user, key, side):
+def annotated_pdf(user, key, side, status='differences'):
     from backend.core import document_comparison as core
     from pypdf import PdfReader, PdfWriter
     from pypdf.annotations import Highlight
@@ -246,14 +246,20 @@ def annotated_pdf(user, key, side):
     path, result, files = result_sources(user, key)
     if side not in files:
         core.fail('Choose Base or Compared PDF.', 400)
-    cache = path / f'highlighted-v1-{side}.pdf'
+    if result.get('pdf',{}).get('mode')=='plc_networks':
+        if status not in {'all','differences','modified','added','removed','unresolved'}:
+            core.fail('Choose All, Differences, Modified, Added, Removed or Needs review.',400)
+        rows=core.filtered(result,status)
+    else:
+        rows=result['rows']
+    cache = path / (f'highlighted-v2-{side}-{status}.pdf' if result.get('pdf',{}).get('mode')=='plc_networks' else f'highlighted-v1-{side}.pdf')
     if cache.is_file():
         return cache.read_bytes()
     writer = PdfWriter()
     for page in PdfReader(files[side]).pages:
         page.transfer_rotation_to_content()
         writer.add_page(page)
-    for row in result['rows']:
+    for row in rows:
         location = row.get(side + '_location')
         if not location or row['status'] == 'unchanged':
             continue

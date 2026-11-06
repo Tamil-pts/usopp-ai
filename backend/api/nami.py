@@ -1,8 +1,11 @@
 """Nami V1.5 API hosted by the uSOPp application."""
 import copy
+import ipaddress
 import math
+import platform
 import re
 import struct
+import subprocess
 import threading
 import time
 from datetime import datetime, timezone
@@ -209,6 +212,36 @@ def test_connection(data: dict = Body(...)):
     previous=json.loads((RECORDS/record['id']/'result.json').read_text(encoding='utf-8'))
     finish_inspect({key:previous[key] for key in ('sessionId','historyId','testId','projectName','machineDepartment','plc','metadata','metadataSource','operation','groupCodes')},result)
     return result
+
+@router.post('/plc/ping')
+def ping_ip(data: dict = Body(...)):
+    """Run one OS ICMP echo request; this does not open a PLC protocol connection."""
+    raw_ip = data.get('ip')
+    try:
+        address = ipaddress.ip_address(str(raw_ip or '').strip())
+    except ValueError as exc:
+        raise HTTPException(400, 'Enter a valid IPv4 address to ping.') from exc
+    if address.version != 4:
+        raise HTTPException(400, 'Ping currently supports IPv4 addresses only.')
+    if not (address.is_private or address.is_loopback or address.is_link_local):
+        raise HTTPException(400, 'Ping is limited to private, loopback, or link-local addresses.')
+    timeout_ms = number(data, 'timeoutMs', 2000, 100, 10000)
+    if platform.system().lower() == 'windows':
+        command = ['ping', '-n', '1', '-w', str(timeout_ms), str(address)]
+    else:
+        command = ['ping', '-n', '-c', '1', '-W', str(max(1, math.ceil(timeout_ms / 1000))), str(address)]
+    started = time.monotonic()
+    try:
+        completed = subprocess.run(command, capture_output=True, text=True, timeout=timeout_ms / 1000 + 2, check=False)
+    except FileNotFoundError as exc:
+        raise HTTPException(503, 'The system ping utility is not installed on this server.') from exc
+    except subprocess.TimeoutExpired:
+        return dict(success=False, ip=str(address), rttMs=None, message=f'Ping to {address} timed out.', protocolRequestSent=False)
+    elapsed_ms = round((time.monotonic() - started) * 1000)
+    success = completed.returncode == 0
+    message = (f'{address} replied to ICMP ping.' if success else f'No ICMP ping reply from {address}.')
+    return dict(success=success, ip=str(address), rttMs=elapsed_ms if success else None,
+                message=message, protocolRequestSent=False)
 
 @router.post('/history/{run_id}/decoded')
 def save_decoded(run_id:str,data:dict=Body(...)):

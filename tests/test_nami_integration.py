@@ -1,5 +1,6 @@
 """Local-only checks: no real controller is contacted or written to."""
 import socket
+import subprocess
 import threading
 import unittest
 import tempfile
@@ -51,6 +52,29 @@ class NamiIntegrationTests(unittest.TestCase):
                 response = self.client.post('/api/nami/plc/test-connection',json={'isSimulated':True,field:value})
                 self.assertEqual(response.status_code,400)
         self.assertEqual(self.client.post('/api/nami/plc/read-group',json={'isSimulated':True,'groupCode':11}).status_code,400)
+
+    def test_ping_is_one_icmp_request_and_never_sends_plc_protocol(self):
+        with patch('backend.api.nami.subprocess.run', return_value=subprocess.CompletedProcess(['ping'], 0, 'reply', '')) as run:
+            response = self.client.post('/api/nami/plc/ping', json={'ip':'127.0.0.2','timeoutMs':1200})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json()['success'])
+        self.assertFalse(response.json()['protocolRequestSent'])
+        self.assertEqual(run.call_count, 1)
+        self.assertEqual(run.call_args.args[0][-1], '127.0.0.2')
+        self.assertFalse(run.call_args.kwargs.get('shell', False))
+
+    def test_ping_rejects_non_private_and_invalid_addresses(self):
+        for address in ('not-an-ip', '8.8.8.8', '::1'):
+            with self.subTest(address=address):
+                response = self.client.post('/api/nami/plc/ping', json={'ip':address})
+                self.assertEqual(response.status_code, 400)
+
+    def test_ping_reports_timeout_without_protocol_request(self):
+        with patch('backend.api.nami.subprocess.run', side_effect=subprocess.TimeoutExpired(['ping'], 1)):
+            response = self.client.post('/api/nami/plc/ping', json={'ip':'127.0.0.2','timeoutMs':100})
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.json()['success'])
+        self.assertFalse(response.json()['protocolRequestSent'])
 
     def test_handshake_rejects_corrupted_or_wrong_machine_frame(self):
         for raw in [list(frame(1,payload(10,DEFAULT_STATE))), [3,0,0,0,4,0,0,0,0,99,2]]:

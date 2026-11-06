@@ -30,14 +30,15 @@ def csv(key:str,request:Request,status:str='differences'):
         headers={'Content-Disposition':f'attachment; filename="plc-networks-{key[:8]}.csv"'})
 
 @router.get('/results/{key}/report.{format}')
-def report(key:str,format:str,request:Request):
+def report(key:str,format:str,request:Request,status:str='differences',project_name:str='',project_id:str='',department:str='',base:str='',description:str='',approved_by:str='',objective_scope:str='',developed:str='',reviewed_by:str=''):
     if format not in {'html','pdf','docx'}:core.fail('Choose PDF, HTML or Word.',400)
     media={'html':'text/html; charset=utf-8','pdf':'application/pdf','docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}
     headers={'Content-Disposition':f'attachment; filename="plc-networks-{key[:8]}.{format}"'}
     if format=='html':headers['Content-Security-Policy']="default-src 'none'; style-src 'unsafe-inline'; img-src data:"
-    return Response(plc.export_report(request.state.user,key,format),media_type=media[format],headers=headers)
+    metadata={'project_name':project_name,'project_id':project_id,'department':department,'base':base,'description':description,'approved_by':approved_by,'objective_scope':objective_scope,'developed':developed,'reviewed_by':reviewed_by}
+    return Response(plc.export_report(request.state.user,key,format,status,metadata),media_type=media[format],headers=headers)
 
 @router.get('/results/{key}/highlighted-{side}.pdf')
-def highlighted(key:str,side:str,request:Request):
-    return Response(pdf.annotated_pdf(request.state.user,key,side),media_type='application/pdf',
+def highlighted(key:str,side:str,request:Request,status:str='differences'):
+    return Response(pdf.annotated_pdf(request.state.user,key,side,status),media_type='application/pdf',
         headers={'Content-Disposition':f'attachment; filename="plc-{key[:8]}-{side}-highlighted.pdf"'})
