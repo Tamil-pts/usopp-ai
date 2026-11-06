@@ -88,6 +88,22 @@ export const Header: React.FC<HeaderProps> = (props) => {
     : plc.status === 'error' ? plc.tcpConnected ? 'Last test: TCP opened, no valid PLC response' : 'PLC not connected' : 'Not tested';
   const sent = response?.sentBytes || [];
   const close = response?.closeResult;
+  const plcReplyIssue = response && !response.success
+    ? (() => {
+        const code = response.resultCode;
+        const messages: Record<number, {title: string; detail: string}> = {
+          10: {title: 'PLC rejected the frame: ETX missing', detail: 'Check the request framing and PLC frame validation.'},
+          11: {title: 'PLC rejected the frame: checksum error', detail: 'Check the checksum calculation and byte order in the PLC receiver.'},
+          12: {title: 'PLC rejected the frame: invalid function code', detail: 'The PLC does not handle this request function.'},
+          13: {title: 'PLC rejected the frame: incomplete or incorrect length', detail: 'Check the request length and the PLC frame-length calculation.'},
+          14: {title: `PLC does not support requested GC ${response.groupCode}`, detail: `The PLC returned error code 14. Add or correct group ${response.groupCode} in the PLC group-code CASE handler, then retry.`},
+        };
+        if (response.rawBytes.length >= 7 && code !== 0) return messages[code] || {title: `PLC returned error code ${code}`, detail: response.error || 'Review the PLC response code and request handler.'};
+        if (response.rawBytes.length > 0) return {title: `PLC replied to GC ${response.groupCode}, but the frame is invalid`, detail: response.error || 'Check the returned frame length, machine ID, checksum and terminator.'};
+        if (response.stage === 'not_sent') return {title: `GC ${response.groupCode} was not sent`, detail: response.error || 'The test stopped before this group request.'};
+        return {title: `No PLC reply for GC ${response.groupCode}`, detail: response.error || 'Check the target IP, TCP port, PLC SpinConnect server and machine ID.'};
+      })()
+    : null;
   const openMetadata = () => {setSettingsOpen(false); props.onOpenMetadataModal();};
   const openFrame = () => {setSettingsOpen(false); props.onOpenManualFrameModal?.();};
 
@@ -120,6 +136,11 @@ export const Header: React.FC<HeaderProps> = (props) => {
         <div className="di-link-arrow"><ArrowLeft size={30}/><span>{response?.success ? `Response GC ${response.groupCode}` : response ? 'No valid response' : 'Awaiting test'}</span></div>
         <span className="di-link-detail">{response ? `${response.rawBytes.length} bytes · ${response.rttMs} ms` : 'One connection per test'}</span>
         <span className="di-link-detail">{isYbsTarget(plc)?'YBS: close TCP session locally':close ? close.sentBytes?.length ? 'GC 11 close request sent' : 'GC 11 could not be sent' : 'Finish with GC 11'}</span>
+        {plcReplyIssue && <div className="di-link-result" role="status" aria-live="polite">
+          <strong>{plcReplyIssue.title}</strong>
+          <span>{plcReplyIssue.detail}</span>
+          {response && response.rawBytes.length >= 7 && response.resultCode === 14 && <small>The response frame has no group-code echo; GC {response.groupCode} is identified from the request sent.</small>}
+        </div>}
       </section>
 
       <section className="di-mimic-card di-plc">

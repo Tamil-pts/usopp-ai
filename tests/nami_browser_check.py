@@ -12,6 +12,10 @@ with sync_playwright() as p:
     page.on('pageerror',lambda error:errors.append(str(error)))
     # Reject accidental real-controller requests during browser checks.
     def protect(route):
+        if route.request.url.endswith('/api/nami/plc/ping'):
+            route.fulfill(status=200,json={'success':True,'ip':'127.0.0.1','rttMs':1,
+                'message':'127.0.0.1 replied to ICMP ping.','protocolRequestSent':False})
+            return
         data=route.request.post_data_json or {}
         if not data.get('isSimulated'):
             route.fulfill(status=400,json={'error':'Real PLC requests disabled during UI checks'})
@@ -42,7 +46,10 @@ with sync_playwright() as p:
     workspace.get_by_role('button',name='Save & Apply',exact=True).click()
     expect(workspace.get_by_role('alert')).to_contain_text('Machine ID must be')
     workspace.locator('input[type="number"]').nth(1).fill('0')
-    workspace.get_by_role('button',name='Ping / GC 10 Test').first.click()
+    workspace.get_by_role('button',name='Ping IP',exact=True).first.click()
+    expect(workspace.get_by_text('ICMP only — no PLC protocol request was sent.').first).to_be_visible()
+    expect(workspace.get_by_text('127.0.0.1 replied to ICMP ping.').first).to_be_visible()
+    workspace.get_by_role('button',name='TCP / GC 10 Test',exact=True).first.click()
     expect(workspace.get_by_text('Handshake Verified: Program Version').first).to_be_visible()
     assert workspace.locator('div.bg-slate-900').first.evaluate('(el)=>getComputedStyle(el).backgroundColor')=='rgb(255, 255, 255)'
     page.screenshot(path=str(artifacts/'settings-light.png'))
@@ -59,4 +66,4 @@ with sync_playwright() as p:
     expect(workspace.locator('html')).to_have_attribute('data-theme','light')
     assert not errors,errors
     browser.close()
-print('Browser checks passed: one workspace, theme sync, help, Cancel, validation, GC10 simulator and Save.')
+print('Browser checks passed: one workspace, separate ping and GC10 controls, theme sync, help, Cancel, validation, simulator and Save.')
