@@ -1,4 +1,5 @@
 .assistModelSettings{grid-column:1/-1;min-width:0}
+.assistSemanticSettings{border-top:1px solid var(--line);margin-top:22px;padding-top:18px;min-width:0}.assistSemanticSettings h3{display:flex;align-items:center;gap:8px}.assistSemanticSettings p{line-height:1.5}.assistSemanticSettings .modelCpuChoices small{overflow-wrap:anywhere}
 .modelSetupHead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
 .modelSetupHead>div:nth-child(2){flex:1;min-width:180px}.modelSetupHead h3{margin:0 0 6px}.modelSetupHead p{margin:0;color:var(--muted)}
 .modelSetupIcon{display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:var(--passbg);color:var(--pass)}

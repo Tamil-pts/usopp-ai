@@ -6,6 +6,18 @@ from backend.core.project_retrieval import retrieve_page
 
 router=APIRouter(tags=['Chopper Project Intelligence'])
 
+@router.get('/api/assist/projects/{key}/semantic-status')
+def semantic_status(key:str,request:Request):
+    from backend.core.semantic_retrieval import status
+    try:return status(intelligence.opened(key,owner(request)),check=True)
+    except (ValueError,PermissionError) as error:raise HTTPException(404,str(error)) from None
+
+@router.post('/api/assist/projects/{key}/semantic-build')
+def semantic_build(key:str,request:Request):
+    from backend.core.semantic_retrieval import begin_build
+    try:return begin_build(intelligence.opened(key,owner(request)))
+    except (ValueError,PermissionError) as error:raise HTTPException(404,str(error)) from None
+
 
 @router.get('/api/assist/projects/{key}/machine-context')
 def machine_context(key:str,request:Request,q:str='',limit:int=60):

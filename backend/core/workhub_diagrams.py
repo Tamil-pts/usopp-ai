@@ -82,6 +82,9 @@ def generate_job(job,user):
         data['label']=text(data.get('label',''),2000,True)
         if data.get('kind') not in kinds.split('|'):raise ValueError('Chopper returned a shape outside the selected diagram type. The saved diagram was retained.')
         node['position']={'x':(i%5)*280,'y':(i//5)*160};node['type']='engineering'
+        if rev['content'].get('workspace'):
+            data['page_id']=rev['content']['workspace']['pages'][0]['id']
+            data['layer_id']=rev['content']['workspace']['layers'][0]['id']
     content={**deepcopy(rev['content']),'nodes':nodes,'edges':edges,'sources':sources,'notice':'Chopper proposal. Review the sequence and labels before approval.'}
     pi.validate_content('flowchart',content);job.check()
     depth={};incoming={n['id']:[e['source'] for e in edges if e['target']==n['id']] for n in nodes}

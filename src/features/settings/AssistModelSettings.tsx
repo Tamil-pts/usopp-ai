@@ -5,6 +5,7 @@ import {apiJson} from '../rules/library';
 import {LocalFileTree} from '../../shared/LocalFileBrowser';
 import {copyChatText} from '../assist/chatFiles';
 import './assist-model-settings.css';
+import {SemanticRetrievalSettings} from './SemanticRetrievalSettings';
 
 const MODES=[
  {id:'embedded',name:'Local CPU model',description:'Recommended · Runs on your uSOPp server',Icon:Cpu},
@@ -14,7 +15,7 @@ const MODES=[
 ];
 export function AssistModelSettings(){
  const {user}=useAccount();const admin=user.role==='admin';
- const [cfg,setCfg]=useState({provider:'embedded',baseUrl:'http://127.0.0.1:8202/v1',model:'chopper-local',modelPath:'',modelFileAvailable:false,localPort:8202,contextSize:4096,cpuThreads:4,maxTokens:512,responseTimeoutSeconds:1800,autoStart:true,allowFallback:true,hasApiKey:false});
+ const [cfg,setCfg]=useState({provider:'embedded',baseUrl:'http://127.0.0.1:8202/v1',model:'chopper-local',modelPath:'',modelFileAvailable:false,localPort:8202,contextSize:4096,cpuThreads:4,maxTokens:512,responseTimeoutSeconds:1800,autoStart:true,allowFallback:true,hasApiKey:false,localOnly:true});
  const [cpu,setCpu]=useState<any>(null),[runtime,setRuntime]=useState<any>(null);
  const [key,setKey]=useState(''),[clearKey,setClearKey]=useState(false),[models,setModels]=useState<string[]>([]);
  const [message,setMessage]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[browse,setBrowse]=useState(false),[dirty,setDirty]=useState(false);
@@ -74,6 +75,7 @@ export function AssistModelSettings(){
  return <><section className="card setting assistModelSettings wide">
   <header className="modelSetupHead"><div className="modelSetupIcon"><Bot size={26}/></div><div><h3>Chopper setup</h3><p>Choose a connection. Your local CPU model is ready to activate once its file is installed.</p></div>{cfg.provider==='embedded'&&<span className={'modelState '+(ready?'ready':running?'loading':'stopped')}>{running&&!ready?<LoaderCircle size={15} className="modelSpinning"/>:<span className="modelStateDot"/>}{statusLabel}</span>}</header>
   <div className="modelModeGrid" role="group" aria-label="Chopper connection mode">{MODES.map(({id,name,description,Icon})=><button type="button" key={id} disabled={busy||installing} className={'modelMode '+(cfg.provider===id?'selected':'')} aria-pressed={cfg.provider===id} onClick={()=>patch({provider:id,...(id==='embedded'?{autoStart:true}:{}),...(id==='ollama'?{baseUrl:'http://127.0.0.1:11434',model:cfg.provider==='ollama'?cfg.model:''}:id==='api'?{baseUrl:cfg.provider==='api'?cfg.baseUrl:'',model:cfg.provider==='api'?cfg.model:''}:{})})}><Icon size={21}/><strong>{name}</strong><small>{description}</small>{cfg.provider===id&&<Check size={15} className="modelModeCheck"/>}</button>)}</div>
+  <label className="modelStartup"><input type="checkbox" checked={cfg.localOnly??true} disabled={busy} onChange={event=>patch({localOnly:event.target.checked})}/><span><b>Local-only model connections</b><small>Enforce loopback model endpoints and bypass system proxies for local requests. Changing this setting requires saving.</small></span></label>
   {cfg.provider==='embedded'?<>
    <div className="modelConnectionFlow" aria-label="Browser connects to uSOPp server, which runs the local CPU model"><span><Monitor size={20}/><b>Your browser</b></span><ArrowRight size={18}/><span><Bot size={20}/><b>uSOPp server</b></span><ArrowRight size={18}/><span><Cpu size={20}/><b>Local CPU model</b></span></div>
    <ol className="modelSetupStages">{stages.map((stage,index)=><li key={stage.name} className={stage.done?'complete':''}><span>{stage.done?<Check size={15}/>:index+1}</span>{stage.name}</li>)}</ol>
@@ -95,6 +97,7 @@ export function AssistModelSettings(){
   </details>
   <footer className="modelSaveBar"><span>{dirty?'Unsaved changes':cfg.provider==='embedded'&&runtime?.ready?'Connected to local Chopper':'Settings saved on this server'}</span><div className="actions"><button className="btn primary" disabled={busy||installing} onClick={()=>void save()}>Save settings</button>{!['local','embedded'].includes(cfg.provider)&&<button className="btn" disabled={busy} onClick={()=>void save(true)}>Save & check</button>}</div></footer>
   {message&&<p className="modelFeedback" role="status">{message}</p>}{error&&<p className="failText" role="alert">{error}</p>}
+  <SemanticRetrievalSettings/>
   <LocalFileTree open={browse} onClose={()=>setBrowse(false)} allowedExts={['.gguf']} selectedPath={cfg.modelPath} onSelect={path=>patch({modelPath:path})}/>
  </section><details className="card setting modelMcp"><summary>Advanced integration · Chopper MCP tools</summary><p>Connect an MCP client to this application to inspect sources, prepare rule drafts and run engineering tools.</p><p>Endpoint: <code>{mcp?.endpoint||'Loading…'}</code></p><small>{mcp?.protocol}</small><div className="actions"><button className="btn" disabled={busy} onClick={()=>{setError('');apiJson('/api/assist/mcp/token',{}).then(result=>{setToken(result.token);setMessage(`MCP token created for ${Math.round(result.expiresInSeconds/3600)} hours.`)}).catch(reason=>setError(reason.message))}}>Create access token</button>{token&&<><button className="btn" onClick={()=>void copyChatText(token).then(()=>setMessage('Token copied.')).catch(reason=>setError(reason.message))}>Copy token</button><button className="btn" onClick={()=>void apiJson('/api/assist/mcp/revoke',{token}).then(()=>{setToken('');setMessage('Token revoked.')}).catch(reason=>setError(reason.message))}>Revoke token</button></>}</div></details></>;
 }

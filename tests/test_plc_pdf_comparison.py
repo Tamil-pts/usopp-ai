@@ -38,6 +38,39 @@ class PLCPDFTests(unittest.TestCase):
         self.assertEqual(response.status_code,200,response.text[:1000])
         data=response.json();return self.client.get(API+f"/results/{data['id']}?status=all&limit=200").json()
 
+    def test_optional_metadata_and_comments_apply_to_text_and_pixels(self):
+        def printed(author,created,modified,comment,operand='M1'):
+            out=io.BytesIO();c=Canvas(out,pagesize=(612,792));c.setFont('Helvetica',10)
+            c.drawString(180,760,'PROJECT / MOTOR (SBR20)');c.drawString(50,730,'Block: MOTOR')
+            for y,label,value in [(710,'Author',author),(690,'Created',created),(670,'Last Modified',modified)]:c.drawString(50,y,label+': '+value)
+            c.drawString(50,630,'Network 1');c.setFillColorRGB(0,.5,0);c.drawString(70,610,comment)
+            c.setFillColorRGB(0,0,0);c.drawString(90,575,operand);c.line(70,550,500,550);c.save();return out.getvalue()
+        a,b=printed('Alice','2000','2024','Old comment'),printed('Bob','2001','2026','New comment')
+        skipped={k:False for k in ('compare_author','compare_created','compare_modified','compare_comments')}
+        data=self.compare(a,b,**skipped)
+        self.assertEqual(data['summary']['modified'],0)
+        self.assertTrue(all(not row['pixels']['changed_pixels'] for row in data['rows']))
+        for field in skipped:
+            changed=self.compare(a,b,**{**skipped,field:True})
+            self.assertGreater(changed['summary']['modified'],0,field)
+        # Excluding comments must retain real logic changes.
+        changed=self.compare(a,printed('Bob','2001','2026','New comment','M2'),**skipped)
+        self.assertEqual(changed['rows'][-1]['status'],'modified')
+        self.assertIn('M2',changed['rows'][-1]['compared'])
+        response=self.client.get(API+f"/results/{data['id']}/report.html")
+        self.assertIn('Excluded from text and rendered pixel comparison',response.text)
+
+    def test_green_network_title_cannot_remove_network_identity_or_operand_spaces(self):
+        def printed(title):
+            out=io.BytesIO();c=Canvas(out,pagesize=(612,792));c.setFont('Helvetica',10)
+            c.drawString(180,760,'PROJECT / MOTOR (SBR20)');c.drawString(50,730,'Block: MOTOR')
+            c.drawString(50,680,'Network 3');c.setFillColorRGB(0,.5,0);c.drawString(110,680,title)
+            c.setFillColorRGB(0,0,0);c.drawString(90,640,'VW4008 SUB_I +4');c.line(70,620,500,620);c.save();return out.getvalue()
+        data=self.compare(printed('Old title'),printed('New title'),compare_comments=False)
+        self.assertEqual(data['summary']['unchanged'],2)
+        self.assertEqual(data['rows'][-1]['base_network'],3)
+        self.assertIn('VW4008 SUB_I +4',data['rows'][-1]['base'])
+
     def test_identical_networks_and_changed_project_header_are_not_logic_changes(self):
         data=self.compare(program([[(1,'VW4008 SUB_I +4')]]),program([[(1,'VW4008 SUB_I +4')]],revision='9445'))
         self.assertEqual(data['summary']['modified'],0)

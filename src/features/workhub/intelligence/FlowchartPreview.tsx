@@ -1,8 +1,10 @@
 import {useId} from 'react';
 import type {Row} from './api';
+import {DrawingPreview} from '../drawing/DrawingPreview';
 
 export function FlowchartPreview({flow}:{flow:Row}){
  const marker=useId().replaceAll(':',''),nodes:Row[]=flow.nodes||[],edges:Row[]=flow.edges||[];
+ if(flow.workspace?.schema_version===2)return <DrawingPreview flow={flow}/>;
  if(!nodes.length)return <p className="qc-small">No flowchart recorded. Open the editor to create the operating sequence.</p>;
  const points:Row[]=nodes.map(n=>({...n,x:Number(n.position?.x)||0,y:Number(n.position?.y)||0})),byId=new Map(points.map(n=>[n.id,n]));
  const minX=Math.min(...points.map(n=>n.x))-25,minY=Math.min(...points.map(n=>n.y))-25,maxX=Math.max(...points.map(n=>n.x))+225,maxY=Math.max(...points.map(n=>n.y))+115;

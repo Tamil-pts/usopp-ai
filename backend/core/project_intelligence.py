@@ -443,6 +443,15 @@ class Index:
                 expression=' OR '.join('"'+term.replace('"','""')+'"' for term in terms)
                 for row in db.execute('SELECT s.*,bm25(section_search) rank FROM section_search JOIN sections s ON s.id=section_search.rowid WHERE section_search MATCH ? ORDER BY rank LIMIT 600',(expression,)):
                     add(row,40+min(15,-float(row['rank'])),'Full-text search',1)
+            from backend.core import semantic_retrieval
+            dense,semantic=semantic_retrieval.candidates(self,db,question)
+            active_configuration=(metadata(db,'identity') or {}).get('activeConfiguration')
+            for identifier,similarity in dense.items():
+                row=db.execute('SELECT * FROM sections WHERE id=?',(identifier,)).fetchone()
+                if not row or not scope_matches(row['scope']):continue
+                if row['file'].casefold().startswith('physical/') and not include_disabled:
+                    if not active_configuration or row['file'].split('/')[1].casefold()!=str(active_configuration).casefold():continue
+                add(row,40+max(0,similarity)*8,'Local semantic candidate (relevance only)',1)
             if not candidates:
                 for row in db.execute("SELECT * FROM sections WHERE enabled=1 AND kind IN ('Logic','Ladder') ORDER BY complete DESC,length(text) DESC LIMIT 20"):add(row,10,'Project overview candidate',1)
             pass_log.append({'pass':1,'strategy':'Exact symbols and SQLite FTS5','candidates':len(candidates)})
@@ -481,7 +490,12 @@ class Index:
                         if selected:return 'active task' if task['enabled'] else 'disabled task'
                 return 'shared / task assignment unresolved'
             chosen=[];used=0;seen=[];cursor=offset
-            ranked=sorted(candidates.values(),key=lambda value:(-value['score'],value['file'],value['first']))
+            ranked=semantic_retrieval.rank(candidates,dense,question,semantic)
+            if semantic['used']:
+                # Generation/reranking can take time. Never publish a semantic hit
+                # from a source modified while the local model was reading it.
+                current,_=semantic_retrieval.snapshot(self,db)
+                if current!=semantic['fingerprint']:raise ValueError('Source/index changed during semantic retrieval. Refresh before asking again.')
             for position,row in enumerate(ranked[offset:],offset):
                 if used>=characters or len(chosen)>=limit:break
                 cursor=position+1
@@ -499,13 +513,15 @@ class Index:
             state=metadata(db,'state') or {}
             ambiguous=[row['name'] for row in db.execute('SELECT name FROM symbols GROUP BY name HAVING count(DISTINCT scope)>1 LIMIT 100') if row['name'] in traced or row['name'] in query_symbols]
         notices=[]
+        if semantic.get('notice'):notices.append(semantic['notice'])
+        if semantic['used']:pass_log.append({'pass':'hybrid','strategy':'Exact symbols + BM25 + local embeddings + graph; optional learned reranking','semantic':semantic})
         if not state.get('ready'):notices.append('Indexing is incomplete. Findings cover only the indexed sources currently available.')
         if state.get('failedFilesCount'):notices.append(f"{state['failedFilesCount']} source files failed indexing; their behavior is unresolved.")
         if state.get('analysisNotices'):notices.append('Some files reached extraction bounds or contain constructs needing manual review; their complete dependency coverage is not established.')
         if state.get('unreadableFolders'):notices.append('Some project folders could not be enumerated. Their sources are unavailable to this analysis.')
         if ambiguous:notices.append('Same-named symbols occur in multiple scopes; do not merge their behavior: '+', '.join(ambiguous[:12]))
         if any(not item['completeSection'] for item in chosen):notices.append('Some retrieved sections are bounded source windows. Full sequence or branch completeness is not established by those windows.')
-        return {'evidence':chosen,'passes':pass_log,'notices':notices,'tasks':tasks,'identity':identity,'characters':used,'candidateCount':len(candidates),'projectId':self.key,'offset':offset,'nextOffset':cursor if cursor<len(ranked) else None,'candidateFiles':len({row['file'] for row in ranked})}
+        return {'evidence':chosen,'passes':pass_log,'notices':notices,'tasks':tasks,'identity':identity,'characters':used,'candidateCount':len(candidates),'projectId':self.key,'offset':offset,'nextOffset':cursor if cursor<len(ranked) else None,'candidateFiles':len({row['file'] for row in ranked}),'semantic':semantic}
 
 
     def relationships(self,kind='',query='',file='',offset=0,limit=100):

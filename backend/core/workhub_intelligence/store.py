@@ -214,6 +214,8 @@ def validate_content(kind,value):
             text(edge.get('label') or '',2000)
         edge_ids=[edge.get('id') for edge in edges]
         if any(not isinstance(key,str) or not key for key in edge_ids) or len(set(edge_ids))!=len(edge_ids):raise HTTPException(400,'Diagram connection IDs must be unique.')
+        from backend.core.workhub_drawing import validate as validate_drawing
+        validate_drawing(value)
     if kind=='frd':
         requirements=value.get('requirements',[])
         if not isinstance(requirements,list) or len(requirements)>2000:raise HTTPException(400,'Use up to 2,000 requirements per document.')

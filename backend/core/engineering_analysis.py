@@ -312,7 +312,7 @@ def _run(index,question,payload,machine,model,config,system,help_lookup):
              'files':[{'file':item['file'],'line':item['line'],'endLine':item['endLine'],'sourceId':item['sourceId']} for item in evidence],
              'filesSent':[{'file':row['file'],'line':row['line'],'endLine':row['endLine'],'sourceId':key} for key,row in supplied_records.items()],
              'analysisPasses':attempts,'passes':retrieval.get('passes',[]),'candidateCount':retrieval.get('candidateCount'),
-             'unvisitedFunctions':unvisited_functions,'semanticIssues':semantic_gaps,'nextRetrievalOffset':retrieval.get('nextOffset')}
+             'unvisitedFunctions':unvisited_functions,'semanticIssues':semantic_gaps,'nextRetrievalOffset':retrieval.get('nextOffset'),'semantic':retrieval.get('semantic',{})}
     text=response['answer'] if response else ''
     final_ids={item['sourceId'] for item in response.get('sentEvidence',[])} if response else set()
     additional=[finding['text'] for finding in findings if not set(finding['sourceIds']).issubset(final_ids)]

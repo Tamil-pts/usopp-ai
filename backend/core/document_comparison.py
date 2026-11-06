@@ -345,8 +345,8 @@ def run(user,payload):
     configs=[{'id':c.get('id'),'sheet':c.get('sheet',''),'header_row':c.get('header_row',1)} for c in configs]
     inputs=[source(user,c.get('id')) for c in configs];files=[i[0] for i in inputs];infos=[i[1] for i in inputs]
     if infos[0]['kind']!=infos[1]['kind']:fail('Compare two spreadsheets, or compare two text documents (PDF, DOCX or TXT).',400)
-    options={k:payload.get(k) for k in ('columns','keys','match_by','value_mode','ignore_case','ignore_whitespace','compare_types','ignore_page_numbers','plc_networks','pixel_compare') if k in payload}
-    for k in ('ignore_case','ignore_whitespace','compare_types','ignore_page_numbers','plc_networks','pixel_compare'):
+    options={k:payload.get(k) for k in ('columns','keys','match_by','value_mode','ignore_case','ignore_whitespace','compare_types','ignore_page_numbers','plc_networks','pixel_compare','compare_author','compare_created','compare_modified','compare_comments') if k in payload}
+    for k in ('ignore_case','ignore_whitespace','compare_types','ignore_page_numbers','plc_networks','pixel_compare','compare_author','compare_created','compare_modified','compare_comments'):
         if k in options and not isinstance(options[k],bool):fail('Choose valid text comparison options.',400)
     pdf=None
     if options.get('plc_networks') and not all(info['extension']=='.pdf' for info in infos):fail('PLC network comparison requires two PDF files.',400)

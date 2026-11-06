@@ -15,8 +15,9 @@ RUNNING = re.compile(r'^.+?\s+/\s+(.+?)\s+\(((?:OB|SBR|FB|FC|DB|INT)\s*\d+)\)\s*
 NETWORK = re.compile(r'^Network\s+(\d+)\b(.*)$', re.I)
 
 
-def extract(path, ignore_page_numbers=True):
+def extract(path, ignore_page_numbers=True, options=None):
     import pdfplumber
+    options = options or {}
     blocks, pages, ignored, notices = [], [], [], []
     current, active = None, None
     characters = 0
@@ -31,7 +32,7 @@ def extract(path, ignore_page_numbers=True):
             page = original.crop(bounds) if tuple(bounds) != tuple(original.bbox) else original
             width, height = page.width, page.height
             pages.append(dict(number=number, width=width, height=height))
-            lines = page.extract_text_lines(return_chars=False)
+            lines = page.extract_text_lines(return_chars=True)
             for line in lines:
                 line['bbox'] = [line['x0']-bounds[0], line['top']-bounds[1], line['x1']-bounds[0], line['bottom']-bounds[1]]
             header = next((line for line in lines if RUNNING.fullmatch(line['text'].strip()) and line['bbox'][1] < height*.12), None)
@@ -60,13 +61,42 @@ def extract(path, ignore_page_numbers=True):
             bottom = min((line['bbox'][1]-4 for line in counters if line['bbox'][1] > height*.9), default=height-8)
             top = header['bbox'][3]+4 if header else 8
             body = [line for line in lines if line is not header and line not in counters and line['bbox'][1] >= top and line['bbox'][3] <= bottom]
+            # Positively identified print metadata and green comment glyphs only.
+            masks=[]
+            retained=[]
+            for line in body:
+                field=next((key for key,pattern in [('author',r'^Author\s*:'),('created',r'^Created\s*:'),('modified',r'^(?:Last\s+)?Modified\s*:')] if re.match(pattern,line['text'],re.I)),None)
+                if field and not options.get('compare_'+field,True):
+                    masks.append(line['bbox']);ignored.append(dict(page=number,text=line['text'],kind=field));continue
+                if not options.get('compare_comments',True):
+                    chars=line.get('chars',[])
+                    def is_comment(char):
+                        color=char.get('non_stroking_color')
+                        return isinstance(color,(tuple,list)) and len(color)==3 and color[1]>.25 and color[1]>color[0]*1.5 and color[1]>color[2]*1.5
+                    removed=[char for char in chars if is_comment(char)]
+                    if removed:
+                        masks.extend([char['x0']-bounds[0],char['top']-bounds[1],char['x1']-bounds[0],char['bottom']-bounds[1]] for char in removed)
+                        ignored.append(dict(page=number,text=''.join(c['text'] for c in removed),kind='comment'))
+                        # PDF spaces are often geometric gaps, not character objects.
+                        # Preserve those gaps so "Network 3" never becomes "Network3".
+                        remaining=[c for c in chars if not is_comment(c)]
+                        compact=[c for c in chars if not c['text'].isspace()]
+                        if ''.join(c['text'] for c in compact)==re.sub(r'\s','',line['text']):
+                            glyphs=iter(compact)
+                            kept=''.join(char for char in line['text'] if char.isspace() or not is_comment(next(glyphs)))
+                        else:
+                            kept=pdfplumber.utils.extract_text(remaining,x_tolerance_ratio=.1) or ''
+                        line={**line,'text':kept.strip()}
+                        if not line['text']:continue
+                retained.append(line)
+            body=retained
             headings = [(line, NETWORK.fullmatch(line['text'].strip())) for line in body]
             headings = [(line, match) for line, match in headings if match]
             def append_region(unit, start, end, excluded=None):
                 nonlocal characters
                 if end <= start: return
                 # Full width preserves parallel branches and wiring with no nearby text.
-                unit['segments'].append(dict(page=number, bbox=[0, start, width, end]))
+                unit['segments'].append(dict(page=number, bbox=[0, start, width, end], masks=[box for box in masks if box[1]<end and box[3]>start]))
                 content = [line['text'] for line in body if line is not excluded and start <= line['bbox'][1] < end]
                 text = '\n'.join(content)
                 if not content and page.images:unit['unknown']=True
@@ -124,8 +154,15 @@ class Renderer:
         try:
             for segment in unit['segments']:
                 image = self.page(segment['page']); meta = self.pages[segment['page']-1]; box = segment['bbox']
+                if segment.get('masks'):
+                    from PIL import ImageDraw
+                    image=image.copy();draw=ImageDraw.Draw(image)
+                    for mask in segment['masks']:
+                        draw.rectangle((int(mask[0]*image.width/meta['width'])-1,int(mask[1]*image.height/meta['height'])-1,
+                            int(mask[2]*image.width/meta['width'])+1,int(mask[3]*image.height/meta['height'])+1),fill='white')
                 crop = image.crop((round(box[0]*image.width/meta['width']), round(box[1]*image.height/meta['height']),
                                    round(box[2]*image.width/meta['width']), round(box[3]*image.height/meta['height'])))
+                if segment.get('masks'):image.close()
                 ink = ImageChops.difference(crop.convert('L'), Image.new('L', crop.size, 255)).point(lambda value:255 if value>70 else 0)
                 bounds = ink.getbbox(); ink.close()
                 if bounds:
@@ -181,7 +218,7 @@ def aligned_networks(a, b):
 
 
 def compare(files, options):
-    extracted=[extract(path,options.get('ignore_page_numbers',True)) for path in files]
+    extracted=[extract(path,options.get('ignore_page_numbers',True),options) for path in files]
     blocks=[item[0] for item in extracted];rows=[]
     renderers=[Renderer(path,item[1]) for path,item in zip(files,extracted)]
     pixels=options.get('pixel_compare',True)
@@ -241,7 +278,10 @@ def compare(files, options):
            'Page breaks and outside whitespace are removed from network crops; continued networks retain every source-page segment.']
     notes.extend(f'{side}: {notice}' for side,item in zip(('Base','Compared'),extracted) for notice in item[3])
     ignored={side:item[2] for side,item in zip(('base','compared'),extracted)}
+    omitted=[name for name in ('author','created','modified','comments') if not options.get('compare_'+name,True)]
+    if omitted:notes.append('Excluded from text and rendered pixel comparison: '+', '.join(omitted)+'. Masked preview areas are omitted from exports too. Comment exclusion recognizes green printed comment text; other comment styles remain compared for review.')
     return rows,[],notes,dict(mode='plc_networks',pixel_compare=pixels,blocks=blocks_info,pages=pages,
+        comparison_fields={name:options.get('compare_'+name,True) for name in ('author','created','modified','comments')},
         pairs=pdf.align_pages(rows,pages['base'],pages['compared']),ignore_page_numbers=options.get('ignore_page_numbers',True),ignored_page_numbers=ignored)
 
 

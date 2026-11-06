@@ -17,6 +17,18 @@ def test_two_pass_graph_rag_publishes_only_checked_facts(reference):
     for evidence in result['evidence']:assert evidence['sourceHash']
 
 
+def test_restored_mtime_edit_during_inference_is_still_rejected(reference,monkeypatch):
+    import os
+    build(reference);monkeypatch.setattr(harness,'configuration',lambda:{'provider':'embedded'})
+    def changed(*args,**kwargs):
+        target=reference.root/kwargs['evidence'][0]['file'];stat=target.stat();raw=target.read_bytes()
+        # Change bytes without changing file length, then restore its timestamp.
+        target.write_bytes(raw.replace(b'Motor',b'Other',1));os.utime(target,ns=(stat.st_atime_ns,stat.st_mtime_ns))
+        return {'answer':'[S1] F1'}
+    with pytest.raises(ValueError,match='Source hash changed'):
+        harness.investigate(reference.key,'What conditions are required before Motor starts?',{'id':'engineer'},model_call=changed)
+
+
 @pytest.mark.parametrize('answer',['[S1] Motor is ON because Start is TRUE.','[S1] F999','[S999] F1'])
 def test_hallucination_protocol_rejects_free_text_fabricated_facts_and_sources(reference,monkeypatch,answer):
     build(reference);monkeypatch.setattr(harness,'configuration',lambda:{'provider':'embedded'})

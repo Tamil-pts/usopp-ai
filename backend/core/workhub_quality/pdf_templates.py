@@ -148,7 +148,11 @@ def blocks(content):
     if criteria:add('sections','Acceptance criteria',columns=['ID','Criterion','Wording confirmed'],rows=[[r['id'],r['text'],'Yes' if r.get('confirmed') else 'No'] for r in criteria])
     else:add('sections','Acceptance criteria',content.get('acceptance_summary'))
     flow=content.get('flowchart') or (content if content.get('nodes') else None)
-    if flow:add('flowchart','Functional sequence and flowchart','Engineering interpretation; review against the linked requirements.',svg=diagram_svg(flow))
+    if flow:
+        if flow.get('workspace',{}).get('schema_version')==2:
+            from backend.core.workhub_drawing import svg_pages
+            for name,image in svg_pages(flow):add('flowchart','Drawing: '+name,'Engineering interpretation; review against the linked requirements.',svg=image)
+        else:add('flowchart','Functional sequence and flowchart','Engineering interpretation; review against the linked requirements.',svg=diagram_svg(flow))
     add('changes','Correction notes',columns=['ID','Change','Requirements'],rows=[[r.get('id',''),r.get('summary',''),', '.join(r.get('requirement_ids',[]))] for r in content.get('changes',[])])
     for correction in content.get('changes',[]):
         add('changes',str(correction.get('id',''))+' — modification and verification',columns=['Field','Recorded detail'],rows=[[key.replace('_',' ').title(),correction[key]] for key in ('existing_behavior','expected_behavior','plc_references','impact','before_evidence','after_evidence','verification') if correction.get(key)])
@@ -157,7 +161,7 @@ def blocks(content):
          (r.get('execution') or {}).get('outcome','Recorded native validation' if r.get('native_run_id') else 'NOT TESTED'),
          json.dumps(r['execution'],ensure_ascii=False) if r.get('execution') else 'Linked validation run: '+r['native_run_id'] if r.get('native_run_id') else 'No execution recorded'] for r in content.get('cases',[])])
     add('sections','Document sections',columns=['Section','Content'],rows=[[r.get('heading',''),r.get('text','')] for r in content.get('sections',[])])
-    known={'summary','purpose','background','expected_outcome','scope','acceptance_summary','acceptance_items','requirements','flowchart','changes','cases','sections','sources','nodes','edges','field_files','document_info','document_links','diagram_type'}|mom_fields
+    known={'summary','purpose','background','expected_outcome','scope','acceptance_summary','acceptance_items','requirements','flowchart','changes','cases','sections','sources','nodes','edges','field_files','document_info','document_links','diagram_type','workspace','starter_template'}|mom_fields
     other={k:v for k,v in content.items() if k not in known}
     add('details','Supporting document details','\n'.join(readable_lines(other)))
     add('sources','Source references',columns=['Reference','Location','Source excerpt'],rows=[

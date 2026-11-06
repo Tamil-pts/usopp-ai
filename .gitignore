@@ -39,6 +39,8 @@ logs/
 release/
 artifacts/
 .usopp_assist_model.json
+.usopp_semantic.json
+.hypothesis/
 
 knowledge/br_help/
 knowledge/projects/

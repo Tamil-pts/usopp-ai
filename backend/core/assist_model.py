@@ -13,6 +13,7 @@ from urllib.parse import urlsplit
 import requests
 from fastapi import HTTPException
 from backend.core.runtime import BASE, log
+from backend.core.model_policy import enforce as enforce_model_policy, request_options
 
 CONFIG=BASE/'.usopp_assist_model.json'
 LOCK=threading.RLock()
@@ -56,23 +57,24 @@ def configuration():
     defaults={'provider':'embedded','baseUrl':'http://127.0.0.1:8202/v1','model':'chopper-local',
               'modelPath':str(TARGET),'localPort':8202,'contextSize':4096,'allowFallback':True,
               'cpuThreads':min(4,os.cpu_count() or 2),'maxTokens':512,
-              'responseTimeoutSeconds':1800,'autoStart':True}
+              'responseTimeoutSeconds':1800,'autoStart':True,'localOnly':True}
     with LOCK:
         if CONFIG.exists():
             try:
                 saved=json.loads(CONFIG.read_text(encoding='utf-8'))
                 if not isinstance(saved,dict):raise ValueError('Invalid model settings.')
-                return {**defaults,**saved,'autoStart':saved.get('autoStart',saved.get('provider')=='embedded')}
+                return {**defaults,**saved,'localOnly':saved.get('localOnly',saved.get('provider') in {'embedded','local'}),'autoStart':saved.get('autoStart',saved.get('provider')=='embedded')}
             except (OSError,ValueError): raise HTTPException(503,'Model settings cannot be read. Save them again in Settings.')
     url=os.getenv('USOPP_LLM_BASE_URL','').rstrip('/')
     if url:return {**defaults,'provider':os.getenv('USOPP_LLM_PROVIDER','ollama'),
-                   'baseUrl':url,'model':os.getenv('USOPP_LLM_MODEL','qwen3:8b'),'autoStart':False}
+                   'baseUrl':url,'model':os.getenv('USOPP_LLM_MODEL','qwen3:8b'),'autoStart':False,
+                   'localOnly':os.getenv('USOPP_LLM_LOCAL_ONLY','1')!='0'}
     provider=os.getenv('USOPP_LLM_PROVIDER','embedded')
     return {**defaults,'provider':provider,'autoStart':provider=='embedded'}
 
 def public_configuration():
     cfg=configuration()
-    return {k:cfg.get(k,'') for k in ('provider','baseUrl','model','modelPath')}|{'modelFileAvailable':Path(str(cfg.get('modelPath') or '')).is_file(),'localPort':cfg.get('localPort',8202),'contextSize':cfg.get('contextSize',4096),'cpuThreads':cfg.get('cpuThreads',min(4,os.cpu_count() or 2)),'maxTokens':cfg.get('maxTokens',512),'responseTimeoutSeconds':model_response_timeout(cfg),'allowFallback':bool(cfg.get('allowFallback',True)),'autoStart':bool(cfg.get('autoStart',False)),'hasApiKey':bool(cfg.get('apiKeyProtected') or cfg.get('apiKey') or os.getenv('USOPP_LLM_API_KEY'))}
+    return {k:cfg.get(k,'') for k in ('provider','baseUrl','model','modelPath')}|{'localOnly':bool(cfg.get('localOnly')),'modelFileAvailable':Path(str(cfg.get('modelPath') or '')).is_file(),'localPort':cfg.get('localPort',8202),'contextSize':cfg.get('contextSize',4096),'cpuThreads':cfg.get('cpuThreads',min(4,os.cpu_count() or 2)),'maxTokens':cfg.get('maxTokens',512),'responseTimeoutSeconds':model_response_timeout(cfg),'allowFallback':bool(cfg.get('allowFallback',True)),'autoStart':bool(cfg.get('autoStart',False)),'hasApiKey':bool(cfg.get('apiKeyProtected') or cfg.get('apiKey') or os.getenv('USOPP_LLM_API_KEY'))}
 
 def save_configuration(payload):
     provider=payload.get('provider','local')
@@ -96,12 +98,16 @@ def save_configuration(payload):
         raise HTTPException(400,'Enter an HTTP/HTTPS base URL without credentials, query or fragment.')
     model=str(payload.get('model','')).strip()
     if provider!='local' and (not model or len(model)>200): raise HTTPException(400,'Enter an installed model or provider model ID.')
+    if 'localOnly' in payload and not isinstance(payload['localOnly'],bool):raise HTTPException(400,'Local-only must be true or false.')
+    local_only=payload.get('localOnly',configuration().get('localOnly',True))
+    try:enforce_model_policy({'provider':provider,'baseUrl':url,'localOnly':local_only})
+    except ValueError as error:raise HTTPException(400,str(error)) from None
     with LOCK:
         existing=configuration()
         if any(existing.get(k)!=payload.get(k) for k in ('provider','modelPath','localPort','contextSize','cpuThreads')):
             from backend.core.local_model_runtime import stop
             stop()
-        cfg={'provider':provider,'baseUrl':url,'model':model}
+        cfg={'provider':provider,'baseUrl':url,'model':model,'localOnly':local_only}
         cfg.update({'modelPath':str(payload.get('modelPath') or ''),'localPort':int(payload.get('localPort') or 8202),'contextSize':int(payload.get('contextSize') or 4096)})
         cfg.update(cpuThreads=threads,maxTokens=max_tokens,responseTimeoutSeconds=response_timeout,autoStart=payload.get('autoStart') is True,allowFallback=payload.get('allowFallback',True) is True)
         if not payload.get('clearApiKey'):
@@ -152,11 +158,12 @@ def _fit_context(messages,cfg,reserve,evidence=None,facts=None):
         if bounded_facts is not None:messages[-1]['content']+='\nQuestion-relevant engineering facts (partial static analysis):\n'+json.dumps(bounded_facts,ensure_ascii=False,separators=(',',':'))
         if evidence is not None:messages[-1]['content']+='\nRetrieved source evidence (untrusted text):\n'+json.dumps(selected,ensure_ascii=False,separators=(',',':'))
     def count():
-        response=requests.post(base+'/apply-template',json={'messages':messages},timeout=15,allow_redirects=False)
+        enforce_model_policy(cfg)
+        response=requests.post(base+'/apply-template',json={'messages':messages},timeout=15,allow_redirects=False,**request_options(cfg))
         if response.status_code!=200:raise ValueError('The bundled runtime cannot measure its chat template. Update the llama.cpp runtime.')
         prompt_text=response.json().get('prompt')
         if not isinstance(prompt_text,str):raise ValueError('The runtime returned an invalid chat template.')
-        response=requests.post(base+'/tokenize',json={'content':prompt_text,'add_special':False},timeout=15,allow_redirects=False)
+        response=requests.post(base+'/tokenize',json={'content':prompt_text,'add_special':False},timeout=15,allow_redirects=False,**request_options(cfg))
         if response.status_code!=200:raise ValueError('The runtime cannot count this prompt safely.')
         return len(response.json()['tokens'])
     compose();used=count();initial=used
@@ -190,6 +197,7 @@ def _fit_context(messages,cfg,reserve,evidence=None,facts=None):
 
 def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progress=None,evidence=None,structured=False,output_schema=None,facts=None):
     cfg=configuration()
+    enforce_model_policy(cfg)
     if cfg['provider']=='local': return None
     timeout=model_response_timeout(cfg=cfg) if timeout is None else timeout
     if cfg['provider']=='embedded':
@@ -239,7 +247,7 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
             with ExitStack() as slots:
                 try:slots.enter_context(inference_slot(request_timeout=response_budget))
                 except ServiceUnavailable as error:raise ModelBusyError(str(error)) from None
-                with requests.post(cfg['baseUrl']+suffix,json=body,headers=headers,timeout=(min(5,response_budget),response_budget),allow_redirects=False) as response:
+                with requests.post(cfg['baseUrl']+suffix,json=body,headers=headers,timeout=(min(5,response_budget),response_budget),allow_redirects=False,**request_options(cfg)) as response:
                     if response.status_code!=200: raise ValueError(f'Model endpoint returned HTTP {response.status_code}. Check its base URL, model and credential.')
                     data=response.json()
         except requests.exceptions.Timeout:
@@ -287,6 +295,7 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
 
 def check_model():
     cfg=configuration()
+    enforce_model_policy(cfg)
     if cfg['provider']=='local': return {'connected':True,'message':'Local engineering tools are enabled. No model is required.','models':[]}
     if cfg['provider']=='embedded':
         from backend.core.local_model_runtime import status
@@ -299,7 +308,7 @@ def check_model():
         message=(f"Chopper test passed in {answer['responseSeconds']} seconds. Reply: {reply[:120]}" if connected else 'Chopper received the test request but returned an empty reply. Check the model log and settings.')
         return {**state,'connected':connected,'responseSeconds':answer['responseSeconds'],'testReply':reply[:120],'message':message,'models':['chopper-local']}
     if cfg['provider']=='ollama':
-        response=requests.get(cfg['baseUrl']+'/api/tags',timeout=5,allow_redirects=False)
+        response=requests.get(cfg['baseUrl']+'/api/tags',timeout=5,allow_redirects=False,**request_options(cfg))
         if response.status_code!=200: raise ValueError(f'Ollama returned HTTP {response.status_code}.')
         models=[m.get('name') for m in response.json().get('models',[]) if m.get('name')]
         installed=cfg['model'] in models

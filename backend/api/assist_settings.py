@@ -3,6 +3,25 @@ from backend.core.assist_model import public_configuration,save_configuration,ch
 
 router=APIRouter(tags=['Chopper model'])
 
+@router.get('/api/assist/model/retrieval')
+def retrieval_status(request:Request):
+    admin(request)
+    from backend.core.semantic_runtime import status
+    return status()
+
+@router.post('/api/assist/model/retrieval')
+def retrieval_settings(payload:dict,request:Request):
+    admin(request)
+    from backend.core.semantic_runtime import save_settings
+    try:return save_settings(payload)
+    except ValueError as error:raise HTTPException(400,str(error)) from None
+
+@router.post('/api/assist/model/retrieval/install')
+def install_retrieval(request:Request):
+    admin(request)
+    from backend.core.semantic_runtime import begin_install
+    return begin_install()
+
 @router.get('/api/assist/model/status')
 def public_status():
     from backend.core.assist_model import configuration

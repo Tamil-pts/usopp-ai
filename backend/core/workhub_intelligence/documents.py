@@ -344,6 +344,9 @@ def _source_hyperlink(paragraph,project_id,source):
 
 
 def diagram_svg(content):
+    if content.get('workspace',{}).get('schema_version')==2:
+        from backend.core.workhub_drawing import svg
+        return svg(content)
     from xml.sax.saxutils import escape
     import textwrap
     nodes=content.get('nodes',[]);edges=content.get('edges',[]);positions={n['id']:n for n in nodes};sizes={}

@@ -63,6 +63,12 @@ def llm_json(instruction,payload,check=lambda:None):
 
 def _llm_json(instruction,payload,check=lambda:None):
     explicit=os.getenv('USOPP_PI_LLM_URL');provider='openai';cfg={}
+    from backend.core.assist_model import configuration
+    from backend.core.model_policy import enforce
+    selected_cfg=configuration()
+    if selected_cfg.get('localOnly'):
+        try:enforce({'provider':'api','baseUrl':explicit or selected_cfg.get('baseUrl',''),'localOnly':True})
+        except ValueError as error:raise ServiceUnavailable(str(error)) from None
     if explicit:
         base=local_url(explicit);model=os.getenv('USOPP_PI_LLM_MODEL','local');token=os.getenv('USOPP_PI_LLM_TOKEN')
     else:
