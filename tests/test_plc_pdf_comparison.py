@@ -38,6 +38,45 @@ class PLCPDFTests(unittest.TestCase):
         self.assertEqual(response.status_code,200,response.text[:1000])
         data=response.json();return self.client.get(API+f"/results/{data['id']}?status=all&limit=200").json()
 
+    def test_running_block_without_address_keeps_continuation_networks(self):
+        # These are explicit project / block headers, as in the supplied STEP7 PDFs.
+        out=io.BytesIO();c=Canvas(out,pagesize=(612,792))
+        for page in range(2):
+            c.drawString(180,760,'PROJECT / MOTOR')
+            if page==0:c.drawString(50,730,'Block: MOTOR')
+            c.drawString(50,680,f'Network {page+1}')
+            c.drawString(90,640,'SM0.0 MOV_W MW30');c.line(70,620,500,620)
+            c.showPage()
+        c.save()
+        data=self.compare(out.getvalue(),out.getvalue())
+        self.assertEqual(data['summary']['unresolved'],0)
+        self.assertEqual(data['summary']['unchanged'],3)
+        self.assertEqual([r['base_network'] for r in data['rows'] if r['unit']=='network'],[1,2])
+
+    def test_network_translation_does_not_become_a_logic_change(self):
+        def shifted(dx,dy,operand='MW30',wire=False):
+            out=io.BytesIO();c=Canvas(out,pagesize=(612,792));c.setFont('Helvetica',10)
+            c.drawString(180,760,'PROJECT / MOTOR (SBR20)');c.drawString(50,730,'Block: MOTOR')
+            c.drawString(50,680,'Network 1')
+            c.saveState();c.translate(dx,dy)
+            c.drawString(90,610,'SM0.0 MOV_W '+operand)
+            c.line(70,650,70,480);c.line(70,590,450,590)
+            c.rect(250,550,100,70)
+            if wire:c.line(180,590,180,530)
+            c.restoreState();c.save();return out.getvalue()
+        original=shifted(0,0)
+        data=self.compare(original,shifted(18,-27))
+        row=next(r for r in data['rows'] if r['unit']=='network')
+        self.assertEqual(row['status'],'unchanged',row['pixels'])
+        self.assertEqual(row['pixels']['changed_pixels'],0)
+        self.assertIn('registration',row['pixels'])
+        # Registration must retain operand changes and a new connected wire.
+        for operand,wire in [('MW31',False),('MW30',True)]:
+            data=self.compare(original,shifted(18,-27,operand,wire))
+            row=next(r for r in data['rows'] if r['unit']=='network')
+            self.assertEqual(row['status'],'modified')
+            self.assertGreater(row['pixels']['changed_pixels'],0)
+
     def test_optional_metadata_and_comments_apply_to_text_and_pixels(self):
         def printed(author,created,modified,comment,operand='M1'):
             out=io.BytesIO();c=Canvas(out,pagesize=(612,792));c.setFont('Helvetica',10)
@@ -48,7 +87,7 @@ class PLCPDFTests(unittest.TestCase):
         a,b=printed('Alice','2000','2024','Old comment'),printed('Bob','2001','2026','New comment')
         skipped={k:False for k in ('compare_author','compare_created','compare_modified','compare_comments')}
         data=self.compare(a,b,**skipped)
-        self.assertEqual(data['pdf']['comparison_version'],3)
+        self.assertEqual(data['pdf']['comparison_version'],4)
         self.assertEqual(data['summary']['modified'],0)
         self.assertTrue(all(not row['pixels']['changed_pixels'] for row in data['rows']))
         for field in skipped:
@@ -243,6 +282,22 @@ class PLCPDFTests(unittest.TestCase):
         response=self.client.post(API+'/run',json={'base':{'id':a['id']},'compared':{'id':a['id']},'pixel_compare':'false'})
         self.assertEqual(response.status_code,400)
         self.assertEqual(self.client.post(API+'/uploads',files={'file':('a.txt',b'Network 1')}).status_code,400)
+
+    def test_word_and_html_keep_the_entered_report_details(self):
+        result=self.compare(program([[(1,'M1')]]),program([[(1,'M2')]]))
+        params={'project_name':'Comber review','project_id':'PRJ-104','department':'Automation',
+                'base':'Reference version','developed':'Changed version','reviewed_by':'Review Engineer',
+                'approved_by':'Approver','objective_scope':'Check PLC network changes',
+                'description':'A detailed engineering review. '*25,'status':'modified'}
+        for kind in ('html','docx'):
+            response=self.client.get(API+f"/results/{result['id']}/report.{kind}",params=params)
+            self.assertEqual(response.status_code,200,response.text[:100])
+            if kind=='html':text=response.text
+            else:
+                document=Document(io.BytesIO(response.content))
+                text='\n'.join(c.text for row in document.tables[0].rows for c in row.cells)
+            for key,value in params.items():
+                if key!='status':self.assertIn(value.strip(),text)
 
 
 if __name__=='__main__':unittest.main()

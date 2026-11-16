@@ -625,6 +625,9 @@ def hmi_screen_layout(text: str, source_path=None, cache=None) -> dict:
                 cache[key] = None
         return cache[key]
     def reference(value, kind, folder, suffix):
+        key = ('hmi_reference', str(target), value, kind, folder, suffix)
+        if key in cache:
+            return cache[key]
         match = re.search(r'Source\[(local|global)\]\.' + kind + r'\[([^\]]+)\]', value or '', re.I)
         if not target or not match:
             return None
@@ -633,7 +636,8 @@ def hmi_screen_layout(text: str, source_path=None, cache=None) -> dict:
         # XML references cannot escape their own resource directory.
         if not path.is_relative_to((home / folder).resolve()):
             return None
-        return resource(path)
+        cache[key] = resource(path)
+        return cache[key]
     palette_root = resource(target / 'Palette.vcr') if target else None
     palette = {n.get('Index'): n.get('Value') for n in palette_root.iter()
                if tag(n) == 'palettecolor'} if palette_root is not None else {}
@@ -652,13 +656,17 @@ def hmi_screen_layout(text: str, source_path=None, cache=None) -> dict:
     def texts(group, index):
         if group is None:
             return {}
+        key = ('hmi_text', group, str(index))
+        if key in cache:
+            return cache[key]
         ids = {n.get('Value'): n.get('ID') for n in group.iter() if tag(n) == 'index'}
         text_id = ids.get(str(index))
         if text_id is None:
             return {}
-        return {layer.get('LanguageId', 'unknown'): n.get('Value', '')
+        cache[key] = {layer.get('LanguageId', 'unknown'): n.get('Value', '')
                 for layer in group.iter() if tag(layer) == 'textlayer'
                 for n in layer if tag(n) == 'text' and n.get('ID') == text_id}
+        return cache[key]
     layers, warnings = [], []
     type_map = {'0X00001001': 'Shape', '0X00001002': 'Button', '0X00001003': 'HotSpot',
                 '0X00001004': 'Text', '0X00001007': 'Numeric', '0X0000100B': 'String',
@@ -1169,6 +1177,7 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
     same_screen_files: List[dict] = []
     same_project_files: List[dict] = []
     hmi_resource_cache = {}
+    declaration_cache = {}
     if detail_dir is not None:
         detail_dir = Path(detail_dir)
         detail_dir.mkdir(parents=True, exist_ok=True)
@@ -1276,7 +1285,7 @@ def compare_projects(base_root: Path, new_root: Path, base_hmi: str = '', new_hm
                 try: from python_engine.ladder_model import declaration_symbols
                 except ModuleNotFoundError: from ladder_model import declaration_symbols
                 parsed_ladder = parse_ladder_diff(base_text, new_text,
-                    declaration_symbols(base_files,base_rel),declaration_symbols(new_files,new_rel),rel)
+                    declaration_symbols(base_files,base_rel,cache=declaration_cache),declaration_symbols(new_files,new_rel,cache=declaration_cache),rel)
                 entry['ladder_structured_available'] = bool(parsed_ladder.get('parsed'))
                 if status == 'unchanged' and detail_dir is not None:
                     detail_id = hashlib.sha256(('ladder:' + rel).encode('utf-8')).hexdigest()

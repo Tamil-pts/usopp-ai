@@ -21,6 +21,12 @@ from backend.core.access import claim_resource
 router=APIRouter(prefix='/api/virtual-electrical',tags=['Virtual electrical workspace'])
 SLOTS=threading.BoundedSemaphore(2)
 
+@router.post('/control/simulate')
+def simulate_industrial_control(payload:dict):
+    user()
+    from backend.electrical.control import simulate
+    return simulate(payload)
+
 
 @router.get('/library')
 def library():
@@ -81,7 +87,11 @@ def begin(name,source=None):
 def worker(folder):
     def progress(phase,current,total):engine.write(folder/'status.json',{'status':'analyzing','processId':os.getpid(),'phase':phase,'current':current,'total':total})
     try:
-        data=engine.decode(folder,progress)
+        meta=engine.read(folder/'workspace.json')
+        if (meta.get('source') or {}).get('mode')=='industrial':
+            from backend.electrical.reconstruction import build
+            model=build(folder,progress);data={'pageCount':len(model['pages'])}
+        else:data=engine.decode(folder,progress)
         engine.write(folder/'status.json',{'status':'ready','phase':'Native circuit objects ready','pageCount':data['pageCount']})
     except Exception as error:engine.write(folder/'status.json',{'status':'failed','error':str(error)[:350]})
     finally:SLOTS.release()
@@ -124,8 +134,9 @@ def from_review(payload:dict):
 
 
 @router.post('/projects')
-async def upload(file:UploadFile=File(...)):
-    key,folder=begin(Path((file.filename or 'Circuit.pdf').replace('\\','/')).name)
+async def upload(file:UploadFile=File(...),mode:str='electronics'):
+    if mode not in {'electronics','industrial'}:raise HTTPException(400,'Choose Electronics or Industrial import mode.')
+    key,folder=begin(Path((file.filename or 'Circuit.pdf').replace('\\','/')).name,{'mode':mode})
     try:
         size=0
         with (folder/'source.pdf').open('wb') as stream:
@@ -218,3 +229,76 @@ def export_circuit(key:str,format:str='svg'):
     if format=='svg':return Response(svg(data),media_type='image/svg+xml',headers={'Content-Disposition':'attachment; filename="Circuit.svg"'})
     if format=='json':return Response(json.dumps(data,ensure_ascii=False),media_type='application/json',headers={'Content-Disposition':'attachment; filename="Circuit.json"'})
     raise HTTPException(400,'Choose SVG or circuit JSON.')
+
+@router.get('/projects/{key}/reconstruction')
+def reconstruction_model(key:str):
+    from backend.electrical.reconstruction import load
+    return load(opened(key)[0])
+
+@router.get('/projects/{key}/reconstruction/pages/{number}')
+def reconstruction_page(key:str,number:int):
+    from backend.electrical.reconstruction import load
+    folder,_,_=opened(key);model=load(folder)
+    if not 1<=number<=len(model['pages']):raise HTTPException(404,'Source page not found.')
+    return engine.read(folder/model['pages'][number-1]['geometry_file'])
+
+@router.post('/projects/{key}/reconstruction/review')
+def reconstruction_review(key:str,payload:dict):
+    from backend.electrical.reconstruction import review
+    return review(opened(key)[0],payload,user())
+
+@router.post('/projects/{key}/reconstruction/review-page')
+def reconstruction_review_page(key:str,payload:dict):
+    from backend.electrical.reconstruction import review_page
+    return review_page(opened(key)[0],payload,user())
+
+@router.get('/projects/{key}/reconstruction/pages/{number}/graphical')
+def reconstruction_graphical(key:str,number:int):
+    from backend.electrical.reconstruction import load
+    folder,_,_=opened(key);model=load(folder)
+    if not 1<=number<=len(model['pages']):raise HTTPException(404,'Source page not found.')
+    path=folder/f'electrical-graphical-{number}.json'
+    if not path.exists():raise HTTPException(409,'Reimport this source to extract independent vector paths.')
+    return engine.read(path)
+
+@router.post('/projects/{key}/reconstruction/validate-scope')
+def reconstruction_scope(key:str,payload:dict):
+    from backend.electrical.reconstruction import load,validate
+    model=load(opened(key)[0]);pages=payload.get('pages')
+    if not isinstance(pages,list) or not pages or any(type(p) is not int or not 1<=p<=len(model['pages']) for p in pages):raise HTTPException(400,'Select valid source pages for the simulation scope.')
+    return validate(model,pages=pages)
+
+@router.get('/projects/{key}/reconstruction/validate')
+def reconstruction_validate(key:str,page:int|None=None):
+    from backend.electrical.reconstruction import load,validate
+    model=load(opened(key)[0])
+    if page is not None and not 1<=page<=len(model['pages']):raise HTTPException(404,'Source page not found.')
+    return validate(model,page)
+
+@router.post('/projects/{key}/reconstruction/compile')
+def reconstruction_compile(key:str,payload:dict):
+    from backend.electrical.reconstruction import load,validate
+    model=load(opened(key)[0]);page=payload.get('page')
+    if type(page) is not int or not 1<=page<=len(model['pages']):raise HTTPException(400,'Choose a source page to compile.')
+    result=validate(model,page)
+    if result['status']!='verified':raise HTTPException(409,{'message':'Resolve and verify all connections on the selected page first.','validation':result})
+    return {'kind':'continuity_only','source_sha256':model['source']['sha256'],'revision':model['revision'],'page':page,'connections':[c for c in model['connections'] if c['source']['page']==page],'simulation_ready':False,'notice':'Verified pin assignments only. No supply, relay, motor or machine behavior inferred.'}
+
+@router.get('/projects/{key}/reconstruction/pages/{number}/preview')
+def reconstruction_preview(key:str,number:int):
+    from backend.electrical.reconstruction import load
+    import io
+    import pypdfium2 as pdfium
+    folder,_,_=opened(key);model=load(folder)
+    if not 1<=number<=len(model['pages']):raise HTTPException(404,'Source page not found.')
+    pdf=pdfium.PdfDocument(str(folder/'source.pdf'))
+    try:
+        page=pdf[number-1]
+        try:
+            width,height=page.get_size();bitmap=page.render(scale=min(2,1800/max(width,height)))
+            try:
+                image=bitmap.to_pil();stream=io.BytesIO();image.save(stream,format='PNG')
+            finally:bitmap.close()
+        finally:page.close()
+    finally:pdf.close()
+    return Response(stream.getvalue(),media_type='image/png',headers={'Cache-Control':'private, no-store'})

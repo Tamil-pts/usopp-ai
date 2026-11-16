@@ -5,7 +5,8 @@ from fastapi import HTTPException
 
 VERSION=1
 FIELDS={'project_name','project_number','customer','machine','document_number','document_title','revision','status','prepared_by','reviewed_by','approved_by','approval_date','date','page','pages','company','department','section_title'}
-FONTS={'Arial','Calibri','Times New Roman','Georgia','Verdana','Courier New','Noto Sans Tamil'}
+from backend.core.visual_content import FONTS as VISUAL_FONTS
+FONTS=set(VISUAL_FONTS)
 TYPES={'paragraph','heading','panel','cover','table','checklist','image','flowchart','chart','signature','approval','line','page_break','section_break','field','checkbox','native_text','native_table','native_flowchart','metadata'}
 PAGE={'size':'A4','orientation':'portrait','margins':{'top':25,'right':20,'bottom':25,'left':20},'header_height':13,'footer_height':10,'header_gap':5,'footer_gap':5,'columns':1,'column_gap':8,'background':'#ffffff','color':'#243b53','accent':'#235789','font':'Arial','font_size':11,'line_height':1.45,'paragraph_spacing':8,'border_color':'#b8c9da','border_width':0,'watermark':'','watermark_color':'#8293a5','watermark_opacity':0.12,'watermark_angle':40}
 STYLE={'align':'left','color':'#243b53','background':'transparent','border_color':'#ccd7e2','border_width':0,'border_style':'solid','padding':2,'width':100,'height':0,'x':0,'space_before':2,'space_after':3,'font':'Arial','font_size':11,'line_height':1.45,'bold':False,'italic':False,'underline':False,'visible':True,'keep_together':False,'inherit_font':True,'inherit_color':True,'inherit_spacing':True}

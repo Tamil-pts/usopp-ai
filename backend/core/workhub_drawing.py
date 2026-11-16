@@ -9,7 +9,8 @@ from fastapi import HTTPException
 
 COLORS=re.compile(r'#[0-9a-fA-F]{6}')
 PATH=re.compile(r'[MmLlHhVvCcSsQqTtAaZz0-9., +\-eE]+')
-FONTS={'Arial','Calibri','Verdana','Georgia','Courier New','Noto Sans Tamil'}
+from backend.core.visual_content import FONTS as VISUAL_FONTS
+FONTS=set(VISUAL_FONTS)
 PAPER={'A4':(794,1123),'A3':(1123,1587),'A2':(1587,2245)}
 SHAPES={'rect','roundrect','ellipse','diamond','io','document','subprocess','path'}
 

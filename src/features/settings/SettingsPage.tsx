@@ -1,3 +1,4 @@
+import {ThemeGallery} from '../../shared/ThemePicker';
 import {SettingsShell} from './SettingsShell';
 import {userStorage} from '../../shared/userStorage';
 import React,{useEffect,useState} from 'react';
@@ -32,7 +33,7 @@ export function SettingsPage({theme,setTheme,accent,setAccent,metaCols,setMetaCo
  const clearCache=async()=>{try{const response=await fetch('/api/cache/clear',{method:'POST'});const data=await response.json();if(!response.ok)throw new Error(data.detail||'Cache clear failed');onClearResults();userStorage.removeItem('usopp_compare_base_path_v4.31');userStorage.removeItem('usopp_compare_new_path_v4.31');alert(`${data.message} Removed ${data.removed||0} temporary workspace item(s).`)}catch(error:any){alert(error.message||'Cache clear failed')}};
  return <><SettingsShell panels={{
  profile:<AccountSettings/>,
- appearance:<><div className="card setting"><h3>Appearance</h3><p>Engineering workspace theme.</p><div className="seg"><button className={'chip '+(theme==='light'?'active':'')} onClick={()=>setTheme('light')}>Light</button><button className={'chip '+(theme==='dark'?'active':'')} onClick={()=>setTheme('dark')}>Dark</button></div></div> <div className="card setting"><h3>Accent</h3><p>uSOPp.ai interface accent.</p><div className="seg">{['#4f7ff2','#6b63e6','#15946b','#d08a22'].map(c=><button key={c} onClick={()=>setAccent(c)} className={'chip '+(accent===c?'active':'')} style={{color:c}}>● {c}</button>)}</div></div></>,
+ appearance:<><div className="card setting"><h3>Appearance</h3><p>Choose a complete workspace palette. Your selection is saved with your account.</p><ThemeGallery theme={theme} onChange={setTheme}/></div> <div className="card setting"><h3>Accent</h3><p>Personal accent for Light and Dark. Retro, Classic and Monochrome use their curated palette.</p><div className="seg">{['#4f7ff2','#6b63e6','#15946b','#d08a22'].map(c=><button key={c} onClick={()=>setAccent(c)} className={'chip '+(accent===c?'active':'')} style={{color:c}}>● {c}</button>)}</div></div></>,
  users:<UserManagement/>,
  'document-studio':<DocumentStudioSettings embedded/>,
  documents:<DocumentBrandingSettings/>,

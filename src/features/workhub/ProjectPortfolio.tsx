@@ -29,12 +29,15 @@ const COLUMN_VERSION_KEY='usopp_project_portfolio_columns_billing_v1';
 function readColumns():Column[]{try{const saved=JSON.parse(userStorage.getItem(COLUMN_KEY)||'null');if(Array.isArray(saved)){const savedIds=new Set(saved);return [...new Set([...COLUMNS.map(([id])=>id).filter(id=>savedIds.has(id)||id==='billing'&&userStorage.getItem(COLUMN_VERSION_KEY)!=='1'),...saved.filter((id:unknown)=>typeof id==='string'&&id.startsWith('custom_'))])];}}catch{/* Use defaults for an invalid saved setting. */}return DEFAULT_COLUMNS;}
 function supporters(row:HubRow):number[]{try{const parsed=typeof row.supporting_ids==='string'?JSON.parse(row.supporting_ids):row.supporting_ids;return Array.isArray(parsed)?parsed:[];}catch{return [];}}
 
+function savedFilters(){try{return JSON.parse(userStorage.getItem('workhub_project_filters')||'{}');}catch{return {};}}
 export default function ProjectPortfolio({onChanged,active,items,users,pendingDocumentReviews,onOpen,onIssues,onUpdates,onRoadmap,onNewProject,onNewDocument,onNewTask,canManage,onOverview,onTeamManagement,onTeamActivity,onApprovals}:Props){
+ const [filters]=useState(savedFilters);
  const projects=useMemo(()=>items.filter(row=>row.type==='project'),[items]);
- const [summaryFilter,setSummaryFilter]=useState(''),[query,setQuery]=useState(''),[stage,setStage]=useState(''),[kind,setKind]=useState(''),[owner,setOwner]=useState(''),[view,setView]=useState<'table'|'cards'|'timeline'>('table'),[page,setPage]=useState(1),[selectedId,setSelectedId]=useState(''),[detail,setDetail]=useState<HubRow|null>(null),[detailError,setDetailError]=useState(''),[columns,setColumns]=useState<Column[]>(readColumns);
+ const [summaryFilter,setSummaryFilter]=useState(filters.summaryFilter||''),[query,setQuery]=useState(filters.query||''),[stage,setStage]=useState(filters.stage||''),[kind,setKind]=useState(filters.kind||''),[owner,setOwner]=useState(filters.owner||''),[view,setView]=useState<'table'|'cards'|'timeline'>(['table','cards','timeline'].includes(filters.view)?filters.view:'table'),[page,setPage]=useState<number>(Number.isInteger(filters.page)&&filters.page>0?filters.page:1),[selectedId,setSelectedId]=useState(''),[detail,setDetail]=useState<HubRow|null>(null),[detailError,setDetailError]=useState(''),[columns,setColumns]=useState<Column[]>(readColumns);
  useEffect(()=>{if(userStorage.getItem(COLUMN_VERSION_KEY)!=='1'){userStorage.setItem(COLUMN_KEY,JSON.stringify(columns));userStorage.setItem(COLUMN_VERSION_KEY,'1');}},[]);
  const [exportOpen,setExportOpen]=useState(false),[fieldProject,setFieldProject]=useState<HubRow|null>(null),[fieldChooser,setFieldChooser]=useState(false);
- const [dates,setDates]=useState<ProjectDateRange>(EMPTY_PROJECT_DATES);
+ const [dates,setDates]=useState<ProjectDateRange>(filters.dates||EMPTY_PROJECT_DATES);
+ useEffect(()=>{userStorage.setItem('workhub_project_filters',JSON.stringify({summaryFilter,query,stage,kind,owner,view,dates,page}));},[summaryFilter,query,stage,kind,owner,view,dates,page]);
  const dateOptions=useMemo(()=>projectDateOptions(projects),[projects]);
  const invalidDates=!!(dates.from_date&&dates.to_date&&dates.from_date>dates.to_date);
  const changeDates=(value:Partial<ProjectDateRange>)=>{setDates(current=>({...current,...value}));setPage(1);};

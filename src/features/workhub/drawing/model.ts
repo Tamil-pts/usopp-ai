@@ -1,8 +1,10 @@
+import {visualFonts} from '../../../shared/visualTokens';
+import {artwork} from './artwork';
 import catalogue from '../../../../knowledge/master/drawing_libraries.json';
 import type {Row} from '../intelligence/api';
 
-export const libraries=catalogue.groups as Row[];
-export const fonts=['Arial','Calibri','Verdana','Georgia','Courier New','Noto Sans Tamil'];
+export const libraries=[artwork,...catalogue.groups] as Row[];
+export const fonts=visualFonts;
 export const themes={Teal:{fill:'#e7f5f4',stroke:'#087f83',text:'#17344b'},Blue:{fill:'#eaf2ff',stroke:'#2864c5',text:'#19385b'},Amber:{fill:'#fff4ce',stroke:'#ac7300',text:'#493700'},Mono:{fill:'#ffffff',stroke:'#263445',text:'#17202a'}};
 export const paper={A4:[794,1123],A3:[1123,1587],A2:[1587,2245]};
 export function normalize(content:Row):Row{

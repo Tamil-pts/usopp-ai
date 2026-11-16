@@ -28,6 +28,17 @@ def health():
     good=build['matches'] or not strict
     data={'status':'ok' if good else 'version-mismatch','version':VERSION,'apiVersion':VERSION,'uiVersion':build['version'],'frontendBuild':build,'capabilities':{'accounts':True,'chopperTools':True,'assistJobs':True,'projectAttachments':True,'userManagement':True,'functionFlows':True,'reportAnalysis':True,'performanceDashboard':True,'workhubPerformanceCapability':True,'contributionPassport':True,'workhubDashboardBuilder':True,'engineeringQualityClosure':True,'workhubUnifiedProjectWorkspace':True,'workhubDefaultDashboardTemplate':True,'workhubReliableBackgroundJobs':True,'workhubRevisionProcessingCache':True},'frontend':'React + TypeScript + Vite','engine':'Python v1.71 base (modified)','ruleEngine':'v4.30'}
     data['capabilities']['circuitCompare']=True
+    data['capabilities']['industrialElectricalReconstruction']=True
+    data['capabilities']['industrialDiscreteControlSimulation']=True
+    data['capabilities']['teamInbox']=True
+    data['capabilities']['teamGroupChat']=True
+    data['capabilities']['inboxWorkHubApps']=True
+    data['capabilities']['nativeSharedChatComponents']=True
+    data['capabilities']['teamMeetingScheduling']=True
+    data['capabilities']['chopperLocalSpeechInput']=True
+    data['capabilities']['chopperLangChainCore']=True
+    data['capabilities']['chopperPresentationStudio']=True
+    data['capabilities']['browserSystemAlertRequests']=True
     # Launcher identity without disclosing a filesystem path to network clients.
     data['installationId']=hashlib.sha256(os.path.normcase(str(BASE.resolve())).encode()).hexdigest()
     data['capabilities']['eDesignReview']=True

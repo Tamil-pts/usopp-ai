@@ -1,0 +1,4 @@
+export async function chatApi(path:string,body?:unknown){const response=await fetch('/api/team-chat'+path,{cache:'no-store',method:body?'POST':'GET',headers:body instanceof FormData?undefined:body?{'Content-Type':'application/json'}:undefined,body:body?body instanceof FormData?body:JSON.stringify(body):undefined});const data=await response.json();if(!response.ok)throw Error(typeof data.detail==='string'?data.detail:'The action could not complete.');return data;}
+export type WorkProject={id:string;title:string;tasks:{id:string;title:string}[]};
+export function projectHref(project:string,item=''){return '/?page=home&hubView=projects&workhubProject='+encodeURIComponent(project)+(item?'&workhubItem='+encodeURIComponent(item):'');}
+export function requestIdentity(){return typeof crypto.randomUUID==='function'?crypto.randomUUID():Array.from(crypto.getRandomValues(new Uint8Array(16)),n=>n.toString(16).padStart(2,'0')).join('');}

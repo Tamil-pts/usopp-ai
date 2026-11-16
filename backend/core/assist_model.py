@@ -203,11 +203,8 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
     if cfg['provider']=='embedded':
         from backend.core.local_model_runtime import status
         if not status()['ready']:raise ValueError('Start the Chopper local model in Settings and wait until it is ready.')
-    messages=[{'role':'system','content':system}]
-    for item in (history if isinstance(history,list) else [])[-12:]:
-        if isinstance(item,dict) and item.get('role') in {'user','assistant'} and isinstance(item.get('content'),str):
-            messages.append({'role':item['role'],'content':item['content'][:8000]})
-    messages.append({'role':'user','content':prompt})
+    from backend.core.chopper_chain import messages as chain_messages
+    messages=chain_messages(system,prompt,history)
     headers={}
     if cfg['provider']=='api' and _key(cfg): headers['Authorization']='Bearer '+_key(cfg)
     suffix='/api/chat' if cfg['provider']=='ollama' else '/chat/completions'
@@ -257,7 +254,8 @@ def chat_model(system,prompt,history=None,timeout=None,max_tokens=None,on_progre
         if not isinstance(answer,str) or not answer.strip(): raise ValueError('The model returned no text answer.')
         if structured and sent_evidence:
             try:
-                paragraphs=json.loads(answer)['paragraphs'];allowed={item['sourceId'] for item in sent_evidence};parts=[]
+                from backend.core.chopper_chain import strict_json
+                paragraphs=strict_json(answer)['paragraphs'];allowed={item['sourceId'] for item in sent_evidence};parts=[]
                 for part in paragraphs:
                     if not part['sourceIds'] or any(value not in allowed for value in part['sourceIds']):raise ValueError('Unknown source citation.')
                     parts.append(' '.join('['+value+']' for value in part['sourceIds'])+' '+part['text'])

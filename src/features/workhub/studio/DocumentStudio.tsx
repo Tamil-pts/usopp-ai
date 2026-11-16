@@ -1,3 +1,4 @@
+import {useUnsavedChanges} from '../../../shared/navigation';
 import {useEffect,useRef,useState} from 'react';
 import {Bold,Italic,Underline,Undo2,Redo2,Save,FileDown,Plus,PanelRightClose,PanelRightOpen,MessageSquare,GitCompareArrows,Link2,Library,LayoutTemplate,Sparkles,CheckCircle2,Image,Table2,Type,Minus,Signature,Heading,CheckSquare,ChartColumn,Workflow,Files,Lock,ZoomIn,ZoomOut} from 'lucide-react';
 import {hub,HUB,uploadFiles,type HubRow as Row} from '../projectApi';
@@ -22,6 +23,7 @@ export default function DocumentStudio({project,documentId,revisionId,revisionSt
  const callbacks=useRef({onSaved,registerFlush});callbacks.current={onSaved,registerFlush};
  const pendingUploads=useRef(new Set<Promise<Row[]>>());
  const render=()=>setEpoch(v=>v+1);
+ useUnsavedChanges(()=>live.current.counter!==live.current.saved||pendingUploads.current.size>0);
  const adopt=(m:Row,reset=true)=>{const c=copy(m.revision.content);delete c.studio;live.current.metadata=m;if(reset){live.current.content=c;live.current.layout=copy(m.layout);live.current.counter=0;live.current.saved=0;history.current=[];redo.current=[];setContent(c);setLayout(copy(m.layout));setSelected('');live.current.selected='';setCursor(null);live.current.cursor=null;render();}setMetadata(m);setQuality(m.quality);};
  const load=async()=>{setLoading(true);setRendering(true);setHTML('');setPages(0);setError('');try{adopt(await studio(project,documentId,revisionId?'?revision_id='+encodeURIComponent(revisionId):''));}catch(e){setError((e as Error).message);}finally{setLoading(false);}};
  useEffect(()=>{const v=live.current,r=v.metadata?.revision;if(revisionId&&r?.id===revisionId&&(!revisionState||revisionState===String(r.version??r.number)+':'+r.status))return;if(v.counter!==v.saved){setError('This document changed elsewhere. Save a copy of your text or reload the saved revision before continuing.');return;}void load();},[project,documentId,revisionId,revisionState]);

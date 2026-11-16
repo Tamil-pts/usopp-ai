@@ -765,7 +765,7 @@ def _html_change(diff: dict, number: int, base_name: str, developed_name: str, *
 
 def export_html(result: dict, path: Path, logo: Path):
     from backend.core.report_cover import COVER_CSS,cover_html
-    cover_section=cover_html(result['reportCover'],'MatchView — Complete comparison result') if result.get('reportCover') else ''
+    cover_section=cover_html(result['reportCover'],'MatchView — Complete comparison result',compact=True) if result.get('reportCover') else ''
     generated = datetime.now().strftime("%Y-%m-%d %H:%M")
     base_name, developed_name, summary = _summary_values(result)
     logo_uri = "data:image/png;base64," + base64.b64encode(logo.read_bytes()).decode("ascii") if logo.exists() else ""
@@ -1028,7 +1028,7 @@ def export_pdf(result: dict, path: Path, logo: Path):
         add_block(block)
     if result.get('reportCover'):
         from backend.core.report_cover import cover_pdf_story
-        story=cover_pdf_story(result['reportCover'],'MatchView - Complete comparison result')+story
+        story=cover_pdf_story(result['reportCover'],'MatchView - Project comparison',compact=True)+story
     doc.build(story, canvasmaker=NumberedCanvas)
 
 
@@ -1116,6 +1116,17 @@ def export_docx(result: dict, path: Path, logo: Path):
     field(page, "NUMPAGES")
 
     base_name, developed_name, summary = _summary_values(result)
+    if result.get('reportCover'):
+        from backend.core.report_cover import cover_fields
+        doc.add_heading('Project and review details',0)
+        cover=result['reportCover']
+        rows=cover_fields(cover)
+        table=doc.add_table(rows=len(rows),cols=2)
+        table.style='Normal Table'
+        for cells,(key,label) in zip(table.rows,rows):
+            cells.cells[0].text=label;cells.cells[1].text=str(cover[key])
+        doc.add_paragraph('Cover details are supplied by the engineer. Approval is not inferred from validation results.')
+        doc.add_page_break()
     doc.add_heading("Project comparison", 0)
     doc.add_paragraph('Test ID: '+str(result.get('testId') or 'Earlier run: not recorded'))
     doc.add_paragraph('Department: '+str(result.get('machineDepartment') or 'All'))

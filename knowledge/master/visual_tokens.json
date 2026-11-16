@@ -1,0 +1,93 @@
+{
+  "fonts": [
+    "Arial",
+    "Calibri",
+    "Aptos",
+    "Segoe UI",
+    "Verdana",
+    "Tahoma",
+    "Trebuchet MS",
+    "Georgia",
+    "Cambria",
+    "Times New Roman",
+    "Courier New",
+    "Consolas",
+    "DejaVu Sans",
+    "Liberation Sans",
+    "Noto Sans Tamil"
+  ],
+  "palettes": {
+    "Ocean": [
+      "#e0f2fe",
+      "#dbeafe",
+      "#ccfbf1",
+      "#ede9fe"
+    ],
+    "Meadow": [
+      "#dcfce7",
+      "#fef9c3",
+      "#d1fae5",
+      "#ecfccb"
+    ],
+    "Sunset": [
+      "#ffedd5",
+      "#ffe4e6",
+      "#fef3c7",
+      "#fae8ff"
+    ],
+    "Blueprint": [
+      "#dbeafe",
+      "#bfdbfe",
+      "#e0f2fe",
+      "#a5f3fc"
+    ],
+    "Lavender": [
+      "#ede9fe",
+      "#f3e8ff",
+      "#fae8ff",
+      "#e0e7ff"
+    ],
+    "Forest": [
+      "#d1fae5",
+      "#ccfbf1",
+      "#ecfccb",
+      "#dcfce7"
+    ],
+    "Coral": [
+      "#ffe4e6",
+      "#ffedd5",
+      "#fef3c7",
+      "#fecdd3"
+    ],
+    "Earth": [
+      "#e7e5e4",
+      "#fef3c7",
+      "#d9f99d",
+      "#fed7aa"
+    ],
+    "Arctic": [
+      "#e0f2fe",
+      "#f1f5f9",
+      "#cffafe",
+      "#e0e7ff"
+    ],
+    "Monochrome": [
+      "#f1f5f9",
+      "#e2e8f0",
+      "#cbd5e1",
+      "#d1d5db"
+    ],
+    "Rose": [
+      "#fce7f3",
+      "#ffe4e6",
+      "#ede9fe",
+      "#fef3c7"
+    ],
+    "Citrus": [
+      "#fef9c3",
+      "#ecfccb",
+      "#ffedd5",
+      "#d1fae5"
+    ]
+  }
+}

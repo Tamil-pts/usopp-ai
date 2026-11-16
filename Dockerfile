@@ -8,6 +8,7 @@ COPY nami/package*.json ./nami/
 RUN npm ci --no-audit --no-fund && npm --prefix nami ci --no-audit --no-fund
 COPY index.html tsconfig*.json vite.config.ts ./
 COPY src ./src
+COPY knowledge/master ./knowledge/master
 COPY public ./public
 COPY nami ./nami
 COPY virtual_plc/ui ./virtual_plc/ui

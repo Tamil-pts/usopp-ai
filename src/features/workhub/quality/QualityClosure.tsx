@@ -1,3 +1,4 @@
+import {useUnsavedChanges,navigateRoute,confirmNavigation} from '../../../shared/navigation';
 import {documentFilename} from '../documentFilename';
 import {saveBlob} from '../intelligence/api';
 import {DocumentInformation} from '../DocumentInformation';
@@ -67,13 +68,14 @@ export default function QualityClosure({project,active,onChanged,onIntelligence,
  const flush=useCallback(async()=>{if(studioModeRef.current&&studioFlush.current)await studioFlush.current();if(attachmentTasks.current.size)await Promise.all([...attachmentTasks.current]);if(pending.current)await pending.current;for(let i=0;i<5;i++){const state=current.current;if(!state.body||JSON.stringify(state.body)===state.baseline)return;await saveDraft();}throw Error('Wait for the current document edits to finish saving.');},[saveDraft]);
  useEffect(()=>registerQualityDraft(pid,flush),[pid,flush]);
  useEffect(()=>{alive.current=true;let cancelled=false;setLoading(true);setError('');void refresh().then(async value=>{const doc=value.stages.find((s:Row)=>s.id===stage)?.document;if(doc&&!cancelled)await load(doc.id);}).catch(e=>{if(!cancelled)setError(e.message);}).finally(()=>{if(!cancelled)setLoading(false);});return()=>{cancelled=true;alive.current=false;};},[pid,refresh,load]);
+ useUnsavedChanges(dirty);
  useEffect(()=>{if(!dirty||!editable||busy)return;const timer=setTimeout(()=>{void saveDraft().catch(()=>{});},800);return()=>clearTimeout(timer);},[body,baseline,editable,busy,saveDraft]);
  useEffect(()=>{if(!dirty)return;const leave=(e:BeforeUnloadEvent)=>{e.preventDefault();};window.addEventListener('beforeunload',leave);return()=>window.removeEventListener('beforeunload',leave);},[dirty]);
  useEffect(()=>{if(!active)return;const timer=setInterval(()=>{if(document.visibilityState==='visible')void refresh().catch(e=>setError(e.message));},5000);return()=>clearInterval(timer);},[active,refresh]);
  useEffect(()=>{const doc=data?.stages?.find((s:Row)=>s.id===stage)?.document;if(!doc||dirty||saving)return;if(!record||record.document.id!==doc.id||(record.revision.id!==doc.current_revision||record.revision.version!==doc.revision?.version)&&record.revisions?.[0]?.id===record.revision.id)void load(doc.id).catch(e=>setError(e.message));},[data?.stages,stage,dirty,saving]);
  const mutate=(value:Row)=>{const next=normalizeFieldLinks(value);setBody(next);current.current.body=next;setNotice('');};
  const update=(field:string,value:unknown)=>body&&mutate({...body,[field]:value});
- const selectStage=async(next:string)=>{try{await flush();setStage(next);setRecord(null);setBody(null);current.current={record:null,body:null,baseline:''};setBaseline('');setError('');const d=data?.stages.find((r:Row)=>r.id===next)?.document;if(d)await load(d.id);}catch(e){setError((e as Error).message);}};
+ const selectStage=async(next:string)=>{if(!confirmNavigation())return;try{await flush();setStage(next);setRecord(null);setBody(null);current.current={record:null,body:null,baseline:''};setBaseline('');setError('');const d=data?.stages.find((r:Row)=>r.id===next)?.document;if(d)await load(d.id);if(active&&!project.is_document_space)navigateRoute({documentStage:next},{guard:false});}catch(e){setError((e as Error).message);}};
  useEffect(()=>{if(!data)return;const next=requestedStage&&scopedStages.includes(requestedStage.split(':')[0])?requestedStage.split(':')[0]:scopedStages.includes(stage)?stage:scopedStages[0];if(next!==stage)void selectStage(next);},[workspace,requestedStage,data?.project.id]);
  useEffect(()=>{if(active)void refresh().catch(e=>setError(e.message));},[active]);
  useEffect(()=>{if(active&&record&&stage!=='frd')rememberWork({project:pid,title:project.title,section:stage==='frd'?'meetings':['corrections','test'].includes(stage)?'documents':'quality',stage,view:guided?'guided':'document'});},[active,record?.document.id,stage,guided]);

@@ -1,13 +1,16 @@
 import {useEffect,useRef,useState,type KeyboardEvent,type ReactNode} from 'react';
 import {ChevronDown,LogOut,Moon,ShieldAlert,Sun,UserRound} from 'lucide-react';
 import {UserAvatar} from '../features/account/UserAvatar';
+import {ThemePicker} from './ThemePicker';
+import type {AppTheme} from './themes';
 import {NotificationBell} from '../features/workhub/NotificationBell';
+import {TeamInbox} from '../features/team-chat/TeamInbox';
 import {BuildVersionBadge,type AppHealth} from './BuildStatus';
 import type {AccountUser} from '../features/account/AuthProvider';
 import petrusLogo from '../petrus_logo.png';
 import './workspace-topbar.css';
 
-type Props={user:AccountUser;page:string;theme:'light'|'dark';health:AppHealth|null;assistant?:ReactNode;onTheme:()=>void;onProfile:()=>void;onLogout:()=>Promise<void>;onNotification:(project:string,item:string)=>void};
+type Props={user:AccountUser;page:string;theme:AppTheme;health:AppHealth|null;assistant?:ReactNode;onTheme:(theme:AppTheme)=>void;onProfile:()=>void;onLogout:()=>Promise<void>;onNotification:(project:string,item:string)=>void};
 export function WorkspaceTopBar({user,page,theme,health,assistant,onTheme,onProfile,onLogout,onNotification}:Props){
  const [open,setOpen]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState('');
  const account=useRef<HTMLDivElement>(null),trigger=useRef<HTMLButtonElement>(null);
@@ -19,8 +22,9 @@ export function WorkspaceTopBar({user,page,theme,health,assistant,onTheme,onProf
   {assistant&&<div className="workspaceTopAssistant">{assistant}</div>}
   <div className="workspaceTopActions">
    <BuildVersionBadge health={health} compact/>
-   <button className="workspaceIconButton" title={theme==='light'?'Switch to dark mode':'Switch to light mode'} aria-label={theme==='light'?'Switch to dark mode':'Switch to light mode'} aria-pressed={theme==='dark'} onClick={onTheme}>{theme==='light'?<Moon size={18}/>:<Sun size={18}/>}</button>
+   <ThemePicker theme={theme} onChange={onTheme}/>
    <NotificationBell onOpen={onNotification}/>
+   <TeamInbox/>
    <div className="workspaceAccount" ref={account} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setOpen(false);}}>
     <button ref={trigger} className="workspaceAccountTrigger" aria-label={'Account menu for '+user.username} aria-haspopup="menu" aria-expanded={open} aria-controls="workspace-account-menu" onClick={()=>setOpen(v=>!v)} onKeyDown={e=>{if(e.key==='ArrowDown'){e.preventDefault();setOpen(true);setTimeout(()=>account.current?.querySelector<HTMLButtonElement>('[role=menuitem]')?.focus(),0);}}}><UserAvatar user={user}/><span>{user.username}<small>{user.role==='admin'?'Administrator':'Team member'}</small></span><ChevronDown size={14}/></button>
     {open&&<div id="workspace-account-menu" className="workspaceAccountMenu" role="menu" aria-label="Your account" onKeyDown={keys}><div className="workspaceAccountIdentity"><strong>{user.username}</strong><small>{user.designation} · {user.company}</small></div><button role="menuitem" onClick={()=>{setOpen(false);onProfile();}}><UserRound size={16}/>My profile & password</button>{user.passwordChangeRequired&&<button role="menuitem" className="workspacePasswordAction" onClick={()=>{setOpen(false);onProfile();}}><ShieldAlert size={16}/>Change initial password</button>}<button role="menuitem" disabled={busy} onClick={()=>{setBusy(true);setError('');void onLogout().catch(e=>setError((e as Error).message)).finally(()=>setBusy(false));}}><LogOut size={16}/>{busy?'Signing out…':'Sign out'}</button>{error&&<p role="alert">{error}</p>}<div className="workspaceBuildDetails"><BuildVersionBadge health={health}/></div></div>}

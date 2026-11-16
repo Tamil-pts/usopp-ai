@@ -130,15 +130,38 @@ def annotate(project_id:str,document_id:str,payload:dict,request:Request):return
 
 
 @router.get('/documents/{document_id}/export/{format}')
-def export(project_id:str,document_id:str,format:str,request:Request,revision_id:str|None=None):
+def export(project_id:str,document_id:str,format:str,request:Request,revision_id:str|None=None,page_id:str|None=None):
     store.initialize()
     with hub.db() as db:
         store.project(db,project_id,request.state.user);doc=store.document(db,document_id,project_id);revision=store.revision(db,revision_id or doc['current_revision'],document_id)
     from backend.core.workhub_quality.store import guard_native
     with hub.db() as db:guard_native(db,document_id)
-    try:data,mime=documents.export_document(doc,revision,format,user=request.state.user)
-    except ServiceUnavailable as error:raise HTTPException(503,str(error))
-    except ValueError as error:raise HTTPException(400,str(error))
+    if page_id is not None:
+        if doc['kind']!='flowchart' or format not in {'svg','pdf'}:raise HTTPException(400,'Page export supports drawing SVG and PDF.')
+        from backend.core.workhub_drawing import svg_pages
+        content=revision['content']
+        pages=svg_pages(content)
+        ids=[p['id'] for p in content.get('workspace',{}).get('pages',[{'id':'page-1'}])]
+        if page_id!='all':
+            if page_id not in ids:raise HTTPException(404,'Drawing page not found in this revision.')
+            pages=[pages[ids.index(page_id)]]
+        if format=='svg':
+            if len(pages)!=1:raise HTTPException(400,'Choose one page for SVG export.')
+            data,mime=pages[0][1].encode(),'image/svg+xml'
+        else:
+            if any('\u0b80'<=c<='\u0bff' for _,source in pages for c in source):raise HTTPException(503,'Tamil drawing PDF needs the configured local font/document renderer. SVG and PNG retain the labels.')
+            import io
+            from reportlab.pdfgen.canvas import Canvas
+            from reportlab.graphics import renderPDF
+            from svglib.svglib import svg2rlg
+            stream=io.BytesIO();pdf=Canvas(stream);pdf.setTitle(doc['title'])
+            for _,source in pages:
+                drawing=svg2rlg(io.BytesIO(source.encode()));pdf.setPageSize((drawing.width,drawing.height));renderPDF.draw(drawing,pdf,0,0);pdf.showPage()
+            pdf.save();data,mime=stream.getvalue(),'application/pdf'
+    else:
+        try:data,mime=documents.export_document(doc,revision,format,user=request.state.user)
+        except ServiceUnavailable as error:raise HTTPException(503,str(error))
+        except ValueError as error:raise HTTPException(400,str(error))
     from backend.core.workhub_document_filename import filename
     name=filename(doc,revision,format)
     return Response(data,media_type=mime,headers={'Content-Disposition':"attachment; filename*=UTF-8''"+quote(name,safe=''),'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'})

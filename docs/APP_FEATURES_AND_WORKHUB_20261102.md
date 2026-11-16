@@ -1,5 +1,9 @@
 # uSOPp.ai — application features and WorkHub delivery workflow
 
+Chopper update: [local multilingual speech input and LangChain integration](CHOPPER_LOCAL_SPEECH_LANGCHAIN_20261113.md).
+
+Collaboration update: [team groups, ZIP sharing, meeting scheduling and WorkHub links](TEAM_COLLABORATION_20261114.md).
+
 Verified against the current checkout on 2 November 2026 (Asia/Calcutta).
 
 Follow-up changes: [six delivery handoffs and landing copy](WORKHUB_DELIVERY_20261102.md), [updated parameter mappings, deletion and viewport checks](PARAMETER_MAPPINGS_20261102.md), and [calendar date filters and the default Portfolio & delivery Overview](WORKHUB_DATES_OVERVIEW_20261103.md), and [dashboard tabs and customizable Projects cards and graphs](WORKHUB_DASHBOARD_WORKSPACE_20261103.md), and [top submenus, MatchView filters/exports and chat sizing](NAVIGATION_MATCHVIEW_CHAT_20261103.md), and [compact Spin Connect workspace controls and the top assistant](COMPACT_WORKSPACE_BAR_20261103.md), and [Document Compare in AI Assist](DOCUMENT_COMPARE_20261103.md).
@@ -14,6 +18,8 @@ The top bar groups profile/password/sign-out into an accessible account menu,
 retains notifications and theme switching, and shows a compact build indicator.
 The complete UI/API version is available in the account menu. It is a build
 indicator, not a security certification.
+
+Presentation update: [local Chopper Presentation Studio, editable PPTX, shared fonts and palettes](CHOPPER_PRESENTATION_STUDIO_20261114.md).
 
 ## Engineering tools
 
@@ -60,6 +66,8 @@ Editing and interface update: [document workspace usability, test-case cards
 and diagram starter templates](WORKHUB_DOCUMENT_UX_20261104.md). MOM opens in the
 workspace, reports offer clearer save/edit controls, and the FRD editor omits
 the Additional engineering details option.
+
+Inbox update: [WorkHub inbox, task assignment and personal timesheets](WORKHUB_INBOX_TIMESHEETS_20261116.md). My Work and Approvals now open through the inbox; users can log project/task hours and review their own approved-time totals.
 
 Team Management shows actual resource totals, assigned/available capacity,
 roles/skills, workload and project progress. Engineers can search/filter resources,

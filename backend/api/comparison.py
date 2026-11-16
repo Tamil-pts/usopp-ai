@@ -53,9 +53,14 @@ def _compare_session():
 def _compare_worker(sid:str, work:Path, base:Path, new:Path, base_name:str, new_name:str, base_hmi:str='', new_hmi:str=''):
     from backend.core.jobs import projects_job
     identity={'sessionId':sid,'projectName':base_name+' vs '+new_name,'baseName':base_name,'newName':new_name}
-    begin_run('compare',identity,new)
-    with projects_job([locate_root(base),locate_root(new)]):
-        return _compare_project(sid,work,base,new,base_name,new_name,base_hmi,new_hmi,identity)
+    try:
+        begin_run('compare',identity,new)
+        with projects_job([locate_root(base),locate_root(new)]):
+            return _compare_project(sid,work,base,new,base_name,new_name,base_hmi,new_hmi,identity)
+    except Exception as error:
+        log.exception('COMPARE_WORKER_ERROR session=%s',sid)
+        with COMPARE_JOBS_LOCK:
+            COMPARE_JOBS.setdefault(sid,{}).update(status='error',phase='error',error=str(error))
 
 def _compare_project(sid,work,base,new,base_name,new_name,base_hmi,new_hmi,identity):
     out=work/'compare_results.json'
@@ -84,7 +89,11 @@ def _compare_project(sid,work,base,new,base_name,new_name,base_hmi,new_hmi,ident
                 else:
                     textmsg=msg.get('message') or line
                     if msg.get('event')=='phase': j['phase']=msg.get('phase','working')
-                    if msg.get('event')=='complete': j['percent']=100; j['phase']='complete'
+                    if msg.get('event')=='complete':
+                        j['percent']=99.9; j['phase']='finalizing'
+                        textmsg='Finalizing comparison and saving report history...'
+                j['message']=textmsg
+                j['elapsedSeconds']=round(time.time()-started,2)
                 j['logs']=(j.get('logs') or [])+ [textmsg]
                 j['logs']=j['logs'][-300:]
         rc=proc.wait()
@@ -96,6 +105,8 @@ def _compare_project(sid,work,base,new,base_name,new_name,base_hmi,new_hmi,ident
         detected_new=(projects.get('developed') or {}).get('project_name')
         data.update({'baseName':detected_base or base_name,'newName':detected_new or new_name,'localMode':work.is_relative_to(COMPARE_WORK_DIR),'sessionId':sid,**{key:identity[key] for key in ('testId','historyId','machineDepartment','runKind')}})
         data['projectName']=data['baseName']+' vs '+data['newName']
+        with COMPARE_JOBS_LOCK:
+            COMPARE_JOBS[sid].update(phase='saving',message='Saving comparison results and report history...',percent=99.9)
         record_run('compare',data,new)
         with out.open('w',encoding='utf-8') as stream:
             json.dump(data,stream,ensure_ascii=False,separators=(',',':'))
@@ -128,6 +139,8 @@ def local_compare_project_info(payload:dict):
     return JSONResponse(project_identity(root,str(payload.get('selected_hmi') or '')))
 @router.get('/api/local/compare/status/{sid}')
 def local_compare_status(sid:str):
+    from backend.core.access import require_session
+    require_session(sid)
     with COMPARE_JOBS_LOCK: job=COMPARE_JOBS.get(sid)
     if not job: raise HTTPException(404,'Comparison session not found or already cleared.')
     return JSONResponse(job)
@@ -380,3 +393,23 @@ async def compare_projects(
     if job['status']=='error': raise HTTPException(500,job['error'])
     job['result']['localMode']=False
     return job['result']
+
+
+@router.post('/api/compare/start')
+async def start_uploaded_comparison(
+    base_files:Optional[List[UploadFile]]=File(None),
+    new_files:Optional[List[UploadFile]]=File(None),
+    base_name:str=Form(''),new_name:str=Form(''),base_hmi:str=Form(''),new_hmi:str=Form('')):
+    """Stage uploads before returning; expose the same owned job progress as local runs."""
+    if not base_files or not new_files:
+        raise HTTPException(400,'Select both project folders using the same input method.')
+    sid,base=await stage_project(base_files,base_name)
+    _,new=await stage_project(new_files,new_name)
+    work=WORK/sid
+    with COMPARE_JOBS_LOCK:
+        COMPARE_JOBS[sid]={'status':'starting','phase':'queued','percent':0,
+                           'message':'Uploads received. Waiting for an available comparison slot.',
+                           'current':0,'total':0,'logs':[]}
+    threading.Thread(target=copy_context().run,args=(_compare_worker,sid,work,base,new,
+        base_name or base.name,new_name or new.name,base_hmi,new_hmi),daemon=True).start()
+    return {'status':'started','sessionId':sid}

@@ -77,3 +77,16 @@ class DrawingPersistenceTests(unittest.TestCase):
                 assert 'Hidden internal note' not in text
             elif extension=='json':assert response.json()['revision']['content']['nodes'][0]['width']==360
         self.login(self.outsider);self.request('GET',path,expected=403)
+    def test_page_exports_select_exact_saved_page_and_require_access(self):
+        made=self.create();pid=made['scope_id'];did=made['document_id'];path=f'/projects/{pid}/intelligence/documents/{did}'
+        saved=self.request('PUT',path,{'version':made['revision_id'],'content':content()});rid=saved['revision']['id']
+        base='/api/workhub'+path+'/export/'
+        one=self.client.get(base+'svg',params={'revision_id':rid,'page_id':'p2'})
+        assert one.status_code==200 and 'Handover accepted' in one.text and 'Control review' not in one.text
+        one_pdf=self.client.get(base+'pdf',params={'revision_id':rid,'page_id':'p2'})
+        assert one_pdf.status_code==200 and len(PdfReader(io.BytesIO(one_pdf.content)).pages)==1
+        all_pdf=self.client.get(base+'pdf',params={'revision_id':rid,'page_id':'all'})
+        assert all_pdf.status_code==200 and len(PdfReader(io.BytesIO(all_pdf.content)).pages)==2
+        assert self.client.get(base+'svg',params={'page_id':'missing'}).status_code==404
+        self.login(self.outsider)
+        assert self.client.get(base+'pdf',params={'page_id':'all'}).status_code==403

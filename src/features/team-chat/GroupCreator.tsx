@@ -1,0 +1,6 @@
+import {useState} from 'react';
+import {chatApi} from './collaboration';
+export function GroupCreator({people,onCreated,onCancel}:{people:{id:number;username:string}[];onCreated:(id:string)=>void;onCancel:()=>void}){
+ const [name,setName]=useState(''),[members,setMembers]=useState<number[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(false);
+ return <form className="chatGroupCreator" onSubmit={async e=>{e.preventDefault();setBusy(true);try{const value=await chatApi('/groups',{name,user_ids:members});onCreated(value.id);}catch(e){setError((e as Error).message)}finally{setBusy(false)}}}><h4>Create group</h4><label>Group name<input aria-label="Group name" value={name} maxLength={100} required onChange={e=>setName(e.target.value)}/></label><fieldset><legend>Members</legend>{people.map(person=><label key={person.id}><input type="checkbox" checked={members.includes(person.id)} onChange={e=>setMembers(old=>e.target.checked?[...old,person.id]:old.filter(id=>id!==person.id))}/>{person.username}</label>)}</fieldset>{error&&<p role="alert">{error}</p>}<div><button className="btn primary" disabled={busy||!name.trim()}>Create group</button><button type="button" className="btn" onClick={onCancel}>Cancel</button></div><small>WorkHub team groups appear automatically from saved team membership.</small></form>;
+}

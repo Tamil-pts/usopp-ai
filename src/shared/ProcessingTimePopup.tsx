@@ -21,6 +21,6 @@ export function ProcessingTimePopup({active,label,progress,defaultEstimate=60}:{
   const estimatedTotal=percent>=2&&elapsed>=2?Math.max(elapsed,elapsed*100/percent):defaultEstimate;
   const remaining=Math.max(0,estimatedTotal-elapsed);
   return <aside className="processingTimePopup" role="status" aria-live="off">
-    <Clock3 size={15}/><div><b>{label}</b><span>Elapsed {formatDuration(elapsed)}</span><span>{remaining>0?`Estimated remaining ${formatDuration(remaining)}`:'Still processing; initial estimate exceeded'}</span></div>
+    <Clock3 size={15}/><div><b>{label}</b><span>Elapsed {formatDuration(elapsed)}</span><span>{percent>=2&&percent<100&&elapsed>=2?`Approx. remaining ${formatDuration(remaining)}`:'Processing; remaining time not yet available'}</span></div>
   </aside>;
 }

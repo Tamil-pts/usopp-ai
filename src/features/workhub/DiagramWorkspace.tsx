@@ -1,3 +1,4 @@
+import {useUnsavedChanges} from '../../shared/navigation';
 import {useEffect,useRef,useState} from 'react';
 import {Bot,Check,Save} from 'lucide-react';
 import {registerQualityDraft} from './quality/bridge';
@@ -14,6 +15,7 @@ import './diagrams.css';
 export default function DiagramWorkspace({detail,users}:{detail:Row;users:Row[]}){
  const {user}=useAccount(),project=detail.project,scope=project.id;
  const [data,setData]=useState<Row|null>(null),[info,setInfo]=useState<Row>({}),[jobs,setJobs]=useState<Row[]>([]),[brief,setBrief]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[dirty,setDirty]=useState(false),[decision,setDecision]=useState<ReviewDecision|null>(null);
+ useUnsavedChanges(()=>!!data&&JSON.stringify(info)!==JSON.stringify(data.revisions[0].content.document_info||{}));
  const flushRef=useRef<()=>Promise<void>>(async()=>{}),graphDraft=useRef<Row|null>(null);
  useEffect(()=>registerQualityDraft(scope,()=>flushRef.current()),[scope]);
  const id=detail.initial_document.slice(7);

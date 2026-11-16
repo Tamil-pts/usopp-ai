@@ -17,6 +17,7 @@ from backend.core.web_security import SecurityHeadersMiddleware,response_headers
 from backend.api import assist_settings, assist_attachments, ladder, mcp_settings, compare_export_jobs, data_models, user_settings, br_help, admin_settings, admin_knowledge
 from backend.api import assist_training, assist_flow, project_intelligence, circuit_compare, edesign, virtual_electrical
 from backend.api import plc_pdf_comparison
+from backend.api import presentation_studio
 from backend.api import spreadsheet_analysis
 from backend.api import live_data, data_simulator, dashboard_layouts
 from backend.api import spinconnect_write
@@ -155,6 +156,14 @@ app.include_router(plc_pdf_comparison.router)
 app.include_router(spreadsheet_analysis.router)
 app.include_router(edesign.router)
 app.include_router(virtual_electrical.router)
+from backend.api import team_chat
+app.include_router(team_chat.router)
+from backend.api import team_meetings
+app.include_router(team_meetings.router)
+from backend.api import team_inbox_apps
+app.include_router(team_inbox_apps.router)
+from backend.api import chopper_speech
+app.include_router(chopper_speech.router)
 
 # Reports and workbook sessions remain available until explicitly cleared.
 
@@ -170,6 +179,7 @@ app.include_router(workhub_praxis.router)
 app.include_router(workhub_studio.router)
 app.include_router(nami_edit.router)
 app.include_router(document_comparison.router)
+app.include_router(presentation_studio.router)
 app.include_router(workhub.router)
 app.include_router(workhub_intelligence.router)
 app.include_router(workhub_office.router)
@@ -197,7 +207,7 @@ if DIST.exists():
         if path == 'nami' or path.startswith('nami/'):
             from fastapi import HTTPException
             raise HTTPException(503, 'DataInspect interface is missing. Build the frontend and restart uSOPp.ai.')
-        if path.startswith('api/'):
+        if path == 'api' or path.startswith('api/'):
             from fastapi import HTTPException
             raise HTTPException(404,'API endpoint not found')
         target=(DIST/path).resolve()

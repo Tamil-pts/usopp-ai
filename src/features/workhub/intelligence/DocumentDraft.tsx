@@ -1,3 +1,4 @@
+import {useUnsavedChanges} from '../../../shared/navigation';
 import {documentFilename} from '../documentFilename';
 import {DeleteDocumentDialog} from '../DeleteDocumentDialog';
 import {userStorage} from '../../../shared/userStorage';
@@ -22,6 +23,7 @@ export function DocumentDraft({project,documentId,initialRevision,startEditing=f
   const [exportNotice,setExportNotice]=useState(''),[discarding,setDiscarding]=useState(false),[saveNotice,setSaveNotice]=useState('');
   const [deleting,setDeleting]=useState(false),[reviewDecision,setReviewDecision]=useState<ReviewDecision|null>(null),[reviewEvidence,setReviewEvidence]=useState<Row>({});
   const [detail,setDetail]=useState<Row|null>(null),[revision,setRevision]=useState<Row|null>(null),[content,setContent]=useState<Row>({}),[baseline,setBaseline]=useState<Row|null>(null),[editing,setEditing]=useState(false),[dirty,setDirty]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false),[reviewer,setReviewer]=useState(defaultReviewer),[comment,setComment]=useState(''),[compare,setCompare]=useState(false),[advanced,setAdvanced]=useState(false),[json,setJson]=useState('');
+ useUnsavedChanges(dirty);
   const load=async(revisionId?:string,keepEditing=false)=>{const value=await api(project,'/documents/'+documentId+(revisionId?'?revision_id='+revisionId:''));setDetail(value);const selected=value.selected_revision||rows(value.revisions).find(r=>r.id===value.document.current_revision);setRevision(selected);seenRevision.current=selected?.id||'';setContent(structuredClone(selected?.content||{}));setJson(JSON.stringify(selected?.content||{},null,2));setDirty(false);const editNow=userStorage.getItem('usopp_document_edit_request')===documentId;setEditing(value.can_edit!==false&&['draft','changes_requested'].includes(selected?.status)&&(editNow||startEditing||keepEditing));if(editNow)userStorage.removeItem('usopp_document_edit_request');if(value.document.approved_revision){const old=await api(project,'/documents/'+documentId+'?revision_id='+value.document.approved_revision);setBaseline(old.selected_revision);}else setBaseline(null);};
   useEffect(()=>{let live=true;setDetail(null);void load(initialRevision).catch(problem=>{if(live)setError(problem.message);});return()=>{live=false;};},[project,documentId,initialRevision]);
   useEffect(()=>{if(!dirty)return;const leave=(e:BeforeUnloadEvent)=>{e.preventDefault();};window.addEventListener('beforeunload',leave);return()=>window.removeEventListener('beforeunload',leave);},[dirty]);

@@ -11,13 +11,14 @@ async function inspectUploadedProject(files:File[]):Promise<ProjectInfo|null>{
   if(!files.length)return null;
   const paths=files.map(file=>({file,path:(file.webkitRelativePath||file.name).replace(/\\/g,'/')}));
   const first=paths[0]?.path.split('/')[0]||'Uploaded project';
-  const settings=paths.find(item=>item.path.toLowerCase()===`${first}/lastuser.set`.toLowerCase());
+  const descriptor=paths.filter(item=>/\.(apj|gdm)$/i.test(item.path)).sort((a,b)=>a.path.split('/').length-b.path.split('/').length)[0];
+  const root=descriptor?.path.slice(0,descriptor.path.lastIndexOf('/'))||first;
+  const settings=paths.find(item=>item.path.toLowerCase()===`${root}/lastuser.set`.toLowerCase());
   const settingsText=settings?await settings.file.text():'';
   const active=settingsText.match(/ActiveConfigurationName\s*=\s*["']([^"']+)/i)?.[1];
   const version=settingsText.match(/AutomationStudio\s+Version\s*=\s*["']?\s*(\d+\.\d+)/i)?.[1];
-  const descriptor=paths.find(item=>new RegExp(`^${first.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}/[^/]+\\.(apj|gdm)$`,'i').test(item.path));
   const screenFolders=[...new Set(paths.map(item=>item.path.match(/\/Logical\/([^/]+)\/Pages\//i)?.[1]).filter(Boolean) as string[])].sort();
-  const physicalPrefix=active?`${first}/Physical/${active}/`.toLowerCase():'';
+  const physicalPrefix=active?`${root}/Physical/${active}/`.toLowerCase():'';
   const hardware=paths.find(item=>physicalPrefix&&item.path.toLowerCase().startsWith(physicalPrefix)&&/Hardware\.(hwl|hw)$/i.test(item.path));
   const cpu=paths.find(item=>physicalPrefix&&item.path.toLowerCase().startsWith(physicalPrefix)&&/\/Cpu\.sw$/i.test(item.path));
   const hardwareText=hardware?await hardware.file.text():'';const cpuText=cpu?await cpu.file.text():'';
@@ -61,16 +62,8 @@ export function useCompareProjects(notify: Notify) {
     setCompareResult(null);
     setCompareConsoleOpen(false);
     setCompareProgress({status:'starting',phase:'starting',percent:0,current:0,total:0,logs:['Starting comparison...']});
-    try {
-      if (localReady) {
-        const response = await fetch('/api/local/compare/start', {
-          method:'POST', headers:{'Content-Type':'application/json',...toolProjectHeaders('matchview')},
-          body:JSON.stringify({base_path:compareBasePath,new_path:compareNewPath,base_hmi:baseHmi,new_hmi:newHmi})
-        });
-        const started = await response.json();
-        if (!response.ok) throw new Error(started.detail || 'Could not start comparison');
-        const sid = started.sessionId;
-        let done = false;
+    const followJob = async (sid:string) => {
+      let done = false;
         while (!done) {
           await new Promise(resolve => setTimeout(resolve, 500));
           const statusResponse = await fetch(`/api/local/compare/status/${sid}`);
@@ -86,8 +79,18 @@ export function useCompareProjects(notify: Notify) {
             throw new Error(status.error || 'Comparison failed');
           }
         }
+    };
+    try {
+      if (localReady) {
+        const response = await fetch('/api/local/compare/start', {
+          method:'POST', headers:{'Content-Type':'application/json',...toolProjectHeaders('matchview')},
+          body:JSON.stringify({base_path:compareBasePath,new_path:compareNewPath,base_hmi:baseHmi,new_hmi:newHmi})
+        });
+        const started = await response.json();
+        if (!response.ok) throw new Error(started.detail || 'Could not start comparison');
+        await followJob(started.sessionId);
       } else {
-        setCompareProgress((progress:any) => ({...progress,phase:'uploading/comparing',percent:0,logs:[...(progress?.logs || []),'Upload comparison started. Progress is available after the server completes the comparison.']}));
+        setCompareProgress((progress:any) => ({...progress,phase:'uploading',percent:0,message:'Uploading project folders. Comparison starts after the upload finishes.',logs:['Uploading project folders...']}));
         const form = new FormData();
         const baseName = compareFiles.base[0]?.webkitRelativePath?.split('/')[0] || '';
         const newName = compareFiles.new_[0]?.webkitRelativePath?.split('/')[0] || '';
@@ -97,12 +100,10 @@ export function useCompareProjects(notify: Notify) {
         form.append('base_name',baseName);
         form.append('new_name',newName);
         form.append('base_hmi',baseHmi);form.append('new_hmi',newHmi);
-        const response = await fetch('/api/compare',{method:'POST',headers:toolProjectHeaders('matchview'),body:form});
+        const response = await fetch('/api/compare/start',{method:'POST',headers:toolProjectHeaders('matchview'),body:form});
         const result = await response.json();
         if (!response.ok) throw new Error(result.detail || 'Compare failed');
-        setCompareResult(result);
-        setCompareProgress((progress:any) => ({status:'complete',phase:'complete',percent:100,logs:[...(progress?.logs || []),'Upload comparison complete.'],result}));
-        notify(`Comparison complete: ${result.summary?.modified || 0} modified, ${result.summary?.added || 0} added, ${result.summary?.removed || 0} removed.`);
+        await followJob(result.sessionId);
       }
     } catch (error:any) {
       setCompareProgress((progress:any) => ({...progress,status:'error',phase:'error',error:error.message || String(error),logs:[...(progress?.logs || []),`ERROR: ${error.message || String(error)}`]}));

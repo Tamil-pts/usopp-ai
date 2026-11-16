@@ -24,6 +24,9 @@ class BitmapResolver:
         self.source_path = Path(source_path) if source_path else None
 
     def reference(self, value, kind, folder, suffix=''):
+        key = ('bitmap_reference', str(self.target), value, kind, folder, suffix)
+        if key in self.cache:
+            return self.cache[key]
         match = re.fullmatch(r'Source\[(local|global)\]\.' + kind + r'\[([^\]]+)\]', str(value or ''), re.I)
         if not match or self.target is None:
             return None
@@ -34,7 +37,8 @@ class BitmapResolver:
             return None
         if not path.exists() and path.parent.is_dir():
             path = next((p for p in path.parent.iterdir() if p.name.casefold() == path.name.casefold()), path)
-        return path, home, match[2]
+        self.cache[key] = (path, home, match[2])
+        return self.cache[key]
 
     def xml(self, path):
         key = 'bitmap_xml:' + str(path)
@@ -46,6 +50,11 @@ class BitmapResolver:
         return self.cache[key]
 
     def bitmap(self, value):
+        key = ('bitmap_record', str(self.target), value)
+        if key in self.cache:
+            record, assets = self.cache[key]
+            self.assets.update(assets)
+            return dict(record)
         record = {'reference': str(value or ''), 'status': 'unresolved', 'name': '', 'file': ''}
         resolved = self.reference(value, 'Bitmap', 'Bitmaps', '.bminfo')
         if resolved is None:
@@ -97,6 +106,7 @@ class BitmapResolver:
         asset_id = hashlib.sha256(str(path).encode()).hexdigest()
         self.assets[asset_id] = {**asset, 'name': name, 'file': path.name, 'path': record['path']}
         record.update(status='resolved', asset_id=asset_id, sha256=asset['sha256'])
+        self.cache[('bitmap_record', str(self.target), value)] = (dict(record), {asset_id:self.assets[asset_id]})
         return record
 
     def resolve(self, props, levels=1):

@@ -466,7 +466,7 @@ def panel_png(record, panel, other=None, side='base'):
     return _png(*primitives(record, other, side), viewbox=panel['viewbox'])
 
 
-def declaration_symbols(files, source_path, read_text=None):
+def declaration_symbols(files, source_path, read_text=None, cache=None):
     """Local program declarations override shared global declarations.
 
     Other program-local files are excluded to avoid assigning their types to
@@ -483,6 +483,11 @@ def declaration_symbols(files, source_path, read_text=None):
         if local or rel.name.casefold()=='global.var' and rel.parent.as_posix().casefold() in {'logical','.'}:
             candidates.append((local,str(relative),path))
     for local,relative,path in sorted(candidates):
+        key = ('declaration_symbols', str(path), relative)
+        if cache is not None and key in cache:
+            symbols.update(cache[key])
+            continue
+        declarations = {}
         try:
             raw_text=read_text(path) if read_text else Path(path).read_text(encoding='utf-8',errors='replace')
         except OSError: continue
@@ -492,8 +497,10 @@ def declaration_symbols(files, source_path, read_text=None):
             declaration=match.group(2).split(':=',1)[0].strip()
             line=text.count('\n',0,match.start(1))+1
             comments=re.findall(r'\(\*(.*?)\*\)',raw_lines[line-1]) if line<=len(raw_lines) else []
-            symbols[match.group(1).casefold()]={'datatype':declaration,'sourceFile':relative,
+            declarations[match.group(1).casefold()]={'datatype':declaration,'sourceFile':relative,
                                                'sourceLine':line,'description':' '.join(comments).strip()}
+        if cache is not None: cache[key] = declarations
+        symbols.update(declarations)
     return symbols
 
 

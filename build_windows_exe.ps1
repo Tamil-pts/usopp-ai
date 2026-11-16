@@ -100,6 +100,8 @@ $Arguments = @(
     '--collect-submodules', 'xlrd', '--collect-data', 'xlrd',
     '--collect-submodules', 'reportlab', '--collect-data', 'reportlab',
     '--collect-submodules', 'docx', '--collect-data', 'docx',
+    '--collect-submodules', 'pptx', '--collect-data', 'pptx',
+    '--collect-submodules', 'xlsxwriter',
     '--collect-submodules', 'pypdf', '--collect-data', 'pypdf',
     # collect-all also copies Python source as data. Keep modules in the frozen
     # archive and collect only PDFium's runtime DLLs and non-code resources.
@@ -115,6 +117,12 @@ $Arguments = @(
     '--collect-data', 'mcp',
     '--collect-submodules', 'lxml', '--collect-data', 'lxml',
     '--collect-submodules', 'PIL', '--collect-data', 'PIL',
+    '--collect-submodules', 'langchain_core', '--collect-data', 'langchain_core',
+    '--collect-submodules', 'langsmith', '--collect-data', 'langsmith',
+    '--collect-submodules', 'faster_whisper', '--collect-data', 'faster_whisper',
+    '--collect-submodules', 'ctranslate2', '--collect-binaries', 'ctranslate2',
+    '--collect-submodules', 'av', '--collect-binaries', 'av',
+    '--collect-submodules', 'onnxruntime', '--collect-binaries', 'onnxruntime', '--collect-data', 'onnxruntime',
     (Join-Path $AppRoot 'server.py')
 )
 

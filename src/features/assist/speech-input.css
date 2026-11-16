@@ -1,0 +1,8 @@
+.chopperSpeechDialog{width:min(620px,calc(100vw - 24px));max-height:90dvh;overflow:auto;border:1px solid var(--border,#cbd5e1);border-radius:20px;padding:24px;background:var(--card,#fff);color:var(--text,#182d36);box-shadow:0 24px 90px #0005}
+.chopperSpeechDialog::backdrop{background:#102c3e80;backdrop-filter:blur(3px)}
+.chopperSpeechDialog header{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:18px}.chopperSpeechDialog h2{margin:0 0 7px}.chopperSpeechDialog p{line-height:1.5;font-size:14px}.chopperSpeechDialog header p{margin:0;color:var(--muted,#64748b)}
+.chopperSpeechDialog label{display:grid;gap:8px;font-weight:600;margin:16px 0}.chopperSpeechDialog select,.chopperSpeechDialog textarea{width:100%;box-sizing:border-box;border:1px solid var(--border,#cbd5e1);border-radius:9px;padding:12px;font:inherit;color:inherit;background:var(--panel,#f5f8fa)}.chopperSpeechDialog textarea{resize:vertical;font-weight:400}
+.speechActions,.chopperSpeechDialog footer{display:flex;gap:10px;flex-wrap:wrap}.chopperSpeechDialog footer{justify-content:flex-end;margin-top:20px}.chopperSpeechDialog small,.speechPrivacy{color:var(--muted,#64748b);font-size:12px;line-height:1.5}.speechError{background:#fee2e2;color:#991b1b;border-radius:8px;padding:12px}
+.chatSpeechButton{flex-shrink:0}
+.workspaceApp .chopperInterface.chopperStudio .chopperComposer.unifiedComposer{grid-template-columns:auto minmax(0,1fr) auto auto}
+@media(max-width:600px){.workspaceApp .chopperInterface.chopperStudio .chopperComposer.unifiedComposer{grid-template-columns:auto auto 1fr}.workspaceApp .chopperInterface.chopperStudio .chopperComposer.unifiedComposer textarea{grid-column:1/-1;grid-row:1}.chopperSpeechDialog{padding:16px}}

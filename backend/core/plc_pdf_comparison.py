@@ -11,7 +11,7 @@ from fastapi import HTTPException
 
 from backend.core import document_pdf_comparison as pdf
 
-RUNNING = re.compile(r'^.+?\s+/\s+(.+?)\s+\(((?:OB|SBR|FB|FC|DB|INT)\s*\d+)\)\s*$', re.I)
+RUNNING = re.compile(r'^.+?\s+/\s+(.+?)(?:\s+\(((?:OB|SBR|FB|FC|DB|INT)\s*\d+)\))?\s*$', re.I)
 NETWORK = re.compile(r'^Network\s+(\d+)\b(.*)$', re.I)
 
 
@@ -39,7 +39,7 @@ def extract(path, ignore_page_numbers=True, options=None):
             title = next((line for line in lines if re.match(r'^Block\s*:', line['text'], re.I)), None)
             match = RUNNING.fullmatch(header['text'].strip()) if header else None
             name = match[1].strip() if match else re.sub(r'^Block\s*:\s*', '', title['text'], flags=re.I).strip() if title else None
-            address = match[2].upper().replace(' ', '') if match else ''
+            address = (match[2] or '').upper().replace(' ', '') if match else ''
             identity = name.casefold() if name else None
             if identity and (current is None or current['key'] != identity or title):
                 current = dict(key=identity, name=name, address=address, networks=[], metadata=None)
@@ -190,17 +190,49 @@ class Renderer:
             for chunk in chunks: chunk.close()
 
 
+def registered_pixels(a, b):
+    """Rigid network registration only: never warp branches or individual operands."""
+    import numpy as np
+    from PIL import Image, ImageChops, ImageFilter
+    scale=min(1., 1024/max(a.size+b.size))
+    arrays=[]
+    for image in (a,b):
+        small=image.convert('L').resize((max(1,round(image.width*scale)),max(1,round(image.height*scale))))
+        arrays.append(np.asarray(small)<180)
+        small.close()
+    aa,bb=arrays
+    shape=[1 << (int(n)-1).bit_length() for n in np.add(aa.shape,bb.shape)-1]
+    correlation=np.fft.irfft2(np.fft.rfft2(aa,s=shape)*np.conj(np.fft.rfft2(bb,s=shape)),s=shape)
+    y,x=np.unravel_index(correlation.argmax(),correlation.shape)
+    y=int(y if y<=shape[0]//2 else y-shape[0]);x=int(x if x<=shape[1]//2 else x-shape[1])
+    # A strong common-ink anchor is required; unrelated networks stay unregistered.
+    confidence=float(correlation.max())/max(1,min(int(aa.sum()),int(bb.sum())))
+    dx,dy=(round(x/scale),round(y/scale)) if confidence>=.55 else (0,0)
+    offsets=[(max(0,-dx),max(0,-dy)),(max(0,dx),max(0,dy))]
+    size=(max(a.width+offsets[0][0],b.width+offsets[1][0]),max(a.height+offsets[0][1],b.height+offsets[1][1]))
+    images=[];ink=[]
+    for original,offset in zip((a,b),offsets):
+        canvas=Image.new('RGB',size,'white');canvas.paste(original,offset);images.append(canvas)
+        ink.append(canvas.convert('L').point(lambda v:255 if v<180 else 0))
+    masks=[]
+    for own,other in ((ink[0],ink[1]),(ink[1],ink[0])):
+        nearby=other.filter(ImageFilter.MaxFilter(3))
+        masks.append(ImageChops.subtract(own,nearby));nearby.close()
+    for item in ink:item.close()
+    return images,masks,offsets,dict(x=dx,y=dy,confidence=round(confidence,4))
+
+
 def pixel_diff(a, b):
     from PIL import Image, ImageChops
-    size=(max(a.width,b.width),max(a.height,b.height))
-    left,right=Image.new('RGB',size,'white'),Image.new('RGB',size,'white')
-    left.paste(a,(0,0));right.paste(b,(0,0))
-    delta=ImageChops.difference(left,right).convert('L').point(lambda v:255 if v>32 else 0)
-    changed=delta.histogram()[255]
-    # Red marks represent observed raster differences, including possible print/layout changes.
-    overlay=right.copy();overlay.paste(Image.new('RGB',size,'#e44d61'),(0,0),delta)
-    left.close();right.close();delta.close()
-    return dict(changed_pixels=changed,total_pixels=size[0]*size[1],threshold=32),overlay
+    images,masks,offsets,registration=registered_pixels(a,b)
+    union=ImageChops.lighter(*masks)
+    changed=union.histogram()[255]
+    overlay=images[1].copy();tint=Image.new('RGB',overlay.size,'#e44d61');overlay.paste(tint,(0,0),union);tint.close()
+    box=(*offsets[1],offsets[1][0]+b.width,offsets[1][1]+b.height)
+    result=overlay.crop(box);overlay.close()
+    total=union.width*union.height
+    for item in images+masks+[union]:item.close()
+    return dict(changed_pixels=changed,total_pixels=total,threshold=180,registration=registration,tolerance_pixels=1),result
 
 
 def aligned_networks(a, b):
@@ -279,13 +311,13 @@ def compare(files, options):
     pages={side:item[1] for side,item in zip(('base','compared'),extracted)}
     notes=['Networks are matched within explicit printed block headings. Exact network text anchors are followed by source-order pairing of unmatched runs.',
            'Printed project headers are identification only. Block information, network titles, operands and source pages remain in the result.',
-           'Pixel comparison at 1000 px page width detects rendered wiring, symbols and text. Differences may include print/layout changes; no behavioural equivalence is asserted.' if pixels else 'Pixel comparison was disabled. Wiring and symbol geometry have not been compared.',
+           'Pixel comparison at 1000 px page width detects rendered wiring, symbols and text. Rigid network alignment removes page translation; a one-pixel raster tolerance retains changed ink. No behavioural equivalence is asserted.' if pixels else 'Pixel comparison was disabled. Wiring and symbol geometry have not been compared.',
            'Page breaks and outside whitespace are removed from network crops; continued networks retain every source-page segment.']
     notes.extend(f'{side}: {notice}' for side,item in zip(('Base','Compared'),extracted) for notice in item[3])
     ignored={side:item[2] for side,item in zip(('base','compared'),extracted)}
     omitted=[name for name in ('author','created','modified','comments') if not options.get('compare_'+name,True)]
     if omitted:notes.append('Excluded from text and rendered pixel comparison: '+', '.join(omitted)+'. Masked preview areas are omitted from exports too. Comment exclusion recognizes green printed comment text; other comment styles remain compared for review.')
-    return rows,[],notes,dict(mode='plc_networks',comparison_version=3,pixel_compare=pixels,blocks=blocks_info,pages=pages,
+    return rows,[],notes,dict(mode='plc_networks',comparison_version=4,pixel_compare=pixels,blocks=blocks_info,pages=pages,
         comparison_fields={name:options.get('compare_'+name,True) for name in ('author','created','modified','comments')},
         pairs=pdf.align_pages(rows,pages['base'],pages['compared']),ignore_page_numbers=options.get('ignore_page_numbers',True),ignored_page_numbers=ignored)
 
@@ -299,20 +331,18 @@ def status_highlights(a, b, status):
         tint=Image.new('RGB',a.size,color)
         try:return Image.blend(a,tint,.16),None
         finally:tint.close()
-    size=(max(a.width,b.width),max(a.height,b.height))
-    left,right=Image.new('RGB',size,'white'),Image.new('RGB',size,'white')
-    left.paste(a,(0,0));right.paste(b,(0,0))
-    delta=ImageChops.difference(left,right).convert('L')
-    mask=delta.point(lambda value:255 if value>32 else 0).filter(ImageFilter.MaxFilter(7))
-    delta.close()
+    images,masks,offsets,_=registered_pixels(a,b)
+    union=ImageChops.lighter(*masks)
     try:
         output=[]
-        for image in (left,right):
-            # A light coloured halo leaves black contacts, wires and labels legible.
-            tint=Image.new('RGB',size,color);wash=Image.blend(image,tint,.28);tint.close()
-            image.paste(wash,(0,0),mask);wash.close();output.append(image.copy())
+        for image,mask,offset,original in zip(images,masks,offsets,(a,b)):
+            halo=union.filter(ImageFilter.MaxFilter(7))
+            tint=Image.new('RGB',image.size,color);wash=Image.blend(image,tint,.28);tint.close()
+            image.paste(wash,(0,0),halo);wash.close();halo.close()
+            output.append(image.crop((*offset,offset[0]+original.width,offset[1]+original.height)))
         return tuple(output)
-    finally:left.close();right.close();mask.close()
+    finally:
+        for item in images+masks+[union]:item.close()
 
 
 def network_image(user,key,row_id,side,overlay=False,highlight=False):
@@ -325,9 +355,8 @@ def network_image(user,key,row_id,side,overlay=False,highlight=False):
     if not row.get(side+'_segments'):core.fail('This network is absent from this side.',404)
     if overlay and (not result['pdf']['pixel_compare'] or not all(row.get(s+'_segments') for s in ('base','compared'))):
         core.fail('Pixel comparison is unavailable for this network.',400)
-    # v3 invalidates previews generated before metadata/comment masks were
-    # included in both the comparison and displayed evidence.
-    cache=path/f'network-v3-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
+    # Registration and raster tolerance must also apply to regenerated exports.
+    cache=path/f'network-v4-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
     if cache.is_file():return cache.read_bytes()
     renderers=[Renderer(files[s],result['pdf']['pages'][s]) for s in ('base','compared')]
     image=None
@@ -367,10 +396,13 @@ def export_report(user,key,format,status='differences',metadata=None):
         raise HTTPException(400,'Choose All, Differences, Modified, Added, Removed or Needs review.')
     metadata=metadata or {}
     metadata_fields=('project_name','project_id','department','base','description','approved_by','objective_scope','developed','reviewed_by')
-    metadata={name:str(metadata.get(name,'') or '').strip()[:500] for name in metadata_fields}
+    metadata={name:str(metadata.get(name,'') or '').strip() for name in metadata_fields}
+    if any(len(value)>(2000 if name in {'description','objective_scope'} else 500) or any(ord(c)<32 and c not in '\n\r\t' for c in value) for name,value in metadata.items()):
+        raise HTTPException(400,'Keep report details within their text limits and remove unsupported control characters.')
+    detail_labels=(('project_name','Project name'),('project_id','Project ID'),('department','Department'),('base','Base / reference'),('developed','Developed / compare'),('description','Description'),('objective_scope','Objective / scope'),('reviewed_by','Reviewed by'),('approved_by','Approved by'))
     import hashlib,json
     metadata_hash=hashlib.sha256(json.dumps(metadata,sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest()[:12]
-    cache=path/f'plc-network-report-v6-{status}-{metadata_hash}.{format}'
+    cache=path/f'plc-network-report-v8-{status}-{metadata_hash}.{format}'
     if cache.is_file():return cache.read_bytes()
     from backend.core import document_comparison as core
     rows=core.filtered(result,status)
@@ -382,7 +414,7 @@ def export_report(user,key,format,status='differences',metadata=None):
     def evidence(row):
         metric=row.get('pixels')
         return ('Text changed. ' if row['text_changed'] else 'Extracted text unchanged. ')+(
-            f"{metric['changed_pixels']} of {metric['total_pixels']} rendered pixels differ (threshold {metric['threshold']}/255). Review wiring and print layout." if metric else 'Pixel comparison not available for this pair.')
+            f"{metric['changed_pixels']} changed ink pixels after rigid network alignment (one-pixel raster tolerance). Review highlighted operands, symbols and wiring." if metric else 'Pixel comparison not available for this pair.')
     def text_changes(row):
         """Return literal line changes, with compared-side additions and base-side removals."""
         added=[];removed=[]
@@ -411,6 +443,8 @@ def export_report(user,key,format,status='differences',metadata=None):
             for image in images.values():image.close()
     output=io.BytesIO()
     if format=='html':
+        cover_rows=''.join(f'<dt>{label}</dt><dd>{escape(metadata[name])}</dd>' for name,label in detail_labels if metadata[name])
+        cover_html=('<section class="cover"><h1>Project and review details</h1><dl>'+cover_rows+'</dl></section>') if cover_rows else ''
         sections=[]
         for row in rows:
             columns=[]
@@ -422,15 +456,22 @@ def export_report(user,key,format,status='differences',metadata=None):
             change_summary=''.join((f'<h3>Added content · Compared</h3><pre class="added">{escape(chr(10).join(added))}</pre>' if added else '',f'<h3>Removed content · Base</h3><pre class="removed">{escape(chr(10).join(removed))}</pre>' if removed else '')) or '<p>No extracted text additions or removals. Review the side-by-side images for visual or wiring changes.</p>'
             sections.append(f'<section><h2>{escape(description(row))}</h2><p>{escape(evidence(row))}</p><div class="pair">{"".join(columns)}</div><h2>Text changes</h2>{change_summary}</section>')
         data=('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-              '<title>PLC PDF network comparison</title><style>body{font:14px system-ui;margin:24px;color:#182b37}section{border-top:1px solid #ccd4db;margin-top:24px}.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}img{max-width:100%;height:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;padding:8px}.added{background:#e3f7eb;border-left:4px solid #159447}.removed{background:#fde8e8;border-left:4px solid #d43f4d}p{overflow-wrap:anywhere}@media(max-width:650px){.pair{grid-template-columns:1fr}}</style>'
-              f'<h1>PLC PDF network comparison</h1><h2>{escape(heading)}</h2>'+''.join(f'<p>{escape(note)}</p>' for note in notes)+
+              '<title>PLC PDF network comparison</title><style>body{font:14px system-ui;margin:24px;color:#182b37}section{border-top:1px solid #ccd4db;margin-top:24px}.cover{page-break-after:always;padding-bottom:30px}.cover dt{font-weight:600;margin-top:14px}.cover dd{margin:5px 0;white-space:pre-wrap}.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}img{max-width:100%;height:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;padding:8px}.added{background:#e3f7eb;border-left:4px solid #159447}.removed{background:#fde8e8;border-left:4px solid #d43f4d}p{overflow-wrap:anywhere}@media(max-width:650px){.pair{grid-template-columns:1fr}}</style>'
+              +cover_html+f'<h1>PLC PDF network comparison</h1><h2>{escape(heading)}</h2>'+''.join(f'<p>{escape(note)}</p>' for note in notes)+
               (''.join(sections) or '<p>No differences in the compared networks.</p>')+'</html>').encode('utf8')
     elif format=='docx':
         from docx import Document
         from docx.shared import Inches
         from docx.shared import RGBColor
         from PIL import Image
-        document=Document();document.add_heading('PLC PDF network comparison',0);document.add_paragraph(heading)
+        document=Document()
+        selected_details=[(label,metadata[name]) for name,label in detail_labels if metadata[name]]
+        if selected_details:
+            document.add_heading('Project and review details',0)
+            table=document.add_table(rows=len(selected_details),cols=2)
+            for row,(label,value) in zip(table.rows,selected_details):row.cells[0].text=label;row.cells[1].text=value
+            document.add_page_break()
+        document.add_heading('PLC PDF network comparison',0);document.add_paragraph(heading)
         for note in notes:document.add_paragraph(note)
         for row in rows:
             document.add_heading(description(row),1);document.add_paragraph(evidence(row))
@@ -466,7 +507,6 @@ def export_report(user,key,format,status='differences',metadata=None):
         if font!='Helvetica':pdfmetrics.registerFontFamily(font,normal=font,bold=font,italic=font,boldItalic=font)
         for style in styles.byName.values():style.fontName=font
         story=[Paragraph('PLC PDF network comparison',styles['Title']),Paragraph(escape(heading),styles['Heading2']),Paragraph(f'Included: {escape(status)}',styles['BodyText'])]
-        detail_labels=(('project_name','Project name'),('project_id','Project ID'),('department','Department'),('base','Base'),('description','Description'),('approved_by','Approved by'),('objective_scope','Objective / scope'),('developed','Developed'),('reviewed_by','Reviewed by'))
         detail_rows=[[Paragraph(f'<b>{label}</b>',styles['BodyText']),Paragraph(escape(metadata[key]) or '—',styles['BodyText'])] for key,label in detail_labels if metadata[key]]
         if detail_rows:
             story.extend([Spacer(1,10),Paragraph('Project and approval details',styles['Heading2'])])

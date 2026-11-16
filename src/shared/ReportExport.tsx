@@ -3,7 +3,7 @@ import {Download,X} from 'lucide-react';
 import {useAccount} from '../features/account/AuthProvider';
 import './report-export.css';
 
-export type ReportCover={projectName:string;description:string;validatedBy:string;validationDetails:string;approvedBy:string;date:string};
+export type ReportCover={projectId?:string;department?:string;base?:string;developed?:string;objectiveScope?:string;reviewedBy?:string;projectName:string;description:string;validatedBy:string;validationDetails:string;approvedBy:string;date:string};
 type ExportRequest={title:string;projectName:string;format:'html'|'pdf';onExport:(cover:ReportCover)=>Promise<void>};
 const Context=createContext<((request:ExportRequest)=>void)|null>(null);
 export function useReportExport(){const request=useContext(Context);if(!request)throw new Error('Report export provider is missing');return request;}

@@ -22,5 +22,6 @@
 @media(max-width:1500px){.hasAssistant .workspaceAccountTrigger>span:not(.userAvatar),.hasAssistant .workspaceAccountTrigger>svg{display:none}}
 @media(max-width:600px){.workspaceTopAssistant .chopperQuickLauncher{height:34px;width:34px;padding:0;display:grid;place-items:center}.workspaceApp .top.workspaceTopBar.hasAssistant{gap:6px}.hasAssistant .workspaceCrumb{max-width:none}}
 @media(max-width:430px){.hasAssistant .workspacePartnerLogo{display:none}}
+@media(max-width:700px){.workspaceApp .top.workspaceTopBar.hasAssistant{grid-template-columns:minmax(0,1fr) auto auto}.workspaceTopActions .team-chat-trigger{width:34px;min-width:34px;height:34px}}
 
 @media(max-width:1050px){.hasAssistant .buildVersionCompact{display:none!important}}

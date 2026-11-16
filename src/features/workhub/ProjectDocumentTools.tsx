@@ -6,10 +6,10 @@ import {ArrowRight,FileText,LoaderCircle,X} from 'lucide-react';
 import {hub,uploadFiles,type HubRow} from './projectApi';
 
 const types=[['mom','Minutes of Meeting','meetings'],['frd','Functional Requirements (FRD)','meetings'],['flowchart','Flowchart','meetings'],['mindmap','Mind Map','meetings'],['corrections','Correction Notes','documents'],['test','Validation Report','documents'],['test_report','Test Report','documents'],['fat','Factory Acceptance Test (FAT)','quality'],['quality','Quality Review','quality'],['closure','Project Closure Report','quality']];
-export function ProjectDocumentTools({projects,initialProject,initialKind,onOpen,onReports,onClose}:{projects:HubRow[];initialProject?:string;initialKind?:string;onOpen:(project:string,section:string,stage:string,independent?:boolean)=>Promise<void>;onReports:()=>void;onClose:()=>void}){
- const [project,setProject]=useState(initialProject||''),[type,setType]=useState(types.some(t=>t[0]===initialKind)?initialKind!:'frd'),[action,setAction]=useState('new'),[method,setMethod]=useState('blank'),[library,setLibrary]=useState<HubRow[]>([]),[source,setSource]=useState(''),[search,setSearch]=useState(''),[files,setFiles]=useState<File[]>([]),[busy,setBusy]=useState(false),[error,setError]=useState(''),[progress,setProgress]=useState('');
+export function ProjectDocumentTools({projects,initialProject,initialKind,initialBrief,onOpen,onReports,onClose}:{projects:HubRow[];initialProject?:string;initialKind?:string;initialBrief?:string;onOpen:(project:string,section:string,stage:string,independent?:boolean)=>Promise<void>;onReports:()=>void;onClose:()=>void}){
+ const [project,setProject]=useState(initialProject||''),[type,setType]=useState(types.some(t=>t[0]===initialKind)?initialKind!:'frd'),[action,setAction]=useState('new'),[method,setMethod]=useState(initialBrief&&initialBrief.length>40&&['frd','flowchart','mindmap'].includes(initialKind||'')?'chopper':'blank'),[library,setLibrary]=useState<HubRow[]>([]),[source,setSource]=useState(''),[search,setSearch]=useState(''),[files,setFiles]=useState<File[]>([]),[busy,setBusy]=useState(false),[error,setError]=useState(''),[progress,setProgress]=useState('');
  const ref=useRef<HTMLDivElement>(null),requestId=useRef(crypto.randomUUID());
- const [brief,setBrief]=useState(''),[diagramTemplate,setDiagramTemplate]=useState('');
+ const [brief,setBrief]=useState(initialBrief||''),[diagramTemplate,setDiagramTemplate]=useState('');
  const stage=type==='test_report'?'test':type;
  const diagram=['flowchart','mindmap'].includes(type);
  const [title,setTitle]=useState(''),[linkedFrd,setLinkedFrd]=useState('');

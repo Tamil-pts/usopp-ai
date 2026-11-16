@@ -109,6 +109,24 @@ class HmiBitmapTests(unittest.TestCase):
         (self.target / 'Bitmaps/Released.bmp').unlink()
         self.assertEqual(self.layout()['bitmaps']['released']['variants'][0]['status'], 'unresolved')
 
+    def test_shared_run_cache_preserves_assets_and_target_isolation(self):
+        from unittest.mock import patch
+        from python_engine.hmi_bitmaps import BitmapResolver
+        cache = {}
+        first = BitmapResolver(self.target, cache)
+        record = first.bitmap('Source[local].Bitmap[Released]')
+        second = BitmapResolver(self.target, cache)
+        with patch.object(Path, 'resolve', side_effect=AssertionError('repeat filesystem resolution')):
+            self.assertEqual(record, second.bitmap('Source[local].Bitmap[Released]'))
+        self.assertEqual(first.assets, second.assets)
+        other = self.root / 'Logical/T30'
+        self.image(other, 'Released', '#00ffff')
+        third = BitmapResolver(other, cache)
+        self.assertNotEqual(record['sha256'], third.bitmap('Source[local].Bitmap[Released]')['sha256'])
+        # Cache belongs to one run; a fresh run must observe a changed image.
+        self.image(self.target, 'Released', '#ffffff')
+        self.assertNotEqual(record['sha256'], BitmapResolver(self.target, {}).bitmap('Source[local].Bitmap[Released]')['sha256'])
+
     def test_missing_index_and_invalid_image_leave_readable_evidence(self):
         layout = self.layout(self.text.replace('Name="BitmapOffset" Value="12"', 'Name="BitmapOffset" Value="99"'))
         self.assertIn('99', layout['properties']['ResolvedBitmapNote'])

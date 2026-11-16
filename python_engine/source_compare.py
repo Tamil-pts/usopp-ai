@@ -8,6 +8,12 @@ def line_key(line):
 
 def aligned_source(base, developed):
     left=base.splitlines(); right=developed.splitlines()
+    # Identical generated/font/source files can contain thousands of repeated
+    # lines. SequenceMatcher(autojunk=False) is quadratic on those repetitions;
+    # exact equality already proves every row unchanged, including blank lines.
+    if base == developed:
+        return [{'base_line':i+1,'new_line':i+1,'base':line,'new':line,'status':'unchanged'}
+                for i,line in enumerate(left)]
     a=[(i,line_key(line)) for i,line in enumerate(left) if line.strip()]
     b=[(i,line_key(line)) for i,line in enumerate(right) if line.strip()]
     matcher=difflib.SequenceMatcher(None,[key for _,key in a],[key for _,key in b],autojunk=False)

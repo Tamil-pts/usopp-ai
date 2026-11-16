@@ -1,3 +1,4 @@
+import {useUnsavedChanges} from '../../shared/navigation';
 import {useEffect,useRef,useState} from 'react';
 import {CircuitBoard,Copy,Download,FolderOpen,Hand,Layers,Maximize2,MousePointer2,PanelLeftClose,PanelRightClose,Pause,Play,Plus,Redo2,RotateCw,Save,Search,Square,Trash2,Undo2,Upload,X,ZoomIn,ZoomOut,Cable} from 'lucide-react';
 import {userStorage} from '../../shared/userStorage';
@@ -12,8 +13,9 @@ export function NativeEditor(){
  const [id,setId]=useState(()=>userStorage.getItem('usopp_virtual_electrical')||''),[doc,setDoc]=useState<Circuit|null>(null),[parts,setParts]=useState<Part[]>([]),[projects,setProjects]=useState<any[]>([]),[sources,setSources]=useState<any[]>([]),[solver,setSolver]=useState(false);
  const [error,setError]=useState(''),[notice,setNotice]=useState(''),[loading,setLoading]=useState(false),[busy,setBusy]=useState(false),[dirty,setDirty]=useState(false),[picker,setPicker]=useState(false),[query,setQuery]=useState(''),[selection,setSelection]=useState<string[]>([]),[tool,setTool]=useState('select'),[zoom,setZoom]=useState(100),[command,setCommand]=useState({kind:'fit',nonce:0}),[focus,setFocus]=useState('');
  const [result,setResult]=useState<any>(null),[sample,setSample]=useState(0),[playing,setPlaying]=useState(false),[analysis,setAnalysis]=useState('op'),[duration,setDuration]=useState(.1),[step,setStep]=useState(.0001),[left,setLeft]=useState(()=>innerWidth>900),[right,setRight]=useState(()=>innerWidth>1200),[showImport,setShowImport]=useState(false);
+ useUnsavedChanges(dirty);
  const [history,setHistory]=useState<Item[][]>([]),[future,setFuture]=useState<Item[][]>([]);const preview=useRef<Item[]|null>(null),input=useRef<HTMLInputElement>(null),epoch=useRef(0),localRevision=useRef(0);
- const refresh=async()=>{const [p,s]=await Promise.all([request('/projects'),request('/sources')]);setProjects(p.projects);setSources(s.drawings);};
+ const refresh=async()=>{const [p,s]=await Promise.all([request('/projects'),request('/sources')]);setProjects(p.projects.filter((p:any)=>p.source?.mode!=='industrial'));setSources(s.drawings);};
  useEffect(()=>{void Promise.all([request('/library').then(d=>{setParts(d.components);setSolver(d.solverAvailable)}),refresh()]).catch(e=>setError(e.message));},[]);
  useEffect(()=>{const media=matchMedia('(max-width:780px)'),close=()=>{if(media.matches){setLeft(false);setRight(false);}};close();media.addEventListener('change',close);return()=>media.removeEventListener('change',close);},[]);
  useEffect(()=>{if(!id)return;const abort=new AbortController();let timer:ReturnType<typeof setTimeout>;epoch.current++;setDoc(null);setLoading(true);setError('');setDirty(false);setResult(null);setPlaying(false);setHistory([]);setFuture([]);setSelection([]);setQuery('');userStorage.setItem('usopp_virtual_electrical',id);

@@ -545,7 +545,7 @@ export function CompareModule({
       </div>
       <div className="compareHeadingAside">{projectLink}<div className="compareDarkActions">
         {result?.sessionId&&<button className="compareDarkBtn primary" onClick={()=>setChopperSummaryOpen(true)}>Chopper summary</button>}
-        <CompareReports sessionId={result?.sessionId} projectName={newProjectInfo?.project_name||compareFiles.new_?.[0]?.webkitRelativePath?.split('/')[0]||compareNewPath.split(/[\\/]/).filter(Boolean).at(-1)||result?.newName||'Comparison'} busy={busy} skipLayout={skipHmiLayout}/>
+        <CompareReports baseName={baseProjectInfo?.project_name||result?.baseName||compareBasePath.split(/[\\/]/).filter(Boolean).at(-1)||''} developedName={newProjectInfo?.project_name||result?.newName||''} sessionId={result?.sessionId} projectName={newProjectInfo?.project_name||compareFiles.new_?.[0]?.webkitRelativePath?.split('/')[0]||compareNewPath.split(/[\\/]/).filter(Boolean).at(-1)||result?.newName||'Comparison'} busy={busy} skipLayout={skipHmiLayout}/>
         {progress&&<button className="compareDarkBtn primary" onClick={()=>setConsoleOpen(true)}>Console</button>}
       </div></div>
     </div>
@@ -578,9 +578,9 @@ export function CompareModule({
     </div>
 
     {progress&&<div className="compareDarkProgress">
-      <div className="compareDarkProgressHead"><span>{progress.phase==='complete'?'Comparison complete':progress.phase==='error'?'Comparison failed':'Comparing projects...'}</span><b>{Number(progress.percent||0).toFixed(1)}%</b></div>
+      <div className="compareDarkProgressHead"><span>{progress.phase==='complete'?'Comparison complete':progress.phase==='error'?'Comparison failed':progress.message||'Preparing comparison...'}</span><b>{Number(progress.percent||0).toFixed(1)}%</b></div>
       <div className="compareDarkProgressTrack"><div style={{width:`${Math.max(0,Math.min(100,Number(progress.percent||0)))}%`}}/></div>
-      <div className="compareDarkCurrent"><span>BASE: {progress.baseFile||progress.currentBase||'Waiting for file'}</span><span>DEVELOPED: {progress.newFile||progress.currentNew||'Waiting for file'}</span></div>
+      <div className="compareDarkCurrent"><span>BASE: {progress.baseFile||progress.currentBase||(progress.phase==='uploading'?'Uploading folder':'Scanning / preparing files')}</span><span>DEVELOPED: {progress.newFile||progress.currentNew||(progress.phase==='uploading'?'Uploading folder':'Scanning / preparing files')}</span></div>
     </div>}
 
     {result&&<div className="compareDarkSummary">
