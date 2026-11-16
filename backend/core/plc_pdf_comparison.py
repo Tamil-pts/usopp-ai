@@ -102,7 +102,15 @@ def extract(path, ignore_page_numbers=True, options=None):
                 if end <= start: return
                 # Full width preserves parallel branches and wiring with no nearby text.
                 unit['segments'].append(dict(page=number, bbox=[0, start, width, end], masks=[box for box in masks if box[1]<end and box[3]>start]))
-                content = [line['text'] for line in body if line is not excluded and start <= line['bbox'][1] < end]
+                region=[line for line in body if line is not excluded and start <= line['bbox'][1] < end]
+                references=next((line for line in region if re.fullmatch(r'(?:Symbol|Address|Comment)(?:\s+(?:Symbol|Address|Comment)){2}',line['text'].strip(),re.I) and all(re.search(r'\b'+word+r'\b',line['text'],re.I) for word in ('Symbol','Address','Comment'))),None)
+                if references and unit.get('number') is not None:
+                    table_start=references['bbox'][1]-2
+                    unit.setdefault('references',[]).append(dict(page=number,text='\n'.join(line['text'] for line in region if line['bbox'][1]>=table_start)))
+                    if not options.get('compare_references',True):
+                        unit['segments'][-1]['bbox'][3]=max(start,table_start)
+                        region=[line for line in region if line['bbox'][1]<table_start]
+                content = [line['text'] for line in region]
                 text = '\n'.join(content)
                 if not content and page.images:unit['unknown']=True
                 characters += len(text)
@@ -142,14 +150,26 @@ def extract(path, ignore_page_numbers=True, options=None):
 
 class Renderer:
     """Bounded page cache. Only cropped network evidence is retained in results."""
-    def __init__(self, path, pages): self.path, self.pages, self.cache = path, pages, OrderedDict()
+    def __init__(self, path, pages): self.path, self.pages, self.cache, self.document = path, pages, OrderedDict(), None
     def close(self):
         for image in self.cache.values(): image.close()
         self.cache.clear()
+        if self.document is not None:
+            with pdf.RENDER_LOCK:self.document.close()
+            self.document=None
     def page(self, number):
-        from PIL import Image
         if number not in self.cache:
-            self.cache[number] = Image.open(io.BytesIO(pdf.render_png(self.path, number, width=1000))).convert('RGB')
+            # Keep the PDF document open for this bounded renderer; avoid PNG
+            # encoding/decoding and font reinitialisation for every source page.
+            import pypdfium2 as pdfium
+            with pdf.RENDER_LOCK:
+                if self.document is None:self.document=pdfium.PdfDocument(str(self.path))
+                page=self.document[number-1]
+                try:
+                    w,h=page.get_size();bitmap=page.render(scale=min(1000/w,(4000000/(w*h))**.5,3))
+                    try:self.cache[number]=bitmap.to_pil().convert('RGB')
+                    finally:bitmap.close()
+                finally:page.close()
             if len(self.cache) > 3: self.cache.popitem(last=False)[1].close()
         self.cache.move_to_end(number)
         return self.cache[number]
@@ -184,7 +204,18 @@ class Renderer:
             for chunk in chunks: merged.paste(chunk,(0,y)); y+=chunk.height
             ink = ImageChops.difference(merged.convert('L'), Image.new('L',merged.size,255)).point(lambda value:255 if value>70 else 0)
             bounds=ink.getbbox(); ink.close()
-            result=merged.crop((max(0,bounds[0]-3),0,min(width,bounds[2]+3),height)) if bounds else merged.copy()
+            top,bottom=0,height
+            if bounds and unit.get('number') is not None:
+                # A printed left power rail can extend through blank space or a symbol
+                # table. Fit to the connected drawing, not that decorative extension.
+                import numpy as np
+                pixels=np.asarray(merged.convert('L'))<180
+                rail=any(pixels[:,x].sum()>height*.75 for x in range(bounds[0],min(width,bounds[0]+5)))
+                if rail:
+                    pixels[:,:min(width,bounds[0]+7)]=False
+                    occupied=np.flatnonzero(pixels.any(axis=1))
+                    if len(occupied):top=max(0,int(occupied[0])-8);bottom=min(height,int(occupied[-1])+9)
+            result=merged.crop((max(0,bounds[0]-3),top,min(width,bounds[2]+3),bottom)) if bounds else merged.copy()
             merged.close(); return result
         finally:
             for chunk in chunks: chunk.close()
@@ -222,14 +253,14 @@ def registered_pixels(a, b):
     return images,masks,offsets,dict(x=dx,y=dy,confidence=round(confidence,4))
 
 
-def pixel_diff(a, b):
+def pixel_diff(a, b, aligned=False):
     from PIL import Image, ImageChops
     images,masks,offsets,registration=registered_pixels(a,b)
     union=ImageChops.lighter(*masks)
     changed=union.histogram()[255]
     overlay=images[1].copy();tint=Image.new('RGB',overlay.size,'#e44d61');overlay.paste(tint,(0,0),union);tint.close()
     box=(*offsets[1],offsets[1][0]+b.width,offsets[1][1]+b.height)
-    result=overlay.crop(box);overlay.close()
+    result=overlay.copy() if aligned else overlay.crop(box);overlay.close()
     total=union.width*union.height
     for item in images+masks+[union]:item.close()
     return dict(changed_pixels=changed,total_pixels=total,threshold=180,registration=registration,tolerance_pixels=1),result
@@ -282,6 +313,7 @@ def compare(files, options):
             row[side+'_title']=unit['title'] if unit else ''
             segments=unit['segments'] if unit else []
             row[side+'_segments']=segments
+            row[side+'_references']=unit.get('references',[]) if unit else []
             page_numbers=list(dict.fromkeys(segment['page'] for segment in segments))
             label=f"Network {unit['number']}" if unit and unit['number'] is not None else unit['title'] if unit else ''
             row[side+'_ref']=f"{block_name} / {label} / Pages {', '.join(map(str,page_numbers))}" if unit else ''
@@ -315,14 +347,14 @@ def compare(files, options):
            'Page breaks and outside whitespace are removed from network crops; continued networks retain every source-page segment.']
     notes.extend(f'{side}: {notice}' for side,item in zip(('Base','Compared'),extracted) for notice in item[3])
     ignored={side:item[2] for side,item in zip(('base','compared'),extracted)}
-    omitted=[name for name in ('author','created','modified','comments') if not options.get('compare_'+name,True)]
+    omitted=[name for name in ('author','created','modified','comments','references') if not options.get('compare_'+name,True)]
     if omitted:notes.append('Excluded from text and rendered pixel comparison: '+', '.join(omitted)+'. Masked preview areas are omitted from exports too. Comment exclusion recognizes green printed comment text; other comment styles remain compared for review.')
-    return rows,[],notes,dict(mode='plc_networks',comparison_version=4,pixel_compare=pixels,blocks=blocks_info,pages=pages,
-        comparison_fields={name:options.get('compare_'+name,True) for name in ('author','created','modified','comments')},
+    return rows,[],notes,dict(mode='plc_networks',comparison_version=5,pixel_compare=pixels,blocks=blocks_info,pages=pages,
+        comparison_fields={name:options.get('compare_'+name,True) for name in ('author','created','modified','comments','references')},
         pairs=pdf.align_pages(rows,pages['base'],pages['compared']),ignore_page_numbers=options.get('ignore_page_numbers',True),ignored_page_numbers=ignored)
 
 
-def status_highlights(a, b, status):
+def status_highlights(a, b, status, aligned=False):
     """Colour observed raster changes; preserve source ink and unchanged pixels."""
     from PIL import Image, ImageChops, ImageFilter
     color={'added':'#17a673','removed':'#e44d61','modified':'#efb52e','unresolved':'#8291a5'}.get(status)
@@ -339,7 +371,7 @@ def status_highlights(a, b, status):
             halo=union.filter(ImageFilter.MaxFilter(7))
             tint=Image.new('RGB',image.size,color);wash=Image.blend(image,tint,.28);tint.close()
             image.paste(wash,(0,0),halo);wash.close();halo.close()
-            output.append(image.crop((*offset,offset[0]+original.width,offset[1]+original.height)))
+            output.append(image.copy() if aligned else image.crop((*offset,offset[0]+original.width,offset[1]+original.height)))
         return tuple(output)
     finally:
         for item in images+masks+[union]:item.close()
@@ -356,40 +388,82 @@ def network_image(user,key,row_id,side,overlay=False,highlight=False):
     if overlay and (not result['pdf']['pixel_compare'] or not all(row.get(s+'_segments') for s in ('base','compared'))):
         core.fail('Pixel comparison is unavailable for this network.',400)
     # Registration and raster tolerance must also apply to regenerated exports.
-    cache=path/f'network-v4-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
+    cache=path/f'network-v5-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
     if cache.is_file():return cache.read_bytes()
-    renderers=[Renderer(files[s],result['pdf']['pages'][s]) for s in ('base','compared')]
     image=None
-    try:
-        if overlay:
-            a,b=[r.network(dict(segments=row[s+'_segments'])) for r,s in zip(renderers,('base','compared'))]
-            try:_,image=pixel_diff(a,b)
+    if not overlay:
+        renderer=ExportNetworkImages((path,result,files))
+        try:data=renderer.png(row,side,highlight=highlight and row['status']!='unchanged')
+        finally:renderer.close()
+    else:
+        renderers=[Renderer(files[s],result['pdf']['pages'][s]) for s in ('base','compared')]
+        try:
+            a,b=[r.network(dict(segments=row[s+'_segments'],number=row.get(s+'_network'))) for r,s in zip(renderers,('base','compared'))]
+            try:_,image=pixel_diff(a,b,aligned=True)
             finally:a.close();b.close()
-        elif highlight and row['status']!='unchanged':
-            if row['status']=='modified' and (row.get('pixels') or {}).get('changed_pixels'):
-                a,b=[r.network(dict(segments=row[s+'_segments'])) for r,s in zip(renderers,('base','compared'))]
-                try:
-                    marked=status_highlights(a,b,'modified')
-                    image=marked[0 if side=='base' else 1]
-                    marked[1 if side=='base' else 0].close()
-                finally:a.close();b.close()
-            else:
-                original=renderers[0 if side=='base' else 1].network(dict(segments=row[side+'_segments']))
-                try:image,_=status_highlights(original,None,row['status'])
-                finally:original.close()
-        else:image=renderers[0 if side=='base' else 1].network(dict(segments=row[side+'_segments']))
-        out=io.BytesIO();image.save(out,format='PNG');data=out.getvalue()
-    finally:
-        if image:image.close()
-        for renderer in renderers:renderer.close()
-    pdf.result_sources(user,key);pdf.save_cache(cache,data);return data
+            out=io.BytesIO();image.save(out,format='PNG');data=out.getvalue()
+        finally:
+            if image:image.close()
+            for renderer in renderers:renderer.close()
+    pdf.result_sources(user,key);pdf.save_cache(cache,data)
+    return data
 
 
-def export_report(user,key,format,status='differences',metadata=None):
+class ExportNetworkImages:
+    """One bounded page cache per source and one registration per network pair."""
+    def __init__(self,sources):
+        self.path,self.result,files=sources
+        self.renderers={side:Renderer(files[side],self.result['pdf']['pages'][side]) for side in ('base','compared')}
+    def close(self):
+        for renderer in self.renderers.values():renderer.close()
+    def png(self,row,side,highlight=None):
+        if not row.get(side+'_segments'):return None
+        highlight=(row['status']!='unchanged') if highlight is None else highlight
+        cache=lambda name:self.path/f"network-v5-{row['id']}-{name}-0-{int(highlight)}.png"
+        if cache(side).is_file():return cache(side).read_bytes()
+        images={};marked=[]
+        try:
+            for name in ('base','compared'):
+                if row.get(name+'_segments'):images[name]=self.renderers[name].network(dict(segments=row[name+'_segments'],number=row.get(name+'_network')))
+            if highlight and row['status']=='modified' and (row.get('pixels') or {}).get('changed_pixels') and len(images)==2:
+                marked=list(status_highlights(images['base'],images['compared'],'modified',aligned=True))
+                selected=dict(zip(('base','compared'),marked))
+            elif highlight:
+                selected={name:status_highlights(original,None,row['status'])[0] for name,original in images.items()}
+                marked=list(selected.values())
+            else:selected=images
+            if len(images)==2 and not marked:
+                if row.get('pixels'):
+                    pair,masks,_,_=registered_pixels(images['base'],images['compared'])
+                    for mask in masks:mask.close()
+                else:
+                    from PIL import Image
+                    size=(max(i.width for i in images.values()),max(i.height for i in images.values()))
+                    pair=[]
+                    for original in images.values():
+                        canvas=Image.new('RGB',size,'white');canvas.paste(original,(0,0));pair.append(canvas)
+                selected=dict(zip(('base','compared'),pair));marked=pair
+            for name,image in selected.items():
+                stream=io.BytesIO();image.save(stream,format='PNG');pdf.save_cache(cache(name),stream.getvalue())
+            return cache(side).read_bytes()
+        finally:
+            for image in [*images.values(),*marked]:image.close()
+
+
+def export_report(user,key,format,status='differences',metadata=None,progress=None):
+    sources=pdf.result_sources(user,key)
+    if sources[1]['pdf'].get('mode')!='plc_networks':raise HTTPException(400,'Choose a PLC network comparison.')
+    if sources[1]['pdf'].get('comparison_version',0)<5:raise HTTPException(409,'Run Compare PLC PDFs again before exporting this older result.')
+    renderer=ExportNetworkImages(sources)
+    try:return _export_report(user,key,format,status,metadata,sources,renderer,progress)
+    finally:renderer.close()
+
+
+def _export_report(user,key,format,status,metadata,sources,renderer,progress):
     """Matched network crops and explicit before/after evidence in every report."""
     import base64
     from html import escape
-    path,result,_=pdf.result_sources(user,key)
+    path,result,_=sources
     if result['pdf'].get('mode')!='plc_networks':
         raise HTTPException(400,'Choose a PLC network comparison.')
     if status not in {'all','differences','modified','added','removed','unresolved'}:
@@ -402,8 +476,10 @@ def export_report(user,key,format,status='differences',metadata=None):
     detail_labels=(('project_name','Project name'),('project_id','Project ID'),('department','Department'),('base','Base / reference'),('developed','Developed / compare'),('description','Description'),('objective_scope','Objective / scope'),('reviewed_by','Reviewed by'),('approved_by','Approved by'))
     import hashlib,json
     metadata_hash=hashlib.sha256(json.dumps(metadata,sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest()[:12]
-    cache=path/f'plc-network-report-v8-{status}-{metadata_hash}.{format}'
-    if cache.is_file():return cache.read_bytes()
+    cache=path/f'plc-network-report-v9-{status}-{metadata_hash}.{format}'
+    if cache.is_file():
+        if progress:progress(0,0,'complete')
+        return cache.read_bytes()
     from backend.core import document_comparison as core
     rows=core.filtered(result,status)
     heading=result['base']['name']+' -> '+result['compared']['name']
@@ -423,8 +499,14 @@ def export_report(user,key,format,status='differences',metadata=None):
             if operation in {'replace','delete'}:removed.extend(before[left_start:left_end])
             if operation in {'replace','insert'}:added.extend(after[right_start:right_end])
         return added,removed
+    completed=set()
+    if progress:progress(0,len(rows),'rendering')
     def png(row,side):
-        return network_image(user,key,row['id'],side,highlight=row['status']!='unchanged') if row.get(side+'_segments') else None
+        value=renderer.png(row,side)
+        if row['id'] not in completed:
+            completed.add(row['id'])
+            if progress:progress(len(completed),len(rows),'rendering')
+        return value
     def tiles(row):
         from PIL import Image
         images={side:Image.open(io.BytesIO(data)).convert('RGB') for side in ('base','compared') if (data:=png(row,side))}
@@ -495,6 +577,7 @@ def export_report(user,key,format,status='differences',metadata=None):
                         for run in paragraph.runs:run.font.color.rgb=RGBColor.from_string(color)
             if not added and not removed:document.add_paragraph('No extracted text additions or removals. Review the side-by-side images for visual or wiring changes.')
         if not rows:document.add_paragraph('No differences in the compared networks.')
+        if progress:progress(len(rows),len(rows),'formatting')
         document.save(output);data=output.getvalue()
     else:
         from reportlab.platypus import SimpleDocTemplate,Paragraph,Spacer,Image,Table,TableStyle,PageBreak
@@ -544,6 +627,9 @@ def export_report(user,key,format,status='differences',metadata=None):
                 changes.setStyle(TableStyle(table_style));story.append(changes)
             else:story.append(Paragraph('No extracted text additions or removals. Review the side-by-side images for visual or wiring changes.',styles['BodyText']))
         if not rows:story.append(Paragraph('No differences in the compared networks.',styles['BodyText']))
+        if progress:progress(len(rows),len(rows),'formatting')
         SimpleDocTemplate(output,pagesize=landscape(A4),leftMargin=35,rightMargin=35,topMargin=30,bottomMargin=30).build(story)
         data=output.getvalue()
-    pdf.result_sources(user,key);pdf.save_cache(cache,data);return data
+    pdf.result_sources(user,key);pdf.save_cache(cache,data)
+    if progress:progress(len(rows),len(rows),'complete')
+    return data

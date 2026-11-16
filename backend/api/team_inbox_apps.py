@@ -141,11 +141,12 @@ def work_center_options(request:Request):
 
 
 @router.get('/work-center/tasks')
-def work_center_tasks(request:Request,view:str=Query('mine',pattern='^(mine|tasks)$'),page:int=Query(1,ge=1),search:str=Query('',max_length=180)):
+def work_center_tasks(request:Request,view:str=Query('mine',pattern='^(mine|tasks|assigned)$'),page:int=Query(1,ge=1),search:str=Query('',max_length=180)):
     user=workhub_user(request)
     from backend.core.workhub import store as hub
     with hub.db() as db:
         condition="(i.owner_id=? OR EXISTS(SELECT 1 FROM json_each(i.supporting_ids) WHERE value=?))" if view=='mine' else "i.type='task' AND (i.owner_id=? OR i.created_by=?)"
+        if view=='assigned':condition="(i.created_by=? OR p.owner_id=?)"
         where=condition+" AND (instr(lower(i.title),lower(?))>0 OR instr(lower(p.title),lower(?))>0)"
         args=(user['id'],user['id'],search,search)
         total=db.execute('SELECT COUNT(*) FROM items i JOIN items p ON p.id=i.project_id WHERE '+where,args).fetchone()[0]
@@ -175,13 +176,47 @@ def work_center_log_time(request:Request,payload:dict):
         'work_date':payload.get('work_date'),'file_ids':[],'run_ids':[]})
 
 
+@router.post('/work-center/updates')
+def work_center_daily_update(request:Request,payload:dict):
+    user=workhub_user(request)
+    from backend.core.workhub import store as hub
+    return hub.add_update(user,payload.get('item_id'),{key:payload[key] for key in ('body','minutes','work_date','work_status','request_kind','mention_ids') if key in payload})
+
+
+@router.get('/work-center/requests')
+def work_center_requests(request:Request):
+    user=workhub_user(request)
+    from backend.core.workhub import store as hub
+    with hub.db() as db:
+        rows=[dict(r) for r in db.execute("SELECT n.*,r.update_id FROM notifications n JOIN update_requests r ON r.notification_id=n.id WHERE n.recipient_id=? AND r.resolved_at IS NULL ORDER BY n.created_at DESC LIMIT 100",(user['id'],))]
+    return {'items':rows}
+
+
+@router.post('/work-center/requests/{key}/resolve')
+def work_center_resolve(key:str,request:Request):
+    user=workhub_user(request)
+    from backend.core.workhub import store as hub,timestamp
+    with hub.db(True) as db:
+        row=db.execute('SELECT r.notification_id FROM update_requests r JOIN notifications n ON n.id=r.notification_id WHERE n.id=? AND n.recipient_id=?',(key,user['id'])).fetchone()
+        if not row:raise HTTPException(404,'Action request not found.')
+        db.execute('UPDATE update_requests SET resolved_at=? WHERE notification_id=?',(timestamp(),key))
+        db.execute('UPDATE notifications SET read_at=? WHERE id=?',(timestamp(),key))
+    return {'ok':True}
+
+
 @router.get('/work-center/timesheet')
-def work_center_timesheet(request:Request,project:str='',date_from:str='',date_to:str='',page:int=Query(1,ge=1),export:str=Query('',pattern='^(|csv)$')):
+def work_center_timesheet(request:Request,project:str='',date_from:str='',date_to:str='',page:int=Query(1,ge=1),export:str=Query('',pattern='^(|csv)$'),include_updates:bool=False,scope:str=Query('mine',pattern='^(mine|project)$')):
     user=workhub_user(request)
     from backend.core.workhub import store as hub,day
     start,end=day(date_from),day(date_to)
     if start and end and start>end:raise HTTPException(400,'From date must be on or before To date.')
-    conditions=['u.author_id=?','u.minutes>0'];args=[user['id']]
+    conditions=['u.author_id=?'];args=[user['id']]
+    if not include_updates:conditions.append('u.minutes>0')
+    if scope=='project':
+        if not project:raise HTTPException(400,'Select a project for its shared update feed.')
+        with hub.db() as db:hub.contribute(db,project,user)
+        conditions=[];args=[]
+        if not include_updates:conditions.append('u.minutes>0')
     if project:conditions.append('u.project_id=?');args.append(project)
     if start:conditions.append('u.work_date>=?');args.append(start)
     if end:conditions.append('u.work_date<=?');args.append(end)
@@ -194,11 +229,21 @@ def work_center_timesheet(request:Request,project:str='',date_from:str='',date_t
             import csv,io
             from fastapi.responses import Response
             output=io.StringIO();writer=csv.writer(output)
-            writer.writerow(['Date','User','Project','Task / project work','Hours','Minutes','What work was done','Status','Review comment'])
+            writer.writerow(['Date','User','Project','Task / project work','Hours','Minutes','What work was done','Status','Review comment','Work status','Purpose','Mentions'])
             def safe(value):
                 value=str(value or '')
                 return "'"+value if value.lstrip().startswith(('=','+','-','@')) else value
-            for row in db.execute(selection,args):writer.writerow([row['work_date'],safe(user['username']),safe(row['project_title']),safe(row['task_title']),round(row['minutes']/60,4),row['minutes'],safe(row['body']),row['time_status'],safe(row['review_comment'])])
+            names={u['id']:u['username'] for u in hub.users()}
+            for row in db.execute(selection,args):
+                context=db.execute('SELECT * FROM update_context WHERE update_id=?',(row['id'],)).fetchone()
+                mentions=', '.join(names.get(i,'Unavailable user') for i in json.loads(context['mention_ids'])) if context else ''
+                writer.writerow([row['work_date'],safe(names.get(row['author_id'],'Unavailable user')),safe(row['project_title']),safe(row['task_title']),round(row['minutes']/60,4),row['minutes'],safe(row['body']),row['time_status'],safe(row['review_comment']),context['work_status'] if context else '',context['request_kind'] if context else '',safe(mentions)])
             return Response('\ufeff'+output.getvalue(),media_type='text/csv',headers={'Content-Disposition':'attachment; filename="my-timesheet.csv"','Cache-Control':'private, no-store'})
         rows=[dict(r) for r in db.execute(selection+' LIMIT 20 OFFSET ?',(*args,(page-1)*20))]
+        names={u['id']:u['username'] for u in hub.users()}
+        for row in rows:
+            context=db.execute('SELECT * FROM update_context WHERE update_id=?',(row['id'],)).fetchone()
+            row.update(dict(context) if context else {'work_status':'','request_kind':'progress','mention_ids':'[]'})
+            row['author_name']=names.get(row['author_id'],'Unavailable user')
+            row['mention_names']=[names.get(i,'Unavailable user') for i in json.loads(row['mention_ids'])]
         return {'items':rows,'total':total,'page':page,'page_size':20,'totals':totals}

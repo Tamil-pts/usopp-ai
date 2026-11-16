@@ -38,6 +38,47 @@ class PLCPDFTests(unittest.TestCase):
         self.assertEqual(response.status_code,200,response.text[:1000])
         data=response.json();return self.client.get(API+f"/results/{data['id']}?status=all&limit=200").json()
 
+    def test_symbol_reference_tables_are_optional_and_do_not_resize_ladder(self):
+        from PIL import Image
+        def printed(table):
+            out=io.BytesIO();c=Canvas(out,pagesize=(612,792));c.setFont('Helvetica',10)
+            c.drawString(180,760,'PROJECT / MOTOR (SBR20)');c.drawString(50,730,'Block: MOTOR')
+            c.drawString(50,680,'Network 22');c.drawString(90,640,'VB1204 ==B 1 V531.0')
+            c.line(70,620,260,620);c.line(70,650,70,480 if table else 560)
+            if table:
+                c.drawString(50,550,'Symbol                 Address                Comment')
+                c.drawString(50,530,'DOFFTYPE              VB1204')
+                c.drawString(50,510,'MANUAL                V531.0')
+            c.save();return out.getvalue()
+        a,b=printed(True),printed(False)
+        data=self.compare(a,b,compare_references=False)
+        row=next(r for r in data['rows'] if r['unit']=='network')
+        self.assertEqual(row['status'],'unchanged')
+        self.assertTrue(row['base_references']);self.assertNotIn('DOFFTYPE',row['base'])
+        sizes=[]
+        for side in ('base','compared'):
+            response=self.client.get(API+f"/results/{data['id']}/networks/{row['id']}/{side}.png")
+            with Image.open(io.BytesIO(response.content)) as im:sizes.append(im.size)
+        self.assertEqual(sizes[0],sizes[1])
+        included=self.compare(a,b,compare_references=True)
+        self.assertEqual(next(r for r in included['rows'] if r['unit']=='network')['status'],'modified')
+
+    def test_export_progress_is_owned_and_source_checks_are_bounded(self):
+        from backend.core import plc_pdf_comparison as plc
+        data=self.compare(program([[(1,'M1'),(2,'M2')]]),program([[(1,'M9'),(2,'M8')]]))
+        key=data['id'];token='a'*32
+        with patch.object(plc.pdf,'result_sources',wraps=plc.pdf.result_sources) as checks:
+            response=self.client.get(API+f'/results/{key}/report.pdf?progress_id={token}')
+            self.assertEqual(response.status_code,200,response.text[:200])
+            self.assertEqual(checks.call_count,2)
+        progress=self.client.get(API+f'/results/{key}/export-progress/{token}')
+        self.assertEqual(progress.json()['phase'],'complete')
+        self.assertEqual(progress.json()['done'],progress.json()['total'])
+        self.login(self.other)
+        self.assertEqual(self.client.get(API+f'/results/{key}/export-progress/{token}').status_code,404)
+        self.login(self.user)
+        self.assertEqual(self.client.get(API+f'/results/{key}/export-progress/bad').status_code,400)
+
     def test_running_block_without_address_keeps_continuation_networks(self):
         # These are explicit project / block headers, as in the supplied STEP7 PDFs.
         out=io.BytesIO();c=Canvas(out,pagesize=(612,792))
@@ -87,7 +128,7 @@ class PLCPDFTests(unittest.TestCase):
         a,b=printed('Alice','2000','2024','Old comment'),printed('Bob','2001','2026','New comment')
         skipped={k:False for k in ('compare_author','compare_created','compare_modified','compare_comments')}
         data=self.compare(a,b,**skipped)
-        self.assertEqual(data['pdf']['comparison_version'],4)
+        self.assertEqual(data['pdf']['comparison_version'],5)
         self.assertEqual(data['summary']['modified'],0)
         self.assertTrue(all(not row['pixels']['changed_pixels'] for row in data['rows']))
         for field in skipped:

@@ -13,7 +13,7 @@ sock=socket.socket();sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
 server=uvicorn.Server(uvicorn.Config(app,log_level='error',lifespan='off'))
 threading.Thread(target=lambda:server.run(sockets=[sock]),daemon=True).start()
 while not server.started:time.sleep(.05)
-out=ROOT/'.build/matchview-export-popup-20261114';out.mkdir(exist_ok=True)
+out=ROOT/'.build/matchview-export-redesign-20261116';out.mkdir(exist_ok=True)
 with sync_playwright() as pw:
  browser=pw.chromium.launch();page=browser.new_page(viewport={'width':1440,'height':1000});errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
  page.goto(f'http://127.0.0.1:{port}/?page=compare')
@@ -51,6 +51,10 @@ with sync_playwright() as pw:
  root.get_by_label('Compared PLC PDF',exact=True).set_input_files({'name':'after.pdf','mimeType':'application/pdf','buffer':program([[(1,'M2')]])})
  root.get_by_role('button',name='Compare PLC PDFs',exact=True).click()
  root.get_by_role('region',name='Continuous PLC network comparison',exact=True).wait_for(timeout=30000)
+ root.get_by_text('Optional details',exact=True).click()
+ for name in ['Symbol reference tables','Comments','Author','Created date','Modified date']:
+  assert not root.get_by_label(name,exact=True).is_checked()
+ root.get_by_text('Optional details',exact=True).click()
  root.get_by_role('button',name='PDF',exact=True).click()
  dialog=page.get_by_role('dialog',name='Export PLC comparison',exact=True)
  dialog.get_by_label('Project name',exact=True).fill('Comber delivery review')
@@ -69,6 +73,24 @@ with sync_playwright() as pw:
  from pypdf import PdfReader
  text=PdfReader(out/'comparison.pdf').pages[0].extract_text()
  for value in ('Comber delivery review','PRJ-104','Automation','Review Engineer'):assert value in text
+ # Exercise the actual supplied INPUTS examples using isolated source-page fixtures.
+ selected=ROOT/'.build/pdf-export-speed/selected'
+ root.get_by_label('Base PLC PDF',exact=True).set_input_files(selected/'18480.pdf')
+ root.get_by_label('Compared PLC PDF',exact=True).set_input_files(selected/'18481.pdf')
+ root.get_by_role('button',name='Compare PLC PDFs',exact=True).click()
+ page.wait_for_timeout(2500)
+ rung=root.locator('.plcPDFSection').filter(has=page.locator('.plcPDFSectionHeading',has_text='Network 22'))
+ rung.scroll_into_view_if_needed();page.wait_for_timeout(700)
+ assert rung.get_attribute('data-status')=='unchanged'
+ images=rung.locator('.plcPDFPairImages img')
+ page.wait_for_function("els=>els.length===2&&els.every(e=>e.complete&&e.naturalWidth>0)",arg=None) if False else None
+ for image in images.all():image.evaluate("e=>e.decode()")
+ dimensions=images.evaluate_all('els=>els.map(e=>[e.naturalWidth,e.naturalHeight])')
+ assert len(dimensions)==2 and dimensions[0]==dimensions[1],dimensions
+ for width in (1440,760,390):
+  page.set_viewport_size({'width':width,'height':900});rung.scroll_into_view_if_needed();page.wait_for_timeout(200)
+  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2')
+  page.screenshot(path=str(out/f'network22-{width}.png'))
  assert not errors,errors
  browser.close();server.should_exit=True
  print('PASS project-folder and PDF export dialogs, retained cover fields/options, Escape/focus, selected-status download and first-page metadata, 390-1440px layouts')

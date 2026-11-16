@@ -13,7 +13,7 @@ sock=socket.socket();sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
 server=uvicorn.Server(uvicorn.Config(app,log_level='error',lifespan='off'))
 threading.Thread(target=lambda:server.run(sockets=[sock]),daemon=True).start()
 while not server.started:time.sleep(.05)
-output=ROOT/'.build/inbox-work-center-browser';output.mkdir(exist_ok=True)
+output=ROOT/'.build/inbox-restructure-browser';output.mkdir(exist_ok=True)
 from backend.core.workhub import store as hub
 reviewer=accounts.store.register('time_reviewer',password,'Reviewer','Fixture',role='admin')
 project=hub.create(admin,{'title':'Inbox project delivery','quality_id':reviewer['id']})
@@ -29,7 +29,7 @@ with sync_playwright() as pw:
  page.get_by_role('group',name='Inbox options').get_by_role('button',name='My Work',exact=True).click()
  dialog=page.get_by_role('dialog',name='Team inbox',exact=True)
  dialog.get_by_role('heading',name='My Work',exact=True).wait_for()
- dialog.get_by_role('button',name='Tasks',exact=True).click()
+ dialog.get_by_role('button',name='Assigned Work',exact=True).click()
  dialog.get_by_role('button',name='New task',exact=True).click()
  dialog.get_by_label('Task project',exact=True).select_option(project['id'])
  dialog.get_by_label('Assign task to',exact=True).select_option(str(reviewer['id']))
@@ -43,28 +43,31 @@ with sync_playwright() as pw:
  dialog.get_by_role('button',name='New task',exact=True).click()
  dialog.get_by_label('Task title',exact=True).fill('Retained task draft')
  dialog.get_by_role('button',name='Chats',exact=True).click()
- dialog.get_by_role('button',name='Tasks',exact=True).click()
+ dialog.get_by_role('button',name='Assigned Work',exact=True).click()
  dialog.get_by_role('button',name='New task',exact=True).click()
  assert dialog.get_by_label('Task title',exact=True).input_value()=='Retained task draft'
  dialog.get_by_role('button',name='Keep draft and close',exact=True).click()
- dialog.get_by_role('button',name='Timesheets',exact=True).click()
- dialog.get_by_role('button',name='Log hours',exact=True).click()
+ dialog.get_by_role('button',name='Daily Updates & Hours',exact=True).click()
+ dialog.get_by_role('button',name='Daily update',exact=True).click()
  dialog.get_by_label('Log hours project',exact=True).select_option(project['id'])
  dialog.get_by_label('Log hours task',exact=True).select_option(task['id'])
  dialog.get_by_label('Hours worked',exact=True).fill('1')
  dialog.get_by_label('Minutes worked',exact=True).fill('30')
+ dialog.get_by_label('Daily work status',exact=True).select_option('blocked')
+ dialog.get_by_label('Update purpose',exact=True).select_option('support')
+ dialog.get_by_label('Mention users',exact=True).select_option(str(reviewer['id']))
  dialog.get_by_label('What work was done',exact=True).fill('Verified source evidence and documented findings.')
- dialog.get_by_role('button',name='Save hours for review',exact=True).click()
- dialog.get_by_text('Work and hours saved.',exact=False).wait_for()
+ dialog.get_by_role('button',name='Save daily update',exact=True).click()
+ dialog.get_by_text('Daily update saved.',exact=False).wait_for()
  page.wait_for_timeout(250)
  assert dialog.locator('.workCenterMetrics').inner_text().count('1.50 h')==2
  with hub.db() as db:entry=dict(db.execute('SELECT * FROM updates WHERE author_id=?',(admin['id'],)).fetchone())
  assert entry['minutes']==90 and entry['time_status']=='submitted'
  hub.time_review(reviewer,entry['id'],{'status':'approved'})
- dialog.get_by_role('button',name='Refresh My Timesheet',exact=True).click()
+ dialog.get_by_role('button',name='Refresh Daily Updates & Hours',exact=True).click()
  page.wait_for_timeout(500)
  assert '1.50 h' in dialog.locator('.workCenterMetrics article').nth(1).inner_text()
- with page.expect_download() as pending:dialog.get_by_role('link',name='Export timesheet CSV',exact=True).click()
+ with page.expect_download() as pending:dialog.get_by_role('link',name='Export updates & hours CSV',exact=True).click()
  pending.value.save_as(str(output/'timesheet.csv'))
  assert 'Verified source evidence' in (output/'timesheet.csv').read_text(encoding='utf-8-sig')
  for width in (1440,760,390):
@@ -72,6 +75,12 @@ with sync_playwright() as pw:
   box=dialog.bounding_box();assert box['x']>=0 and box['x']+box['width']<=width+1
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2')
   page.screenshot(path=str(output/f'timesheet-{width}.png'))
+ dialog.get_by_role('button',name='Chats',exact=True).click()
+ dialog.get_by_role('button',name='Create internal group',exact=True).click()
+ dialog.get_by_label('Group name',exact=True).fill('Internal delivery support')
+ dialog.locator('.chatGroupCreator').get_by_label(reviewer['username'],exact=True).check()
+ dialog.locator('.chatGroupCreator').get_by_role('button',name='Create group',exact=True).click()
+ dialog.locator('.team-chat-peer').get_by_text('Internal delivery support',exact=True).wait_for()
  page.keyboard.press('Escape');dialog.wait_for(state='hidden')
  page.set_viewport_size({'width':1440,'height':900})
  for theme in ('Light','Dark','Retro','Classic','Monochrome'):
@@ -79,6 +88,11 @@ with sync_playwright() as pw:
   page.get_by_role('menuitemradio',name=theme+' theme',exact=True).click()
   assert ribbon.get_by_role('button',name='Inbox',exact=True).is_visible()
   page.screenshot(path=str(output/f'ribbon-{theme.lower()}.png'))
+ for module,label in [('PLC','PLC'),('e-design','e-design'),('AI Assist','AI Assist'),('Virtual','Virtual'),('WorkHub','WorkHub')]:
+  page.get_by_role('navigation',name='Main navigation',exact=True).get_by_role('button',name=module,exact=True).click()
+  nav=page.get_by_role('group',name=label+' submenu',exact=True);nav.wait_for()
+  assert nav.evaluate("e=>getComputedStyle(e).backdropFilter")=='blur(18px)'
+  page.screenshot(path=str(output/('submenu-'+module.replace(' ','-')+'.png')))
  assert not errors,errors
  browser.close()
 server.should_exit=True

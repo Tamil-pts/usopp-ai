@@ -30,13 +30,38 @@ def csv(key:str,request:Request,status:str='differences'):
         headers={'Content-Disposition':f'attachment; filename="plc-networks-{key[:8]}.csv"'})
 
 @router.get('/results/{key}/report.{format}')
-def report(key:str,format:str,request:Request,status:str='differences',project_name:str='',project_id:str='',department:str='',base:str='',description:str='',approved_by:str='',objective_scope:str='',developed:str='',reviewed_by:str=''):
+def report(key:str,format:str,request:Request,status:str='differences',project_name:str='',project_id:str='',department:str='',base:str='',description:str='',approved_by:str='',objective_scope:str='',developed:str='',reviewed_by:str='',progress_id:str=''):
     if format not in {'html','pdf','docx'}:core.fail('Choose PDF, HTML or Word.',400)
     media={'html':'text/html; charset=utf-8','pdf':'application/pdf','docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}
     headers={'Content-Disposition':f'attachment; filename="plc-networks-{key[:8]}.{format}"'}
     if format=='html':headers['Content-Security-Policy']="default-src 'none'; style-src 'unsafe-inline'; img-src data:"
     metadata={'project_name':project_name,'project_id':project_id,'department':department,'base':base,'description':description,'approved_by':approved_by,'objective_scope':objective_scope,'developed':developed,'reviewed_by':reviewed_by}
-    return Response(plc.export_report(request.state.user,key,format,status,metadata),media_type=media[format],headers=headers)
+    import json,re,time
+    if progress_id and not re.fullmatch('[0-9a-f]{32}',progress_id):core.fail('Invalid export progress reference.',400)
+    progress=None
+    if progress_id:
+        path,_=core.record(request.state.user,key,'results');target=path/f'export-progress-{progress_id}.json'
+        last=[0.,'']
+        def progress(done,total,phase):
+            now=time.monotonic()
+            if phase!=last[1] or done==total or now-last[0]>=1:
+                pdf.save_cache(target,json.dumps({'done':done,'total':total,'phase':phase}).encode())
+                last[:]=[now,phase]
+        progress(0,0,'starting')
+    try:data=plc.export_report(request.state.user,key,format,status,metadata,progress)
+    except Exception:
+        if progress:progress(0,0,'failed')
+        raise
+    return Response(data,media_type=media[format],headers={**headers,'Cache-Control':'private, no-store'})
+
+
+@router.get('/results/{key}/export-progress/{token}')
+def export_progress(key:str,token:str,request:Request):
+    import json,re
+    if not re.fullmatch('[0-9a-f]{32}',token):core.fail('Invalid export progress reference.',400)
+    path,_=core.record(request.state.user,key,'results')
+    target=path/f'export-progress-{token}.json'
+    return json.loads(target.read_bytes()) if target.is_file() else {'done':0,'total':0,'phase':'starting'}
 
 @router.get('/results/{key}/highlighted-{side}.pdf')
 def highlighted(key:str,side:str,request:Request,status:str='differences'):

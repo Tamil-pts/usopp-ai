@@ -177,3 +177,9 @@ and Windows Docker Desktop/Linux-container profiles with version-aware builders.
 Both host launchers and the Studio print assets are included in the build bundle.
 The Linux image itself could not be built locally because Docker/WSL is absent.
 See [the complete verification and host instructions](DOCKER_WINDOWS_UBUNTU_20261103.md).
+
+
+Subsequent update: [consolidated inbox daily work and shared module navigation](INBOX_DAILY_WORK_AND_SHARED_NAV_20261116.md). My Work, Assigned Work and Approvals & Actions share one Daily Updates & Hours flow with mentions, project/task hours and existing billing review. The submenu redesign applies across all modules.
+
+
+MatchView update: [PLC PDF review, shared-scale previews and export progress](MATCHVIEW_PDF_REVIEW_REDESIGN_20261116.md). Optional symbol reference tables are separate from Ladder comparison; the workspace and exports use shared drawing dimensions.

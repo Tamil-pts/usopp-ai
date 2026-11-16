@@ -60,6 +60,8 @@ class WorkHub:
                   author_id INTEGER NOT NULL,body TEXT NOT NULL,work_date TEXT NOT NULL,minutes INTEGER NOT NULL DEFAULT 0,
                   file_ids TEXT NOT NULL,run_ids TEXT NOT NULL,created_at TEXT NOT NULL,reviewer_id INTEGER,
                   time_status TEXT NOT NULL DEFAULT 'none',review_comment TEXT NOT NULL DEFAULT '');
+                CREATE TABLE IF NOT EXISTS update_context(update_id TEXT PRIMARY KEY,work_status TEXT NOT NULL,request_kind TEXT NOT NULL,mention_ids TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS update_requests(notification_id TEXT PRIMARY KEY,update_id TEXT NOT NULL,resolved_at TEXT);
                 CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT,project_id TEXT NOT NULL,
                   item_id TEXT NOT NULL,actor_id INTEGER NOT NULL,event TEXT NOT NULL,detail TEXT NOT NULL,created_at TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS notifications(id TEXT PRIMARY KEY,recipient_id INTEGER NOT NULL,
@@ -479,15 +481,32 @@ class WorkHub:
                 if user['role']!='admin' and (record.get('user') or {}).get('id')!=user['id']:raise HTTPException(403,'You can share only your own saved results.')
                 valid_runs.append({'id':record['id'],'kind':record['kind'],'testId':record.get('testId',''),'projectName':record.get('projectName','')})
                 selected_runs.append(record)
+            work_status=payload.get('work_status','');request_kind=payload.get('request_kind','progress')
+            if work_status not in {'','not_started','in_progress','blocked','completed'} or request_kind not in {'progress','guidance','support','review_request'}:
+                raise HTTPException(400,'Choose a valid work status and update purpose.')
+            mentions=payload.get('mention_ids',[])
+            active={u['id'] for u in self.users() if u['active']}
+            if not isinstance(mentions,list) or len(mentions)>30 or any(type(v) is not int or v not in active for v in mentions):
+                raise HTTPException(400,'Mention up to 30 active approved users.')
+            mentions=sorted(set(mentions))
+            if request_kind!='progress' and not mentions:raise HTTPException(400,'Choose a person for your support or review request.')
             key_update=identity();now=timestamp()
             db.execute('INSERT INTO updates VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',(key_update,item['project_id'],key,user['id'],body,work_date,minutes,encode(files),encode(valid_runs),now,item['quality_id'],'submitted' if minutes else 'none',''))
+            db.execute('INSERT INTO update_context VALUES(?,?,?,?)',(key_update,work_status,request_kind,encode(mentions)))
             from .workhub_runs import link_saved
             for record in selected_runs:link_saved(db,user,item['project_id'],record,key_update)
             db.execute('UPDATE items SET updated_at=? WHERE id IN (?,?)',(now,key,item['project_id']))
             self.event(db,item,user,'daily_update',{'update_id':key_update,'minutes':minutes,'work_date':work_date})
-            recipients=[item['created_by']]
+            recipients=[item['created_by'],*mentions]
             recipients.extend(u['id'] for u in self.users() if re.search(r'@'+re.escape(u['username'])+r'(?!\w)',body,re.I))
+            if request_kind!='progress':recipients=[i for i in recipients if i not in mentions]
             self.notify(db,item,user['id'],recipients,'Work update: '+item['title'],body[:1000])
+            # Action requests are in-app records, independently resolvable by each recipient.
+            if request_kind!='progress':
+                for recipient in mentions:
+                    notification=identity()
+                    db.execute('INSERT INTO notifications VALUES(?,?,?,?,?,?,?,?,NULL)',(notification,recipient,user['id'],item['project_id'],item['id'],request_kind.replace('_',' ').title()+': '+item['title'],body[:3000],now))
+                    db.execute('INSERT INTO update_requests VALUES(?,?,NULL)',(notification,key_update))
             if minutes:self.notify(db,item,user['id'],[item['quality_id']],'Time entry awaiting review: '+item['title'],f'{minutes} minutes recorded for {work_date}.')
             return {'id':key_update,'status':'saved'}
     def time_review(self,user,key,payload):
