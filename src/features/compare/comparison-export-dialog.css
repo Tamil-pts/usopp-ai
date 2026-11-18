@@ -9,3 +9,8 @@ fieldset.comparisonExportBody{border:0;padding:0;margin:0;min-width:0}
 .comparisonExportOptions fieldset>label:has(select){display:grid;gap:7px}.comparisonExportOptions details summary{cursor:pointer;font-size:11px;color:var(--muted);padding:5px 0}.comparisonExportOptions details label{margin-top:9px}
 
 .comparisonFieldGrid{align-items:start}.comparisonFieldGrid .comparisonFullRow{grid-column:1/-1}.comparisonExportDialog{scroll-padding-top:145px;scroll-padding-bottom:90px}.comparisonExportDialog :is(input,textarea,select){scroll-margin-top:145px;scroll-margin-bottom:100px}
+
+.comparisonStatusPresets{display:grid;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.comparisonExportOptions .comparisonStatusPresets label{font-weight:600}
+.comparisonStatusCount{margin-inline-start:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+.comparisonExportStatuses small{margin-top:0}

@@ -7,7 +7,7 @@ REGISTRY = {
         'MUL_I', 'MUL_DI', 'MUL_R', 'DIV_I', 'DIV_DI', 'DIV_R')},
     **{name: ('EN', 'ENO', 'IN', 'OUT') for name in ('MOV_B', 'MOV_W', 'MOV_DW')},
 }
-LITERAL = re.compile(r"(?:[A-Za-z_%][\w%.]*(?:\[\d+\])*|[+-]?\d+(?:\.\d+)?|(?:16|2)#[0-9A-Fa-f]+)\Z")
+LITERAL = re.compile(r"(?:[A-Za-z_%][\w%.]*(?:\[\d+\])*|[+-]?\d+(?:\.\d+)?|(?:16|2)#[0-9A-Fa-f]+|'[^']*')\Z")
 
 
 def recognize(rectangles, segments, words, used, used_words, symbols, unknown):
@@ -17,6 +17,8 @@ def recognize(rectangles, segments, words, used, used_words, symbols, unknown):
     or ambiguous boxes stay opaque and block complete coverage.
     """
     for box, border in rectangles:
+        if border & used:
+            continue
         x0, y0, x1, y1 = box
         inside = [(i, w) for i, w in enumerate(words)
                   if x0-.2 <= w['box'][0] and w['box'][2] <= x1+.2 and
@@ -25,9 +27,12 @@ def recognize(rectangles, segments, words, used, used_words, symbols, unknown):
         if len(titles) != 1:
             labels = ' '.join(w['text'] for _, w in inside)
             unknown.append('Opaque instruction box: '+(labels[:100] or 'unlabelled')+'.')
+            if inside:
+                symbols.append(dict(kind='opaque',operand=inside[0][1]['text'],box=list(box),ports=[],port_names=[]))
             continue
         title_id, title = titles[0]; contract = REGISTRY[title['text']]
         pins = {}; bindings = {}; consumed = {title_id}; ports = []; names = []
+        binding_boxes = {}
         valid = True
         for pin in contract:
             matches = [(i, w) for i, w in inside if w['text'] == pin]
@@ -39,7 +44,7 @@ def recognize(rectangles, segments, words, used, used_words, symbols, unknown):
             cy = (word['box'][1]+word['box'][3])/2
             stubs = [(j, s) for j, s in enumerate(segments) if j not in used and j not in border and
                      abs(s[0][1]-s[1][1]) < .01 and abs(s[0][1]-cy) <= 4 and
-                     any(abs(p[0]-edge) <= .1 and (s[1-k][0]-edge)*(1 if right else -1) > .1
+                     any(abs(p[0]-edge) <= .55 and (s[1-k][0]-edge)*(1 if right else -1) > .55
                          for k, p in enumerate(s))]
             if len(stubs) > 1: valid = False; break
             py = stubs[0][1][0][1] if stubs else cy
@@ -48,10 +53,17 @@ def recognize(rectangles, segments, words, used, used_words, symbols, unknown):
                         (0 <= w['box'][0]-x1 <= 65 if right else 0 <= x0-w['box'][2] <= 65)]
             if pin in {'EN', 'ENO'}:
                 if not stubs or operands: valid = False; break
-                ports.append((edge, py)); names.append(pin)
+                _,stub=stubs[0]
+                # Retain the observed wire endpoint. Small gaps on the printed
+                # box edge or between conductors remain explicit open checks.
+                point=min(stub,key=lambda p:abs(p[0]-edge))
+                if abs(point[0]-edge)>.05:
+                    unknown.append('A printed enable connection stops short of its instruction box.')
+                ports.append(point); names.append(pin)
             else:
                 if len(operands) != 1: valid = False; break
                 j, value = operands[0]; consumed.add(j); bindings[pin] = value['text']
+                binding_boxes[pin] = value['box']
                 # These short pin stubs end at printed operands, not hidden nets.
                 if stubs:
                     stub_id, stub = stubs[0]
@@ -62,5 +74,5 @@ def recognize(rectangles, segments, words, used, used_words, symbols, unknown):
             continue
         used.update(border); used.update(pins.values()); used_words.update(consumed)
         symbols.append(dict(kind='FB:'+title['text'], operand=title['text'], box=list(box),
-                            ports=ports, port_names=names, bindings=bindings,
+                            ports=ports, port_names=names, bindings=bindings, binding_boxes=binding_boxes,
                             contract='Printed pin contract; execution semantics not evaluated'))

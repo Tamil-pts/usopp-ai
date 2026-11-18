@@ -9,12 +9,14 @@ from math import hypot
 
 TOL = 1.0  # PDF points; terminal matching only, never an image-noise threshold.
 TAG = re.compile(r'[A-Za-z_%][\w%]*(?:\.[\w]+)*(?:\[\d+\])*\Z')
+COMPARATOR = re.compile(r'(?:==|<>|!=|>=|<=|>|<)(?:B|I|D|R)\Z')
+NUMBER = re.compile(r'[+-]?\d+(?:\.\d+)?\Z')
 
 
 def recognize(page, region, lines, masks):
     import pdfplumber
     px,py=page.bbox[:2];x0,y0,x1,y1=region
-    unknown=[];segments=[];curves=[];rectangles=[]
+    unknown=[];segments=[];curves=[];rectangles=[];clipped=set()
     def masked(box):
         return any(box[0]<m[2] and box[2]>m[0] and box[1]<m[3] and box[3]>m[1] for m in masks)
     chars=[c for line in lines for c in line.get('chars',[]) if not masked([c['x0']-px,c['top']-py,c['x1']-px,c['bottom']-py])]
@@ -32,10 +34,13 @@ def recognize(page, region, lines, masks):
                 a,b=pts
                 # Only axis-aligned lines may be clipped at page/network edges.
                 if a[0]==b[0] or a[1]==b[1]:
+                    if box[0]<x0 or box[1]<y0 or box[2]>x1 or box[3]>y1:
+                        clipped.add(len(segments))
                     a=tuple(max(lo,min(hi,v)) for v,lo,hi in zip(a,(x0,y0),(x1,y1)))
                     b=tuple(max(lo,min(hi,v)) for v,lo,hi in zip(b,(x0,y0),(x1,y1)))
                 elif box[1]<y0 or box[3]>y1:unknown.append('Clipped diagonal.');continue
-                segments.append((a,b))
+                if a != b:segments.append((a,b))
+                else:clipped.discard(len(segments))
             elif kind=='rects' and y0<=box[1] and box[3]<=y1:
                 a,b,c,d=(box[0],box[1]),(box[2],box[1]),(box[2],box[3]),(box[0],box[3])
                 border=set(range(len(segments),len(segments)+4))
@@ -65,7 +70,7 @@ def recognize(page, region, lines, masks):
         i,w=candidates[0]
         if i in used_words:return None
         used_words.add(i);return w['text']
-    # Some PDF printers emit boxes as four independent line paths.
+    # Some printers split a vertical side at each pin height.
     seen={tuple(round(v,2) for v in box) for box,_ in rectangles}
     vertical_edges={}
     for k,v in enumerate(segments):
@@ -77,11 +82,21 @@ def recognize(page, region, lines, masks):
         for j,t in enumerate(segments):
             bottom=t[0][1]
             if axis(t)!='h' or bottom-top<20 or abs(min(p[0] for p in t)-lx)>.05 or abs(max(p[0] for p in t)-rx)>.05:continue
-            sides=[k for k,v in vertical_edges.get(round(lx,2),[])+vertical_edges.get(round(rx,2),[]) if
-                   abs(min(p[1] for p in v)-top)<.05 and abs(max(p[1] for p in v)-bottom)<.05]
-            box=[lx,top,rx,bottom];key=tuple(round(v,2) for v in box)
-            if len(sides)==2 and key not in seen:
-                rectangles.append((box,{i,j,*sides}));seen.add(key)
+            sides=[]
+            for x in (lx,rx):
+                runs=sorted((min(p[1] for p in v),max(p[1] for p in v),k)
+                    for k,v in vertical_edges.get(round(x,2),[])
+                    if min(p[1] for p in v)>=top-.05 and max(p[1] for p in v)<=bottom+.05)
+                end=top
+                for begin,finish,k in runs:
+                    if begin>end+.05:break
+                    sides.append(k)
+                    end=max(end,finish)
+                if end<bottom-.05:break
+            else:
+                box=[lx,top,rx,bottom];key=tuple(round(v,2) for v in box)
+                if key not in seen and not any(i in border or j in border for _,border in rectangles):
+                    rectangles.append((box,{i,j,*sides}));seen.add(key)
     from backend.core.plc_pdf_instructions import recognize as recognize_instructions
     recognize_instructions(rectangles,segments,words,used,used_words,symbols,unknown)
     vertical=[(i,s) for i,s in enumerate(segments) if axis(s)=='v' and 4<=abs(s[1][1]-s[0][1])<=40]
@@ -105,9 +120,22 @@ def recognize(page, region, lines, masks):
                  abs(s[1][1]-s[0][1])>=height*.4 and abs(s[1][0]-s[0][0])>1]
         slash_words=[k for k,w in enumerate(words) if w['text']=='/' and
                      lx<=w['box'][0]<=rx and top-TOL<=w['box'][1]<=bottom]
+        operators=[(k,w) for k,w in enumerate(words) if COMPARATOR.fullmatch(w['text'])
+                   and lx-TOL<=w['box'][0]<=rx and top-TOL<=w['box'][1]<=bottom]
+        constants=[(k,w) for k,w in enumerate(words) if NUMBER.fullmatch(w['text'])
+                   and lx<=w['box'][0]<=rx and -.5<=w['box'][1]-bottom<=16]
         if len(slashes)+len(slash_words)>1:unknown.append('Ambiguous contact mark.')
         used.update((i,j,*slashes));used_words.update(slash_words)
-        symbols.append(dict(kind='NC' if slashes or slash_words else 'NO',operand=tag,box=box,ports=[(lx,cy),(rx,cy)]))
+        contact=dict(kind='NC' if slashes or slash_words else 'NO',operand=tag,box=box,ports=[(lx,cy),(rx,cy)])
+        if operators:
+            if len(operators)==len(constants)==1 and not (slashes or slash_words):
+                (op_index,operator),(value_index,value)=operators[0],constants[0]
+                used_words.update((op_index,value_index))
+                contact.update(kind='compare:'+operator['text'],bindings={'rhs':value['text']},
+                               binding_boxes={'rhs':value['box']})
+            else:
+                unknown.append('Comparator operator or operand is ambiguous.')
+        symbols.append(contact)
     # Two outward-facing arcs, with an incoming wire and an operand above,
     # are the supported ordinary coil profile. No timer/FB semantics are guessed.
     def arc(curve,side):
@@ -125,7 +153,15 @@ def recognize(page, region, lines, masks):
         j,right=candidates[0];box=[lb[0],lb[1],right['box'][2],lb[3]];tag=operand(box)
         if not tag:continue
         used_curves.update((i,j))
-        symbols.append(dict(kind='coil',operand=tag,box=box,ports=[(box[0],cy),(box[2],cy)]))
+        marks=[(k,w) for k,w in enumerate(words) if w['text'] in {'S','R'} and
+               box[0]<=w['box'][0]<=box[2] and box[1]-TOL<=w['box'][1]<=box[3]]
+        counts=[k for k,w in enumerate(words) if w['text']=='1' and box[0]<=w['box'][0]<=box[2]
+                and -.5<=w['box'][1]-box[3]<=16]
+        coil_kind='coil'
+        if len(marks)==len(counts)==1:
+            coil_kind='coil:'+marks[0][1]['text']
+            used_words.update((marks[0][0],counts[0]))
+        symbols.append(dict(kind=coil_kind,operand=tag,box=box,ports=[(box[0],cy),(box[2],cy)]))
     if len(used_curves)!=len(curves):unknown.append('Unrecognized curve or symbol.')
     if len(used_words)!=len(words):unknown.append('Unassigned text, instruction or operand.')
     if page.images:unknown.append('Page contains raster content.')
@@ -158,10 +194,13 @@ def recognize(page, region, lines, masks):
             if len(attached_roots)>1:unknown.append('Ambiguous terminal attachment.')
             if attached_roots:
                 net=next(iter(attached_roots));nets.setdefault(net,[]).append((symbol['instance_id'],port))
-            elif not(symbol['kind']=='coil' and port=='out'):unknown.append('Unconnected symbol terminal.')
+            elif not(symbol['kind'].startswith('coil') and port=='out'):unknown.append('Unconnected symbol terminal.')
     assigned=set(nets)
     if any(root(i) not in assigned for i in range(len(wires))):unknown.append('Unassigned wire component.')
     min_x=min((p[0] for w in wires for p in w),default=0)
+    if any(not (axis(segments[i])=='v' and abs(segments[i][0][0]-min_x)<.05
+                and abs(segments[i][1][1]-segments[i][0][1])>40) for i in clipped):
+        unknown.append('A non-rail conductor crosses the extraction boundary.')
     ports=[p for symbol in symbols for p in symbol['ports']]
     for i,w in enumerate(wires):
         rail=axis(w)=='v' and abs(w[0][0]-min_x)<.05 and abs(w[1][1]-w[0][1])>40
@@ -174,16 +213,42 @@ def recognize(page, region, lines, masks):
     roots=sorted(nets,key=lambda r:sorted(nets[r]))
     power={root(i) for i,w in enumerate(wires) if axis(w)=='v' and abs(w[0][0]-min_x)<.05 and abs(w[1][1]-w[0][1])>40}
     if len(power)!=1:unknown.append('A unique continuous power rail was not established.')
-    return dict(complete=not unknown,symbols=symbols,nets=[sorted(nets[r]) for r in roots],
+    return dict(complete=not unknown, empty=not (words or segments or curves) and
+                set(unknown)<= {'No supported contact/coil network recognized.',
+                                'A unique continuous power rail was not established.'},
+                rail_x=min_x if len(power)==1 else None,symbols=symbols,nets=[sorted(nets[r]) for r in roots],
                 power_nets=[i for i,r in enumerate(roots) if r in power],
                 open_checks=sorted(set(unknown)),tolerance_points=TOL)
 
 
+def continuous_graph(parts):
+    """Join proven page fragments through the common supply rail only."""
+    if not parts or not all(p['complete'] for p in parts):
+        return None
+    if len(parts)==1:
+        return parts[0]
+    if (sum(len(p['symbols']) for p in parts)>200
+            or any(len(p['power_nets'])!=1 for p in parts)
+            or any(b['page']!=a['page']+1 or abs(a['rail_x']-b['rail_x'])>.05 for a,b in zip(parts,parts[1:]))):
+        return None
+    symbols,nets,supply=[],[],[]
+    for part in parts:
+        prefix=f"p{part['page']}-"
+        symbols.extend(dict(s,instance_id=prefix+s['instance_id'],page=part['page']) for s in part['symbols'])
+        for index,net in enumerate(part['nets']):
+            terminals=[(prefix+instance,port) for instance,port in net]
+            if index in part['power_nets']:supply.extend(terminals)
+            else:nets.append(terminals)
+    return dict(complete=True,symbols=symbols,nets=[supply,*nets],power_nets=[0])
+
+
 def compare(left,right):
-    a=left.get('ladder_parts',[]);b=right.get('ladder_parts',[])
+    from backend.core.plc_pdf_engineering import normalize_operands
+    a,b=normalize_operands(left),normalize_operands(right)
     covered_a=bool(a and all(p['complete'] for p in a))
     covered_b=bool(b and all(p['complete'] for p in b))
-    supported=covered_a and covered_b and len(a)==len(b)
+    ga,gb=continuous_graph(a),continuous_graph(b)
+    supported=ga is not None and gb is not None
     symbols=lambda parts:sorted((s['operand'],s['kind']) for p in parts for s in p['symbols'])
     sa,sb=symbols(a),symbols(b)
     changes=[]
@@ -194,15 +259,29 @@ def compare(left,right):
         for tag in sorted(aa.keys()|bb.keys()):
             if aa.get(tag)!=bb.get(tag):changes.append(dict(operand=tag,before=aa.get(tag),after=bb.get(tag)))
     from backend.core import plc_engineering_graph as engineering
-    matches=[engineering.match(x,y) for x,y in zip(a,b)] if supported else []
+    matches=[engineering.match(ga,gb)] if supported else []
     if any(m['exhausted'] for m in matches):supported=False
     same=bool(supported and all(m['same'] for m in matches))
     checks=sorted(set(c for p in a+b for c in p['open_checks']))
     if any(m['exhausted'] for m in matches):checks.append('Instance matching search bound exceeded; review repeated elements.')
-    # Page-local incidence does not prove a cross-page terminal connection.
-    if len(a)>1 or len(b)>1:
-        supported=False;same=False;checks.append('Multi-page terminal continuity requires review; source segments are retained.')
-    functional=engineering.functional(a[0],b[0]) if supported and len(a)==len(b)==1 else dict(supported=False)
+    if (len(a)>1 and ga is None) or (len(b)>1 and gb is None):
+        checks.append('Cross-page conductor continuity requires review; source segments are retained.')
+    functional=engineering.functional(ga,gb) if supported and not same else dict(supported=False)
+    aliases=[]
+    mapping=matches[0]['mapping'] if same else {}
+    if mapping:
+        target={s['instance_id']:s for s in gb['symbols']}
+        for source in ga['symbols']:
+            other=target[mapping[source['instance_id']]]
+            for pin,before,after in [('operand',source['operand'],other['operand']),
+                *((pin,value,other['bindings'][pin]) for pin,value in source.get('bindings',{}).items())]:
+                if before!=after:
+                    aliases.append(dict(pin=pin,before=before,after=after))
+    def instruction_order(parts):
+        return [(s['kind'],s['canonical_operand'],s['canonical_bindings'])
+                for part in parts for s in sorted(part['symbols'],key=lambda item:(item['box'][1],item['box'][0]))
+                if s['kind'].startswith(('FB:','coil:'))]
+    printed_order_changed=same and instruction_order(a)!=instruction_order(b)
     return dict(supported=supported,same=same,changes=changes,
                 base_complete=covered_a,compared_complete=covered_b,
                 # Partial candidates on both sides cannot overrule the existing
@@ -210,10 +289,10 @@ def compare(left,right):
                 # network must not be certified by raster agreement alone.
                 review_required=covered_a!=covered_b,
                 connections_changed=supported and not same,
-                instance_matches=matches,functional=functional,
+                instance_matches=matches,functional=functional,alias_changes=aliases,printed_order_changed=printed_order_changed,
                 base_symbols=sa,compared_symbols=sb,
                 base_elements=[dict(page=p['page'],**s) for p in a for s in p['symbols']],
                 compared_elements=[dict(page=p['page'],**s) for p in b for s in p['symbols']],
-                base_nets=[dict(page=p['page'],nets=p['nets']) for p in a],
-                compared_nets=[dict(page=p['page'],nets=p['nets']) for p in b],
+                base_nets=[dict(page=p['page'],nets=p['nets'],power_nets=p.get('power_nets',[])) for p in a],
+                compared_nets=[dict(page=p['page'],nets=p['nets'],power_nets=p.get('power_nets',[])) for p in b],
                 open_checks=checks)

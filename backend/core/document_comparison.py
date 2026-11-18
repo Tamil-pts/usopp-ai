@@ -361,10 +361,11 @@ def run(user,payload):
         if all(info['extension']=='.pdf' for info in infos):
             if options.get('plc_networks'):
                 from backend.core.plc_pdf_comparison import compare
+                rows,labels,notices,pdf=compare(files,options,folder(user)/'plc-extraction')
             else:
                 from backend.core.document_pdf_comparison import compare
-            options.setdefault('ignore_page_numbers',True)
-            rows,labels,notices,pdf=compare(files,options)
+                options.setdefault('ignore_page_numbers',True)
+                rows,labels,notices,pdf=compare(files,options)
         else:
             rows,labels,notices=table_diff(files,infos,configs,options) if infos[0]['kind']=='table' else text_diff(files,options)
     except HTTPException:raise
@@ -380,9 +381,34 @@ def run(user,payload):
     return page(user,key)
 
 
+PLC_STATUSES = ('modified', 'added', 'removed', 'unchanged', 'unresolved')
+PLC_DIFFERENCES = frozenset(PLC_STATUSES) - {'unchanged'}
+
+
+def plc_status_filter(status):
+    """Validate and canonicalize a PLC report selection before using it in a cache key."""
+    if isinstance(status, str):
+        if status in ('all', 'differences'):
+            return status
+        if len(status) <= len(','.join(PLC_STATUSES)):
+            selected = set(status.split(','))
+            if selected.issubset(PLC_STATUSES):
+                if selected == set(PLC_STATUSES):
+                    return 'all'
+                if selected == PLC_DIFFERENCES:
+                    return 'differences'
+                return ','.join(value for value in PLC_STATUSES if value in selected)
+    fail('Choose one or more valid comparison statuses.', 400)
+
+
 def filtered(result,status):
+    if result.get('pdf',{}).get('mode')=='plc_networks':
+        status=plc_status_filter(status)
+        if status=='all':return result['rows']
+        selected=PLC_DIFFERENCES if status=='differences' else set(status.split(','))
+        return [row for row in result['rows'] if row['status'] in selected]
     if not isinstance(status,str) or status not in {'all','differences','added','removed','modified','unchanged','unresolved'}:fail('Choose a valid difference filter.',400)
-    if result['kind']=='text' and result.get('pdf',{}).get('mode')!='plc_networks' and status=='differences':
+    if result['kind']=='text' and status=='differences':
         positions=set()
         for i,row in enumerate(result['rows']):
             if row['status']!='unchanged':positions.update(range(max(0,i-5),min(len(result['rows']),i+6)))
@@ -478,11 +504,19 @@ def export_csv(user,key,status='differences',column_filters=None,sort=None):
     if rules or sorting:
         writer.writerow(['Column filters',json.dumps(rules,ensure_ascii=False)]);writer.writerow(['Sort',json.dumps(sorting,ensure_ascii=False)])
     for note in result['notices']:writer.writerow(['Scope',safe(note)])
-    writer.writerow(['Status','Row key','Column pair','Base source','Base value','Base type','Compared source','Compared value','Compared type'])
+    plc=result.get('pdf',{}).get('mode')=='plc_networks'
+    header=['Status','Row key','Column pair','Base source','Base value','Base type','Compared source','Compared value','Compared type']
+    writer.writerow(header+(['Engineering finding','Source evidence'] if plc else []))
     for row in rows:
         if result['kind']=='table':
             for c in row['cells']:
                 label=result['columns'][c['column']];a=c['base'] or {};b=c['compared'] or {}
                 writer.writerow([c['status'],safe(row['key']),safe(label['base']['name']+' -> '+label['compared']['name']),safe(a.get('ref','')),safe(a.get('value','')),a.get('type',''),safe(b.get('ref','')),safe(b.get('value','')),b.get('type','')])
-        else:writer.writerow([row['status'],'','Text',safe(row['base_ref']),safe(row['base']),'text',safe(row['compared_ref']),safe(row['compared']),'text'])
+        else:
+            values=[row['status'],'','Text',safe(row['base_ref']),safe(row['base']),'text',safe(row['compared_ref']),safe(row['compared']),'text']
+            if plc:
+                from backend.core.plc_pdf_engineering import describe
+                assessment=row.get('assessment') or {}
+                values.extend((assessment.get('classification',''),safe(describe(row)) if assessment else ''))
+            writer.writerow(values)
     return ('\ufeff'+out.getvalue()).encode('utf8')

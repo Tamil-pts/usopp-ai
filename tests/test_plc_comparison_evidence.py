@@ -17,18 +17,13 @@ def run(a, b, **options):
         return plc.compare(files, options)[0]
 
 
-@pytest.mark.parametrize('pixels',[1,2,7])
-def test_source_evidence_prevents_raster_specks_deciding_modified(pixels):
-    original=plc.pixel_diff
-    def noisy(*args,**kwargs):
-        metric,image=original(*args,**kwargs)
-        metric['changed_pixels']=pixels
-        return metric,image
+def test_identical_source_fingerprints_skip_raster_comparison():
     content=program([[(1,'SM0.0 MOV_W MW30')]])
-    with patch.object(plc,'pixel_diff',side_effect=noisy):rows=run(content,content)
+    with patch.object(plc,'pixel_diff') as raster:
+        rows=run(content,content)
+    raster.assert_not_called()
     assert all(r['status']=='unchanged' for r in rows)
     assert all(r['assessment']['source_corroborated'] for r in rows)
-    assert all(r['assessment']['raw_changed_pixels']==pixels for r in rows)
 
 
 @pytest.mark.parametrize('before,after',[
@@ -141,3 +136,20 @@ def test_plc_page_limit_is_bounded():
     with patch.object(plc.evidence,'MAX_PAGES',1):
         with pytest.raises(HTTPException,match='2,000 pages'):
             run(program([[(1,'A')],[(2,'B')]]),program([[(1,'A')]]))
+
+
+def test_extraction_cache_respects_source_profile_and_account(tmp_path):
+    files=[tmp_path/name for name in ('a.pdf','b.pdf')]
+    for file,contents in zip(files,(program([[(1,'M1')]]),program([[(1,'M2')]]))):
+        file.write_bytes(contents)
+    cache=tmp_path/'first-account'
+    original,*_,info=plc.compare(files,{},cache)
+    assert info['extraction_cache_hits']==0
+    with patch.object(plc,'extract',wraps=plc.extract) as extraction:
+        repeated,*_,info=plc.compare(files,{},cache)
+        assert info['extraction_cache_hits']==2 and extraction.call_count==0
+        assert [row['assessment'] for row in original]==[row['assessment'] for row in repeated]
+        assert plc.compare(files,{'compare_comments':False},cache)[-1]['extraction_cache_hits']==0
+        assert plc.compare(files,{},tmp_path/'second-account')[-1]['extraction_cache_hits']==0
+        files[-1].write_bytes(program([[(1,'M3')]]))
+        assert plc.compare(files,{},cache)[-1]['extraction_cache_hits']==1

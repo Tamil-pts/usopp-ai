@@ -260,8 +260,7 @@ def annotated_pdf(user, key, side, status='differences'):
     if side not in files:
         core.fail('Choose Base or Compared PDF.', 400)
     if result.get('pdf',{}).get('mode')=='plc_networks':
-        if status not in {'all','differences','modified','added','removed','unresolved'}:
-            core.fail('Choose All, Differences, Modified, Added, Removed or Needs review.',400)
+        status=core.plc_status_filter(status)
         rows=core.filtered(result,status)
     else:
         rows=result['rows']
@@ -278,6 +277,13 @@ def annotated_pdf(user, key, side, status='differences'):
             continue
         locations = ([{'page':segment['page'],'highlights':[segment['bbox']]} for segment in row[side+'_segments']]
                      if row.get(side+'_segments') else [location])
+        binding_changes=(row.get('structure') or {}).get('binding_changes',[])
+        if binding_changes:
+            locations=[{'page':change[side+'_page'],'highlights':[change[side+'_bbox']]} for change in binding_changes]
+        summary=f"Change {row['id']} - {row['status']}"
+        if binding_changes:
+            from backend.core.plc_pdf_engineering import describe
+            summary+='\n'+describe(row)
         for location in locations:
           page = writer.pages[location['page'] - 1]
           width, height = float(page.cropbox.width), float(page.cropbox.height)
@@ -292,7 +298,7 @@ def annotated_pdf(user, key, side, status='differences'):
                 FloatObject(v) for v in (x0, y1, x1, y1, x0, y0, x1, y0)]),
                 highlight_color=COLORS[row['status']].lstrip('#'), printing=True)
             annotation[NameObject('/Contents')] = TextStringObject(
-                f"Change {row['id']} - {row['status']}\nBefore: {row['base']}\nAfter: {row['compared']}")
+                f"{summary}\nBefore: {row['base']}\nAfter: {row['compared']}")
             writer.add_annotation(location['page'] - 1, annotation)
     writer.add_metadata({'/Title': f"{result[side]['name']} - highlighted text comparison", '/Subject': key})
     output = io.BytesIO(); writer.write(output); data = output.getvalue()

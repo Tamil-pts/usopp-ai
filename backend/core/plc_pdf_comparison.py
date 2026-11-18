@@ -4,6 +4,7 @@ from __future__ import annotations
 import io
 import re
 from collections import Counter, OrderedDict
+from bisect import bisect_left
 from difflib import SequenceMatcher
 from itertools import zip_longest
 
@@ -12,6 +13,7 @@ from fastapi import HTTPException
 from backend.core import document_pdf_comparison as pdf
 from backend.core import plc_comparison_evidence as evidence
 from backend.core import plc_ladder_structure as ladder
+from backend.core import plc_pdf_engineering as engineering
 
 RUNNING = re.compile(r'^.+?\s+/\s+(.+?)(?:\s+\(((?:OB|SBR|FB|FC|DB|INT)\s*\d+)\))?\s*$', re.I)
 NETWORK = re.compile(r'^Network\s+(\d+)\b(.*)$', re.I)
@@ -44,7 +46,8 @@ def extract(path, ignore_page_numbers=True, options=None):
             name = match[1].strip() if match else re.sub(r'^Block\s*:\s*', '', title['text'], flags=re.I).strip() if title else None
             address = (match[2] or '').upper().replace(' ', '') if match else ''
             identity = name.casefold() if name else None
-            if identity and (current is None or current['key'] != identity or title):
+            if identity and (current is None or current['key'] != identity or title or
+                             address and current['address'] and address != current['address']):
                 current = dict(key=identity, name=name, address=address, networks=[], metadata=None)
                 if title and match and re.sub(r'^Block\s*:\s*','',title['text'],flags=re.I).strip().casefold()!=identity:
                     current['ambiguous']=True
@@ -106,20 +109,32 @@ def extract(path, ignore_page_numbers=True, options=None):
                 # Full width preserves parallel branches and wiring with no nearby text.
                 unit['segments'].append(dict(page=number, bbox=[0, start, width, end], masks=[box for box in masks if box[1]<end and box[3]>start]))
                 region=[line for line in body if line is not excluded and start <= line['bbox'][1] < end]
+                drawing_end=end
+                drawing_lines=region
                 references=next((line for line in region if re.fullmatch(r'(?:Symbol|Address|Comment)(?:\s+(?:Symbol|Address|Comment)){2}',line['text'].strip(),re.I) and all(re.search(r'\b'+word+r'\b',line['text'],re.I) for word in ('Symbol','Address','Comment'))),None)
                 if references and unit.get('number') is not None:
                     table_start=references['bbox'][1]-2
-                    unit.setdefault('references',[]).append(dict(page=number,text='\n'.join(line['text'] for line in region if line['bbox'][1]>=table_start)))
+                    table=[line for line in region if line['bbox'][1]>=table_start]
+                    unit.setdefault('references',[]).append(dict(page=number,text='\n'.join(line['text'] for line in table)))
+                    unit.setdefault('symbol_references',[]).extend(engineering.symbol_references(references,table[1:],number))
+                    drawing_end=max(start,table_start)
+                    drawing_lines=[line for line in region if line['bbox'][1]<table_start]
                     if not options.get('compare_references',True):
-                        unit['segments'][-1]['bbox'][3]=max(start,table_start)
-                        region=[line for line in region if line['bbox'][1]<table_start]
+                        unit['segments'][-1]['bbox'][3]=drawing_end
+                        region=drawing_lines
                 unit.setdefault('source_evidence', []).append(evidence.fingerprint(page, unit['segments'][-1]['bbox'], region, masks))
                 if unit.get('number') is not None:
-                    try:part=ladder.recognize(page,unit['segments'][-1]['bbox'],region,masks)
+                    drawing_box=[0,start,width,drawing_end]
+                    try:part=ladder.recognize(page,drawing_box,drawing_lines,masks)
                     except (KeyError,TypeError,ValueError,OverflowError):
                         part=dict(complete=False,symbols=[],nets=[],open_checks=['Unsupported structural drawing format; source/raster comparison retained.'])
-                    part['page']=number
+                    if part.get('empty') and not region and unit.get('ladder_parts'):
+                        unit['segments'].pop()
+                        unit['source_evidence'].pop()
+                        return
+                    part.update(page=number,bbox=drawing_box)
                     unit.setdefault('ladder_parts',[]).append(part)
+                    unit['drawing_text']=unit.get('drawing_text',[])+[line['text'] for line in drawing_lines]
                 content = [line['text'] for line in region]
                 text = '\n'.join(content)
                 if not content and page.images:unit['unknown']=True
@@ -184,21 +199,26 @@ class Renderer:
             if len(self.cache) > 3: self.cache.popitem(last=False)[1].close()
         self.cache.move_to_end(number)
         return self.cache[number]
-    def network(self, unit):
+    def network(self, unit, highlights=()):
         from PIL import Image, ImageChops
         chunks = []
         try:
             for segment in unit['segments']:
                 image = self.page(segment['page']); meta = self.pages[segment['page']-1]; box = segment['bbox']
-                if segment.get('masks'):
+                boxes=[box for page,box in highlights if page==segment['page']]
+                if segment.get('masks') or boxes:
                     from PIL import ImageDraw
                     image=image.copy();draw=ImageDraw.Draw(image)
-                    for mask in segment['masks']:
+                    for mask in segment.get('masks',[]):
                         draw.rectangle((int(mask[0]*image.width/meta['width'])-1,int(mask[1]*image.height/meta['height'])-1,
                             int(mask[2]*image.width/meta['width'])+1,int(mask[3]*image.height/meta['height'])+1),fill='white')
+                    mark=ImageDraw.Draw(image,'RGBA')
+                    for x0,y0,x1,y1 in boxes:
+                        mark.rectangle((int(x0*image.width/meta['width'])-2,int(y0*image.height/meta['height'])-2,
+                            int(x1*image.width/meta['width'])+2,int(y1*image.height/meta['height'])+2),fill=(245,181,35,75))
                 crop = image.crop((round(box[0]*image.width/meta['width']), round(box[1]*image.height/meta['height']),
                                    round(box[2]*image.width/meta['width']), round(box[3]*image.height/meta['height'])))
-                if segment.get('masks'):image.close()
+                if segment.get('masks') or boxes:image.close()
                 ink = ImageChops.difference(crop.convert('L'), Image.new('L', crop.size, 255)).point(lambda value:255 if value>70 else 0)
                 bounds = ink.getbbox(); ink.close()
                 if bounds:
@@ -236,6 +256,8 @@ def registered_pixels(a, b):
     """Rigid network registration only: never warp branches or individual operands."""
     import numpy as np
     from PIL import Image, ImageChops, ImageFilter
+    if a.size==b.size and a.tobytes()==b.tobytes():
+        return [a.copy(),b.copy()],[Image.new('L',a.size),Image.new('L',a.size)],[(0,0),(0,0)],dict(x=0,y=0,confidence=1.0)
     scale=min(1., 1024/max(a.size+b.size))
     arrays=[]
     for image in (a,b):
@@ -278,26 +300,52 @@ def pixel_diff(a, b, aligned=False):
 
 
 def aligned_networks(a, b):
-    """Exact text anchors prevent one inserted network shifting all later networks."""
-    keys=lambda units:[unit['text']+'\n'+unit['title'] for unit in units]
-    for tag,i,j,k,l in SequenceMatcher(None,keys(a),keys(b),autojunk=False).get_opcodes():
-        if tag=='equal': yield from zip(a[i:j],b[k:l]);continue
-        # Exact network numbers are a second anchor when an entire text run changed.
-        # Never pair network 1 with an unrelated network 20 merely by list position.
-        unmatched_a,unmatched_b=a[i:j],b[k:l]
+    """Use unique content anchors and network IDs inside the intervening spans."""
+    keys=[list(map(engineering.network_key,units)) for units in (a,b)]
+    counts=[Counter(side) for side in keys]
+    indexes={key:i for i,key in enumerate(keys[1]) if key and counts[1][key]==1}
+    candidates=[(i,indexes[key]) for i,key in enumerate(keys[0]) if counts[0][key]==1 and key in indexes]
+    # Longest increasing subsequence keeps stable source-order anchors, even
+    # when some signatures repeat hundreds of times or a network is relocated.
+    tails,tail_indices,previous=[],[],[]
+    for index,(_,right) in enumerate(candidates):
+        slot=bisect_left(tails,right)
+        previous.append(tail_indices[slot-1] if slot else -1)
+        if slot==len(tails):
+            tails.append(right)
+            tail_indices.append(index)
+        else:
+            tails[slot]=right
+            tail_indices[slot]=index
+    anchors=[]
+    index=tail_indices[-1] if tail_indices else -1
+    while index!=-1:
+        anchors.append(candidates[index])
+        index=previous[index]
+    ordered=set(anchors)
+    moved={}
+    for i,k in candidates:
+        if (i,k) not in ordered and (evidence.exact_match(a[i],b[k]) or ladder.compare(a[i],b[k])['same']):
+            moved[i]=k
+    moved_targets=set(moved.values())
+    i=k=0
+    for j,l in [*reversed(anchors),(len(a),len(b))]:
+        unmatched_b=[b[index] for index in range(k,l) if index not in moved_targets]
         right_numbers=Counter(unit['number'] for unit in unmatched_b)
         lookup={unit['number']:unit for unit in unmatched_b if right_numbers[unit['number']]==1}
-        used=set()
-        for left in unmatched_a:
-            right=lookup.get(left['number'])
-            if right:used.add(id(right))
-            yield left,right
+        for index in range(i,j):
+            left=a[index]
+            yield left,b[moved[index]] if index in moved else lookup.pop(left['number'],None)
         for right in unmatched_b:
-            if id(right) not in used:yield None,right
+            if right_numbers[right['number']]!=1 or right['number'] in lookup:yield None,right
+        if j<len(a):
+            yield a[j],b[l]
+        i,k=j+1,l+1
 
 
-def compare(files, options):
-    extracted=[extract(path,options.get('ignore_page_numbers',True),options) for path in files]
+def compare(files, options, cache_dir=None):
+    cached=[engineering.cached_extract(path,options,extract,cache_dir) for path in files]
+    extracted=[item[0] for item in cached]
     blocks=[item[0] for item in extracted];rows=[]
     renderers=[Renderer(path,item[1]) for path,item in zip(files,extracted)]
     pixels=options.get('pixel_compare',True)
@@ -307,31 +355,22 @@ def compare(files, options):
         if not left and not right:return
         text_equal=bool(left and right and (left['text'],left['title'])==(right['text'],right['title']))
         state='unresolved' if ambiguous or any(unit and unit.get('unknown') for unit in (left,right)) else 'added' if left is None else 'removed' if right is None else 'unchanged' if text_equal else 'modified'
+        structure=ladder.compare(left or {},right or {}) if pixels and not ambiguous else ladder.compare({}, {})
         visual=None
-        if pixels and left and right and state!='unresolved':
+        if (pixels and left and right and state!='unresolved' and not structure['same']
+                and not (text_equal and evidence.exact_match(left,right))):
             a,b=renderers[0].network(left),renderers[1].network(right)
             try:
                 visual,overlay=pixel_diff(a,b);overlay.close()
                 if visual['changed_pixels']:state='modified'
             finally:a.close();b.close()
         assessment=None
-        structure=ladder.compare(left or {},right or {})
         if left and right and state!='unresolved':
             assessment=evidence.judge(left,right,text_equal,visual)
+            assessment=engineering.decision(structure,assessment,left,right,options)
             state=assessment['status']
-            if pixels and structure['supported']:
-                assessment['checks'].append('recognized_contact_coil_graph')
-                if structure['same']:
-                    state='unchanged'
-                    assessment['reason']='Supported contact/coil types, operands and terminal connections agree; drawing layout changes do not alter this recognized structure.'
-                else:
-                    state='modified'
-                    assessment['reason']='Recognized contact/coil structure changed: '+('; '.join(f"{c['operand']}: {c['before'] or 'absent'} -> {c['after'] or 'absent'}" for c in structure['changes']) or 'terminal connections changed')+'.'
-                assessment['status']=state
-            elif pixels and structure['review_required'] and state=='unchanged':
-                state='unresolved'
-                assessment['status']=state
-                assessment['reason']='Partial symbol or connection evidence changed. Review the incomplete network; raster agreement cannot confirm unchanged wiring.'
+            if left['number'] is not None and left['number']!=right['number']:
+                assessment['reason']+=f" Printed network number changed from {left['number']} to {right['number']}."
         row=dict(structure=structure,assessment=assessment,id=len(rows)+1,status=state,block=block_name,unit='network' if (left or right)['number'] is not None else 'block',
                  text_changed=not text_equal,pixels=visual)
         for side,unit in zip(('base','compared'),(left,right)):
@@ -343,6 +382,7 @@ def compare(files, options):
             segments=unit['segments'] if unit else []
             row[side+'_segments']=segments
             row[side+'_references']=unit.get('references',[]) if unit else []
+            row[side+'_symbol_references']=unit.get('symbol_references',[]) if unit else []
             page_numbers=list(dict.fromkeys(segment['page'] for segment in segments))
             label=f"Network {unit['number']}" if unit and unit['number'] is not None else unit['title'] if unit else ''
             row[side+'_ref']=f"{block_name} / {label} / Pages {', '.join(map(str,page_numbers))}" if unit else ''
@@ -371,7 +411,7 @@ def compare(files, options):
     finally:
         for renderer in renderers:renderer.close()
     pages={side:item[1] for side,item in zip(('base','compared'),extracted)}
-    notes=['Networks are matched within explicit printed block headings. Exact network text anchors are followed by source-order pairing of unmatched runs.',
+    notes=['Networks are matched within explicit printed block headings using unique content anchors and unambiguous network numbers.',
            'Printed project headers are identification only. Block information, network titles, operands and source pages remain in the result.',
            'Pixel comparison at 1000 px page width detects rendered wiring, symbols and text. Rigid network alignment removes page translation; a one-pixel raster tolerance retains changed ink. No behavioural equivalence is asserted.' if pixels else 'Pixel comparison was disabled. Wiring and symbol geometry have not been compared.',
            'Source text, drawing primitives and raster evidence are checked in two bounded passes. Matching source geometry corroborates rendering noise; unexplained visual changes require review.',
@@ -380,7 +420,8 @@ def compare(files, options):
     ignored={side:item[2] for side,item in zip(('base','compared'),extracted)}
     omitted=[name for name in ('author','created','modified','comments','references') if not options.get('compare_'+name,True)]
     if omitted:notes.append('Excluded from text and rendered pixel comparison: '+', '.join(omitted)+'. Masked preview areas are omitted from exports too. Comment exclusion recognizes green printed comment text; other comment styles remain compared for review.')
-    return rows,[],notes,dict(mode='plc_networks',comparison_version=7,pixel_compare=pixels,blocks=blocks_info,pages=pages,
+    return rows,[],notes,dict(mode='plc_networks',comparison_version=engineering.VERSION,pixel_compare=pixels,blocks=blocks_info,pages=pages,
+        extraction_cache_hits=sum(hit for _,hit in cached),
         comparison_fields={name:options.get('compare_'+name,True) for name in ('author','created','modified','comments','references')},
         pairs=pdf.align_pages(rows,pages['base'],pages['compared']),ignore_page_numbers=options.get('ignore_page_numbers',True),ignored_page_numbers=ignored)
 
@@ -414,13 +455,13 @@ def network_image(user,key,row_id,side,overlay=False,highlight=False):
     if result['pdf'].get('mode')!='plc_networks' or side not in files or not 1<=row_id<=len(result['rows']):
         core.fail('Choose a valid PLC network and side.',400)
     if overlay and side!='compared':core.fail('Pixel overlay belongs to the Compared network.',400)
-    if result['pdf'].get('comparison_version',0)<7:core.fail('Run Compare PLC PDFs again to apply source evidence checks.',409)
+    if result['pdf'].get('comparison_version',0)!=engineering.VERSION:core.fail('Run Compare PLC PDFs again to apply source evidence checks.',409)
     row=result['rows'][row_id-1]
     if not row.get(side+'_segments'):core.fail('This network is absent from this side.',404)
     if overlay and (not result['pdf']['pixel_compare'] or not all(row.get(s+'_segments') for s in ('base','compared'))):
         core.fail('Pixel comparison is unavailable for this network.',400)
     # Registration and raster tolerance must also apply to regenerated exports.
-    cache=path/f'network-v7-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
+    cache=path/f'network-v{engineering.VERSION}-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
     if cache.is_file():return cache.read_bytes()
     image=None
     if not overlay:
@@ -456,13 +497,18 @@ class ExportNetworkImages:
     def png(self,row,side,highlight=None):
         if not row.get(side+'_segments'):return None
         highlight=(row['status']!='unchanged') if highlight is None else highlight
-        cache=lambda name:self.path/f"network-v7-{row['id']}-{name}-0-{int(highlight)}.png"
+        cache=lambda name:self.path/f"network-v{engineering.VERSION}-{row['id']}-{name}-0-{int(highlight)}.png"
         if cache(side).is_file():return cache(side).read_bytes()
         images={};marked=[]
         try:
+            local_marks=(row.get('structure') or {}).get('binding_changes',[]) if highlight else []
             for name in ('base','compared'):
-                if row.get(name+'_segments'):images[name]=self.renderers[name].network(dict(segments=row[name+'_segments'],number=row.get(name+'_network')))
-            if highlight and row['status'] in {'modified','unresolved'} and (row.get('pixels') or {}).get('changed_pixels') and len(images)==2:
+                if row.get(name+'_segments'):
+                    boxes=[(change[name+'_page'],change[name+'_bbox']) for change in local_marks]
+                    images[name]=self.renderers[name].network(dict(segments=row[name+'_segments'],number=row.get(name+'_network')),boxes)
+            if local_marks:
+                selected=images
+            elif highlight and row['status'] in {'modified','unresolved'} and (row.get('pixels') or {}).get('changed_pixels') and len(images)==2:
                 marked=list(status_highlights(images['base'],images['compared'],row['status'],aligned=True))
                 selected=dict(zip(('base','compared'),marked))
             elif highlight:
@@ -470,7 +516,7 @@ class ExportNetworkImages:
                 marked=list(selected.values())
             else:selected=images
             if len(images)==2 and not marked:
-                if row.get('pixels'):
+                if row.get('pixels') and not local_marks:
                     pair,masks,_,_=registered_pixels(images['base'],images['compared'])
                     for mask in masks:mask.close()
                 else:
@@ -490,7 +536,7 @@ class ExportNetworkImages:
 def export_report(user,key,format,status='differences',metadata=None,progress=None):
     sources=pdf.result_sources(user,key)
     if sources[1]['pdf'].get('mode')!='plc_networks':raise HTTPException(400,'Choose a PLC network comparison.')
-    if sources[1]['pdf'].get('comparison_version',0)<7:raise HTTPException(409,'Run Compare PLC PDFs again before exporting this older result.')
+    if sources[1]['pdf'].get('comparison_version',0)!=engineering.VERSION:raise HTTPException(409,'Run Compare PLC PDFs again before exporting this older result.')
     renderer=ExportNetworkImages(sources)
     try:return _export_report(user,key,format,status,metadata,sources,renderer,progress)
     finally:renderer.close()
@@ -500,11 +546,11 @@ def _export_report(user,key,format,status,metadata,sources,renderer,progress):
     """Matched network crops and explicit before/after evidence in every report."""
     import base64
     from html import escape
+    from backend.core import document_comparison as core
     path,result,_=sources
     if result['pdf'].get('mode')!='plc_networks':
         raise HTTPException(400,'Choose a PLC network comparison.')
-    if status not in {'all','differences','modified','added','removed','unresolved'}:
-        raise HTTPException(400,'Choose All, Differences, Modified, Added, Removed or Needs review.')
+    status=core.plc_status_filter(status)
     metadata=metadata or {}
     metadata_fields=('project_name','project_id','department','base','description','approved_by','objective_scope','developed','reviewed_by')
     metadata={name:str(metadata.get(name,'') or '').strip() for name in metadata_fields}
@@ -517,7 +563,6 @@ def _export_report(user,key,format,status,metadata,sources,renderer,progress):
     if cache.is_file():
         if progress:progress(0,0,'complete')
         return cache.read_bytes()
-    from backend.core import document_comparison as core
     rows=core.filtered(result,status)
     heading=result['base']['name']+' -> '+result['compared']['name']
     notes=[*result['notices'],f'Export selection: {status}. Reports show Before and After side by side; both sides mark detected changes when highlighting is available.',
@@ -526,7 +571,7 @@ def _export_report(user,key,format,status,metadata,sources,renderer,progress):
         return f"{row['block']} | {'Network' if row['unit']=='network' else 'Block information'} {row['base_network'] if row['base_network'] is not None else ''} -> {row['compared_network'] if row['compared_network'] is not None else ''} | {row['status']}"
     def evidence(row):
         metric=row.get('pixels')
-        if row.get('assessment'):return row['assessment']['reason']
+        if row.get('assessment'):return engineering.describe(row)
         return ('Text changed. ' if row['text_changed'] else 'Extracted text unchanged. ')+(
             f"{metric['changed_pixels']} changed ink pixels after rigid network alignment (one-pixel raster tolerance). Review highlighted operands, symbols and wiring." if metric else 'Pixel comparison not available for this pair.')
     def text_changes(row):

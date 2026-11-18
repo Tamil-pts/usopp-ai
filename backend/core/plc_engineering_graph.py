@@ -13,7 +13,7 @@ MAX_SEARCH = 4096
 def graph(part):
     elements = {s.get('instance_id', s['operand']): s for s in part['symbols']}
     labels = {key: (s['kind'], s.get('canonical_operand', s['operand']),
-                    tuple(sorted(s.get('bindings', {}).items()))) for key, s in elements.items()}
+                    tuple(sorted(s.get('canonical_bindings', s.get('bindings', {})).items()))) for key, s in elements.items()}
     nets = [tuple(sorted(map(tuple, net))) for net in part['nets']]
     power = set(part.get('power_nets', []))
     return labels, nets, power
@@ -94,16 +94,19 @@ def functional(a, b):
     inputs = sorted(aa[1] | bb[1])
     if len(inputs) > 10: return dict(supported=False, reason='Truth-table input bound exceeded (10 inputs).')
     def evaluate(part, prepared, values):
-        symbols, _, ports = prepared; parents = list(range(len(part['nets'])))
-        def root(i):
-            while parents[i] != i: i = parents[i]
-            return i
+        symbols, _, ports = prepared
+        connections = defaultdict(set)
         for s in symbols:
             key = s.get('instance_id', s['operand']); name = s.get('canonical_operand', s['operand'])
             if s['kind'] in {'NO', 'NC'} and values[name] == (s['kind'] == 'NO'):
-                parents[root(ports[(key, 'in')])] = root(ports[(key, 'out')])
-        supply = {root(i) for i in part['power_nets']}
-        return {s.get('canonical_operand', s['operand']): root(ports[(s.get('instance_id', s['operand']), 'in')]) in supply
+                connections[ports[(key, 'in')]].add(ports[(key, 'out')])
+        supply = set(part['power_nets'])
+        pending = list(supply)
+        while pending:
+            targets = connections[pending.pop()] - supply
+            supply.update(targets)
+            pending.extend(targets)
+        return {s.get('canonical_operand', s['operand']): ports[(s.get('instance_id', s['operand']), 'in')] in supply
                 for s in symbols if s['kind'] == 'coil'}
     for combination in product((False, True), repeat=len(inputs)):
         values = dict(zip(inputs, combination)); av, bv = evaluate(a, aa, values), evaluate(b, bb, values)

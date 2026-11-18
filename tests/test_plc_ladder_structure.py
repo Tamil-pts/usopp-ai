@@ -4,12 +4,12 @@ from reportlab.pdfgen.canvas import Canvas
 from tests.test_plc_comparison_evidence import run
 
 
-def diagram(nc=False,parallel=False,dx=0,dy=0,tag='A',gap=0,unsupported=False,coil=True,second=True,glyph_nc=False):
+def diagram(nc=False,parallel=False,dx=0,dy=0,tag='A',gap=0,unsupported=False,coil=True,second=True,glyph_nc=False,alias_address=None):
     output=io.BytesIO();c=Canvas(output,pagesize=(612,792));c.setFont('Helvetica',9)
     c.drawString(180,760,'PROJECT / CONTROL');c.drawString(50,730,'Block: CONTROL')
     c.drawString(50,680,'Network 1');c.saveState();c.translate(dx,dy)
     def contact(x,y,label,closed=False):
-        c.drawString(x-2,y+20,label);c.line(x,y-8,x,y+8);c.line(x+20,y-8,x+20,y+8)
+        c.drawCentredString(x+10,y+20,label);c.line(x,y-8,x,y+8);c.line(x+20,y-8,x+20,y+8)
         if closed:
             if glyph_nc:c.drawString(x+8,y-3,'/')
             else:c.line(x+7,y-6,x+13,y+6)
@@ -32,6 +32,9 @@ def diagram(nc=False,parallel=False,dx=0,dy=0,tag='A',gap=0,unsupported=False,co
             c.drawPath(p)
     if unsupported:
         c.rect(330,550,70,40);c.drawString(340,570,'TON')
+    if alias_address:
+        for x,heading,entry in ((60,'Symbol',tag),(220,'Address',alias_address),(360,'Comment','Input')):
+            c.drawString(x,480,heading);c.drawString(x,460,entry)
     c.restoreState();c.save();return output.getvalue()
 
 
@@ -113,8 +116,102 @@ def test_missing_coil_does_not_become_complete_network():
 
 def test_repeated_operands_are_not_merged_into_one_instance():
     row=network(diagram(tag='B'),diagram(tag='B',dx=12))
+    assert row['structure']['supported'] and row['structure']['same']
+    assert len(row['structure']['instance_matches'][0]['mapping'])==3
+    changed=network(diagram(tag='B'),diagram(tag='B',parallel=True))
+    assert changed['structure']['connections_changed']
+    # B in series with B and B in parallel with B are both B.
+    assert changed['assessment']['classification']=='equivalent_combinational_restructure'
+
+
+def test_same_address_alias_change_preserves_wiring():
+    row=run(diagram(tag='Ready',alias_address='I0.1'),diagram(tag='MachineReady',alias_address='I0.1'),
+            compare_references=False)[-1]
+    assert row['structure']['supported'] and row['structure']['same'],row['structure']
+    assert row['assessment']['classification']=='alias_changed'
+    changed=run(diagram(tag='Ready',alias_address='I0.1'),diagram(tag='Ready',alias_address='I0.2'),
+                compare_references=False)[-1]
+    assert changed['assessment']['classification']=='functional_difference'
+
+
+def instruction_pdf(instruction, literal='+7', output='VW4046'):
+    content=io.BytesIO();c=Canvas(content,pagesize=(612,792));c.setFont('Helvetica',9)
+    c.drawString(180,760,'PROJECT / CONTROL')
+    c.drawString(50,730,'Block: CONTROL')
+    c.drawString(50,680,'Network 1')
+    c.line(50,540,50,650)
+    for y,first,destination in ((615,'+3','VW16'),(550,literal,output)):
+        c.rect(240,y-35,75,56)
+        c.drawString(261,y+10,instruction)
+        c.drawString(242,y-3,'EN');c.drawRightString(312,y-3,'ENO')
+        c.line(50,y,240,y);c.line(315,y,370,y)
+        c.drawRightString(235,y-17,first)
+        c.drawString(242,y-17,'IN' if instruction=='MOV_W' else 'IN1')
+        c.drawRightString(312,y-17,'OUT');c.drawString(320,y-17,destination)
+        if instruction!='MOV_W':
+            c.drawRightString(235,y-30,'+2');c.drawString(242,y-30,'IN2')
+        c.drawCentredString(385,y+19,'M1' if y==615 else 'M2')
+        for x,side in ((370,1),(400,-1)):
+            p=c.beginPath();p.moveTo(x+side*4,y+8)
+            p.curveTo(x+side,y+6,x,y+3,x,y)
+            p.curveTo(x,y-3,x+side,y-6,x+side*4,y-8);c.drawPath(p)
+    c.save()
+    return content.getvalue()
+
+
+def test_repeated_instruction_instances_report_only_changed_pin_with_source():
+    for instruction in ('ADD_I','DIV_R','MUL_R','MOV_W'):
+        row=network(instruction_pdf(instruction),instruction_pdf(instruction,literal='+9'))
+        assert row['structure']['supported'],row['structure']
+        assert row['assessment']['classification']=='operand_modified'
+        [change]=row['structure']['binding_changes']
+        assert (change['instruction'],change['pin'],change['before'],change['after'])==(
+            instruction,'IN' if instruction=='MOV_W' else 'IN1','+7','+9')
+        assert change['base_page']==change['compared_page']==1
+        assert len(change['base_bbox'])==4
+    row=network(instruction_pdf('MOV_W'),instruction_pdf('MOV_W',output='VW4048'))
+    assert row['structure']['binding_changes'][0]['pin']=='OUT'
+
+
+def test_nc_change_has_source_checked_truth_table_witness():
+    row=network(diagram(),diagram(nc=True))
+    witness=row['structure']['functional']
+    assert witness['supported'] and not witness['equivalent']
+    assert witness['inputs']['B']
+    assert witness['before']['M1']!=witness['after']['M1']
+
+
+def test_paginated_network_matches_closed_branches_on_same_rail():
+    def printed(split, cut=False):
+        content=io.BytesIO();c=Canvas(content,pagesize=(612,792));c.setFont('Helvetica',9)
+        c.drawString(180,760,'PROJECT / CONTROL')
+        c.drawString(50,730,'Block: CONTROL')
+        c.drawString(50,680,'Network 1')
+        for index in range(2):
+            if split and index:
+                c.showPage();c.setFont('Helvetica',9);c.drawString(180,760,'PROJECT / CONTROL')
+            y=600 if split else 600-80*index
+            if not index or split:
+                c.line(60,y-45 if split else y-125,60,y+40)
+            c.drawCentredString(100,y+20,'A' if index==0 else 'B')
+            c.line(60,y,90,y);c.line(90,y-8,90,y+8);c.line(110,y-8,110,y+8)
+            c.line(110,y,230,y)
+            c.drawCentredString(245,y+20,'M1' if index==0 else 'M2')
+            for x,side in ((230,1),(260,-1)):
+                p=c.beginPath();p.moveTo(x+side*4,y+8)
+                p.curveTo(x+side,y+6,x,y+3,x,y)
+                p.curveTo(x,y-3,x+side,y-6,x+side*4,y-8);c.drawPath(p)
+            if cut and index==0:
+                c.line(185,y,185,0)
+        c.save()
+        return content.getvalue()
+
+    row=network(printed(False),printed(True))
+    assert row['structure']['same'],row['structure']
+    assert [part['page'] for part in row['compared_segments']]==[1,2]
+    row=network(printed(False),printed(True,cut=True))
     assert not row['structure']['supported']
-    assert 'Repeated operands require explicit instance matching.' in row['structure']['open_checks']
+    assert any('Cross-page' in check for check in row['structure']['open_checks'])
 
 
 def test_timer_literal_edit_still_uses_source_comparison():

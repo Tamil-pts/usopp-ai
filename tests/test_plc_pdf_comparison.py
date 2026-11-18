@@ -1,4 +1,5 @@
 """PLC block/network evidence, visual-only edits and account-owned HTTP exports."""
+import csv
 import io
 import unittest
 from unittest.mock import patch
@@ -125,8 +126,8 @@ class PLCPDFTests(unittest.TestCase):
         data=self.compare(original,shifted(18,-27))
         row=next(r for r in data['rows'] if r['unit']=='network')
         self.assertEqual(row['status'],'unchanged',row['pixels'])
-        self.assertEqual(row['pixels']['changed_pixels'],0)
-        self.assertIn('registration',row['pixels'])
+        self.assertEqual((row['pixels'] or {}).get('changed_pixels',0),0)
+        self.assertTrue(row['assessment']['source_corroborated'])
         # Registration must retain operand changes and a new connected wire.
         for operand,wire in [('MW31',False),('MW30',True)]:
             data=self.compare(original,shifted(18,-27,operand,wire))
@@ -144,9 +145,10 @@ class PLCPDFTests(unittest.TestCase):
         a,b=printed('Alice','2000','2024','Old comment'),printed('Bob','2001','2026','New comment')
         skipped={k:False for k in ('compare_author','compare_created','compare_modified','compare_comments')}
         data=self.compare(a,b,**skipped)
-        self.assertEqual(data['pdf']['comparison_version'],7)
+        from backend.core.plc_pdf_engineering import VERSION
+        self.assertEqual(data['pdf']['comparison_version'],VERSION)
         self.assertEqual(data['summary']['modified'],0)
-        self.assertTrue(all(not row['pixels']['changed_pixels'] for row in data['rows']))
+        self.assertTrue(all(not (row['pixels'] or {}).get('changed_pixels') for row in data['rows']))
         for field in skipped:
             changed=self.compare(a,b,**{**skipped,field:True})
             self.assertGreater(changed['summary']['modified'],0,field)
@@ -283,16 +285,21 @@ class PLCPDFTests(unittest.TestCase):
                 ('differences',('Network 1','Network 3','Network 4'),('Network 2',)),
                 ('modified',('Network 1',),('Network 2','Network 3','Network 4')),
                 ('added',('Network 4',),('Network 1','Network 2','Network 3')),
-                ('removed',('Network 3',),('Network 1','Network 2','Network 4'))]:
+                ('removed',('Network 3',),('Network 1','Network 2','Network 4')),
+                ('unchanged',('Network 2',),('Network 1','Network 3','Network 4')),
+                ('added,unchanged',('Network 2','Network 4'),('Network 1','Network 3'))]:
             response=self.client.get(url+f'/report.html?status={status}')
             self.assertEqual(response.status_code,200)
             for value in expected:self.assertIn(value,response.text)
             for value in excluded:self.assertNotIn(value,response.text)
             csv_response=self.client.get(url+f'/export.csv?status={status}')
             self.assertEqual(csv_response.status_code,200)
-            self.assertIn(f'Filter,{status}',csv_response.text)
+            csv_rows=list(csv.reader(io.StringIO(csv_response.text)))
+            self.assertIn(['Filter',status],csv_rows)
+            if status=='added,unchanged':
+                self.assertEqual({row[0] for row in csv_rows if len(row)==11 and row[2]=='Text'}, {'added','unchanged'})
         for extension in ('pdf','docx'):
-            response=self.client.get(url+f'/report.{extension}?status=modified')
+            response=self.client.get(url+f'/report.{extension}?status=unchanged,modified')
             self.assertEqual(response.status_code,200,response.text[:300] if extension=='docx' else '')
             if extension=='pdf':
                 report_text='\n'.join(page.extract_text() or '' for page in PdfReader(io.BytesIO(response.content)).pages)
@@ -300,7 +307,9 @@ class PLCPDFTests(unittest.TestCase):
                 document=Document(io.BytesIO(response.content))
                 report_text='\n'.join(p.text for p in document.paragraphs)+'\n'+'\n'.join(cell.text for table in document.tables for row in table.rows for cell in row.cells)
             self.assertIn('Network 1',report_text)
+            self.assertIn('Network 2',report_text)
             self.assertNotIn('Network 4',report_text)
+            self.assertNotIn('Network 3',report_text)
             if extension=='pdf':
                 self.assertIn('Before',report_text)
                 self.assertIn('After',report_text)
@@ -322,8 +331,25 @@ class PLCPDFTests(unittest.TestCase):
         self.assertEqual(base.status_code,200);self.assertEqual(compared.status_code,200)
         self.assertEqual(len(PdfReader(io.BytesIO(base.content)).pages[0].get('/Annots',[])),0)
         self.assertEqual(len(PdfReader(io.BytesIO(compared.content)).pages[0].get('/Annots',[])),1)
-        invalid=self.client.get(url+'/report.html?status=unknown')
-        self.assertEqual(invalid.status_code,400)
+        marked=self.client.get(url+'/highlighted-compared.pdf?status=unchanged,added')
+        self.assertEqual(marked.status_code,200)
+        self.assertEqual(marked.content,compared.content)
+        unchanged=self.client.get(url+'/highlighted-compared.pdf?status=unchanged')
+        self.assertEqual(unchanged.status_code,200)
+        self.assertFalse(PdfReader(io.BytesIO(unchanged.content)).pages[0].get('/Annots'))
+        for endpoint in ('report.html','export.csv','highlighted-compared.pdf'):
+            with self.subTest(endpoint=endpoint):
+                self.assertEqual(self.client.get(url+'/'+endpoint,params={'status':'added,unknown'}).status_code,400)
+
+    def test_export_needs_review_can_be_selected_with_unchanged(self):
+        source=program([[(1,'M1'),(1,'M2')]])
+        data=self.compare(source,source)
+        url=API+f"/results/{data['id']}"
+        response=self.client.get(url+'/report.html',params={'status':'unresolved,unchanged'})
+        self.assertEqual(response.status_code,200)
+        self.assertIn('Block information',response.text)
+        self.assertIn('Network 1',response.text)
+        self.assertIn('unresolved',response.text)
 
     def test_owner_isolation_stale_sources_and_invalid_options(self):
         data=self.compare(program([[(1,'M1')]]),program([[(1,'M2')]]))

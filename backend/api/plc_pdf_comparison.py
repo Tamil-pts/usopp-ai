@@ -7,7 +7,7 @@ router=APIRouter(prefix='/api/local/compare/plc-pdf',tags=['PLC PDF comparison']
 
 def require_current(user,key):
     _,result,_=pdf.result_sources(user,key)
-    if result.get('pdf',{}).get('mode')!='plc_networks' or result['pdf'].get('comparison_version',0)<7:
+    if result.get('pdf',{}).get('mode')!='plc_networks' or result['pdf'].get('comparison_version',0)!=plc.engineering.VERSION:
         core.fail('Run Compare PLC PDFs again to apply source evidence checks.',409)
 
 @router.post('/uploads')
@@ -32,7 +32,7 @@ def network(key:str,row_id:int,side:str,request:Request,overlay:bool=False,highl
 @router.get('/results/{key}/export.csv')
 def csv(key:str,request:Request,status:str='differences'):
     require_current(request.state.user,key)
-    return Response(core.export_csv(request.state.user,key,status),media_type='text/csv; charset=utf-8',
+    return Response(core.export_csv(request.state.user,key,core.plc_status_filter(status)),media_type='text/csv; charset=utf-8',
         headers={'Content-Disposition':f'attachment; filename="plc-networks-{key[:8]}.csv"'})
 
 @router.get('/results/{key}/report.{format}')
