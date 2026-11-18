@@ -1,3 +1,5 @@
+import {ResultReview} from '../../shared/ResultReview';
+import {packetFindings} from '../../shared/resultEvidence';
 import {PacketGroupTable} from './PacketGroupTable';
 import {useEffect,useState,type ReactNode} from 'react';
 import {LocalFolderTree,LocalFileTree} from '../../shared/LocalFileBrowser';
@@ -78,7 +80,7 @@ export function ValidationPage({workspace:w,metaCols,departments=DEPARTMENTS,pro
     <div hidden={tab!=='write-st'}><WriteSTGenerator workspace={w}/></div>
     {sourceSelection&&w.result?.sessionId&&<ValidationSourceEditor sessionId={w.result.sessionId} selection={sourceSelection} datatypes={w.result.datatypeIndex||[]} onClose={()=>setSourceSelection(null)} onSaved={w.markSourceChanged}/>}
     {['packets','offset','metadata','dropdown'].includes(tab)&&!w.result&&<div className="card emptyState"><h3>No validation results yet</h3><p>Select the project and run validation using the controls above.</p></div>}
-    {tab==='packets'&&w.result&&<PacketGroupTable groups={w.result.groups||[]} issues={w.result.issues||[]} onOffsets={code=>{setGroup(code);setTab('offset')}} onSource={(path,line)=>setSourceSelection({path,line,mode:'source'})}/>}
+    {tab==='packets'&&w.result&&<><ResultReview title="ByteMap" sourceKind="issues" rows={packetFindings(w.result)} onSource={(path,line)=>setSourceSelection({path,line,mode:'source'})}/><PacketGroupTable groups={w.result.groups||[]} issues={w.result.issues||[]} onOffsets={code=>{setGroup(code);setTab('offset')}} onSource={(path,line)=>setSourceSelection({path,line,mode:'source'})}/></>}
     {tab==='offset'&&w.result&&<><div className="actions"><label>Group code <select className="textInput" value={group} onChange={e=>setGroup(e.target.value)}><option value="">All groups</option>{(w.result.groups||[]).map((g:any)=><option key={g.groupCode} value={String(g.groupCode)}>GC{g.groupCode}</option>)}</select></label></div><TablePage title="ByteMap" desc="PLC field sizes and buffer offsets, including memcpy and direct byte assignments. Metadata offsets exclude the 5-byte header." type="offset" onSource={(row,mode)=>setSourceSelection({path:row.sourceFile,line:row.lineNumber,tag:row.parameter,mode})} rows={(data?.offsetRows||[]).filter((r:any)=>!group||r.gc===`GC${group}`)}/></>}
     {tab==='metadata'&&w.result&&<TablePage title="MetaWorks" desc="Compare PLC and reference metadata; approved mappings are stored in the knowledge base." type="metadata" rows={data?.metadataRows||[]} metaCols={metaCols} projectName={w.result.projectName}/>}
     {tab==='dropdown'&&w.result&&<TablePage title="Dropdown validation" desc="HMI values and metadata mappings by group and tag code." type="dropdown" rows={data?.dropdownRows||[]}/>}

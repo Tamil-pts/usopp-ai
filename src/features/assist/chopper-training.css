@@ -12,3 +12,4 @@
 .chopperTrainingLayout pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;color:var(--text)}
 .chopperTrainingLayout article{min-width:0}
 @media(max-width:800px){.chopperTrainingLayout{grid-template-columns:1fr}.chopperTrainingLayout>aside{max-height:280px}}
+.trainingReadiness{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);margin:12px 0;line-height:1.6}.trainingReadiness h4{margin:0 0 8px}.trainingReadiness p{margin:8px 0}.trainingReadiness ol{padding-left:22px}.trainingReadiness li{margin:6px 0}

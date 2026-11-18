@@ -1,5 +1,6 @@
 import {useCallback,useEffect,useState} from 'react';
 import type {Status} from '../../shared/types';
+import {uiStatus} from '../../shared/resultEvidence';
 
 export const DEPARTMENTS=['All','Blow Room','Carding','Breaker','Finisher','Comber','Lapformer','Speedframe','Ringframe','RAP','Auto Winder'];
 export const CATEGORIES=['PLC logic + HMI','Logic / declaration','Declaration','Logic','Logic with condition','Group code wise parameter check','Logic traceability in various subroutines','Library check','HMI screen + datapoint mapped','HMI text groups','HMI touch pad','HMI alarm declaration','PLC configuration'];
@@ -13,8 +14,7 @@ export function categoryFor(rule:any){
  return 'Structured Text logic';
 }
 export function badgeStatus(value:any):Status{
- const status=String(value||'').toLowerCase().replaceAll(' ','_');
- return status==='pass'?'pass':status==='fail'?'fail':status==='not_found'?'not_found':'warn';
+ return uiStatus(value);
 }
 export async function apiJson(url:string,body?:any,method?:string){
  const requestMethod=method||(body===undefined?'GET':'POST');

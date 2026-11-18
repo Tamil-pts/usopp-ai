@@ -100,9 +100,30 @@ def summary(user):
                                   ('' if user['role'] == 'admin' else 'WHERE owner_id=? ') + 'GROUP BY status',
                                   (() if user['role'] == 'admin' else (user['id'],))).fetchall()
     counts = dict(rows)
-    return {'counts': counts, 'weightsTrained': False, 'mode': 'Task analysis + source retrieval + reviewed training drafts',
+    readiness=training_readiness(export_examples()) if user['role']=='admin' else {'ready':False,'adminReviewRequired':True,'minimumUniqueExamples':50,'minimumProjectGroups':2}
+    return {'counts': counts, 'weightsTrained': False, 'trainingReadiness':readiness, 'mode': 'Task analysis + source retrieval + reviewed training drafts',
             'notice': 'Approval saves a training example. It does not run training or replace the installed model.',
             'tasks': list(playbook()['tasks']), 'baseModel': 'Qwen/Qwen2.5-Coder-1.5B-Instruct'}
+
+
+def training_readiness(examples):
+    """Mirror the offline trainer's dedup/project split; never start training here."""
+    from collections import Counter
+    import random
+    seen=set();groups=Counter();partial=False
+    for number,row in enumerate(examples):
+        if number>=10000:partial=True;break
+        key=hashlib.sha256(json.dumps(row['messages'],sort_keys=True).encode()).hexdigest()
+        if key in seen:continue
+        seen.add(key);groups[row['metadata']['splitGroup']]+=1
+    ordered=sorted(groups);random.Random(42).shuffle(ordered)
+    held=set(ordered[:max(1,len(ordered)//5)])
+    held_rows=sum(count for key,count in groups.items() if key in held)
+    train_rows=len(seen)-held_rows
+    return {'ready':not partial and len(seen)>=50 and len(groups)>=2 and train_rows>=20,
+            'uniqueExamples':len(seen),'projectGroups':len(groups),'trainingExamples':train_rows,'heldOutExamples':held_rows,
+            'minimumUniqueExamples':50,'minimumProjectGroups':2,'partial':partial,
+            'notice':'Readiness is a dataset preflight, not a model-quality pass. Train an adapter separately, evaluate held-out projects, then review activation.'}
 
 
 def export_examples():

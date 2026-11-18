@@ -79,3 +79,5 @@ rules/feedback/**
 knowledge/dashboard_layouts/users/**
 virtual_plc/tests/**
 virtual_plc/dist/**
+
+chopper_agent_evaluation.json

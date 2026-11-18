@@ -2,6 +2,7 @@ import {openDashboardBuilder} from '../workhub/dashboards/bridge';
 ﻿import {navigateRoute} from '../../shared/navigation';
 import type {WorkspaceModule} from '../../shared/workspaceModules';
 export const assistantTasks=[
+ {id:'agent',name:'Investigate with validated agent',description:'Use checked source facts, read-only SQL and approved public references.',module:'assistant',category:'Analyze'},
  {id:'frd',name:'Create FRD',description:'Open a numbered requirements document draft.',module:'workhub',kind:'frd',category:'Create'},
  {id:'mom',name:'Create meeting minutes',description:'Prepare MOM, decisions and action owners.',module:'workhub',kind:'mom',category:'Create'},
  {id:'test',name:'Create validation report',description:'Prepare test cases and record actual evidence.',module:'workhub',kind:'test',category:'Create'},
@@ -25,7 +26,7 @@ export function takeAssistantTask(){const value=pending;pending=null;return valu
 export function startAssistantTask(task:AssistantTask,modules:WorkspaceModule[],prompt=''){
  if(!modules.includes(task.module))throw Error('This workspace is unavailable for your account.');
  const isHub=task.module==='workhub';
- if(!navigateRoute(isHub?{page:'home'}:{page:task.id==='documents'||task.id==='presentations'?'chatbot':task.id,assistTab:task.id==='presentations'?'presentations':task.id==='documents'?'documents':task.id==='chatbot'?'chat':null}))return false;
+ if(!navigateRoute(isHub?{page:'home'}:{page:['documents','presentations','agent'].includes(task.id)?'chatbot':task.id,assistTab:task.id==='agent'?'agent':task.id==='presentations'?'presentations':task.id==='documents'?'documents':task.id==='chatbot'?'chat':null}))return false;
  if(task.id==='dashboard'){openDashboardBuilder(prompt||'Create a dashboard');return true;}
  if(isHub){pending={id:task.id,brief:prompt.slice(0,12000),...('kind' in task?{kind:task.kind}:{})};window.dispatchEvent(new Event('usopp-assistant-task'));}
  return true;

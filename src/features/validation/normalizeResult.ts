@@ -1,4 +1,5 @@
 import type {AnyResult} from '../../shared/types';
+import {fieldStatus,resultStatus,uiStatus} from '../../shared/resultEvidence';
 export function normalizeResult(r:any){
  const s=r?.summary||{}; const counts={pass:s.passed??r?.passed??0,warn:s.warnings??r?.warnings??0,fail:s.failed??r?.failed??0};
  const issues=Array.isArray(r?.issues)?r.issues:[]; let offsetSequence=0;
@@ -15,13 +16,12 @@ export function normalizeResult(r:any){
    const rawMethod=p.transferMethod||'memcpy';
    const method=rawMethod==='direct-byte'?'Direct byte assignment':(rawMethod==='cursor-gap'||rawMethod==='unwritten-gap')?'Unwritten cursor gap':rawMethod==='conditional'?'Conditional alternatives':'memcpy';
    const condition=p.conditionContext||variant?.condition||'';
-   const statusText=String(p.status||'PASS').toLowerCase();
    return {
-    id:++offsetSequence,tag:String(offsetSequence),gc:`GC${p.groupCode??g.groupCode}`,parameter:p.parameter||'',description:p.description||'',condition,
-    type:p.dataType||'',declaredType:p.declaredDataType||p.dataType||'',declaredSize:p.declaredSize??'',size:p.memcpySize??p.size??0,method,evidence:p.writeEvidence||[],
-    payloadOffset:p.tcpOffset??p.offsetBuffer??'',tcpOffset:p.tcpOffset??p.offsetBuffer??'',increment:p.incrementValue??'',actual:p.runningOffset??'',expected:p.expectedOffset??p.runningOffset??'',after:p.offsetAfterCopy??'',
-    src:p.sourceExpression||'',dest:p.destinationExpression||'',status:statusText==='fail'?'fail':statusText==='warning'||statusText==='warn'?'warn':'pass',
-    sourceFile:p.sourceFile||'',lineNumber:p.lineNumber||1,issues:parameterIssues,
+    id:++offsetSequence,tag:p.logicSequence??p.sequence??'',gc:`GC${p.groupCode??g.groupCode}`,parameter:p.parameter||'',description:p.description||'',condition,
+    type:p.dataType||'',declaredType:p.declaredDataType||p.dataType||'',declaredSize:p.declaredSize??'',size:p.memcpySize??p.size??'',method,evidence:p.writeEvidence||[],
+    payloadOffset:p.tcpOffset??p.offsetBuffer??'',tcpOffset:p.tcpOffset??p.offsetBuffer??'',increment:p.incrementValue??'',actual:p.runningOffset??'',expected:p.expectedOffset??'',after:p.offsetAfterCopy??'',
+    src:p.sourceExpression||'',dest:p.destinationExpression||'',status:fieldStatus(p.status,parameterIssues),
+    sourceFile:p.sourceFile||'',lineNumber:p.lineNumber??0,issues:parameterIssues,
     code:p.sourceFile?`${p.sourceFile}:${p.lineNumber??''}`:'',root:p.remarks||parameterIssues.map((x:any)=>x.validationType).join('; '),fix:issue?.suggestedFix||''
    };
   });
@@ -158,7 +158,20 @@ export function normalizeResult(r:any){
   if(!aMeta && !bMeta)return Number(a.sl||0)-Number(b.sl||0);
   return Number(a.metaSeq||0)-Number(b.metaSeq||0);
  });
- const dropdownRows=(r?.dropdownValidation?.controls||[]).map((x:any,i:number)=>({id:i+1,gc:String(x.groupCode??''),comment:x.logicComment||'',parameter:x.logicComment||'No PLC comment found',tag:String(x.tagCode??x.indexDatapoint??''),metaSeq:x.metadataSequence??'',hmi:(x.hmiPairs||[]).map((p:any)=>`${p[0]} = ${p[1]}`),metaParam:x.metadataParameterName||'',meta:(x.metadataPairs||[]).map((p:any)=>`${p[0]} = ${p[1]}`),status:String(x.status||'').toLowerCase().includes('matching')?'pass':String(x.status||'').toLowerCase().includes('mismatch')?'fail':'warn',reason:x.reason||'',root:'',fix:'',matchMethod:x.metadataMatchMethod||'',source:x.logicSourceFile||'',line:x.logicLineNumber??''}));
- const groupSummary=(r?.groups||[]).map((g:any)=>{const ps=g.parameters||[];const pass=ps.filter((p:any)=>String(p.status||'').toUpperCase()==='PASS').length;const warn=ps.filter((p:any)=>String(p.status||'').toUpperCase()==='WARNING').length;const fail=ps.filter((p:any)=>String(p.status||'').toUpperCase()==='FAIL').length;const status=fail?'fail':warn?'warn':'pass';return {gc:String(g.groupCode??''),description:g.description||g.name||'',total:ps.length,pass,warn,fail,status,configuredMsb:g.configuredMsb,configuredLsb:g.configuredLsb,configuredBytes:g.configuredBytes,calculatedBytes:g.calculatedBytes,calculatedByOffset:g.calculatedByOffset,packetCalResult:g.packetCalResult}});
+ const dropdownRows=(r?.dropdownValidation?.controls||[]).map((x:any,i:number)=>({id:i+1,gc:String(x.groupCode??''),comment:x.logicComment||'',parameter:x.logicComment||'No PLC comment found',tag:String(x.tagCode??x.indexDatapoint??''),metaSeq:x.metadataSequence??'',hmi:(x.hmiPairs||[]).map((p:any)=>`${p[0]} = ${p[1]}`),metaParam:x.metadataParameterName||'',meta:(x.metadataPairs||[]).map((p:any)=>`${p[0]} = ${p[1]}`),status:uiStatus(x.status),reason:x.reason||'',root:'',fix:'',matchMethod:x.metadataMatchMethod||'',source:x.logicSourceFile||'',line:x.logicLineNumber??''}));
+ const groupSummary=(r?.groups||[]).map((g:any)=>{
+  const ps=g.parameters||[];
+  const states=ps.map((p:any)=>resultStatus(p.status));
+  const pass=states.filter((state:string)=>state==='pass').length;
+  const fail=states.filter((state:string)=>state==='fail').length;
+  const warn=states.filter((state:string)=>!['pass','fail'].includes(state)).length;
+  const groupIssues=issues.filter((issue:any)=>String(issue.groupCode)===String(g.groupCode));
+  const explicit=g.overallStatus??g.packetCalResult;
+  const status=fieldStatus(explicit,[...groupIssues,...ps.map((p:any)=>({status:p.status})),
+   ...(!explicit&&(!ps.length||warn)?[{status:'WARNING'}]:[])]);
+  return {gc:String(g.groupCode??''),description:g.description||g.name||'',total:ps.length,pass,warn,fail,status,
+   configuredMsb:g.configuredMsb,configuredLsb:g.configuredLsb,configuredBytes:g.configuredBytes,
+   calculatedBytes:g.calculatedBytes,calculatedByOffset:g.calculatedByOffset,packetCalResult:g.packetCalResult};
+ });
  return {counts,score:s.complianceScore??r?.complianceScore??0,offsetRows,metadataRows,dropdownRows,groupSummary};
 }

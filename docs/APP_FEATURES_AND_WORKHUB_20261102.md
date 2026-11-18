@@ -21,6 +21,8 @@ indicator, not a security certification.
 
 Presentation update: [local Chopper Presentation Studio, editable PPTX, shared fonts and palettes](CHOPPER_PRESENTATION_STUDIO_20261114.md).
 
+Chopper update: [validated agent workspace, guided prompts, worksheet SQL and reviewed learning](CHOPPER_VALIDATED_AGENT_20261118.md).
+
 ## Engineering tools
 
 | Area | Implemented purpose |
@@ -73,6 +75,12 @@ Team Management shows actual resource totals, assigned/available capacity,
 roles/skills, workload and project progress. Engineers can search/filter resources,
 inspect workload, and use the existing authorized assignment controls. Counts are
 calculated from saved records, not sample dashboard numbers.
+
+Validation result update: [LogicScan and ByteMap evidence review and
+recommendations](VALIDATION_RESULT_REVIEW_20261118.md). Both tools now offer
+prioritized findings, status/search filters, source-linked expected/actual
+evidence and a findings CSV. Missing statuses no longer become passes, and
+recommendations retain the engine's reported scope and proposed correction.
 
 ## Project management workflow
 
@@ -183,3 +191,9 @@ Subsequent update: [consolidated inbox daily work and shared module navigation](
 
 
 MatchView update: [PLC PDF review, shared-scale previews and export progress](MATCHVIEW_PDF_REVIEW_REDESIGN_20261116.md). Optional symbol reference tables are separate from Ladder comparison; the workspace and exports use shared drawing dimensions.
+
+
+MatchView follow-up: [source evidence decisions, regression checks and large PLC PDFs](MATCHVIEW_EVIDENCE_ENGINE_20261117.md). PLC PDFs support up to 2,000 pages; unexplained drawing differences remain reviewable.
+
+
+MatchView structural follow-up: [bounded contact/coil recognition and wire-net comparison](MATCHVIEW_CONTACT_COIL_GRAPHS_20261117.md). Fully covered profiles compare symbol types, operands and connections; unsupported diagrams retain source/raster evidence and review checks.

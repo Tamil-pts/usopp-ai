@@ -73,12 +73,13 @@ def csv_rows(path):
     return result
 
 
-def upload(user,name,content):
+def upload(user,name,content,*,plc_pdf=False):
     name=Path(str(name).replace('\\','/')).name[:180]
     ext=Path(name).suffix.lower()
     if ext not in SUPPORTED:fail('Choose CSV, XLS, XLSX, PDF, DOCX or TXT. Save legacy Word DOC files as DOCX first.',400)
     if not content:fail('The selected file is empty.',400)
-    if len(content)>MAX_BYTES:fail('Choose a file up to 25 MB.',413)
+    limit=100*1024**2 if plc_pdf else MAX_BYTES
+    if len(content)>limit:fail(f'Choose a file up to {limit//1024**2} MB.',413)
     key=uuid4().hex;path=folder(user)/'uploads'/key
     path.mkdir(parents=True,exist_ok=False);source=path/('source'+ext);source.write_bytes(content)
     try:
@@ -96,6 +97,12 @@ def upload(user,name,content):
             finally:book.release_resources()
         elif ext=='.csv':
             rows=csv_rows(source);sheets=[{'name':'CSV','rows':len(rows),'columns':max(map(len,rows),default=0)}]
+        elif plc_pdf and ext=='.pdf':
+            from pypdf import PdfReader
+            from backend.core.plc_comparison_evidence import MAX_PAGES
+            reader=PdfReader(source)
+            if reader.is_encrypted:fail('Upload an unlocked PLC PDF.')
+            if len(reader.pages)>MAX_PAGES:fail('PLC PDF comparison supports up to 2,000 pages per file.')
         else:
             # Fail unreadable/encrypted inputs before accepting them into the UI.
             text_units(source)

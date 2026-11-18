@@ -10,6 +10,8 @@ from itertools import zip_longest
 from fastapi import HTTPException
 
 from backend.core import document_pdf_comparison as pdf
+from backend.core import plc_comparison_evidence as evidence
+from backend.core import plc_ladder_structure as ladder
 
 RUNNING = re.compile(r'^.+?\s+/\s+(.+?)(?:\s+\(((?:OB|SBR|FB|FC|DB|INT)\s*\d+)\))?\s*$', re.I)
 NETWORK = re.compile(r'^Network\s+(\d+)\b(.*)$', re.I)
@@ -21,9 +23,10 @@ def extract(path, ignore_page_numbers=True, options=None):
     blocks, pages, ignored, notices = [], [], [], []
     current, active = None, None
     characters = 0
+    network_count = 0
     with pdfplumber.open(path) as document:
-        if len(document.pages) > 250:
-            raise HTTPException(422, 'PLC PDF comparison supports up to 250 pages per file.')
+        if len(document.pages) > evidence.MAX_PAGES:
+            raise HTTPException(422, 'PLC PDF comparison supports up to 2,000 pages per file.')
         for number, original in enumerate(document.pages, 1):
             bounds = original.bbox
             if original.cropbox:
@@ -110,13 +113,20 @@ def extract(path, ignore_page_numbers=True, options=None):
                     if not options.get('compare_references',True):
                         unit['segments'][-1]['bbox'][3]=max(start,table_start)
                         region=[line for line in region if line['bbox'][1]<table_start]
+                unit.setdefault('source_evidence', []).append(evidence.fingerprint(page, unit['segments'][-1]['bbox'], region, masks))
+                if unit.get('number') is not None:
+                    try:part=ladder.recognize(page,unit['segments'][-1]['bbox'],region,masks)
+                    except (KeyError,TypeError,ValueError,OverflowError):
+                        part=dict(complete=False,symbols=[],nets=[],open_checks=['Unsupported structural drawing format; source/raster comparison retained.'])
+                    part['page']=number
+                    unit.setdefault('ladder_parts',[]).append(part)
                 content = [line['text'] for line in region]
                 text = '\n'.join(content)
                 if not content and page.images:unit['unknown']=True
                 characters += len(text)
                 unit['text'] += ('\n' if unit['text'] and text else '') + text
-                if characters > 1000000:
-                    raise HTTPException(422, 'PLC PDF text exceeds one million characters. Split the document.')
+                if characters > 20000000:
+                    raise HTTPException(422, 'PLC PDF text exceeds twenty million characters. Split the document.')
             first = headings[0][0]['bbox'][1] if headings else bottom
             if title:
                 active = dict(number=None, title='Block information', text='', segments=[])
@@ -131,14 +141,15 @@ def extract(path, ignore_page_numbers=True, options=None):
             for index, (line, match) in enumerate(headings):
                 active = dict(number=int(match[1]), title=match[2].strip(), text='', segments=[])
                 current['networks'].append(active)
+                network_count += 1
                 end = headings[index+1][0]['bbox'][1]-2 if index+1 < len(headings) else bottom
                 append_region(active, line['bbox'][3]+2, end)
             # A page counter is kept as separate evidence when explicitly requested.
             if not ignore_page_numbers and counters:
                 current.setdefault('counters', []).extend(dict(number=None, title='Printed page counter', text=line['text'],
                     segments=[dict(page=number,bbox=line['bbox'])]) for line in counters)
-            if sum(len(block['networks']) for block in blocks) > 3000:
-                raise HTTPException(422, 'PLC PDF comparison supports up to 3,000 networks per file.')
+            if network_count > 50000:
+                raise HTTPException(422, 'PLC PDF comparison supports up to 50,000 networks per file.')
             original.close()
     if not any(block['networks'] for block in blocks):
         raise HTTPException(422, 'No explicit PLC blocks and Network headings were found. Use a searchable PLC program PDF; scanned or other layouts need OCR/format review.')
@@ -263,7 +274,7 @@ def pixel_diff(a, b, aligned=False):
     result=overlay.copy() if aligned else overlay.crop(box);overlay.close()
     total=union.width*union.height
     for item in images+masks+[union]:item.close()
-    return dict(changed_pixels=changed,total_pixels=total,threshold=180,registration=registration,tolerance_pixels=1),result
+    return dict(changed_pixels=changed,total_pixels=total,difference_ratio=round(changed/max(1,total),8),threshold=180,registration=registration,tolerance_pixels=1),result
 
 
 def aligned_networks(a, b):
@@ -303,7 +314,25 @@ def compare(files, options):
                 visual,overlay=pixel_diff(a,b);overlay.close()
                 if visual['changed_pixels']:state='modified'
             finally:a.close();b.close()
-        row=dict(id=len(rows)+1,status=state,block=block_name,unit='network' if (left or right)['number'] is not None else 'block',
+        assessment=None
+        structure=ladder.compare(left or {},right or {})
+        if left and right and state!='unresolved':
+            assessment=evidence.judge(left,right,text_equal,visual)
+            state=assessment['status']
+            if pixels and structure['supported']:
+                assessment['checks'].append('recognized_contact_coil_graph')
+                if structure['same']:
+                    state='unchanged'
+                    assessment['reason']='Supported contact/coil types, operands and terminal connections agree; drawing layout changes do not alter this recognized structure.'
+                else:
+                    state='modified'
+                    assessment['reason']='Recognized contact/coil structure changed: '+('; '.join(f"{c['operand']}: {c['before'] or 'absent'} -> {c['after'] or 'absent'}" for c in structure['changes']) or 'terminal connections changed')+'.'
+                assessment['status']=state
+            elif pixels and structure['review_required'] and state=='unchanged':
+                state='unresolved'
+                assessment['status']=state
+                assessment['reason']='Partial symbol or connection evidence changed. Review the incomplete network; raster agreement cannot confirm unchanged wiring.'
+        row=dict(structure=structure,assessment=assessment,id=len(rows)+1,status=state,block=block_name,unit='network' if (left or right)['number'] is not None else 'block',
                  text_changed=not text_equal,pixels=visual)
         for side,unit in zip(('base','compared'),(left,right)):
             row[side]=unit['text'] if unit else ''
@@ -331,9 +360,10 @@ def compare(files, options):
                 ambiguous=any(counts[block['key']]>1 for counts in block_counts) or block['key'].startswith('__unresolved') or bool((left or {}).get('ambiguous') or (right or {}).get('ambiguous'))
                 start=len(rows)
                 add(left.get('metadata') if left else None,right.get('metadata') if right else None,block['name'],ambiguous)
+                network_counts={id(source):Counter(unit['number'] for unit in source['networks']) for source in (left,right) if source}
                 for a,b in aligned_networks(left['networks'] if left else [],right['networks'] if right else []):
                     # Duplicated network numbers in a block are never quietly certified as matches.
-                    duplicate=any(unit and Counter(item['number'] for item in source['networks'])[unit['number']]>1 for unit,source in [(a,left),(b,right)] if source)
+                    duplicate=any(unit and network_counts[id(source)][unit['number']]>1 for unit,source in [(a,left),(b,right)] if source)
                     add(a,b,block['name'],ambiguous or duplicate)
                 for a,b in zip_longest(left.get('counters',[]) if left else [],right.get('counters',[]) if right else []):add(a,b,block['name'],ambiguous)
                 for a,b in zip_longest(left.get('unassigned',[]) if left else [],right.get('unassigned',[]) if right else []):add(a,b,block['name'],True)
@@ -344,12 +374,13 @@ def compare(files, options):
     notes=['Networks are matched within explicit printed block headings. Exact network text anchors are followed by source-order pairing of unmatched runs.',
            'Printed project headers are identification only. Block information, network titles, operands and source pages remain in the result.',
            'Pixel comparison at 1000 px page width detects rendered wiring, symbols and text. Rigid network alignment removes page translation; a one-pixel raster tolerance retains changed ink. No behavioural equivalence is asserted.' if pixels else 'Pixel comparison was disabled. Wiring and symbol geometry have not been compared.',
+           'Source text, drawing primitives and raster evidence are checked in two bounded passes. Matching source geometry corroborates rendering noise; unexplained visual changes require review.',
            'Page breaks and outside whitespace are removed from network crops; continued networks retain every source-page segment.']
     notes.extend(f'{side}: {notice}' for side,item in zip(('Base','Compared'),extracted) for notice in item[3])
     ignored={side:item[2] for side,item in zip(('base','compared'),extracted)}
     omitted=[name for name in ('author','created','modified','comments','references') if not options.get('compare_'+name,True)]
     if omitted:notes.append('Excluded from text and rendered pixel comparison: '+', '.join(omitted)+'. Masked preview areas are omitted from exports too. Comment exclusion recognizes green printed comment text; other comment styles remain compared for review.')
-    return rows,[],notes,dict(mode='plc_networks',comparison_version=5,pixel_compare=pixels,blocks=blocks_info,pages=pages,
+    return rows,[],notes,dict(mode='plc_networks',comparison_version=7,pixel_compare=pixels,blocks=blocks_info,pages=pages,
         comparison_fields={name:options.get('compare_'+name,True) for name in ('author','created','modified','comments','references')},
         pairs=pdf.align_pages(rows,pages['base'],pages['compared']),ignore_page_numbers=options.get('ignore_page_numbers',True),ignored_page_numbers=ignored)
 
@@ -368,7 +399,7 @@ def status_highlights(a, b, status, aligned=False):
     try:
         output=[]
         for image,mask,offset,original in zip(images,masks,offsets,(a,b)):
-            halo=union.filter(ImageFilter.MaxFilter(7))
+            halo=union.filter(ImageFilter.MaxFilter(3))
             tint=Image.new('RGB',image.size,color);wash=Image.blend(image,tint,.28);tint.close()
             image.paste(wash,(0,0),halo);wash.close();halo.close()
             output.append(image.copy() if aligned else image.crop((*offset,offset[0]+original.width,offset[1]+original.height)))
@@ -383,12 +414,13 @@ def network_image(user,key,row_id,side,overlay=False,highlight=False):
     if result['pdf'].get('mode')!='plc_networks' or side not in files or not 1<=row_id<=len(result['rows']):
         core.fail('Choose a valid PLC network and side.',400)
     if overlay and side!='compared':core.fail('Pixel overlay belongs to the Compared network.',400)
+    if result['pdf'].get('comparison_version',0)<7:core.fail('Run Compare PLC PDFs again to apply source evidence checks.',409)
     row=result['rows'][row_id-1]
     if not row.get(side+'_segments'):core.fail('This network is absent from this side.',404)
     if overlay and (not result['pdf']['pixel_compare'] or not all(row.get(s+'_segments') for s in ('base','compared'))):
         core.fail('Pixel comparison is unavailable for this network.',400)
     # Registration and raster tolerance must also apply to regenerated exports.
-    cache=path/f'network-v5-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
+    cache=path/f'network-v7-{row_id}-{side}-{int(overlay)}-{int(highlight)}.png'
     if cache.is_file():return cache.read_bytes()
     image=None
     if not overlay:
@@ -399,7 +431,12 @@ def network_image(user,key,row_id,side,overlay=False,highlight=False):
         renderers=[Renderer(files[s],result['pdf']['pages'][s]) for s in ('base','compared')]
         try:
             a,b=[r.network(dict(segments=row[s+'_segments'],number=row.get(s+'_network'))) for r,s in zip(renderers,('base','compared'))]
-            try:_,image=pixel_diff(a,b,aligned=True)
+            try:
+                if row['status']=='unchanged' and ((row.get('assessment') or {}).get('source_corroborated') or (row.get('structure') or {}).get('same')):
+                    pair,masks,_,_=registered_pixels(a,b)
+                    image=pair[1];pair[0].close()
+                    for mask in masks:mask.close()
+                else:_,image=pixel_diff(a,b,aligned=True)
             finally:a.close();b.close()
             out=io.BytesIO();image.save(out,format='PNG');data=out.getvalue()
         finally:
@@ -419,14 +456,14 @@ class ExportNetworkImages:
     def png(self,row,side,highlight=None):
         if not row.get(side+'_segments'):return None
         highlight=(row['status']!='unchanged') if highlight is None else highlight
-        cache=lambda name:self.path/f"network-v5-{row['id']}-{name}-0-{int(highlight)}.png"
+        cache=lambda name:self.path/f"network-v7-{row['id']}-{name}-0-{int(highlight)}.png"
         if cache(side).is_file():return cache(side).read_bytes()
         images={};marked=[]
         try:
             for name in ('base','compared'):
                 if row.get(name+'_segments'):images[name]=self.renderers[name].network(dict(segments=row[name+'_segments'],number=row.get(name+'_network')))
-            if highlight and row['status']=='modified' and (row.get('pixels') or {}).get('changed_pixels') and len(images)==2:
-                marked=list(status_highlights(images['base'],images['compared'],'modified',aligned=True))
+            if highlight and row['status'] in {'modified','unresolved'} and (row.get('pixels') or {}).get('changed_pixels') and len(images)==2:
+                marked=list(status_highlights(images['base'],images['compared'],row['status'],aligned=True))
                 selected=dict(zip(('base','compared'),marked))
             elif highlight:
                 selected={name:status_highlights(original,None,row['status'])[0] for name,original in images.items()}
@@ -453,7 +490,7 @@ class ExportNetworkImages:
 def export_report(user,key,format,status='differences',metadata=None,progress=None):
     sources=pdf.result_sources(user,key)
     if sources[1]['pdf'].get('mode')!='plc_networks':raise HTTPException(400,'Choose a PLC network comparison.')
-    if sources[1]['pdf'].get('comparison_version',0)<5:raise HTTPException(409,'Run Compare PLC PDFs again before exporting this older result.')
+    if sources[1]['pdf'].get('comparison_version',0)<7:raise HTTPException(409,'Run Compare PLC PDFs again before exporting this older result.')
     renderer=ExportNetworkImages(sources)
     try:return _export_report(user,key,format,status,metadata,sources,renderer,progress)
     finally:renderer.close()
@@ -476,7 +513,7 @@ def _export_report(user,key,format,status,metadata,sources,renderer,progress):
     detail_labels=(('project_name','Project name'),('project_id','Project ID'),('department','Department'),('base','Base / reference'),('developed','Developed / compare'),('description','Description'),('objective_scope','Objective / scope'),('reviewed_by','Reviewed by'),('approved_by','Approved by'))
     import hashlib,json
     metadata_hash=hashlib.sha256(json.dumps(metadata,sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest()[:12]
-    cache=path/f'plc-network-report-v9-{status}-{metadata_hash}.{format}'
+    cache=path/f'plc-network-report-v11-{status}-{metadata_hash}.{format}'
     if cache.is_file():
         if progress:progress(0,0,'complete')
         return cache.read_bytes()
@@ -489,6 +526,7 @@ def _export_report(user,key,format,status,metadata,sources,renderer,progress):
         return f"{row['block']} | {'Network' if row['unit']=='network' else 'Block information'} {row['base_network'] if row['base_network'] is not None else ''} -> {row['compared_network'] if row['compared_network'] is not None else ''} | {row['status']}"
     def evidence(row):
         metric=row.get('pixels')
+        if row.get('assessment'):return row['assessment']['reason']
         return ('Text changed. ' if row['text_changed'] else 'Extracted text unchanged. ')+(
             f"{metric['changed_pixels']} changed ink pixels after rigid network alignment (one-pixel raster tolerance). Review highlighted operands, symbols and wiring." if metric else 'Pixel comparison not available for this pair.')
     def text_changes(row):

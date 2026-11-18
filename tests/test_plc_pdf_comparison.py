@@ -38,6 +38,22 @@ class PLCPDFTests(unittest.TestCase):
         self.assertEqual(response.status_code,200,response.text[:1000])
         data=response.json();return self.client.get(API+f"/results/{data['id']}?status=all&limit=200").json()
 
+    def test_plc_upload_accepts_1001_pages_without_general_document_limits(self):
+        source=program([[(i+1,'Motor := TRUE;')] for i in range(1001)])
+        result=self.upload('large-program.pdf',source)
+        self.assertEqual(result['size'],len(source))
+        self.assertEqual(result['extension'],'.pdf')
+
+    def test_old_decisions_cannot_leak_through_export_or_preview_caches(self):
+        data=self.compare(program([[(1,'M1')]]),program([[(1,'M2')]]))
+        key=data['id'];path,record=core.record(self.user,key,'results')
+        record['pdf']['comparison_version']=5;core.publish(path,record)
+        for suffix in ('export.csv','highlighted-base.pdf','highlighted-compared.pdf',
+                       'report.pdf','report.docx','report.html','networks/2/base.png'):
+            with self.subTest(export=suffix):
+                response=self.client.get(API+f'/results/{key}/{suffix}')
+                self.assertEqual(response.status_code,409,response.text[:300])
+
     def test_symbol_reference_tables_are_optional_and_do_not_resize_ladder(self):
         from PIL import Image
         def printed(table):
@@ -128,7 +144,7 @@ class PLCPDFTests(unittest.TestCase):
         a,b=printed('Alice','2000','2024','Old comment'),printed('Bob','2001','2026','New comment')
         skipped={k:False for k in ('compare_author','compare_created','compare_modified','compare_comments')}
         data=self.compare(a,b,**skipped)
-        self.assertEqual(data['pdf']['comparison_version'],5)
+        self.assertEqual(data['pdf']['comparison_version'],7)
         self.assertEqual(data['summary']['modified'],0)
         self.assertTrue(all(not row['pixels']['changed_pixels'] for row in data['rows']))
         for field in skipped:

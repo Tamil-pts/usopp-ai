@@ -164,6 +164,8 @@ from backend.api import team_inbox_apps
 app.include_router(team_inbox_apps.router)
 from backend.api import chopper_speech
 app.include_router(chopper_speech.router)
+from backend.api import chopper_agent
+app.include_router(chopper_agent.router)
 
 # Reports and workbook sessions remain available until explicitly cleared.
 

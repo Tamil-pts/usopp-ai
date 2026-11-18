@@ -230,10 +230,23 @@ def page_image(user, key, side, number):
 
 
 def save_cache(path, data):
+    import time
     temporary = path.with_suffix('.' + uuid4().hex + '.tmp')
     try:
         temporary.write_bytes(data)
-        temporary.replace(path)
+        for attempt in range(4):
+            try:
+                temporary.replace(path)
+                break
+            except PermissionError:
+                # Windows can deny replacement while another immutable preview
+                # is being read or published. Reuse only an identical complete
+                # cache entry; never accept a mismatched or partial winner.
+                try:
+                    if path.read_bytes()==data:return
+                except (PermissionError,FileNotFoundError):pass
+                if attempt==3:raise
+                time.sleep(.02)
     finally:
         temporary.unlink(missing_ok=True)
 

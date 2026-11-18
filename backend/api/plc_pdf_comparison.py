@@ -5,11 +5,16 @@ from backend.core import document_comparison as core, document_pdf_comparison as
 
 router=APIRouter(prefix='/api/local/compare/plc-pdf',tags=['PLC PDF comparison'],dependencies=[Depends(private)])
 
+def require_current(user,key):
+    _,result,_=pdf.result_sources(user,key)
+    if result.get('pdf',{}).get('mode')!='plc_networks' or result['pdf'].get('comparison_version',0)<7:
+        core.fail('Run Compare PLC PDFs again to apply source evidence checks.',409)
+
 @router.post('/uploads')
 def upload(request:Request,file:UploadFile=File(...)):
     try:
         if not (file.filename or '').lower().endswith('.pdf'):core.fail('Choose a PLC program PDF.',400)
-        return core.upload(request.state.user,file.filename,file.file.read(core.MAX_BYTES+1))
+        return core.upload(request.state.user,file.filename,file.file.read(plc.evidence.MAX_BYTES+1),plc_pdf=True)
     finally:file.file.close()
 
 @router.post('/run')
@@ -26,6 +31,7 @@ def network(key:str,row_id:int,side:str,request:Request,overlay:bool=False,highl
 
 @router.get('/results/{key}/export.csv')
 def csv(key:str,request:Request,status:str='differences'):
+    require_current(request.state.user,key)
     return Response(core.export_csv(request.state.user,key,status),media_type='text/csv; charset=utf-8',
         headers={'Content-Disposition':f'attachment; filename="plc-networks-{key[:8]}.csv"'})
 
@@ -65,5 +71,6 @@ def export_progress(key:str,token:str,request:Request):
 
 @router.get('/results/{key}/highlighted-{side}.pdf')
 def highlighted(key:str,side:str,request:Request,status:str='differences'):
+    require_current(request.state.user,key)
     return Response(pdf.annotated_pdf(request.state.user,key,side,status),media_type='application/pdf',
         headers={'Content-Disposition':f'attachment; filename="plc-{key[:8]}-{side}-highlighted.pdf"'})

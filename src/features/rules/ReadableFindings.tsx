@@ -1,3 +1,5 @@
+import {resultStatus} from '../../shared/resultEvidence';
+const resultLabel=(value:any)=>({pass:'Passed',fail:'Failed',warn:'Warning',not_found:'Not found',skipped:'Not required',unknown:'Not reported'})[resultStatus(value)];
 const names:Record<string,string>={check:'Check',file:'Source file',line:'Line',groupCode:'Group Code',actual:'Actual result',expected:'Expected',property:'Property',properties:'Property checks',acceptedConfiguration:'Accepted configuration',matchedAlternative:'Matched alternative',declarationText:'Variable declarations',declarationFile:'Declaration file',nameMatch:'Object name matching',classId:'Class ID',textGroupFile:'Text group file',referenceChecks:'Referenced HMI checks',characterRequirement:'Allowed characters',shiftLevels:'Shift levels',nameOverride:'Referenced object',searchedFiles:'Files searched',notRequiredReason:'Why this alternative is not required'};
 const label=(key:string)=>names[key]||key.replace(/([a-z])([A-Z])/g,'$1 $2').replaceAll('_',' ').replace(/^./,letter=>letter.toUpperCase());
 
@@ -35,5 +37,5 @@ export function ReadableFindings({rows,onSource,onAcceptHmiActual}:{rows:any[];o
 }
 
 function PropertyFindings({rows,onAccept}:{rows:any[];onAccept?:(row:any)=>void}){
- return <div className="findingTableWrap"><table><thead><tr><th>Property checked</th><th>Expected</th><th>Actual</th><th>Result</th>{onAccept&&<th>Teach rule</th>}</tr></thead><tbody>{rows.map((row,index)=><tr key={index}><td>{row.property}</td><td><FindingValue value={row.expected}/></td><td><FindingValue value={row.actual}/></td><td>{row.status==='PASS'?'Passed':'Failed'}</td>{onAccept&&<td>{row.status==='FAIL'&&row.actual!==null&&row.actual!==undefined&&<button type="button" className="btn" onClick={()=>onAccept(row)}>Accept actual as HMI alternative</button>}</td>}</tr>)}</tbody></table></div>;
+ return <div className="findingTableWrap"><table><thead><tr><th>Property checked</th><th>Expected</th><th>Actual</th><th>Result</th>{onAccept&&<th>Teach rule</th>}</tr></thead><tbody>{rows.map((row,index)=><tr key={index}><td>{row.property}</td><td><FindingValue value={row.expected}/></td><td><FindingValue value={row.actual}/></td><td>{resultLabel(row.status)}</td>{onAccept&&<td>{row.status==='FAIL'&&row.actual!==null&&row.actual!==undefined&&<button type="button" className="btn" onClick={()=>onAccept(row)}>Accept actual as HMI alternative</button>}</td>}</tr>)}</tbody></table></div>;
 }

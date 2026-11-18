@@ -51,6 +51,11 @@ with sync_playwright() as pw:
  root.get_by_label('Compared PLC PDF',exact=True).set_input_files({'name':'after.pdf','mimeType':'application/pdf','buffer':program([[(1,'M2')]])})
  root.get_by_role('button',name='Compare PLC PDFs',exact=True).click()
  root.get_by_role('region',name='Continuous PLC network comparison',exact=True).wait_for(timeout=30000)
+ root.get_by_label('Zoom networks out',exact=True).click()
+ root.get_by_label('Zoom networks out',exact=True).click()
+ assert root.locator('.plcPDFToolbar').get_by_text('50%',exact=True).is_visible()
+ assert root.locator('.plcPDFStreamCanvas').evaluate('e=>e.getBoundingClientRect().width < e.parentElement.clientWidth*.6')
+ root.get_by_role('button',name='Fit width',exact=True).click()
  root.get_by_text('Optional details',exact=True).click()
  for name in ['Symbol reference tables','Comments','Author','Created date','Modified date']:
   assert not root.get_by_label(name,exact=True).is_checked()
@@ -91,6 +96,23 @@ with sync_playwright() as pw:
   page.set_viewport_size({'width':width,'height':900});rung.scroll_into_view_if_needed();page.wait_for_timeout(200)
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2')
   page.screenshot(path=str(out/f'network22-{width}.png'))
+ # Confirm the enabled structural feature reaches both the UI and PDF export.
+ from tests.test_plc_ladder_structure import diagram
+ page.set_viewport_size({'width':1440,'height':1000})
+ root.get_by_label('Base PLC PDF',exact=True).set_input_files({'name':'contacts-before.pdf','mimeType':'application/pdf','buffer':diagram()})
+ root.get_by_label('Compared PLC PDF',exact=True).set_input_files({'name':'contacts-after.pdf','mimeType':'application/pdf','buffer':diagram(nc=True)})
+ root.get_by_role('button',name='Compare PLC PDFs',exact=True).click()
+ reason=root.get_by_text('Recognized contact/coil structure changed: A: NO -> NC.',exact=False)
+ reason.wait_for(timeout=30000)
+ root.get_by_text('Recognized contacts, coils and connections',exact=False).first.click()
+ assert root.locator('.plcPDFText pre').filter(has_text='A: NC').first.is_visible()
+ root.get_by_role('button',name='PDF',exact=True).click()
+ dialog=page.get_by_role('dialog',name='Export PLC comparison',exact=True)
+ dialog.get_by_label('Comparison sections to export',exact=True).select_option('modified')
+ with page.expect_download() as download:dialog.get_by_role('button',name='Download PDF',exact=True).click()
+ download.value.save_as(out/'contact-type-change.pdf')
+ exported=' '.join(' '.join(p.extract_text() or '' for p in PdfReader(out/'contact-type-change.pdf').pages).split())
+ assert 'A: NO -> NC' in exported,exported[:1000]
  assert not errors,errors
  browser.close();server.should_exit=True
  print('PASS project-folder and PDF export dialogs, retained cover fields/options, Escape/focus, selected-status download and first-page metadata, 390-1440px layouts')

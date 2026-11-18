@@ -1,3 +1,4 @@
+import {actions} from '../../shared/resultEvidence';
 import {ReadableFindings,FindingValue} from './ReadableFindings';
 import {useState} from 'react';
 import './rule-logic-evidence.css';
@@ -8,10 +9,12 @@ export function RuleLogicEvidence({item,onSource,onAcceptHmiActual}:{item:any;on
  const comparison=comparisons[choice]||comparisons[0];
  const crossChecks=item.crossFunctionLogicChecks||[];
  const structured=item.structuredRequirements;
- if(structured)return <section className="structuredEvidence">{item.hmiScope&&<p><b>HMI scope:</b> {item.hmiScope.screenFolder?`Active screen folder Logical/${item.hmiScope.screenFolder}`:(item.hmiScope.screenFolders?.length?`Checked discovered HMI folder(s): ${item.hmiScope.screenFolders.join(', ')}`:'No HMI screen folder found')}{item.hmiScope.configurationMessage?` - ${item.hmiScope.configurationMessage}`:''}</p>}<p>{item.actual}</p><ReadableFindings rows={structured} onSource={onSource} onAcceptHmiActual={onAcceptHmiActual}/></section>;
+ const recommendations=actions(item.recommendations);
+ const nextActions=recommendations.length>0&&<aside className="findingRecommendation"><b>Recommended action</b><ul>{recommendations.map((action,index)=><li key={index}>{action}</li>)}</ul></aside>;
+ if(structured)return <section className="structuredEvidence">{item.hmiScope&&<p><b>HMI scope:</b> {item.hmiScope.screenFolder?`Active screen folder Logical/${item.hmiScope.screenFolder}`:(item.hmiScope.screenFolders?.length?`Checked discovered HMI folder(s): ${item.hmiScope.screenFolders.join(', ')}`:'No HMI screen folder found')}{item.hmiScope.configurationMessage?` - ${item.hmiScope.configurationMessage}`:''}</p>}<p>{item.actual}</p>{nextActions}<ReadableFindings rows={structured} onSource={onSource} onAcceptHmiActual={onAcceptHmiActual}/></section>;
  return <section className="ruleLogicEvidence">
   <p><b>{item.status==='PASS'?'Validation evidence':'Why this did not pass'}</b>: {item.actual}</p>
-  {item.status!=='PASS'&&<ul>{(item.recommendations||[]).map((reason:string,i:number)=><li key={i}>{reason}</li>)}</ul>}
+  {nextActions}
   {comparisons.length>1&&<label>Expected alternative <select value={choice} onChange={e=>setChoice(Number(e.target.value))}>{comparisons.map((x:any,i:number)=><option value={i} key={i}>{i+1} {x.matched?'(matched)':''}</option>)}</select></label>}
   {comparison?<>
    <div className="logicCompareHeader"><span>{comparison.matched?'Configured logic found':comparison.approximate?'Nearest source section — review the differences':'Source section not found'}</span><span>{comparison.file}{comparison.file?` : ${comparison.line}–${comparison.endLine}`:''}</span>

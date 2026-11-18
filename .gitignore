@@ -44,6 +44,7 @@ release/
 artifacts/
 .usopp_assist_model.json
 .usopp_semantic.json
+chopper_agent_evaluation.json
 .hypothesis/
 
 knowledge/br_help/
