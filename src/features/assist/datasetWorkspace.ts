@@ -1,10 +1,12 @@
+import {useDatasetBI} from './datasetBI';
 import {useEffect,useState} from 'react';
 import type {ChatAttachment} from './chatFiles';
 
-export type DatasetTab='prompts'|'overview'|'outliers'|'comparisons'|'recommendations';
+export type DatasetTab='dashboard'|'prompts'|'overview'|'outliers'|'comparisons'|'recommendations';
 export type ChartType='bar'|'line'|'donut'|'pivot';
-export const DATASET_TABS:[DatasetTab,string][]=[['prompts','Dataset Prompts'],['overview','Overview'],['outliers','Outliers & Risk'],['comparisons','Comparisons'],['recommendations','Recommendations']];
+export const DATASET_TABS:[DatasetTab,string][]=[['dashboard','Auto dashboard'],['prompts','Dataset Prompts'],['overview','Overview'],['outliers','Outliers & Risk'],['comparisons','Comparisons'],['recommendations','Recommendations']];
 export const DATASET_PROMPTS:Record<DatasetTab,string[]>={
+ dashboard:['Summarize this worksheet.'],
  prompts:['Summarize this worksheet and list its columns.','Show missing cells and duplicate rows.','Compare the groups using the selected measure.'],
  overview:['Give an overview of this worksheet.','Show the grouped values for the current chart.'],
  outliers:['Find statistical outliers in the selected measure.','Show missing values and spreadsheet errors.'],
@@ -19,9 +21,10 @@ export function useDatasetWorkspace(attachments:ChatAttachment[]){
  const files=attachments.filter(item=>item.dataset),fileKeys=files.map(item=>item.dataset!.id).join(',');
  const [config,setConfig]=useState<DatasetConfig>({id:'',sheet:'',header_row:1,group:null,metric:null,pivot:null,operation:'count',order:'source'});
  const [data,setData]=useState<DatasetResult|null>(null),[loading,setLoading]=useState(false),[error,setError]=useState(''),[revision,setRevision]=useState(0);
- const [tab,setTab]=useState<DatasetTab>('overview'),[chart,setChart]=useState<ChartType>('bar'),[selection,setSelection]=useState<string|null>(null);
+ const [tab,setTab]=useState<DatasetTab>('dashboard'),[chart,setChart]=useState<ChartType>('bar'),[selection,setSelection]=useState<string|null>(null);
  const [selectedRows,setSelectedRows]=useState<{rows:{row:number;cells:string[]}[];total:number}|null>(null),[selectionLoading,setSelectionLoading]=useState(false),[selectionError,setSelectionError]=useState('');
  const source=files.find(item=>item.dataset?.id===config.id)?.dataset;
+ const bi=useDatasetBI(config,!!source);
  useEffect(()=>{if(!files.some(item=>item.dataset?.id===config.id)){const first=files[0]?.dataset,sheet=first?.sheets[0]?.name||'';setConfig({id:first?.id||'',sheet,header_row:first?.header_rows?.[sheet]??(first?.sheets[0]?.rows?1:0),group:null,metric:null,pivot:null,operation:'count',order:'source'});}},[fileKeys,config.id]);
  useEffect(()=>{
   setSelection(null);setData(null);setError('');if(!source||!config.sheet){setLoading(false);return;}
@@ -41,6 +44,11 @@ export function useDatasetWorkspace(attachments:ChatAttachment[]){
   const url=URL.createObjectURL(await response.blob()),anchor=document.createElement('a');anchor.href=url;anchor.download=`${(config.sheet||'Worksheet').replace(/[<>:"/\\|?*]/g,'_')}.${format}`;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }
  async function answer(question:string){
+  bi.result.current=null;
+  if(Object.values(DATASET_PROMPTS).flat().includes(question)&&question!==DATASET_PROMPTS.dashboard[0])return await legacyAnswer(question);
+  setTab('dashboard');return await bi.answer(question);
+ }
+ async function legacyAnswer(question:string){
   const result=await query<DatasetResult>('/api/assist/datasets/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(config)});setData(result);
   const lower=question.toLowerCase(),section:DatasetTab=/outlier|missing|error|risk|duplicate/.test(lower)?'outliers':/recommend|review first|check/.test(lower)?'recommendations':/compare|largest|smallest|group/.test(lower)?'comparisons':'overview';setTab(section);
   const exact=Object.values(DATASET_PROMPTS).flat().includes(question);
@@ -54,6 +62,6 @@ export function useDatasetWorkspace(attachments:ChatAttachment[]){
   return `**Worksheet overview**\n\n${profile}\n\nSelected calculation: ${measure} = ${result.value??'No numeric value'}.\n\nColumns: ${result.columns.map(column=>`${column.letter}: ${column.name}`).join('; ')}.\n\nSource: ${provenance}`;
  }
  const currentData=data&&data.source.id===config.id&&data.source.sheet===config.sheet&&data.source.header_row===config.header_row&&data.metric===config.metric&&data.group===config.group&&data.pivot===config.pivot&&data.operation===config.operation&&data.order===config.order?data:null;
- return {files,source,config,setConfig,chooseFile,chooseSheet,data:currentData,loading,error,tab,setTab,chart,setChart,selection,setSelection,selectedRows,selectionLoading,selectionError,download,answer,refresh:()=>setRevision(value=>value+1)};
+ return {bi,files,source,config,setConfig,chooseFile,chooseSheet,data:currentData,loading,error,tab,setTab,chart,setChart,selection,setSelection,selectedRows,selectionLoading,selectionError,download,answer,refresh:()=>setRevision(value=>value+1)};
 }
 export type DatasetManager=ReturnType<typeof useDatasetWorkspace>;

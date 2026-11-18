@@ -211,6 +211,12 @@ def answer(payload):
     selected_plan=plan(question,machine)
     focused=trace_answer(index,question,machine,selected_plan)
     if focused:return enrich(focused)
+    # Publish parsed source records before optional inference. This is deliberately
+    # not a machine-purpose summary or an assertion of runtime behavior.
+    report('Source findings ready; preparing checked explanation',partialResult={
+        'machineAnalysis':_machine_chat_preview(machine),'machineAnalysisProjectId':index.key,
+        'evidence':[], 'source':'local-project-intelligence',
+        'engineeringVerification':{'status':'partial','trainingEligible':False}})
     outcome=run(index,question,payload,machine,chat_model,configuration(),SYSTEM,help_lookup=reference_evidence)
     response=outcome['response'];evidence=outcome['evidence'];text=outcome['answer']
     if broad_question(question):

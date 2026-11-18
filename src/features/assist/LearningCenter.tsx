@@ -1,5 +1,7 @@
+import {AnswerFeedbackQueue} from './AnswerFeedbackQueue';
 import {DropdownMappings} from './DropdownMappings';
-import {useState} from 'react';
+import {useEffect,useState,lazy,Suspense} from 'react';
+const AgentWorkspace=lazy(()=>import('./AgentWorkspace'));
 import {MasterMappings} from './MasterMappings';
 import {RuleKnowledgeLibrary} from './RuleKnowledgeLibrary';
 import {ChopperTraining} from './ChopperTraining';
@@ -7,14 +9,17 @@ import {UnitRules} from './UnitRules';
 import {DataModelRules} from './DataModelRules';
 import './knowledge-tables.css';
 import {BrainCircuit,Download,RefreshCw} from 'lucide-react';
-export function LearningCenter({data,onRefresh,revision,machineDepartment='All',departments,onEditRule,onRulesChanged}:{data:any;onRefresh:()=>void;revision:number;machineDepartment?:string;departments?:string[];onEditRule:(rule:any)=>void;onRulesChanged:()=>void}){
- const [section,setSection]=useState('rules');
+export function LearningCenter({data,onRefresh,revision,machineDepartment='All',departments,onEditRule,onRulesChanged,projectPath='',projectName='',requestedSection}:{projectPath?:string;projectName?:string;requestedSection?:string;data:any;onRefresh:()=>void;revision:number;machineDepartment?:string;departments?:string[];onEditRule:(rule:any)=>void;onRulesChanged:()=>void}){
+ const [section,setSection]=useState(requestedSection||'rules');
+ useEffect(()=>{if(requestedSection)setSection(requestedSection)},[requestedSection]);
  const summary=data?.summary||{};const observations=[...(data?.observations||[])].reverse();
  return <section className="learningCenter">
   <div className="learningHero card"><div className="learningIdentity"><span className="chopperAvatar"><BrainCircuit size={22}/></span><div><div className="eyebrow">SELF LEARNING ENGINEERING ASSISTANT</div><h2>KnowHub</h2><p>Approved engineer decisions become searchable project knowledge. The deterministic Rule Engine remains the source of PASS, FAIL and WARNING.</p></div></div><div className="actions"><button className="btn" onClick={onRefresh}><RefreshCw size={13}/> Refresh</button>{summary.approvedCount>0&&<a className="btn primary" href="/api/rules/learning/export"><Download size={13}/> Export approved dataset</a>}</div></div>
-  <div className="ruleWorkspaceTabs" role="tablist" aria-label="KnowHub sections">{[['rules','Rule library'],['mappings','Parameter mappings'],['data-model','Database JSON Keys'],['dropdowns','Dropdown mappings'],['units','Automatic units'],['training','Project answer training'],['learning','Engineer feedback and feature files']].map(([key,label])=><button key={key} role="tab" aria-selected={section===key} className={section===key?'active':''} onClick={()=>setSection(key)}>{label}</button>)}</div>
+  <div className="ruleWorkspaceTabs" role="tablist" aria-label="KnowHub sections">{[['rules','Rule library'],['mappings','Parameter mappings'],['data-model','Database JSON Keys'],['dropdowns','Dropdown mappings'],['units','Automatic units'],['answer-feedback','Answer feedback'],['agent','Agent controls & evaluation'],['training','Project answer training'],['learning','Engineer feedback and feature files']].map(([key,label])=><button key={key} role="tab" aria-selected={section===key} className={section===key?'active':''} onClick={()=>setSection(key)}>{label}</button>)}</div>
   <div hidden={section!=='units'}><UnitRules active={section==='units'} machineDepartment={machineDepartment} departments={departments}/></div>
+  {section==='answer-feedback'&&<AnswerFeedbackQueue/>}
   {section==='training'&&<ChopperTraining/>}
+  {section==='agent'&&<Suspense fallback={<p role='status'>Opening agent controls...</p>}><AgentWorkspace projectPath={projectPath} projectName={projectName}/></Suspense>}
   <div hidden={section!=='mappings'}><MasterMappings machineDepartment={machineDepartment} departments={departments}/></div>
   <div hidden={section!=='data-model'}><DataModelRules active={section==='data-model'}/></div>
   <div hidden={section!=='dropdowns'}><DropdownMappings machineDepartment={machineDepartment} departments={departments}/></div>

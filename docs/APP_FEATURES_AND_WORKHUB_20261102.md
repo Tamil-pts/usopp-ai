@@ -197,3 +197,5 @@ MatchView follow-up: [source evidence decisions, regression checks and large PLC
 
 
 MatchView structural follow-up: [bounded contact/coil recognition and wire-net comparison](MATCHVIEW_CONTACT_COIL_GRAPHS_20261117.md). Fully covered profiles compare symbol types, operands and connections; unsupported diagrams retain source/raster evidence and review checks.
+
+Subsequent Chopper update: [evidence-first answer cards, private history and worksheet dashboards](CHOPPER_ANSWER_WORKSPACE_20261118.md). Agent controls and review-only feedback are now accessed through KnowHub.

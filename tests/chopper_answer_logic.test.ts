@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {answerTabs} from '../src/features/assist/ProjectAnswerCard';
+import {flowDefinition} from '../src/features/assist/ProjectAnswerFlow';
+assert.deepEqual(answerTabs({text:''},'engineer'),[]);
+assert.deepEqual(answerTabs({text:'Ready'},'simple'),['Summary']);
+const sequence={name:'Step',file:'Logical/Main.st',line:2,ownership:'active task',transitions:Array.from({length:40},(_,i)=>({from:i,to:i+1,line:i+3,conditions:['Ready']}))};
+const answer={text:'',machineAnalysis:{stateMachines:[sequence],hardwareLinks:[{}],alarmCandidates:[]}};
+assert.deepEqual(answerTabs(answer,'engineer'),['Flow','Sequence','I/O & axes','Sources']);
+assert.deepEqual(answerTabs(answer,'simple'),['Flow','Sequence']);
+const graph=flowDefinition([sequence],0);assert.equal(graph.refs.length,25);assert(!graph.text.includes('State 25'));assert(graph.text.includes('State 24'));assert.equal(graph.refs[0].line,3);
+const second=flowDefinition([sequence],0,25);assert(second.text.includes('State 40'));
+const overview=flowDefinition(Array(30).fill(sequence),null);assert.equal(overview.refs.length,25);assert.equal(overview.refs[24].sequence,24);
+const hostile=flowDefinition([{...sequence,name:'" ]\nclick N0 "javascript:alert(1)"'}],null);
+assert(!hostile.text.includes('\nclick'));assert(!hostile.text.includes('javascript:alert(1)"'));
+console.log('PASS hidden tabs, stable tab order, Simple mode, 25-node branches, source references and label isolation');

@@ -15,13 +15,18 @@ export async function requestChopper(payload:unknown,signal:AbortSignal,onProgre
  const data=await response.json().catch(()=>({}));
  if(!response.ok)throw new Error(data.detail||'Chopper is unavailable.');
  if(!data.jobId)throw new Error('The running server returned an incomplete chat request. Restart the updated application.');
+ const cancel=()=>{void fetch('/api/assist/cancel/'+encodeURIComponent(data.jobId),{method:'POST',headers:{'Content-Type':'application/json'},body:'{}',keepalive:true}).catch(()=>{})};
+ signal.addEventListener('abort',cancel,{once:true});
+ try{
  while(!signal.aborted) {
   const poll=await fetch(`/api/assist/status/${encodeURIComponent(data.jobId)}`,{signal,cache:'no-store'});
   const status=await poll.json().catch(()=>({}));
+  if(status.status==='stopped')throw new DOMException('Request cancelled','AbortError');
   if(!poll.ok||status.status==='error')throw new Error(status.error||status.detail||'Chopper processing failed.');
   onProgress(status);
   if(status.status==='complete')return status;
   await new Promise<void>(resolve=>setTimeout(resolve,700));
  }
  throw new DOMException('Request cancelled','AbortError');
+ }finally{signal.removeEventListener('abort',cancel)}
 }

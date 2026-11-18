@@ -89,6 +89,8 @@ $Arguments = @(
     '--add-data', ((Join-Path $AppRoot 'src\petrus_logo.png') + ';src'),
     '--collect-submodules', 'uvicorn',
     '--collect-submodules', 'backend',
+    '--hidden-import', '_duckdb',
+    '--collect-submodules', 'duckdb',
     '--add-data', ((Join-Path $AppRoot 'backend\core\workhub_quality\templates') + ';backend/core/workhub_quality/templates'),
     '--collect-submodules', 'virtual_plc.core',
     '--add-data', ((Join-Path $AppRoot 'virtual_plc\dist') + ';virtual_plc/dist'),

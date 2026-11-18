@@ -28,3 +28,6 @@ Jinja2>=3.1.6,<4
 playwright>=1.56,<2
 
 python-pptx>=1.0.2,<2
+
+# Embedded deterministic worksheet analytics; no external database service.
+duckdb==2.0.0

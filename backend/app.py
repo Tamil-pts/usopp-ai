@@ -154,6 +154,8 @@ for feature_router in (system.router, validation.router, metadata.router, knowle
 app.include_router(circuit_compare.router)
 app.include_router(plc_pdf_comparison.router)
 app.include_router(spreadsheet_analysis.router)
+from backend.api import spreadsheet_bi
+app.include_router(spreadsheet_bi.router)
 app.include_router(edesign.router)
 app.include_router(virtual_electrical.router)
 from backend.api import team_chat
@@ -164,6 +166,8 @@ from backend.api import team_inbox_apps
 app.include_router(team_inbox_apps.router)
 from backend.api import chopper_speech
 app.include_router(chopper_speech.router)
+from backend.api import chopper_conversations
+app.include_router(chopper_conversations.router)
 from backend.api import chopper_agent
 app.include_router(chopper_agent.router)
 

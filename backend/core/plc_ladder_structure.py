@@ -14,7 +14,7 @@ TAG = re.compile(r'[A-Za-z_%][\w%]*(?:\.[\w]+)*(?:\[\d+\])*\Z')
 def recognize(page, region, lines, masks):
     import pdfplumber
     px,py=page.bbox[:2];x0,y0,x1,y1=region
-    unknown=[];segments=[];curves=[]
+    unknown=[];segments=[];curves=[];rectangles=[]
     def masked(box):
         return any(box[0]<m[2] and box[2]>m[0] and box[1]<m[3] and box[3]>m[1] for m in masks)
     chars=[c for line in lines for c in line.get('chars',[]) if not masked([c['x0']-px,c['top']-py,c['x1']-px,c['bottom']-py])]
@@ -36,6 +36,10 @@ def recognize(page, region, lines, masks):
                     b=tuple(max(lo,min(hi,v)) for v,lo,hi in zip(b,(x0,y0),(x1,y1)))
                 elif box[1]<y0 or box[3]>y1:unknown.append('Clipped diagonal.');continue
                 segments.append((a,b))
+            elif kind=='rects' and y0<=box[1] and box[3]<=y1:
+                a,b,c,d=(box[0],box[1]),(box[2],box[1]),(box[2],box[3]),(box[0],box[3])
+                border=set(range(len(segments),len(segments)+4))
+                segments.extend(((a,b),(b,c),(c,d),(d,a)));rectangles.append((box,border))
             elif kind=='curves' and y0<=box[1] and box[3]<=y1:
                 curves.append(dict(box=box,points=pts,path=obj.get('path',[])))
             else:unknown.append('Unsupported or clipped drawing object.')
@@ -61,6 +65,25 @@ def recognize(page, region, lines, masks):
         i,w=candidates[0]
         if i in used_words:return None
         used_words.add(i);return w['text']
+    # Some PDF printers emit boxes as four independent line paths.
+    seen={tuple(round(v,2) for v in box) for box,_ in rectangles}
+    vertical_edges={}
+    for k,v in enumerate(segments):
+        if axis(v)=='v':vertical_edges.setdefault(round(v[0][0],2),[]).append((k,v))
+    for i,s in enumerate(segments):
+        if axis(s)!='h':continue
+        lx,rx=sorted(p[0] for p in s);top=s[0][1]
+        if rx-lx<25:continue
+        for j,t in enumerate(segments):
+            bottom=t[0][1]
+            if axis(t)!='h' or bottom-top<20 or abs(min(p[0] for p in t)-lx)>.05 or abs(max(p[0] for p in t)-rx)>.05:continue
+            sides=[k for k,v in vertical_edges.get(round(lx,2),[])+vertical_edges.get(round(rx,2),[]) if
+                   abs(min(p[1] for p in v)-top)<.05 and abs(max(p[1] for p in v)-bottom)<.05]
+            box=[lx,top,rx,bottom];key=tuple(round(v,2) for v in box)
+            if len(sides)==2 and key not in seen:
+                rectangles.append((box,{i,j,*sides}));seen.add(key)
+    from backend.core.plc_pdf_instructions import recognize as recognize_instructions
+    recognize_instructions(rectangles,segments,words,used,used_words,symbols,unknown)
     vertical=[(i,s) for i,s in enumerate(segments) if axis(s)=='v' and 4<=abs(s[1][1]-s[0][1])<=40]
     for i,left in vertical:
         if i in used:continue
@@ -106,8 +129,9 @@ def recognize(page, region, lines, masks):
     if len(used_curves)!=len(curves):unknown.append('Unrecognized curve or symbol.')
     if len(used_words)!=len(words):unknown.append('Unassigned text, instruction or operand.')
     if page.images:unknown.append('Page contains raster content.')
-    counts=Counter(s['operand'] for s in symbols)
-    if any(n>1 for n in counts.values()):unknown.append('Repeated operands require explicit instance matching.')
+    # Location-derived IDs preserve instances; graph matching ignores ID spelling.
+    for index,symbol in enumerate(sorted(symbols,key=lambda s:(s['box'][1],s['box'][0],s['kind']))):
+        symbol['instance_id']=f'e{index+1}'
     wires=[s for i,s in enumerate(segments) if i not in used]
     if any(axis(s)=='d' for s in wires):unknown.append('Unrecognized diagonal.')
     wires=[s for s in wires if axis(s)!='d']
@@ -129,11 +153,11 @@ def recognize(page, region, lines, masks):
                 if on(cross,v) and on(cross,h):unknown.append('Unmarked four-way crossing.')
     nets={}
     for symbol in symbols:
-        for port,point in zip(('in','out'),symbol['ports']):
+        for port,point in zip(symbol.get('port_names',('in','out')),symbol['ports']):
             attached_roots={root(i) for i,w in enumerate(wires) if on(point,w,TOL)}
             if len(attached_roots)>1:unknown.append('Ambiguous terminal attachment.')
             if attached_roots:
-                net=next(iter(attached_roots));nets.setdefault(net,[]).append((symbol['operand'],port))
+                net=next(iter(attached_roots));nets.setdefault(net,[]).append((symbol['instance_id'],port))
             elif not(symbol['kind']=='coil' and port=='out'):unknown.append('Unconnected symbol terminal.')
     assigned=set(nets)
     if any(root(i) not in assigned for i in range(len(wires))):unknown.append('Unassigned wire component.')
@@ -147,7 +171,11 @@ def recognize(page, region, lines, masks):
                 unknown.append('Unterminated conductor or broken wire.')
     if not symbols:unknown.append('No supported contact/coil network recognized.')
     # Reachability is connectivity evidence only, not PLC execution/scan timing.
-    return dict(complete=not unknown,symbols=symbols,nets=sorted(sorted(v) for v in nets.values()),
+    roots=sorted(nets,key=lambda r:sorted(nets[r]))
+    power={root(i) for i,w in enumerate(wires) if axis(w)=='v' and abs(w[0][0]-min_x)<.05 and abs(w[1][1]-w[0][1])>40}
+    if len(power)!=1:unknown.append('A unique continuous power rail was not established.')
+    return dict(complete=not unknown,symbols=symbols,nets=[sorted(nets[r]) for r in roots],
+                power_nets=[i for i,r in enumerate(roots) if r in power],
                 open_checks=sorted(set(unknown)),tolerance_points=TOL)
 
 
@@ -160,20 +188,32 @@ def compare(left,right):
     sa,sb=symbols(a),symbols(b)
     changes=[]
     if supported:
-        aa,bb=dict(sa),dict(sb)
+        # Never collapse duplicated labels into one dictionary entry.
+        aa={tag:kind for tag,kind in sa if sum(t==tag for t,_ in sa)==1}
+        bb={tag:kind for tag,kind in sb if sum(t==tag for t,_ in sb)==1}
         for tag in sorted(aa.keys()|bb.keys()):
             if aa.get(tag)!=bb.get(tag):changes.append(dict(operand=tag,before=aa.get(tag),after=bb.get(tag)))
-    same=supported and sa==sb and all(x['nets']==y['nets'] for x,y in zip(a,b))
+    from backend.core import plc_engineering_graph as engineering
+    matches=[engineering.match(x,y) for x,y in zip(a,b)] if supported else []
+    if any(m['exhausted'] for m in matches):supported=False
+    same=bool(supported and all(m['same'] for m in matches))
+    checks=sorted(set(c for p in a+b for c in p['open_checks']))
+    if any(m['exhausted'] for m in matches):checks.append('Instance matching search bound exceeded; review repeated elements.')
+    # Page-local incidence does not prove a cross-page terminal connection.
+    if len(a)>1 or len(b)>1:
+        supported=False;same=False;checks.append('Multi-page terminal continuity requires review; source segments are retained.')
+    functional=engineering.functional(a[0],b[0]) if supported and len(a)==len(b)==1 else dict(supported=False)
     return dict(supported=supported,same=same,changes=changes,
                 base_complete=covered_a,compared_complete=covered_b,
                 # Partial candidates on both sides cannot overrule the existing
                 # source/raster engine. A newly incomplete formerly covered
                 # network must not be certified by raster agreement alone.
                 review_required=covered_a!=covered_b,
-                connections_changed=supported and any(x['nets']!=y['nets'] for x,y in zip(a,b)),
+                connections_changed=supported and not same,
+                instance_matches=matches,functional=functional,
                 base_symbols=sa,compared_symbols=sb,
                 base_elements=[dict(page=p['page'],**s) for p in a for s in p['symbols']],
                 compared_elements=[dict(page=p['page'],**s) for p in b for s in p['symbols']],
                 base_nets=[dict(page=p['page'],nets=p['nets']) for p in a],
                 compared_nets=[dict(page=p['page'],nets=p['nets']) for p in b],
-                open_checks=sorted(set(c for p in a+b for c in p['open_checks'])))
+                open_checks=checks)

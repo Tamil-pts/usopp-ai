@@ -32,36 +32,43 @@ ASSIST_JOBS_LOCK = threading.RLock()
 @router.post('/api/assist/start')
 def assist_start(payload: dict):
     from backend.core.run_history import current_user
-    owner = (current_user.get() or {}).get('id') or (current_user.get() or {}).get('username')
+    user=current_user.get() or {};owner=(user.get('id') or user.get('username'),user.get('createdAt',''))
     sid = uuid.uuid4().hex
     now = time.monotonic()
     with ASSIST_JOBS_LOCK:
         for key in list(ASSIST_JOBS):
             job=ASSIST_JOBS[key]
-            if job['status'] != 'running' and now - job.get('finished',job['started']) > 1800: del ASSIST_JOBS[key]
-        if sum(j['status'] == 'running' and j['owner'] == owner for j in ASSIST_JOBS.values()) >= 2:
+            if not job.get('workerActive') and job['status'] != 'running' and now - job.get('finished',job['started']) > 1800: del ASSIST_JOBS[key]
+        if sum(j.get('workerActive',j['status']=='running') and j['owner'] == owner for j in ASSIST_JOBS.values()) >= 2:
             raise HTTPException(429, 'Wait for your current Chopper questions to finish.')
-        ASSIST_JOBS[sid] = {'status': 'running', 'owner': owner, 'started': now, 'stage': 'Preparing project context', 'current': 0, 'total': 0}
+        ASSIST_JOBS[sid] = {'status': 'running', 'workerActive':True, 'owner': owner, 'started': now, 'stage': 'Preparing project context', 'current': 0, 'total': 0}
 
     def update(stage, current=None, total=None, **telemetry):
         with ASSIST_JOBS_LOCK:
             job = ASSIST_JOBS[sid]
+            if job.get('cancelled'):raise InterruptedError('Reply stopped by the user.')
             if job['stage'] != stage:
                 job.update(stageStarted=time.monotonic(), current=0, total=0)
             job['stage'] = stage
             if current is not None: job['current'] = current
             if total is not None: job['total'] = total
-            job.update({key:value for key,value in telemetry.items() if key in {'contextUsage','retrieval','modelStatus'}})
+            job.update({key:value for key,value in telemetry.items() if key in {'contextUsage','retrieval','modelStatus','partialResult'}})
 
     def worker():
         token = reporter.set(update)
         try:
             answer = assist(payload)
-            with ASSIST_JOBS_LOCK: ASSIST_JOBS[sid].update(status='complete', stage='Answer ready', result=answer, finished=time.monotonic())
+            with ASSIST_JOBS_LOCK:
+                if not ASSIST_JOBS[sid].get('cancelled'):ASSIST_JOBS[sid].update(status='complete', stage='Answer ready', result=answer, finished=time.monotonic())
+        except InterruptedError:
+            with ASSIST_JOBS_LOCK:ASSIST_JOBS[sid].update(status='stopped',finished=time.monotonic())
         except Exception as error:
             log.exception('CHOPPER_JOB_ERROR')
-            with ASSIST_JOBS_LOCK: ASSIST_JOBS[sid].update(status='error', error=str(error), finished=time.monotonic())
-        finally: reporter.reset(token)
+            with ASSIST_JOBS_LOCK:
+                if not ASSIST_JOBS[sid].get('cancelled'):ASSIST_JOBS[sid].update(status='error', error=str(error), finished=time.monotonic())
+        finally:
+            with ASSIST_JOBS_LOCK:ASSIST_JOBS[sid]['workerActive']=False
+            reporter.reset(token)
     threading.Thread(target=copy_context().run, args=(worker,), daemon=True).start()
     return {'jobId': sid}
 
@@ -69,16 +76,27 @@ def assist_start(payload: dict):
 @router.get('/api/assist/status/{sid}')
 def assist_status(sid: str):
     from backend.core.run_history import current_user
-    owner = (current_user.get() or {}).get('id') or (current_user.get() or {}).get('username')
+    user=current_user.get() or {};owner=(user.get('id') or user.get('username'),user.get('createdAt',''))
     with ASSIST_JOBS_LOCK:
         job = ASSIST_JOBS.get(sid)
         if not job or job['owner'] != owner: raise HTTPException(404, 'Chopper request not found.')
-        data = {k: v for k, v in job.items() if k not in {'owner', 'started', 'stageStarted', 'finished'}}
+        data = {k: v for k, v in job.items() if k not in {'owner', 'started', 'stageStarted', 'finished', 'workerActive'}}
         now = job.get('finished', time.monotonic())
         data['elapsedSeconds'] = round(now - job['started'], 1)
         if job['total'] and job['current'] >= 3 and job['status'] == 'running':
             data['estimatedStageRemainingSeconds'] = round((now - job.get('stageStarted', job['started'])) / job['current'] * (job['total'] - job['current']), 1)
         return data
+
+
+@router.post('/api/assist/cancel/{sid}')
+def assist_cancel(sid: str):
+    from backend.core.run_history import current_user
+    user=current_user.get() or {};owner=(user.get('id') or user.get('username'),user.get('createdAt',''))
+    with ASSIST_JOBS_LOCK:
+        job=ASSIST_JOBS.get(sid)
+        if not job or job['owner']!=owner:raise HTTPException(404,'Chopper request not found.')
+        job.update(cancelled=True,status='stopped',stage='Reply stopped',finished=time.monotonic())
+    return {'status':'stopped','notice':'Reply publication stopped. An in-flight local model call may finish in the background.'}
 
 ASSIST_SUFFIXES={'.st','.var','.typ','.ab','.c','.h','.src','.ld','.pages','.page','.layer','.txtgrp','.algrp','.iom','.sw','.per','.osl','.hwl','.hw','.set','.apj','.gdm','.xml','.txt'}
 ASSIST_STOP_WORDS={'about','after','again','also','and','are','can','check','does','explain','file','find','for','from','give','how','in','is','it','logic','me','of','on','or','project','show','the','this','to','what','where','why','with'}

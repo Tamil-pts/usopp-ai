@@ -5,6 +5,8 @@ LogicScan and project search run locally without an LLM. Optional models provide
 conversation, explanations and suggested code changes; deterministic tools keep
 their own results.
 
+Latest workspace update: [answer cards, private project history and local worksheet BI](docs/CHOPPER_ANSWER_WORKSPACE_20261118.md). Chat is the main entry; agent controls, evaluation and reviewed learning are in KnowHub.
+
 ## Project task analysis and reviewed training (4.65.12)
 
 Chopper now has backend guidance and source traces for machine functions,
