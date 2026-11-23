@@ -28,7 +28,11 @@ from python_engine.circuit_visual import compare_visual, visible_text_change
 from python_engine.circuit_objects import build_scene, uncovered_lines
 
 ENGINE_VERSION = '2.1'
-MAX_PAGES = 200
+try:
+    from backend.core.pdf_limits import get_pdf_page_limit
+except Exception:
+    get_pdf_page_limit = lambda: 10000
+MAX_PAGES = 10000
 MAX_WORDS = 40000
 MAX_CELLS = 20000
 RENDER_WIDTH = 1600
@@ -222,8 +226,9 @@ def extract_pdf(path, side, output, progress=lambda *_: None):
     reader = PdfReader(path)
     if reader.is_encrypted:
         raise ValueError('Password-protected drawings are not supported. Export an unlocked PDF first.')
-    if not 0 < len(reader.pages) <= MAX_PAGES:
-        raise ValueError(f'Use a PDF containing 1–{MAX_PAGES} pages.')
+    max_pages = get_pdf_page_limit()
+    if not 0 < len(reader.pages) <= max_pages:
+        raise ValueError(f'Use a PDF containing 1–{max_pages:,} pages.')
     pages = []
     repaired, font_recovery = extraction_copy(reader)
     with pdfplumber.open(repaired or path) as document:

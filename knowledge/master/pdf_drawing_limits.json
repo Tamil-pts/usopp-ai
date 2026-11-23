@@ -1,0 +1,5 @@
+{
+  "version": "1.0",
+  "maxPages": 10000,
+  "maxFileSizeMB": 500
+}

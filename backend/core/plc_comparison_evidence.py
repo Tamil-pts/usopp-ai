@@ -2,8 +2,13 @@
 import hashlib
 import json
 
-MAX_PAGES = 2000
-MAX_BYTES = 100 * 1024**2
+try:
+    from backend.core.pdf_limits import get_pdf_page_limit, get_pdf_max_bytes
+    MAX_PAGES = get_pdf_page_limit()
+    MAX_BYTES = get_pdf_max_bytes()
+except Exception:
+    MAX_PAGES = 10000
+    MAX_BYTES = 500 * 1024**2
 
 
 def fingerprint(page, region, lines, masks):

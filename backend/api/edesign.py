@@ -25,7 +25,12 @@ from backend.core.runtime import WORK
 from python_engine.circuit_compare import PDFIUM_LOCK
 
 router = APIRouter(prefix='/api/e-design', tags=['e-design review'])
-MAX_BYTES = 75 * 1024 * 1024
+try:
+    from backend.core.pdf_limits import get_pdf_page_limit, get_pdf_max_bytes
+except Exception:
+    get_pdf_page_limit = lambda: 10000
+    get_pdf_max_bytes = lambda: 500 * 1024 * 1024
+MAX_BYTES = 500 * 1024 * 1024
 
 
 def user():
@@ -106,7 +111,8 @@ def create_review(folder, sid, name, who):
     import pypdfium2 as pdfium
     reader = PdfReader(folder / 'source.pdf')
     if reader.is_encrypted: raise ValueError('Upload an unlocked PDF.')
-    if not 1 <= len(reader.pages) <= 160: raise ValueError('Use a drawing set with 1–150 drawing pages.')
+    max_pages = get_pdf_page_limit()
+    if not 1 <= len(reader.pages) <= max_pages: raise ValueError(f'Use a drawing set with 1–{max_pages:,} drawing pages.')
     from python_engine.edesign_pdf import read_review,review_background
     imported=read_review(folder/'source.pdf')
     review_background(folder/'source.pdf',folder/'background.pdf')
@@ -155,10 +161,11 @@ async def upload(file: UploadFile = File(...)):
     folder.mkdir(parents=True)
     try:
         size = 0
+        max_bytes = get_pdf_max_bytes()
         with (folder / 'source.pdf').open('wb') as stream:
             while chunk := await file.read(1024 * 1024):
                 size += len(chunk)
-                if size > MAX_BYTES: raise HTTPException(413, 'The PDF must be 75 MB or smaller.')
+                if size > max_bytes: raise HTTPException(413, f'The PDF must be {max_bytes // (1024 * 1024)} MB or smaller.')
                 stream.write(chunk)
         with (folder / 'source.pdf').open('rb') as stream:
             if not stream.read(5).startswith(b'%PDF-'): raise HTTPException(400, 'Upload a PDF drawing.')
@@ -170,7 +177,8 @@ async def upload(file: UploadFile = File(...)):
         if folder.resolve().parent == WORK.resolve() and folder.name == sid:
             shutil.rmtree(folder)
         if isinstance(error, HTTPException): raise
-        raise HTTPException(400, 'The PDF could not be opened. Use an unlocked, valid PDF with up to 150 pages.') from error
+        max_pages = get_pdf_page_limit()
+        raise HTTPException(400, f'The PDF could not be opened. Use an unlocked, valid PDF with up to {max_pages:,} pages.') from error
     finally: await file.close()
 
 

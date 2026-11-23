@@ -19,7 +19,11 @@ from python_engine.circuit_report import build_report
 from backend.core import circuit_markup
 
 router = APIRouter(prefix='/api/circuit-compare', tags=['Circuit Comparison'])
-MAX_BYTES = 75 * 1024 * 1024
+try:
+    from backend.core.pdf_limits import get_pdf_max_bytes
+except Exception:
+    get_pdf_max_bytes = lambda: 500 * 1024 * 1024
+MAX_BYTES = 500 * 1024 * 1024
 _slots = threading.BoundedSemaphore(2)
 _jobs = {}
 _lock = threading.RLock()
@@ -48,12 +52,13 @@ def _result(sid):
 
 async def _save_upload(upload, target):
     size = 0
+    max_bytes = get_pdf_max_bytes()
     try:
         with target.open('wb') as stream:
             while chunk := await upload.read(1024 * 1024):
                 size += len(chunk)
-                if size > MAX_BYTES:
-                    raise HTTPException(413, 'Each drawing must be no larger than 75 MB.')
+                if size > max_bytes:
+                    raise HTTPException(413, f'Each drawing must be no larger than {max_bytes // (1024 * 1024)} MB.')
                 stream.write(chunk)
         with target.open('rb') as stream:
             valid = size >= 5 and stream.read(5).startswith(b'%PDF-')

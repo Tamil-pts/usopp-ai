@@ -102,7 +102,13 @@ def upload(user,name,content,*,plc_pdf=False):
             from backend.core.plc_comparison_evidence import MAX_PAGES
             reader=PdfReader(source)
             if reader.is_encrypted:fail('Upload an unlocked PLC PDF.')
-            if len(reader.pages)>MAX_PAGES:fail('PLC PDF comparison supports up to 2,000 pages per file.')
+            max_pages = MAX_PAGES
+            try:
+                from backend.core.pdf_limits import get_pdf_page_limit
+                max_pages = get_pdf_page_limit()
+            except Exception:
+                pass
+            if len(reader.pages)>max_pages:fail(f'PLC PDF comparison supports up to {max_pages:,} pages per file.')
         else:
             # Fail unreadable/encrypted inputs before accepting them into the UI.
             text_units(source)

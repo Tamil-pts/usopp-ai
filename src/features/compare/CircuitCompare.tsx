@@ -25,6 +25,13 @@ async function request<T>(url:string,options?:RequestInit):Promise<T>{
 const categories=['Connections','Components','Cable specifications','Terminal mapping','BOM','Drawing / annotations','Revision information'];
 
 export function CircuitCompare({projectLink}:{projectLink?:ReactNode}={}){
+ const [pdfLimits,setPdfLimits]=useState<{maxPages:number;maxFileSizeMB:number}>({maxPages:10000,maxFileSizeMB:500});
+ useEffect(()=>{
+  fetch('/api/admin/settings/pdf-drawing-limits',{cache:'no-store'})
+   .then(r=>r.json())
+   .then(d=>{if(d&&typeof d.maxPages==='number')setPdfLimits({maxPages:d.maxPages,maxFileSizeMB:d.maxFileSizeMB||500});})
+   .catch(()=>{});
+ },[]);
  const [base,setBase]=useState<File|null>(null),[developed,setDeveloped]=useState<File|null>(null);
  const [session,setSession]=useState(()=>userStorage.getItem('usopp_circuit_compare_session')||'');
  const [result,setResult]=useState<Result|null>(null),[job,setJob]=useState<Job|null>(null),[starting,setStarting]=useState(false),[error,setError]=useState('');
@@ -111,7 +118,7 @@ export function CircuitCompare({projectLink}:{projectLink?:ReactNode}={}){
    {result&&<div className="circuitActions"><a className="btn" href={`/api/circuit-compare/${session}/export`} download><Download size={15}/>Change data</a><button className="btn primary" disabled={reportBusy} onClick={()=>void downloadReport()}><FileText size={16}/>{reportBusy?'Preparing PDF…':'PDF comparison report'}</button></div>}
   </div></header>
   <div className="circuitUploads">
-   {(['base','developed'] as const).map(side=><label className="circuitUpload" key={side}><span><Upload size={17}/>{side==='base'?'Base drawing':'Developed drawing'}</span><input type="file" accept="application/pdf,.pdf" disabled={busy} aria-label={`${side==='base'?'Base':'Developed'} drawing PDF`} onChange={e=>(side==='base'?setBase:setDeveloped)(e.target.files?.[0]||null)}/><small>{(side==='base'?base:developed)?.name||'Choose a PDF · up to 75 MB / 200 pages'}</small></label>)}
+   {(['base','developed'] as const).map(side=><label className="circuitUpload" key={side}><span><Upload size={17}/>{side==='base'?'Base drawing':'Developed drawing'}</span><input type="file" accept="application/pdf,.pdf" disabled={busy} aria-label={`${side==='base'?'Base':'Developed'} drawing PDF`} onChange={e=>(side==='base'?setBase:setDeveloped)(e.target.files?.[0]||null)}/><small>{(side==='base'?base:developed)?.name||`Choose a PDF · up to ${pdfLimits.maxFileSizeMB} MB / ${pdfLimits.maxPages.toLocaleString()} pages`}</small></label>)}
    <button className="btn primary circuitRun" disabled={!base||!developed||busy} onClick={()=>void run()}>{busy?'Comparing…':'Compare drawings'}</button>
   </div>
   {busy&&<div className="circuitProgress" role="status"><span className="circuitSpinner"/><b>{job?.phase||'Uploading drawings'}</b>{!!job?.total&&<span>{job.current} / {job.total}</span>}<span>The original drawings remain unchanged.</span></div>}

@@ -83,3 +83,20 @@ def save_machine_departments(request: Request, payload: dict):
     CONFIG.parent.mkdir(parents=True, exist_ok=True)
     CONFIG.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     return result
+
+
+@router.get('/pdf-drawing-limits')
+def get_pdf_drawing_limits():
+    from backend.core.pdf_limits import read_pdf_limits
+    return read_pdf_limits()
+
+
+@router.put('/pdf-drawing-limits')
+def put_pdf_drawing_limits(request: Request, payload: dict):
+    require_admin(request)
+    from backend.core.pdf_limits import save_pdf_limits
+    try:
+        return save_pdf_limits(payload)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+

@@ -27,8 +27,14 @@ def extract(path, ignore_page_numbers=True, options=None):
     characters = 0
     network_count = 0
     with pdfplumber.open(path) as document:
-        if len(document.pages) > evidence.MAX_PAGES:
-            raise HTTPException(422, 'PLC PDF comparison supports up to 2,000 pages per file.')
+        max_pages = getattr(evidence, 'MAX_PAGES', 10000)
+        try:
+            from backend.core.pdf_limits import get_pdf_page_limit
+            max_pages = get_pdf_page_limit()
+        except Exception:
+            pass
+        if len(document.pages) > max_pages:
+            raise HTTPException(422, f'PLC PDF comparison supports up to {max_pages:,} pages per file.')
         for number, original in enumerate(document.pages, 1):
             bounds = original.bbox
             if original.cropbox:
