@@ -298,6 +298,14 @@ def _assist(payload:dict):
     report_reply = reply_if_report(payload)
     if report_reply is not None:
         return report_reply
+    # Chopper Command Layer hook — additive, flag-gated (USOPP_CHOPPER_ACTIONS=1).
+    # Only intercepts clear command phrases; question phrases fall through unchanged.
+    import os as _os
+    if _os.environ.get('USOPP_CHOPPER_ACTIONS') != '0':
+        from backend.core.chopper_actions.router import reply_if_action
+        _action_card = reply_if_action(payload)
+        if _action_card is not None:
+            return _action_card
     application_help=bool(re.search(r'\b(?:WorkHub|ByteMap|MetaWorks|DataInspect|MatchView|LogicScan|KnowHub|ResultView|uSOPp)\b|how\s+(?:do\s+I\s+)?use\s+(?:this\s+)?app',str(question),re.I))
     from backend.core.window_help import guide as window_guide, answer as window_answer
     current_guide=window_guide(context)

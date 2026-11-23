@@ -1663,7 +1663,10 @@ def required_sheet2_issues(metadata_info: MetadataInfo) -> List[ValidationIssue]
             for sheet in book.sheets():
                 if normalize_name(sheet.name).casefold() == 'sheet2':reference_sheet(sheet.name,[sheet.row_values(i) for i in range(sheet.nrows)])
         finally:book.release_resources()
-    from python_engine.metadata_quality import inspect_workbook
+    try:
+        from python_engine.metadata_quality import inspect_workbook
+    except ModuleNotFoundError:
+        from metadata_quality import inspect_workbook
     missing = [issue for issue in inspect_workbook(sheets)['stages'][1]['issues'] if issue['check']=='Missing Sheet2 mapping']
     result = []
     for issue in missing:

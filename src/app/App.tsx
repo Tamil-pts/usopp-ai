@@ -84,6 +84,25 @@ function App(){
   useEffect(()=>{let active=true;fetch('/api/admin/settings/machine-departments',{cache:'no-store'}).then(async response=>{const data=await response.json();if(!response.ok)throw new Error(data.detail||'Could not load machine departments.');if(active&&Array.isArray(data.departments)&&Array.isArray(data.prefixes))setMachineConfig(data)}).catch(()=>{});return()=>{active=false}},[]);
   const saveMachineConfig=async(next:{departments:string[];prefixes:MachinePrefix[]})=>{const response=await fetch('/api/admin/settings/machine-departments',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(next)});const data=await response.json();if(!response.ok)throw new Error(data.detail||'Could not save machine / department settings.');setMachineConfig(data)};
   useEffect(()=>{if(!toast)return;const id=setTimeout(()=>setToast(''),8000);return()=>clearTimeout(id)},[toast]);
+  useEffect(()=>{
+    const onAdoptValidation=(event:Event)=>{
+      const data=(event as CustomEvent).detail;
+      if(!data)return;
+      if(data.counts||data.results)validation.openHistory('validation',data);
+      if(data.projectPath&&data.projectName)validation.selectProject(data.projectPath,data.projectName);
+    };
+    const onAdoptCompare=(event:Event)=>{
+      const data=(event as CustomEvent).detail;
+      if(!data)return;
+      if(data.summary||data.diffs)compare.openHistory(data);
+    };
+    window.addEventListener('usopp-adopt-validation',onAdoptValidation);
+    window.addEventListener('usopp-adopt-compare',onAdoptCompare);
+    return()=>{
+      window.removeEventListener('usopp-adopt-validation',onAdoptValidation);
+      window.removeEventListener('usopp-adopt-compare',onAdoptCompare);
+    };
+  },[validation,compare]);
   const runRules=async(rules:any)=>{
     if(!validation.localProjectPath&&!validation.projectFiles.length){setToast('Select a project in the pipeline project box to continue.');return {error:'Select a project in the pipeline project box to continue.'}}
     setRuleBusy('rules');setRuleResults(null);try{const data={...await validateEngineeringRules({...validation,rules}),pipelineRunId:rules.pipelineRunId};setRuleResults(data);setToast('Rule validation completed.');return data}catch(e:any){setToast(e.message);return {error:e.message}}finally{setRuleBusy('')}

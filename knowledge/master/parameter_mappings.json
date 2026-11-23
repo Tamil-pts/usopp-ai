@@ -15806,6 +15806,20 @@
       "scale_factor": "1",
       "is_visible": "YES",
       "is_writable": "YES"
+    },
+    {
+      "plc_parameter": "Thickplace per Can",
+      "plc_tag": "DOFF_REPORT2[19]",
+      "metadata_parameter": "No of Thickplace",
+      "machine_department": "All",
+      "status": "configured"
+    },
+    {
+      "plc_parameter": "Cumulative Consumption Air Consumption",
+      "plc_tag": "HMI_A IR_CONSUMPTION_SHIFT",
+      "metadata_parameter": "Cumulative Air Consumption",
+      "machine_department": "All",
+      "status": "configured"
     }
   ],
   "entry_schema": {

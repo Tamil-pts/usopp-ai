@@ -100,3 +100,21 @@ def put_pdf_drawing_limits(request: Request, payload: dict):
     except ValueError as e:
         raise HTTPException(400, str(e))
 
+
+# ---------------------------------------------------------------------------
+# Chopper Actions pilot-user configuration (additive)
+# ---------------------------------------------------------------------------
+
+@router.get('/chopper-actions')
+def get_chopper_actions_config(request: Request):
+    require_admin(request)
+    from backend.core.chopper_actions.permissions import read_config
+    return read_config()
+
+
+@router.put('/chopper-actions')
+def put_chopper_actions_config(request: Request, payload: dict):
+    require_admin(request)
+    from backend.core.chopper_actions.permissions import save_config
+    return save_config(payload)
+

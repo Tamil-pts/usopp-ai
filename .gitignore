@@ -27,6 +27,7 @@ node_modules_setup_backup*/
 .usopp_exports/
 .usopp_workhub/
 .usopp_chat/
+.usopp_chopper2/
 .usopp_speech_jobs/
 .usopp_meetings.json
 deploy/meetings/runtime/
