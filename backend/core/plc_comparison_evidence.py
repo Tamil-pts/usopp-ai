@@ -9,6 +9,7 @@ try:
 except Exception:
     MAX_PAGES = 10000
     MAX_BYTES = 500 * 1024**2
+_INITIAL_MAX_PAGES = MAX_PAGES
 
 
 def fingerprint(page, region, lines, masks):

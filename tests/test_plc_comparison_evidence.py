@@ -134,7 +134,7 @@ def test_1001_pages_compare_with_last_page_change_and_pixels_enabled():
 def test_plc_page_limit_is_bounded():
     from fastapi import HTTPException
     with patch.object(plc.evidence,'MAX_PAGES',1):
-        with pytest.raises(HTTPException,match='2,000 pages'):
+        with pytest.raises(HTTPException,match=r'supports up to [\d,]+ pages per file'):
             run(program([[(1,'A')],[(2,'B')]]),program([[(1,'A')]]))
 
 

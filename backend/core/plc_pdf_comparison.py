@@ -27,12 +27,13 @@ def extract(path, ignore_page_numbers=True, options=None):
     characters = 0
     network_count = 0
     with pdfplumber.open(path) as document:
-        max_pages = getattr(evidence, 'MAX_PAGES', 10000)
-        try:
-            from backend.core.pdf_limits import get_pdf_page_limit
-            max_pages = get_pdf_page_limit()
-        except Exception:
-            pass
+        max_pages = getattr(evidence, 'MAX_PAGES', None)
+        if max_pages is None or max_pages == getattr(evidence, '_INITIAL_MAX_PAGES', max_pages):
+            try:
+                from backend.core.pdf_limits import get_pdf_page_limit
+                max_pages = get_pdf_page_limit()
+            except Exception:
+                max_pages = max_pages or 10000
         if len(document.pages) > max_pages:
             raise HTTPException(422, f'PLC PDF comparison supports up to {max_pages:,} pages per file.')
         for number, original in enumerate(document.pages, 1):
