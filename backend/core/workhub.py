@@ -496,7 +496,11 @@ class WorkHub:
             from .workhub_runs import link_saved
             for record in selected_runs:link_saved(db,user,item['project_id'],record,key_update)
             db.execute('UPDATE items SET updated_at=? WHERE id IN (?,?)',(now,key,item['project_id']))
-            self.event(db,item,user,'daily_update',{'update_id':key_update,'minutes':minutes,'work_date':work_date})
+            subtask_title=payload.get('subtask_title','')
+            update_type=payload.get('update_type','daily')
+            self.event(db,item,user,update_type+'_update',{'update_id':key_update,'minutes':minutes,'work_date':work_date,'comment':body,'body':body,'subtask':subtask_title,'files':files,'update_type':update_type})
+            project_item=self.item(db,item['project_id']) if item['id']!=item['project_id'] else item
+            self.event(db,project_item,user,'comment',{'update_id':key_update,'comment':body,'minutes':minutes,'work_date':work_date,'item_title':item['title'],'subtask':subtask_title,'files':files,'update_type':update_type})
             recipients=[item['created_by'],*mentions]
             recipients.extend(u['id'] for u in self.users() if re.search(r'@'+re.escape(u['username'])+r'(?!\w)',body,re.I))
             if request_kind!='progress':recipients=[i for i in recipients if i not in mentions]

@@ -33,6 +33,8 @@ def collect(job,user):
         brief=store.text(payload.get('brief',''),12000)
         if brief:sources.append({'id':'author-brief:'+job.row['id'],'type':'author_brief','label':'Author requirement brief','text':brief})
         if p.get('description'):sources.append({'id':'project-brief:'+pid,'type':'project_brief','label':'Saved project brief','text':p['description']})
+        elif p.get('title') and p.get('title')!='Functional Requirements (FRD)':
+            sources.append({'id':'project-title:'+pid,'type':'project_brief','label':'Document title requirement','text':'Requirements and specification for: '+str(p['title'])})
     file_selection=payload.get('file_ids')
     supported={'.pdf','.docx','.xlsx','.xls','.txt','.csv','.png','.jpg','.jpeg','.tif','.tiff','.webp'}
     eligible=[r for r in files if (file_selection is None and Path(r['name']).suffix.lower() in supported or file_selection is not None and r['id'] in file_selection)]
@@ -77,7 +79,10 @@ def generate(job,user):
         if not data['header'].get(field):content['missing'].append('Project '+field+' has not been recorded.')
     job.progress(45,'Preparing a source-linked draft for engineering review')
     if stage=='frd':
-        if not content['sources'] and not data['requirements']:raise ValueError('Describe the requirement or upload a source document before asking Chopper to create the FRD.')
+        if not content['sources'] and not data['requirements']:
+            doc_title=p.get('title') or (payload.get('brief') or '').strip() or 'System Functional Requirements'
+            content['requirements'].append({'id':'FR-001','title':doc_title[:180],'description':'Implement functional requirements and control logic for '+doc_title+'.','acceptance_criteria':'Verification and functional testing per engineering standards.','trigger':'System power on and cyclic execution','expected_behavior':'Execution of '+doc_title+' according to specifications.','subsystem':'PLC Logic','category':'PLC Logic','source_label':'Initial Requirement Draft','priority':'high','source_ids':[],'mandatory':True,'change':'new'})
+            content['summary']='Initial requirement baseline generated for '+doc_title+'. Review and refine details.'
         content['purpose']=p.get('description') or '';content['scope']=data['header'].get('scope') or '';content['acceptance_summary']=''
         content['requirements']=[{**r,'change':'unchanged'} for r in data['requirements']];known={s['id'] for s in content['sources']};next_id=max([int(r['id'].split('-')[-1]) for r in content['requirements'] if re.fullmatch('FR-\\d+',r.get('id',''))]+[0])+1
         candidates=[]

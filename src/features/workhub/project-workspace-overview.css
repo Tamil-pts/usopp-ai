@@ -10,3 +10,8 @@
 @media(max-width:700px){.pwo-title-line h2{font-size:19px}.pwo-milestone-name,.pwo-milestone>small{font-size:10px}}
 
 .pwo-current-section{align-self:center;color:var(--muted);font-size:13px}.pwo-tools-menu{position:absolute;right:0;top:38px;z-index:5;display:grid;min-width:230px;padding:5px;border:1px solid var(--line);border-radius:8px;background:var(--panel);box-shadow:0 6px 20px #0002}.wh-projects .pwo-tools-menu button{display:flex;align-items:center;gap:8px;text-align:left;padding:9px 10px;border:0;border-radius:5px;background:transparent;color:var(--text);white-space:nowrap}.wh-projects .pwo-tools-menu button:hover{background:var(--panel2)}.wh-projects .pwo-tools-menu .pwo-delete-project{color:#d33}
+
+.pwo-dashboard-duo{grid-template-columns:repeat(2,minmax(0,1fr))!important;margin-top:12px}
+@media(max-width:900px){.pwo-dashboard-duo{grid-template-columns:1fr!important}}
+.pwo-timelog .pwo-compact,.pwo-comments .pwo-compact{cursor:pointer}
+.pwo-timelog .pwo-compact:hover,.pwo-comments .pwo-compact:hover{background:var(--panel2);}

@@ -1,19 +1,25 @@
-import {useEffect,useState,type FormEvent} from 'react';
-import {RefreshCw,Plus,Clock,CheckSquare,Download,ArrowUpRight} from 'lucide-react';
+import {useEffect,useState,useRef,type FormEvent} from 'react';
+import {RefreshCw,Plus,Clock,CheckSquare,Download,ArrowUpRight,Paperclip,X,FolderOpen,FileText} from 'lucide-react';
 import {chatApi,projectHref} from './collaboration';
 import {userStorage} from '../../shared/userStorage';
+import {navigateRoute} from '../../shared/navigation';
+import {uploadFiles} from '../workhub/projectApi';
 import './work-center.css';
 
 type Row=Record<string,any>;
 const hours=(minutes:number)=>`${(minutes/60).toFixed(2)} h`;
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
 function draft(key:string,fallback:Row){try{return {...fallback,...JSON.parse(userStorage.getItem(key)||'{}')};}catch{return fallback;}}
+
 export function WorkCenter({view}:{view:'mine'|'tasks'|'timesheet'}){
  const [formKind,setFormKind]=useState<'task'|'update'>('update'),[scope,setScope]=useState('mine');
  const isTask=formKind==='task';
  const [options,setOptions]=useState<Row>({projects:[],users:[],current_user:0}),[data,setData]=useState<Row>({items:[],total:0,totals:{}}),[page,setPage]=useState(1),[search,setSearch]=useState(''),[project,setProject]=useState(''),[from,setFrom]=useState(''),[to,setTo]=useState(''),[error,setError]=useState(''),[notice,setNotice]=useState(''),[loading,setLoading]=useState(false),[busy,setBusy]=useState(false),[form,setForm]=useState(false),[revision,setRevision]=useState(0);
- const [task,setTask]=useState(()=>draft('usopp_inbox_task_draft',{project_id:'',title:'',description:'',owner_id:'',due_date:'',planned_hours:''}));
- const [time,setTime]=useState(()=>draft('usopp_inbox_time_draft',{project_id:'',item_id:'',work_date:today(),hours:'',minutes:'',body:'',work_status:'in_progress',request_kind:'progress',mention_ids:[]}));
+ const [task,setTask]=useState(()=>draft('usopp_inbox_task_draft',{project_id:'',custom_project:'',title:'',description:'',owner_id:'',due_date:'',planned_hours:''}));
+ const [time,setTime]=useState(()=>draft('usopp_inbox_time_draft',{update_type:'daily',project_id:'',item_id:'',custom_task:'',subtask_title:'',work_date:today(),hours:'',minutes:'',body:'',work_status:'in_progress',request_kind:'progress',mention_ids:[]}));
+ const [attachedFiles,setAttachedFiles]=useState<{id?:string;name:string;size?:number}[]>([]);
+ const filePickerRef=useRef<HTMLInputElement>(null);
+
  useEffect(()=>{userStorage.setItem('usopp_inbox_task_draft',JSON.stringify(task));},[task]);
  useEffect(()=>{userStorage.setItem('usopp_inbox_time_draft',JSON.stringify(time));},[time]);
  useEffect(()=>{let alive=true;void chatApi('/work-center/options').then(value=>{if(alive)setOptions(value);}).catch(e=>{if(alive)setError(e.message)});return()=>{alive=false}},[revision]);
@@ -23,19 +29,132 @@ export function WorkCenter({view}:{view:'mine'|'tasks'|'timesheet'}){
  const changed=()=>{setRevision(v=>v+1);window.dispatchEvent(new Event('workhub-updated'));};
  const timeProject=options.projects.find((p:Row)=>p.id===time.project_id);
  const title=view==='mine'?'My Work':view==='tasks'?'Assigned Work':'Daily Updates & Hours';
+
+ const openCreateNewProject=()=>{
+  setForm(false);
+  navigateRoute({page:'home',hubView:'projects'});
+  setTimeout(()=>{
+   window.dispatchEvent(new CustomEvent('workhub-create-new-project'));
+  },120);
+ };
+
+ async function handleUploadFiles(event:React.ChangeEvent<HTMLInputElement>){
+  const files=Array.from(event.target.files||[]);
+  if(!files.length)return;
+  event.target.value='';
+  setBusy(true);
+  try{
+   if(time.project_id){
+    const abort=new AbortController();
+    const uploaded=await uploadFiles(time.project_id,files,()=>{},()=>{},abort.signal);
+    setAttachedFiles(prev=>[...prev,...uploaded.map(u=>({id:u.id,name:u.name,size:u.size}))]);
+   }else{
+    setAttachedFiles(prev=>[...prev,...files.map(f=>({name:f.name,size:f.size}))]);
+   }
+  }catch(e){
+   setError((e as Error).message);
+  }finally{
+   setBusy(false);
+  }
+ }
+
  async function save(event:FormEvent){event.preventDefault();setBusy(true);setError('');setNotice('');try{
   if(isTask){
-   await chatApi('/work-center/tasks',{...task,owner_id:Number(task.owner_id||options.current_user),planned_hours:Number(task.planned_hours||0)});
-   setTask({project_id:'',title:'',description:'',owner_id:'',due_date:'',planned_hours:''});setNotice('Task created and assigned in WorkHub.');
+   if(task.project_id==='__new__'){openCreateNewProject();return;}
+   await chatApi('/work-center/tasks',{
+    ...task,
+    project_id:task.project_id||'',
+    custom_project:task.custom_project||'',
+    owner_id:Number(task.owner_id||options.current_user),
+    planned_hours:Number(task.planned_hours||0)
+   });
+   setTask({project_id:'',custom_project:'',title:'',description:'',owner_id:'',due_date:'',planned_hours:''});
+   setNotice('Task created and assigned in WorkHub.');
   }else{
-   const h=Number(time.hours||0),m=Number(time.minutes||0);if(!Number.isInteger(h)||!Number.isInteger(m)||h<0||m<0||m>59||h*60+m>1440)throw Error('Enter whole hours and minutes, up to 24 hours. Leave hours blank for a status-only update.');
-   await chatApi('/work-center/updates',{item_id:time.item_id||time.project_id,work_date:time.work_date,minutes:h*60+m,body:time.body,work_status:time.work_status,request_kind:time.request_kind,mention_ids:time.mention_ids});
-   setTime({project_id:'',item_id:'',work_date:today(),hours:'',minutes:'',body:'',work_status:'in_progress',request_kind:'progress',mention_ids:[]});setNotice('Daily update saved. Mentioned users receive an inbox notification; recorded hours follow the existing time review.');
+   const h=Number(time.hours||0),m=Number(time.minutes||0);
+   if(!Number.isInteger(h)||!Number.isInteger(m)||h<0||m<0||m>59||h*60+m>1440)throw Error('Enter whole hours and minutes, up to 24 hours. Leave hours blank for a status-only update.');
+   await chatApi('/work-center/updates',{
+    update_type:time.update_type||'daily',
+    item_id:time.item_id||time.project_id||'',
+    project_id:time.project_id||'',
+    custom_task:time.custom_task||'',
+    subtask_title:time.subtask_title||'',
+    work_date:time.work_date,
+    minutes:h*60+m,
+    body:time.body,
+    work_status:time.work_status,
+    request_kind:time.request_kind,
+    mention_ids:time.mention_ids,
+    file_ids:attachedFiles.filter(f=>f.id).map(f=>f.id!),
+    file_names:attachedFiles.map(f=>f.name)
+   });
+   setTime({update_type:'daily',project_id:'',item_id:'',custom_task:'',subtask_title:'',work_date:today(),hours:'',minutes:'',body:'',work_status:'in_progress',request_kind:'progress',mention_ids:[]});
+   setAttachedFiles([]);
+   setNotice(`${time.update_type==='project'?'Project':'Daily'} update saved. Posted to project comments.`);
   }setForm(false);changed();
  }catch(e){setError((e as Error).message)}finally{setBusy(false)}}
+
  return <section className="inboxWorkCenter" aria-label={'Inbox '+title}><header><div><span className="workCenterEyebrow">YOUR WORKSPACE</span><h2>{title}</h2><p>{view==='timesheet'?'One daily entry records work status, notes and optional hours against a project or its task. Approved hours contribute to project billing.':view==='tasks'?'Monitor projects and tasks you created or manage, including work assigned to other people.':'Projects, tasks and supporting work assigned to you. Open the workflow or post a daily update here.'}</p></div><div className="workCenterActions"><button className="btn" aria-label={'Refresh '+title} disabled={loading||busy} onClick={changed}><RefreshCw size={16}/></button><button className="btn" disabled={busy} onClick={()=>{setFormKind('task');setForm(true)}}><Plus size={16}/>New task</button><button className="btn primary" disabled={busy} onClick={()=>{setFormKind('update');setForm(true)}}><Clock size={16}/>Daily update</button></div></header>
  {view==='timesheet'&&<><div className="workCenterMetrics"><article><Clock size={20}/><span>Logged hours</span><b>{hours(data.totals?.logged_minutes||0)}</b></article><article><CheckSquare size={20}/><span>Approved / billing hours</span><b>{hours(data.totals?.approved_minutes||0)}</b></article><article><Clock size={20}/><span>Awaiting time approval</span><b>{hours(data.totals?.pending_minutes||0)}</b></article></div><small>Totals cover the selected feed and dates. Status-only updates add no billing time. Approved project hours are time totals, not invoices or payment amounts.</small><div className="workCenterFilters"><label>Project<select aria-label="Timesheet project filter" value={project} onChange={e=>{setProject(e.target.value);if(!e.target.value)setScope('mine');setPage(1)}}><option value="">All my projects</option>{options.projects.map((p:Row)=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label><label>Feed<select aria-label="Update feed scope" value={scope} onChange={e=>{setScope(e.target.value);setPage(1)}}><option value="mine">My daily entries</option><option value="project" disabled={!project}>Selected project / all contributors</option></select></label><label>From<input aria-label="Timesheet from" type="date" value={from} onChange={e=>{setFrom(e.target.value);setPage(1)}}/></label><label>To<input aria-label="Timesheet to" type="date" value={to} onChange={e=>{setTo(e.target.value);setPage(1)}}/></label><button className="btn" onClick={()=>{setProject('');setScope('mine');setFrom('');setTo('');setPage(1)}}>Clear filters</button><a className="btn" href={'/api/team-chat/work-center/timesheet?'+query+'&export=csv'}><Download size={15}/>Export updates & hours CSV</a></div></>}
- {form&&<form className="workCenterForm" onSubmit={event=>void save(event)}><h3>{isTask?'Assign a project task':'Record your daily work'}</h3><div className="workCenterFormGrid">{isTask?<><label>Project<select aria-label="Task project" required disabled={busy} value={task.project_id} onChange={e=>setTask({...task,project_id:e.target.value})}><option value="">Choose a project you manage</option>{options.projects.filter((p:Row)=>p.can_create).map((p:Row)=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label><label>Assign to<select aria-label="Assign task to" disabled={busy} value={task.owner_id||String(options.current_user)} onChange={e=>setTask({...task,owner_id:e.target.value})}>{options.users.map((u:Row)=><option key={u.id} value={u.id}>{u.username}{u.id===options.current_user?' (myself)':''}</option>)}</select></label><label className="full">Task title<input aria-label="Task title" required maxLength={180} disabled={busy} value={task.title} onChange={e=>setTask({...task,title:e.target.value})}/></label><label>Due date<input aria-label="Task due date" type="date" disabled={busy} value={task.due_date} onChange={e=>setTask({...task,due_date:e.target.value})}/></label><label>Planned hours<input aria-label="Task planned hours" type="number" min="0" max="100000" step="0.25" disabled={busy} value={task.planned_hours} onChange={e=>setTask({...task,planned_hours:e.target.value})}/></label><label className="full">Description<textarea aria-label="Task description" maxLength={4000} disabled={busy} rows={3} value={task.description} onChange={e=>setTask({...task,description:e.target.value})}/></label><small className="full">Project owners, creators and administrators can assign tasks. Reopen completed development through its controlled workflow before adding development tasks.</small></>:<><label>Project<select aria-label="Log hours project" required disabled={busy} value={time.project_id} onChange={e=>setTime({...time,project_id:e.target.value,item_id:''})}><option value="">Choose assigned project</option>{options.projects.map((p:Row)=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label><label>Task<select aria-label="Log hours task" disabled={busy||!time.project_id} value={time.item_id} onChange={e=>setTime({...time,item_id:e.target.value})}><option value="">Project-level work</option>{timeProject?.tasks.map((t:Row)=><option key={t.id} value={t.id}>{t.title}</option>)}</select></label><label>Work date<input aria-label="Work date" required type="date" max={today()} disabled={busy} value={time.work_date} onChange={e=>setTime({...time,work_date:e.target.value})}/></label><div className="workCenterDuration"><label>Hours<input aria-label="Hours worked" type="number" min="0" max="24" step="1" disabled={busy} value={time.hours} onChange={e=>setTime({...time,hours:e.target.value})}/></label><label>Minutes<input aria-label="Minutes worked" type="number" min="0" max="59" step="1" disabled={busy} value={time.minutes} onChange={e=>setTime({...time,minutes:e.target.value})}/></label></div><label>Work status<select aria-label="Daily work status" value={time.work_status} disabled={busy} onChange={e=>setTime({...time,work_status:e.target.value})}>{[['not_started','Not started'],['in_progress','In progress'],['blocked','Blocked / need help'],['completed','Work completed']].map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label><label>Purpose<select aria-label="Update purpose" value={time.request_kind} disabled={busy} onChange={e=>setTime({...time,request_kind:e.target.value})}>{[['progress','Progress update'],['guidance','Ask for guidance'],['support','Request technical support'],['review_request','Request review / approval']].map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label><label className="full">Mention people / send an inbox request<select multiple aria-label="Mention users" value={time.mention_ids.map(String)} disabled={busy} onChange={e=>setTime({...time,mention_ids:Array.from(e.target.selectedOptions,o=>Number(o.value))})}>{options.users.filter((u:Row)=>u.id!==options.current_user).map((u:Row)=><option key={u.id} value={u.id}>@{u.username}</option>)}</select><small>Ctrl / Command to choose several people. A mention notifies that person; it does not grant project access. A review request does not approve the work.</small></label><small className="full">Hours are optional for a status update. Reported work completion does not release or approve the project.</small><label className="full">What work was done<textarea aria-label="What work was done" required maxLength={8000} disabled={busy} rows={3} value={time.body} onChange={e=>setTime({...time,body:e.target.value})}/></label></>}</div><div className="workCenterActions"><button className="btn primary" disabled={busy}>{busy?'Saving...':isTask?'Create and assign task':'Save daily update'}</button><button className="btn" type="button" disabled={busy} onClick={()=>setForm(false)}>Keep draft and close</button></div><small>Your unfinished draft is kept when you switch inbox tabs.</small></form>}
+ {form&&<form className="workCenterForm" onSubmit={event=>void save(event)}>
+  <h3>{isTask?'Assign a project task':'Record your work update'}</h3>
+  <div className="workCenterFormGrid">
+   {isTask?(<>
+    <div className="workCenterProjectSelectRow">
+     <label>Project
+      <select aria-label="Task project" disabled={busy} value={task.project_id} onChange={e=>{
+       if(e.target.value==='__new__'){openCreateNewProject();}
+       else{setTask({...task,project_id:e.target.value});}
+      }}>
+       <option value="">Independent task (No specific project)</option>
+       <option value="__new__">✨ + Create New Project in WorkHub…</option>
+       {options.projects.filter((p:Row)=>p.can_create).map((p:Row)=><option key={p.id} value={p.id}>{p.title}</option>)}
+      </select>
+     </label>
+     <button type="button" className="btn whCreateProjectQuickBtn" onClick={openCreateNewProject} title="Create New Project in WorkHub">
+      <Plus size={14}/> Create New Project
+     </button>
+    </div>
+    <label className="full">Custom / Editable Project Name (Optional)
+     <input aria-label="Custom project title" placeholder="Type or edit project name (links or creates project if new)…" disabled={busy} value={task.custom_project||''} onChange={e=>setTask({...task,custom_project:e.target.value})}/>
+    </label>
+    <label>Assign to<select aria-label="Assign task to" disabled={busy} value={task.owner_id||String(options.current_user)} onChange={e=>setTask({...task,owner_id:e.target.value})}>{options.users.map((u:Row)=><option key={u.id} value={u.id}>{u.username}{u.id===options.current_user?' (myself)':''}</option>)}</select></label>
+    <label className="full">Task title<input aria-label="Task title" required maxLength={180} disabled={busy} value={task.title} onChange={e=>setTask({...task,title:e.target.value})}/></label>
+    <label>Due date<input aria-label="Task due date" type="date" disabled={busy} value={task.due_date} onChange={e=>setTask({...task,due_date:e.target.value})}/></label>
+    <label>Planned hours<input aria-label="Task planned hours" type="number" min="0" max="100000" step="0.25" disabled={busy} value={task.planned_hours} onChange={e=>setTask({...task,planned_hours:e.target.value})}/></label>
+    <label className="full">Description<textarea aria-label="Task description" maxLength={4000} disabled={busy} rows={3} value={task.description} onChange={e=>setTask({...task,description:e.target.value})}/></label>
+    <small className="full">Tasks can be associated with a project or assigned independently. Choosing '+ Create New Project' auto-navigates to the WorkHub project creation workflow.</small>
+   </>):(<>
+    <div className="workCenterTypeToggleRow full">
+     <span>Update Kind:</span>
+     <div className="workCenterTypeToggle" role="group" aria-label="Update kind">
+      <button type="button" className={'btn '+(time.update_type!=='project'?'primary':'')} onClick={()=>setTime({...time,update_type:'daily'})}><Clock size={14}/> Daily update</button>
+      <button type="button" className={'btn '+(time.update_type==='project'?'primary':'')} onClick={()=>setTime({...time,update_type:'project'})}><FolderOpen size={14}/> Project update</button>
+     </div>
+    </div>
+    <label>Project<select aria-label="Log hours project" disabled={busy} value={time.project_id} onChange={e=>setTime({...time,project_id:e.target.value,item_id:''})}><option value="">Choose assigned project (or project-level work)</option>{options.projects.map((p:Row)=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label>
+    <label>Task (Select or custom)<select aria-label="Log hours task" disabled={busy||!time.project_id} value={time.item_id} onChange={e=>setTime({...time,item_id:e.target.value})}><option value="">Project-level work</option>{timeProject?.tasks.map((t:Row)=><option key={t.id} value={t.id}>{t.title}</option>)}</select></label>
+    <label className="full">Or edit / type custom task name<input aria-label="Editable task title" placeholder="Type or customize task title (editable)…" disabled={busy} value={time.custom_task||''} onChange={e=>setTime({...time,custom_task:e.target.value})}/></label>
+    <label className="full">Sub-task (Optional)<input aria-label="Sub-task title" placeholder="e.g. Sub-task #2: Alarm banner visual alignment & acknowledgment button" disabled={busy} value={time.subtask_title||''} onChange={e=>setTime({...time,subtask_title:e.target.value})}/></label>
+    <label>Work date<input aria-label="Work date" required type="date" max={today()} disabled={busy} value={time.work_date} onChange={e=>setTime({...time,work_date:e.target.value})}/></label>
+    <div className="workCenterDuration"><label>Hours<input aria-label="Hours worked" type="number" min="0" max="24" step="1" disabled={busy} value={time.hours} onChange={e=>setTime({...time,hours:e.target.value})}/></label><label>Minutes<input aria-label="Minutes worked" type="number" min="0" max="59" step="1" disabled={busy} value={time.minutes} onChange={e=>setTime({...time,minutes:e.target.value})}/></label></div>
+    <label>Work status<select aria-label="Daily work status" value={time.work_status} disabled={busy} onChange={e=>setTime({...time,work_status:e.target.value})}>{[['not_started','Not started'],['in_progress','In progress'],['blocked','Blocked / need help'],['completed','Work completed']].map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label>
+    <label>Purpose<select aria-label="Update purpose" value={time.request_kind} disabled={busy} onChange={e=>setTime({...time,request_kind:e.target.value})}>{[['progress','Progress update'],['guidance','Ask for guidance'],['support','Request technical support'],['review_request','Request review / approval']].map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label>
+    <div className="workCenterAttachmentsRow full">
+     <div className="workCenterAttachHeader">
+      <span>Attachments & screenshots:</span>
+      <button type="button" className="btn workCenterAttachBtn" disabled={busy} onClick={()=>filePickerRef.current?.click()}><Paperclip size={14}/> Attach files</button>
+      <input type="file" multiple hidden ref={filePickerRef} onChange={handleUploadFiles}/>
+     </div>
+     {attachedFiles.length>0&&<div className="workCenterAttachChips">{attachedFiles.map((f,idx)=><span key={idx} className="workCenterAttachChip"><Paperclip size={12}/>{f.name}<button type="button" onClick={()=>setAttachedFiles(curr=>curr.filter((_,i)=>i!==idx))}><X size={12}/></button></span>)}</div>}
+    </div>
+    <label className="full">Mention people / send an inbox request<select multiple aria-label="Mention users" value={time.mention_ids.map(String)} disabled={busy} onChange={e=>setTime({...time,mention_ids:Array.from(e.target.selectedOptions,o=>Number(o.value))})}>{options.users.filter((u:Row)=>u.id!==options.current_user).map((u:Row)=><option key={u.id} value={u.id}>@{u.username}</option>)}</select><small>Ctrl / Command to choose several people. Both Daily and Project updates are recorded into the project discussion thread as comments.</small></label>
+    <label className="full">Discussion comment & work notes<textarea aria-label="What work was done" required maxLength={8000} disabled={busy} rows={3} placeholder="Add a comment. Use @ to mention a person or # for work items. Markdown is supported." value={time.body} onChange={e=>setTime({...time,body:e.target.value})}/></label>
+   </>)}
+  </div>
+  <div className="workCenterActions"><button className="btn primary" disabled={busy}>{busy?'Saving...':isTask?'Create and assign task':`Save ${time.update_type==='project'?'project':'daily'} update & comment`}</button><button className="btn" type="button" disabled={busy} onClick={()=>setForm(false)}>Keep draft and close</button></div>
+  <small>Your unfinished draft is kept when you switch inbox tabs.</small>
+ </form>}
  {error&&<p role="alert" className="workCenterError">{error}</p>}{notice&&<p role="status">{notice}</p>}
  {view!=='timesheet'&&<div className="workCenterFilters"><label>Find work<input aria-label="Search inbox work" value={search} placeholder="Task or project name" onChange={e=>{setSearch(e.target.value);setPage(1)}}/></label><span>{data.total} items {view==='tasks'?'created or managed by you':'assigned to you'}</span></div>}
  {loading?<p role="status">Loading {title.toLowerCase()}...</p>:<div className="workCenterList">{data.items.map((row:Row)=><article key={row.id}><div><small>{view==='timesheet'?row.work_date:row.type}</small><h3>{view==='timesheet'?row.task_title:row.title}</h3><p>{row.project_title}</p>{view==='timesheet'?<><small>{row.author_name} / {row.work_status?.replaceAll('_',' ')}</small><p className="workCenterBody">{row.body}</p>{!!row.mention_names?.length&&<p>To: {row.mention_names.join(', ')} / {row.request_kind.replaceAll('_',' ')}</p>}<strong>{row.minutes?hours(row.minutes)+' / '+row.time_status.replaceAll('_',' '):'Status update / no hours'}</strong>{row.review_comment&&<p>Reviewer: {row.review_comment}</p>}</>:<><p>Assigned to {row.owner_name} / Due {row.due_date||'not scheduled'}</p><span className="workCenterStage">{row.stage_label}</span></>}</div>{view!=='timesheet'&&<button className="btn" onClick={()=>{setFormKind('update');setTime({...time,project_id:row.project_id,item_id:row.type==='task'?row.id:''});setForm(true)}}>Update work</button>}<a className="btn" href={projectHref(row.project_id,view==='timesheet'?row.item_id:row.id)}>Open {view==='timesheet'?'work':'workflow'}<ArrowUpRight size={14}/></a>{view==='timesheet'&&row.time_status==='changes_requested'&&<a className="btn" href="/?page=home&hubView=mine&mineMode=approvals">Correct and resubmit</a>}</article>)}{!data.items.length&&<p className="team-chat-empty">No {view==='timesheet'?'time entries':'work items'} match this view.</p>}</div>}

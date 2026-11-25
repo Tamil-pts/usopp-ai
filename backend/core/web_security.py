@@ -24,7 +24,7 @@ def allowed_host(value):
     except ValueError:return False
     configured=[h.strip().lower().rstrip('.') for h in os.getenv('USOPP_ALLOWED_HOSTS','').split(',') if h.strip()]
     if configured:return host in configured
-    if host in local_names():return True
+    if host in local_names() or host.endswith('.devtunnels.ms'):return True
     try:
         address=ipaddress.ip_address(host)
         return address.is_loopback or address.is_private
@@ -47,8 +47,13 @@ def response_headers(scheme='http'):
 
 def unsafe_origin(request,dev_origins):
     origin=request.headers.get('origin')
-    expected=f'{request.url.scheme}://{request.headers.get("host")}'
-    if origin:return origin not in dev_origins and origin!=expected
+    expected_origins={f'{request.url.scheme}://{request.headers.get("host")}'}
+    fwd_host=request.headers.get('x-forwarded-host','').split(',')[0].strip()
+    if fwd_host and allowed_host(fwd_host):
+        fwd_proto=request.headers.get('x-forwarded-proto',request.url.scheme).split(',')[0].strip() or 'https'
+        expected_origins.add(f'{fwd_proto}://{fwd_host}')
+        expected_origins.add(f'https://{fwd_host}')
+    if origin:return origin not in dev_origins and origin not in expected_origins
     # Modern browser metadata covers cross-site requests that omit Origin.
     if request.headers.get('sec-fetch-site')=='cross-site':return True
     referer=request.headers.get('referer')
@@ -56,7 +61,7 @@ def unsafe_origin(request,dev_origins):
         try:
             value=urlsplit(referer);source=f'{value.scheme}://{value.netloc}'
         except ValueError:return True
-        return source not in dev_origins and source!=expected
+        return source not in dev_origins and source not in expected_origins
     # Authenticated non-browser clients (MCP and local tools) need not send browser headers.
     return False
 

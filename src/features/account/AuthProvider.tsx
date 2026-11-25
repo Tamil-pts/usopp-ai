@@ -5,7 +5,7 @@ import {createContext,useContext,useEffect,useRef,useState,type ReactNode,type F
 import {ArrowRight,ArrowUpRight,Check,RefreshCw} from 'lucide-react';
 import usoppLogo from '../../usopp_logo.png';
 import petrusLogo from '../../petrus_logo.png';
-import engineeringHero from './assets/engineering-factory-hero-v1.png';
+import engineeringHero from './assets/engineering-factory-hero-v1.webp';
 import {PasswordInput} from './PasswordInput';
 import type {WorkspaceModule} from '../../shared/workspaceModules';
 import '../../styles.css';
@@ -37,7 +37,7 @@ window.fetch=async(...args:Parameters<typeof fetch>)=>{
 export function AuthProvider({children}:{children:ReactNode}){
   const [user,setUserState]=useState<AccountUser|null>(null),[loading,setLoading]=useState(true),[register,setRegister]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState('');
   const accountGeneration=useRef(0);
-  const setUser=async(value:AccountUser|null)=>{const generation=++accountGeneration.current;if(value)await hydrateUserStorage(value);else activateUserStorage(null);if(generation===accountGeneration.current)setUserState(value)};
+  const setUser=async(value:AccountUser|null)=>{const generation=++accountGeneration.current;if(value){activateUserStorage(value);setUserState(value);void hydrateUserStorage(value).catch(()=>{});return;}activateUserStorage(null);if(generation===accountGeneration.current)setUserState(null)};
   const [serviceReady,setServiceReady]=useState(false);
   const [form,setForm]=useState({username:'',password:'',confirm:'',designation:'',company:'',email:''});
   const usernameInput=useRef<HTMLInputElement>(null);

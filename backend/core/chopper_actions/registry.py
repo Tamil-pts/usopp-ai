@@ -86,9 +86,12 @@ def match_action(text: str) -> ActionEntry | None:
 # ---------------------------------------------------------------------------
 
 def _register_builtin_actions() -> None:
-    from backend.core.chopper_actions.actions import bytecheck    # noqa: F401 — registers itself
-    from backend.core.chopper_actions.actions import matchview    # noqa: F401 — registers itself
-    from backend.core.chopper_actions.actions import project_pack # noqa: F401 — registers itself
+    from backend.core.chopper_actions.actions import bytecheck             # noqa: F401 — registers itself
+    from backend.core.chopper_actions.actions import matchview             # noqa: F401 — registers itself
+    from backend.core.chopper_actions.actions import project_pack          # noqa: F401 — registers itself
+    from backend.core.chopper_actions.actions import create_frd            # noqa: F401 — registers itself
+    from backend.core.chopper_actions.actions import create_mom            # noqa: F401 — registers itself
+    from backend.core.chopper_actions.actions import create_quality_report # noqa: F401 — registers itself
 
 
 _register_builtin_actions()

@@ -7,6 +7,7 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from backend.core.runtime import RESOURCE_ROOT, VERSION, log
@@ -95,7 +96,9 @@ async def request_logger(request, call_next):
         route=getattr(request.scope.get('route'),'path','')
         record_latency(route,elapsed*1000,response.status_code>=500)
         log.info('HTTP %s %s -> %s (%.3fs)', request.method, request.url.path, response.status_code, elapsed)
-        if request.url.path.startswith('/assets/') or response.headers.get('content-type','').startswith('text/html') or request.url.path in ('/api/health','/build-info.json'):
+        if request.url.path.startswith('/assets/'):
+            response.headers['Cache-Control']='public, max-age=31536000, immutable'
+        elif response.headers.get('content-type','').startswith('text/html') or request.url.path in ('/api/health','/build-info.json','/sw.js'):
             response.headers['Cache-Control']='no-store'
         response.headers['X-USOPP-Version']=VERSION
         return response
@@ -106,6 +109,7 @@ async def request_logger(request, call_next):
         raise
 
 DEV_ORIGINS=[f'http://{host}:{os.getenv("USOPP_FRONTEND_PORT","8201")}' for host in ('localhost','127.0.0.1')]
+app.add_middleware(GZipMiddleware, minimum_size=512)
 app.add_middleware(CORSMiddleware, allow_origins=DEV_ORIGINS, allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
 
 @app.middleware('http')

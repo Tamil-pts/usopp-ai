@@ -160,8 +160,23 @@ def work_center_tasks(request:Request,view:str=Query('mine',pattern='^(mine|task
 def work_center_create_task(request:Request,payload:dict):
     user=workhub_user(request)
     from backend.core.workhub import store as hub
-    project=payload.get('project_id')
-    if not isinstance(project,str) or not project:raise HTTPException(400,'Select a project for this task.')
+    project=payload.get('project_id') or ''
+    custom_project=str(payload.get('custom_project') or '').strip()
+    with hub.db(True) as db:
+        if custom_project:
+            row=db.execute("SELECT id FROM items WHERE type='project' AND lower(title)=lower(?)",(custom_project,)).fetchone()
+            if row:
+                project=row['id']
+            else:
+                created=hub.create(user,{'title':custom_project,'kind':'Engineering','description':f'Created via task assignment: {custom_project}'})
+                project=created['id']
+        elif not project or project=='__new__':
+            row=db.execute("SELECT id FROM items WHERE type='project' AND (title='General Tasks' OR title='Independent Work')").fetchone()
+            if row:
+                project=row['id']
+            else:
+                created=hub.create(user,{'title':'General Tasks','kind':'Operations','description':'General and independent operational tasks without a designated project pack.'})
+                project=created['id']
     return hub.create(user,{'title':payload.get('title'),'description':payload.get('description',''),
         'owner_id':payload.get('owner_id',user['id']),'due_date':payload.get('due_date',''),
         'planned_hours':payload.get('planned_hours',0)},project_id=project)
@@ -180,7 +195,42 @@ def work_center_log_time(request:Request,payload:dict):
 def work_center_daily_update(request:Request,payload:dict):
     user=workhub_user(request)
     from backend.core.workhub import store as hub
-    return hub.add_update(user,payload.get('item_id'),{key:payload[key] for key in ('body','minutes','work_date','work_status','request_kind','mention_ids') if key in payload})
+    item_id=payload.get('item_id') or payload.get('project_id')
+    if not item_id:
+        with hub.db() as db:
+            row=db.execute("SELECT id FROM items WHERE type='project' ORDER BY updated_at DESC LIMIT 1").fetchone()
+            if row:item_id=row['id']
+            else:raise HTTPException(400,'Select a project or task for this update.')
+    
+    update_type=payload.get('update_type','daily')
+    subtask=str(payload.get('subtask_title') or '').strip()
+    custom_task=str(payload.get('custom_task') or '').strip()
+    body=str(payload.get('body') or '').strip()
+    
+    header_parts=[]
+    if update_type=='project':
+        header_parts.append('**[Project Update]**')
+    else:
+        header_parts.append('**[Daily Update]**')
+    if custom_task:
+        header_parts.append(f"Task: {custom_task}")
+    if subtask:
+        header_parts.append(f"Sub-task: {subtask}")
+    
+    formatted_body=(' — '.join(header_parts)+'\n\n'+body) if header_parts else body
+    
+    update_payload={
+        'body':formatted_body,
+        'minutes':payload.get('minutes',0),
+        'work_date':payload.get('work_date'),
+        'work_status':payload.get('work_status','in_progress'),
+        'request_kind':payload.get('request_kind','progress'),
+        'mention_ids':payload.get('mention_ids',[]),
+        'file_ids':payload.get('file_ids',[]),
+        'subtask_title':subtask,
+        'update_type':update_type
+    }
+    return hub.add_update(user,item_id,update_payload)
 
 
 @router.get('/work-center/requests')

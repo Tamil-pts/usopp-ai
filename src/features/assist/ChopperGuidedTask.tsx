@@ -167,7 +167,7 @@ export function ChopperGuidedTask({
       if (!launched) throw new Error('This workspace is not available for your account.');
 
       setDone(true);
-      onDone(`Opening **${script.label}** with your answers pre-filled. Review and confirm in the workspace.`);
+      onDone(`Opening **${script?.label || 'task'}** with your answers pre-filled. Review and confirm in the workspace.`);
     } catch (e) {
       setError((e as Error).message);
     } finally {

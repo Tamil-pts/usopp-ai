@@ -18,6 +18,9 @@ from backend.core.chopper_actions.permissions import (
 from backend.core.chopper_actions.actions.bytecheck import _summarize as summarize_bytecheck
 from backend.core.chopper_actions.actions.matchview import _summarize as summarize_matchview
 from backend.core.chopper_actions.actions.project_pack import _summarize as summarize_project_pack
+from backend.core.chopper_actions.actions.create_frd import _summarize as summarize_create_frd
+from backend.core.chopper_actions.actions.create_mom import _summarize as summarize_create_mom
+from backend.core.chopper_actions.actions.create_quality_report import _summarize as summarize_create_quality_report
 
 
 class TestChopperActionsSecurity(unittest.TestCase):
@@ -129,6 +132,16 @@ class TestChopperCommandPhraseMatching(unittest.TestCase):
             ('create project pack', 'project_pack'),
             ('build project pack', 'project_pack'),
             ('Create an new project and FRD', 'project_pack'),
+
+            # Specific Document Creation commands (FRD, MOM, Quality)
+            ('create an frd', 'create_frd'),
+            ('draft functional requirements', 'create_frd'),
+            ('new frd document', 'create_frd'),
+            ('create mom', 'create_mom'),
+            ('record meeting minutes', 'create_mom'),
+            ('create quality report', 'create_quality_report'),
+            ('draft fat report', 'create_quality_report'),
+            ('create validation report', 'create_quality_report'),
         ]
         self.assertGreaterEqual(len(commands), 30)
         for phrase, expected_action in commands:
@@ -253,6 +266,58 @@ class TestActionsEndToEnd(unittest.TestCase):
         self.assertEqual(summary['actionId'], 'project_pack')
         self.assertEqual(summary['projectId'], 'PROJ-TEST-101')
         self.assertEqual(len(summary['documents']), 3)
+
+    def test_create_frd_summarize(self):
+        mock_result = {
+            'scopeId': 'SCOPE-FRD-001',
+            'docTitle': 'Motor Alarm Control',
+            'documentNumber': 'PTPL-FRD-001',
+            'customer': 'LMW',
+            'department': 'Spinning',
+            'scope': 'In scope: motor trip logic',
+            'acceptanceCriteria': 'Response < 100ms',
+            'requirements': [{'id': 'FR-001', 'title': 'Trip motor on overload'}],
+            'requirementsCount': 1,
+        }
+        summary = summarize_create_frd(mock_result)
+        self.assertEqual(summary['type'], 'action-summary')
+        self.assertEqual(summary['actionId'], 'create_frd')
+        self.assertEqual(summary['scopeId'], 'SCOPE-FRD-001')
+        self.assertEqual(summary['requirementsCount'], 1)
+
+    def test_create_mom_summarize(self):
+        mock_result = {
+            'scopeId': 'SCOPE-MOM-001',
+            'meetingSubject': 'Kickoff Alignment',
+            'docTitle': 'Kickoff Alignment — Minutes of Meeting',
+            'documentNumber': 'PTPL-MOM-001',
+            'customer': 'LMW',
+            'department': 'Comber',
+            'decisions': [{'decision': 'Use IEC 61131-3'}],
+            'actions': [{'task': 'Review PLC logic', 'owner': 'Admin'}],
+        }
+        summary = summarize_create_mom(mock_result)
+        self.assertEqual(summary['type'], 'action-summary')
+        self.assertEqual(summary['actionId'], 'create_mom')
+        self.assertEqual(summary['meetingSubject'], 'Kickoff Alignment')
+        self.assertEqual(len(summary['decisions']), 1)
+
+    def test_create_quality_report_summarize(self):
+        mock_result = {
+            'scopeId': 'SCOPE-FAT-001',
+            'docTitle': 'FAT Validation Report',
+            'documentNumber': 'PTPL-FAT-001',
+            'customer': 'LMW',
+            'department': 'General',
+            'testScope': 'Safety interlocks',
+            'acceptanceCriteria': 'Zero critical alarms',
+            'cases': [{'id': 'TC-001', 'title': 'E-stop trip'}],
+            'testCasesCount': 1,
+        }
+        summary = summarize_create_quality_report(mock_result)
+        self.assertEqual(summary['type'], 'action-summary')
+        self.assertEqual(summary['actionId'], 'create_quality_report')
+        self.assertEqual(summary['testCasesCount'], 1)
 
 
 if __name__ == '__main__':

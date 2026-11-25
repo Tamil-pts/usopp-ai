@@ -1,0 +1,132 @@
+/* Mobile App Shell: Bottom Navigation Bar + Install Banner (<= 768px) */
+.mobileBottomNav {
+  display: none;
+}
+
+.mobileInstallBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #073B4C 0%, #0d6e6e 100%);
+  color: #ffffff;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 14px rgba(7, 59, 76, 0.18);
+}
+
+.mobileInstallCopy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mobileInstallCopy strong {
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.mobileInstallCopy span {
+  display: block;
+  font-size: 0.78rem;
+  opacity: 0.9;
+}
+
+.mobileInstallActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.mobileInstallBtn {
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: #ffffff;
+  color: #073B4C;
+  cursor: pointer;
+}
+
+.mobileInstallDismiss {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .workspaceApp .content {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .mobileBottomNav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2px;
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+    background: var(--panel, #ffffff);
+    border-top: 1px solid var(--line, #dbe4ea);
+    box-shadow: 0 -4px 18px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(10px);
+  }
+
+  .mobileBottomNav button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-height: 50px;
+    padding: 4px 2px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted, #51606d);
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .mobileBottomNav button.active {
+    color: #0d9488;
+    background: rgba(13, 148, 136, 0.1);
+  }
+
+  .mobileBottomNav button svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  /* Keep desktop top subnav compact & horizontally scrollable on phone screens */
+  .workspaceApp .workspaceSubnavRow {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .workspaceApp .workspaceSubnavRow::-webkit-scrollbar {
+    display: none;
+  }
+
+  .workspaceApp .workspaceSubnavRow > * {
+    flex-shrink: 0;
+  }
+}
